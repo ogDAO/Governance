@@ -465,9 +465,22 @@ function printGovContractDetails() {
     var stakedEvents = contract.Staked({}, { fromBlock: _govFromBlock, toBlock: latestBlock });
     i = 0;
     stakedEvents.watch(function (error, result) {
-      console.log("RESULT: Staked " + i++ + " #" + result.blockNumber + " " + JSON.stringify(result.args));
+      // console.log("RESULT: Staked " + i++ + " #" + result.blockNumber + " " + JSON.stringify(result.args));
+      console.log("RESULT: Staked" + i++ + " #" + result.blockNumber +
+        " user=" + getShortAddressName(result.args.user) +
+        " amount=" + result.args.amount.shift(-18) +
+        " balance=" + result.args.balance.shift(-18) +
+        " duration=" + result.args.duration +
+        " end=" + result.args.end +
+        " votes=" + result.args.votes.shift(-18) +
+        " rewardPool=" + result.args.rewardPool.shift(-18) +
+        " totalVotes=" + result.args.totalVotes.shift(-18));
     });
     stakedEvents.stopWatching();
+    // Staked 0 #13426 {"user":"0xa44a08d3f6933c69212114bb66e2df1813651844","amount":"10000000000000000000","balance":"0","duration":"86400","end":"1599251854","votes":"0","rewardPool":"0","totalVotes":"0"}
+    // Staked 1 #13426 {"user":"0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0","amount":"10000000000000000000","balance":"0","duration":"86400","end":"1599251854","votes":"0","rewardPool":"0","totalVotes":"0"}
+    // Staked 2 #13426 {"user":"0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976","amount":"10000000000000000000","balance":"0","duration":"86400","end":"1599251854","votes":"0","rewardPool":"0","totalVotes":"0"}
+    // Staked 3 #13426 {"user":"0xa55a151eb00fded1634d27d1127b4be4627079ea","amount":"10000000000000000000","balance":"0","duration":"86400","end":"1599251854","votes":"0","rewardPool":"0","totalVotes":"0"}
 
     var collectedEvents = contract.Collected({}, { fromBlock: _govFromBlock, toBlock: latestBlock });
     i = 0;
