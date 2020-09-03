@@ -2,25 +2,25 @@
 ---------- Deploy Group #1 - Contracts ----------
  # Account                                             EtherBalanceChange                           TEST                       (unused) Name
 -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
- 0 0xa00af22d07c87d96eeeb0ed583f8f6ac7812827e        0.067435672600000000           0.000000000000000000           0.000000000000000000 miner
- 1 0xa11aae29840fbb5c86e6fd4cf809eba183aef433       -0.067435672600000000           0.000000000000000000           0.000000000000000000 deployer
+ 0 0xa00af22d07c87d96eeeb0ed583f8f6ac7812827e        0.067459951000000000           0.000000000000000000           0.000000000000000000 miner
+ 1 0xa11aae29840fbb5c86e6fd4cf809eba183aef433       -0.067459951000000000           0.000000000000000000           0.000000000000000000 deployer
  2 0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976        0.000000000000000000           0.000000000000000000           0.000000000000000000 user1
  3 0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0        0.000000000000000000           0.000000000000000000           0.000000000000000000 user2
  4 0xa44a08d3f6933c69212114bb66e2df1813651844        0.000000000000000000           0.000000000000000000           0.000000000000000000 user3
  5 0xa55a151eb00fded1634d27d1127b4be4627079ea        0.000000000000000000           0.000000000000000000           0.000000000000000000 user4
  6 0x0000000000000000000000000000000000000000        0.000000000000000000           0.000000000000000000           0.000000000000000000 null
- 7 0x8662046fb8b0a6c03f49dd0a922a5e60c55f8118        0.000000000000000000           0.000000000000000000           0.000000000000000000 'TEST' 'Test (18 dp)'
- 8 0xa26571b63970bb075610213a94bbbd497c3c953f        0.000000000000000000           0.000000000000000000           0.000000000000000000 Gov
+ 7 0x2f9c836fb15d19d1ad679f2d86ca6841e24c8d7e        0.000000000000000000           0.000000000000000000           0.000000000000000000 'TEST' 'Test (18 dp)'
+ 8 0x2bf4dd749b6a58271d15684796ce878b2b8f2f9f        0.000000000000000000           0.000000000000000000           0.000000000000000000 Gov
 -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
                                                                                     0.000000000000000000           0.000000000000000000 Total Token Balances
 -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
 
 PASS Deploy Group #1 - Contracts - Gov
-govTx status=0x1 Success gas=6000000 gasUsed=1592471 costETH=0.0447484351 costUSD=19.503605438335 @ ETH/USD=435.85 gasPrice=28.1 gwei block=13686 txIx=0 txId=0x67b1b9c0278bfd2dad0baaa8e02392de1a4d0582718ca8c345fdead0ad5b918a @ 1599165714 Thu, 03 Sep 2020 20:41:54 GMT
+govTx status=0x1 Success gas=6000000 gasUsed=1593335 costETH=0.0447727135 costUSD=19.514187178975 @ ETH/USD=435.85 gasPrice=28.1 gwei block=14309 txIx=0 txId=0x4b395fe6af322d31b9f976cb39c30b685bdb48694932f29e1a159cf29814b767 @ 1599166337 Thu, 03 Sep 2020 20:52:17 GMT
 PASS Deploy Group #1 - Contracts - Token
-tokenTx status=0x1 Success gas=4000000 gasUsed=807375 costETH=0.0226872375 costUSD=9.888232464375 @ ETH/USD=435.85 gasPrice=28.1 gwei block=13684 txIx=0 txId=0x40561c2bf2447f62a28bff8b08bf2081ea82090602174a18997147c1f8b4f26e @ 1599165712 Thu, 03 Sep 2020 20:41:52 GMT
-govContractAddress=Gov:0xa265
-gov.xs2token='TEST' 'Test (18 dp)':0x8662
+tokenTx status=0x1 Success gas=4000000 gasUsed=807375 costETH=0.0226872375 costUSD=9.888232464375 @ ETH/USD=435.85 gasPrice=28.1 gwei block=14307 txIx=0 txId=0x3e67a1798f0e71bc1046adf8ec3e0e8e1b1f97468bd8e0079d7184a022650e3f @ 1599166335 Thu, 03 Sep 2020 20:52:15 GMT
+govContractAddress=Gov:0x2bf4
+gov.xs2token='TEST' 'Test (18 dp)':0x2f9c
 gov.rewardsPerSecond=0.15 /day=12960 /year=4730400
 gov.proposalCost=100
 gov.proposalThreshold=0.01%
@@ -30,47 +30,41 @@ gov.executeDelay=7200 seconds
 gov.rewardPool=0
 gov.totalVotes=0
 gov.proposalCount=0
+gov.stakes[0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976]=0,0,0,0
+gov.stakes[0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0]=0,0,0,0
 
-token0ContractAddress='TEST' 'Test (18 dp)':0x8662
+token0ContractAddress='TEST' 'Test (18 dp)':0x2f9c
 token0.owner/new=deployer:0xa11a/null:0x0000
 token0.details='TEST' 'Test (18 dp)' 18 dp
 token0.totalSupply=0
-token0.Transfer 0 #13684 from=null:0x0000 to=deployer:0xa11a tokens=0
+token0.Transfer 0 #14307 from=null:0x0000 to=deployer:0xa11a tokens=0
 
 ---------- Distribute And Approve Tokens ----------
  # Account                                             EtherBalanceChange                           TEST                       (unused) Name
 -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
- 0 0xa00af22d07c87d96eeeb0ed583f8f6ac7812827e        0.078602837400000000           0.000000000000000000           0.000000000000000000 miner
- 1 0xa11aae29840fbb5c86e6fd4cf809eba183aef433       -0.073660834200000000           0.000000000000000000           0.000000000000000000 deployer
+ 0 0xa00af22d07c87d96eeeb0ed583f8f6ac7812827e        0.073254283400000000           0.000000000000000000           0.000000000000000000 miner
+ 1 0xa11aae29840fbb5c86e6fd4cf809eba183aef433       -0.070783281800000000           0.000000000000000000           0.000000000000000000 deployer
  2 0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976       -0.001235500800000000        1000.000000000000000000           0.000000000000000000 user1
  3 0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0       -0.001235500800000000        1000.000000000000000000           0.000000000000000000 user2
- 4 0xa44a08d3f6933c69212114bb66e2df1813651844       -0.001235500800000000        1000.000000000000000000           0.000000000000000000 user3
- 5 0xa55a151eb00fded1634d27d1127b4be4627079ea       -0.001235500800000000        1000.000000000000000000           0.000000000000000000 user4
+ 4 0xa44a08d3f6933c69212114bb66e2df1813651844        0.000000000000000000           0.000000000000000000           0.000000000000000000 user3
+ 5 0xa55a151eb00fded1634d27d1127b4be4627079ea        0.000000000000000000           0.000000000000000000           0.000000000000000000 user4
  6 0x0000000000000000000000000000000000000000        0.000000000000000000           0.000000000000000000           0.000000000000000000 null
- 7 0x8662046fb8b0a6c03f49dd0a922a5e60c55f8118        0.000000000000000000           0.000000000000000000           0.000000000000000000 'TEST' 'Test (18 dp)'
- 8 0xa26571b63970bb075610213a94bbbd497c3c953f        0.000000000000000000           0.000000000000000000           0.000000000000000000 Gov
+ 7 0x2f9c836fb15d19d1ad679f2d86ca6841e24c8d7e        0.000000000000000000           0.000000000000000000           0.000000000000000000 'TEST' 'Test (18 dp)'
+ 8 0x2bf4dd749b6a58271d15684796ce878b2b8f2f9f        0.000000000000000000           0.000000000000000000           0.000000000000000000 Gov
 -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-                                                                                 4000.000000000000000000           0.000000000000000000 Total Token Balances
+                                                                                 2000.000000000000000000           0.000000000000000000 Total Token Balances
 -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
 
 PASS Distribute And Approve Tokens - token.mint(0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976, 1000)
-distributeTokens_Txs[0] status=0x1 Success gas=2000000 gasUsed=66634 costETH=0.0018724154 costUSD=0.81609225209 @ ETH/USD=435.85 gasPrice=28.1 gwei block=13688 txIx=0 txId=0x7961b83af98062b6b2493c4f4c7b8a9b2ecc9579a7504f373594ccc900dec599 @ 1599165716 Thu, 03 Sep 2020 20:41:56 GMT
-PASS Distribute And Approve Tokens - token.approve(0xa26571b63970bb075610213a94bbbd497c3c953f, 100)
-approveTokens_Txs[0] status=0x1 Success gas=2000000 gasUsed=43968 costETH=0.0012355008 costUSD=0.53849302368 @ ETH/USD=435.85 gasPrice=28.1 gwei block=13688 txIx=7 txId=0x0cc46a5cd6ca15a7782bd40a358583786552f75e04f9ed7eca33d0c15ec5e211 @ 1599165716 Thu, 03 Sep 2020 20:41:56 GMT
+distributeTokens_Txs[0] status=0x1 Success gas=2000000 gasUsed=66634 costETH=0.0018724154 costUSD=0.81609225209 @ ETH/USD=435.85 gasPrice=28.1 gwei block=14311 txIx=0 txId=0x5f162ed059b1a9c17501a1f7c92282be79b13688b1ad0b60f18d0ff6fa54a228 @ 1599166339 Thu, 03 Sep 2020 20:52:19 GMT
+PASS Distribute And Approve Tokens - token.approve(0x2bf4dd749b6a58271d15684796ce878b2b8f2f9f, 100)
+approveTokens_Txs[0] status=0x1 Success gas=2000000 gasUsed=43968 costETH=0.0012355008 costUSD=0.53849302368 @ ETH/USD=435.85 gasPrice=28.1 gwei block=14311 txIx=3 txId=0xc0df5ed00e3d1d63b991c15fdea48b2cb55d4d1356983c78282aae68ca25bb91 @ 1599166339 Thu, 03 Sep 2020 20:52:19 GMT
 PASS Distribute And Approve Tokens - token.mint(0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0, 1000)
-distributeTokens_Txs[1] status=0x1 Success gas=2000000 gasUsed=51634 costETH=0.0014509154 costUSD=0.63238147709 @ ETH/USD=435.85 gasPrice=28.1 gwei block=13688 txIx=1 txId=0x692e87da93327bb1aa827e51e2776058f03a4d457a744c2054aefa75a9df141a @ 1599165716 Thu, 03 Sep 2020 20:41:56 GMT
-PASS Distribute And Approve Tokens - token.approve(0xa26571b63970bb075610213a94bbbd497c3c953f, 100)
-approveTokens_Txs[1] status=0x1 Success gas=2000000 gasUsed=43968 costETH=0.0012355008 costUSD=0.53849302368 @ ETH/USD=435.85 gasPrice=28.1 gwei block=13688 txIx=6 txId=0xa41075626c7d224b83b9bc0e8de50d912a9aa66719ac01e77c1e4473db792f89 @ 1599165716 Thu, 03 Sep 2020 20:41:56 GMT
-PASS Distribute And Approve Tokens - token.mint(0xa44a08d3f6933c69212114bb66e2df1813651844, 1000)
-distributeTokens_Txs[2] status=0x1 Success gas=2000000 gasUsed=51634 costETH=0.0014509154 costUSD=0.63238147709 @ ETH/USD=435.85 gasPrice=28.1 gwei block=13688 txIx=2 txId=0xa3f3c608bc4c6a4ee697034d65f52dcbd0d737b05569e743eb338bf8084ef255 @ 1599165716 Thu, 03 Sep 2020 20:41:56 GMT
-PASS Distribute And Approve Tokens - token.approve(0xa26571b63970bb075610213a94bbbd497c3c953f, 100)
-approveTokens_Txs[2] status=0x1 Success gas=2000000 gasUsed=43968 costETH=0.0012355008 costUSD=0.53849302368 @ ETH/USD=435.85 gasPrice=28.1 gwei block=13688 txIx=5 txId=0x7967db7d089b9048658e86208ff77aff503565dfdf5eb4e1b5756526d962bdf6 @ 1599165716 Thu, 03 Sep 2020 20:41:56 GMT
-PASS Distribute And Approve Tokens - token.mint(0xa55a151eb00fded1634d27d1127b4be4627079ea, 1000)
-distributeTokens_Txs[3] status=0x1 Success gas=2000000 gasUsed=51634 costETH=0.0014509154 costUSD=0.63238147709 @ ETH/USD=435.85 gasPrice=28.1 gwei block=13688 txIx=3 txId=0x450517175d684a07cd4f4ea91b93a9375e91d3547cf88d8e958d48313b68f2de @ 1599165716 Thu, 03 Sep 2020 20:41:56 GMT
-PASS Distribute And Approve Tokens - token.approve(0xa26571b63970bb075610213a94bbbd497c3c953f, 100)
-approveTokens_Txs[3] status=0x1 Success gas=2000000 gasUsed=43968 costETH=0.0012355008 costUSD=0.53849302368 @ ETH/USD=435.85 gasPrice=28.1 gwei block=13688 txIx=4 txId=0xf9829e3c402e297c6052125b54ac622c49e87273e56d5c48e8040dac09efb67f @ 1599165716 Thu, 03 Sep 2020 20:41:56 GMT
-govContractAddress=Gov:0xa265
-gov.xs2token='TEST' 'Test (18 dp)':0x8662
+distributeTokens_Txs[1] status=0x1 Success gas=2000000 gasUsed=51634 costETH=0.0014509154 costUSD=0.63238147709 @ ETH/USD=435.85 gasPrice=28.1 gwei block=14311 txIx=1 txId=0x301e5c99e3be8bc71bc81a0bb426864448032f7b26cffac944eee2963bde2df3 @ 1599166339 Thu, 03 Sep 2020 20:52:19 GMT
+PASS Distribute And Approve Tokens - token.approve(0x2bf4dd749b6a58271d15684796ce878b2b8f2f9f, 100)
+approveTokens_Txs[1] status=0x1 Success gas=2000000 gasUsed=43968 costETH=0.0012355008 costUSD=0.53849302368 @ ETH/USD=435.85 gasPrice=28.1 gwei block=14311 txIx=2 txId=0x7fa6e815c1c26a6f666a69c319b13b336dc2359df90ff2c3861354d0676100ef @ 1599166339 Thu, 03 Sep 2020 20:52:19 GMT
+govContractAddress=Gov:0x2bf4
+gov.xs2token='TEST' 'Test (18 dp)':0x2f9c
 gov.rewardsPerSecond=0.15 /day=12960 /year=4730400
 gov.proposalCost=100
 gov.proposalThreshold=0.01%
@@ -80,46 +74,40 @@ gov.executeDelay=7200 seconds
 gov.rewardPool=0
 gov.totalVotes=0
 gov.proposalCount=0
+gov.stakes[0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976]=0,0,0,0
+gov.stakes[0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0]=0,0,0,0
 
-token0ContractAddress='TEST' 'Test (18 dp)':0x8662
+token0ContractAddress='TEST' 'Test (18 dp)':0x2f9c
 token0.owner/new=deployer:0xa11a/null:0x0000
 token0.details='TEST' 'Test (18 dp)' 18 dp
-token0.totalSupply=4000
-token0.Approval 0 #13688 tokenOwner=user4:0xa55a spender=Gov:0xa265 tokens=100
-token0.Approval 1 #13688 tokenOwner=user3:0xa44a spender=Gov:0xa265 tokens=100
-token0.Approval 2 #13688 tokenOwner=user2:0xa33a spender=Gov:0xa265 tokens=100
-token0.Approval 3 #13688 tokenOwner=user1:0xa22a spender=Gov:0xa265 tokens=100
-token0.Transfer 0 #13688 from=null:0x0000 to=user1:0xa22a tokens=1000
-token0.Transfer 1 #13688 from=null:0x0000 to=user2:0xa33a tokens=1000
-token0.Transfer 2 #13688 from=null:0x0000 to=user3:0xa44a tokens=1000
-token0.Transfer 3 #13688 from=null:0x0000 to=user4:0xa55a tokens=1000
+token0.totalSupply=2000
+token0.Approval 0 #14311 tokenOwner=user2:0xa33a spender=Gov:0x2bf4 tokens=100
+token0.Approval 1 #14311 tokenOwner=user1:0xa22a spender=Gov:0x2bf4 tokens=100
+token0.Transfer 0 #14311 from=null:0x0000 to=user1:0xa22a tokens=1000
+token0.Transfer 1 #14311 from=null:0x0000 to=user2:0xa33a tokens=1000
 
 ---------- Stake Tokens ----------
  # Account                                             EtherBalanceChange                           TEST                       (unused) Name
 -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
- 0 0xa00af22d07c87d96eeeb0ed583f8f6ac7812827e        0.089944671800000000           0.000000000000000000           0.000000000000000000 miner
- 1 0xa11aae29840fbb5c86e6fd4cf809eba183aef433       -0.073660834200000000           0.000000000000000000           0.000000000000000000 deployer
- 2 0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976       -0.003965584400000000         990.000000000000000000           0.000000000000000000 user1
- 3 0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0       -0.004387084400000000         990.000000000000000000           0.000000000000000000 user2
- 4 0xa44a08d3f6933c69212114bb66e2df1813651844       -0.003965584400000000         990.000000000000000000           0.000000000000000000 user3
- 5 0xa55a151eb00fded1634d27d1127b4be4627079ea       -0.003965584400000000         990.000000000000000000           0.000000000000000000 user4
+ 0 0xa00af22d07c87d96eeeb0ed583f8f6ac7812827e        0.081954661600000000           0.000000000000000000           0.000000000000000000 miner
+ 1 0xa11aae29840fbb5c86e6fd4cf809eba183aef433       -0.070783281800000000           0.000000000000000000           0.000000000000000000 deployer
+ 2 0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976       -0.006007189900000000         990.000000000000000000           0.000000000000000000 user1
+ 3 0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0       -0.005164189900000000         990.000000000000000000           0.000000000000000000 user2
+ 4 0xa44a08d3f6933c69212114bb66e2df1813651844        0.000000000000000000           0.000000000000000000           0.000000000000000000 user3
+ 5 0xa55a151eb00fded1634d27d1127b4be4627079ea        0.000000000000000000           0.000000000000000000           0.000000000000000000 user4
  6 0x0000000000000000000000000000000000000000        0.000000000000000000           0.000000000000000000           0.000000000000000000 null
- 7 0x8662046fb8b0a6c03f49dd0a922a5e60c55f8118        0.000000000000000000           0.000000000000000000           0.000000000000000000 'TEST' 'Test (18 dp)'
- 8 0xa26571b63970bb075610213a94bbbd497c3c953f        0.000000000000000000          40.000000000000000000           0.000000000000000000 Gov
+ 7 0x2f9c836fb15d19d1ad679f2d86ca6841e24c8d7e        0.000000000000000000           0.000000000000000000           0.000000000000000000 'TEST' 'Test (18 dp)'
+ 8 0x2bf4dd749b6a58271d15684796ce878b2b8f2f9f        0.000000000000000000          20.000000000000000000           0.000000000000000000 Gov
 -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-                                                                                 4000.000000000000000000           0.000000000000000000 Total Token Balances
+                                                                                 2000.000000000000000000           0.000000000000000000 Total Token Balances
 -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
 
 PASS Stake Tokens - 0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976-> gov.stake(10, 86400)
-stakeTokens_Txs[0] status=0x1 Success gas=2000000 gasUsed=97156 costETH=0.0027300836 costUSD=1.18990693706 @ ETH/USD=435.85 gasPrice=28.1 gwei block=13690 txIx=1 txId=0xfb7cc333acb995a57794b532f1027f5bfc71c9223eebc90980805298b77947ef @ 1599165718 Thu, 03 Sep 2020 20:41:58 GMT
+stakeTokens_Txs[0] status=0x1 Success gas=2000000 gasUsed=169811 costETH=0.0047716891 costUSD=2.079740694235 @ ETH/USD=435.85 gasPrice=28.1 gwei block=14313 txIx=0 txId=0xb911cb7206cdaf2faa4c28200415ee40c1b636911f23d950f963048ad39ba833 @ 1599166341 Thu, 03 Sep 2020 20:52:21 GMT
 PASS Stake Tokens - 0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0-> gov.stake(10, 86400)
-stakeTokens_Txs[1] status=0x1 Success gas=2000000 gasUsed=112156 costETH=0.0031515836 costUSD=1.37361771206 @ ETH/USD=435.85 gasPrice=28.1 gwei block=13690 txIx=0 txId=0xa1b95b55908dd04a753b53d382256da9d44b7e58dc224dfc29afa0e28646281a @ 1599165718 Thu, 03 Sep 2020 20:41:58 GMT
-PASS Stake Tokens - 0xa44a08d3f6933c69212114bb66e2df1813651844-> gov.stake(10, 86400)
-stakeTokens_Txs[2] status=0x1 Success gas=2000000 gasUsed=97156 costETH=0.0027300836 costUSD=1.18990693706 @ ETH/USD=435.85 gasPrice=28.1 gwei block=13690 txIx=3 txId=0x4d5566c0bd2acafa691559027b26384b4efa2f2cd23439962db173a50db8dddb @ 1599165718 Thu, 03 Sep 2020 20:41:58 GMT
-PASS Stake Tokens - 0xa55a151eb00fded1634d27d1127b4be4627079ea-> gov.stake(10, 86400)
-stakeTokens_Txs[3] status=0x1 Success gas=2000000 gasUsed=97156 costETH=0.0027300836 costUSD=1.18990693706 @ ETH/USD=435.85 gasPrice=28.1 gwei block=13690 txIx=2 txId=0x48a3fd86c0f8b641074471c09d887fdfbdcbc3e5d816add3e3b07529701dbb22 @ 1599165718 Thu, 03 Sep 2020 20:41:58 GMT
-govContractAddress=Gov:0xa265
-gov.xs2token='TEST' 'Test (18 dp)':0x8662
+stakeTokens_Txs[1] status=0x1 Success gas=2000000 gasUsed=139811 costETH=0.0039286891 costUSD=1.712319144235 @ ETH/USD=435.85 gasPrice=28.1 gwei block=14313 txIx=1 txId=0xfe2edffee6dce3be78591e4856226253da60b0af71202be0909c5a8699681a1f @ 1599166341 Thu, 03 Sep 2020 20:52:21 GMT
+govContractAddress=Gov:0x2bf4
+gov.xs2token='TEST' 'Test (18 dp)':0x2f9c
 gov.rewardsPerSecond=0.15 /day=12960 /year=4730400
 gov.proposalCost=100
 gov.proposalThreshold=0.01%
@@ -127,19 +115,17 @@ gov.quorum=20%
 gov.votingDuration=10800 seconds
 gov.executeDelay=7200 seconds
 gov.rewardPool=0
-gov.totalVotes=0
+gov.totalVotes=0.054794520547945204
 gov.proposalCount=0
-Staked0 #13690 user=user2:0xa33a amount=10 balance=0 duration=86400 end=1599252118 votes=0 rewardPool=0 totalVotes=0
-Staked1 #13690 user=user1:0xa22a amount=10 balance=0 duration=86400 end=1599252118 votes=0 rewardPool=0 totalVotes=0
-Staked2 #13690 user=user4:0xa55a amount=10 balance=0 duration=86400 end=1599252118 votes=0 rewardPool=0 totalVotes=0
-Staked3 #13690 user=user3:0xa44a amount=10 balance=0 duration=86400 end=1599252118 votes=0 rewardPool=0 totalVotes=0
+gov.stakes[0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976]=86400,1599252741,10000000000000000000,27397260273972602
+gov.stakes[0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0]=86400,1599252741,10000000000000000000,27397260273972602
+Staked0 #14313 user=user1:0xa22a amount=10 balance=10 duration=86400 end=1599252741 votes=0.027397260273972602 rewardPool=0 totalVotes=0.027397260273972602
+Staked1 #14313 user=user2:0xa33a amount=10 balance=10 duration=86400 end=1599252741 votes=0.027397260273972602 rewardPool=0 totalVotes=0.054794520547945204
 
-token0ContractAddress='TEST' 'Test (18 dp)':0x8662
+token0ContractAddress='TEST' 'Test (18 dp)':0x2f9c
 token0.owner/new=deployer:0xa11a/null:0x0000
 token0.details='TEST' 'Test (18 dp)' 18 dp
-token0.totalSupply=4000
-token0.Transfer 0 #13690 from=user2:0xa33a to=Gov:0xa265 tokens=10
-token0.Transfer 1 #13690 from=user1:0xa22a to=Gov:0xa265 tokens=10
-token0.Transfer 2 #13690 from=user4:0xa55a to=Gov:0xa265 tokens=10
-token0.Transfer 3 #13690 from=user3:0xa44a to=Gov:0xa265 tokens=10
+token0.totalSupply=2000
+token0.Transfer 0 #14313 from=user1:0xa22a to=Gov:0x2bf4 tokens=10
+token0.Transfer 1 #14313 from=user2:0xa33a to=Gov:0x2bf4 tokens=10
 

@@ -105,7 +105,7 @@ contract XS2Gov {
         }
 
         // Create stake
-        user.amount.add(amount);
+        user.amount = user.amount.add(amount);
         user.duration = duration;
         user.end = block.timestamp.add(duration);
         user.votes = user.amount.mul(duration).div(365 days);

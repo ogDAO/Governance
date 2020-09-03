@@ -154,7 +154,8 @@ console.log("RESULT: ");
 var distributeAndApproveTokens_Message = "Distribute And Approve Tokens";
 var tokensToDistribute = new BigNumber("1000").shift(18);
 var tokensToApprove = new BigNumber("100").shift(18);
-var users = [user1, user2, user3, user4];
+// var users = [user1, user2, user3, user4];
+var users = [user1, user2];
 var distributeTokens_Txs = [];
 var approveTokens_Txs = [];
 // -----------------------------------------------------------------------------
@@ -185,7 +186,7 @@ console.log("RESULT: ");
 var stakeTokens_Message = "Stake Tokens";
 var tokensToStake = new BigNumber("10").shift(18);
 var stakeDuration = 60 * 60 * 24; // 1 day
-var users = [user1, user2, user3, user4];
+// var users = [user1, user2, user3, user4];
 var stakeTokens_Txs = [];
 // -----------------------------------------------------------------------------
 console.log("RESULT: ---------- " + stakeTokens_Message + " ----------");

@@ -442,6 +442,12 @@ function printGovContractDetails() {
     console.log("RESULT: gov.totalVotes=" + contract.totalVotes.call().shift(-18));
     console.log("RESULT: gov.proposalCount=" + contract.proposalCount.call());
 
+    // var users = [user1, user2, user3, user4];
+    var users = [user1, user2];
+    for (var userIndex in users) {
+      console.log("RESULT: gov.stakes[" + users[userIndex] + "]=" + contract.stakes.call(users[userIndex]));
+    }
+
     // address public xs2token;
     // uint256 public rewardsPerSecond;
     //
@@ -476,6 +482,10 @@ function printGovContractDetails() {
         " rewardPool=" + result.args.rewardPool.shift(-18) +
         " totalVotes=" + result.args.totalVotes.shift(-18));
     });
+
+    // emit Staked(msg.sender, amount, user.amount, user.duration, user.end, user.votes, rewardPool, totalVotes);
+    // event Staked(address indexed user, uint256 amount, uint256 balance, uint256 duration, uint256 end, uint256 votes, uint256 rewardPool, uint256 totalVotes);
+
     stakedEvents.stopWatching();
     // Staked 0 #13426 {"user":"0xa44a08d3f6933c69212114bb66e2df1813651844","amount":"10000000000000000000","balance":"0","duration":"86400","end":"1599251854","votes":"0","rewardPool":"0","totalVotes":"0"}
     // Staked 1 #13426 {"user":"0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0","amount":"10000000000000000000","balance":"0","duration":"86400","end":"1599251854","votes":"0","rewardPool":"0","totalVotes":"0"}
