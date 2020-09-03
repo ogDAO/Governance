@@ -33,16 +33,16 @@ TEST3RESULTS=test3results.txt
 TEST4OUTPUT=test4output.txt
 TEST4RESULTS=test4results.txt
 
-CURRENTTIME = '1599132315' 'Thu Sep  3 21:25:15 2020'
-START_DATE  = '1599132360' 'Thu Sep  3 21:26:00 2020'
-END_DATE    = '1599132435' 'Thu Sep  3 21:27:15 2020'
+CURRENTTIME = '1599132857' 'Thu Sep  3 21:34:17 2020'
+START_DATE  = '1599132902' 'Thu Sep  3 21:35:02 2020'
+END_DATE    = '1599132977' 'Thu Sep  3 21:36:17 2020'
 solc, the solidity compiler commandline interface
 Version: 0.7.1+commit.f4a555be.Darwin.appleclang
 Welcome to the Geth JavaScript console!
 
 instance: Geth/v1.9.16-stable/darwin-amd64/go1.14.4
 coinbase: 0xa00af22d07c87d96eeeb0ed583f8f6ac7812827e
-at block: 1346 (Thu Sep 03 2020 21:25:16 GMT+1000 (AEST))
+at block: 1888 (Thu Sep 03 2020 21:34:18 GMT+1000 (AEST))
  datadir: /Users/bok/Projects/Governance/test/testchain
  modules: admin:1.0 clique:1.0 debug:1.0 eth:1.0 miner:1.0 net:1.0 personal:1.0 rpc:1.0 shh:1.0 txpool:1.0 web3:1.0
 
@@ -146,7 +146,7 @@ undefined
 ... 
 undefined
 > 
-DATA: var tokenAddress="0x57930444aa5c1e758c1407ded001a8f36aa80b1d";
+DATA: var tokenAddress="0x545b861c70089afcbee7c3e8ff00e1ab9e5be210";
 DATA: var tokenAbi=[{"inputs":[{"internalType":"string","name":"symbol","type":"string"},{"internalType":"string","name":"name","type":"string"},{"internalType":"uint8","name":"decimals","type":"uint8"},{"internalType":"address","name":"tokenOwner","type":"address"},{"internalType":"uint256","name":"initialSupply","type":"uint256"}],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"tokenOwner","type":"address"},{"indexed":true,"internalType":"address","name":"spender","type":"address"},{"indexed":false,"internalType":"uint256","name":"tokens","type":"uint256"}],"name":"Approval","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"_from","type":"address"},{"indexed":true,"internalType":"address","name":"_to","type":"address"}],"name":"OwnershipTransferred","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"},{"indexed":false,"internalType":"uint256","name":"tokens","type":"uint256"}],"name":"Transfer","type":"event"},{"inputs":[],"name":"acceptOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"tokenOwner","type":"address"},{"internalType":"address","name":"spender","type":"address"}],"name":"allowance","outputs":[{"internalType":"uint256","name":"remaining","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"tokens","type":"uint256"}],"name":"approve","outputs":[{"internalType":"bool","name":"success","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"tokenOwner","type":"address"}],"name":"balanceOf","outputs":[{"internalType":"uint256","name":"balance","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"tokenOwner","type":"address"},{"internalType":"uint256","name":"tokens","type":"uint256"}],"name":"burn","outputs":[{"internalType":"bool","name":"success","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"decimals","outputs":[{"internalType":"uint8","name":"","type":"uint8"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"tokenOwner","type":"address"},{"internalType":"uint256","name":"tokens","type":"uint256"}],"name":"mint","outputs":[{"internalType":"bool","name":"success","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"name","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"newOwner","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"owner","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"symbol","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"totalSupply","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"tokens","type":"uint256"}],"name":"transfer","outputs":[{"internalType":"bool","name":"success","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"tokenAddress","type":"address"},{"internalType":"uint256","name":"tokens","type":"uint256"}],"name":"transferAnyERC20Token","outputs":[{"internalType":"bool","name":"success","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"tokens","type":"uint256"}],"name":"transferFrom","outputs":[{"internalType":"bool","name":"success","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"_newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"}];
 DATA: var token=eth.contract(tokenAbi).at(tokenAddress);
 undefined
@@ -180,32 +180,20 @@ undefined
 ... 
 undefined
 > 
-RESULT:  # Account                                             EtherBalanceChange                           TEST                              1 Name
-RESULT:                                                                                                        2                              3
+RESULT:  # Account                                             EtherBalanceChange                           TEST                       (unused) Name
 RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-RESULT:  0 0xa00af22d07c87d96eeeb0ed583f8f6ac7812827e        0.019438752600000000           0.000000000000000000           0.000000000000000000 miner
-RESULT:                                                                                     0.000000000000000000           0.000000000000000000
-RESULT:  1 0xa11aae29840fbb5c86e6fd4cf809eba183aef433       -0.019438752600000000           0.000000000000000000           0.000000000000000000 deployer
-RESULT:                                                                                     0.000000000000000000           0.000000000000000000
+RESULT:  0 0xa00af22d07c87d96eeeb0ed583f8f6ac7812827e        0.019438655400000000           0.000000000000000000           0.000000000000000000 miner
+RESULT:  1 0xa11aae29840fbb5c86e6fd4cf809eba183aef433       -0.019438655400000000           0.000000000000000000           0.000000000000000000 deployer
 RESULT:  2 0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976        0.000000000000000000           0.000000000000000000           0.000000000000000000 seller1
-RESULT:                                                                                     0.000000000000000000           0.000000000000000000
 RESULT:  3 0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0        0.000000000000000000           0.000000000000000000           0.000000000000000000 seller2
-RESULT:                                                                                     0.000000000000000000           0.000000000000000000
 RESULT:  4 0xa44a08d3f6933c69212114bb66e2df1813651844        0.000000000000000000           0.000000000000000000           0.000000000000000000 buyer1
-RESULT:                                                                                     0.000000000000000000           0.000000000000000000
 RESULT:  5 0xa55a151eb00fded1634d27d1127b4be4627079ea        0.000000000000000000           0.000000000000000000           0.000000000000000000 buyer2
-RESULT:                                                                                     0.000000000000000000           0.000000000000000000
 RESULT:  6 0xa66a85ede0cbe03694aa9d9de0bb19c99ff55bd9        0.000000000000000000           0.000000000000000000           0.000000000000000000 uiFeeAccount
-RESULT:                                                                                     0.000000000000000000           0.000000000000000000
 RESULT:  7 0x0000000000000000000000000000000000000000        0.000000000000000000           0.000000000000000000           0.000000000000000000 null
-RESULT:                                                                                     0.000000000000000000           0.000000000000000000
-RESULT:  8 0x57930444aa5c1e758c1407ded001a8f36aa80b1d        0.000000000000000000           0.000000000000000000           0.000000000000000000 'TEST' 'Test (18 dp)'
-RESULT:                                                                                     0.000000000000000000           0.000000000000000000
-RESULT:  9 0x936e75a404fc4ea6aba4d9c3b20ea67abab3188a        0.000000000000000000           0.000000000000000000           0.000000000000000000 Gov
-RESULT:                                                                                     0.000000000000000000           0.000000000000000000
+RESULT:  8 0x545b861c70089afcbee7c3e8ff00e1ab9e5be210        0.000000000000000000           0.000000000000000000           0.000000000000000000 'TEST' 'Test (18 dp)'
+RESULT:  9 0xb3c7d39fdd2e7dcd02b660b1a317ae06c7c915cc        0.000000000000000000           0.000000000000000000           0.000000000000000000 Gov
 RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000 Total Token Balances
-RESULT:                                                                                     0.000000000000000000           0.000000000000000000
 RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
 RESULT: 
 undefined
@@ -213,20 +201,20 @@ undefined
 RESULT: PASS Deploy Group #1 - Contracts - Token
 1
 > 
-RESULT: tokenTx status=0x1 Success gas=4000000 gasUsed=807375 costETH=0.0065397375 costUSD=1.285123816125 @ ETH/USD=196.51 gasPrice=8.1 gwei block=1353 txIx=0 txId=0x7b34ff4fc09cf6789e8c37aed9062a979b3bea1cb4b6b4ff693497937a1ea700 @ 1599132323 Thu, 03 Sep 2020 11:25:23 GMT
+RESULT: tokenTx status=0x1 Success gas=4000000 gasUsed=807375 costETH=0.0065397375 costUSD=2.850344589375 @ ETH/USD=435.85 gasPrice=8.1 gwei block=1895 txIx=0 txId=0x563de9d7fd1e7a7a3a1734b9db8b04eb9acb52033580fcbf940e0d35a14fdbaa @ 1599132865 Thu, 03 Sep 2020 11:34:25 GMT
 undefined
 > 
 RESULT: PASS Deploy Group #1 - Contracts - Gov
 1
 > 
-RESULT: govTx status=0x1 Success gas=6000000 gasUsed=1592471 costETH=0.0128990151 costUSD=2.534785457301 @ ETH/USD=196.51 gasPrice=8.1 gwei block=1355 txIx=0 txId=0x0efa14eb7d466aaf217a5dec43de00c83ad493bc03cb74ee602e64afa10627b2 @ 1599132325 Thu, 03 Sep 2020 11:25:25 GMT
+RESULT: govTx status=0x1 Success gas=6000000 gasUsed=1592459 costETH=0.0128989179 costUSD=5.621993366715 @ ETH/USD=435.85 gasPrice=8.1 gwei block=1897 txIx=0 txId=0x6a99da4ef4fe9d55a33e318a9c08c53ee7d1ba9090d80111d0397a4613a63345 @ 1599132867 Thu, 03 Sep 2020 11:34:27 GMT
 undefined
 > 
-RESULT: token0ContractAddress='TEST' 'Test (18 dp)':0x5793
+RESULT: token0ContractAddress='TEST' 'Test (18 dp)':0x545b
 RESULT: token0.owner/new=deployer:0xa11a/null:0x0000
 RESULT: token0.details='TEST' 'Test (18 dp)' 18 dp
 RESULT: token0.totalSupply=0
-RESULT: token0.Transfer 0 #1353 from=null:0x0000 to=deployer:0xa11a tokens=0
+RESULT: token0.Transfer 0 #1895 from=null:0x0000 to=deployer:0xa11a tokens=0
 undefined
 > 
 RESULT: 
