@@ -56,9 +56,9 @@ contract XS2Gov {
 
     uint256 public rewardPool;
     uint256 public totalVotes;
-    mapping(address => Stake) stakes; // Staked tokens per address
+    mapping(address => Stake) public stakes; // Staked tokens per address
 
-    uint256 proposalCount;
+    uint256 public proposalCount;
     mapping(uint256 => Proposal) public proposals;
 
     event Staked(address indexed user, uint256 amount, uint256 balance, uint256 duration, uint256 end, uint256 votes, uint256 rewardPool, uint256 totalVotes);
@@ -72,6 +72,8 @@ contract XS2Gov {
     constructor(address xs2token_) {
         xs2token = xs2token_;
 
+        // TODO: Parameterise these variables, allowing calls back to this smart contract to update via proposals
+
         // Total reward pool = 5.000.000 * 10^18
         // Total rewards per second = 1.5 * 10^17
         // Your reward per second is votes/totalVotes * rewards per second
@@ -81,8 +83,8 @@ contract XS2Gov {
         proposalCost = 100000000000000000000; // 100 XS2
         proposalThreshold = 100; // 6 decimals, so this is 0.1%
         quorum = 200000; // 6 decimals, so this is 20%
-        votingDuration = 3 days;
-        executeDelay = 2 days;
+        votingDuration = 3 hours; // 3 days;
+        executeDelay = 2 hours; // 2 days;
     }
 
     // Stake XS2 and set a duration. If you already have a stake you cannot set a duration that ends before the current one.
