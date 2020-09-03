@@ -446,12 +446,6 @@ function printGovContractDetails() {
     console.log("RESULT: gov.rewardPool=" + contract.rewardPool.call().shift(-18));
     console.log("RESULT: gov.totalVotes=" + contract.totalVotes.call().shift(-18));
     console.log("RESULT: gov.proposalCount=" + contract.proposalCount.call());
-    // console.log("RESULT: contract=" + JSON.stringify(contract));
-    // console.log("RESULT: priceFeed.owner/new=" + getShortAddressName(contract.owner.call()) + "/" + getShortAddressName(contract.newOwner.call()));
-    // var peek = contract.peek.call();
-    // console.log("RESULT: priceFeed.peek=" + contract.peek.call());
-    // console.log("RESULT: priceFeed.value=" + contract.value.call().shift(-18) + " ETH/USD");
-    // console.log("RESULT: priceFeed.hasValue=" + contract.hasValue.call());
 
     // address public xs2token;
     // uint256 public rewardsPerSecond;
@@ -473,20 +467,47 @@ function printGovContractDetails() {
     var latestBlock = eth.blockNumber;
     var i;
 
-    // var ownershipTransferredEvents = contract.OwnershipTransferred({}, { fromBlock: _govFromBlock, toBlock: latestBlock });
-    // i = 0;
-    // ownershipTransferredEvents.watch(function (error, result) {
-    //   console.log("RESULT: OwnershipTransferred " + i++ + " #" + result.blockNumber + " " + JSON.stringify(result.args));
-    // });
-    // ownershipTransferredEvents.stopWatching();
-
-    var setValueEvents = contract.SetValue({}, { fromBlock: _govFromBlock, toBlock: latestBlock });
+    var stakedEvents = contract.Staked({}, { fromBlock: _govFromBlock, toBlock: latestBlock });
     i = 0;
-    setValueEvents.watch(function (error, result) {
-      console.log("RESULT: SetValue " + i++ + " #" + result.blockNumber + " value=" + result.args.value.shift(-18) +
-        " hasValue=" + result.args.hasValue);
+    stakedEvents.watch(function (error, result) {
+      console.log("RESULT: Staked " + i++ + " #" + result.blockNumber + " " + JSON.stringify(result.args));
     });
-    setValueEvents.stopWatching();
+    stakedEvents.stopWatching();
+
+    var collectedEvents = contract.Collected({}, { fromBlock: _govFromBlock, toBlock: latestBlock });
+    i = 0;
+    collectedEvents.watch(function (error, result) {
+      console.log("RESULT: Collected " + i++ + " #" + result.blockNumber + " " + JSON.stringify(result.args));
+    });
+    collectedEvents.stopWatching();
+
+    var unstakedEvents = contract.Unstaked({}, { fromBlock: _govFromBlock, toBlock: latestBlock });
+    i = 0;
+    unstakedEvents.watch(function (error, result) {
+      console.log("RESULT: Unstaked " + i++ + " #" + result.blockNumber + " " + JSON.stringify(result.args));
+    });
+    unstakedEvents.stopWatching();
+
+    var proposedEvents = contract.Proposed({}, { fromBlock: _govFromBlock, toBlock: latestBlock });
+    i = 0;
+    proposedEvents.watch(function (error, result) {
+      console.log("RESULT: Proposed " + i++ + " #" + result.blockNumber + " " + JSON.stringify(result.args));
+    });
+    proposedEvents.stopWatching();
+
+    var votedEvents = contract.Voted({}, { fromBlock: _govFromBlock, toBlock: latestBlock });
+    i = 0;
+    votedEvents.watch(function (error, result) {
+      console.log("RESULT: Voted " + i++ + " #" + result.blockNumber + " " + JSON.stringify(result.args));
+    });
+    votedEvents.stopWatching();
+
+    var executedEvents = contract.Executed({}, { fromBlock: _govFromBlock, toBlock: latestBlock });
+    i = 0;
+    executedEvents.watch(function (error, result) {
+      console.log("RESULT: Executed " + i++ + " #" + result.blockNumber + " " + JSON.stringify(result.args));
+    });
+    executedEvents.stopWatching();
 
     _govFromBlock = latestBlock + 1;
   }
