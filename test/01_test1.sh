@@ -115,7 +115,7 @@ var token = tokenContract.new(tokenSymbol, tokenName, tokenDecimals, tokenOwner,
 while (txpool.status.pending > 0) {
 }
 var govContract = web3.eth.contract(govAbi);
-// console.log("DATA: govContract=" + JSON.stringify(govContract));
+// console.log("RESULT: govContract=" + JSON.stringify(govContract));
 var govTx = null;
 var govAddress = null;
 var gov = govContract.new(tokenAddress, {from: deployer, data: govBin, gas: 6000000, gasPrice: defaultGasPrice},
@@ -127,12 +127,12 @@ var gov = govContract.new(tokenAddress, {from: deployer, data: govBin, gas: 6000
         govAddress = contract.address;
         addAccount(govAddress, "Gov");
         addAddressSymbol(govAddress, "Gov");
-        addOptinoFactoryContractAddressAndAbi(govAddress, govAbi, optinoTokenAbi);
+        addGovContractAddressAndAbi(govAddress, govAbi);
         console.log("DATA: var govAddress=\"" + govAddress + "\";");
         console.log("DATA: var govAbi=" + JSON.stringify(govAbi) + ";");
-        // console.log("DATA: var optinoTokenAbi=" + JSON.stringify(optinoTokenAbi) + ";");
+        console.log("DATA: var optinoTokenAbi=" + JSON.stringify(optinoTokenAbi) + ";");
         console.log("DATA: var gov=eth.contract(govAbi).at(govAddress);");
-        console.log("RESULT: govBin.length=" + govBin.length + ", /2=" + govBin.length / 2);
+        // console.log("RESULT: govBin.length=" + govBin.length + ", /2=" + govBin.length / 2);
       }
     }
   }
@@ -145,6 +145,8 @@ printTxData("tokenTx", tokenTx);
 failIfTxStatusError(govTx, deployGroup1_Message + " - Gov");
 printTxData("govTx", govTx);
 printTokenContractDetails(0);
+console.log("RESULT: ");
+printGovContractDetails();
 console.log("RESULT: ");
 exit;
 

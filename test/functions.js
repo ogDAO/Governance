@@ -1,6 +1,6 @@
 // 26 Apr 2020 21:11 AEDT ETH/USD from CMC and ethgasstation.info normal
 var ethPriceUSD = 435.85;
-var defaultGasPrice = web3.toWei("218.1", "gwei");
+var defaultGasPrice = web3.toWei("28.1", "gwei");
 
 // -----------------------------------------------------------------------------
 // Accounts
@@ -416,6 +416,80 @@ function getTokenContractDeployed() {
     tokenDeployedEvents.stopWatching();
   }
   return addresses;
+}
+
+
+// -----------------------------------------------------------------------------
+// Feed Contract
+// -----------------------------------------------------------------------------
+var _govContractAddress = null;
+var _govContractAbi = null;
+function addGovContractAddressAndAbi(address, abi) {
+  _govContractAddress = address;
+  _govContractAbi = abi;
+}
+
+var _govFromBlock = 0;
+function printGovContractDetails() {
+  console.log("RESULT: govContractAddress=" + getShortAddressName(_govContractAddress));
+  // console.log("RESULT: priceFeedContractAbi=" + JSON.stringify(_govContractAbi));
+  if (_govContractAddress != null && _govContractAbi != null) {
+    var contract = web3.eth.contract(_govContractAbi).at(_govContractAddress);
+    console.log("RESULT: gov.xs2token=" + getShortAddressName(contract.xs2token.call()));
+    var rewardsPerSecond = contract.rewardsPerSecond.call();
+    console.log("RESULT: gov.rewardsPerSecond=" + rewardsPerSecond.shift(-18) + " /day=" + rewardsPerSecond.mul(60).mul(60).mul(24).shift(-18) + " /year=" + rewardsPerSecond.mul(60).mul(60).mul(24).mul(365).shift(-18));
+    console.log("RESULT: gov.proposalCost=" + contract.proposalCost.call().shift(-18));
+    console.log("RESULT: gov.proposalThreshold=" + contract.proposalThreshold.call().shift(-4) + "%");
+    console.log("RESULT: gov.quorum=" + contract.quorum.call().shift(-4) + "%");
+    console.log("RESULT: gov.votingDuration=" + contract.votingDuration.call() + " seconds");
+    console.log("RESULT: gov.executeDelay=" + contract.executeDelay.call() + " seconds");
+    console.log("RESULT: gov.rewardPool=" + contract.rewardPool.call().shift(-18));
+    console.log("RESULT: gov.totalVotes=" + contract.totalVotes.call().shift(-18));
+    console.log("RESULT: gov.proposalCount=" + contract.proposalCount.call());
+    // console.log("RESULT: contract=" + JSON.stringify(contract));
+    // console.log("RESULT: priceFeed.owner/new=" + getShortAddressName(contract.owner.call()) + "/" + getShortAddressName(contract.newOwner.call()));
+    // var peek = contract.peek.call();
+    // console.log("RESULT: priceFeed.peek=" + contract.peek.call());
+    // console.log("RESULT: priceFeed.value=" + contract.value.call().shift(-18) + " ETH/USD");
+    // console.log("RESULT: priceFeed.hasValue=" + contract.hasValue.call());
+
+    // address public xs2token;
+    // uint256 public rewardsPerSecond;
+    //
+    // uint256 public proposalCost;
+    // uint256 public proposalThreshold;
+    // uint256 public quorum;
+    // uint256 public votingDuration;
+    // uint256 public executeDelay;
+    //
+    // uint256 public rewardPool;
+    // uint256 public totalVotes;
+    // mapping(address => Stake) public stakes; // Staked tokens per address
+    //
+    // uint256 public proposalCount;
+    // mapping(uint256 => Proposal) public proposals;
+
+
+    var latestBlock = eth.blockNumber;
+    var i;
+
+    // var ownershipTransferredEvents = contract.OwnershipTransferred({}, { fromBlock: _govFromBlock, toBlock: latestBlock });
+    // i = 0;
+    // ownershipTransferredEvents.watch(function (error, result) {
+    //   console.log("RESULT: OwnershipTransferred " + i++ + " #" + result.blockNumber + " " + JSON.stringify(result.args));
+    // });
+    // ownershipTransferredEvents.stopWatching();
+
+    var setValueEvents = contract.SetValue({}, { fromBlock: _govFromBlock, toBlock: latestBlock });
+    i = 0;
+    setValueEvents.watch(function (error, result) {
+      console.log("RESULT: SetValue " + i++ + " #" + result.blockNumber + " value=" + result.args.value.shift(-18) +
+        " hasValue=" + result.args.hasValue);
+    });
+    setValueEvents.stopWatching();
+
+    _govFromBlock = latestBlock + 1;
+  }
 }
 
 
