@@ -430,7 +430,7 @@ function printGovContractDetails() {
   // console.log("RESULT: priceFeedContractAbi=" + JSON.stringify(_govContractAbi));
   if (_govContractAddress != null && _govContractAbi != null) {
     var contract = web3.eth.contract(_govContractAbi).at(_govContractAddress);
-    console.log("RESULT: gov.xs2token=" + getShortAddressName(contract.xs2token.call()));
+    console.log("RESULT: gov.token=" + getShortAddressName(contract.token.call()));
     var rewardsPerSecond = contract.rewardsPerSecond.call();
     console.log("RESULT: gov.rewardsPerSecond=" + rewardsPerSecond.shift(-18) + " /day=" + rewardsPerSecond.mul(60).mul(60).mul(24).shift(-18) + " /year=" + rewardsPerSecond.mul(60).mul(60).mul(24).mul(365).shift(-18));
     console.log("RESULT: gov.proposalCost=" + contract.proposalCost.call().shift(-18));

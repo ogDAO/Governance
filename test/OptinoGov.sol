@@ -5,14 +5,14 @@ pragma solidity ^0.7.0;
 pragma experimental ABIEncoderV2;
 
 library SafeMath {
-    function add(uint256 a, uint256 b) internal pure returns (uint256) { uint256 c = a + b; require(c >= a, "XS2: Overflow"); return c; }
-    function sub(uint256 a, uint256 b) internal pure returns (uint256) { require(b <= a, "XS2: Underflow"); uint256 c = a - b; return c; }
+    function add(uint256 a, uint256 b) internal pure returns (uint256) { uint256 c = a + b; require(c >= a, "SafeMath: Overflow"); return c; }
+    function sub(uint256 a, uint256 b) internal pure returns (uint256) { require(b <= a, "SafeMath: Underflow"); uint256 c = a - b; return c; }
     function mul(uint256 a, uint256 b) internal pure returns (uint256)
-        { if (a == 0) {return 0;} uint256 c = a * b; require(c / a == b, "XS2: Overflow"); return c; }
-    function div(uint256 a, uint256 b) internal pure returns (uint256) { require(b > 0, "XS2: Div by 0"); uint256 c = a / b; return c; }
+        { if (a == 0) {return 0;} uint256 c = a * b; require(c / a == b, "SafeMath: Overflow"); return c; }
+    function div(uint256 a, uint256 b) internal pure returns (uint256) { require(b > 0, "SafeMath: Div by 0"); uint256 c = a / b; return c; }
 }
 
-interface IXS2Token {
+interface ERC20 {
     function transferFrom(address from, address to, uint256 value) external returns (bool);
     function transfer(address to, uint256 value) external returns (bool);
 }
@@ -38,14 +38,14 @@ struct Proposal {
     bool executed;
 }
 
-contract XS2Gov {
+contract OptinoGov {
     using SafeMath for uint256;
 
     // Design parameters
     // Lowish gas
     // No entanglement with other parts of the system (stand alone)
     // Timelock built into this contract, no need for a separate one
-    address public xs2token;
+    address public token;
     uint256 public rewardsPerSecond;
 
     uint256 public proposalCost;
@@ -64,13 +64,13 @@ contract XS2Gov {
     event Staked(address indexed user, uint256 amount, uint256 balance, uint256 duration, uint256 end, uint256 votes, uint256 rewardPool, uint256 totalVotes);
     event Collected(address indexed user, uint256 elapsed, uint256 reward, uint256 rewardPool, uint256 end, uint256 duration);
     event Unstaked(address indexed user, uint256 amount, uint256 balance, uint256 duration, uint256 end, uint256 votes, uint256 rewardPool, uint256 totalVotes);
-    event Proposed(address indexed proposer, uint256 xip, string description, address[] targets, bytes[] data, uint256 start);
-    event Voted(address indexed user, uint256 xip, bool voteFor, uint256 forVotes, uint256 againstVotes);
-    event Executed(address indexed user, uint256 xip);
+    event Proposed(address indexed proposer, uint256 oip, string description, address[] targets, bytes[] data, uint256 start);
+    event Voted(address indexed user, uint256 oip, bool voteFor, uint256 forVotes, uint256 againstVotes);
+    event Executed(address indexed user, uint256 oip);
 
 
-    constructor(address xs2token_) {
-        xs2token = xs2token_;
+    constructor(address token_) {
+        token = token_;
 
         // TODO: Parameterise these variables, allowing calls back to this smart contract to update via proposals
 
@@ -80,20 +80,20 @@ contract XS2Gov {
         // Your reward is elapsed time * rewards per second * votes / totalVotes
         rewardsPerSecond = 150000000000000000;
 
-        proposalCost = 100000000000000000000; // 100 XS2
+        proposalCost = 100000000000000000000; // 100 tokens
         proposalThreshold = 100; // 6 decimals, so this is 0.1%
         quorum = 200000; // 6 decimals, so this is 20%
         votingDuration = 3 hours; // 3 days;
         executeDelay = 2 hours; // 2 days;
     }
 
-    // Stake XS2 and set a duration. If you already have a stake you cannot set a duration that ends before the current one.
+    // Stake tokens and set a duration. If you already have a stake you cannot set a duration that ends before the current one.
     function stake(uint256 amount, uint256 duration) public {
-        require(duration < 365 days, "XS2Gov: Maximum duration is 1 year");
+        require(duration < 365 days, "OptinoGov: Maximum duration is 1 year");
         Stake memory user = stakes[msg.sender];
 
         if (user.amount > 0) {
-            require(block.timestamp + duration > user.end, "XS2Gov: duration cannot end before existing stake");
+            require(block.timestamp + duration > user.end, "OptinoGov: duration cannot end before existing stake");
 
             // Pay rewards until now and reset
             uint elapsed = block.timestamp.sub(user.end.sub(user.duration));
@@ -113,7 +113,7 @@ contract XS2Gov {
 
         stakes[msg.sender] = user;
 
-        require(IXS2Token(xs2token).transferFrom(msg.sender, address(this), amount));
+        require(ERC20(token).transferFrom(msg.sender, address(this), amount), "OptinoGov: transferFrom failed");
 
         emit Staked(msg.sender, amount, user.amount, user.duration, user.end, user.votes, rewardPool, totalVotes);
     }
@@ -132,7 +132,7 @@ contract XS2Gov {
         }
         user.duration = user.end.sub(block.timestamp);
 
-        require(IXS2Token(xs2token).transfer(msg.sender, reward));
+        require(ERC20(token).transfer(msg.sender, reward), "OptinoGov: transfer failed");
 
         emit Collected(msg.sender, elapsed, reward, rewardPool, user.end, user.duration);
     }
@@ -141,7 +141,7 @@ contract XS2Gov {
     function unstake() public {
         Stake memory user = stakes[msg.sender];
         require(user.amount > 0);
-        require(block.timestamp > user.end, "XS2Gov: Staking period not ended yet");
+        require(block.timestamp > user.end, "OptinoGov: Staking period not ended yet");
 
         // Reward
         uint elapsed = block.timestamp.sub(user.end.sub(user.duration));
@@ -156,13 +156,13 @@ contract XS2Gov {
 
         stakes[msg.sender] = user;
 
-        require(IXS2Token(xs2token).transfer(msg.sender, payout));
+        require(ERC20(token).transfer(msg.sender, payout), "OptinoGov: transfer failed");
 
         emit Unstaked(msg.sender, payout, user.amount, user.duration, user.end, user.votes, rewardPool, totalVotes);
     }
 
     function propose(string memory description, address[] memory targets, bytes[] memory data) public returns(uint256) {
-        require(stakes[msg.sender].votes >= totalVotes.mul(proposalThreshold).div(1e6), "XS2: Not enough votes to propose");
+        require(stakes[msg.sender].votes >= totalVotes.mul(proposalThreshold).div(1e6), "OptinoGov: Not enough votes to propose");
 
         proposalCount++;
 
@@ -172,38 +172,38 @@ contract XS2Gov {
         proposals[proposalCount].targets = targets;
         proposals[proposalCount].data = data;
 
-        require(IXS2Token(xs2token).transferFrom(msg.sender, address(this), proposalCost));
+        require(ERC20(token).transferFrom(msg.sender, address(this), proposalCost), "OptinoGov: transferFrom failed");
 
         emit Proposed(msg.sender, proposalCount, description, targets, data, block.timestamp);
         return proposalCount;
     }
 
-    function vote(uint256 xip, bool voteFor) public {
-        uint256 start = proposals[xip].start;
-        require(start != 0 && block.timestamp < start.add(votingDuration), "XS2Gov: Voting closed");
-        require(!proposals[xip].voted[msg.sender], "XS2Gov: Already voted");
+    function vote(uint256 oip, bool voteFor) public {
+        uint256 start = proposals[oip].start;
+        require(start != 0 && block.timestamp < start.add(votingDuration), "OptinoGov: Voting closed");
+        require(!proposals[oip].voted[msg.sender], "OptinoGov: Already voted");
         if (voteFor) {
-            proposals[xip].forVotes = proposals[xip].forVotes.add(stakes[msg.sender].votes);
+            proposals[oip].forVotes = proposals[oip].forVotes.add(stakes[msg.sender].votes);
         }
         else {
-            proposals[xip].againstVotes = proposals[xip].forVotes.add(stakes[msg.sender].votes);
+            proposals[oip].againstVotes = proposals[oip].forVotes.add(stakes[msg.sender].votes);
         }
-        proposals[xip].voted[msg.sender] = true;
+        proposals[oip].voted[msg.sender] = true;
 
-        emit Voted(msg.sender, xip, voteFor, proposals[xip].forVotes, proposals[xip].againstVotes);
+        emit Voted(msg.sender, oip, voteFor, proposals[oip].forVotes, proposals[oip].againstVotes);
     }
 
-    function execute(uint256 xip) public {
-        Proposal storage proposal = proposals[xip];
+    function execute(uint256 oip) public {
+        Proposal storage proposal = proposals[oip];
         require(proposal.start != 0 && block.timestamp < proposal.start.add(votingDuration).add(executeDelay));
-        require(proposal.forVotes >= totalVotes.mul(quorum).div(1e6), "XS2: Not enough votes to propose");
+        require(proposal.forVotes >= totalVotes.mul(quorum).div(1e6), "OptinoGov: Not enough votes to execute");
         proposal.executed = true;
 
         for (uint256 i = 0; i < proposal.targets.length; i++) {
             (bool success,) = proposal.targets[i].call(proposal.data[i]);
-            require(success, "XS2Gov: Execution failed");
+            require(success, "OptinoGov: Execution failed");
         }
 
-        emit Executed(msg.sender, xip);
+        emit Executed(msg.sender, oip);
     }
 }
