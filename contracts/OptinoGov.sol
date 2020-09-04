@@ -1,4 +1,4 @@
-// From https://github.com/bartjman/XS2Option/blob/master/contracts/XS2Gov.sol#L162-L173
+// From https://github.com/bartjman/XS2Option/blob/master/contracts/XS2Gov.sol
 
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.7.0;
@@ -96,7 +96,7 @@ contract OptinoGov {
             require(block.timestamp + duration > user.end, "OptinoGov: duration cannot end before existing stake");
 
             // Pay rewards until now and reset
-            uint elapsed = block.timestamp.sub(user.end.sub(user.duration));
+            uint256 elapsed = block.timestamp.sub(user.end.sub(user.duration));
             uint256 reward = elapsed.mul(rewardsPerSecond).mul(user.votes).div(totalVotes);
             rewardPool = rewardPool.sub(reward);
             user.amount = user.amount.add(reward);
@@ -123,7 +123,7 @@ contract OptinoGov {
         require(user.amount > 0);
 
         // Pay rewards until now
-        uint elapsed = block.timestamp.sub(user.end.sub(user.duration));
+        uint256 elapsed = block.timestamp.sub(user.end.sub(user.duration));
         uint256 reward = elapsed.mul(rewardsPerSecond).mul(user.votes).div(totalVotes);
         rewardPool = rewardPool.sub(reward);
 
@@ -144,7 +144,7 @@ contract OptinoGov {
         require(block.timestamp > user.end, "OptinoGov: Staking period not ended yet");
 
         // Reward
-        uint elapsed = block.timestamp.sub(user.end.sub(user.duration));
+        uint256 elapsed = block.timestamp.sub(user.end.sub(user.duration));
         uint256 reward = elapsed.mul(rewardsPerSecond).mul(user.votes).div(totalVotes);
         rewardPool = rewardPool.sub(reward);
         user.amount = user.amount.add(reward);
