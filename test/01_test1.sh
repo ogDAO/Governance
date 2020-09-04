@@ -185,7 +185,7 @@ console.log("RESULT: ");
 // -----------------------------------------------------------------------------
 var stakeTokens_Message = "Stake Tokens";
 var tokensToStake = new BigNumber("10").shift(18);
-var stakeDuration = 60 * 60 * 24; // 1 day
+var stakeDuration = 60 * 60 * 24 * 365; // 365 day
 var users = [user1, user2, user1];
 var stakeTokens_Txs = [];
 // -----------------------------------------------------------------------------

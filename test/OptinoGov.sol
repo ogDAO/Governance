@@ -89,7 +89,7 @@ contract OptinoGov {
 
     // Stake tokens and set a duration. If you already have a stake you cannot set a duration that ends before the current one.
     function stake(uint256 amount, uint256 duration) public {
-        require(duration < 365 days, "OptinoGov: Maximum duration is 1 year");
+        require(duration <= 365 days, "OptinoGov: Maximum duration is 1 year");
         Stake memory user = stakes[msg.sender];
 
         if (user.amount > 0) {
