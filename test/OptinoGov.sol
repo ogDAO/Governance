@@ -93,7 +93,7 @@ contract OptinoGov {
         Stake memory user = stakes[msg.sender];
 
         if (user.amount > 0) {
-            require(block.timestamp + duration > user.end, "OptinoGov: duration cannot end before existing stake");
+            require(block.timestamp + duration >= user.end, "OptinoGov: duration cannot end before existing stake");
 
             // Pay rewards until now and reset
             uint256 elapsed = block.timestamp.sub(user.end.sub(user.duration));

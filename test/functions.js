@@ -445,7 +445,8 @@ function printGovContractDetails() {
     // var users = [user1, user2, user3, user4];
     var users = [user1, user2];
     for (var userIndex in users) {
-      console.log("RESULT: gov.stakes[" + users[userIndex] + "]=" + contract.stakes.call(users[userIndex]));
+      var stake = contract.stakes.call(users[userIndex]);
+      console.log("RESULT: gov.stakes[" + getShortAddressName(users[userIndex]) + "] balance=" + stake[2].shift(-18) + ", duration=" + stake[0] + ", end=" + stake[1] + " " + new Date(stake[1]*1000).toUTCString() + ", votes=" + stake[3].shift(-18).toString());
     }
 
     // address public xs2token;
@@ -477,7 +478,7 @@ function printGovContractDetails() {
         " amount=" + result.args.amount.shift(-18) +
         " balance=" + result.args.balance.shift(-18) +
         " duration=" + result.args.duration +
-        " end=" + result.args.end +
+        " end=" + result.args.end + " " + new Date(result.args.end * 1000).toUTCString() +
         " votes=" + result.args.votes.shift(-18) +
         " rewardPool=" + result.args.rewardPool.shift(-18) +
         " totalVotes=" + result.args.totalVotes.shift(-18));
