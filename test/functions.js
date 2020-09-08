@@ -473,7 +473,7 @@ function printGovContractDetails() {
     i = 0;
     stakedEvents.watch(function (error, result) {
       // console.log("RESULT: Staked " + i++ + " #" + result.blockNumber + " " + JSON.stringify(result.args));
-      console.log("RESULT: Staked" + i++ + " #" + result.blockNumber +
+      console.log("RESULT: Staked " + i++ + " #" + result.blockNumber +
         " user=" + getShortAddressName(result.args.user) +
         " amount=" + result.args.amount.shift(-18) +
         " balance=" + result.args.balance.shift(-18) +
