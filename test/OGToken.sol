@@ -1,12 +1,9 @@
 pragma solidity ^0.7.0;
 
 // ----------------------------------------------------------------------------
-// Dividend Paying Token
+// Optino Governance Token
 //
-// NOTE: This token contract allows the owner to mint and burn tokens for any
-// account, and is used for testing
-//
-// Enjoy. (c) BokkyPooBah / Bok Consulting Pty Ltd 2019 of the Optino Project
+// Enjoy. (c) The Optino Project 2020
 //
 // SPDX-License-Identifier: MIT
 // ----------------------------------------------------------------------------
@@ -80,11 +77,8 @@ interface ERC20 {
     function decimals() external view returns (uint8);
 }
 
-// import "MintableTokenInterface.sol";
-// ----------------------------------------------------------------------------
-// MintableToken Interface = ERC20 + symbol + name + decimals + mint + burn
-// + approveAndCall
-// ----------------------------------------------------------------------------
+// import "MintableToken.sol";
+/// @notice MintableToken = ERC20 + mint + burn
 interface MintableToken is ERC20 {
     function mint(address tokenOwner, uint tokens) external returns (bool success);
     function burn(address tokenOwner, uint tokens) external returns (bool success);
@@ -92,13 +86,9 @@ interface MintableToken is ERC20 {
 
 
 // ----------------------------------------------------------------------------
-// DividendPayingToken = ERC20 + symbol + name + decimals + mint + burn
-//                     + dividend payment
-//
-// NOTE: This token contract allows the owner to mint and burn tokens for any
-// account, and is used for testing
+// OGToken = ERC20 + mint + burn + dividend payment
 // ----------------------------------------------------------------------------
-contract DividendPayingToken is MintableToken, Owned {
+contract OGToken is MintableToken, Owned {
     using SafeMath for uint;
 
     string _symbol;
@@ -179,7 +169,7 @@ function disburse(uint amount) {
         withdrawn = 0;
     }
 
-    constructor(string memory symbol, string memory name, uint8 decimals, address tokenOwner, uint initialSupply, address _dividendToken) {
+    constructor(string memory symbol, string memory name, uint8 decimals, address tokenOwner, uint initialSupply) {
         initOwned(msg.sender);
         _symbol = symbol;
         _name = name;
@@ -187,7 +177,8 @@ function disburse(uint amount) {
         accounts[tokenOwner].balance = initialSupply;
         _totalSupply = initialSupply;
         emit Transfer(address(0), tokenOwner, _totalSupply);
-        dividendToken = _dividendToken;
+        // dividendToken = _dividendToken;
+        dividendToken = address(0);
     }
     function symbol() override external view returns (string memory) {
         return _symbol;

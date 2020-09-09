@@ -1,4 +1,4 @@
-var tokenOutput={
+var testTokenOutput={
   "contracts":
   {
     "TestToken.sol:ERC20":
