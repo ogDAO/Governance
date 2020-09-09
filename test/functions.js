@@ -347,15 +347,26 @@ function printTokenContractDetails(j) {
     var latestBlock = eth.blockNumber;
     var i;
 
-    // WETH has no OwnershipTransferred event
-    if (j > 0) {
-      var ownershipTransferredEvents = contract.OwnershipTransferred({}, { fromBlock: tokenFromBlock[j], toBlock: latestBlock });
+    if (j == 0) {
+      var logInfoEvents = contract.LogInfo({}, { fromBlock: tokenFromBlock[j], toBlock: latestBlock });
       i = 0;
-      ownershipTransferredEvents.watch(function (error, result) {
-        console.log("RESULT: token" + j + ".OwnershipTransferred " + i++ + " #" + result.blockNumber + " " + JSON.stringify(result.args));
+      logInfoEvents.watch(function (error, result) {
+        console.log("RESULT: token" + j + ".LogInfo " + i++ + " #" + result.blockNumber + " " +
+        " topic=" + result.args.topic +
+        " number=" + result.args.number + " " + result.args.number.shift(-decimals) +
+        " data=" + result.args.data +
+        " note=" + result.args.note +
+        " addr=" + getShortAddressName(result.args.addr));
       });
-      ownershipTransferredEvents.stopWatching();
+      logInfoEvents.stopWatching();
     }
+
+    var ownershipTransferredEvents = contract.OwnershipTransferred({}, { fromBlock: tokenFromBlock[j], toBlock: latestBlock });
+    i = 0;
+    ownershipTransferredEvents.watch(function (error, result) {
+      console.log("RESULT: token" + j + ".OwnershipTransferred " + i++ + " #" + result.blockNumber + " " + JSON.stringify(result.args));
+    });
+    ownershipTransferredEvents.stopWatching();
 
     var approvalEvents = contract.Approval({}, { fromBlock: tokenFromBlock[j], toBlock: latestBlock });
     i = 0;
