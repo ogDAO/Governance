@@ -469,6 +469,48 @@ function printGovContractDetails() {
     var latestBlock = eth.blockNumber;
     var i;
 
+    var rewardsPerSecondUpdatedEvents = contract.RewardsPerSecondUpdated({}, { fromBlock: _govFromBlock, toBlock: latestBlock });
+    i = 0;
+    rewardsPerSecondUpdatedEvents.watch(function (error, result) {
+      console.log("RESULT: RewardsPerSecondUpdated " + i++ + " #" + result.blockNumber + " " + JSON.stringify(result.args));
+    });
+    rewardsPerSecondUpdatedEvents.stopWatching();
+
+    var proposalCostUpdatedEvents = contract.ProposalCostUpdated({}, { fromBlock: _govFromBlock, toBlock: latestBlock });
+    i = 0;
+    proposalCostUpdatedEvents.watch(function (error, result) {
+      console.log("RESULT: ProposalCostUpdated " + i++ + " #" + result.blockNumber + " " + JSON.stringify(result.args));
+    });
+    proposalCostUpdatedEvents.stopWatching();
+
+    var proposalThresholdUpdatedEvents = contract.ProposalThresholdUpdated({}, { fromBlock: _govFromBlock, toBlock: latestBlock });
+    i = 0;
+    proposalThresholdUpdatedEvents.watch(function (error, result) {
+      console.log("RESULT: ProposalThresholdUpdated " + i++ + " #" + result.blockNumber + " " + JSON.stringify(result.args));
+    });
+    proposalThresholdUpdatedEvents.stopWatching();
+
+    var quorumUpdatedEvents = contract.QuorumUpdated({}, { fromBlock: _govFromBlock, toBlock: latestBlock });
+    i = 0;
+    quorumUpdatedEvents.watch(function (error, result) {
+      console.log("RESULT: QuorumUpdated " + i++ + " #" + result.blockNumber + " " + JSON.stringify(result.args));
+    });
+    quorumUpdatedEvents.stopWatching();
+
+    var votingDurationUpdatedEvents = contract.VotingDurationUpdated({}, { fromBlock: _govFromBlock, toBlock: latestBlock });
+    i = 0;
+    votingDurationUpdatedEvents.watch(function (error, result) {
+      console.log("RESULT: VotingDurationUpdated " + i++ + " #" + result.blockNumber + " " + JSON.stringify(result.args));
+    });
+    votingDurationUpdatedEvents.stopWatching();
+
+    var executeDelayUpdatedEvents = contract.ExecuteDelayUpdated({}, { fromBlock: _govFromBlock, toBlock: latestBlock });
+    i = 0;
+    executeDelayUpdatedEvents.watch(function (error, result) {
+      console.log("RESULT: ExecuteDelayUpdated " + i++ + " #" + result.blockNumber + " " + JSON.stringify(result.args));
+    });
+    executeDelayUpdatedEvents.stopWatching();
+
     var stakedEvents = contract.Staked({}, { fromBlock: _govFromBlock, toBlock: latestBlock });
     i = 0;
     stakedEvents.watch(function (error, result) {
