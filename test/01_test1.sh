@@ -252,6 +252,33 @@ printTokenContractDetails(1);
 console.log("RESULT: ");
 
 
+// -----------------------------------------------------------------------------
+var collectRewards_Message = "Collect Rewards";
+var collectRewardUsers = [user3];
+var collectReward_Txs = [];
+// -----------------------------------------------------------------------------
+console.log("RESULT: ---------- " + collectRewards_Message + " ----------");
+
+for (var userIndex in collectRewardUsers) {
+  collectReward_Txs[userIndex] = gov.collect({from: collectRewardUsers[userIndex], gas: 2000000, gasPrice: defaultGasPrice});
+}
+while (txpool.status.pending > 0) {
+}
+printBalances();
+
+for (var userIndex in collectRewardUsers) {
+  failIfTxStatusError(collectReward_Txs[userIndex], collectRewards_Message + " - " + getShortAddressName(collectRewardUsers[userIndex]) + "-> gov.collect()");
+  printTxData("collectReward_Txs[" + userIndex + "]", collectReward_Txs[userIndex]);
+}
+
+printGovContractDetails();
+console.log("RESULT: ");
+printTokenContractDetails(0);
+console.log("RESULT: ");
+printTokenContractDetails(1);
+console.log("RESULT: ");
+
+
 exit;
 
 if (true) {
@@ -411,4 +438,4 @@ grep "DATA: " $TEST1OUTPUT | sed "s/DATA: //" > $DEPLOYMENTDATA
 cat $DEPLOYMENTDATA
 grep "RESULT: " $TEST1OUTPUT | sed "s/RESULT: //" > $TEST1RESULTS
 cat $TEST1RESULTS
-egrep -e "tokenTx.*gasUsed|govTx.*gasUsed" $TEST1RESULTS
+# egrep -e "tokenTx.*gasUsed|govTx.*gasUsed" $TEST1RESULTS

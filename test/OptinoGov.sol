@@ -119,20 +119,21 @@ contract OptinoGov {
     }
 
     function collect() public {
-        Stake memory user = stakes[msg.sender];
+        Stake storage user = stakes[msg.sender];
         require(user.amount > 0);
 
         // Pay rewards until now
         uint256 elapsed = block.timestamp.sub(user.end.sub(user.duration));
         uint256 reward = elapsed.mul(rewardsPerSecond).mul(user.votes).div(totalVotes);
-        rewardPool = rewardPool.sub(reward);
+        // DEBUG rewardPool = rewardPool.sub(reward);
 
         if (user.end < block.timestamp) {
             user.end = block.timestamp;
         }
         user.duration = user.end.sub(block.timestamp);
+        // user.end = user.duration.add(block.timestamp);
 
-        require(ERC20(token).transfer(msg.sender, reward), "OptinoGov: transfer failed");
+        // DEBUG require(ERC20(token).transfer(msg.sender, reward), "OptinoGov: transfer failed");
 
         emit Collected(msg.sender, elapsed, reward, rewardPool, user.end, user.duration);
     }
