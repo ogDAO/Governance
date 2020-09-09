@@ -33,16 +33,16 @@ TEST3RESULTS=test3results.txt
 TEST4OUTPUT=test4output.txt
 TEST4RESULTS=test4results.txt
 
-CURRENTTIME = '1599218018' 'Fri Sep  4 21:13:38 2020'
-START_DATE  = '1599218063' 'Fri Sep  4 21:14:23 2020'
-END_DATE    = '1599218138' 'Fri Sep  4 21:15:38 2020'
+CURRENTTIME = '1599621000' 'Wed Sep  9 13:10:00 2020'
+START_DATE  = '1599621045' 'Wed Sep  9 13:10:45 2020'
+END_DATE    = '1599621120' 'Wed Sep  9 13:12:00 2020'
 solc, the solidity compiler commandline interface
 Version: 0.7.1+commit.f4a555be.Darwin.appleclang
 Welcome to the Geth JavaScript console!
 
 instance: Geth/v1.9.16-stable/darwin-amd64/go1.14.4
 coinbase: 0xa00af22d07c87d96eeeb0ed583f8f6ac7812827e
-at block: 42103 (Fri Sep 04 2020 21:13:39 GMT+1000 (AEST))
+at block: 245495 (Wed Sep 09 2020 13:10:01 GMT+1000 (AEST))
  datadir: /Users/bok/Projects/Governance/test/testchain
  modules: admin:1.0 clique:1.0 debug:1.0 eth:1.0 miner:1.0 net:1.0 personal:1.0 rpc:1.0 shh:1.0 txpool:1.0 web3:1.0
 
@@ -145,7 +145,7 @@ undefined
 ... 
 undefined
 > 
-DATA: var tokenAddress="0x8b535eeb7c4704afe708ea8cc9b830978310f97f";
+DATA: var tokenAddress="0xf82dfe0df4504a618c0791c2c0617c6fe9de5328";
 DATA: var tokenAbi=[{"inputs":[{"internalType":"string","name":"symbol","type":"string"},{"internalType":"string","name":"name","type":"string"},{"internalType":"uint8","name":"decimals","type":"uint8"},{"internalType":"address","name":"tokenOwner","type":"address"},{"internalType":"uint256","name":"initialSupply","type":"uint256"}],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"tokenOwner","type":"address"},{"indexed":true,"internalType":"address","name":"spender","type":"address"},{"indexed":false,"internalType":"uint256","name":"tokens","type":"uint256"}],"name":"Approval","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"_from","type":"address"},{"indexed":true,"internalType":"address","name":"_to","type":"address"}],"name":"OwnershipTransferred","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"},{"indexed":false,"internalType":"uint256","name":"tokens","type":"uint256"}],"name":"Transfer","type":"event"},{"inputs":[],"name":"acceptOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"tokenOwner","type":"address"},{"internalType":"address","name":"spender","type":"address"}],"name":"allowance","outputs":[{"internalType":"uint256","name":"remaining","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"tokens","type":"uint256"}],"name":"approve","outputs":[{"internalType":"bool","name":"success","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"tokenOwner","type":"address"}],"name":"balanceOf","outputs":[{"internalType":"uint256","name":"balance","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"tokenOwner","type":"address"},{"internalType":"uint256","name":"tokens","type":"uint256"}],"name":"burn","outputs":[{"internalType":"bool","name":"success","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"decimals","outputs":[{"internalType":"uint8","name":"","type":"uint8"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"tokenOwner","type":"address"},{"internalType":"uint256","name":"tokens","type":"uint256"}],"name":"mint","outputs":[{"internalType":"bool","name":"success","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"name","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"newOwner","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"owner","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"symbol","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"totalSupply","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"tokens","type":"uint256"}],"name":"transfer","outputs":[{"internalType":"bool","name":"success","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"tokenAddress","type":"address"},{"internalType":"uint256","name":"tokens","type":"uint256"}],"name":"transferAnyERC20Token","outputs":[{"internalType":"bool","name":"success","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"tokens","type":"uint256"}],"name":"transferFrom","outputs":[{"internalType":"bool","name":"success","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"_newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"}];
 DATA: var token=eth.contract(tokenAbi).at(tokenAddress);
 undefined
@@ -179,7 +179,7 @@ undefined
 ... 
 undefined
 > 
-DATA: var govAddress="0x11f72ce9616536054e80f6e72946f67f73ffc7a4";
+DATA: var govAddress="0x6018bc97feb6551e610524b61074d1a0517d5212";
 DATA: var govAbi=[{"inputs":[{"internalType":"address","name":"token_","type":"address"}],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"user","type":"address"},{"indexed":false,"internalType":"uint256","name":"elapsed","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"reward","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"rewardPool","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"end","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"duration","type":"uint256"}],"name":"Collected","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"user","type":"address"},{"indexed":false,"internalType":"uint256","name":"oip","type":"uint256"}],"name":"Executed","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"proposer","type":"address"},{"indexed":false,"internalType":"uint256","name":"oip","type":"uint256"},{"indexed":false,"internalType":"string","name":"description","type":"string"},{"indexed":false,"internalType":"address[]","name":"targets","type":"address[]"},{"indexed":false,"internalType":"bytes[]","name":"data","type":"bytes[]"},{"indexed":false,"internalType":"uint256","name":"start","type":"uint256"}],"name":"Proposed","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"user","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"balance","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"duration","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"end","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"votes","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"rewardPool","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"totalVotes","type":"uint256"}],"name":"Staked","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"user","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"balance","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"duration","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"end","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"votes","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"rewardPool","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"totalVotes","type":"uint256"}],"name":"Unstaked","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"user","type":"address"},{"indexed":false,"internalType":"uint256","name":"oip","type":"uint256"},{"indexed":false,"internalType":"bool","name":"voteFor","type":"bool"},{"indexed":false,"internalType":"uint256","name":"forVotes","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"againstVotes","type":"uint256"}],"name":"Voted","type":"event"},{"inputs":[],"name":"collect","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"oip","type":"uint256"}],"name":"execute","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"executeDelay","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"proposalCost","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"proposalCount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"proposalThreshold","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"proposals","outputs":[{"internalType":"uint256","name":"start","type":"uint256"},{"internalType":"address","name":"proposer","type":"address"},{"internalType":"string","name":"description","type":"string"},{"internalType":"uint256","name":"forVotes","type":"uint256"},{"internalType":"uint256","name":"againstVotes","type":"uint256"},{"internalType":"bool","name":"executed","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"string","name":"description","type":"string"},{"internalType":"address[]","name":"targets","type":"address[]"},{"internalType":"bytes[]","name":"data","type":"bytes[]"}],"name":"propose","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"quorum","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"rewardPool","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"rewardsPerSecond","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"amount","type":"uint256"},{"internalType":"uint256","name":"duration","type":"uint256"}],"name":"stake","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"stakes","outputs":[{"internalType":"uint256","name":"duration","type":"uint256"},{"internalType":"uint256","name":"end","type":"uint256"},{"internalType":"uint256","name":"amount","type":"uint256"},{"internalType":"uint256","name":"votes","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"token","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"totalVotes","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"unstake","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"oip","type":"uint256"},{"internalType":"bool","name":"voteFor","type":"bool"}],"name":"vote","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"votingDuration","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"}];
 RESULT:  # Account                                             EtherBalanceChange                           TEST                       (unused) Name
 RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
@@ -190,8 +190,8 @@ RESULT:  3 0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0        0.00000000000000000
 RESULT:  4 0xa44a08d3f6933c69212114bb66e2df1813651844        0.000000000000000000           0.000000000000000000           0.000000000000000000 user3
 RESULT:  5 0xa55a151eb00fded1634d27d1127b4be4627079ea        0.000000000000000000           0.000000000000000000           0.000000000000000000 user4
 RESULT:  6 0x0000000000000000000000000000000000000000        0.000000000000000000           0.000000000000000000           0.000000000000000000 null
-RESULT:  7 0x8b535eeb7c4704afe708ea8cc9b830978310f97f        0.000000000000000000           0.000000000000000000           0.000000000000000000 'TEST' 'Test (18 dp)'
-RESULT:  8 0x11f72ce9616536054e80f6e72946f67f73ffc7a4        0.000000000000000000           0.000000000000000000           0.000000000000000000 Gov
+RESULT:  7 0xf82dfe0df4504a618c0791c2c0617c6fe9de5328        0.000000000000000000           0.000000000000000000           0.000000000000000000 'TEST' 'Test (18 dp)'
+RESULT:  8 0x6018bc97feb6551e610524b61074d1a0517d5212        0.000000000000000000           0.000000000000000000           0.000000000000000000 Gov
 RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000 Total Token Balances
 RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
@@ -201,17 +201,17 @@ undefined
 RESULT: PASS Deploy Group #1 - Contracts - Gov
 1
 > 
-RESULT: govTx status=0x1 Success gas=6000000 gasUsed=1661227 costETH=0.0466804787 costUSD=20.345686641395 @ ETH/USD=435.85 gasPrice=28.1 gwei block=42112 txIx=0 txId=0x1ce2edde697be0b9793383146df9cbbffbc864f26274c5abe79506e4d2581b72 @ 1599218028 Fri, 04 Sep 2020 11:13:48 GMT
+RESULT: govTx status=0x1 Success gas=6000000 gasUsed=1661227 costETH=0.0466804787 costUSD=20.345686641395 @ ETH/USD=435.85 gasPrice=28.1 gwei block=245504 txIx=0 txId=0x27308c84852d9a49b29f020773dd1a774bfd41c314342119c854f3d7fbfbbc29 @ 1599621010 Wed, 09 Sep 2020 03:10:10 GMT
 undefined
 > 
 RESULT: PASS Deploy Group #1 - Contracts - Token
 1
 > 
-RESULT: tokenTx status=0x1 Success gas=4000000 gasUsed=807375 costETH=0.0226872375 costUSD=9.888232464375 @ ETH/USD=435.85 gasPrice=28.1 gwei block=42110 txIx=0 txId=0xd64db67d8ccae1568ff467d74dd5b8e54c1dfa73c56203e6b95921e32eaaf44d @ 1599218026 Fri, 04 Sep 2020 11:13:46 GMT
+RESULT: tokenTx status=0x1 Success gas=4000000 gasUsed=807375 costETH=0.0226872375 costUSD=9.888232464375 @ ETH/USD=435.85 gasPrice=28.1 gwei block=245502 txIx=0 txId=0xf12877e82d449f8a6453065ffd133c8300ef917fb377b7eaf08d2ab4d754767d @ 1599621008 Wed, 09 Sep 2020 03:10:08 GMT
 undefined
 > 
-RESULT: govContractAddress=Gov:0x11f7
-RESULT: gov.token='TEST' 'Test (18 dp)':0x8b53
+RESULT: govContractAddress=Gov:0x6018
+RESULT: gov.token='TEST' 'Test (18 dp)':0xf82d
 RESULT: gov.rewardsPerSecond=0.15 /day=12960 /year=4730400
 RESULT: gov.proposalCost=100
 RESULT: gov.proposalThreshold=0.01%
@@ -228,11 +228,11 @@ undefined
 RESULT: 
 null
 > 
-RESULT: token0ContractAddress='TEST' 'Test (18 dp)':0x8b53
+RESULT: token0ContractAddress='TEST' 'Test (18 dp)':0xf82d
 RESULT: token0.owner/new=deployer:0xa11a/null:0x0000
 RESULT: token0.details='TEST' 'Test (18 dp)' 18 dp
 RESULT: token0.totalSupply=0
-RESULT: token0.Transfer 0 #42110 from=null:0x0000 to=deployer:0xa11a tokens=0
+RESULT: token0.Transfer 0 #245502 from=null:0x0000 to=deployer:0xa11a tokens=0
 undefined
 > 
 RESULT: 
@@ -265,7 +265,7 @@ null
 ... 
 ... 
 ... 
-"0x25610fe52649d65b0e1f6f7c13dbe58ac44de59a6a5de27646a3b510c5c0fcdb"
+"0x4ae8fde28ee7f524baf32afcbcbceacafdfb666650cdc2dfbd7fe5f1284c3710"
 > 
 ... 
 undefined
@@ -279,8 +279,8 @@ RESULT:  3 0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0       -0.00123550080000000
 RESULT:  4 0xa44a08d3f6933c69212114bb66e2df1813651844        0.000000000000000000           0.000000000000000000           0.000000000000000000 user3
 RESULT:  5 0xa55a151eb00fded1634d27d1127b4be4627079ea        0.000000000000000000           0.000000000000000000           0.000000000000000000 user4
 RESULT:  6 0x0000000000000000000000000000000000000000        0.000000000000000000           0.000000000000000000           0.000000000000000000 null
-RESULT:  7 0x8b535eeb7c4704afe708ea8cc9b830978310f97f        0.000000000000000000           0.000000000000000000           0.000000000000000000 'TEST' 'Test (18 dp)'
-RESULT:  8 0x11f72ce9616536054e80f6e72946f67f73ffc7a4        0.000000000000000000           0.000000000000000000           0.000000000000000000 Gov
+RESULT:  7 0xf82dfe0df4504a618c0791c2c0617c6fe9de5328        0.000000000000000000           0.000000000000000000           0.000000000000000000 'TEST' 'Test (18 dp)'
+RESULT:  8 0x6018bc97feb6551e610524b61074d1a0517d5212        0.000000000000000000           0.000000000000000000           0.000000000000000000 Gov
 RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
 RESULT:                                                                                  2000.000000000000000000           0.000000000000000000 Total Token Balances
 RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
@@ -294,18 +294,18 @@ undefined
 ... 
 ... 
 RESULT: PASS Distribute And Approve Tokens - token.mint(0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976, 1000)
-RESULT: distributeTokens_Txs[0] status=0x1 Success gas=2000000 gasUsed=66634 costETH=0.0018724154 costUSD=0.81609225209 @ ETH/USD=435.85 gasPrice=28.1 gwei block=42114 txIx=0 txId=0x4b0dd54f049e36d9f96780aa3a68b332f735ee7ec78968dec975a9ea8ba930d2 @ 1599218030 Fri, 04 Sep 2020 11:13:50 GMT
-RESULT: PASS Distribute And Approve Tokens - token.approve(0x11f72ce9616536054e80f6e72946f67f73ffc7a4, 100)
-RESULT: approveTokens_Txs[0] status=0x1 Success gas=2000000 gasUsed=43968 costETH=0.0012355008 costUSD=0.53849302368 @ ETH/USD=435.85 gasPrice=28.1 gwei block=42114 txIx=3 txId=0x875f1ba35f2d33b55e5ff651df07a164f3dbceaadcdf20be328e53403c9bb96d @ 1599218030 Fri, 04 Sep 2020 11:13:50 GMT
+RESULT: distributeTokens_Txs[0] status=0x1 Success gas=2000000 gasUsed=66634 costETH=0.0018724154 costUSD=0.81609225209 @ ETH/USD=435.85 gasPrice=28.1 gwei block=245506 txIx=0 txId=0xddf64024842107008fd064c24f567131ae53cf1131bea4f0c41f5c6eeee50b83 @ 1599621012 Wed, 09 Sep 2020 03:10:12 GMT
+RESULT: PASS Distribute And Approve Tokens - token.approve(0x6018bc97feb6551e610524b61074d1a0517d5212, 100)
+RESULT: approveTokens_Txs[0] status=0x1 Success gas=2000000 gasUsed=43968 costETH=0.0012355008 costUSD=0.53849302368 @ ETH/USD=435.85 gasPrice=28.1 gwei block=245506 txIx=3 txId=0x5812faab8c6a7879dbd22ce8d5be76e7f5f66b3c74554ffce6359db82acafb79 @ 1599621012 Wed, 09 Sep 2020 03:10:12 GMT
 RESULT: PASS Distribute And Approve Tokens - token.mint(0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0, 1000)
-RESULT: distributeTokens_Txs[1] status=0x1 Success gas=2000000 gasUsed=51634 costETH=0.0014509154 costUSD=0.63238147709 @ ETH/USD=435.85 gasPrice=28.1 gwei block=42114 txIx=1 txId=0x833611c54ca079cf72797866424f89c26ad7c71be7a817fb9caf3e626fd49d19 @ 1599218030 Fri, 04 Sep 2020 11:13:50 GMT
-RESULT: PASS Distribute And Approve Tokens - token.approve(0x11f72ce9616536054e80f6e72946f67f73ffc7a4, 100)
-RESULT: approveTokens_Txs[1] status=0x1 Success gas=2000000 gasUsed=43968 costETH=0.0012355008 costUSD=0.53849302368 @ ETH/USD=435.85 gasPrice=28.1 gwei block=42114 txIx=2 txId=0x25610fe52649d65b0e1f6f7c13dbe58ac44de59a6a5de27646a3b510c5c0fcdb @ 1599218030 Fri, 04 Sep 2020 11:13:50 GMT
+RESULT: distributeTokens_Txs[1] status=0x1 Success gas=2000000 gasUsed=51634 costETH=0.0014509154 costUSD=0.63238147709 @ ETH/USD=435.85 gasPrice=28.1 gwei block=245506 txIx=1 txId=0x499c32870a6530ce9a75d915899cd986e6f69fb64592f83c7ad3e3848c85c95d @ 1599621012 Wed, 09 Sep 2020 03:10:12 GMT
+RESULT: PASS Distribute And Approve Tokens - token.approve(0x6018bc97feb6551e610524b61074d1a0517d5212, 100)
+RESULT: approveTokens_Txs[1] status=0x1 Success gas=2000000 gasUsed=43968 costETH=0.0012355008 costUSD=0.53849302368 @ ETH/USD=435.85 gasPrice=28.1 gwei block=245506 txIx=2 txId=0x4ae8fde28ee7f524baf32afcbcbceacafdfb666650cdc2dfbd7fe5f1284c3710 @ 1599621012 Wed, 09 Sep 2020 03:10:12 GMT
 undefined
 > 
 > 
-RESULT: govContractAddress=Gov:0x11f7
-RESULT: gov.token='TEST' 'Test (18 dp)':0x8b53
+RESULT: govContractAddress=Gov:0x6018
+RESULT: gov.token='TEST' 'Test (18 dp)':0xf82d
 RESULT: gov.rewardsPerSecond=0.15 /day=12960 /year=4730400
 RESULT: gov.proposalCost=100
 RESULT: gov.proposalThreshold=0.01%
@@ -322,14 +322,14 @@ undefined
 RESULT: 
 null
 > 
-RESULT: token0ContractAddress='TEST' 'Test (18 dp)':0x8b53
+RESULT: token0ContractAddress='TEST' 'Test (18 dp)':0xf82d
 RESULT: token0.owner/new=deployer:0xa11a/null:0x0000
 RESULT: token0.details='TEST' 'Test (18 dp)' 18 dp
 RESULT: token0.totalSupply=2000
-RESULT: token0.Approval 0 #42114 tokenOwner=user2:0xa33a spender=Gov:0x11f7 tokens=100
-RESULT: token0.Approval 1 #42114 tokenOwner=user1:0xa22a spender=Gov:0x11f7 tokens=100
-RESULT: token0.Transfer 0 #42114 from=null:0x0000 to=user1:0xa22a tokens=1000
-RESULT: token0.Transfer 1 #42114 from=null:0x0000 to=user2:0xa33a tokens=1000
+RESULT: token0.Approval 0 #245506 tokenOwner=user2:0xa33a spender=Gov:0x6018 tokens=100
+RESULT: token0.Approval 1 #245506 tokenOwner=user1:0xa22a spender=Gov:0x6018 tokens=100
+RESULT: token0.Transfer 0 #245506 from=null:0x0000 to=user1:0xa22a tokens=1000
+RESULT: token0.Transfer 1 #245506 from=null:0x0000 to=user2:0xa33a tokens=1000
 undefined
 > 
 RESULT: 
@@ -357,7 +357,7 @@ null
 > 
 ... 
 ... 
-"0x172e21a606a5f1d08b6d44938f1314042cc4d7b09e27a112d424582716160ee7"
+"0xe8a8a033cc9dfc2449f66cac28b995b3c2eaa5476dae43a67c035ebd4ae48338"
 > 
 ... 
 undefined
@@ -371,8 +371,8 @@ RESULT:  3 0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0       -0.00516708420000000
 RESULT:  4 0xa44a08d3f6933c69212114bb66e2df1813651844        0.000000000000000000           0.000000000000000000           0.000000000000000000 user3
 RESULT:  5 0xa55a151eb00fded1634d27d1127b4be4627079ea        0.000000000000000000           0.000000000000000000           0.000000000000000000 user4
 RESULT:  6 0x0000000000000000000000000000000000000000        0.000000000000000000           0.000000000000000000           0.000000000000000000 null
-RESULT:  7 0x8b535eeb7c4704afe708ea8cc9b830978310f97f        0.000000000000000000           0.000000000000000000           0.000000000000000000 'TEST' 'Test (18 dp)'
-RESULT:  8 0x11f72ce9616536054e80f6e72946f67f73ffc7a4        0.000000000000000000          30.000000000000000000           0.000000000000000000 Gov
+RESULT:  7 0xf82dfe0df4504a618c0791c2c0617c6fe9de5328        0.000000000000000000           0.000000000000000000           0.000000000000000000 'TEST' 'Test (18 dp)'
+RESULT:  8 0x6018bc97feb6551e610524b61074d1a0517d5212        0.000000000000000000          30.000000000000000000           0.000000000000000000 Gov
 RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
 RESULT:                                                                                  2000.000000000000000000           0.000000000000000000 Total Token Balances
 RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
@@ -384,16 +384,16 @@ undefined
 ... 
 ... 
 RESULT: PASS Stake Tokens - 0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976-> gov.stake(10, 31536000)
-RESULT: stakeTokens_Txs[0] status=0x1 Success gas=2000000 gasUsed=169914 costETH=0.0047745834 costUSD=2.08100217489 @ ETH/USD=435.85 gasPrice=28.1 gwei block=42116 txIx=0 txId=0x89acc71028eb346297eec5af55992ac09214f728bdb3e6213043745b9d53bb7a @ 1599218032 Fri, 04 Sep 2020 11:13:52 GMT
+RESULT: stakeTokens_Txs[0] status=0x1 Success gas=2000000 gasUsed=169914 costETH=0.0047745834 costUSD=2.08100217489 @ ETH/USD=435.85 gasPrice=28.1 gwei block=245508 txIx=0 txId=0xaba0d0ce134b68e308f4ddd2cb18f6fff1c76eef25df3e10cb6454826f6b0258 @ 1599621014 Wed, 09 Sep 2020 03:10:14 GMT
 RESULT: PASS Stake Tokens - 0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0-> gov.stake(10, 31536000)
-RESULT: stakeTokens_Txs[1] status=0x1 Success gas=2000000 gasUsed=139914 costETH=0.0039315834 costUSD=1.71358062489 @ ETH/USD=435.85 gasPrice=28.1 gwei block=42116 txIx=2 txId=0xc3c45656bee759bf78a12bbdc49b9268e00038861f8de5926f84ff6741071b85 @ 1599218032 Fri, 04 Sep 2020 11:13:52 GMT
+RESULT: stakeTokens_Txs[1] status=0x1 Success gas=2000000 gasUsed=139914 costETH=0.0039315834 costUSD=1.71358062489 @ ETH/USD=435.85 gasPrice=28.1 gwei block=245508 txIx=2 txId=0x162773c472e5a590b0807384b75453abc41007098da7bb31ac7cbb33e71aa270 @ 1599621014 Wed, 09 Sep 2020 03:10:14 GMT
 RESULT: PASS Stake Tokens - 0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976-> gov.stake(10, 31536000)
-RESULT: stakeTokens_Txs[2] status=0x1 Success gas=2000000 gasUsed=77138 costETH=0.0021675778 costUSD=0.94473878413 @ ETH/USD=435.85 gasPrice=28.1 gwei block=42116 txIx=1 txId=0x172e21a606a5f1d08b6d44938f1314042cc4d7b09e27a112d424582716160ee7 @ 1599218032 Fri, 04 Sep 2020 11:13:52 GMT
+RESULT: stakeTokens_Txs[2] status=0x1 Success gas=2000000 gasUsed=77138 costETH=0.0021675778 costUSD=0.94473878413 @ ETH/USD=435.85 gasPrice=28.1 gwei block=245508 txIx=1 txId=0xe8a8a033cc9dfc2449f66cac28b995b3c2eaa5476dae43a67c035ebd4ae48338 @ 1599621014 Wed, 09 Sep 2020 03:10:14 GMT
 undefined
 > 
 > 
-RESULT: govContractAddress=Gov:0x11f7
-RESULT: gov.token='TEST' 'Test (18 dp)':0x8b53
+RESULT: govContractAddress=Gov:0x6018
+RESULT: gov.token='TEST' 'Test (18 dp)':0xf82d
 RESULT: gov.rewardsPerSecond=0.15 /day=12960 /year=4730400
 RESULT: gov.proposalCost=100
 RESULT: gov.proposalThreshold=0.01%
@@ -403,23 +403,23 @@ RESULT: gov.executeDelay=7200 seconds
 RESULT: gov.rewardPool=0
 RESULT: gov.totalVotes=30
 RESULT: gov.proposalCount=0
-RESULT: gov.stakes[user1:0xa22a] balance=20, duration=31536000, end=1630754032 Sat, 04 Sep 2021 11:13:52 GMT, votes=20
-RESULT: gov.stakes[user2:0xa33a] balance=10, duration=31536000, end=1630754032 Sat, 04 Sep 2021 11:13:52 GMT, votes=10
-RESULT: Staked0 #42116 user=user1:0xa22a amount=10 balance=10 duration=31536000 end=1630754032 Sat, 04 Sep 2021 11:13:52 GMT votes=10 rewardPool=0 totalVotes=10
-RESULT: Staked1 #42116 user=user1:0xa22a amount=10 balance=20 duration=31536000 end=1630754032 Sat, 04 Sep 2021 11:13:52 GMT votes=20 rewardPool=0 totalVotes=20
-RESULT: Staked2 #42116 user=user2:0xa33a amount=10 balance=10 duration=31536000 end=1630754032 Sat, 04 Sep 2021 11:13:52 GMT votes=10 rewardPool=0 totalVotes=30
+RESULT: gov.stakes[user1:0xa22a] balance=20, duration=31536000, end=1631157014 Thu, 09 Sep 2021 03:10:14 GMT, votes=20
+RESULT: gov.stakes[user2:0xa33a] balance=10, duration=31536000, end=1631157014 Thu, 09 Sep 2021 03:10:14 GMT, votes=10
+RESULT: Staked 0 #245508 user=user1:0xa22a amount=10 balance=10 duration=31536000 end=1631157014 Thu, 09 Sep 2021 03:10:14 GMT votes=10 rewardPool=0 totalVotes=10
+RESULT: Staked 1 #245508 user=user1:0xa22a amount=10 balance=20 duration=31536000 end=1631157014 Thu, 09 Sep 2021 03:10:14 GMT votes=20 rewardPool=0 totalVotes=20
+RESULT: Staked 2 #245508 user=user2:0xa33a amount=10 balance=10 duration=31536000 end=1631157014 Thu, 09 Sep 2021 03:10:14 GMT votes=10 rewardPool=0 totalVotes=30
 undefined
 > 
 RESULT: 
 null
 > 
-RESULT: token0ContractAddress='TEST' 'Test (18 dp)':0x8b53
+RESULT: token0ContractAddress='TEST' 'Test (18 dp)':0xf82d
 RESULT: token0.owner/new=deployer:0xa11a/null:0x0000
 RESULT: token0.details='TEST' 'Test (18 dp)' 18 dp
 RESULT: token0.totalSupply=2000
-RESULT: token0.Transfer 0 #42116 from=user1:0xa22a to=Gov:0x11f7 tokens=10
-RESULT: token0.Transfer 1 #42116 from=user1:0xa22a to=Gov:0x11f7 tokens=10
-RESULT: token0.Transfer 2 #42116 from=user2:0xa33a to=Gov:0x11f7 tokens=10
+RESULT: token0.Transfer 0 #245508 from=user1:0xa22a to=Gov:0x6018 tokens=10
+RESULT: token0.Transfer 1 #245508 from=user1:0xa22a to=Gov:0x6018 tokens=10
+RESULT: token0.Transfer 2 #245508 from=user2:0xa33a to=Gov:0x6018 tokens=10
 undefined
 > 
 RESULT: 
