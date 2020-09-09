@@ -443,7 +443,7 @@ function printGovContractDetails() {
     console.log("RESULT: gov.proposalCount=" + contract.proposalCount.call());
 
     // var users = [user1, user2, user3, user4];
-    var users = [user1, user2];
+    var users = [user1, user2, user3, user4];
     for (var userIndex in users) {
       var stake = contract.stakes.call(users[userIndex]);
       console.log("RESULT: gov.stakes[" + getShortAddressName(users[userIndex]) + "] balance=" + stake[2].shift(-18) + ", duration=" + stake[0] + ", end=" + stake[1] + " " + new Date(stake[1]*1000).toUTCString() + ", votes=" + stake[3].shift(-18).toString());

@@ -194,23 +194,22 @@ console.log("RESULT: ");
 var distributeAndApproveTokens_Message = "Distribute And Approve Tokens";
 var ogTokensToDistribute = new BigNumber("1000").shift(18);
 var ogTokensToApprove = new BigNumber("100").shift(18);
-// var users = [user1, user2, user3, user4];
-var users = [user1, user2];
+var distApproveUsers = [user1, user2, user3, user4];
 var distributeTokens_Txs = [];
 var approveTokens_Txs = [];
 // -----------------------------------------------------------------------------
 console.log("RESULT: ---------- " + distributeAndApproveTokens_Message + " ----------");
 
-for (var userIndex in users) {
-  distributeTokens_Txs[userIndex] = ogToken.mint(users[userIndex], ogTokensToDistribute, {from: deployer, gas: 2000000, gasPrice: defaultGasPrice});
-  approveTokens_Txs[userIndex] = ogToken.approve(govAddress, ogTokensToApprove, {from: users[userIndex], gas: 2000000, gasPrice: defaultGasPrice});
+for (var userIndex in distApproveUsers) {
+  distributeTokens_Txs[userIndex] = ogToken.mint(distApproveUsers[userIndex], ogTokensToDistribute, {from: deployer, gas: 2000000, gasPrice: defaultGasPrice});
+  approveTokens_Txs[userIndex] = ogToken.approve(govAddress, ogTokensToApprove, {from: distApproveUsers[userIndex], gas: 2000000, gasPrice: defaultGasPrice});
 }
 while (txpool.status.pending > 0) {
 }
 printBalances();
 
-for (var userIndex in users) {
-  failIfTxStatusError(distributeTokens_Txs[userIndex], distributeAndApproveTokens_Message + " - ogToken.mint(" + users[userIndex] + ", " + ogTokensToDistribute.shift(-18).toString() + ")");
+for (var userIndex in distApproveUsers) {
+  failIfTxStatusError(distributeTokens_Txs[userIndex], distributeAndApproveTokens_Message + " - ogToken.mint(" + distApproveUsers[userIndex] + ", " + ogTokensToDistribute.shift(-18).toString() + ")");
   printTxData("distributeTokens_Txs[" + userIndex + "]", distributeTokens_Txs[userIndex]);
   failIfTxStatusError(approveTokens_Txs[userIndex], distributeAndApproveTokens_Message + " - ogToken.approve(" + govAddress + ", " + ogTokensToApprove.shift(-18).toString() + ")");
   printTxData("approveTokens_Txs[" + userIndex + "]", approveTokens_Txs[userIndex]);
@@ -223,33 +222,33 @@ console.log("RESULT: ");
 printTokenContractDetails(1);
 console.log("RESULT: ");
 
-exit;
-
 
 // -----------------------------------------------------------------------------
 var stakeTokens_Message = "Stake Tokens";
-var tokensToStake = new BigNumber("10").shift(18);
+var ogTokensToStake = new BigNumber("10").shift(18);
 var stakeDuration = 60 * 60 * 24 * 365; // 365 day
-var users = [user1, user2, user1];
+var stakeUsers = [user1, user2, user3, user1]; // double for user1
 var stakeTokens_Txs = [];
 // -----------------------------------------------------------------------------
 console.log("RESULT: ---------- " + stakeTokens_Message + " ----------");
 
-for (var userIndex in users) {
-  stakeTokens_Txs[userIndex] = gov.stake(tokensToStake, stakeDuration, {from: users[userIndex], gas: 2000000, gasPrice: defaultGasPrice});
+for (var userIndex in stakeUsers) {
+  stakeTokens_Txs[userIndex] = gov.stake(ogTokensToStake, stakeDuration, {from: stakeUsers[userIndex], gas: 2000000, gasPrice: defaultGasPrice});
 }
 while (txpool.status.pending > 0) {
 }
 printBalances();
 
-for (var userIndex in users) {
-  failIfTxStatusError(stakeTokens_Txs[userIndex], stakeTokens_Message + " - " + users[userIndex] + "-> gov.stake(" + tokensToStake.shift(-18).toString() + ", " + stakeDuration + ")");
+for (var userIndex in stakeUsers) {
+  failIfTxStatusError(stakeTokens_Txs[userIndex], stakeTokens_Message + " - " + stakeUsers[userIndex] + "-> gov.stake(" + ogTokensToStake.shift(-18).toString() + ", " + stakeDuration + ")");
   printTxData("stakeTokens_Txs[" + userIndex + "]", stakeTokens_Txs[userIndex]);
 }
 
 printGovContractDetails();
 console.log("RESULT: ");
 printTokenContractDetails(0);
+console.log("RESULT: ");
+printTokenContractDetails(1);
 console.log("RESULT: ");
 
 
