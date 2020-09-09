@@ -61,6 +61,13 @@ contract OptinoGov {
     uint256 public proposalCount;
     mapping(uint256 => Proposal) public proposals;
 
+    event RewardsPerSecondUpdated(uint256 rewardsPerSecond);
+    event ProposalCostUpdated(uint256 proposalCost);
+    event ProposalThresholdUpdated(uint256 proposalThreshold);
+    event QuorumUpdated(uint256 quorum);
+    event VotingDurationUpdated(uint256 votingDuration);
+    event ExecuteDelayUpdated(uint256 executeDelay);
+
     event Staked(address indexed user, uint256 amount, uint256 balance, uint256 duration, uint256 end, uint256 votes, uint256 rewardPool, uint256 totalVotes);
     event Collected(address indexed user, uint256 elapsed, uint256 reward, uint256 rewardPool, uint256 end, uint256 duration);
     event Unstaked(address indexed user, uint256 amount, uint256 balance, uint256 duration, uint256 end, uint256 votes, uint256 rewardPool, uint256 totalVotes);
@@ -69,23 +76,52 @@ contract OptinoGov {
     event Executed(address indexed user, uint256 oip);
 
 
+    modifier onlySelf {
+        require(msg.sender == address(this), "Not self");
+        _;
+    }
+
+
     constructor(address token_) {
         token = token_;
-
         // TODO: Parameterise these variables, allowing calls back to this smart contract to update via proposals
-
         // Total reward pool = 5.000.000 * 10^18
         // Total rewards per second = 1.5 * 10^17
         // Your reward per second is votes/totalVotes * rewards per second
         // Your reward is elapsed time * rewards per second * votes / totalVotes
         rewardsPerSecond = 150000000000000000;
-
         proposalCost = 100000000000000000000; // 100 tokens
         proposalThreshold = 100; // 6 decimals, so this is 0.1%
         quorum = 200000; // 6 decimals, so this is 20%
         votingDuration = 3 hours; // 3 days;
         executeDelay = 2 hours; // 2 days;
     }
+
+    function setRewardsPerSecond(uint256 _rewardsPerSecond) external onlySelf {
+        rewardsPerSecond = _rewardsPerSecond;
+        emit RewardsPerSecondUpdated(rewardsPerSecond);
+    }
+    function setProposalCost(uint256 _proposalCost) external onlySelf {
+        proposalCost = _proposalCost;
+        emit ProposalCostUpdated(proposalCost);
+    }
+    function setProposalThreshold(uint256 _proposalThreshold) external onlySelf {
+        proposalThreshold = _proposalThreshold;
+        emit ProposalThresholdUpdated(proposalThreshold);
+    }
+    function setQuorum(uint256 _quorum) external onlySelf {
+        quorum = _quorum;
+        emit QuorumUpdated(quorum);
+    }
+    function setVotingDuration(uint256 _votingDuration) external onlySelf {
+        votingDuration = _votingDuration;
+        emit VotingDurationUpdated(votingDuration);
+    }
+    function setExecuteDelay(uint256 _executeDelay) external onlySelf {
+        executeDelay = _executeDelay;
+        emit ExecuteDelayUpdated(executeDelay);
+    }
+
 
     // Stake tokens and set a duration. If you already have a stake you cannot set a duration that ends before the current one.
     function stake(uint256 amount, uint256 duration) public {
@@ -125,15 +161,15 @@ contract OptinoGov {
         // Pay rewards until now
         uint256 elapsed = block.timestamp.sub(user.end.sub(user.duration));
         uint256 reward = elapsed.mul(rewardsPerSecond).mul(user.votes).div(totalVotes);
-        // DEBUG rewardPool = rewardPool.sub(reward);
+        // BK DEBUG rewardPool = rewardPool.sub(reward);
 
         if (user.end < block.timestamp) {
             user.end = block.timestamp;
         }
         user.duration = user.end.sub(block.timestamp);
-        // user.end = user.duration.add(block.timestamp);
+        // BK TEST user.end = user.duration.add(block.timestamp);
 
-        // DEBUG require(ERC20(token).transfer(msg.sender, reward), "OptinoGov: transfer failed");
+        // BK DEBUG require(ERC20(token).transfer(msg.sender, reward), "OptinoGov: transfer failed");
 
         emit Collected(msg.sender, elapsed, reward, rewardPool, user.end, user.duration);
     }
