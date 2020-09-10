@@ -232,7 +232,7 @@ contract OptinoGov {
 
     function execute(uint256 oip) public {
         Proposal storage proposal = proposals[oip];
-        require(proposal.start != 0 && block.timestamp < proposal.start.add(votingDuration).add(executeDelay));
+        require(proposal.start != 0 && block.timestamp >= proposal.start.add(votingDuration).add(executeDelay));
         require(proposal.forVotes >= totalVotes.mul(quorum).div(1e6), "OptinoGov: Not enough votes to execute");
         proposal.executed = true;
 
