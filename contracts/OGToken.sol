@@ -77,6 +77,7 @@ interface ERC20 {
     function decimals() external view returns (uint8);
 }
 
+
 // import "MintableToken.sol";
 /// @notice MintableToken = ERC20 + mint + burn
 interface MintableToken is ERC20 {
@@ -96,76 +97,70 @@ contract OGToken is MintableToken, Owned {
     uint8 _decimals;
     uint _totalSupply;
 
-    uint _totalDividendPoints;
-    uint _unclaimedDividends;
-
-    address public dividendToken;
+    // uint _totalDividendPoints;
+    mapping(address => uint) public totalDividendPoints;
+    mapping(address => uint) public unclaimedDividends;
 
     uint public constant pointMultiplier = 10e18;
 
     struct Account {
       uint balance;
-      uint lastDividendPoints;
+      mapping(address => uint) lastDividendPoints;
     }
+    // tokenHolder => dividendToken => Account
     mapping(address => Account) accounts;
     mapping(address => mapping(address => uint)) allowed;
 
+    uint public maxDividendTokens = 20;
+    mapping(address => bool) public dividendTokens;
+    address[] public dividendTokenIndex;
+
+    event MaxDividendTokensUpdated(uint256 maxDividendTokens);
+    event DividendTokensAdded(address dividendToken);
+
     event LogInfo(string topic, uint number, bytes32 data, string note, address addr);
 
-/*
+    /*
+    function disburse(uint amount) {
+      totalDividendPoints += (amount * pointsMultiplier / totalSupply);
+      totalSupply += amount;
+      unclaimedDividends += amount;
+    }*/
 
-
-
-
-function disburse(uint amount) {
-  totalDividendPoints += (amount * pointsMultiplier / totalSupply);
-  totalSupply += amount;
-  unclaimedDividends += amount;
-}*/
-
-
-
-    function totalDividendPoints() public view returns (uint) {
-        return _totalDividendPoints;
-    }
-    function unclaimedDividends() public view returns (uint) {
-        return _unclaimedDividends;
-    }
-
-    function dividendsOwing(address account) public view returns (uint) {
-        uint newDividendPoints = _totalDividendPoints - accounts[account].lastDividendPoints;
+    function dividendsOwing(address dividendToken, address account) public view returns (uint) {
+        uint newDividendPoints = totalDividendPoints[dividendToken] - accounts[account].lastDividendPoints[dividendToken];
         return (accounts[account].balance * newDividendPoints) / pointMultiplier;
     }
-    function updateAccount(address account) internal {
-        uint owing = dividendsOwing(account);
+    function updateAccount(address dividendToken, address account) internal {
+        uint owing = dividendsOwing(dividendToken, account);
         emit LogInfo("depositDividends: owing", owing, 0x0, "", account);
         if (owing > 0) {
-            emit LogInfo("depositDividends: _unclaimedDividends before", _unclaimedDividends, 0x0, "", account);
-            _unclaimedDividends = _unclaimedDividends.sub(owing);
-            emit LogInfo("depositDividends: _unclaimedDividends after", _unclaimedDividends, 0x0, "", account);
-            emit LogInfo("depositDividends: accounts[account].balance", accounts[account].balance, 0x0, "", account);
-            accounts[account].balance = accounts[account].balance.add(owing);
-            emit LogInfo("depositDividends: accounts[account].balance", accounts[account].balance, 0x0, "", account);
-            emit LogInfo("depositDividends: accounts[account].lastDividendPoints before", accounts[account].lastDividendPoints, 0x0, "", account);
-            accounts[account].lastDividendPoints = _totalDividendPoints;
-             emit LogInfo("depositDividends: accounts[account].lastDividendPoints after", accounts[account].lastDividendPoints, 0x0, "", account);
+            emit LogInfo("depositDividends: _unclaimedDividends before", unclaimedDividends[dividendToken], 0x0, "", account);
+            unclaimedDividends[dividendToken] = unclaimedDividends[dividendToken].sub(owing);
+            emit LogInfo("depositDividends: _unclaimedDividends after", unclaimedDividends[dividendToken], 0x0, "", account);
+            // emit LogInfo("depositDividends: accounts[account].balance", accounts[account].balance, 0x0, "", account);
+            // accounts[account][dividendToken].balance = accounts[account][dividendToken].balance.add(owing);
+            // emit LogInfo("depositDividends: accounts[account][dividendToken].balance", accounts[account][dividendToken].balance, 0x0, "", account);
+            emit LogInfo("depositDividends: accounts[account].lastDividendPoints[dividendToken] before", accounts[account].lastDividendPoints[dividendToken], 0x0, "", account);
+            accounts[account].lastDividendPoints[dividendToken] = totalDividendPoints[dividendToken];
+             emit LogInfo("depositDividends: accounts[account].lastDividendPoints[dividendToken] after", accounts[account].lastDividendPoints[dividendToken], 0x0, "", account);
         }
     }
 
-    function depositDividends(address token, uint dividends) public {
-        emit LogInfo("depositDividends: token", 0, 0x0, "", token);
+    function depositDividends(address dividendToken, uint dividends) public {
+        emit LogInfo("depositDividends: dividendToken", 0, 0x0, "", dividendToken);
         emit LogInfo("depositDividends: dividends", dividends, 0x0, "", address(0));
         emit LogInfo("depositDividends: pointMultiplier", pointMultiplier, 0x0, "", address(0));
         emit LogInfo("depositDividends: _totalSupply", _totalSupply, 0x0, "", address(0));
-        _totalDividendPoints = _totalDividendPoints.add((dividends * pointMultiplier / _totalSupply));
-        _unclaimedDividends = _unclaimedDividends.add(dividends);
-        emit LogInfo("depositDividends: _totalDividendPoints", _totalDividendPoints, 0x0, "", address(0));
-        emit LogInfo("depositDividends: _unclaimedDividends", _unclaimedDividends, 0x0, "", address(0));
-        ERC20(token).transferFrom(msg.sender, address(this), dividends);
+        totalDividendPoints[dividendToken] = totalDividendPoints[dividendToken].add((dividends * pointMultiplier / _totalSupply));
+        unclaimedDividends[dividendToken] = unclaimedDividends[dividendToken].add(dividends);
+        emit LogInfo("depositDividends: totalDividendPoints[dividendToken]", totalDividendPoints[dividendToken], 0x0, "", address(0));
+        emit LogInfo("depositDividends: unclaimedDividends[dividendToken]", unclaimedDividends[dividendToken], 0x0, "", address(0));
+        ERC20(dividendToken).transferFrom(msg.sender, address(this), dividends);
     }
 
-    function withdrawDividends(address /*token*/) public returns (uint withdrawn) {
-        updateAccount(msg.sender);
+    function withdrawDividends(address dividendToken) public returns (uint withdrawn) {
+        updateAccount(dividendToken, msg.sender);
         withdrawn = 0;
     }
 
@@ -177,8 +172,6 @@ function disburse(uint amount) {
         accounts[tokenOwner].balance = initialSupply;
         _totalSupply = initialSupply;
         emit Transfer(address(0), tokenOwner, _totalSupply);
-        // dividendToken = _dividendToken;
-        dividendToken = address(0);
     }
     function symbol() override external view returns (string memory) {
         return _symbol;
@@ -196,8 +189,11 @@ function disburse(uint amount) {
         return accounts[tokenOwner].balance;
     }
     function transfer(address to, uint tokens) override external returns (bool success) {
-        updateAccount(msg.sender);
-        updateAccount(to);
+        for (uint i = 0; i < dividendTokenIndex.length; i++) {
+            address dividendToken = dividendTokenIndex[i];
+            updateAccount(dividendToken, msg.sender);
+            updateAccount(dividendToken, to);
+        }
         accounts[msg.sender].balance = accounts[msg.sender].balance.sub(tokens);
         accounts[to].balance = accounts[to].balance.add(tokens);
         emit Transfer(msg.sender, to, tokens);
@@ -209,8 +205,11 @@ function disburse(uint amount) {
         return true;
     }
     function transferFrom(address from, address to, uint tokens) override external returns (bool success) {
-        updateAccount(from);
-        updateAccount(to);
+        for (uint i = 0; i < dividendTokenIndex.length; i++) {
+            address dividendToken = dividendTokenIndex[i];
+            updateAccount(dividendToken, msg.sender);
+            updateAccount(dividendToken, to);
+        }
         accounts[from].balance = accounts[from].balance.sub(tokens);
         allowed[from][msg.sender] = allowed[from][msg.sender].sub(tokens);
         accounts[to].balance = accounts[to].balance.add(tokens);
@@ -224,13 +223,33 @@ function disburse(uint amount) {
         accounts[tokenOwner].balance = accounts[tokenOwner].balance.add(tokens);
         _totalSupply = _totalSupply.add(tokens);
         emit Transfer(address(0), tokenOwner, tokens);
+        for (uint i = 0; i < dividendTokenIndex.length; i++) {
+            updateAccount(dividendTokenIndex[i], tokenOwner);
+        }
         return true;
     }
     function burn(address tokenOwner, uint tokens) override external onlyOwner returns (bool success) {
+        for (uint i = 0; i < dividendTokenIndex.length; i++) {
+            updateAccount(dividendTokenIndex[i], tokenOwner);
+        }
+        // TODO Pay out
         accounts[tokenOwner].balance = accounts[tokenOwner].balance.sub(tokens);
         _totalSupply = _totalSupply.sub(tokens);
         emit Transfer(tokenOwner, address(0), tokens);
         return true;
+    }
+
+    function setMaxDividendTokens(uint _maxDividendTokens) external onlyOwner {
+        require(_maxDividendTokens > dividendTokenIndex.length, "Max must be more than current list length");
+        maxDividendTokens = _maxDividendTokens;
+        emit MaxDividendTokensUpdated(maxDividendTokens);
+    }
+    function addDividendToken(address _dividendToken) external onlyOwner {
+        require(!dividendTokens[_dividendToken], "Token already in the list");
+        dividendTokens[_dividendToken] = true;
+        dividendTokenIndex.push(_dividendToken);
+        emit DividendTokensAdded(_dividendToken);
+
     }
 }
 // ----------------------------------------------------------------------------
