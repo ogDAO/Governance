@@ -359,6 +359,20 @@ function printTokenContractDetails(j) {
         " addr=" + getShortAddressName(result.args.addr));
       });
       logInfoEvents.stopWatching();
+
+      var updateAccountInfoEvents = contract.UpdateAccountInfo({}, { fromBlock: tokenFromBlock[j], toBlock: latestBlock });
+      i = 0;
+      updateAccountInfoEvents.watch(function (error, result) {
+        console.log("RESULT: token" + j + ".UpdateAccountInfo " + i++ + " #" + result.blockNumber + " " +
+        " dividendToken=" + getShortAddressName(result.args.dividendToken) +
+        " account=" + getShortAddressName(result.args.account) +
+        " owing=" + result.args.owing + " " + result.args.owing.shift(-decimals) +
+        " totalOwing=" + result.args.totalOwing + " " + result.args.totalOwing.shift(-decimals) +
+        " lastDividendPoints=" + result.args.lastDividendPoints + " " + result.args.lastDividendPoints.shift(-decimals) +
+        " totalDividendPoints=" + result.args.totalDividendPoints + " " + result.args.totalDividendPoints.shift(-decimals) +
+        " unclaimedDividends=" + result.args.unclaimedDividends + " " + result.args.unclaimedDividends.shift(-decimals));
+      });
+      updateAccountInfoEvents.stopWatching();
     }
 
     var ownershipTransferredEvents = contract.OwnershipTransferred({}, { fromBlock: tokenFromBlock[j], toBlock: latestBlock });

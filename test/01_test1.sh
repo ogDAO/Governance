@@ -125,6 +125,27 @@ var ogToken = ogTokenContract.new(ogTokenSymbol, ogTokenName, ogTokenDecimals, o
     }
   }
 );
+var testTokenContract = web3.eth.contract(testTokenAbi);
+// console.log("DATA: testTokenContract=" + JSON.stringify(testTokenContract));
+var testTokenTx = null;
+var testTokenAddress = null;
+var testToken = testTokenContract.new(testTokenSymbol, testTokenName, testTokenDecimals, testTokenOwner, testTokenInitialSupply, {from: deployer, data: testTokenBin, gas: 4000000, gasPrice: defaultGasPrice},
+  function(e, contract) {
+    if (!e) {
+      if (!contract.address) {
+        testTokenTx = contract.transactionHash;
+      } else {
+        testTokenAddress = contract.address;
+        addAccount(testTokenAddress, "'" + testToken.symbol.call() + "' '" + testToken.name.call() + "'");
+        addAddressSymbol(testTokenAddress, "'" + testToken.symbol.call() + "' '" + testToken.name.call() + "'");
+        addTokenContractAddressAndAbi(1, testTokenAddress, testTokenAbi);
+        console.log("DATA: var testTokenAddress=\"" + testTokenAddress + "\";");
+        console.log("DATA: var testTokenAbi=" + JSON.stringify(testTokenAbi) + ";");
+        console.log("DATA: var testToken=eth.contract(testTokenAbi).at(testTokenAddress);");
+      }
+    }
+  }
+);
 while (txpool.status.pending > 0) {
 }
 var govContract = web3.eth.contract(govAbi);
@@ -150,38 +171,21 @@ var gov = govContract.new(ogTokenAddress, {from: deployer, data: govBin, gas: 60
     }
   }
 );
-while (txpool.status.pending > 0) {
-}
-var testTokenContract = web3.eth.contract(testTokenAbi);
-// console.log("DATA: testTokenContract=" + JSON.stringify(testTokenContract));
-var testTokenTx = null;
-var testTokenAddress = null;
-var testToken = testTokenContract.new(testTokenSymbol, testTokenName, testTokenDecimals, testTokenOwner, testTokenInitialSupply, {from: deployer, data: testTokenBin, gas: 4000000, gasPrice: defaultGasPrice},
-  function(e, contract) {
-    if (!e) {
-      if (!contract.address) {
-        testTokenTx = contract.transactionHash;
-      } else {
-        testTokenAddress = contract.address;
-        addAccount(testTokenAddress, "'" + testToken.symbol.call() + "' '" + testToken.name.call() + "'");
-        addAddressSymbol(testTokenAddress, "'" + testToken.symbol.call() + "' '" + testToken.name.call() + "'");
-        addTokenContractAddressAndAbi(1, testTokenAddress, testTokenAbi);
-        console.log("DATA: var testTokenAddress=\"" + testTokenAddress + "\";");
-        console.log("DATA: var testTokenAbi=" + JSON.stringify(testTokenAbi) + ";");
-        console.log("DATA: var testToken=eth.contract(testTokenAbi).at(testTokenAddress);");
-      }
-    }
-  }
-);
+var addDividendToken1_Tx = ogToken.addDividendToken(NULLACCOUNT, {from: deployer, gas: 2000000, gasPrice: defaultGasPrice});
+var addDividendToken2_Tx = ogToken.addDividendToken(testTokenAddress, {from: deployer, gas: 2000000, gasPrice: defaultGasPrice});
 while (txpool.status.pending > 0) {
 }
 printBalances();
 failIfTxStatusError(ogTokenTx, deployGroup1_Message + " - OGToken");
 printTxData("ogTokenTx", ogTokenTx);
-failIfTxStatusError(govTx, deployGroup1_Message + " - Gov");
-printTxData("govTx", govTx);
 failIfTxStatusError(testTokenTx, deployGroup1_Message + " - TestToken");
 printTxData("testTokenTx", testTokenTx);
+failIfTxStatusError(govTx, deployGroup1_Message + " - Gov");
+printTxData("govTx", govTx);
+failIfTxStatusError(addDividendToken1_Tx, deployGroup1_Message + " - ogToken.addDividendToken(0x00)");
+printTxData("addDividendToken1_Tx", addDividendToken1_Tx);
+failIfTxStatusError(addDividendToken2_Tx, deployGroup1_Message + " - ogToken.addDividendToken(TEST)");
+printTxData("addDividendToken2_Tx", addDividendToken2_Tx);
 printGovContractDetails();
 console.log("RESULT: ");
 printTokenContractDetails(0);
@@ -199,22 +203,20 @@ var distributeTokens_Txs = [];
 var approveTokens_Txs = [];
 // -----------------------------------------------------------------------------
 console.log("RESULT: ---------- " + distributeAndApproveTokens_Message + " ----------");
-
 for (var userIndex in distApproveUsers) {
   distributeTokens_Txs[userIndex] = ogToken.mint(distApproveUsers[userIndex], ogTokensToDistribute, {from: deployer, gas: 2000000, gasPrice: defaultGasPrice});
   approveTokens_Txs[userIndex] = ogToken.approve(govAddress, ogTokensToApprove, {from: distApproveUsers[userIndex], gas: 2000000, gasPrice: defaultGasPrice});
 }
 while (txpool.status.pending > 0) {
 }
+approveTokens_Txs[userIndex] = ogToken.approve(govAddress, ogTokensToApprove, {from: distApproveUsers[userIndex], gas: 2000000, gasPrice: defaultGasPrice});
 printBalances();
-
 for (var userIndex in distApproveUsers) {
   failIfTxStatusError(distributeTokens_Txs[userIndex], distributeAndApproveTokens_Message + " - ogToken.mint(" + distApproveUsers[userIndex] + ", " + ogTokensToDistribute.shift(-18).toString() + ")");
   printTxData("distributeTokens_Txs[" + userIndex + "]", distributeTokens_Txs[userIndex]);
   failIfTxStatusError(approveTokens_Txs[userIndex], distributeAndApproveTokens_Message + " - ogToken.approve(" + govAddress + ", " + ogTokensToApprove.shift(-18).toString() + ")");
   printTxData("approveTokens_Txs[" + userIndex + "]", approveTokens_Txs[userIndex]);
 }
-
 printGovContractDetails();
 console.log("RESULT: ");
 printTokenContractDetails(0);

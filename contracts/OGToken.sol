@@ -106,6 +106,7 @@ contract OGToken is MintableToken, Owned {
     struct Account {
       uint balance;
       mapping(address => uint) lastDividendPoints;
+      mapping(address => uint) owing;
     }
     // tokenHolder => dividendToken => Account
     mapping(address => Account) accounts;
@@ -131,20 +132,23 @@ contract OGToken is MintableToken, Owned {
         uint newDividendPoints = totalDividendPoints[dividendToken] - accounts[account].lastDividendPoints[dividendToken];
         return (accounts[account].balance * newDividendPoints) / pointMultiplier;
     }
+    event UpdateAccountInfo(address dividendToken, address account, uint owing, uint totalOwing, uint lastDividendPoints, uint totalDividendPoints, uint unclaimedDividends);
     function updateAccount(address dividendToken, address account) internal {
         uint owing = dividendsOwing(dividendToken, account);
-        emit LogInfo("depositDividends: owing", owing, 0x0, "", account);
+        emit LogInfo("updateAccount: owing", owing, 0x0, "", account);
         if (owing > 0) {
-            emit LogInfo("depositDividends: _unclaimedDividends before", unclaimedDividends[dividendToken], 0x0, "", account);
+            emit LogInfo("updateAccount: _unclaimedDividends before", unclaimedDividends[dividendToken], 0x0, "", account);
             unclaimedDividends[dividendToken] = unclaimedDividends[dividendToken].sub(owing);
-            emit LogInfo("depositDividends: _unclaimedDividends after", unclaimedDividends[dividendToken], 0x0, "", account);
-            // emit LogInfo("depositDividends: accounts[account].balance", accounts[account].balance, 0x0, "", account);
+            emit LogInfo("updateAccount: _unclaimedDividends after", unclaimedDividends[dividendToken], 0x0, "", account);
+            // emit LogInfo("updateAccount: accounts[account].balance", accounts[account].balance, 0x0, "", account);
             // accounts[account][dividendToken].balance = accounts[account][dividendToken].balance.add(owing);
-            // emit LogInfo("depositDividends: accounts[account][dividendToken].balance", accounts[account][dividendToken].balance, 0x0, "", account);
-            emit LogInfo("depositDividends: accounts[account].lastDividendPoints[dividendToken] before", accounts[account].lastDividendPoints[dividendToken], 0x0, "", account);
+            // emit LogInfo("updateAccount: accounts[account][dividendToken].balance", accounts[account][dividendToken].balance, 0x0, "", account);
+            emit LogInfo("updateAccount: accounts[account].lastDividendPoints[dividendToken] before", accounts[account].lastDividendPoints[dividendToken], 0x0, "", account);
             accounts[account].lastDividendPoints[dividendToken] = totalDividendPoints[dividendToken];
-             emit LogInfo("depositDividends: accounts[account].lastDividendPoints[dividendToken] after", accounts[account].lastDividendPoints[dividendToken], 0x0, "", account);
+            emit LogInfo("updateAccount: accounts[account].lastDividendPoints[dividendToken] after", accounts[account].lastDividendPoints[dividendToken], 0x0, "", account);
+            accounts[account].owing[dividendToken] = accounts[account].owing[dividendToken].add(owing);
         }
+        emit UpdateAccountInfo(dividendToken, account, owing, accounts[account].owing[dividendToken], accounts[account].lastDividendPoints[dividendToken], totalDividendPoints[dividendToken], unclaimedDividends[dividendToken]);
     }
 
     function depositDividends(address dividendToken, uint dividends) public {
