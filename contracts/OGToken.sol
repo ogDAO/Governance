@@ -92,33 +92,31 @@ interface OGTokenInterface is ERC20 {
 contract OGToken is OGTokenInterface, Owned {
     using SafeMath for uint;
 
-    string _symbol;
-    string  _name;
-    uint8 _decimals;
-    uint _totalSupply;
-
-    // uint _totalDividendPoints;
-    mapping(address => uint) public totalDividendPoints;
-    mapping(address => uint) public unclaimedDividends;
-
-    uint public constant pointMultiplier = 10e18;
-
     struct Account {
       uint balance;
       mapping(address => uint) lastDividendPoints;
       mapping(address => uint) owing;
     }
-    // tokenHolder => dividendToken => Account
-    mapping(address => Account) accounts;
-    mapping(address => mapping(address => uint)) allowed;
+
+    string _symbol;
+    string  _name;
+    uint8 _decimals;
+    uint _totalSupply;
 
     uint public maxDividendTokens = 20;
     mapping(address => bool) public dividendTokens;
     address[] public dividendTokenIndex;
 
+    uint public constant pointMultiplier = 10e18;
+    mapping(address => uint) public totalDividendPoints;
+    mapping(address => uint) public unclaimedDividends;
+
+    // tokenHolder => dividendToken => Account
+    mapping(address => Account) accounts;
+    mapping(address => mapping(address => uint)) allowed;
+
     event MaxDividendTokensUpdated(uint256 maxDividendTokens);
     event DividendTokensAdded(address dividendToken);
-
     event LogInfo(string topic, uint number, bytes32 data, string note, address addr);
 
     /*
@@ -135,31 +133,31 @@ contract OGToken is OGTokenInterface, Owned {
     event UpdateAccountInfo(address dividendToken, address account, uint owing, uint totalOwing, uint lastDividendPoints, uint totalDividendPoints, uint unclaimedDividends);
     function updateAccount(address dividendToken, address account) internal {
         uint owing = dividendsOwing(dividendToken, account);
-        emit LogInfo("updateAccount: owing", owing, 0x0, "", account);
+        // emit LogInfo("updateAccount: owing", owing, 0x0, "", account);
         if (owing > 0) {
-            emit LogInfo("updateAccount: _unclaimedDividends before", unclaimedDividends[dividendToken], 0x0, "", account);
+            // emit LogInfo("updateAccount: _unclaimedDividends before", unclaimedDividends[dividendToken], 0x0, "", account);
             unclaimedDividends[dividendToken] = unclaimedDividends[dividendToken].sub(owing);
-            emit LogInfo("updateAccount: _unclaimedDividends after", unclaimedDividends[dividendToken], 0x0, "", account);
-            // emit LogInfo("updateAccount: accounts[account].balance", accounts[account].balance, 0x0, "", account);
-            // accounts[account][dividendToken].balance = accounts[account][dividendToken].balance.add(owing);
-            // emit LogInfo("updateAccount: accounts[account][dividendToken].balance", accounts[account][dividendToken].balance, 0x0, "", account);
-            emit LogInfo("updateAccount: accounts[account].lastDividendPoints[dividendToken] before", accounts[account].lastDividendPoints[dividendToken], 0x0, "", account);
+            // emit LogInfo("updateAccount: _unclaimedDividends after", unclaimedDividends[dividendToken], 0x0, "", account);
+            // // emit LogInfo("updateAccount: accounts[account].balance", accounts[account].balance, 0x0, "", account);
+            // // accounts[account][dividendToken].balance = accounts[account][dividendToken].balance.add(owing);
+            // // emit LogInfo("updateAccount: accounts[account][dividendToken].balance", accounts[account][dividendToken].balance, 0x0, "", account);
+            // emit LogInfo("updateAccount: accounts[account].lastDividendPoints[dividendToken] before", accounts[account].lastDividendPoints[dividendToken], 0x0, "", account);
             accounts[account].lastDividendPoints[dividendToken] = totalDividendPoints[dividendToken];
-            emit LogInfo("updateAccount: accounts[account].lastDividendPoints[dividendToken] after", accounts[account].lastDividendPoints[dividendToken], 0x0, "", account);
+            // emit LogInfo("updateAccount: accounts[account].lastDividendPoints[dividendToken] after", accounts[account].lastDividendPoints[dividendToken], 0x0, "", account);
             accounts[account].owing[dividendToken] = accounts[account].owing[dividendToken].add(owing);
         }
         emit UpdateAccountInfo(dividendToken, account, owing, accounts[account].owing[dividendToken], accounts[account].lastDividendPoints[dividendToken], totalDividendPoints[dividendToken], unclaimedDividends[dividendToken]);
     }
 
     function depositDividends(address dividendToken, uint dividends) public {
-        emit LogInfo("depositDividends: dividendToken", 0, 0x0, "", dividendToken);
-        emit LogInfo("depositDividends: dividends", dividends, 0x0, "", address(0));
-        emit LogInfo("depositDividends: pointMultiplier", pointMultiplier, 0x0, "", address(0));
-        emit LogInfo("depositDividends: _totalSupply", _totalSupply, 0x0, "", address(0));
+        // emit LogInfo("depositDividends: dividendToken", 0, 0x0, "", dividendToken);
+        // emit LogInfo("depositDividends: dividends", dividends, 0x0, "", address(0));
+        // emit LogInfo("depositDividends: pointMultiplier", pointMultiplier, 0x0, "", address(0));
+        // emit LogInfo("depositDividends: _totalSupply", _totalSupply, 0x0, "", address(0));
         totalDividendPoints[dividendToken] = totalDividendPoints[dividendToken].add((dividends * pointMultiplier / _totalSupply));
         unclaimedDividends[dividendToken] = unclaimedDividends[dividendToken].add(dividends);
-        emit LogInfo("depositDividends: totalDividendPoints[dividendToken]", totalDividendPoints[dividendToken], 0x0, "", address(0));
-        emit LogInfo("depositDividends: unclaimedDividends[dividendToken]", unclaimedDividends[dividendToken], 0x0, "", address(0));
+        // emit LogInfo("depositDividends: totalDividendPoints[dividendToken]", totalDividendPoints[dividendToken], 0x0, "", address(0));
+        // emit LogInfo("depositDividends: unclaimedDividends[dividendToken]", unclaimedDividends[dividendToken], 0x0, "", address(0));
         ERC20(dividendToken).transferFrom(msg.sender, address(this), dividends);
     }
 
@@ -256,6 +254,3 @@ contract OGToken is OGTokenInterface, Owned {
 
     }
 }
-// ----------------------------------------------------------------------------
-// End - Dividend Paying Token
-// ----------------------------------------------------------------------------
