@@ -469,7 +469,13 @@ function printGovContractDetails() {
     console.log("RESULT: gov.executeDelay=" + contract.executeDelay.call() + " seconds");
     console.log("RESULT: gov.rewardPool=" + contract.rewardPool.call().shift(-18));
     console.log("RESULT: gov.totalVotes=" + contract.totalVotes.call().shift(-18));
-    console.log("RESULT: gov.proposalCount=" + contract.proposalCount.call());
+    var proposalCount = contract.proposalCount.call();
+    console.log("RESULT: gov.proposalCount=" + proposalCount);
+    for (var proposalId = 1; proposalId <= proposalCount; proposalId++) {
+      var proposal = contract.proposals.call(proposalId);
+      console.log("RESULT: gov.proposals[" + proposalId + "] =" + JSON.stringify(proposal));
+    }
+
     var stakeInfoLength = contract.stakeInfoLength.call();
     for (var stakeInfo_i = 0; stakeInfo_i < stakeInfoLength; stakeInfo_i++) {
       var stakeInfoKey = contract.stakeInfoIndex.call(stakeInfo_i);

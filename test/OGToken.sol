@@ -35,6 +35,11 @@ contract Owned {
         owner = newOwner;
         newOwner = address(0);
     }
+    function transferOwnershipImmediately(address _newOwner) public onlyOwner {
+        emit OwnershipTransferred(owner, _newOwner);
+        owner = _newOwner;
+        newOwner = address(0);
+    }
 }
 
 
@@ -84,6 +89,7 @@ interface ERC20 {
 interface OGTokenInterface is ERC20 {
     function mint(address tokenOwner, uint tokens) external returns (bool success);
     function burn(uint tokens) external returns (bool success);
+    function burnFrom(address tokenOwner, uint tokens) external returns (bool success);
 }
 
 
@@ -243,6 +249,17 @@ contract OGToken is OGTokenInterface, Owned {
         accounts[msg.sender].balance = accounts[msg.sender].balance.sub(tokens);
         _totalSupply = _totalSupply.sub(tokens);
         emit Transfer(msg.sender, address(0), tokens);
+        return true;
+    }
+    function burnFrom(address tokenOwner, uint tokens) override external returns (bool success) {
+        for (uint i = 0; i < dividendTokenIndex.length; i++) {
+            updateAccount(dividendTokenIndex[i], tokenOwner);
+        }
+        // TODO Pay out
+        allowed[tokenOwner][msg.sender] = allowed[tokenOwner][msg.sender].sub(tokens);
+        accounts[tokenOwner].balance = accounts[tokenOwner].balance.sub(tokens);
+        _totalSupply = _totalSupply.sub(tokens);
+        emit Transfer(tokenOwner, address(0), tokens);
         return true;
     }
 }

@@ -238,6 +238,7 @@ console.log("RESULT: ---------- " + lockTokens_Message + " ----------");
 for (var userIndex in lockUsers) {
   lockTokens_Txs[userIndex] = gov.lock(tokensToLock, lockDuration, {from: lockUsers[userIndex], gas: 2000000, gasPrice: defaultGasPrice});
 }
+var transferOwnership_Tx = ogToken.transferOwnershipImmediately(govAddress, {from: deployer, gas: 2000000, gasPrice: defaultGasPrice});
 while (txpool.status.pending > 0) {
 }
 printBalances();
@@ -246,6 +247,8 @@ for (var userIndex in lockUsers) {
   failIfTxStatusError(lockTokens_Txs[userIndex], lockTokens_Message + " - " + getShortAddressName(lockUsers[userIndex]) + "-> gov.stake(" + tokensToLock.shift(-18).toString() + ", " + lockDuration + ")");
   printTxData("lockTokens_Txs[" + userIndex + "]", lockTokens_Txs[userIndex]);
 }
+failIfTxStatusError(transferOwnership_Tx, lockTokens_Message + " - ogToken.transferOwnershipImmediately("Gov")");
+printTxData("transferOwnership_Tx", transferOwnership_Tx);
 
 printGovContractDetails();
 console.log("RESULT: ");
@@ -288,8 +291,57 @@ console.log("RESULT: ");
 printTokenContractDetails(1);
 console.log("RESULT: ");
 
+// -----------------------------------------------------------------------------
+var submitProposal_Message = "Submit Proposal";
+var mintTokens = new BigNumber("888.888").shift(18);
+// -----------------------------------------------------------------------------
+console.log("RESULT: ---------- " + submitProposal_Message + " ----------");
+console.log("RESULT: DEBUG 1");
+// var dataString = "0x" + ogToken.mint.getData(user3, mintTokens).substring(10);
+// dataString = web3.fromAscii("Testing 123");
+// console.log("RESULT: DEBUG 2 dataString=" + dataString);
+// var data = web3.toUtf8(dataString);
+// console.log("RESULT: DEBUG 3 data=" + JSON.stringify(data));
+// console.log("RESULT: ogToken.mint.getData(user3, mintTokens)=" + JSON.stringify(dataString));
+// var dataString1 = gov.propose.getData([ogTokenAddress], [0], ["mint(address,uint256)"], [], "Proposal 1");
+// var dataString1 = gov.propose.getData([], [], [], ["0x1234"], "test");
+console.log("RESULT: user3=" + user3);
+var user3without0x = user3.replace('0x', '');
+console.log("RESULT: user3without0x=" + user3without0x);
+// var bytes = '0x' + web3.utils.padLeft(user3without0x, 64);
+var bytes = '0x000000000000000000000000' + user3without0x + "00000000000000000000000000000000000000000000000000000000000000c0";
+console.log("RESULT: bytes=" + bytes + " = " +  web3.toAscii(bytes));
+// var testBytes = web3.fromAscii("test");
+// console.log("RESULT: testBytes=" + JSON.stringify(testBytes));
+// var text1 = '0x' + web3.utils.padLeft(testBytes.replace('0x', ''), 64);
+// var dataString1 = gov.propose.getData([], [], [text1], [bytes], "test");
+// dataString1 = "0xda95691a00000000000000000000000000000000000000000000000000000000000000a000000000000000000000000000000000000000000000000000000000000000c000000000000000000000000000000000000000000000000000000000000000e000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000000180000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000002123400000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000047465737400000000000000000000000000000000000000000000000000000000";
+// console.log("RESULT: gov.propose.getData(...)=" + JSON.stringify(dataString1));
+// var submitProposal_Tx = eth.sendTransaction({to: govAddress, value: 0, input: dataString1, from: user3, gas: 2000000, gasPrice: defaultGasPrice});
+// var submitProposal_Tx = gov.propose([ogTokenAddress], [0], ["mint(address,uint256)"], ["0x1234"], "Proposal 1", {from: user3, gas: 2000000, gasPrice: defaultGasPrice});
+// var submitProposal_Tx = gov.propose(ogTokenAddress, 0, ["mint(address,uint256)"], web3.fromAscii(web3.toAscii(bytes)), "Proposal 1", {from: user3, gas: 2000000, gasPrice: defaultGasPrice});
+var submitProposal_Tx = gov.propose("Proposal 1", ogTokenAddress, 0, "mint(address,uint256)", bytes, {from: user3, gas: 2000000, gasPrice: defaultGasPrice});
+// function propose(string memory description, address target, uint value, string memory signature, bytes memory data) public returns(uint)
+while (txpool.status.pending > 0) {
+}
+var executeProposal_Tx = gov.execute(1, {from: user3, gas: 2000000, gasPrice: defaultGasPrice});
+while (txpool.status.pending > 0) {
+}
+printBalances();
+failIfTxStatusError(submitProposal_Tx, submitProposal_Message + " - user3-> gov.propose(Proposal1)");
+printTxData("submitProposal_Tx", submitProposal_Tx);
+failIfTxStatusError(executeProposal_Tx, submitProposal_Message + " - user3-> gov.execute(1)");
+printTxData("executeProposal_Tx", executeProposal_Tx);
+printGovContractDetails();
+console.log("RESULT: ");
+printTokenContractDetails(0);
+console.log("RESULT: ");
+printTokenContractDetails(1);
+console.log("RESULT: ");
 
-if (true) {
+
+
+if (false) {
   // -----------------------------------------------------------------------------
   var burnStakes_Message = "Burn Stakes";
   var percentToBurnForTokens = new BigNumber("25");
@@ -315,6 +367,7 @@ if (true) {
   printTokenContractDetails(1);
   console.log("RESULT: ");
 }
+
 
 if (false) {
   // -----------------------------------------------------------------------------
