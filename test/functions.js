@@ -461,8 +461,10 @@ function printGovContractDetails() {
     var rewardsPerSecond = contract.rewardsPerSecond.call();
     console.log("RESULT: gov.rewardsPerSecond=" + rewardsPerSecond.shift(-18) + " /day=" + rewardsPerSecond.mul(60).mul(60).mul(24).shift(-18) + " /year=" + rewardsPerSecond.mul(60).mul(60).mul(24).mul(365).shift(-18));
     console.log("RESULT: gov.proposalCost=" + contract.proposalCost.call().shift(-18));
-    console.log("RESULT: gov.proposalThreshold=" + contract.proposalThreshold.call().shift(-4) + "%");
-    console.log("RESULT: gov.quorum=" + contract.quorum.call().shift(-4) + "%");
+    console.log("RESULT: gov.proposalThreshold=" + contract.proposalThreshold.call().shift(-16) + "%");
+    console.log("RESULT: gov.quorum=" + contract.quorum.call().shift(-16) + "%");
+    var quorumDecayPerSecond = contract.quorumDecayPerSecond.call();
+    console.log("RESULT: gov.quorumDecayPerSecond=" + quorumDecayPerSecond.shift(-16) + "%" + " /year=" + quorumDecayPerSecond.mul(60).mul(60).mul(24).mul(365).shift(-16));
     console.log("RESULT: gov.votingDuration=" + contract.votingDuration.call() + " seconds");
     console.log("RESULT: gov.executeDelay=" + contract.executeDelay.call() + " seconds");
     console.log("RESULT: gov.rewardPool=" + contract.rewardPool.call().shift(-18));

@@ -35,6 +35,7 @@ rsync -rp $SOURCEDIR/*.sol . --exclude=Multisig.sol --exclude=test/ # */
 
 # --- Modify parameters ---
 `perl -pi -e "s/365 days/10000/" $GOVSOL`
+`perl -pi -e "s/external onlySelf/external/" $GOVSOL`
 
 # ../scripts/solidityFlattener.pl --contractsdir=$SOURCEDIR --mainsol=$MINTABLETOKENSOL --outputsol=$TESTTOKENFLATTENED --verbose | tee -a $TEST1OUTPUT
 # ../scripts/solidityFlattener.pl --contractsdir=$SOURCEDIR --mainsol=$MAKERDAOFEEDSOL --outputsol=$MAKERDAOFEEDFLATTENED --verbose | tee -a $TEST1OUTPUT

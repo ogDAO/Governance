@@ -209,7 +209,7 @@ contract OGToken is OGTokenInterface, Owned {
             // emit LogInfo("updateAccount: accounts[account].lastDividendPoints[dividendToken] after", accounts[account].lastDividendPoints[dividendToken], 0x0, "", account);
             accounts[account].owing[dividendToken] = accounts[account].owing[dividendToken].add(owing);
         }
-        emit UpdateAccountInfo(dividendToken, account, owing, accounts[account].owing[dividendToken], accounts[account].lastDividendPoints[dividendToken], totalDividendPoints[dividendToken], unclaimedDividends[dividendToken]);
+        // emit UpdateAccountInfo(dividendToken, account, owing, accounts[account].owing[dividendToken], accounts[account].lastDividendPoints[dividendToken], totalDividendPoints[dividendToken], unclaimedDividends[dividendToken]);
     }
     function depositDividends(address dividendToken, uint dividends) public {
         // emit LogInfo("depositDividends: dividendToken", 0, 0x0, "", dividendToken);

@@ -71,39 +71,20 @@ contract OptinoGov {
         uint staked;
         mapping(bytes32 => uint) stakes;
     }
-
-    // Token
-    // - dataType 1
-    // - address tokenAddress
-    // Feed
-    // - dataType 2
-    // - address feedAddress
-    // - uint feedType
-    // - uint feedDecimals
-    // - string name
-    // Conventions
-    // - dataType 3
-    // - address [token0, token1];
-    // - address [feed0, feed1]
-    // - uint[6] [type0, type1, decimals0, decimals1, inverse0, inverse1]
-    // - string [feed0Name, feedName2, Market, Convention]
-    // General
-    // - dataType 4
-    // - address[4] addresses;
-    // - address [feed0, feed1]
-    // - uint[6] uints;
-    // - string[4] strings;
+    // Token { dataType 1, address tokenAddress }
+    // Feed { dataType 2, address feedAddress, uint feedType, uint feedDecimals, string name }
+    // Conventions { dataType 3, address [token0, token1], address [feed0, feed1], uint[6] [type0, type1, decimals0, decimals1, inverse0, inverse1], string [feed0Name, feedName2, Market, Convention] }
+    // General { dataType 4, address[4] addresses, address [feed0, feed1], uint[6] uints, string[4] strings }
     struct StakeInfo {
         uint dataType;
         address[4] addresses;
         uint[6] uints;
         string[4] strings;
     }
-
     struct Proposal {
         uint start;
         address proposer;
-        string description; // Use an IPFS link to JSON data - OK
+        string description;
         address[] targets;
         bytes[] data;
         uint forVotes;
@@ -115,9 +96,10 @@ contract OptinoGov {
     OGTokenInterface public token;
     uint public maxLockTerm = 10000;
     uint public rewardsPerSecond = 150000000000000000;
-    uint public proposalCost = 100000000000000000000; // 100 tokens
-    uint public proposalThreshold = 100; // 6 decimals, so this is 0.1%
-    uint public quorum = 200000; // 6 decimals, so this is 20%
+    uint public proposalCost = 100000000000000000000; // 100 tokens assuming 18 decimals
+    uint public proposalThreshold = 1 * 10 ** 15; // 0.1%, 18 decimals
+    uint public quorum = 2 * 10 ** 17; // 20%, 18 decimals
+    uint public quorumDecayPerSecond = 4 * 10 ** 17 / uint(60 * 60 * 24 * 365); // 40% per year, i.e., 0 in 6 months
     uint public votingDuration = 3 hours; // 3 days;
     uint public executeDelay = 2 hours; // 2 days;
     uint public rewardPool;
@@ -133,6 +115,7 @@ contract OptinoGov {
     event ProposalCostUpdated(uint proposalCost);
     event ProposalThresholdUpdated(uint proposalThreshold);
     event QuorumUpdated(uint quorum);
+    event QuorumDecayPerSecondUpdated(uint quorumDecayPerSecond);
     event VotingDurationUpdated(uint votingDuration);
     event ExecuteDelayUpdated(uint executeDelay);
 
@@ -147,41 +130,43 @@ contract OptinoGov {
     event Voted(address indexed user, uint oip, bool voteFor, uint forVotes, uint againstVotes);
     event Executed(address indexed user, uint oip);
 
-
     modifier onlySelf {
         require(msg.sender == address(this), "Not self");
         _;
     }
 
-
     constructor(OGTokenInterface token_) {
         token = token_;
     }
-    function setMaxLockTerm(uint _maxLockTerm) external onlySelf {
+    function setMaxLockTerm(uint _maxLockTerm) external {
         maxLockTerm = _maxLockTerm;
         emit MaxLockTermUpdated(maxLockTerm);
     }
-    function setRewardsPerSecond(uint _rewardsPerSecond) external onlySelf {
+    function setRewardsPerSecond(uint _rewardsPerSecond) external {
         rewardsPerSecond = _rewardsPerSecond;
         emit RewardsPerSecondUpdated(rewardsPerSecond);
     }
-    function setProposalCost(uint _proposalCost) external onlySelf {
+    function setProposalCost(uint _proposalCost) external {
         proposalCost = _proposalCost;
         emit ProposalCostUpdated(proposalCost);
     }
-    function setProposalThreshold(uint _proposalThreshold) external onlySelf {
+    function setProposalThreshold(uint _proposalThreshold) external {
         proposalThreshold = _proposalThreshold;
         emit ProposalThresholdUpdated(proposalThreshold);
     }
-    function setQuorum(uint _quorum) external onlySelf {
+    function setQuorum(uint _quorum) external {
         quorum = _quorum;
         emit QuorumUpdated(quorum);
     }
-    function setVotingDuration(uint _votingDuration) external onlySelf {
+    function setQuorumDecayPerSecond(uint _quorumDecayPerSecond) external {
+        quorumDecayPerSecond = _quorumDecayPerSecond;
+        emit QuorumDecayPerSecondUpdated(quorumDecayPerSecond);
+    }
+    function setVotingDuration(uint _votingDuration) external {
         votingDuration = _votingDuration;
         emit VotingDurationUpdated(votingDuration);
     }
-    function setExecuteDelay(uint _executeDelay) external onlySelf {
+    function setExecuteDelay(uint _executeDelay) external {
         executeDelay = _executeDelay;
         emit ExecuteDelayUpdated(executeDelay);
     }
@@ -259,7 +244,7 @@ contract OptinoGov {
         emit Unstaked(msg.sender, tokens, lock.stakes[stakingKey], stakingKey);
     }
 
-    function burnStake(address[] calldata tokenOwners, bytes32 stakingKey, uint percent) external onlySelf {
+    function burnStake(address[] calldata tokenOwners, bytes32 stakingKey, uint percent) external {
         for (uint i = 0; i < tokenOwners.length; i++) {
             address tokenOwner = tokenOwners[i];
             Lock storage lock = locks[tokenOwner];
@@ -348,7 +333,7 @@ contract OptinoGov {
     }
 
     function propose(string memory description, address[] memory targets, bytes[] memory data) public returns(uint) {
-        require(locks[msg.sender].votes >= totalVotes.mul(proposalThreshold).div(1e6), "OptinoGov: Not enough votes to propose");
+        require(locks[msg.sender].votes >= totalVotes.mul(proposalThreshold).div(10 ** 18), "OptinoGov: Not enough votes to propose");
 
         proposalCount++;
 
@@ -386,7 +371,14 @@ contract OptinoGov {
     function execute(uint oip) public {
         Proposal storage proposal = proposals[oip];
         require(proposal.start != 0 && block.timestamp >= proposal.start.add(votingDuration).add(executeDelay));
-        require(proposal.forVotes >= totalVotes.mul(quorum).div(1e6), "OptinoGov: Not enough votes to execute");
+
+        // if (quorum > currentTime.sub(proposalTime).mul(quorumDecayPerWeek).div(1 weeks)) {
+        //     return quorum.sub(currentTime.sub(proposalTime).mul(quorumDecayPerWeek).div(1 weeks));
+        // } else {
+        //     return 0;
+        // }
+
+        require(proposal.forVotes >= totalVotes.mul(quorum).div(10 ** 18), "OptinoGov: Not enough votes to execute");
         proposal.executed = true;
 
         for (uint i = 0; i < proposal.targets.length; i++) {
