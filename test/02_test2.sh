@@ -2,7 +2,7 @@
 # ----------------------------------------------------------------------------------------------
 # Testing the smart contract
 #
-# Enjoy. (c) BokkyPooBah / Bok Consulting Pty Ltd 2019. The MIT Licence.
+# Enjoy. (c) BokkyPooBah / Bok Consulting Pty Ltd 2019. The GPLv2 Licence.
 # ----------------------------------------------------------------------------------------------
 
 # echo "Options: [full|takerSell|takerBuy|exchange]"
@@ -34,7 +34,8 @@ rsync -rp $SOURCEDIR/*.sol . --exclude=Multisig.sol --exclude=test/ # */
 # find ./modifiedContracts -type f -name \* -exec cp {} . \;
 
 # --- Modify parameters ---
-# `perl -pi -e "s/openzeppelin-solidity/\.\.\/\.\.\/openzeppelin-solidity/" token/dataStorage/*.sol`
+`perl -pi -e "s/365 days/10000/" $GOVSOL`
+`perl -pi -e "s/external onlySelf/external/" $GOVSOL`
 
 # ../scripts/solidityFlattener.pl --contractsdir=$SOURCEDIR --mainsol=$MINTABLETOKENSOL --outputsol=$TESTTOKENFLATTENED --verbose | tee -a $TEST2OUTPUT
 # ../scripts/solidityFlattener.pl --contractsdir=$SOURCEDIR --mainsol=$MAKERDAOFEEDSOL --outputsol=$MAKERDAOFEEDFLATTENED --verbose | tee -a $TEST2OUTPUT
@@ -42,9 +43,9 @@ rsync -rp $SOURCEDIR/*.sol . --exclude=Multisig.sol --exclude=test/ # */
 # ../scripts/solidityFlattener.pl --contractsdir=$SOURCEDIR --mainsol=$OPTINOFACTORYSOL --outputsol=$OPTINOFACTORYFLATTENED --verbose | tee -a $TEST2OUTPUT
 
 
-# DIFFS1=`diff -r -x '*.js' -x '*.json' -x '*.txt' -x 'testchain' -x '*.md' -x '*.sh' -x 'settings' -x 'modifiedContracts' $SOURCEDIR .`
-# echo "--- Differences $SOURCEDIR/*.sol *.sol ---" | tee -a $TEST2OUTPUT
-# echo "$DIFFS1" | tee -a $TEST2OUTPUT
+DIFFS1=`diff -r -x '*.js' -x '*.json' -x '*.txt' -x 'testchain' -x '*.md' -x '*.sh' -x 'settings' -x 'modifiedContracts' $SOURCEDIR .`
+echo "--- Differences $SOURCEDIR/*.sol *.sol ---" | tee -a $TEST2OUTPUT
+echo "$DIFFS1" | tee -a $TEST2OUTPUT
 
 solc_0.7.1 --version | tee -a $TEST2OUTPUT
 
@@ -125,6 +126,27 @@ var ogToken = ogTokenContract.new(ogTokenSymbol, ogTokenName, ogTokenDecimals, o
     }
   }
 );
+var testTokenContract = web3.eth.contract(testTokenAbi);
+// console.log("DATA: testTokenContract=" + JSON.stringify(testTokenContract));
+var testTokenTx = null;
+var testTokenAddress = null;
+var testToken = testTokenContract.new(testTokenSymbol, testTokenName, testTokenDecimals, testTokenOwner, testTokenInitialSupply, {from: deployer, data: testTokenBin, gas: 4000000, gasPrice: defaultGasPrice},
+  function(e, contract) {
+    if (!e) {
+      if (!contract.address) {
+        testTokenTx = contract.transactionHash;
+      } else {
+        testTokenAddress = contract.address;
+        addAccount(testTokenAddress, "'" + testToken.symbol.call() + "' '" + testToken.name.call() + "'");
+        addAddressSymbol(testTokenAddress, "'" + testToken.symbol.call() + "' '" + testToken.name.call() + "'");
+        addTokenContractAddressAndAbi(1, testTokenAddress, testTokenAbi);
+        console.log("DATA: var testTokenAddress=\"" + testTokenAddress + "\";");
+        console.log("DATA: var testTokenAbi=" + JSON.stringify(testTokenAbi) + ";");
+        console.log("DATA: var testToken=eth.contract(testTokenAbi).at(testTokenAddress);");
+      }
+    }
+  }
+);
 while (txpool.status.pending > 0) {
 }
 var govContract = web3.eth.contract(govAbi);
@@ -150,38 +172,21 @@ var gov = govContract.new(ogTokenAddress, {from: deployer, data: govBin, gas: 60
     }
   }
 );
-while (txpool.status.pending > 0) {
-}
-var testTokenContract = web3.eth.contract(testTokenAbi);
-// console.log("DATA: testTokenContract=" + JSON.stringify(testTokenContract));
-var testTokenTx = null;
-var testTokenAddress = null;
-var testToken = testTokenContract.new(testTokenSymbol, testTokenName, testTokenDecimals, testTokenOwner, testTokenInitialSupply, {from: deployer, data: testTokenBin, gas: 4000000, gasPrice: defaultGasPrice},
-  function(e, contract) {
-    if (!e) {
-      if (!contract.address) {
-        testTokenTx = contract.transactionHash;
-      } else {
-        testTokenAddress = contract.address;
-        addAccount(testTokenAddress, "'" + testToken.symbol.call() + "' '" + testToken.name.call() + "'");
-        addAddressSymbol(testTokenAddress, "'" + testToken.symbol.call() + "' '" + testToken.name.call() + "'");
-        addTokenContractAddressAndAbi(1, testTokenAddress, testTokenAbi);
-        console.log("DATA: var testTokenAddress=\"" + testTokenAddress + "\";");
-        console.log("DATA: var testTokenAbi=" + JSON.stringify(testTokenAbi) + ";");
-        console.log("DATA: var testToken=eth.contract(testTokenAbi).at(testTokenAddress);");
-      }
-    }
-  }
-);
+var addDividendToken1_Tx = ogToken.addDividendToken(NULLACCOUNT, {from: deployer, gas: 2000000, gasPrice: defaultGasPrice});
+var addDividendToken2_Tx = ogToken.addDividendToken(testTokenAddress, {from: deployer, gas: 2000000, gasPrice: defaultGasPrice});
 while (txpool.status.pending > 0) {
 }
 printBalances();
 failIfTxStatusError(ogTokenTx, deployGroup1_Message + " - OGToken");
 printTxData("ogTokenTx", ogTokenTx);
-failIfTxStatusError(govTx, deployGroup1_Message + " - Gov");
-printTxData("govTx", govTx);
 failIfTxStatusError(testTokenTx, deployGroup1_Message + " - TestToken");
 printTxData("testTokenTx", testTokenTx);
+failIfTxStatusError(govTx, deployGroup1_Message + " - Gov");
+printTxData("govTx", govTx);
+failIfTxStatusError(addDividendToken1_Tx, deployGroup1_Message + " - ogToken.addDividendToken(0x00)");
+printTxData("addDividendToken1_Tx", addDividendToken1_Tx);
+failIfTxStatusError(addDividendToken2_Tx, deployGroup1_Message + " - ogToken.addDividendToken(TEST)");
+printTxData("addDividendToken2_Tx", addDividendToken2_Tx);
 printGovContractDetails();
 console.log("RESULT: ");
 printTokenContractDetails(0);
@@ -193,26 +198,53 @@ console.log("RESULT: ");
 // -----------------------------------------------------------------------------
 var distributeAndApproveTokens_Message = "Distribute And Approve Tokens";
 var ogTokensToDistribute = new BigNumber("1000").shift(18);
-var ogTokensToApprove = new BigNumber("100").shift(18);
+var ogTokensToApprove = new BigNumber("1000").shift(18);
 var distApproveUsers = [user1, user2, user3, user4];
 var distributeTokens_Txs = [];
 var approveTokens_Txs = [];
 // -----------------------------------------------------------------------------
 console.log("RESULT: ---------- " + distributeAndApproveTokens_Message + " ----------");
-
 for (var userIndex in distApproveUsers) {
   distributeTokens_Txs[userIndex] = ogToken.mint(distApproveUsers[userIndex], ogTokensToDistribute, {from: deployer, gas: 2000000, gasPrice: defaultGasPrice});
   approveTokens_Txs[userIndex] = ogToken.approve(govAddress, ogTokensToApprove, {from: distApproveUsers[userIndex], gas: 2000000, gasPrice: defaultGasPrice});
 }
 while (txpool.status.pending > 0) {
 }
+var approveTokens_Txs[userIndex] = ogToken.approve(govAddress, ogTokensToApprove, {from: distApproveUsers[userIndex], gas: 2000000, gasPrice: defaultGasPrice});
+printBalances();
+for (var userIndex in distApproveUsers) {
+  failIfTxStatusError(distributeTokens_Txs[userIndex], distributeAndApproveTokens_Message + " - ogToken.mint(" + getShortAddressName(distApproveUsers[userIndex]) + ", " + ogTokensToDistribute.shift(-18).toString() + ")");
+  printTxData("distributeTokens_Txs[" + userIndex + "]", distributeTokens_Txs[userIndex]);
+  failIfTxStatusError(approveTokens_Txs[userIndex], distributeAndApproveTokens_Message + " - ogToken.approve(" + getShortAddressName(govAddress) + ", " + ogTokensToApprove.shift(-18).toString() + ")");
+  printTxData("approveTokens_Txs[" + userIndex + "]", approveTokens_Txs[userIndex]);
+}
+printGovContractDetails();
+console.log("RESULT: ");
+printTokenContractDetails(0);
+console.log("RESULT: ");
+printTokenContractDetails(1);
+console.log("RESULT: ");
+
+
+// -----------------------------------------------------------------------------
+var lockTokens_Message = "Lock Tokens";
+var tokensToLock = new BigNumber("300").shift(18);
+var lockDuration = 100; // 60 * 60 * 24 * 365; // 365 day
+var lockUsers = [user1, user2, user3, user1]; // double for user1
+var lockTokens_Txs = [];
+// -----------------------------------------------------------------------------
+console.log("RESULT: ---------- " + lockTokens_Message + " ----------");
+
+for (var userIndex in lockUsers) {
+  lockTokens_Txs[userIndex] = gov.lock(tokensToLock, lockDuration, {from: lockUsers[userIndex], gas: 2000000, gasPrice: defaultGasPrice});
+}
+while (txpool.status.pending > 0) {
+}
 printBalances();
 
-for (var userIndex in distApproveUsers) {
-  failIfTxStatusError(distributeTokens_Txs[userIndex], distributeAndApproveTokens_Message + " - ogToken.mint(" + distApproveUsers[userIndex] + ", " + ogTokensToDistribute.shift(-18).toString() + ")");
-  printTxData("distributeTokens_Txs[" + userIndex + "]", distributeTokens_Txs[userIndex]);
-  failIfTxStatusError(approveTokens_Txs[userIndex], distributeAndApproveTokens_Message + " - ogToken.approve(" + govAddress + ", " + ogTokensToApprove.shift(-18).toString() + ")");
-  printTxData("approveTokens_Txs[" + userIndex + "]", approveTokens_Txs[userIndex]);
+for (var userIndex in lockUsers) {
+  failIfTxStatusError(lockTokens_Txs[userIndex], lockTokens_Message + " - " + getShortAddressName(lockUsers[userIndex]) + "-> gov.stake(" + tokensToLock.shift(-18).toString() + ", " + lockDuration + ")");
+  printTxData("lockTokens_Txs[" + userIndex + "]", lockTokens_Txs[userIndex]);
 }
 
 printGovContractDetails();
@@ -225,22 +257,21 @@ console.log("RESULT: ");
 
 // -----------------------------------------------------------------------------
 var stakeTokens_Message = "Stake Tokens";
-var ogTokensToStake = new BigNumber("10").shift(18);
-var stakeDuration = 100000; // 60 * 60 * 24 * 365; // 365 day
-var stakeUsers = [user1, user2, user3, user1]; // double for user1
+var tokensToStake = new BigNumber("10").shift(18);
+var stakeUsers = [user1, user2, user3];
 var stakeTokens_Txs = [];
 // -----------------------------------------------------------------------------
 console.log("RESULT: ---------- " + stakeTokens_Message + " ----------");
 
 for (var userIndex in stakeUsers) {
-  stakeTokens_Txs[userIndex] = gov.stake(ogTokensToStake, stakeDuration, {from: stakeUsers[userIndex], gas: 2000000, gasPrice: defaultGasPrice});
+  stakeTokens_Txs[userIndex] = gov.addStakeForToken(tokensToStake, testTokenAddress, "Testing", {from: stakeUsers[userIndex], gas: 2000000, gasPrice: defaultGasPrice});
 }
 while (txpool.status.pending > 0) {
 }
 printBalances();
 
 for (var userIndex in stakeUsers) {
-  failIfTxStatusError(stakeTokens_Txs[userIndex], stakeTokens_Message + " - " + stakeUsers[userIndex] + "-> gov.stake(" + ogTokensToStake.shift(-18).toString() + ", " + stakeDuration + ")");
+  failIfTxStatusError(stakeTokens_Txs[userIndex], stakeTokens_Message + " - " + getShortAddressName(stakeUsers[userIndex]) + "-> gov.addStakeForToken(" + tokensToStake.shift(-18).toString() + ", " + getShortAddressName(testTokenAddress) + ")");
   printTxData("stakeTokens_Txs[" + userIndex + "]", stakeTokens_Txs[userIndex]);
 }
 
@@ -253,22 +284,22 @@ console.log("RESULT: ");
 
 
 // -----------------------------------------------------------------------------
-var collectRewards_Message = "Collect Rewards";
-var collectRewardUsers = [user3];
-var collectReward_Txs = [];
+var collectLockRewards_Message = "Collect Lock Rewards";
+var collectLockRewardUsers = [user3];
+var collectLockReward_Txs = [];
 // -----------------------------------------------------------------------------
-console.log("RESULT: ---------- " + collectRewards_Message + " ----------");
+console.log("RESULT: ---------- " + collectLockRewards_Message + " ----------");
 
-for (var userIndex in collectRewardUsers) {
-  collectReward_Txs[userIndex] = gov.collect({from: collectRewardUsers[userIndex], gas: 2000000, gasPrice: defaultGasPrice});
+for (var userIndex in collectLockRewardUsers) {
+  collectLockReward_Txs[userIndex] = gov.collectLockReward({from: collectLockRewardUsers[userIndex], gas: 2000000, gasPrice: defaultGasPrice});
 }
 while (txpool.status.pending > 0) {
 }
 printBalances();
 
-for (var userIndex in collectRewardUsers) {
-  failIfTxStatusError(collectReward_Txs[userIndex], collectRewards_Message + " - " + getShortAddressName(collectRewardUsers[userIndex]) + "-> gov.collect()");
-  printTxData("collectReward_Txs[" + userIndex + "]", collectReward_Txs[userIndex]);
+for (var userIndex in collectLockRewardUsers) {
+  failIfTxStatusError(collectLockReward_Txs[userIndex], collectLockRewards_Message + " - " + getShortAddressName(collectLockRewardUsers[userIndex]) + "-> gov.collect()");
+  printTxData("collectLockReward_Txs[" + userIndex + "]", collectLockReward_Txs[userIndex]);
 }
 
 printGovContractDetails();

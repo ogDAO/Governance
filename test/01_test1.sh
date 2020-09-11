@@ -2,7 +2,7 @@
 # ----------------------------------------------------------------------------------------------
 # Testing the smart contract
 #
-# Enjoy. (c) BokkyPooBah / Bok Consulting Pty Ltd 2019. The MIT Licence.
+# Enjoy. (c) BokkyPooBah / Bok Consulting Pty Ltd 2019. The GPLv2 Licence.
 # ----------------------------------------------------------------------------------------------
 
 # echo "Options: [full|takerSell|takerBuy|exchange]"
@@ -90,7 +90,7 @@ console.log("RESULT: ");
 var deployGroup1_Message = "Deploy Group #1 - Contracts";
 
 var ogTokenDecimals = 18;
-var ogTokenSymbol = 'OG';
+var ogTokenSymbol = 'OGToken';
 var ogTokenName = "Optino Governance Token (" + ogTokenDecimals + " dp)";
 var ogTokenOwner = deployer;
 var ogTokenInitialSupply = new BigNumber("0").shift(18);
@@ -160,8 +160,8 @@ var gov = govContract.new(ogTokenAddress, {from: deployer, data: govBin, gas: 60
         govTx = contract.transactionHash;
       } else {
         govAddress = contract.address;
-        addAccount(govAddress, "Gov DAO");
-        addAddressSymbol(govAddress, "Gov DAO");
+        addAccount(govAddress, "OptinoGov");
+        addAddressSymbol(govAddress, "OptinoGov");
         addGovContractAddressAndAbi(govAddress, govAbi);
         console.log("DATA: var govAddress=\"" + govAddress + "\";");
         console.log("DATA: var govAbi=" + JSON.stringify(govAbi) + ";");
@@ -257,22 +257,28 @@ console.log("RESULT: ");
 
 // -----------------------------------------------------------------------------
 var stakeTokens_Message = "Stake Tokens";
-var tokensToStake = new BigNumber("10").shift(18);
+var tokensToStakeForTokens = new BigNumber("10").shift(18);
+var tokensToStakeForFeeds = new BigNumber("15").shift(18);
 var stakeUsers = [user1, user2, user3];
-var stakeTokens_Txs = [];
+var stakeTokensForTokens_Txs = [];
+var stakeTokensForFeed_Txs = [];
+var FEEDADDRESS = "0xfeedfeedfeedfeedfeedfeedfeedfeedfeedfeed";
 // -----------------------------------------------------------------------------
 console.log("RESULT: ---------- " + stakeTokens_Message + " ----------");
 
 for (var userIndex in stakeUsers) {
-  stakeTokens_Txs[userIndex] = gov.addStakeForToken(tokensToStake, testTokenAddress, "Testing", {from: stakeUsers[userIndex], gas: 2000000, gasPrice: defaultGasPrice});
+  stakeTokensForTokens_Txs[userIndex] = gov.addStakeForToken(tokensToStakeForTokens, testTokenAddress, "Testing", {from: stakeUsers[userIndex], gas: 2000000, gasPrice: defaultGasPrice});
+  stakeTokensForFeed_Txs[userIndex] = gov.addStakeForFeed(tokensToStakeForFeeds, FEEDADDRESS, 1, 9, "Feed:ETH/USD", {from: stakeUsers[userIndex], gas: 2000000, gasPrice: defaultGasPrice});
 }
 while (txpool.status.pending > 0) {
 }
 printBalances();
 
 for (var userIndex in stakeUsers) {
-  failIfTxStatusError(stakeTokens_Txs[userIndex], stakeTokens_Message + " - " + getShortAddressName(stakeUsers[userIndex]) + "-> gov.addStakeForToken(" + tokensToStake.shift(-18).toString() + ", " + getShortAddressName(testTokenAddress) + ")");
-  printTxData("stakeTokens_Txs[" + userIndex + "]", stakeTokens_Txs[userIndex]);
+  failIfTxStatusError(stakeTokensForTokens_Txs[userIndex], stakeTokens_Message + " - " + getShortAddressName(stakeUsers[userIndex]) + "-> gov.addStakeForToken(" + tokensToStakeForTokens.shift(-18).toString() + ", " + getShortAddressName(testTokenAddress) + ")");
+  printTxData("stakeTokensForTokens_Txs[" + userIndex + "]", stakeTokensForTokens_Txs[userIndex]);
+  failIfTxStatusError(stakeTokensForFeed_Txs[userIndex], stakeTokens_Message + " - " + getShortAddressName(stakeUsers[userIndex]) + "-> gov.addStakeForFeed(" + tokensToStakeForFeeds.shift(-18).toString() + ", " + getShortAddressName(FEEDADDRESS) + ")");
+  printTxData("stakeTokensForFeed_Txs[" + userIndex + "]", stakeTokensForFeed_Txs[userIndex]);
 }
 
 printGovContractDetails();
@@ -283,31 +289,60 @@ printTokenContractDetails(1);
 console.log("RESULT: ");
 
 
-// -----------------------------------------------------------------------------
-var collectLockRewards_Message = "Collect Lock Rewards";
-var collectLockRewardUsers = [user3];
-var collectLockReward_Txs = [];
-// -----------------------------------------------------------------------------
-console.log("RESULT: ---------- " + collectLockRewards_Message + " ----------");
-
-for (var userIndex in collectLockRewardUsers) {
-  collectLockReward_Txs[userIndex] = gov.collectLockReward({from: collectLockRewardUsers[userIndex], gas: 2000000, gasPrice: defaultGasPrice});
+if (true) {
+  // -----------------------------------------------------------------------------
+  var burnStakes_Message = "Burn Stakes";
+  var percentToBurnForTokens = new BigNumber("25");
+  var percentToBurnForFeeds = new BigNumber("75");
+  var burnUsers = [user1, user2, user3];
+  // -----------------------------------------------------------------------------
+  console.log("RESULT: ---------- " + burnStakes_Message + " ----------");
+  var stakingKeyForToken = gov.stakeInfoIndex.call(0);
+  var stakingKeyForFeed = gov.stakeInfoIndex.call(1);
+  var burnForTokens_Tx = gov.burnStake(burnUsers, stakingKeyForToken, percentToBurnForTokens, {from: deployer, gas: 2000000, gasPrice: defaultGasPrice});
+  var burnForFeed_Tx = gov.burnStake(burnUsers, stakingKeyForFeed, percentToBurnForFeeds, {from: deployer, gas: 2000000, gasPrice: defaultGasPrice});
+  while (txpool.status.pending > 0) {
+  }
+  printBalances();
+  failIfTxStatusError(burnForTokens_Tx, burnStakes_Message + " - deployer-> gov.burnStake(" + JSON.stringify(burnUsers) + ", " + stakingKeyForToken + ", " + percentToBurnForTokens.toString() + "%)");
+  printTxData("burnForTokens_Tx", burnForTokens_Tx);
+  failIfTxStatusError(burnForFeed_Tx, burnStakes_Message + " - deployer-> gov.burnStake(" + JSON.stringify(burnUsers) + ", " + stakingKeyForFeed + ", " + percentToBurnForFeeds.toString() + "%)");
+  printTxData("burnForFeed_Tx", burnForFeed_Tx);
+  printGovContractDetails();
+  console.log("RESULT: ");
+  printTokenContractDetails(0);
+  console.log("RESULT: ");
+  printTokenContractDetails(1);
+  console.log("RESULT: ");
 }
-while (txpool.status.pending > 0) {
-}
-printBalances();
 
-for (var userIndex in collectLockRewardUsers) {
-  failIfTxStatusError(collectLockReward_Txs[userIndex], collectLockRewards_Message + " - " + getShortAddressName(collectLockRewardUsers[userIndex]) + "-> gov.collect()");
-  printTxData("collectLockReward_Txs[" + userIndex + "]", collectLockReward_Txs[userIndex]);
-}
+if (false) {
+  // -----------------------------------------------------------------------------
+  var collectLockRewards_Message = "Collect Lock Rewards";
+  var collectLockRewardUsers = [user3];
+  var collectLockReward_Txs = [];
+  // -----------------------------------------------------------------------------
+  console.log("RESULT: ---------- " + collectLockRewards_Message + " ----------");
 
-printGovContractDetails();
-console.log("RESULT: ");
-printTokenContractDetails(0);
-console.log("RESULT: ");
-printTokenContractDetails(1);
-console.log("RESULT: ");
+  for (var userIndex in collectLockRewardUsers) {
+    collectLockReward_Txs[userIndex] = gov.collectLockReward({from: collectLockRewardUsers[userIndex], gas: 2000000, gasPrice: defaultGasPrice});
+  }
+  while (txpool.status.pending > 0) {
+  }
+  printBalances();
+
+  for (var userIndex in collectLockRewardUsers) {
+    failIfTxStatusError(collectLockReward_Txs[userIndex], collectLockRewards_Message + " - " + getShortAddressName(collectLockRewardUsers[userIndex]) + "-> gov.collect()");
+    printTxData("collectLockReward_Txs[" + userIndex + "]", collectLockReward_Txs[userIndex]);
+  }
+
+  printGovContractDetails();
+  console.log("RESULT: ");
+  printTokenContractDetails(0);
+  console.log("RESULT: ");
+  printTokenContractDetails(1);
+  console.log("RESULT: ");
+}
 
 
 exit;

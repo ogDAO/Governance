@@ -56,7 +56,7 @@ interface ERC20 {
 /// @notice OGTokenInterface = ERC20 + mint + burn
 interface OGTokenInterface is ERC20 {
     function mint(address tokenOwner, uint tokens) external returns (bool success);
-    function burn(address tokenOwner, uint tokens) external returns (bool success);
+    function burn(uint tokens) external returns (bool success);
 }
 
 
@@ -251,7 +251,6 @@ contract OptinoGov {
     }
     function getStakeInfoByKey(bytes32 stakingKey) public view returns (uint dataType, address[4] memory addresses, uint[6] memory uints, string memory string0, string memory string1, string memory string2, string memory string3) {
         StakeInfo memory stakeInfo = stakeInfoData[stakingKey];
-        // (dataType, addresses, uints, strings) = (stakeInfo.dataType, stakeInfo.addresses, stakeInfo.uints, stakeInfo.strings);
         (dataType, addresses, uints) = (stakeInfo.dataType, stakeInfo.addresses, stakeInfo.uints);
         string0 = stakeInfo.string0;
         string1 = stakeInfo.string1;
@@ -269,16 +268,17 @@ contract OptinoGov {
             Lock storage lock = locks[tokenOwner];
             uint staked = lock.stakes[stakingKey];
             if (staked > 0) {
-                uint tokensToBurn = staked * percent / 100;
+                uint tokensToBurn = staked * percent / uint(100);
                 lock.staked = lock.staked.sub(tokensToBurn);
                 lock.stakes[stakingKey] = lock.stakes[stakingKey].sub(tokensToBurn);
-                require(token.burn(tokenOwner, tokensToBurn), "OptinoGov: burn failed");
+                lock.locked = lock.locked.sub(tokensToBurn);
+                require(token.burn(tokensToBurn), "OptinoGov: burn failed");
                 emit StakeBurnt(tokenOwner, tokensToBurn, lock.stakes[stakingKey], stakingKey);
             }
         }
     }
 
-    // Stake tokens and set a duration. If you already have a stake you cannot set a duration that ends before the current one.
+    // Lock tokens for a duration. If you already locked some tokens, you cannot set a duration that ends before the current one.
     function lock(uint tokens, uint duration) public {
         require(duration <= maxLockTerm, "OptinoGov: Cannot exceed maxLockTerm");
         Lock storage user = locks[msg.sender];
@@ -308,6 +308,7 @@ contract OptinoGov {
         emit Locked(msg.sender, tokens, user.locked, user.duration, user.end, user.votes, rewardPool, totalVotes);
     }
 
+    // TODO
     function collectLockReward() public {
         Lock storage user = locks[msg.sender];
         require(user.locked > 0);
@@ -329,6 +330,7 @@ contract OptinoGov {
     }
 
     // Unstake all and pay all rewards
+    // TODO
     function unlock() public {
         Lock storage user = locks[msg.sender];
         uint tokens = user.locked;
@@ -351,6 +353,7 @@ contract OptinoGov {
         emit Unlocked(msg.sender, payout, tokens, user.duration, user.end, user.votes, rewardPool, totalVotes);
     }
 
+    // TODO
     function propose(string memory description, address[] memory targets, bytes[] memory data) public returns(uint) {
         require(locks[msg.sender].votes >= totalVotes.mul(proposalThreshold).div(10 ** 18), "OptinoGov: Not enough votes to propose");
 
@@ -368,6 +371,7 @@ contract OptinoGov {
         return proposalCount;
     }
 
+    // TODO
     function vote(uint oip, bool voteFor) public {
         uint start = proposals[oip].start;
         require(start != 0 && block.timestamp < start.add(votingDuration), "OptinoGov: Voting closed");
