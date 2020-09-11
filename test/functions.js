@@ -470,12 +470,23 @@ function printGovContractDetails() {
     console.log("RESULT: gov.rewardPool=" + contract.rewardPool.call().shift(-18));
     console.log("RESULT: gov.totalVotes=" + contract.totalVotes.call().shift(-18));
     console.log("RESULT: gov.proposalCount=" + contract.proposalCount.call());
+    var stakeInfoLength = contract.stakeInfoLength.call();
+    for (var stakeInfo_i = 0; stakeInfo_i < stakeInfoLength; stakeInfo_i++) {
+      var stakeInfoKey = contract.stakeInfoIndex.call(stakeInfo_i);
+      var stakeInfo = contract.getStakeInfoByKey.call(stakeInfoKey);
+      console.log("RESULT: gov.getStakeInfoByKey[" + stakeInfoKey + "] =" + JSON.stringify(stakeInfo));
+    }
 
     // var users = [user1, user2, user3, user4];
     var users = [user1, user2, user3, user4];
     for (var userIndex in users) {
       var lock = contract.locks.call(users[userIndex]);
       console.log("RESULT: gov.locks[" + getShortAddressName(users[userIndex]) + "] balance=" + lock[2].shift(-18) + ", duration=" + lock[0] + ", end=" + lock[1] + " " + new Date(lock[1]*1000).toUTCString() + ", votes=" + lock[3].shift(-18).toString());
+      for (var stakeInfo_i = 0; stakeInfo_i < stakeInfoLength; stakeInfo_i++) {
+        var stakeInfoKey = contract.stakeInfoIndex.call(stakeInfo_i);
+        var staked = contract.getStaked.call(users[userIndex], stakeInfoKey);
+        console.log("RESULT:   gov.locks[" + getShortAddressName(users[userIndex]) + "].stake[" + stakeInfoKey + "] =" + staked + " " + staked.shift(-18));
+      }
     }
 
     // address public xs2token;
@@ -525,6 +536,13 @@ function printGovContractDetails() {
       console.log("RESULT: QuorumUpdated " + i++ + " #" + result.blockNumber + " " + JSON.stringify(result.args));
     });
     quorumUpdatedEvents.stopWatching();
+
+    var quorumDecayPerSecondUpdatedEvents = contract.QuorumDecayPerSecondUpdated({}, { fromBlock: _govFromBlock, toBlock: latestBlock });
+    i = 0;
+    quorumDecayPerSecondUpdatedEvents.watch(function (error, result) {
+      console.log("RESULT: QuorumDecayPerSecondUpdated " + i++ + " #" + result.blockNumber + " " + JSON.stringify(result.args));
+    });
+    quorumDecayPerSecondUpdatedEvents.stopWatching();
 
     var votingDurationUpdatedEvents = contract.VotingDurationUpdated({}, { fromBlock: _govFromBlock, toBlock: latestBlock });
     i = 0;

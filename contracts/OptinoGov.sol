@@ -79,7 +79,10 @@ contract OptinoGov {
         uint dataType;
         address[4] addresses;
         uint[6] uints;
-        string[4] strings;
+        string string0; // TODO: Check issues using string[4] strings
+        string string1;
+        string string2;
+        string string3;
     }
     struct Proposal {
         uint start;
@@ -120,7 +123,7 @@ contract OptinoGov {
     event ExecuteDelayUpdated(uint executeDelay);
 
     event Locked(address indexed user, uint tokens, uint balance, uint duration, uint end, uint votes, uint rewardPool, uint totalVotes);
-    event StakeInfoAdded(bytes32 stakingKey, uint dataType, address[4] addresses, uint[6] uints, string[4] stringsz);
+    event StakeInfoAdded(bytes32 stakingKey, uint dataType, address[4] addresses, uint[6] uints, string string0, string string1, string string2, string string3);
     event Staked(address tokenOwner, uint tokens, uint balance, bytes32 stakingKey);
     event Unstaked(address tokenOwner, uint tokens, uint balance, bytes32 stakingKey);
     event StakeBurnt(address tokenOwner, uint tokens, uint balance, bytes32 stakingKey);
@@ -171,27 +174,27 @@ contract OptinoGov {
         emit ExecuteDelayUpdated(executeDelay);
     }
 
-    function addStakeForToken(uint tokens, address tokenAddress) external {
-        bytes32 stakingKey = keccak256(abi.encodePacked(tokenAddress));
+    function addStakeForToken(uint tokens, address tokenAddress, string memory name) external {
+        bytes32 stakingKey = keccak256(abi.encodePacked(tokenAddress, name));
         StakeInfo memory stakeInfo = stakeInfoData[stakingKey];
         if (stakeInfo.dataType == 0) {
-            stakeInfoData[stakingKey] = StakeInfo(1, [tokenAddress, address(0), address(0), address(0)], [uint(0), uint(0), uint(0), uint(0), uint(0), uint(0)], ["", "", "", ""]);
+            stakeInfoData[stakingKey] = StakeInfo(1, [tokenAddress, address(0), address(0), address(0)], [uint(0), uint(0), uint(0), uint(0), uint(0), uint(0)], name, "", "", "");
             stakeInfoIndex.push(stakingKey);
-            emit StakeInfoAdded(stakingKey, 1, [tokenAddress, address(0), address(0), address(0)], [uint(0), uint(0), uint(0), uint(0), uint(0), uint(0)], ["", "", "", ""]);
+            emit StakeInfoAdded(stakingKey, 1, [tokenAddress, address(0), address(0), address(0)], [uint(0), uint(0), uint(0), uint(0), uint(0), uint(0)], name, "", "", "");
         }
         _addStake(tokens, stakingKey);
     }
-    function subStakeForToken(uint tokens, address tokenAddress) external {
-        bytes32 stakingKey = keccak256(abi.encodePacked(tokenAddress));
+    function subStakeForToken(uint tokens, address tokenAddress, string calldata name) external {
+        bytes32 stakingKey = keccak256(abi.encodePacked(tokenAddress, name));
         _subStake(tokens, stakingKey);
     }
     function addStakeForFeed(uint tokens, address feedAddress, uint feedType, uint feedDecimals, string calldata name) external {
         bytes32 stakingKey = keccak256(abi.encodePacked(feedAddress, feedType, feedDecimals, name));
         StakeInfo memory stakeInfo = stakeInfoData[stakingKey];
         if (stakeInfo.dataType == 0) {
-            stakeInfoData[stakingKey] = StakeInfo(2, [feedAddress, address(0), address(0), address(0)], [uint(feedType), uint(feedDecimals), uint(0), uint(0), uint(0), uint(0)], [name, "", "", ""]);
+            stakeInfoData[stakingKey] = StakeInfo(2, [feedAddress, address(0), address(0), address(0)], [uint(feedType), uint(feedDecimals), uint(0), uint(0), uint(0), uint(0)], name, "", "", "");
             stakeInfoIndex.push(stakingKey);
-            emit StakeInfoAdded(stakingKey, 2, [feedAddress, address(0), address(0), address(0)], [uint(feedType), uint(feedDecimals), uint(0), uint(0), uint(0), uint(0)], [name, "", "", ""]);
+            emit StakeInfoAdded(stakingKey, 2, [feedAddress, address(0), address(0), address(0)], [uint(feedType), uint(feedDecimals), uint(0), uint(0), uint(0), uint(0)], name, "", "", "");
         }
         _addStake(tokens, stakingKey);
     }
@@ -199,32 +202,32 @@ contract OptinoGov {
         bytes32 stakingKey = keccak256(abi.encodePacked(feedAddress, feedType, feedDecimals, name));
         _subStake(tokens, stakingKey);
     }
-    function addStakeForConvention(uint tokens, address[4] memory addresses, uint[6] memory uints, string[4] memory stringsz) external {
-        bytes32 stakingKey = keccak256(abi.encodePacked(addresses, uints, stringsz[0], stringsz[1], stringsz[2], stringsz[3]));
+    function addStakeForConvention(uint tokens, address[4] memory addresses, uint[6] memory uints, string[4] memory strings) external {
+        bytes32 stakingKey = keccak256(abi.encodePacked(addresses, uints, strings[0], strings[1], strings[2], strings[3]));
         StakeInfo memory stakeInfo = stakeInfoData[stakingKey];
         if (stakeInfo.dataType == 0) {
-            stakeInfoData[stakingKey] = StakeInfo(3, addresses, uints, stringsz);
+            stakeInfoData[stakingKey] = StakeInfo(3, addresses, uints, strings[0], strings[1], strings[2], strings[3]);
             stakeInfoIndex.push(stakingKey);
-            emit StakeInfoAdded(stakingKey, 3, addresses, uints, stringsz);
+            emit StakeInfoAdded(stakingKey, 3, addresses, uints, strings[0], strings[1], strings[2], strings[3]);
         }
         _addStake(tokens, stakingKey);
     }
-    function subStakeForConvention(uint tokens, address[4] memory addresses, uint[6] memory uints, string[4] memory stringsz) external {
-        bytes32 stakingKey = keccak256(abi.encodePacked(addresses, uints, stringsz[0], stringsz[1], stringsz[2], stringsz[3]));
+    function subStakeForConvention(uint tokens, address[4] memory addresses, uint[6] memory uints, string[4] memory strings) external {
+        bytes32 stakingKey = keccak256(abi.encodePacked(addresses, uints, strings[0], strings[1], strings[2], strings[3]));
         _subStake(tokens, stakingKey);
     }
-    function addStakeForGeneral(uint tokens, uint dataType, address[4] memory addresses, uint[6] memory uints, string[4] memory stringsz) external {
-        bytes32 stakingKey = keccak256(abi.encodePacked(addresses, dataType, uints, stringsz[0], stringsz[1], stringsz[2], stringsz[3]));
+    function addStakeForGeneral(uint tokens, uint dataType, address[4] memory addresses, uint[6] memory uints, string[4] memory strings) external {
+        bytes32 stakingKey = keccak256(abi.encodePacked(addresses, dataType, uints, strings[0], strings[1], strings[2], strings[3]));
         StakeInfo memory stakeInfo = stakeInfoData[stakingKey];
         if (stakeInfo.dataType == 0) {
-            stakeInfoData[stakingKey] = StakeInfo(dataType, addresses, uints, stringsz);
+            stakeInfoData[stakingKey] = StakeInfo(dataType, addresses, uints, strings[0], strings[1], strings[2], strings[3]);
             stakeInfoIndex.push(stakingKey);
-            emit StakeInfoAdded(stakingKey, dataType, addresses, uints, stringsz);
+            emit StakeInfoAdded(stakingKey, dataType, addresses, uints, strings[0], strings[1], strings[2], strings[3]);
         }
         _addStake(tokens, stakingKey);
     }
-    function subStakeForGeneral(uint tokens, uint dataType, address[4] memory addresses, uint[6] memory uints, string[4] memory stringsz) external {
-        bytes32 stakingKey = keccak256(abi.encodePacked(addresses, dataType, uints, stringsz[0], stringsz[1], stringsz[2], stringsz[3]));
+    function subStakeForGeneral(uint tokens, uint dataType, address[4] memory addresses, uint[6] memory uints, string[4] memory strings) external {
+        bytes32 stakingKey = keccak256(abi.encodePacked(addresses, dataType, uints, strings[0], strings[1], strings[2], strings[3]));
         _subStake(tokens, stakingKey);
     }
     function _addStake(uint tokens, bytes32 stakingKey) internal {
@@ -242,6 +245,22 @@ contract OptinoGov {
         lock.staked = lock.staked.sub(tokens);
         lock.stakes[stakingKey] = lock.stakes[stakingKey].sub(tokens);
         emit Unstaked(msg.sender, tokens, lock.stakes[stakingKey], stakingKey);
+    }
+    function stakeInfoLength() public view returns (uint _stakeInfoLength) {
+        _stakeInfoLength = stakeInfoIndex.length;
+    }
+    function getStakeInfoByKey(bytes32 stakingKey) public view returns (uint dataType, address[4] memory addresses, uint[6] memory uints, string memory string0, string memory string1, string memory string2, string memory string3) {
+        StakeInfo memory stakeInfo = stakeInfoData[stakingKey];
+        // (dataType, addresses, uints, strings) = (stakeInfo.dataType, stakeInfo.addresses, stakeInfo.uints, stakeInfo.strings);
+        (dataType, addresses, uints) = (stakeInfo.dataType, stakeInfo.addresses, stakeInfo.uints);
+        string0 = stakeInfo.string0;
+        string1 = stakeInfo.string1;
+        string2 = stakeInfo.string2;
+        string3 = stakeInfo.string3;
+    }
+    function getStaked(address tokenOwner, bytes32 stakingKey) public view returns (uint _staked) {
+        Lock storage lock = locks[tokenOwner];
+        _staked = lock.stakes[stakingKey];
     }
 
     function burnStake(address[] calldata tokenOwners, bytes32 stakingKey, uint percent) external onlySelf {

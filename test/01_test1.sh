@@ -256,6 +256,34 @@ console.log("RESULT: ");
 
 
 // -----------------------------------------------------------------------------
+var stakeTokens_Message = "Stake Tokens";
+var tokensToStake = new BigNumber("10").shift(18);
+var stakeUsers = [user1, user2, user3];
+var stakeTokens_Txs = [];
+// -----------------------------------------------------------------------------
+console.log("RESULT: ---------- " + stakeTokens_Message + " ----------");
+
+for (var userIndex in stakeUsers) {
+  stakeTokens_Txs[userIndex] = gov.addStakeForToken(tokensToStake, testTokenAddress, "Testing", {from: stakeUsers[userIndex], gas: 2000000, gasPrice: defaultGasPrice});
+}
+while (txpool.status.pending > 0) {
+}
+printBalances();
+
+for (var userIndex in stakeUsers) {
+  failIfTxStatusError(stakeTokens_Txs[userIndex], stakeTokens_Message + " - " + getShortAddressName(stakeUsers[userIndex]) + "-> gov.addStakeForToken(" + tokensToStake.shift(-18).toString() + ", " + getShortAddressName(testTokenAddress) + ")");
+  printTxData("stakeTokens_Txs[" + userIndex + "]", stakeTokens_Txs[userIndex]);
+}
+
+printGovContractDetails();
+console.log("RESULT: ");
+printTokenContractDetails(0);
+console.log("RESULT: ");
+printTokenContractDetails(1);
+console.log("RESULT: ");
+
+
+// -----------------------------------------------------------------------------
 var collectLockRewards_Message = "Collect Lock Rewards";
 var collectLockRewardUsers = [user3];
 var collectLockReward_Txs = [];
