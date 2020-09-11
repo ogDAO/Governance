@@ -60,11 +60,9 @@ library SafeMath {
 }
 
 
+// import "ERC20.sol";
 /// @notice ERC20 https://eips.ethereum.org/EIPS/eip-20 with optional symbol, name and decimals
 interface ERC20 {
-    event Transfer(address indexed from, address indexed to, uint tokens);
-    event Approval(address indexed tokenOwner, address indexed spender, uint tokens);
-
     function totalSupply() external view returns (uint);
     function balanceOf(address tokenOwner) external view returns (uint balance);
     function allowance(address tokenOwner, address spender) external view returns (uint remaining);
@@ -75,6 +73,9 @@ interface ERC20 {
     function symbol() external view returns (string memory);
     function name() external view returns (string memory);
     function decimals() external view returns (uint8);
+
+    event Transfer(address indexed from, address indexed to, uint tokens);
+    event Approval(address indexed tokenOwner, address indexed spender, uint tokens);
 }
 
 
@@ -104,11 +105,9 @@ contract OGToken is OGTokenInterface, Owned {
     uint _totalSupply;
     mapping(address => Account) accounts;
     mapping(address => mapping(address => uint)) allowed;
-
     uint public maxDividendTokens = 20;
     mapping(address => bool) public dividendTokens;
     address[] public dividendTokenIndex;
-
     uint public constant pointMultiplier = 10e18;
     mapping(address => uint) public totalDividendPoints;
     mapping(address => uint) public unclaimedDividends;

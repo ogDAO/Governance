@@ -36,9 +36,6 @@ library SafeMath {
 // import "ERC20.sol";
 /// @notice ERC20 https://eips.ethereum.org/EIPS/eip-20 with optional symbol, name and decimals
 interface ERC20 {
-    event Transfer(address indexed from, address indexed to, uint tokens);
-    event Approval(address indexed tokenOwner, address indexed spender, uint tokens);
-
     function totalSupply() external view returns (uint);
     function balanceOf(address tokenOwner) external view returns (uint balance);
     function allowance(address tokenOwner, address spender) external view returns (uint remaining);
@@ -49,6 +46,9 @@ interface ERC20 {
     function symbol() external view returns (string memory);
     function name() external view returns (string memory);
     function decimals() external view returns (uint8);
+
+    event Transfer(address indexed from, address indexed to, uint tokens);
+    event Approval(address indexed tokenOwner, address indexed spender, uint tokens);
 }
 
 
@@ -106,11 +106,9 @@ contract OptinoGov {
         string description; // Use an IPFS link to JSON data - OK
         address[] targets;
         bytes[] data;
-
         uint forVotes;
         uint againstVotes;
         mapping(address => bool) voted;
-
         bool executed;
     }
 
@@ -124,11 +122,9 @@ contract OptinoGov {
     uint public executeDelay = 2 hours; // 2 days;
     uint public rewardPool;
     uint public totalVotes;
-
     mapping(address => Lock) public locks; // Locked tokens per address
     mapping(bytes32 => StakeInfo) public stakeInfoData;
     bytes32[] public stakeInfoIndex;
-
     uint public proposalCount;
     mapping(uint => Proposal) public proposals;
 
