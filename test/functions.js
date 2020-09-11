@@ -456,6 +456,8 @@ function printGovContractDetails() {
   if (_govContractAddress != null && _govContractAbi != null) {
     var contract = web3.eth.contract(_govContractAbi).at(_govContractAddress);
     console.log("RESULT: gov.token=" + getShortAddressName(contract.token.call()));
+    var maxLockTerm = contract.maxLockTerm.call();
+    console.log("RESULT: gov.maxLockTerm=" + maxLockTerm + " =" + maxLockTerm.div(60*60*24) + " days");
     var rewardsPerSecond = contract.rewardsPerSecond.call();
     console.log("RESULT: gov.rewardsPerSecond=" + rewardsPerSecond.shift(-18) + " /day=" + rewardsPerSecond.mul(60).mul(60).mul(24).shift(-18) + " /year=" + rewardsPerSecond.mul(60).mul(60).mul(24).mul(365).shift(-18));
     console.log("RESULT: gov.proposalCost=" + contract.proposalCost.call().shift(-18));
@@ -470,8 +472,8 @@ function printGovContractDetails() {
     // var users = [user1, user2, user3, user4];
     var users = [user1, user2, user3, user4];
     for (var userIndex in users) {
-      var stake = contract.stakes.call(users[userIndex]);
-      console.log("RESULT: gov.stakes[" + getShortAddressName(users[userIndex]) + "] balance=" + stake[2].shift(-18) + ", duration=" + stake[0] + ", end=" + stake[1] + " " + new Date(stake[1]*1000).toUTCString() + ", votes=" + stake[3].shift(-18).toString());
+      var lock = contract.locks.call(users[userIndex]);
+      console.log("RESULT: gov.locks[" + getShortAddressName(users[userIndex]) + "] balance=" + lock[2].shift(-18) + ", duration=" + lock[0] + ", end=" + lock[1] + " " + new Date(lock[1]*1000).toUTCString() + ", votes=" + lock[3].shift(-18).toString());
     }
 
     // address public xs2token;
@@ -536,13 +538,13 @@ function printGovContractDetails() {
     });
     executeDelayUpdatedEvents.stopWatching();
 
-    var stakedEvents = contract.Staked({}, { fromBlock: _govFromBlock, toBlock: latestBlock });
+    var lockedEvents = contract.Locked({}, { fromBlock: _govFromBlock, toBlock: latestBlock });
     i = 0;
-    stakedEvents.watch(function (error, result) {
-      // console.log("RESULT: Staked " + i++ + " #" + result.blockNumber + " " + JSON.stringify(result.args));
-      console.log("RESULT: Staked " + i++ + " #" + result.blockNumber +
+    lockedEvents.watch(function (error, result) {
+      // console.log("RESULT: Locked " + i++ + " #" + result.blockNumber + " " + JSON.stringify(result.args));
+      console.log("RESULT: Locked " + i++ + " #" + result.blockNumber +
         " user=" + getShortAddressName(result.args.user) +
-        " amount=" + result.args.amount.shift(-18) +
+        " tokens=" + result.args.tokens.shift(-18) +
         " balance=" + result.args.balance.shift(-18) +
         " duration=" + result.args.duration +
         " end=" + result.args.end + " " + new Date(result.args.end * 1000).toUTCString() +
@@ -550,15 +552,39 @@ function printGovContractDetails() {
         " rewardPool=" + result.args.rewardPool.shift(-18) +
         " totalVotes=" + result.args.totalVotes.shift(-18));
     });
+    lockedEvents.stopWatching();
 
-    // emit Staked(msg.sender, amount, user.amount, user.duration, user.end, user.votes, rewardPool, totalVotes);
-    // event Staked(address indexed user, uint256 amount, uint256 balance, uint256 duration, uint256 end, uint256 votes, uint256 rewardPool, uint256 totalVotes);
+    var stakeInfoAddedEvents = contract.StakeInfoAdded({}, { fromBlock: _govFromBlock, toBlock: latestBlock });
+    i = 0;
+    stakeInfoAddedEvents.watch(function (error, result) {
+      console.log("RESULT: StakeInfoAdded " + i++ + " #" + result.blockNumber + " " + JSON.stringify(result.args));
+    });
+    stakeInfoAddedEvents.stopWatching();
 
+    var stakedEvents = contract.Staked({}, { fromBlock: _govFromBlock, toBlock: latestBlock });
+    i = 0;
+    stakedEvents.watch(function (error, result) {
+      // console.log("RESULT: Staked " + i++ + " #" + result.blockNumber + " " + JSON.stringify(result.args));
+      console.log("RESULT: Staked " + i++ + " #" + result.blockNumber +
+        " tokenOwner=" + getShortAddressName(result.args.tokenOwner) +
+        " tokens=" + result.args.tokens.shift(-18) +
+        " balance=" + result.args.balance.shift(-18) +
+        " stakingKey=" + stakingKey);
+    });
     stakedEvents.stopWatching();
-    // Staked 0 #13426 {"user":"0xa44a08d3f6933c69212114bb66e2df1813651844","amount":"10000000000000000000","balance":"0","duration":"86400","end":"1599251854","votes":"0","rewardPool":"0","totalVotes":"0"}
-    // Staked 1 #13426 {"user":"0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0","amount":"10000000000000000000","balance":"0","duration":"86400","end":"1599251854","votes":"0","rewardPool":"0","totalVotes":"0"}
-    // Staked 2 #13426 {"user":"0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976","amount":"10000000000000000000","balance":"0","duration":"86400","end":"1599251854","votes":"0","rewardPool":"0","totalVotes":"0"}
-    // Staked 3 #13426 {"user":"0xa55a151eb00fded1634d27d1127b4be4627079ea","amount":"10000000000000000000","balance":"0","duration":"86400","end":"1599251854","votes":"0","rewardPool":"0","totalVotes":"0"}
+
+    var unstakeEvents = contract.Unstaked({}, { fromBlock: _govFromBlock, toBlock: latestBlock });
+    i = 0;
+    unstakeEvents.watch(function (error, result) {
+      // console.log("RESULT: Unstaked " + i++ + " #" + result.blockNumber + " " + JSON.stringify(result.args));
+      console.log("RESULT: Unstaked " + i++ + " #" + result.blockNumber +
+        " tokenOwner=" + getShortAddressName(result.args.tokenOwner) +
+        " tokens=" + result.args.tokens.shift(-18) +
+        " balance=" + result.args.balance.shift(-18) +
+        " stakingKey=" + stakingKey);
+    });
+    unstakeEvents.stopWatching();
+
 
     var collectedEvents = contract.Collected({}, { fromBlock: _govFromBlock, toBlock: latestBlock });
     i = 0;
@@ -567,12 +593,12 @@ function printGovContractDetails() {
     });
     collectedEvents.stopWatching();
 
-    var unstakedEvents = contract.Unstaked({}, { fromBlock: _govFromBlock, toBlock: latestBlock });
+    var unlockedEvents = contract.Unlocked({}, { fromBlock: _govFromBlock, toBlock: latestBlock });
     i = 0;
-    unstakedEvents.watch(function (error, result) {
-      console.log("RESULT: Unstaked " + i++ + " #" + result.blockNumber + " " + JSON.stringify(result.args));
+    unlockedEvents.watch(function (error, result) {
+      console.log("RESULT: Unlocked " + i++ + " #" + result.blockNumber + " " + JSON.stringify(result.args));
     });
-    unstakedEvents.stopWatching();
+    unlockedEvents.stopWatching();
 
     var proposedEvents = contract.Proposed({}, { fromBlock: _govFromBlock, toBlock: latestBlock });
     i = 0;

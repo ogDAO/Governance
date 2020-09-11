@@ -78,18 +78,18 @@ interface ERC20 {
 }
 
 
-// import "MintableToken.sol";
-/// @notice MintableToken = ERC20 + mint + burn
-interface MintableToken is ERC20 {
+// import "OGTokenInterface.sol";
+/// @notice OGTokenInterface = ERC20 + mint + burn
+interface OGTokenInterface is ERC20 {
     function mint(address tokenOwner, uint tokens) external returns (bool success);
     function burn(address tokenOwner, uint tokens) external returns (bool success);
 }
 
 
 // ----------------------------------------------------------------------------
-// OGToken = ERC20 + mint + burn + dividend payment
+// OGToken = OGTokenInterface (ERC20 + mint + burn) + dividend payment
 // ----------------------------------------------------------------------------
-contract OGToken is MintableToken, Owned {
+contract OGToken is OGTokenInterface, Owned {
     using SafeMath for uint;
 
     string _symbol;
