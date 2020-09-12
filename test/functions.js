@@ -146,6 +146,30 @@ function padLeft(s, n) {
   return o;
 }
 
+function padLeft0(s, n) {
+  var result = s.toString();
+  while (result.length < n) {
+    result = "0" + result;
+  }
+  return result;
+}
+
+function addressToHex64(address) {
+  if (address.substring(0, 2) == "0x") {
+    return padLeft0(address.substring(2, 42).toLowerCase(), 64);
+  } else {
+    return padLeft0(address.substring(0, 40).toLowerCase(), 64);
+  }
+}
+
+function uint256ToHex64(number) {
+  var bigNumber = new BigNumber(number).toString(16);
+  if (bigNumber.substring(0, 2) == "0x") {
+    return padLeft0(bigNumber.substring(2, 66).toLowerCase(), 64);
+  } else {
+    return padLeft0(bigNumber.substring(0, 64).toLowerCase(), 64);
+  }
+}
 
 // -----------------------------------------------------------------------------
 // Transaction status
