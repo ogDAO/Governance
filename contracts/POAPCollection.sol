@@ -90,13 +90,11 @@ interface POAP {
 
 
 contract POAPCollection is Owned {
-
     OGTokenInterface public ogToken;
     POAP public poap;
-    // tokenEvent => tokens to mint
+    // tokenEvent => number of tokens to mint
     mapping(uint => uint) tokenEvents;
-
-    // tokenId => bool
+    // tokenId => collected?
     mapping(uint => bool) collected;
 
     // POAP @ 0x22C1f6050E56d2876009903609a2cC3fEf83B415 Mainnet, 0x50C5CA3e7f5566dA3Aa64eC687D283fdBEC2A2F2 Ropsten
