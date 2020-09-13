@@ -5,7 +5,7 @@ pragma solidity ^0.7.0;
 //
 // Enjoy. (c) The Optino Project 2020
 //
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: GPLv2
 // ----------------------------------------------------------------------------
 
 // import "Owned.sol";

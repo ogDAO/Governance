@@ -1,11 +1,11 @@
 pragma solidity ^0.7.0;
 
 // ----------------------------------------------------------------------------
-// Optino Governance Token
+// Collect Optino Governance tokens based on POAP tokenEvents
 //
 // Enjoy. (c) The Optino Project 2020
 //
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: GPLv2
 // ----------------------------------------------------------------------------
 
 // import "Owned.sol";
