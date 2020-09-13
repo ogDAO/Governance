@@ -136,6 +136,8 @@ contract OGToken is OGTokenInterface, Permissioned {
     uint _totalSupply;
     mapping(address => Account) accounts;
     mapping(address => mapping(address => uint)) allowed;
+    uint public cap;
+    bool public freezeCap;
     uint public maxDividendTokens = 20;
     mapping(address => bool) public dividendTokens;
     address[] public dividendTokenIndex;
@@ -143,6 +145,7 @@ contract OGToken is OGTokenInterface, Permissioned {
     mapping(address => uint) public totalDividendPoints;
     mapping(address => uint) public unclaimedDividends;
 
+    event CapUpdated(uint256 cap, bool freezeCap);
     event MaxDividendTokensUpdated(uint256 maxDividendTokens);
     event DividendTokensAdded(address dividendToken);
     event LogInfo(string topic, uint number, bytes32 data, string note, address addr);
@@ -203,6 +206,12 @@ contract OGToken is OGTokenInterface, Permissioned {
     function allowance(address tokenOwner, address spender) override external view returns (uint remaining) {
         return allowed[tokenOwner][spender];
     }
+
+    function setCap(uint _cap, bool _freezeCap) external onlyOwner {
+        require(!freezeCap, "Cap frozen");
+        (cap, freezeCap) = (_cap, _freezeCap);
+        emit CapUpdated(cap, freezeCap);
+    }
     function setMaxDividendTokens(uint _maxDividendTokens) external onlyOwner {
         require(_maxDividendTokens > dividendTokenIndex.length, "Max must be more than current list length");
         maxDividendTokens = _maxDividendTokens;
@@ -258,6 +267,7 @@ contract OGToken is OGTokenInterface, Permissioned {
         withdrawn = 0;
     }
     function mint(address tokenOwner, uint tokens) override external permitted(ROLE_MINTER, tokens) returns (bool success) {
+        require(cap == 0 || _totalSupply + tokens <= cap, "Cap exceeded");
         accounts[tokenOwner].balance = accounts[tokenOwner].balance.add(tokens);
         _totalSupply = _totalSupply.add(tokens);
         emit Transfer(address(0), tokenOwner, tokens);

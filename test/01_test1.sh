@@ -674,4 +674,4 @@ grep "DATA: " $TEST1OUTPUT | sed "s/DATA: //" > $DEPLOYMENTDATA
 cat $DEPLOYMENTDATA
 grep "RESULT: " $TEST1OUTPUT | sed "s/RESULT: //" > $TEST1RESULTS
 cat $TEST1RESULTS
-# egrep -e "tokenTx.*gasUsed|govTx.*gasUsed" $TEST1RESULTS
+egrep -e "ogTokenTx.*gasUsed|govTx.*gasUsed" $TEST1RESULTS

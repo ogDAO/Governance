@@ -1,6 +1,6 @@
 // 26 Apr 2020 21:11 AEDT ETH/USD from CMC and ethgasstation.info normal
 var ethPriceUSD = 435.85;
-var defaultGasPrice = web3.toWei("28.1", "gwei");
+var defaultGasPrice = web3.toWei("99.9", "gwei");
 
 // -----------------------------------------------------------------------------
 // Accounts
@@ -380,11 +380,41 @@ function printTokenContractDetails(j) {
       console.log("RESULT: token" + j + ".bound=" + contract.bound.call().shift(-decimals));
     } catch (e) {
     }
+    if (j == 0) {
+      console.log("RESULT: token" + j + ".cap=" + contract.cap.call() + " freezeCap=" + contract.freezeCap.call());
+    }
 
     var latestBlock = eth.blockNumber;
     var i;
 
     if (j == 0) {
+      // event CapUpdated(uint256 cap, bool freezeCap);
+      // event MaxDividendTokensUpdated(uint256 maxDividendTokens);
+      // event DividendTokensAdded(address dividendToken);
+      // event LogInfo(string topic, uint number, bytes32 data, string note, address addr);
+      // event UpdateAccountInfo(address dividendToken, address account, uint owing, uint totalOwing, uint lastDividendPoints, uint totalDividendPoints, uint unclaimedDividends);
+
+      var capUpdatedEvents = contract.CapUpdated({}, { fromBlock: tokenFromBlock[j], toBlock: latestBlock });
+      i = 0;
+      capUpdatedEvents.watch(function (error, result) {
+        console.log("RESULT: token" + j + ".CapUpdated " + i++ + " #" + result.blockNumber + " " + JSON.stringify(result.args));
+      });
+      capUpdatedEvents.stopWatching();
+
+      var maxDividendTokensUpdatedEvents = contract.MaxDividendTokensUpdated({}, { fromBlock: tokenFromBlock[j], toBlock: latestBlock });
+      i = 0;
+      maxDividendTokensUpdatedEvents.watch(function (error, result) {
+        console.log("RESULT: token" + j + ".MaxDividendTokensUpdated " + i++ + " #" + result.blockNumber + " " + JSON.stringify(result.args));
+      });
+      maxDividendTokensUpdatedEvents.stopWatching();
+
+      var dividendTokensAddedEvents = contract.DividendTokensAdded({}, { fromBlock: tokenFromBlock[j], toBlock: latestBlock });
+      i = 0;
+      dividendTokensAddedEvents.watch(function (error, result) {
+        console.log("RESULT: token" + j + ".DividendTokensAdded " + i++ + " #" + result.blockNumber + " " + JSON.stringify(result.args));
+      });
+      dividendTokensAddedEvents.stopWatching();
+
       var logInfoEvents = contract.LogInfo({}, { fromBlock: tokenFromBlock[j], toBlock: latestBlock });
       i = 0;
       logInfoEvents.watch(function (error, result) {
