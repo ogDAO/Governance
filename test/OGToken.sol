@@ -13,7 +13,6 @@ pragma solidity ^0.7.0;
 contract Owned {
     bool initialised;
     address public owner;
-    address public newOwner;
 
     event OwnershipTransferred(address indexed _from, address indexed _to);
 
@@ -28,17 +27,8 @@ contract Owned {
         initialised = true;
     }
     function transferOwnership(address _newOwner) public onlyOwner {
-        newOwner = _newOwner;
-    }
-    function acceptOwnership() public {
-        emit OwnershipTransferred(owner, newOwner);
-        owner = newOwner;
-        newOwner = address(0);
-    }
-    function transferOwnershipImmediately(address _newOwner) public onlyOwner {
         emit OwnershipTransferred(owner, _newOwner);
         owner = _newOwner;
-        newOwner = address(0);
     }
 }
 
@@ -61,6 +51,41 @@ library SafeMath {
     function div(uint a, uint b) internal pure returns (uint c) {
         require(b > 0, "Divide by 0");
         c = a / b;
+    }
+}
+
+
+// import "Permissioned.sol";
+/// @notice Permissioned
+contract Permissioned is Owned {
+    using SafeMath for uint;
+
+    struct Permission {
+        bool active;
+        uint maximum;
+        uint processed;
+    }
+
+    uint public constant ROLE_MINTER = 1;
+    // Don't need ROLE_BURNER at the moment
+    // uint public constant ROLE_BURNER = 2;
+    mapping(address => mapping(uint => Permission)) public permissions;
+
+    modifier permitted(uint role, uint tokens) {
+        Permission storage permission = permissions[msg.sender][role];
+        require(permission.active && (permission.maximum == 0 || permission.processed + tokens < permission.maximum), "Not permissioned");
+        permission.processed = permission.processed.add(tokens);
+        _;
+    }
+
+    function initPermissioned(address _owner) internal {
+        initOwned(_owner);
+        setPermission(_owner, ROLE_MINTER, true, 0);
+        // setPermission(_owner, ROLE_BURNER, true, 0);
+    }
+    function setPermission(address account, uint role, bool active, uint maximum) public {
+        uint processed = permissions[account][role].processed;
+        permissions[account][role] = Permission({ active: active, maximum: maximum, processed: processed });
     }
 }
 
@@ -89,14 +114,14 @@ interface ERC20 {
 interface OGTokenInterface is ERC20 {
     function mint(address tokenOwner, uint tokens) external returns (bool success);
     function burn(uint tokens) external returns (bool success);
-    function burnFrom(address tokenOwner, uint tokens) external returns (bool success);
+    // function burnFrom(address tokenOwner, uint tokens) external returns (bool success);
 }
 
 
 // ----------------------------------------------------------------------------
 // OGToken = OGTokenInterface (ERC20 + mint + burn) + dividend payment
 // ----------------------------------------------------------------------------
-contract OGToken is OGTokenInterface, Owned {
+contract OGToken is OGTokenInterface, Permissioned {
     using SafeMath for uint;
 
     struct Account {
@@ -124,7 +149,7 @@ contract OGToken is OGTokenInterface, Owned {
     event UpdateAccountInfo(address dividendToken, address account, uint owing, uint totalOwing, uint lastDividendPoints, uint totalDividendPoints, uint unclaimedDividends);
 
     constructor(string memory symbol, string memory name, uint8 decimals, address tokenOwner, uint initialSupply) {
-        initOwned(msg.sender);
+        initPermissioned(msg.sender);
         _symbol = symbol;
         _name = name;
         _decimals = decimals;
@@ -232,7 +257,7 @@ contract OGToken is OGTokenInterface, Owned {
         updateAccount(dividendToken, msg.sender);
         withdrawn = 0;
     }
-    function mint(address tokenOwner, uint tokens) override external onlyOwner returns (bool success) {
+    function mint(address tokenOwner, uint tokens) override external permitted(ROLE_MINTER, tokens) returns (bool success) {
         accounts[tokenOwner].balance = accounts[tokenOwner].balance.add(tokens);
         _totalSupply = _totalSupply.add(tokens);
         emit Transfer(address(0), tokenOwner, tokens);
@@ -251,15 +276,15 @@ contract OGToken is OGTokenInterface, Owned {
         emit Transfer(msg.sender, address(0), tokens);
         return true;
     }
-    function burnFrom(address tokenOwner, uint tokens) override external returns (bool success) {
-        for (uint i = 0; i < dividendTokenIndex.length; i++) {
-            updateAccount(dividendTokenIndex[i], tokenOwner);
-        }
-        // TODO Pay out
-        allowed[tokenOwner][msg.sender] = allowed[tokenOwner][msg.sender].sub(tokens);
-        accounts[tokenOwner].balance = accounts[tokenOwner].balance.sub(tokens);
-        _totalSupply = _totalSupply.sub(tokens);
-        emit Transfer(tokenOwner, address(0), tokens);
-        return true;
-    }
+    // function burnFrom(address tokenOwner, uint tokens) override external returns (bool success) {
+    //     for (uint i = 0; i < dividendTokenIndex.length; i++) {
+    //         updateAccount(dividendTokenIndex[i], tokenOwner);
+    //     }
+    //     // TODO Pay out
+    //     allowed[tokenOwner][msg.sender] = allowed[tokenOwner][msg.sender].sub(tokens);
+    //     accounts[tokenOwner].balance = accounts[tokenOwner].balance.sub(tokens);
+    //     _totalSupply = _totalSupply.sub(tokens);
+    //     emit Transfer(tokenOwner, address(0), tokens);
+    //     return true;
+    // }
 }

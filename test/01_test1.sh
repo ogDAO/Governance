@@ -355,7 +355,7 @@ console.log("RESULT: ---------- " + lockTokens_Message + " ----------");
 for (var userIndex in lockUsers) {
   lockTokens_Txs[userIndex] = gov.lock(tokensToLock, lockDuration, {from: lockUsers[userIndex], gas: 2000000, gasPrice: defaultGasPrice});
 }
-var transferOwnership_Tx = ogToken.transferOwnershipImmediately(govAddress, {from: deployer, gas: 2000000, gasPrice: defaultGasPrice});
+var transferOwnership_Tx = ogToken.transferOwnership(govAddress, {from: deployer, gas: 2000000, gasPrice: defaultGasPrice});
 while (txpool.status.pending > 0) {
 }
 printBalances();
@@ -404,6 +404,8 @@ printTokenContractDetails(0);
 console.log("RESULT: ");
 printTokenContractDetails(1);
 console.log("RESULT: ");
+
+exit;
 
 // -----------------------------------------------------------------------------
 var submitProposal_Message = "Submit Proposal";

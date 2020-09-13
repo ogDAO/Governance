@@ -57,7 +57,7 @@ interface ERC20 {
 interface OGTokenInterface is ERC20 {
     function mint(address tokenOwner, uint tokens) external returns (bool success);
     function burn(uint tokens) external returns (bool success);
-    function burnFrom(address tokenOwner, uint tokens) external returns (bool success);
+    // function burnFrom(address tokenOwner, uint tokens) external returns (bool success);
 }
 
 
