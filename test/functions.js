@@ -154,6 +154,14 @@ function padLeft0(s, n) {
   return result;
 }
 
+function padRight0(s, n) {
+  var result = s.toString();
+  while (result.length < n) {
+    result = result + "0";
+  }
+  return result;
+}
+
 function addressToHex64(address) {
   if (address.substring(0, 2) == "0x") {
     return padLeft0(address.substring(2, 42).toLowerCase(), 64);
@@ -170,6 +178,11 @@ function uint256ToHex64(number) {
     return padLeft0(bigNumber.substring(0, 64).toLowerCase(), 64);
   }
 }
+
+function stringToHex(s) {
+  return web3.toHex(s).substring(2);
+}
+
 
 // -----------------------------------------------------------------------------
 // Transaction status
@@ -649,6 +662,13 @@ function printGovContractDetails() {
       console.log("RESULT: Unlocked " + i++ + " #" + result.blockNumber + " " + JSON.stringify(result.args));
     });
     unlockedEvents.stopWatching();
+
+    // var proposedArrayEvents = contract.ProposedArray({}, { fromBlock: _govFromBlock, toBlock: latestBlock });
+    // i = 0;
+    // proposedArrayEvents.watch(function (error, result) {
+    //   console.log("RESULT: ProposedArray " + i++ + " #" + result.blockNumber + " " + JSON.stringify(result.args));
+    // });
+    // proposedArrayEvents.stopWatching();
 
     var proposedEvents = contract.Proposed({}, { fromBlock: _govFromBlock, toBlock: latestBlock });
     i = 0;

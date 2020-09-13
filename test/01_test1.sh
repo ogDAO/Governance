@@ -80,7 +80,6 @@ var testTokenBin = "0x" + testTokenOutput.contracts["$TESTTOKENSOL:$TESTTOKENNAM
 // console.log("DATA: testTokenAbi=" + JSON.stringify(testTokenAbi));
 // console.log("DATA: testTokenBin=" + JSON.stringify(testTokenBin));
 
-
 unlockAccounts("$PASSWORD");
 // printBalances();
 console.log("RESULT: ");
@@ -195,6 +194,124 @@ printTokenContractDetails(1);
 console.log("RESULT: ");
 
 
+if (false) {
+// -----------------------------------------------------------------------------
+var testProposal_Message = "Testing Proposal Parameters";
+var functionSig = web3.sha3("propose(string,address[],uint256[],bytes[])").substring(0,10);
+var description = "Test Array";
+var mintTokens = new BigNumber("888.888").shift(18);
+var ogTokenAddress = "0x6c2f495c5ff3add941ebecea9888d04308d810c9";
+var targets = [ogTokenAddress, ogTokenAddress];
+var values = [1, 1];
+var bytes = '0x' + functionSig + addressToHex64(user3) + uint256ToHex64(mintTokens);
+var data = [bytes, bytes];
+// -----------------------------------------------------------------------------
+console.log("RESULT: ---------- " + testProposal_Message + " ----------");
+console.log("RESULT: functionSig : " + functionSig);
+var input = functionSig;
+console.log("RESULT: description offset : " + uint256ToHex64(32 * 5)); // (0xa0  = 32 x 5)
+input = input + uint256ToHex64(32 * 5);
+console.log("RESULT: targets offset     : " + uint256ToHex64(32 * 7)); // (0xe0  = 224 = 32 x 7)
+input = input + uint256ToHex64(32 * 7);
+console.log("RESULT: values offset      : " + uint256ToHex64(32 * 10)); // (0x140 = 320 = 32 x 10)
+input = input + uint256ToHex64(32 * 10);
+console.log("RESULT: signatures offset  : " + uint256ToHex64(32 * 13)); // (0x1a0 = 416 = 32 x 13)
+input = input + uint256ToHex64(32 * 13);
+console.log("RESULT: data offset        : " + uint256ToHex64(32 * 20)); // (0x280 = 640 = 32 x 20)
+input = input + uint256ToHex64(32 * 20);
+console.log("RESULT: string.length      : " + uint256ToHex64(description.length));
+input = input + uint256ToHex64(description.length);
+console.log("RESULT: string             : " + padRight0(stringToHex(description), 64));
+input = input + padRight0(stringToHex(description), 64);
+console.log("RESULT: targets.length     : " + uint256ToHex64(targets.length));
+input = input + uint256ToHex64(targets.length);
+for (var i = 0; i < targets.length; i++) {
+  console.log("RESULT: targets            : " + addressToHex64(targets[i]));
+  input = input + addressToHex64(targets[i]);
+}
+console.log("RESULT: values.length      : " + uint256ToHex64(values.length));
+input = input + uint256ToHex64(values.length);
+for (var i = 0; i < values.length; i++) {
+  console.log("RESULT: value              : " + uint256ToHex64(values[i]));
+  input = input + uint256ToHex64(values[i]);
+}
+console.log("RESULT: signatures.length  : " + uint256ToHex64(signatures.length));
+input = input + uint256ToHex64(signatures.length);
+console.log("RESULT: signatures0 offset : " + uint256ToHex64(64)); // (64 = 32 x 2)
+input = input + uint256ToHex64(64);
+console.log("RESULT: signatures1 offset : " + uint256ToHex64(128)); // (128 = 32 x 4)
+input = input + uint256ToHex64(128);
+for (var i = 0; i < signatures.length; i++) {
+  console.log("RESULT: signaturex.length  : " + uint256ToHex64(signatures[i].length));
+  input = input + uint256ToHex64(signatures[i].length);
+  console.log("RESULT: signaturex         : " + padRight0(stringToHex(signatures[i]), 64));
+  input = input + padRight0(stringToHex(signatures[i]), 64);
+}
+console.log("RESULT: data.length        : " + uint256ToHex64(data.length));
+input = input + uint256ToHex64(data.length);
+console.log("RESULT: data0 offset       : " + uint256ToHex64(64)); // (64 = 32 x 2)
+input = input + uint256ToHex64(64);
+console.log("RESULT: data1 offset       : " + uint256ToHex64(160)); // (160 = 32 x 5)
+input = input + uint256ToHex64(160);
+for (var i = 0; i < data.length; i++) {
+  console.log("RESULT: datax.length       : " + uint256ToHex64((data[i].length - 2)/2));
+  input = input + uint256ToHex64((data[i].length - 2)/2);
+  console.log("RESULT: datax              : " + data[i].substring(2, 66));
+  input = input + data[i].substring(2, 66);
+  console.log("RESULT: datax              : " + data[i].substring(66));
+  input = input + data[i].substring(66);
+}
+console.log("RESULT: input : " + input);
+
+// "Test Array", ["0x6c2f495c5ff3add941ebecea9888d04308d810c9", "0x6c2f495c5ff3add941ebecea9888d04308d810c9"], [1, 1], ["0x000000000000000000000000a44a08d3f6933c69212114bb66e2df18136518440000000000000000000000000000000000000000000000302fcc8e78336c0000", "0x000000000000000000000000a44a08d3f6933c69212114bb66e2df18136518440000000000000000000000000000000000000000000000302fcc8e78336c0000"]
+// var testArray_Tx = gov.proposeArray(description, targets, values, signatures, data, {from: deployer, gas: 2000000, gasPrice: defaultGasPrice});
+var testArray_Tx = eth.sendTransaction({to: govAddress, value: 0, input: input, from: user3, gas: 2000000, gasPrice: defaultGasPrice});
+while (txpool.status.pending > 0) {
+}
+printBalances();
+failIfTxStatusError(testArray_Tx, testProposal_Message + " - deployer-> gov.burnStake(" + JSON.stringify(burnUsers) + ", " + stakingKeyForToken + ", " + percentToBurnForTokens.toString() + "%)");
+printTxData("testArray_Tx", testArray_Tx);
+printGovContractDetails();
+console.log("RESULT: ");
+printTokenContractDetails(0);
+console.log("RESULT: ");
+printTokenContractDetails(1);
+console.log("RESULT: ");
+
+// Remix
+// 0xf04af0c7
+// 00000000000000000000000000000000000000000000000000000000000000a0 <= offset to description
+// 00000000000000000000000000000000000000000000000000000000000000e0 <= offset to targets
+// 0000000000000000000000000000000000000000000000000000000000000140 <= offset to values
+// 00000000000000000000000000000000000000000000000000000000000001a0 <= offset to signatures
+// 0000000000000000000000000000000000000000000000000000000000000280 <= offset to data
+// 000000000000000000000000000000000000000000000000000000000000000a <= description.length
+// 5465737420417272617900000000000000000000000000000000000000000000 <= description
+// 0000000000000000000000000000000000000000000000000000000000000002 <= targets.length
+// 0000000000000000000000006c2f495c5ff3add941ebecea9888d04308d810c9 <= targets[0]
+// 0000000000000000000000006c2f495c5ff3add941ebecea9888d04308d810c9 <= targets[1]
+// 0000000000000000000000000000000000000000000000000000000000000002 <= values.length
+// 0000000000000000000000000000000000000000000000000000000000000001 <= values[0]
+// 0000000000000000000000000000000000000000000000000000000000000001 <= values[1]
+// 0000000000000000000000000000000000000000000000000000000000000002 <= signatures.length
+// 0000000000000000000000000000000000000000000000000000000000000040 <= signature[0] offset (64 = 32 x 2)
+// 0000000000000000000000000000000000000000000000000000000000000080 <= signature[1] offset (128 = 32 x 4)
+// 0000000000000000000000000000000000000000000000000000000000000015 <= signatures[0].length
+// 6d696e7428616464726573732c75696e74323536290000000000000000000000 <= signatures[0]
+// 0000000000000000000000000000000000000000000000000000000000000015 <= signatures[1].length
+// 6d696e7428616464726573732c75696e74323536290000000000000000000000 <= signatures[1]
+// 0000000000000000000000000000000000000000000000000000000000000002 <= data.length
+// 0000000000000000000000000000000000000000000000000000000000000040 <= data[0] offset (64 = 32 x 2)
+// 00000000000000000000000000000000000000000000000000000000000000a0 <= data[1] offset (160 = 32 x 5)
+// 0000000000000000000000000000000000000000000000000000000000000040 <= data[0].length
+// 000000000000000000000000a44a08d3f6933c69212114bb66e2df1813651844
+// 0000000000000000000000000000000000000000000000302fcc8e78336c0000
+// 0000000000000000000000000000000000000000000000000000000000000040
+// 000000000000000000000000a44a08d3f6933c69212114bb66e2df1813651844
+// 0000000000000000000000000000000000000000000000302fcc8e78336c0000
+}
+
+
 // -----------------------------------------------------------------------------
 var distributeAndApproveTokens_Message = "Distribute And Approve Tokens";
 var ogTokensToDistribute = new BigNumber("1000").shift(18);
@@ -268,7 +385,6 @@ var stakeTokensForFeed_Txs = [];
 var FEEDADDRESS = "0xfeedfeedfeedfeedfeedfeedfeedfeedfeedfeed";
 // -----------------------------------------------------------------------------
 console.log("RESULT: ---------- " + stakeTokens_Message + " ----------");
-
 for (var userIndex in stakeUsers) {
   stakeTokensForTokens_Txs[userIndex] = gov.addStakeForToken(tokensToStakeForTokens, testTokenAddress, "Testing", {from: stakeUsers[userIndex], gas: 2000000, gasPrice: defaultGasPrice});
   stakeTokensForFeed_Txs[userIndex] = gov.addStakeForFeed(tokensToStakeForFeeds, FEEDADDRESS, 1, 9, "Feed:ETH/USD", {from: stakeUsers[userIndex], gas: 2000000, gasPrice: defaultGasPrice});
@@ -276,14 +392,12 @@ for (var userIndex in stakeUsers) {
 while (txpool.status.pending > 0) {
 }
 printBalances();
-
 for (var userIndex in stakeUsers) {
   failIfTxStatusError(stakeTokensForTokens_Txs[userIndex], stakeTokens_Message + " - " + getShortAddressName(stakeUsers[userIndex]) + "-> gov.addStakeForToken(" + tokensToStakeForTokens.shift(-18).toString() + ", " + getShortAddressName(testTokenAddress) + ")");
   printTxData("stakeTokensForTokens_Txs[" + userIndex + "]", stakeTokensForTokens_Txs[userIndex]);
   failIfTxStatusError(stakeTokensForFeed_Txs[userIndex], stakeTokens_Message + " - " + getShortAddressName(stakeUsers[userIndex]) + "-> gov.addStakeForFeed(" + tokensToStakeForFeeds.shift(-18).toString() + ", " + getShortAddressName(FEEDADDRESS) + ")");
   printTxData("stakeTokensForFeed_Txs[" + userIndex + "]", stakeTokensForFeed_Txs[userIndex]);
 }
-
 printGovContractDetails();
 console.log("RESULT: ");
 printTokenContractDetails(0);

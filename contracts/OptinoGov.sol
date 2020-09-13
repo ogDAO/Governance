@@ -89,15 +89,10 @@ contract OptinoGov {
         uint start;
         address proposer;
         string description;
-        // TODO: Array
-        // address[] targets;
-        // uint[] values;
-        // string[] signatures;
-        // bytes[] data;
-        address target;
-        uint value;
-        string signature;
-        bytes data;
+        address[] targets;
+        uint[] values;
+        string[] signatures;
+        bytes[] data;
         uint forVotes;
         uint againstVotes;
         mapping(address => bool) voted;
@@ -137,8 +132,7 @@ contract OptinoGov {
     event StakeBurnt(address tokenOwner, uint tokens, uint balance, bytes32 stakingKey);
     event Collected(address indexed user, uint elapsed, uint reward, uint rewardPool, uint end, uint duration);
     event Unlocked(address indexed user, uint amount, uint balance, uint duration, uint end, uint votes, uint rewardPool, uint totalVotes);
-    // event Proposed(address indexed proposer, uint oip, string description, address[] targets, uint[] values, string[] signatures, bytes data, uint start);
-    event Proposed(address indexed proposer, uint oip, string description, address target, uint value, string signature, bytes data, uint start);
+    event Proposed(address indexed proposer, uint oip, string description, address[] targets, uint[] value, bytes[] data, uint start);
     event Voted(address indexed user, uint oip, bool voteFor, uint forVotes, uint againstVotes);
     event Executed(address indexed user, uint oip);
 
@@ -362,30 +356,20 @@ contract OptinoGov {
         emit Unlocked(msg.sender, payout, tokens, user.duration, user.end, user.votes, rewardPool, totalVotes);
     }
 
-    // event Proposed(address indexed proposer, uint oip, string description, address target, uint value, string signature, bytes data, uint start);
+    function propose(string memory description, address[] memory targets, uint[] memory values, bytes[] memory data) public returns(uint) {
+        // require(locks[msg.sender].votes >= totalVotes.mul(proposalThreshold).div(10 ** 18), "OptinoGov: Not enough votes to propose");
 
-    // TODO
-    // function propose(address[] memory targets, uint[] memory values, string[] memory signatures, bytes[] memory calldatas, string memory description) public returns(uint) {
-    function propose(string memory description, address target, uint value, string memory signature, bytes memory data) public returns(uint) {
-        require(locks[msg.sender].votes >= totalVotes.mul(proposalThreshold).div(10 ** 18), "OptinoGov: Not enough votes to propose");
-
-        // proposals.push();
         proposalCount++;
-
         Proposal storage proposal = proposals[proposalCount];
         proposal.start = block.timestamp;
         proposal.proposer = msg.sender;
         proposal.description = description;
-        proposal.target = target;
-        proposal.value = value;
-        proposal.signature = signature;
+        proposal.targets = targets;
+        proposal.values = values;
         proposal.data = data;
         proposal.forVotes = 0;
         proposal.againstVotes = 0;
         proposal.executed = false;
-
-        // string[] storage signatures = proposal.signatures;
-        // signatures.push("Hello");
 
         // Proposal memory proposal = Proposal({
         //     start: block.timestamp,
@@ -393,43 +377,17 @@ contract OptinoGov {
         //     description: description,
         //     targets: [target],
         //     values: [value],
-        //     signatures: [signature],
         //     data: [data],
         //     forVotes: 0,
         //     againstVotes: 0,
         //     executed: false
         // });
 
-        // proposals[proposalCount].start = block.timestamp;
-        // proposals[proposalCount].proposer = msg.sender;
-        // proposals[proposalCount].description = description;
-        // proposals[proposalCount].targets = targets;
-        // proposals[proposalCount].data = data;
-
         // require(token.burnFrom(msg.sender, proposalCost), "OptinoGov: transferFrom failed");
 
-        emit Proposed(msg.sender, proposalCount, description, proposal.target, proposal.value, proposal.signature, proposal.data, block.timestamp);
+        emit Proposed(msg.sender, proposalCount, description, proposal.targets, proposal.values, proposal.data, block.timestamp);
         return proposalCount;
     }
-
-    // function getProposal(uint proposalId) public view returns (string[] memory signatures) {
-    //     Proposal storage proposal = proposals[proposalId];
-    //     signatures = proposal.signatures;
-    // }
-    // struct Proposal {
-    //     uint start;
-    //     address proposer;
-    //     string description;
-    //     address[] targets;
-    //     uint[] values;
-    //     string[] signatures;
-    //     bytes[] data;
-    //     uint forVotes;
-    //     uint againstVotes;
-    //     mapping(address => bool) voted;
-    //     bool executed;
-    // }
-
 
     // TODO
     function vote(uint oip, bool voteFor) public {
@@ -464,20 +422,10 @@ contract OptinoGov {
         // require(proposal.forVotes >= totalVotes.mul(quorum).div(10 ** 18), "OptinoGov: Not enough votes to execute");
         proposal.executed = true;
 
-        bytes memory callData;
-        if (bytes(proposal.signature).length == 0) {
-            callData = proposal.data;
-        } else {
-            callData = abi.encodePacked(bytes4(keccak256(bytes(proposal.signature))), proposal.data);
+        for (uint i = 0; i < proposal.targets.length; i++) {
+            (bool success,) = proposal.targets[i].call{value: proposal.values[i]}(proposal.data[i]);
+            require(success, "OptinoGov: Execution failed");
         }
-
-        (bool success, ) = proposal.target.call{value: proposal.value}(callData);
-        require(success, "OptinoGov: Execution failed");
-
-        // for (uint i = 0; i < proposal.targets.length; i++) {
-        //     (bool success,) = proposal.targets[i].call(proposal.data[i]);
-        //     require(success, "OptinoGov: Execution failed");
-        // }
 
         emit Executed(msg.sender, oip);
     }
