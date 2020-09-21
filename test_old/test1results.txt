@@ -1,0 +1,267 @@
+
+---------- Deploy Group #1 - Contracts ----------
+ # Account                                             EtherBalanceChange                        OGToken                           TEST Name
+-- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
+ 0 0xa00af22d07c87d96eeeb0ed583f8f6ac7812827e        0.651989657700000000           0.000000000000000000           0.000000000000000000 miner
+ 1 0xa11aae29840fbb5c86e6fd4cf809eba183aef433       -0.651989657700000000           0.000000000000000000         321.123456789012345678 deployer
+ 2 0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976        0.000000000000000000           0.000000000000000000           0.000000000000000000 user1
+ 3 0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0        0.000000000000000000           0.000000000000000000           0.000000000000000000 user2
+ 4 0xa44a08d3f6933c69212114bb66e2df1813651844        0.000000000000000000           0.000000000000000000           0.000000000000000000 user3
+ 5 0xa55a151eb00fded1634d27d1127b4be4627079ea        0.000000000000000000           0.000000000000000000           0.000000000000000000 user4
+ 6 0x0000000000000000000000000000000000000000        0.000000000000000000           0.000000000000000000           0.000000000000000000 null
+ 7 0x90d8927407c79c4a28ee879b821c76fc9bcc2688        0.000000000000000000           0.000000000000000000           0.000000000000000000 'OGToken' 'Optino Governance Token (18 dp)'
+ 8 0x0e946b999033257976aa5cbe0e3530618ca1582d        0.000000000000000000           0.000000000000000000           0.000000000000000000 'TEST' 'Test (18 dp)'
+ 9 0xdf9f36fd5654d92e0844c78d2d2dd562404cd1ff        0.000000000000000000           0.000000000000000000           0.000000000000000000 OptinoGov
+-- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
+                                                                                    0.000000000000000000         321.123456789012345678 Total Token Balances
+-- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
+
+PASS Deploy Group #1 - Contracts - OGToken
+ogTokenTx status=0x1 Success gas=4000000 gasUsed=1357234 costETH=0.1355876766 costUSD=59.09588884611 @ ETH/USD=435.85 gasPrice=99.9 gwei block=20 txIx=0 txId=0x3015b9a6942498c0d7ed39a0cb0dcf5e2e64720de87f09d6c307072670e170d9 @ 1600500110 Sat, 19 Sep 2020 07:21:50 GMT
+PASS Deploy Group #1 - Contracts - TestToken
+testTokenTx status=0x1 Success gas=4000000 gasUsed=823574 costETH=0.0822750426 costUSD=35.85957731721 @ ETH/USD=435.85 gasPrice=99.9 gwei block=20 txIx=1 txId=0x9e26f9a3e8f67764de4b4bd927ec51d1f14234e2ad088e814fb7f41d70da3623 @ 1600500110 Sat, 19 Sep 2020 07:21:50 GMT
+PASS Deploy Group #1 - Contracts - Gov
+govTx status=0x1 Success gas=6000000 gasUsed=4205707 costETH=0.4201501293 costUSD=183.122433855405 @ ETH/USD=435.85 gasPrice=99.9 gwei block=22 txIx=0 txId=0xa19040866d02168dc1a92169e24a8cf46d4f6ba38cc5e215b1956362cf945a37 @ 1600500112 Sat, 19 Sep 2020 07:21:52 GMT
+PASS Deploy Group #1 - Contracts - ogToken.addDividendToken(0x00)
+addDividendToken1_Tx status=0x1 Success gas=2000000 gasUsed=67734 costETH=0.0067666266 costUSD=2.94923420361 @ ETH/USD=435.85 gasPrice=99.9 gwei block=22 txIx=1 txId=0xd9662d7d1334682f33626f8fd99fa2f26eb255722893298a5a0bb77babfbceec @ 1600500112 Sat, 19 Sep 2020 07:21:52 GMT
+PASS Deploy Group #1 - Contracts - ogToken.addDividendToken(TEST)
+addDividendToken2_Tx status=0x1 Success gas=2000000 gasUsed=72174 costETH=0.0072101826 costUSD=3.14255808621 @ ETH/USD=435.85 gasPrice=99.9 gwei block=22 txIx=2 txId=0xfd1e6f4067f4a910b4370db2c7d25578b817e4c5a2c408c6925420d1516f7f93 @ 1600500112 Sat, 19 Sep 2020 07:21:52 GMT
+govContractAddress=OptinoGov:0xdf9f
+gov.token='OGToken' 'Optino Governance Token (18 dp)':0x90d8
+gov.maxLockTerm=10000 =0.11574074074074074074 days
+gov.rewardsPerSecond=0.15 /day=12960 /year=4730400
+gov.proposalCost=100
+gov.proposalThreshold=0.1%
+gov.quorum=20%
+gov.quorumDecayPerSecond=0.0000012683916793% /year=39.9999999984048
+gov.votingDuration=10800 seconds
+gov.executeDelay=7200 seconds
+gov.rewardPool=0
+gov.totalVotes=0
+gov.proposalCount=0
+gov.locks[user1:0xa22a] balance=0, duration=0, end=0 Thu, 01 Jan 1970 00:00:00 GMT, votes=0
+gov.locks[user2:0xa33a] balance=0, duration=0, end=0 Thu, 01 Jan 1970 00:00:00 GMT, votes=0
+gov.locks[user3:0xa44a] balance=0, duration=0, end=0 Thu, 01 Jan 1970 00:00:00 GMT, votes=0
+gov.locks[user4:0xa55a] balance=0, duration=0, end=0 Thu, 01 Jan 1970 00:00:00 GMT, votes=0
+
+token0ContractAddress='OGToken' 'Optino Governance Token (18 dp)':0x90d8
+token0.owner=deployer:0xa11a
+token0.details='OGToken' 'Optino Governance Token (18 dp)' 18 dp
+token0.totalSupply=0
+token0.cap=0 freezeCap=false
+token0.DividendTokensAdded 0 #22 {"dividendToken":"0x0000000000000000000000000000000000000000"}
+token0.DividendTokensAdded 1 #22 {"dividendToken":"0x0e946b999033257976aa5cbe0e3530618ca1582d"}
+token0.Transfer 0 #20 from=null:0x0000 to=deployer:0xa11a tokens=0
+
+token1ContractAddress='TEST' 'Test (18 dp)':0x0e94
+token1.owner=deployer:0xa11a
+token1.details='TEST' 'Test (18 dp)' 18 dp
+token1.totalSupply=321.123456789012345678
+token1.Transfer 0 #20 from=null:0x0000 to=deployer:0xa11a tokens=321.123456789012345678
+
+bytes : 0x40c10f19000000000000000000000000a44a08d3f6933c69212114bb66e2df18136518440000000000000000000000000000000000000000000000302fcc8e78336c0000
+---------- Testing Proposal Parameters ----------
+---------- Distribute And Approve Tokens ----------
+ # Account                                             EtherBalanceChange                        OGToken                           TEST Name
+-- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
+ 0 0xa00af22d07c87d96eeeb0ed583f8f6ac7812827e        0.700901896500000000           0.000000000000000000           0.000000000000000000 miner
+ 1 0xa11aae29840fbb5c86e6fd4cf809eba183aef433       -0.683314301700000000           0.000000000000000000         321.123456789012345678 deployer
+ 2 0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976       -0.004396898700000000        1000.000000000000000000           0.000000000000000000 user1
+ 3 0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0       -0.004396898700000000        1000.000000000000000000           0.000000000000000000 user2
+ 4 0xa44a08d3f6933c69212114bb66e2df1813651844       -0.004396898700000000        1000.000000000000000000           0.000000000000000000 user3
+ 5 0xa55a151eb00fded1634d27d1127b4be4627079ea       -0.004396898700000000        1000.000000000000000000           0.000000000000000000 user4
+ 6 0x0000000000000000000000000000000000000000        0.000000000000000000           0.000000000000000000           0.000000000000000000 null
+ 7 0x90d8927407c79c4a28ee879b821c76fc9bcc2688        0.000000000000000000           0.000000000000000000           0.000000000000000000 'OGToken' 'Optino Governance Token (18 dp)'
+ 8 0x0e946b999033257976aa5cbe0e3530618ca1582d        0.000000000000000000           0.000000000000000000           0.000000000000000000 'TEST' 'Test (18 dp)'
+ 9 0xdf9f36fd5654d92e0844c78d2d2dd562404cd1ff        0.000000000000000000           0.000000000000000000           0.000000000000000000 OptinoGov
+-- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
+                                                                                 4000.000000000000000000         321.123456789012345678 Total Token Balances
+-- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
+
+PASS Distribute And Approve Tokens - ogToken.mint(user1:0xa22a, 1000)
+distributeTokens_Txs[0] status=0x1 Success gas=2000000 gasUsed=100890 costETH=0.010078911 costUSD=4.39289335935 @ ETH/USD=435.85 gasPrice=99.9 gwei block=24 txIx=2 txId=0xb945d9b33b5cec81e67f23caecde849d1b74eba0aaa65311ee5eda4a6feeaae3 @ 1600500114 Sat, 19 Sep 2020 07:21:54 GMT
+PASS Distribute And Approve Tokens - ogToken.approve(OptinoGov:0xdf9f, 1000)
+approveTokens_Txs[0] status=0x1 Success gas=2000000 gasUsed=44013 costETH=0.0043968987 costUSD=1.916388298395 @ ETH/USD=435.85 gasPrice=99.9 gwei block=24 txIx=1 txId=0x8d0746e26e0a2541312ab9d3e78d0a880c1ff953ece739a32c35040cade970c1 @ 1600500114 Sat, 19 Sep 2020 07:21:54 GMT
+PASS Distribute And Approve Tokens - ogToken.mint(user2:0xa33a, 1000)
+distributeTokens_Txs[1] status=0x1 Success gas=2000000 gasUsed=70890 costETH=0.007081911 costUSD=3.08665090935 @ ETH/USD=435.85 gasPrice=99.9 gwei block=24 txIx=3 txId=0x7c427faa95e77d2248ce1328e2abf6f47766a142e1db42abcf884be7cedf4e9e @ 1600500114 Sat, 19 Sep 2020 07:21:54 GMT
+PASS Distribute And Approve Tokens - ogToken.approve(OptinoGov:0xdf9f, 1000)
+approveTokens_Txs[1] status=0x1 Success gas=2000000 gasUsed=44013 costETH=0.0043968987 costUSD=1.916388298395 @ ETH/USD=435.85 gasPrice=99.9 gwei block=24 txIx=0 txId=0xcaf64f051c147adae56b6bd0739a81ffbbba462d1c21bd6f5f3b02c29afe0f1c @ 1600500114 Sat, 19 Sep 2020 07:21:54 GMT
+PASS Distribute And Approve Tokens - ogToken.mint(user3:0xa44a, 1000)
+distributeTokens_Txs[2] status=0x1 Success gas=2000000 gasUsed=70890 costETH=0.007081911 costUSD=3.08665090935 @ ETH/USD=435.85 gasPrice=99.9 gwei block=24 txIx=4 txId=0x95efd9c6f542eca812c78435f1e3409af3726359a1aec7e08e485583a63c0fb0 @ 1600500114 Sat, 19 Sep 2020 07:21:54 GMT
+PASS Distribute And Approve Tokens - ogToken.approve(OptinoGov:0xdf9f, 1000)
+approveTokens_Txs[2] status=0x1 Success gas=2000000 gasUsed=44013 costETH=0.0043968987 costUSD=1.916388298395 @ ETH/USD=435.85 gasPrice=99.9 gwei block=24 txIx=7 txId=0x42b4a6612cbe6bfc34622f8809cd8fcc132796dc04a1f3540cd22c5b7de6df5c @ 1600500114 Sat, 19 Sep 2020 07:21:54 GMT
+PASS Distribute And Approve Tokens - ogToken.mint(user4:0xa55a, 1000)
+distributeTokens_Txs[3] status=0x1 Success gas=2000000 gasUsed=70890 costETH=0.007081911 costUSD=3.08665090935 @ ETH/USD=435.85 gasPrice=99.9 gwei block=24 txIx=5 txId=0x4d2f60d8ea03b1519c0f846d8de0bd186d59660f7cfabbda859cec3d31494845 @ 1600500114 Sat, 19 Sep 2020 07:21:54 GMT
+PASS Distribute And Approve Tokens - ogToken.approve(OptinoGov:0xdf9f, 1000)
+approveTokens_Txs[3] status=0x1 Success gas=2000000 gasUsed=44013 costETH=0.0043968987 costUSD=1.916388298395 @ ETH/USD=435.85 gasPrice=99.9 gwei block=24 txIx=6 txId=0x7a85cafee71b5fafbf5356527b456346fbf7b40242894a0d266bd244475f195c @ 1600500114 Sat, 19 Sep 2020 07:21:54 GMT
+govContractAddress=OptinoGov:0xdf9f
+gov.token='OGToken' 'Optino Governance Token (18 dp)':0x90d8
+gov.maxLockTerm=10000 =0.11574074074074074074 days
+gov.rewardsPerSecond=0.15 /day=12960 /year=4730400
+gov.proposalCost=100
+gov.proposalThreshold=0.1%
+gov.quorum=20%
+gov.quorumDecayPerSecond=0.0000012683916793% /year=39.9999999984048
+gov.votingDuration=10800 seconds
+gov.executeDelay=7200 seconds
+gov.rewardPool=0
+gov.totalVotes=0
+gov.proposalCount=0
+gov.locks[user1:0xa22a] balance=0, duration=0, end=0 Thu, 01 Jan 1970 00:00:00 GMT, votes=0
+gov.locks[user2:0xa33a] balance=0, duration=0, end=0 Thu, 01 Jan 1970 00:00:00 GMT, votes=0
+gov.locks[user3:0xa44a] balance=0, duration=0, end=0 Thu, 01 Jan 1970 00:00:00 GMT, votes=0
+gov.locks[user4:0xa55a] balance=0, duration=0, end=0 Thu, 01 Jan 1970 00:00:00 GMT, votes=0
+
+token0ContractAddress='OGToken' 'Optino Governance Token (18 dp)':0x90d8
+token0.owner=deployer:0xa11a
+token0.details='OGToken' 'Optino Governance Token (18 dp)' 18 dp
+token0.totalSupply=4000
+token0.cap=0 freezeCap=false
+token0.Approval 0 #24 tokenOwner=user2:0xa33a spender=OptinoGov:0xdf9f tokens=1000
+token0.Approval 1 #24 tokenOwner=user1:0xa22a spender=OptinoGov:0xdf9f tokens=1000
+token0.Approval 2 #24 tokenOwner=user4:0xa55a spender=OptinoGov:0xdf9f tokens=1000
+token0.Approval 3 #24 tokenOwner=user3:0xa44a spender=OptinoGov:0xdf9f tokens=1000
+token0.Transfer 0 #24 from=null:0x0000 to=user1:0xa22a tokens=1000
+token0.Transfer 1 #24 from=null:0x0000 to=user2:0xa33a tokens=1000
+token0.Transfer 2 #24 from=null:0x0000 to=user3:0xa44a tokens=1000
+token0.Transfer 3 #24 from=null:0x0000 to=user4:0xa55a tokens=1000
+
+token1ContractAddress='TEST' 'Test (18 dp)':0x0e94
+token1.owner=deployer:0xa11a
+token1.details='TEST' 'Test (18 dp)' 18 dp
+token1.totalSupply=321.123456789012345678
+
+---------- Lock Tokens ----------
+ # Account                                             EtherBalanceChange                        OGToken                           TEST Name
+-- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
+ 0 0xa00af22d07c87d96eeeb0ed583f8f6ac7812827e        0.765475857900000000           0.000000000000000000           0.000000000000000000 miner
+ 1 0xa11aae29840fbb5c86e6fd4cf809eba183aef433       -0.686393219700000000           0.000000000000000000         321.123456789012345678 deployer
+ 2 0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976       -0.030827241900000000         400.000000000000000000           0.000000000000000000 user1
+ 3 0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0       -0.020430748800000000         700.000000000000000000           0.000000000000000000 user2
+ 4 0xa44a08d3f6933c69212114bb66e2df1813651844       -0.023427748800000000         700.000000000000000000           0.000000000000000000 user3
+ 5 0xa55a151eb00fded1634d27d1127b4be4627079ea       -0.004396898700000000        1000.000000000000000000           0.000000000000000000 user4
+ 6 0x0000000000000000000000000000000000000000        0.000000000000000000           0.000000000000000000           0.000000000000000000 null
+ 7 0x90d8927407c79c4a28ee879b821c76fc9bcc2688        0.000000000000000000           0.000000000000000000           0.000000000000000000 'OGToken' 'Optino Governance Token (18 dp)'
+ 8 0x0e946b999033257976aa5cbe0e3530618ca1582d        0.000000000000000000           0.000000000000000000           0.000000000000000000 'TEST' 'Test (18 dp)'
+ 9 0xdf9f36fd5654d92e0844c78d2d2dd562404cd1ff        0.000000000000000000        1200.000000000000000000           0.000000000000000000 OptinoGov
+-- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
+                                                                                 4000.000000000000000000         321.123456789012345678 Total Token Balances
+-- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
+
+PASS Lock Tokens - user1:0xa22a-> gov.stake(300, 100)
+lockTokens_Txs[0] status=0x1 Success gas=2000000 gasUsed=160499 costETH=0.0160338501 costUSD=6.988353566085 @ ETH/USD=435.85 gasPrice=99.9 gwei block=26 txIx=2 txId=0x67b80dedd369f565469e5181ae5fc3f9dc74053deef32fdf4540b4c4d2d9a7ee @ 1600500116 Sat, 19 Sep 2020 07:21:56 GMT
+PASS Lock Tokens - user2:0xa33a-> gov.stake(300, 100)
+lockTokens_Txs[1] status=0x1 Success gas=2000000 gasUsed=160499 costETH=0.0160338501 costUSD=6.988353566085 @ ETH/USD=435.85 gasPrice=99.9 gwei block=26 txIx=1 txId=0xed9b977534118cd1566027eca36070195fa390778a5f2b86dc3d45186baca09d @ 1600500116 Sat, 19 Sep 2020 07:21:56 GMT
+PASS Lock Tokens - user3:0xa44a-> gov.stake(300, 100)
+lockTokens_Txs[2] status=0x1 Success gas=2000000 gasUsed=190499 costETH=0.0190308501 costUSD=8.294596016085 @ ETH/USD=435.85 gasPrice=99.9 gwei block=26 txIx=0 txId=0x8b81b7f453c75eb1b1aa0917b1efe6f3f3344d2b3d6653031d89c815a8c5adcd @ 1600500116 Sat, 19 Sep 2020 07:21:56 GMT
+PASS Lock Tokens - user1:0xa22a-> gov.stake(300, 100)
+lockTokens_Txs[3] status=0x1 Success gas=2000000 gasUsed=104069 costETH=0.0103964931 costUSD=4.531311517635 @ ETH/USD=435.85 gasPrice=99.9 gwei block=26 txIx=3 txId=0x4c7d54be613243ab8bd18d93cc12d7c13b6efb16d994886054f8c7311e1f40ca @ 1600500116 Sat, 19 Sep 2020 07:21:56 GMT
+transferOwnership_Tx status=0x1 Success gas=2000000 gasUsed=30820 costETH=0.003078918 costUSD=1.3419464103 @ ETH/USD=435.85 gasPrice=99.9 gwei block=26 txIx=4 txId=0xcfb9418ecb334b34534adebcb51752a38cd1c9ee5696038697a46d9b144406c9 @ 1600500116 Sat, 19 Sep 2020 07:21:56 GMT
+govContractAddress=OptinoGov:0xdf9f
+gov.token='OGToken' 'Optino Governance Token (18 dp)':0x90d8
+gov.maxLockTerm=10000 =0.11574074074074074074 days
+gov.rewardsPerSecond=0.15 /day=12960 /year=4730400
+gov.proposalCost=100
+gov.proposalThreshold=0.1%
+gov.quorum=20%
+gov.quorumDecayPerSecond=0.0000012683916793% /year=39.9999999984048
+gov.votingDuration=10800 seconds
+gov.executeDelay=7200 seconds
+gov.rewardPool=0
+gov.totalVotes=12
+gov.proposalCount=0
+gov.locks[user1:0xa22a] balance=600, duration=100, end=1600500216 Sat, 19 Sep 2020 07:23:36 GMT, votes=6
+gov.locks[user2:0xa33a] balance=300, duration=100, end=1600500216 Sat, 19 Sep 2020 07:23:36 GMT, votes=3
+gov.locks[user3:0xa44a] balance=300, duration=100, end=1600500216 Sat, 19 Sep 2020 07:23:36 GMT, votes=3
+gov.locks[user4:0xa55a] balance=0, duration=0, end=0 Thu, 01 Jan 1970 00:00:00 GMT, votes=0
+Locked 0 #26 user=user3:0xa44a tokens=300 balance=300 duration=100 end=1600500216 Sat, 19 Sep 2020 07:23:36 GMT votes=3 rewardPool=0 totalVotes=3
+Locked 1 #26 user=user2:0xa33a tokens=300 balance=300 duration=100 end=1600500216 Sat, 19 Sep 2020 07:23:36 GMT votes=3 rewardPool=0 totalVotes=6
+Locked 2 #26 user=user1:0xa22a tokens=300 balance=300 duration=100 end=1600500216 Sat, 19 Sep 2020 07:23:36 GMT votes=3 rewardPool=0 totalVotes=9
+Locked 3 #26 user=user1:0xa22a tokens=300 balance=600 duration=100 end=1600500216 Sat, 19 Sep 2020 07:23:36 GMT votes=6 rewardPool=0 totalVotes=12
+
+token0ContractAddress='OGToken' 'Optino Governance Token (18 dp)':0x90d8
+token0.owner=OptinoGov:0xdf9f
+token0.details='OGToken' 'Optino Governance Token (18 dp)' 18 dp
+token0.totalSupply=4000
+token0.cap=0 freezeCap=false
+token0.OwnershipTransferred 0 #26 {"_from":"0xa11aae29840fbb5c86e6fd4cf809eba183aef433","_to":"0xdf9f36fd5654d92e0844c78d2d2dd562404cd1ff"}
+token0.Transfer 0 #26 from=user3:0xa44a to=OptinoGov:0xdf9f tokens=300
+token0.Transfer 1 #26 from=user2:0xa33a to=OptinoGov:0xdf9f tokens=300
+token0.Transfer 2 #26 from=user1:0xa22a to=OptinoGov:0xdf9f tokens=300
+token0.Transfer 3 #26 from=user1:0xa22a to=OptinoGov:0xdf9f tokens=300
+
+token1ContractAddress='TEST' 'Test (18 dp)':0x0e94
+token1.owner=deployer:0xa11a
+token1.details='TEST' 'Test (18 dp)' 18 dp
+token1.totalSupply=321.123456789012345678
+
+---------- Stake Tokens ----------
+ # Account                                             EtherBalanceChange                        OGToken                           TEST Name
+-- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
+ 0 0xa00af22d07c87d96eeeb0ed583f8f6ac7812827e        0.839731128300000000           0.000000000000000000           0.000000000000000000 miner
+ 1 0xa11aae29840fbb5c86e6fd4cf809eba183aef433       -0.686393219700000000           0.000000000000000000         321.123456789012345678 deployer
+ 2 0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976       -0.046311542100000000         400.000000000000000000           0.000000000000000000 user1
+ 3 0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0       -0.035915049000000000         700.000000000000000000           0.000000000000000000 user2
+ 4 0xa44a08d3f6933c69212114bb66e2df1813651844       -0.066714418800000000         700.000000000000000000           0.000000000000000000 user3
+ 5 0xa55a151eb00fded1634d27d1127b4be4627079ea       -0.004396898700000000        1000.000000000000000000           0.000000000000000000 user4
+ 6 0x0000000000000000000000000000000000000000        0.000000000000000000           0.000000000000000000           0.000000000000000000 null
+ 7 0x90d8927407c79c4a28ee879b821c76fc9bcc2688        0.000000000000000000           0.000000000000000000           0.000000000000000000 'OGToken' 'Optino Governance Token (18 dp)'
+ 8 0x0e946b999033257976aa5cbe0e3530618ca1582d        0.000000000000000000           0.000000000000000000           0.000000000000000000 'TEST' 'Test (18 dp)'
+ 9 0xdf9f36fd5654d92e0844c78d2d2dd562404cd1ff        0.000000000000000000        1200.000000000000000000           0.000000000000000000 OptinoGov
+-- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
+                                                                                 4000.000000000000000000         321.123456789012345678 Total Token Balances
+-- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
+
+PASS Stake Tokens - user1:0xa22a-> gov.addStakeForToken(10, 'TEST' 'Test (18 dp)':0x0e94)
+stakeTokensForTokens_Txs[0] status=0x1 Success gas=2000000 gasUsed=84917 costETH=0.0084832083 costUSD=3.697406337555 @ ETH/USD=435.85 gasPrice=99.9 gwei block=28 txIx=4 txId=0x8d3a967f5604a5d495bcf9128c8419baec8559c606c0a6d6f74ce04204b132ae @ 1600500118 Sat, 19 Sep 2020 07:21:58 GMT
+PASS Stake Tokens - user1:0xa22a-> gov.addStakeForFeed(15, 0xfeedfeedfeedfeedfeedfeedfeedfeedfeedfeed)
+stakeTokensForFeed_Txs[0] status=0x1 Success gas=2000000 gasUsed=70081 costETH=0.0070010919 costUSD=3.051425904615 @ ETH/USD=435.85 gasPrice=99.9 gwei block=28 txIx=5 txId=0x9fdbede1fe9fb103bf91b304cbb30e89dc50ba2da15b26d78647e5b52da86d21 @ 1600500118 Sat, 19 Sep 2020 07:21:58 GMT
+PASS Stake Tokens - user2:0xa33a-> gov.addStakeForToken(10, 'TEST' 'Test (18 dp)':0x0e94)
+stakeTokensForTokens_Txs[1] status=0x1 Success gas=2000000 gasUsed=84917 costETH=0.0084832083 costUSD=3.697406337555 @ ETH/USD=435.85 gasPrice=99.9 gwei block=28 txIx=2 txId=0x876b6c90c92ee22b50d4c1bd614e54614816370c269aa1d63521f579d2d14e0c @ 1600500118 Sat, 19 Sep 2020 07:21:58 GMT
+PASS Stake Tokens - user2:0xa33a-> gov.addStakeForFeed(15, 0xfeedfeedfeedfeedfeedfeedfeedfeedfeedfeed)
+stakeTokensForFeed_Txs[1] status=0x1 Success gas=2000000 gasUsed=70081 costETH=0.0070010919 costUSD=3.051425904615 @ ETH/USD=435.85 gasPrice=99.9 gwei block=28 txIx=3 txId=0x3877d3fae29375b4e1857d47fe0ba50f5af35a952f1d6708c664cfb34b6bef39 @ 1600500118 Sat, 19 Sep 2020 07:21:58 GMT
+PASS Stake Tokens - user3:0xa44a-> gov.addStakeForToken(10, 'TEST' 'Test (18 dp)':0x0e94)
+stakeTokensForTokens_Txs[2] status=0x1 Success gas=2000000 gasUsed=212316 costETH=0.0212103684 costUSD=9.24453906714 @ ETH/USD=435.85 gasPrice=99.9 gwei block=28 txIx=0 txId=0xaad13c85296f9ad450faeec709f2a3ffd62644a508060c1e1f69df6714d43a15 @ 1600500118 Sat, 19 Sep 2020 07:21:58 GMT
+PASS Stake Tokens - user3:0xa44a-> gov.addStakeForFeed(15, 0xfeedfeedfeedfeedfeedfeedfeedfeedfeedfeed)
+stakeTokensForFeed_Txs[2] status=0x1 Success gas=2000000 gasUsed=220984 costETH=0.0220763016 costUSD=9.62195605236 @ ETH/USD=435.85 gasPrice=99.9 gwei block=28 txIx=1 txId=0xe0feaa2b56a12ef22fff4d999f2769dcbac2922621a6f7cdb2084d6a494cd154 @ 1600500118 Sat, 19 Sep 2020 07:21:58 GMT
+govContractAddress=OptinoGov:0xdf9f
+gov.token='OGToken' 'Optino Governance Token (18 dp)':0x90d8
+gov.maxLockTerm=10000 =0.11574074074074074074 days
+gov.rewardsPerSecond=0.15 /day=12960 /year=4730400
+gov.proposalCost=100
+gov.proposalThreshold=0.1%
+gov.quorum=20%
+gov.quorumDecayPerSecond=0.0000012683916793% /year=39.9999999984048
+gov.votingDuration=10800 seconds
+gov.executeDelay=7200 seconds
+gov.rewardPool=0
+gov.totalVotes=12
+gov.proposalCount=0
+gov.getStakeInfoByKey[0x0f4f95e77057e0a1aac04ae00414fdfdcdb39c993b831970b31388d23f5c51e4] =["1",["0x0e946b999033257976aa5cbe0e3530618ca1582d","0x0000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000"],["0","0","0","0","0","0"],"Testing","","",""]
+gov.getStakeInfoByKey[0xde45e6bccf5211cfb6e42f5cb7555a980df8222399967f7ff8691a24ddb130c2] =["2",["0xfeedfeedfeedfeedfeedfeedfeedfeedfeedfeed","0x0000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000"],["1","9","0","0","0","0"],"Feed:ETH/USD","","",""]
+gov.locks[user1:0xa22a] balance=600, duration=100, end=1600500216 Sat, 19 Sep 2020 07:23:36 GMT, votes=6
+  gov.locks[user1:0xa22a].stake[0x0f4f95e77057e0a1aac04ae00414fdfdcdb39c993b831970b31388d23f5c51e4] =10000000000000000000 10
+  gov.locks[user1:0xa22a].stake[0xde45e6bccf5211cfb6e42f5cb7555a980df8222399967f7ff8691a24ddb130c2] =15000000000000000000 15
+gov.locks[user2:0xa33a] balance=300, duration=100, end=1600500216 Sat, 19 Sep 2020 07:23:36 GMT, votes=3
+  gov.locks[user2:0xa33a].stake[0x0f4f95e77057e0a1aac04ae00414fdfdcdb39c993b831970b31388d23f5c51e4] =10000000000000000000 10
+  gov.locks[user2:0xa33a].stake[0xde45e6bccf5211cfb6e42f5cb7555a980df8222399967f7ff8691a24ddb130c2] =15000000000000000000 15
+gov.locks[user3:0xa44a] balance=300, duration=100, end=1600500216 Sat, 19 Sep 2020 07:23:36 GMT, votes=3
+  gov.locks[user3:0xa44a].stake[0x0f4f95e77057e0a1aac04ae00414fdfdcdb39c993b831970b31388d23f5c51e4] =10000000000000000000 10
+  gov.locks[user3:0xa44a].stake[0xde45e6bccf5211cfb6e42f5cb7555a980df8222399967f7ff8691a24ddb130c2] =15000000000000000000 15
+gov.locks[user4:0xa55a] balance=0, duration=0, end=0 Thu, 01 Jan 1970 00:00:00 GMT, votes=0
+  gov.locks[user4:0xa55a].stake[0x0f4f95e77057e0a1aac04ae00414fdfdcdb39c993b831970b31388d23f5c51e4] =0 0
+  gov.locks[user4:0xa55a].stake[0xde45e6bccf5211cfb6e42f5cb7555a980df8222399967f7ff8691a24ddb130c2] =0 0
+StakeInfoAdded 0 #28 {"stakingKey":"0x0f4f95e77057e0a1aac04ae00414fdfdcdb39c993b831970b31388d23f5c51e4","dataType":"1","addresses":["0x0e946b999033257976aa5cbe0e3530618ca1582d","0x0000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000"],"uints":["0","0","0","0","0","0"],"string0":"Testing","string1":"","string2":"","string3":""}
+StakeInfoAdded 1 #28 {"stakingKey":"0xde45e6bccf5211cfb6e42f5cb7555a980df8222399967f7ff8691a24ddb130c2","dataType":"2","addresses":["0xfeedfeedfeedfeedfeedfeedfeedfeedfeedfeed","0x0000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000"],"uints":["1","9","0","0","0","0"],"string0":"Feed:ETH/USD","string1":"","string2":"","string3":""}
+
+token0ContractAddress='OGToken' 'Optino Governance Token (18 dp)':0x90d8
+token0.owner=OptinoGov:0xdf9f
+token0.details='OGToken' 'Optino Governance Token (18 dp)' 18 dp
+token0.totalSupply=4000
+token0.cap=0 freezeCap=false
+
+token1ContractAddress='TEST' 'Test (18 dp)':0x0e94
+token1.owner=deployer:0xa11a
+token1.details='TEST' 'Test (18 dp)' 18 dp
+token1.totalSupply=321.123456789012345678
+

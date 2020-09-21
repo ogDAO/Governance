@@ -1,6 +1,7 @@
 pragma solidity ^0.7.0;
 
 /// @notice Safe maths
+// SPDX-License-Identifier: GPLv2
 library SafeMath {
     function add(uint a, uint b) internal pure returns (uint c) {
         c = a + b;

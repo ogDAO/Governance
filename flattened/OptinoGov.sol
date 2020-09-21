@@ -1,8 +1,69 @@
+// File: contracts/ERC20.sol
+
+pragma solidity ^0.7.0;
+
+/// @notice ERC20 https://eips.ethereum.org/EIPS/eip-20 with optional symbol, name and decimals
+// SPDX-License-Identifier: GPLv2
+interface ERC20 {
+    function totalSupply() external view returns (uint);
+    function balanceOf(address tokenOwner) external view returns (uint balance);
+    function allowance(address tokenOwner, address spender) external view returns (uint remaining);
+    function transfer(address to, uint tokens) external returns (bool success);
+    function approve(address spender, uint tokens) external returns (bool success);
+    function transferFrom(address from, address to, uint tokens) external returns (bool success);
+
+    function symbol() external view returns (string memory);
+    function name() external view returns (string memory);
+    function decimals() external view returns (uint8);
+
+    event Transfer(address indexed from, address indexed to, uint tokens);
+    event Approval(address indexed tokenOwner, address indexed spender, uint tokens);
+}
+
+// File: contracts/OGTokenInterface.sol
+
+pragma solidity ^0.7.0;
+
+
+/// @notice OGTokenInterface = ERC20 + mint + burn
+// SPDX-License-Identifier: GPLv2
+interface OGTokenInterface is ERC20 {
+    function mint(address tokenOwner, uint tokens) external returns (bool success);
+    function burn(uint tokens) external returns (bool success);
+    // function burnFrom(address tokenOwner, uint tokens) external returns (bool success);
+}
+
+// File: contracts/SafeMath.sol
+
+pragma solidity ^0.7.0;
+
+/// @notice Safe maths
+// SPDX-License-Identifier: GPLv2
+library SafeMath {
+    function add(uint a, uint b) internal pure returns (uint c) {
+        c = a + b;
+        require(c >= a, "Add overflow");
+    }
+    function sub(uint a, uint b) internal pure returns (uint c) {
+        require(b <= a, "Sub underflow");
+        c = a - b;
+    }
+    function mul(uint a, uint b) internal pure returns (uint c) {
+        c = a * b;
+        require(a == 0 || c / a == b, "Mul overflow");
+    }
+    function div(uint a, uint b) internal pure returns (uint c) {
+        require(b > 0, "Divide by 0");
+        c = a / b;
+    }
+}
+
+// File: contracts/OptinoGov.sol
+
 pragma solidity ^0.7.0;
 pragma experimental ABIEncoderV2;
 
-import "./OGTokenInterface.sol";
-import "./SafeMath.sol";
+
 
 // ----------------------------------------------------------------------------
 // Optino Governance

@@ -367,7 +367,11 @@ function printTokenContractDetails(j) {
     try {
       console.log("RESULT: token" + j + ".owner/new=" + getShortAddressName(contract.owner.call()) + "/" + getShortAddressName(contract.newOwner.call()));
     } catch (error) {
-      console.log("RESULT: token" + j + ".owner/new - Function call failed");
+      try {
+        console.log("RESULT: token" + j + ".owner=" + getShortAddressName(contract.owner.call()));
+      } catch (error1) {
+        console.log("RESULT: token" + j + ".owner/new - Function call failed");
+      }
     }
     try {
       console.log("RESULT: token" + j + ".details='" + contract.symbol.call() + "' '" + contract.name.call() + "' " + decimals + " dp");

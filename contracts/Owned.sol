@@ -1,10 +1,10 @@
 pragma solidity ^0.7.0;
 
 /// @notice Ownership
+// SPDX-License-Identifier: GPLv2
 contract Owned {
     bool initialised;
     address public owner;
-    address public newOwner;
 
     event OwnershipTransferred(address indexed _from, address indexed _to);
 
@@ -19,11 +19,7 @@ contract Owned {
         initialised = true;
     }
     function transferOwnership(address _newOwner) public onlyOwner {
-        newOwner = _newOwner;
-    }
-    function acceptOwnership() public {
-        emit OwnershipTransferred(owner, newOwner);
-        owner = newOwner;
-        newOwner = address(0);
+        emit OwnershipTransferred(owner, _newOwner);
+        owner = _newOwner;
     }
 }

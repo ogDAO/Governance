@@ -194,31 +194,31 @@ printTokenContractDetails(1);
 console.log("RESULT: ");
 
 
-if (false) {
 // -----------------------------------------------------------------------------
 var testProposal_Message = "Testing Proposal Parameters";
-var functionSig = web3.sha3("propose(string,address[],uint256[],bytes[])").substring(0,10);
-var description = "Test Array";
+var proposeFunctionSig = web3.sha3("propose(string,address[],uint256[],bytes[])").substring(0,10);
+var mintFunctionSig = web3.sha3("mint(address,uint256)").substring(0,10);
+var description = "Proposal 1";
 var mintTokens = new BigNumber("888.888").shift(18);
-var ogTokenAddress = "0x6c2f495c5ff3add941ebecea9888d04308d810c9";
+var ogTokenAddress = "0xf7b8de4484d33d9a64d220f83d28d9a03fa73ec4";
 var targets = [ogTokenAddress, ogTokenAddress];
 var values = [1, 1];
-var bytes = '0x' + functionSig + addressToHex64(user3) + uint256ToHex64(mintTokens);
+var bytes = '0x' + mintFunctionSig.substring(2) + addressToHex64(user3) + uint256ToHex64(mintTokens);
+console.log("RESULT: bytes : " + bytes);
 var data = [bytes, bytes];
 // -----------------------------------------------------------------------------
 console.log("RESULT: ---------- " + testProposal_Message + " ----------");
-console.log("RESULT: functionSig : " + functionSig);
-var input = functionSig;
-console.log("RESULT: description offset : " + uint256ToHex64(32 * 5)); // (0xa0  = 32 x 5)
-input = input + uint256ToHex64(32 * 5);
-console.log("RESULT: targets offset     : " + uint256ToHex64(32 * 7)); // (0xe0  = 224 = 32 x 7)
-input = input + uint256ToHex64(32 * 7);
-console.log("RESULT: values offset      : " + uint256ToHex64(32 * 10)); // (0x140 = 320 = 32 x 10)
-input = input + uint256ToHex64(32 * 10);
-console.log("RESULT: signatures offset  : " + uint256ToHex64(32 * 13)); // (0x1a0 = 416 = 32 x 13)
-input = input + uint256ToHex64(32 * 13);
-console.log("RESULT: data offset        : " + uint256ToHex64(32 * 20)); // (0x280 = 640 = 32 x 20)
-input = input + uint256ToHex64(32 * 20);
+if (false) {
+console.log("RESULT: proposeFunctionSig : " + proposeFunctionSig);
+var input = proposeFunctionSig;
+console.log("RESULT: description offset : " + uint256ToHex64(32 * 4)); // (0x80  = 32 x 4)
+input = input + uint256ToHex64(32 * 4);
+console.log("RESULT: targets offset     : " + uint256ToHex64(32 * 6)); // (0xc0  = 192 = 32 x 6)
+input = input + uint256ToHex64(32 * 6);
+console.log("RESULT: values offset      : " + uint256ToHex64(32 * 9)); // (0x120 = 288 = 32 x 9)
+input = input + uint256ToHex64(32 * 9);
+console.log("RESULT: data offset        : " + uint256ToHex64(32 * 12)); // (0x180 = 384 = 32 x 12)
+input = input + uint256ToHex64(32 * 12);
 console.log("RESULT: string.length      : " + uint256ToHex64(description.length));
 input = input + uint256ToHex64(description.length);
 console.log("RESULT: string             : " + padRight0(stringToHex(description), 64));
@@ -263,7 +263,7 @@ for (var i = 0; i < data.length; i++) {
 }
 console.log("RESULT: input : " + input);
 
-// "Test Array", ["0x6c2f495c5ff3add941ebecea9888d04308d810c9", "0x6c2f495c5ff3add941ebecea9888d04308d810c9"], [1, 1], ["0x000000000000000000000000a44a08d3f6933c69212114bb66e2df18136518440000000000000000000000000000000000000000000000302fcc8e78336c0000", "0x000000000000000000000000a44a08d3f6933c69212114bb66e2df18136518440000000000000000000000000000000000000000000000302fcc8e78336c0000"]
+// "Proposal 1", ["0xf7b8de4484d33d9a64d220f83d28d9a03fa73ec4", "0xf7b8de4484d33d9a64d220f83d28d9a03fa73ec4"], [0, 0], ["0x40c10f19000000000000000000000000a44a08d3f6933c69212114bb66e2df18136518440000000000000000000000000000000000000000000000302fcc8e78336c0000", "0x40c10f19000000000000000000000000a44a08d3f6933c69212114bb66e2df18136518440000000000000000000000000000000000000000000000302fcc8e78336c0000"]
 // var testArray_Tx = gov.proposeArray(description, targets, values, signatures, data, {from: deployer, gas: 2000000, gasPrice: defaultGasPrice});
 var testArray_Tx = eth.sendTransaction({to: govAddress, value: 0, input: input, from: user3, gas: 2000000, gasPrice: defaultGasPrice});
 while (txpool.status.pending > 0) {
