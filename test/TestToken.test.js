@@ -1,36 +1,30 @@
-// const Web3 = require('web3');
-// const web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
-
-const { MyData, ZERO_ADDRESS, TestToken, printBalancesOld } = require('./helpers/common');
+const { MyData, ZERO_ADDRESS, TestToken, printBalances } = require('./helpers/common');
 const BigNumber = require('bignumber.js');
+const { TestTokenTests } = require('./TestToken.js');
 
 contract('TestToken', async _accounts => {
 
-  this.myData = null;
-  this.TestToken = null;
+  const myData = new MyData(_accounts);
+  // this.myData = null;
+  // this.TestToken = null;
 
+  /*
   it('Test getBlockNumber 1', async () => {
-    // web3.eth.getBlockNumber(function(error, result) { if (!error) console.log("it.block number 1 => " + result) });
-    // var blockNumber = await web3.eth.getBlockNumber();
-    // console.log("Test getBlockNumber 1 - blockNumber: " + blockNumber);
-    await web3.eth.sendTransaction({ value: "100000000000000000", from: myData.owner, to: myData.user1 });
+    await web3.eth.sendTransaction({ value: "100000000000000000", from: this.myData.owner, to: this.myData.user1 });
 
     // this.TestToken.transfer.sendTransaction(myData.user1, "123", { from: myData.owner });
     // console.log(this.TestToken);
     // console.log(JSON.stringify(this.TestToken));
     // await this.TestToken.transfer(myData.user1, "123");
 
-    await myData.printBalances();
+    await this.myData.printBalances();
     assert.equal(1, 1, "1 1=1");
   });
-
   it('Test getBlockNumber 2', async () => {
-    // web3.eth.getBlockNumber(function(error, result) { if (!error) console.log("it.block number 2 => " + result) });
-    // var blockNumber = await web3.eth.getBlockNumber();
-    // console.log("Test getBlockNumber 2 - blockNumber: " + blockNumber);
-    await myData.printBalances();
+    await this.myData.printBalances();
     assert.equal(2, 2, "2 2=2");
   });
+  */
 
   // const myData = new MyData(_accounts);
   // const owner = myData.owner
@@ -44,14 +38,10 @@ contract('TestToken', async _accounts => {
   // });
 
   beforeEach(async function () {
-    myData = new MyData(_accounts);
+    // this.myData = new MyData(_accounts);
     await myData.setBaseBlock();
-    // var blockNumber = await web3.eth.getBlockNumber();
-    // console.log("beforeEach - blockNumber: " + blockNumber);
-    // web3.eth.getBlockNumber(function(error, result) { if (!error) console.log("beforeEach.block number => " + result) });
-    // console.log("beforeEach.Deploying TestToken");
     this.TestToken = await TestToken.new("ABC", "Abc", 18, myData.owner, new web3.utils.BN("1000000000000000000000000"), { from: myData.owner, gas: 2000000 });
-    console.log("beforeEach.Deployed TestToken.address: " + this.TestToken.address);
+    console.log("    - beforeEach Deployed TestToken - address: " + this.TestToken.address);
     await myData.addToken(this.TestToken);
   //     // Set up TokenStorage
   //     this.allowances = await AllowanceSheet.new( {from:owner })
@@ -70,11 +60,8 @@ contract('TestToken', async _accounts => {
   });
 
   describe("TestToken behavior tests", function () {
-    // web3 not available
-    // const myData = new MyData(_accounts);
-    // myData.setBaseBlock();
+    // web3 not available yet
     console.log("TestToken.test.js: describe(TestToken behavior tests)");
-
-    // myData.printBalances();
+    TestTokenTests(myData);
   });
 })

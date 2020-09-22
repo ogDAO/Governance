@@ -20,4 +20,6 @@ truffle console
 > let accounts = await web3.eth.getAccounts()
 > accounts
 
+let balanceOf = await instance.balanceOf(accounts[0])
+
 ```

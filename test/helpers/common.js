@@ -40,13 +40,13 @@ class MyData {
 
   async setBaseBlock() {
     this.baseBlock = await web3.eth.getBlockNumber();
-    console.log("MyData.setBaseBlock - this.baseBlock: " + this.baseBlock);
+    console.log("    - MyData.setBaseBlock - this.baseBlock: " + this.baseBlock);
   }
 
   async addToken(tokenContract) {
     let symbol = await tokenContract.symbol();
     let decimals = await tokenContract.decimals();
-    console.log("MyData.addToken - tokenContract.address: " + tokenContract.address + " " + symbol + " " + decimals);
+    console.log("    - MyData.addToken - tokenContract.address: " + tokenContract.address + " " + symbol + " " + decimals);
     this.tokenContracts.push(tokenContract);
     this.symbols.push(symbol);
     this.decimals.push(decimals);
@@ -98,8 +98,8 @@ class MyData {
   }
 }
 
-const printBalancesOld = async function (commonVariables) {
-  console.log("printBalancesOld: Hello: " + JSON.stringify(commonVariables));
+const printBalances = async function (commonVariables) {
+  console.log("common.printBalances function: " + JSON.stringify(commonVariables));
 }
 
 /* Exporting the module */
@@ -107,5 +107,5 @@ module.exports = {
     MyData,
     ZERO_ADDRESS,
     TestToken,
-    printBalancesOld,
+    printBalances,
 }
