@@ -33,6 +33,19 @@ interface OGTokenInterface is ERC20 {
     // function burnFrom(address tokenOwner, uint tokens) external returns (bool success);
 }
 
+// File: contracts/OFTokenInterface.sol
+
+pragma solidity ^0.7.0;
+
+
+/// @notice OFTokenInterface = ERC20 + mint + burn
+// SPDX-License-Identifier: GPLv2
+interface OFTokenInterface is ERC20 {
+    function mint(address tokenOwner, uint tokens) external returns (bool success);
+    function burn(uint tokens) external returns (bool success);
+    // function burnFrom(address tokenOwner, uint tokens) external returns (bool success);
+}
+
 // File: contracts/SafeMath.sol
 
 pragma solidity ^0.7.0;
@@ -62,6 +75,7 @@ library SafeMath {
 
 pragma solidity ^0.7.0;
 pragma experimental ABIEncoderV2;
+
 
 
 
