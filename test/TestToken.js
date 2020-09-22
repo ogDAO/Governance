@@ -4,14 +4,10 @@ const util = require('util')
 
 function TestTokenTests(myData) {
 
-  this.myData = myData;
-  const t = this;
-  // this.TestToken = null;
-
+  // this.myData = myData;
 
   it('Test getBlockNumber 1 a', async () => {
-    console.log("TestToken.js - this.myData: " + t.myData);
-    console.log("TestToken.js - util.inspect(this.myData): " + util.inspect(t.myData));
+    // console.log("TestToken.js - util.inspect(myData): " + util.inspect(myData));
     // web3.eth.getBlockNumber(function(error, result) { if (!error) console.log("it.block number 1 => " + result) });
     // var blockNumber = await web3.eth.getBlockNumber();
     // console.log("Test getBlockNumber 1 - blockNumber: " + blockNumber);
@@ -22,7 +18,11 @@ function TestTokenTests(myData) {
     // console.log(JSON.stringify(this.TestToken));
     // await this.TestToken.transfer(myData.user1, "123");
 
-    // await myData.printBalances();
+    await myData.printBalances();
+    const testToken = myData.tokenContracts[0];
+    // console.log("TestToken.js - util.inspect(testToken): " + util.inspect(testToken));
+    await testToken.transfer(myData.user1, new BigNumber("10").shiftedBy(18), { from: myData.owner });
+    await myData.printBalances();
     assert.equal(1, 1, "1 1=1");
   });
 

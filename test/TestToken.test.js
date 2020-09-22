@@ -40,7 +40,7 @@ contract('TestToken', async _accounts => {
   beforeEach(async function () {
     // this.myData = new MyData(_accounts);
     await myData.setBaseBlock();
-    this.TestToken = await TestToken.new("ABC", "Abc", 18, myData.owner, new web3.utils.BN("1000000000000000000000000"), { from: myData.owner, gas: 2000000 });
+    this.TestToken = await TestToken.new("ABC", "Abc", 18, myData.owner, new BigNumber("1000000").shiftedBy(18), { from: myData.owner, gas: 2000000 });
     console.log("    - beforeEach Deployed TestToken - address: " + this.TestToken.address);
     await myData.addToken(this.TestToken);
   //     // Set up TokenStorage
