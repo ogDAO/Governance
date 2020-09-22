@@ -76,6 +76,10 @@ library SafeMath {
 pragma solidity ^0.7.0;
 pragma experimental ABIEncoderV2;
 
+// import "https://github.com/ogDAO/Governance/blob/master/contracts/OGTokenInterface.sol";
+// import "https://github.com/ogDAO/Governance/blob/master/contracts/OFTokenInterface.sol";
+// import "https://github.com/ogDAO/Governance/blob/master/contracts/SafeMath.sol";
+
 
 
 

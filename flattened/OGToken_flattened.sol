@@ -51,6 +51,49 @@ library SafeMath {
     }
 }
 
+// File: contracts/Permissioned.sol
+
+pragma solidity ^0.7.0;
+
+
+
+/// @notice Permissioned
+// SPDX-License-Identifier: GPLv2
+contract Permissioned is Owned {
+    using SafeMath for uint;
+
+    struct Permission {
+        bool active;
+        uint maximum;
+        uint processed;
+    }
+
+    uint public constant ROLE_MINTER = 1;
+    // Don't need ROLE_BURNER at the moment
+    // uint public constant ROLE_BURNER = 2;
+    mapping(address => mapping(uint => Permission)) public permissions;
+
+    modifier permitted(uint role, uint tokens) {
+        Permission storage permission = permissions[msg.sender][role];
+        require(permission.active && (permission.maximum == 0 || permission.processed + tokens < permission.maximum), "Not permissioned");
+        permission.processed = permission.processed.add(tokens);
+        _;
+    }
+
+    function initPermissioned(address _owner) internal {
+        initOwned(_owner);
+        setPermission(_owner, ROLE_MINTER, true, 0);
+        // setPermission(_owner, ROLE_BURNER, true, 0);
+    }
+    function setPermission(address account, uint role, bool active, uint maximum) public onlyOwner {
+        uint processed = permissions[account][role].processed;
+        permissions[account][role] = Permission({ active: active, maximum: maximum, processed: processed });
+    }
+    function processed(uint role, uint tokens) internal {
+        permissions[msg.sender][role].processed = permissions[msg.sender][role].processed.add(tokens);
+    }
+}
+
 // File: contracts/ERC20.sol
 
 pragma solidity ^0.7.0;
@@ -90,54 +133,20 @@ interface OGTokenInterface is ERC20 {
 
 pragma solidity ^0.7.0;
 
+// import "https://github.com/ogDAO/Governance/blob/master/contracts/Permissioned.sol";
+// import "https://github.com/ogDAO/Governance/blob/master/contracts/OGTokenInterface.sol";
+
 
 
 
 // ----------------------------------------------------------------------------
 // Optino Governance Token
 //
+// OGToken = OGTokenInterface (ERC20 + mint + burn) + dividend payment
+//
 // Enjoy. (c) The Optino Project 2020
 //
 // SPDX-License-Identifier: GPLv2
-// ----------------------------------------------------------------------------
-
-// import "Permissioned.sol";
-/// @notice Permissioned
-contract Permissioned is Owned {
-    using SafeMath for uint;
-
-    struct Permission {
-        bool active;
-        uint maximum;
-        uint processed;
-    }
-
-    uint public constant ROLE_MINTER = 1;
-    // Don't need ROLE_BURNER at the moment
-    // uint public constant ROLE_BURNER = 2;
-    mapping(address => mapping(uint => Permission)) public permissions;
-
-    modifier permitted(uint role, uint tokens) {
-        Permission storage permission = permissions[msg.sender][role];
-        require(permission.active && (permission.maximum == 0 || permission.processed + tokens < permission.maximum), "Not permissioned");
-        permission.processed = permission.processed.add(tokens);
-        _;
-    }
-
-    function initPermissioned(address _owner) internal {
-        initOwned(_owner);
-        setPermission(_owner, ROLE_MINTER, true, 0);
-        // setPermission(_owner, ROLE_BURNER, true, 0);
-    }
-    function setPermission(address account, uint role, bool active, uint maximum) public {
-        uint processed = permissions[account][role].processed;
-        permissions[account][role] = Permission({ active: active, maximum: maximum, processed: processed });
-    }
-}
-
-
-// ----------------------------------------------------------------------------
-// OGToken = OGTokenInterface (ERC20 + mint + burn) + dividend payment
 // ----------------------------------------------------------------------------
 contract OGToken is OGTokenInterface, Permissioned {
     using SafeMath for uint;
@@ -286,6 +295,7 @@ contract OGToken is OGTokenInterface, Permissioned {
     }
     function mint(address tokenOwner, uint tokens) override external permitted(ROLE_MINTER, tokens) returns (bool success) {
         require(cap == 0 || _totalSupply + tokens <= cap, "Cap exceeded");
+        processed(ROLE_MINTER, tokens);
         accounts[tokenOwner].balance = accounts[tokenOwner].balance.add(tokens);
         _totalSupply = _totalSupply.add(tokens);
         emit Transfer(address(0), tokenOwner, tokens);
