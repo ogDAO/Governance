@@ -1,6 +1,7 @@
 const { MyData, ZERO_ADDRESS, TestToken, printBalances } = require('./helpers/common');
 const BigNumber = require('bignumber.js');
-const util = require('util')
+const util = require('util');
+const ethers = require('ethers');
 
 function TestTokenTests(myData) {
 
@@ -32,6 +33,23 @@ function TestTokenTests(myData) {
   });
 
   it('Test getBlockNumber 2 b', async () => {
+    const message = "Hello";
+    console.log("Test getBlockNumber 2 b - message: " + message);
+
+    // test account 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E
+    let privateKey = '0x56554ba7c55d35844ffe3b132ad064faa810780fe73b952f8c8593facfcb1eaa';
+    let wallet = new ethers.Wallet(privateKey);
+    console.log("Test getBlockNumber 2 b - wallet: " + util.inspect(wallet));
+    let ethersSignature = await wallet.signMessage(message);
+    console.log("Test getBlockNumber 2 b - ethersSignature: " + ethersSignature);
+    // const ethersSigningAccount = await web3.eth.accounts.recover(message, ethersSignature, false);
+    const ethersSigningAccount = ethers.utils.verifyMessage(message, ethersSignature);
+    console.log("Test getBlockNumber 2 b - ethersSigningAccount: " + ethersSigningAccount);
+
+    const web3jsSignature = await web3.eth.sign(message, myData.owner);
+    console.log("Test getBlockNumber 2 b - web3jsSignature: " + web3jsSignature);
+    const web3jsSigningAccount = await web3.eth.accounts.recover(message, web3jsSignature, false);
+    console.log("Test getBlockNumber 2 b - web3jsSigningAccount: " + web3jsSigningAccount);
     // web3.eth.getBlockNumber(function(error, result) { if (!error) console.log("it.block number 2 => " + result) });
     // var blockNumber = await web3.eth.getBlockNumber();
     // console.log("Test getBlockNumber 2 - blockNumber: " + blockNumber);

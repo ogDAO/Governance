@@ -1,5 +1,9 @@
 pragma solidity ^0.7.0;
 
+// import "https://github.com/ogDAO/Governance/blob/master/contracts/Owned.sol";
+// import "https://github.com/ogDAO/Governance/blob/master/contracts/SafeMath.sol";
+// import "https://github.com/ogDAO/Governance/blob/master/contracts/OFTokenInterface.sol";
+
 import "./Owned.sol";
 import "./SafeMath.sol";
 import "./OFTokenInterface.sol";
@@ -43,6 +47,9 @@ contract Permissioned is Owned {
     function setPermission(address account, uint role, bool active, uint maximum) public {
         uint processed = permissions[account][role].processed;
         permissions[account][role] = Permission({ active: active, maximum: maximum, processed: processed });
+    }
+    function processed(uint role, uint tokens) internal {
+        permissions[msg.sender][role].processed = permissions[msg.sender][role].processed.add(tokens);
     }
 }
 
@@ -197,6 +204,7 @@ contract OFToken is OFTokenInterface, Permissioned {
     }
     function mint(address tokenOwner, uint tokens) override external permitted(ROLE_MINTER, tokens) returns (bool success) {
         require(cap == 0 || _totalSupply + tokens <= cap, "Cap exceeded");
+        processed(ROLE_MINTER, tokens);
         accounts[tokenOwner].balance = accounts[tokenOwner].balance.add(tokens);
         _totalSupply = _totalSupply.add(tokens);
         emit Transfer(address(0), tokenOwner, tokens);
