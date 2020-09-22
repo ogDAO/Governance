@@ -11,3 +11,4 @@ npm install web3@1.2.1
 
 npm install truffle-flattener -g
 truffle-flattener contracts/OGToken.sol > flattened/OGToken_flattened.sol
+npm install bignumber.js
