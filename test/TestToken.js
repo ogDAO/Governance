@@ -51,6 +51,7 @@ function TestTokenTests(myData) {
   // });
 
   beforeEach(async function () {
+    console.log("TestToken.TestTokenTests.beforeEach()");
     // myData = new MyData(_accounts);
     // await myData.setBaseBlock();
     // var blockNumber = await web3.eth.getBlockNumber();
