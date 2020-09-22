@@ -7,6 +7,7 @@ npm install -g truffle
 truffle init
 truffle compile
 truffle migrate
+truffle migrate --reset
 npm install web3@1.2.1
 npm install --save ethers
 npm install eth-sig-util --save

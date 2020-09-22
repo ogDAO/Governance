@@ -1,6 +1,10 @@
 const ZERO_ADDRESS = 0x0000000000000000000000000000000000000000;
 const BigNumber = require('bignumber.js');
 
+var OFToken = artifacts.require("OFToken");
+var OGToken = artifacts.require("OGToken");
+var OptinoGov = artifacts.require("OptinoGov");
+var POAPOGTokenStation = artifacts.require("POAPOGTokenStation");
 var TestToken = artifacts.require("TestToken");
 
 /* Creating a class with all common Variables */
