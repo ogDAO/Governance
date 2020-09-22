@@ -21,7 +21,12 @@ function TestTokenTests(myData) {
     await myData.printBalances();
     const testToken = myData.tokenContracts[0];
     // console.log("TestToken.js - util.inspect(testToken): " + util.inspect(testToken));
-    await testToken.transfer(myData.user1, new BigNumber("10").shiftedBy(18), { from: myData.owner });
+    await web3.eth.sendTransaction({ value: new BigNumber("10").shiftedBy(18), from: myData.owner, to: myData.user1 });
+    await web3.eth.sendTransaction({ value: new BigNumber("10").shiftedBy(18), from: myData.owner, to: myData.user2 });
+    await web3.eth.sendTransaction({ value: new BigNumber("10").shiftedBy(18), from: myData.owner, to: myData.user3 });
+    await testToken.transfer(myData.user1, new BigNumber("100").shiftedBy(18), { from: myData.owner });
+    await testToken.transfer(myData.user2, new BigNumber("100").shiftedBy(18), { from: myData.owner });
+    await testToken.transfer(myData.user3, new BigNumber("100").shiftedBy(18), { from: myData.owner });
     await myData.printBalances();
     assert.equal(1, 1, "1 1=1");
   });

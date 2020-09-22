@@ -76,7 +76,7 @@ class MyData {
     var blockNumber = await web3.eth.getBlockNumber();
     var i = 0;
     var totalTokenBalances = [new BigNumber(0), new BigNumber(0)];
-    console.log("RESULT:  # Account                                             EtherBalanceChange               " + this.padLeft(this.symbols[0] || "???", 16) +  "               " + this.padLeft(this.symbols[1] || "???", 16));
+    console.log("RESULT:  # Account                                             EtherBalanceChange               " + this.padLeft(this.symbols[0] || "???", 16) +  "               " + this.padLeft(this.symbols[1] || "???", 16) + " @ " + this.baseBlock.toString() + " -> " + blockNumber.toString());
     console.log("RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------");
     for (var i = 0; i < this.accounts.length; i++) {
       let account = this.accounts[i];
