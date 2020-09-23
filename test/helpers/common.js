@@ -57,7 +57,7 @@ class MyData {
 
   async setBaseBlock() {
     this.baseBlock = await web3.eth.getBlockNumber();
-    console.log("    - MyData.setBaseBlock - this.baseBlock: " + this.baseBlock);
+    // console.log("    - MyData.setBaseBlock - this.baseBlock: " + this.baseBlock);
   }
 
   async setOptinoGovData(ogToken, ofToken, feeToken, optinoGov) {
@@ -70,7 +70,7 @@ class MyData {
     this.addAccount(this.feeToken.address, "FeeToken");
     this.addAccount(this.optinoGov.address, "OptinoGov");
     // console.log("    - MyData.setOptinoGovData - ogToken: " + util.inspect(ogToken) + ", ofToken: " + util.inspect(ofToken) + ", optinoGov: " + util.inspect(optinoGov));
-    console.log("    - MyData.setOptinoGovData - ogToken: " + ogToken + ", ofToken: " + ofToken + ", feeToken: " + feeToken + ", optinoGov: " + optinoGov);
+    // console.log("    - MyData.setOptinoGovData - ogToken: " + ogToken + ", ofToken: " + ofToken + ", feeToken: " + feeToken + ", optinoGov: " + optinoGov);
     this.tokenContracts = [ogToken, ofToken, feeToken];
     for (let i = 0; i < this.tokenContracts.length; i++) {
       let tokenContract = this.tokenContracts[i];
@@ -78,7 +78,7 @@ class MyData {
         let _symbol = tokenContract.symbol();
         let _decimals = tokenContract.decimals();
         let [symbol, decimals] = await Promise.all([_symbol, _decimals]);
-        console.log("    - MyData.setOptinoGovData - token: " + tokenContract.address + " => " + symbol + " " + decimals);
+        // console.log("    - MyData.setOptinoGovData - token: " + tokenContract.address + " => " + symbol + " " + decimals);
         this.symbols.push(symbol);
         this.decimals.push(decimals);
       } else {
@@ -135,7 +135,7 @@ class MyData {
         tokenBalances[j] = new BigNumber(await this.tokenContracts[j].balanceOf(account));
         totalTokenBalances[j] = totalTokenBalances[j].plus(tokenBalances[j]);
       }
-      console.log("RESULT: " + this.padLeft(i, 2) + " " + account + "  " + this.padToken(etherBalanceDiff, 18) + "    " + this.padToken(tokenBalances[0] || new BigNumber(0), this.decimals[0] || 18) + "    " + this.padToken(tokenBalances[1] || new BigNumber(0), this.decimals[1] || 18) + " " + this.accountNames[account]);
+      console.log("RESULT: " + this.padLeft(i, 2) + " " + account + "  " + this.padToken(etherBalanceDiff, 18) + "    " + this.padToken(tokenBalances[0] || new BigNumber(0), this.decimals[0] || 18) + "    " + this.padToken(tokenBalances[1] || new BigNumber(0), this.decimals[1] || 18) + " " + this.accountNames[account.toLowerCase()]);
       console.log("RESULT:                                                                              " + this.padToken(tokenBalances[2] || new BigNumber(0), this.decimals[2] || 18));
     }
     console.log("RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------");
@@ -147,18 +147,50 @@ class MyData {
     for (let i = 0; i < this.tokenContracts.length; i++) {
       let tokenContract = this.tokenContracts[i];
       console.log("RESULT: Token " + i + " @ " + tokenContract.address);
-      let _symbol = tokenContract.symbol();
-      let _name = tokenContract.name();
-      let _decimals = tokenContract.decimals();
-      let _totalSupply = tokenContract.totalSupply();
-      let _owner = tokenContract.owner();
-      let [symbol, name, decimals, totalSupply, owner] = await Promise.all([_symbol, _name, _decimals, _totalSupply, _owner]);
-      console.log("RESULT: - symbol     : " + symbol);
-      console.log("RESULT: - name       : " + name);
-      console.log("RESULT: - decimals   : " + decimals);
-      console.log("RESULT: - totalSupply: " + new BigNumber(totalSupply).shiftedBy(-decimals));
-      console.log("RESULT: - owner      : " + this.getShortAccountName(owner));
+      let [symbol, name, decimals, totalSupply, owner] = await Promise.all([tokenContract.symbol(), tokenContract.name(), tokenContract.decimals(), tokenContract.totalSupply(), tokenContract.owner()]);
+      console.log("RESULT: - symbol               : " + symbol);
+      console.log("RESULT: - name                 : " + name);
+      console.log("RESULT: - decimals             : " + decimals);
+      console.log("RESULT: - totalSupply          : " + new BigNumber(totalSupply).shiftedBy(-decimals));
+      console.log("RESULT: - owner                : " + this.getShortAccountName(owner));
     }
+
+    console.log("RESULT: OptinoGov " + i + " @ " + this.optinoGov.address);
+
+    let [token, maxLockTerm, rewardsPerSecond, proposalCost, proposalThreshold] = await Promise.all([this.optinoGov.token(), this.optinoGov.maxLockTerm(), this.optinoGov.rewardsPerSecond(), this.optinoGov.proposalCost(), this.optinoGov.proposalThreshold()]);
+    let [quorum, quorumDecayPerSecond, votingDuration, executeDelay, rewardPool, totalVotes] = await Promise.all([this.optinoGov.quorum(), this.optinoGov.quorumDecayPerSecond(), this.optinoGov.votingDuration(), this.optinoGov.executeDelay(), this.optinoGov.rewardPool(), this.optinoGov.totalVotes()]);
+    let [proposalCount, stakeInfoLength] = await Promise.all([this.optinoGov.proposalCount(), this.optinoGov.stakeInfoLength()]);
+    console.log("RESULT: - token                : " + this.getShortAccountName(token));
+    let decimals = 18;
+    console.log("RESULT: - maxLockTerm          : " + maxLockTerm + " = " + new BigNumber(maxLockTerm).dividedBy(60 * 60 * 24) + " days");
+    console.log("RESULT: - rewardsPerSecond     : " + rewardsPerSecond + " = " + new BigNumber(rewardsPerSecond).multipliedBy(60 * 60 * 24).shiftedBy(-decimals) + " per day");
+    console.log("RESULT: - proposalCost         : " + proposalCost + " = " + new BigNumber(proposalCost).shiftedBy(-decimals));
+    console.log("RESULT: - proposalThreshold    : " + proposalThreshold + " = " + new BigNumber(proposalThreshold).shiftedBy(-16) + "%");
+    console.log("RESULT: - quorum               : " + quorum + " = " + new BigNumber(quorum).shiftedBy(-16) + "%");
+    console.log("RESULT: - quorumDecayPerSecond : " + quorumDecayPerSecond + " = " + new BigNumber(quorumDecayPerSecond).multipliedBy(60 * 60 * 24 * 365).shiftedBy(-16) + "% per year");
+    console.log("RESULT: - votingDuration       : " + votingDuration + " = " + new BigNumber(votingDuration).dividedBy(60 * 60 * 24) + " days");
+    console.log("RESULT: - executeDelay         : " + executeDelay + " = " + new BigNumber(executeDelay).dividedBy(60 * 60 * 24) + " days");
+    console.log("RESULT: - rewardPool           : " + rewardPool + " = " + new BigNumber(rewardPool).shiftedBy(-decimals));
+    console.log("RESULT: - totalVotes           : " + totalVotes + " = " + new BigNumber(totalVotes).shiftedBy(-decimals));
+    console.log("RESULT: - proposalCount        : " + proposalCount);
+    console.log("RESULT: - stakeInfoLength      : " + stakeInfoLength);
+    // console.log("RESULT: gov.totalVotes=" + contract.totalVotes.call().shift(-18));
+    // var proposalCount = contract.proposalCount.call();
+    // console.log("RESULT: gov.proposalCount=" + proposalCount);
+    // for (var proposalId = 1; proposalId <= proposalCount; proposalId++) {
+    //   var proposal = contract.proposals.call(proposalId);
+    //   console.log("RESULT: gov.proposals[" + proposalId + "] =" + JSON.stringify(proposal));
+    // }
+    //
+    // var stakeInfoLength = contract.stakeInfoLength.call();
+    // for (var stakeInfo_i = 0; stakeInfo_i < stakeInfoLength; stakeInfo_i++) {
+    //   var stakeInfoKey = contract.stakeInfoIndex.call(stakeInfo_i);
+    //   var stakeInfo = contract.getStakeInfoByKey.call(stakeInfoKey);
+    //   console.log("RESULT: gov.getStakeInfoByKey[" + stakeInfoKey + "] =" + JSON.stringify(stakeInfo));
+    // }
+
+
+
   }
 }
 
