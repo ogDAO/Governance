@@ -1,12 +1,10 @@
-const { MyData, ZERO_ADDRESS, TestToken, printBalances } = require('./helpers/common');
+const { MyData, ZERO_ADDRESS, OFToken, OGToken, OptinoGov, TestToken, printBalances } = require('./helpers/common');
 const BigNumber = require('bignumber.js');
 const { TestTokenTests } = require('./TestToken.js');
 
-contract('TestToken', async _accounts => {
+contract('Test OptinoGov', async _accounts => {
 
   const myData = new MyData(_accounts);
-  // this.myData = null;
-  // this.TestToken = null;
 
   /*
   it('Test getBlockNumber 1', async () => {
@@ -26,23 +24,18 @@ contract('TestToken', async _accounts => {
   });
   */
 
-  // const myData = new MyData(_accounts);
-  // const owner = myData.owner
-  // const tokenHolder = myData.user
-  // const otherAccount = myData.user2
-  //
-
-  // it("...should...", async () => {
-    // const accountABalance = await web3.eth.getBalance(accountA);
-    /// ...
-  // });
-
-  beforeEach('TestToken beforeEach', async function () {
+  beforeEach('Test OptinoGov beforeEach', async function () {
     // this.myData = new MyData(_accounts);
     await myData.setBaseBlock();
-    this.TestToken = await TestToken.new("ABC", "Abc", 18, myData.owner, new BigNumber("1000000").shiftedBy(18), { from: myData.owner, gas: 2000000 });
-    console.log("    - beforeEach Deployed TestToken - address: " + this.TestToken.address);
-    await myData.addToken(this.TestToken);
+    const _ogToken = await OGToken.new("OG", "Optino Governance", 18, myData.owner, new BigNumber("1000000").shiftedBy(18), { from: myData.owner, gas: 2000000 });
+    const _ofToken = await OFToken.new("OF", "Optino Fee", 18, myData.owner, new BigNumber("1000000").shiftedBy(18), { from: myData.owner, gas: 2000000 });
+    const _feeToken = await OFToken.new("FEE", "Fee", 18, myData.owner, new BigNumber("1000000").shiftedBy(18), { from: myData.owner, gas: 2000000 });
+    const [ogToken, ofToken, feeToken] = await Promise.all([_ogToken, _ofToken, _feeToken]);
+    const optinoGov = await OptinoGov.new(ogToken.address, { from: myData.owner, gas: 5000000 });
+    await myData.setOptinoGovData(ogToken, ofToken, feeToken, optinoGov);
+    // this.TestToken = await TestToken.new("ABC", "Abc", 18, myData.owner, new BigNumber("1000000").shiftedBy(18), { from: myData.owner, gas: 2000000 });
+    // console.log("    - beforeEach Deployed TestToken - address: " + this.TestToken.address);
+    // await myData.addToken(this.TestToken);
   //     // Set up TokenStorage
   //     this.allowances = await AllowanceSheet.new( {from:owner })
   //     this.balances = await BalanceSheet.new({ from:owner })
@@ -59,9 +52,14 @@ contract('TestToken', async _accounts => {
   //     await this.AkropolisBaseToken.claimAllowanceOwnership()
   });
 
-  describe("TestToken behavior tests", function () {
+  it('Test getBlockNumber 2', async () => {
+    await myData.printBalances();
+    assert.equal(2, 2, "2 2=2");
+  });
+
+  describe("Test OptinoGov tests", function () {
     // web3 not available yet
     console.log("TestToken.test.js: describe(TestToken behavior tests)");
-    TestTokenTests(myData);
+    // TestTokenTests(myData);
   });
 })

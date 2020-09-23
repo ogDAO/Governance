@@ -1,5 +1,6 @@
 const ZERO_ADDRESS = 0x0000000000000000000000000000000000000000;
 const BigNumber = require('bignumber.js');
+const util = require('util');
 
 var OFToken = artifacts.require("OFToken");
 var OGToken = artifacts.require("OGToken");
@@ -7,14 +8,9 @@ var OptinoGov = artifacts.require("OptinoGov");
 var POAPOGTokenStation = artifacts.require("POAPOGTokenStation");
 var TestToken = artifacts.require("TestToken");
 
-/* Creating a class with all common Variables */
 class MyData {
-  // var accounts = [];
-  // var accountNames = {};
 
   constructor(_accounts) {
-    // var accounts = [];
-    // var accountNames = {};
     // this.accounts = _accounts;
     this.accounts = [];
     this.accountNames = {};
@@ -33,6 +29,12 @@ class MyData {
     this.tokenContracts = [];
     this.symbols = [];
     this.decimals = [];
+
+    // OptinoGov testing
+    this.ogToken = null;
+    this.ofToken = null;
+    this.feeToken = null;
+    this.optinoGov = null;
   }
 
   addAccount(account, accountName) {
@@ -46,6 +48,31 @@ class MyData {
     this.baseBlock = await web3.eth.getBlockNumber();
     console.log("    - MyData.setBaseBlock - this.baseBlock: " + this.baseBlock);
   }
+
+  async setOptinoGovData(ogToken, ofToken, feeToken, optinoGov) {
+    this.ogToken = ogToken;
+    this.ofToken = ofToken;
+    this.feeToken = feeToken;
+    this.optinoGov = optinoGov;
+    // console.log("    - MyData.setOptinoGovData - ogToken: " + util.inspect(ogToken) + ", ofToken: " + util.inspect(ofToken) + ", optinoGov: " + util.inspect(optinoGov));
+    console.log("    - MyData.setOptinoGovData - ogToken: " + ogToken + ", ofToken: " + ofToken + ", feeToken: " + feeToken + ", optinoGov: " + optinoGov);
+    this.tokenContracts = [ogToken, ofToken, feeToken];
+    for (let i = 0; i < this.tokenContracts.length; i++) {
+      let tokenContract = this.tokenContracts[i];
+      if (tokenContract != null) {
+        let _symbol = tokenContract.symbol();
+        let _decimals = tokenContract.decimals();
+        let [symbol, decimals] = await Promise.all([_symbol, _decimals]);
+        console.log("    - MyData.setOptinoGovData - token: " + tokenContract.address + " => " + symbol + " " + decimals);
+        this.symbols.push(symbol);
+        this.decimals.push(decimals);
+      } else {
+        this.symbols.push("???");
+        this.decimals.push(18);
+      }
+    }
+  }
+
 
   async addToken(tokenContract) {
     let symbol = await tokenContract.symbol();
@@ -79,29 +106,32 @@ class MyData {
   async printBalances() {
     var blockNumber = await web3.eth.getBlockNumber();
     var i = 0;
-    var totalTokenBalances = [new BigNumber(0), new BigNumber(0)];
+    var totalTokenBalances = [new BigNumber(0), new BigNumber(0), new BigNumber(0)];
     console.log("RESULT:  # Account                                             EtherBalanceChange               " + this.padLeft(this.symbols[0] || "???", 16) +  "               " + this.padLeft(this.symbols[1] || "???", 16) + " @ " + this.baseBlock.toString() + " -> " + blockNumber.toString());
+    console.log("RESULT:                                                                                         " + this.padLeft(this.symbols[2] || "???", 16));
     console.log("RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------");
     for (var i = 0; i < this.accounts.length; i++) {
       let account = this.accounts[i];
       let etherBalanceBaseBlock = await web3.eth.getBalance(account, this.baseBlock);
       let etherBalance = await web3.eth.getBalance(account, blockNumber);
-      // let etherBalanceDiff = new web3.utils.BN(etherBalance).sub(new web3.utils.BN(etherBalanceBaseBlock));
       let etherBalanceDiff = new BigNumber(etherBalance).minus(new BigNumber(etherBalanceBaseBlock));
       let tokenBalances = [new BigNumber(0), new BigNumber(0)];
       for (let j = 0; j < this.tokenContracts.length; j++) {
         tokenBalances[j] = new BigNumber(await this.tokenContracts[j].balanceOf(account));
         totalTokenBalances[j] = totalTokenBalances[j].plus(tokenBalances[j]);
       }
-      console.log("RESULT: " + this.padLeft(i, 2) + " " + account + "  " + this.padToken(etherBalanceDiff, 18) + "    " + this.padToken(tokenBalances[0], this.decimals[0]) + "    " + this.padToken(tokenBalances[1] || new BigNumber(0), this.decimals[1] || 18) + " " + this.accountNames[account]);
+      console.log("RESULT: " + this.padLeft(i, 2) + " " + account + "  " + this.padToken(etherBalanceDiff, 18) + "    " + this.padToken(tokenBalances[0] || new BigNumber(0), this.decimals[0] || 18) + "    " + this.padToken(tokenBalances[1] || new BigNumber(0), this.decimals[1] || 18) + " " + this.accountNames[account]);
+      console.log("RESULT:                                                                              " + this.padToken(tokenBalances[2] || new BigNumber(0), this.decimals[2] || 18));
     }
     console.log("RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------");
-    console.log("RESULT:                                                                              " + this.padToken(totalTokenBalances[0], this.decimals[0]) + "    " + this.padToken(totalTokenBalances[1], this.decimals[1] || 18) + " Total Token Balances");
+    console.log("RESULT:                                                                              " + this.padToken(totalTokenBalances[0], this.decimals[0] || 18) + "    " + this.padToken(totalTokenBalances[1], this.decimals[1] || 18) + " Total Token Balances");
+    console.log("RESULT:                                                                              " + this.padToken(totalTokenBalances[2], this.decimals[2] || 18));
     console.log("RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------");
     console.log("RESULT: ");
   }
 }
 
+// TODO: Delete
 const printBalances = async function (commonVariables) {
   console.log("common.printBalances function: " + JSON.stringify(commonVariables));
 }
@@ -110,6 +140,9 @@ const printBalances = async function (commonVariables) {
 module.exports = {
     MyData,
     ZERO_ADDRESS,
+    OFToken,
+    OGToken,
+    OptinoGov,
     TestToken,
     printBalances,
 }
