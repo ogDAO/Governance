@@ -36,23 +36,6 @@ contract('Test OptinoGov', async _accounts => {
     const _ofTokenTransferOwnership = ofToken.transferOwnership(optinoGov.address);
     const [ogTokenTransferOwnership, ofTokenTransferOwnership] = await Promise.all([_ogTokenTransferOwnership, _ofTokenTransferOwnership]);
     await myData.setOptinoGovData(ogToken, ofToken, feeToken, optinoGov);
-    // this.TestToken = await TestToken.new("ABC", "Abc", 18, myData.owner, new BigNumber("1000000").shiftedBy(18), { from: myData.owner, gas: 2000000 });
-    // console.log("    - beforeEach Deployed TestToken - address: " + this.TestToken.address);
-    // await myData.addToken(this.TestToken);
-  //     // Set up TokenStorage
-  //     this.allowances = await AllowanceSheet.new( {from:owner })
-  //     this.balances = await BalanceSheet.new({ from:owner })
-  //
-  //     // Set up Token
-  //     this.AkropolisBaseToken = await AkropolisBaseToken.new(this.balances.address, this.allowances.address, {from:owner})
-  //
-  //     // If Token does not own storage contracts, then the storage contracts must
-  //     // transfer ownership to the token contract and then the token must claim
-  //     // ownership to complete two stage ownership transfer
-  //     await this.allowances.transferOwnership(this.AkropolisBaseToken.address)
-  //     await this.balances.transferOwnership(this.AkropolisBaseToken.address)
-  //     await this.AkropolisBaseToken.claimBalanceOwnership()
-  //     await this.AkropolisBaseToken.claimAllowanceOwnership()
   });
 
   it('Test getBlockNumber 2', async () => {
