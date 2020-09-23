@@ -32,6 +32,9 @@ contract('Test OptinoGov', async _accounts => {
     const _feeToken = await OFToken.new("FEE", "Fee", 18, myData.owner, new BigNumber("1000000").shiftedBy(18), { from: myData.owner, gas: 2000000 });
     const [ogToken, ofToken, feeToken] = await Promise.all([_ogToken, _ofToken, _feeToken]);
     const optinoGov = await OptinoGov.new(ogToken.address, { from: myData.owner, gas: 5000000 });
+    const _ogTokenTransferOwnership = ogToken.transferOwnership(optinoGov.address);
+    const _ofTokenTransferOwnership = ofToken.transferOwnership(optinoGov.address);
+    const [ogTokenTransferOwnership, ofTokenTransferOwnership] = await Promise.all([_ogTokenTransferOwnership, _ofTokenTransferOwnership]);
     await myData.setOptinoGovData(ogToken, ofToken, feeToken, optinoGov);
     // this.TestToken = await TestToken.new("ABC", "Abc", 18, myData.owner, new BigNumber("1000000").shiftedBy(18), { from: myData.owner, gas: 2000000 });
     // console.log("    - beforeEach Deployed TestToken - address: " + this.TestToken.address);

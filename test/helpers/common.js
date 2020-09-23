@@ -39,9 +39,20 @@ class MyData {
 
   addAccount(account, accountName) {
     this.accounts.push(account);
-    this.accountNames[account] = accountName;
+    this.accountNames[account.toLowerCase()] = accountName;
     // addAddressNames(account, accountName);
     // console.log("MyData.addAccount: " + account + " => " + accountName);
+  }
+
+  getShortAccountName(address) {
+    if (address != null) {
+      var a = address.toLowerCase();
+      var n = this.accountNames[a];
+      if (n !== undefined) {
+        return n + ":" + address.substring(0, 6);
+      }
+    }
+    return address;
   }
 
   async setBaseBlock() {
@@ -54,6 +65,10 @@ class MyData {
     this.ofToken = ofToken;
     this.feeToken = feeToken;
     this.optinoGov = optinoGov;
+    this.addAccount(this.ogToken.address, "OGToken");
+    this.addAccount(this.ofToken.address, "OFToken");
+    this.addAccount(this.feeToken.address, "FeeToken");
+    this.addAccount(this.optinoGov.address, "OptinoGov");
     // console.log("    - MyData.setOptinoGovData - ogToken: " + util.inspect(ogToken) + ", ofToken: " + util.inspect(ofToken) + ", optinoGov: " + util.inspect(optinoGov));
     console.log("    - MyData.setOptinoGovData - ogToken: " + ogToken + ", ofToken: " + ofToken + ", feeToken: " + feeToken + ", optinoGov: " + optinoGov);
     this.tokenContracts = [ogToken, ofToken, feeToken];
@@ -128,6 +143,22 @@ class MyData {
     console.log("RESULT:                                                                              " + this.padToken(totalTokenBalances[2], this.decimals[2] || 18));
     console.log("RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------");
     console.log("RESULT: ");
+
+    for (let i = 0; i < this.tokenContracts.length; i++) {
+      let tokenContract = this.tokenContracts[i];
+      console.log("RESULT: Token " + i + " @ " + tokenContract.address);
+      let _symbol = tokenContract.symbol();
+      let _name = tokenContract.name();
+      let _decimals = tokenContract.decimals();
+      let _totalSupply = tokenContract.totalSupply();
+      let _owner = tokenContract.owner();
+      let [symbol, name, decimals, totalSupply, owner] = await Promise.all([_symbol, _name, _decimals, _totalSupply, _owner]);
+      console.log("RESULT: - symbol     : " + symbol);
+      console.log("RESULT: - name       : " + name);
+      console.log("RESULT: - decimals   : " + decimals);
+      console.log("RESULT: - totalSupply: " + new BigNumber(totalSupply).shiftedBy(-decimals));
+      console.log("RESULT: - owner      : " + this.getShortAccountName(owner));
+    }
   }
 }
 
