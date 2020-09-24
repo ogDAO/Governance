@@ -57,7 +57,8 @@ contract OptinoGov {
         bool executed;
     }
 
-    OGTokenInterface public token;
+    OGTokenInterface public ogToken;
+    OGDTokenInterface public ogdToken;
     uint public maxLockTerm = 365 days;
     uint public rewardsPerSecond = 150000000000000000;
     uint public proposalCost = 100000000000000000000; // 100 tokens assuming 18 decimals
@@ -99,8 +100,9 @@ contract OptinoGov {
         _;
     }
 
-    constructor(OGTokenInterface token_) {
-        token = token_;
+    constructor(OGTokenInterface _ogToken, OGDTokenInterface _ogdToken) {
+        ogToken = _ogToken;
+        ogdToken = _ogdToken;
     }
     function setMaxLockTerm(uint _maxLockTerm) external onlySelf {
         maxLockTerm = _maxLockTerm;
@@ -233,7 +235,7 @@ contract OptinoGov {
                 lock.staked = lock.staked.sub(tokensToBurn);
                 lock.stakes[stakingKey] = lock.stakes[stakingKey].sub(tokensToBurn);
                 lock.locked = lock.locked.sub(tokensToBurn);
-                require(token.burn(tokensToBurn), "OptinoGov: burn failed");
+                require(ogToken.burn(tokensToBurn), "OptinoGov: burn failed");
                 emit StakeBurnt(tokenOwner, tokensToBurn, lock.stakes[stakingKey], stakingKey);
             }
         }
@@ -264,7 +266,7 @@ contract OptinoGov {
         user.votes = user.locked.mul(duration).div(maxLockTerm);
         totalVotes = totalVotes.add(user.votes);
 
-        require(token.transferFrom(msg.sender, address(this), tokens), "OptinoGov: transferFrom failed");
+        require(ogToken.transferFrom(msg.sender, address(this), tokens), "OptinoGov: transferFrom failed");
 
         emit Locked(msg.sender, tokens, user.locked, user.duration, user.end, user.votes, rewardPool, totalVotes);
     }
@@ -309,7 +311,7 @@ contract OptinoGov {
         uint payout = user.locked;
         user.locked = 0;
 
-        require(token.transfer(msg.sender, payout), "OptinoGov: transfer failed");
+        require(ogToken.transfer(msg.sender, payout), "OptinoGov: transfer failed");
 
         emit Unlocked(msg.sender, payout, tokens, user.duration, user.end, user.votes, rewardPool, totalVotes);
     }

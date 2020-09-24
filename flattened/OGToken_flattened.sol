@@ -142,7 +142,7 @@ pragma solidity ^0.7.0;
 // ----------------------------------------------------------------------------
 // Optino Governance Token
 //
-// OGToken = OGTokenInterface (ERC20 + mint + burn) + dividend payment
+// OGToken = OGTokenInterface (ERC20 + mint + burn)
 //
 // Enjoy. (c) The Optino Project 2020
 //

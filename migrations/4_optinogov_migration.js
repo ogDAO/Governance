@@ -8,5 +8,5 @@ var OptinoGov = artifacts.require("OptinoGov");
 module.exports = function(deployer, network, accounts) {
   let owner = accounts[0];
   // console.log('owner: ' + owner);
-  deployer.deploy(OptinoGov, OGToken.address, { from: owner, gas: 5000000 });
+  deployer.deploy(OptinoGov, OGToken.address, OGDToken.address, { from: owner, gas: 5000000 });
 };

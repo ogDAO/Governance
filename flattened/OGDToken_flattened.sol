@@ -116,39 +116,39 @@ interface ERC20 {
     event Approval(address indexed tokenOwner, address indexed spender, uint tokens);
 }
 
-// File: contracts/OFTokenInterface.sol
+// File: contracts/OGDTokenInterface.sol
 
 pragma solidity ^0.7.0;
 
 
-/// @notice OFTokenInterface = ERC20 + mint + burn
+/// @notice OGDTokenInterface = ERC20 + mint + burn (+ dividend payment)
 // SPDX-License-Identifier: GPLv2
-interface OFTokenInterface is ERC20 {
+interface OGDTokenInterface is ERC20 {
     function mint(address tokenOwner, uint tokens) external returns (bool success);
     function burn(uint tokens) external returns (bool success);
     // function burnFrom(address tokenOwner, uint tokens) external returns (bool success);
 }
 
-// File: contracts/OFToken.sol
+// File: contracts/OGDToken.sol
 
 pragma solidity ^0.7.0;
 
 // import "https://github.com/ogDAO/Governance/blob/master/contracts/Permissioned.sol";
-// import "https://github.com/ogDAO/Governance/blob/master/contracts/OFTokenInterface.sol";
+// import "https://github.com/ogDAO/Governance/blob/master/contracts/OGDTokenInterface.sol";
 
 
 
 
 // ----------------------------------------------------------------------------
-// Optino Fee Token
+// Optino Governance Dividend Token
 //
-// OFToken = OFTokenInterface (ERC20 + mint + burn) + dividend payment
+// OGDToken = OGDTokenInterface (ERC20 + mint + burn) + dividend payment
 //
 // Enjoy. (c) The Optino Project 2020
 //
 // SPDX-License-Identifier: GPLv2
 // ----------------------------------------------------------------------------
-contract OFToken is OFTokenInterface, Permissioned {
+contract OGDToken is OGDTokenInterface, Permissioned {
     using SafeMath for uint;
 
     struct Account {

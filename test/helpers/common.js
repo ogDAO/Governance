@@ -157,10 +157,11 @@ class MyData {
 
     console.log("RESULT: OptinoGov " + this.getShortAccountName(this.optinoGov.address) + " @ " + this.optinoGov.address);
 
-    let [token, maxLockTerm, rewardsPerSecond, proposalCost, proposalThreshold] = await Promise.all([this.optinoGov.token(), this.optinoGov.maxLockTerm(), this.optinoGov.rewardsPerSecond(), this.optinoGov.proposalCost(), this.optinoGov.proposalThreshold()]);
+    let [ogToken, ogdToken, maxLockTerm, rewardsPerSecond, proposalCost, proposalThreshold] = await Promise.all([this.optinoGov.ogToken(), this.optinoGov.ogdToken(), this.optinoGov.maxLockTerm(), this.optinoGov.rewardsPerSecond(), this.optinoGov.proposalCost(), this.optinoGov.proposalThreshold()]);
     let [quorum, quorumDecayPerSecond, votingDuration, executeDelay, rewardPool, totalVotes] = await Promise.all([this.optinoGov.quorum(), this.optinoGov.quorumDecayPerSecond(), this.optinoGov.votingDuration(), this.optinoGov.executeDelay(), this.optinoGov.rewardPool(), this.optinoGov.totalVotes()]);
     let [proposalCount, stakeInfoLength] = await Promise.all([this.optinoGov.proposalCount(), this.optinoGov.stakeInfoLength()]);
-    console.log("RESULT: - token                : " + this.getShortAccountName(token));
+    console.log("RESULT: - ogToken              : " + this.getShortAccountName(ogToken));
+    console.log("RESULT: - ogdToken             : " + this.getShortAccountName(ogdToken));
     let decimals = 18;
     console.log("RESULT: - maxLockTerm          : " + maxLockTerm + " = " + new BigNumber(maxLockTerm).dividedBy(60 * 60 * 24) + " days");
     console.log("RESULT: - rewardsPerSecond     : " + rewardsPerSecond + " = " + new BigNumber(rewardsPerSecond).multipliedBy(60 * 60 * 24).shiftedBy(-decimals) + " per day");

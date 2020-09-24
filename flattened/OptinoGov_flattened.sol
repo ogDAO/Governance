@@ -33,14 +33,14 @@ interface OGTokenInterface is ERC20 {
     // function burnFrom(address tokenOwner, uint tokens) external returns (bool success);
 }
 
-// File: contracts/OFTokenInterface.sol
+// File: contracts/OGDTokenInterface.sol
 
 pragma solidity ^0.7.0;
 
 
-/// @notice OFTokenInterface = ERC20 + mint + burn
+/// @notice OGDTokenInterface = ERC20 + mint + burn (+ dividend payment)
 // SPDX-License-Identifier: GPLv2
-interface OFTokenInterface is ERC20 {
+interface OGDTokenInterface is ERC20 {
     function mint(address tokenOwner, uint tokens) external returns (bool success);
     function burn(uint tokens) external returns (bool success);
     // function burnFrom(address tokenOwner, uint tokens) external returns (bool success);
@@ -77,7 +77,7 @@ pragma solidity ^0.7.0;
 pragma experimental ABIEncoderV2;
 
 // import "https://github.com/ogDAO/Governance/blob/master/contracts/OGTokenInterface.sol";
-// import "https://github.com/ogDAO/Governance/blob/master/contracts/OFTokenInterface.sol";
+// import "https://github.com/ogDAO/Governance/blob/master/contracts/OGDTokenInterface.sol";
 // import "https://github.com/ogDAO/Governance/blob/master/contracts/SafeMath.sol";
 
 
@@ -131,7 +131,8 @@ contract OptinoGov {
         bool executed;
     }
 
-    OGTokenInterface public token;
+    OGTokenInterface public ogToken;
+    OGDTokenInterface public ogdToken;
     uint public maxLockTerm = 365 days;
     uint public rewardsPerSecond = 150000000000000000;
     uint public proposalCost = 100000000000000000000; // 100 tokens assuming 18 decimals
@@ -173,8 +174,9 @@ contract OptinoGov {
         _;
     }
 
-    constructor(OGTokenInterface token_) {
-        token = token_;
+    constructor(OGTokenInterface _ogToken, OGDTokenInterface _ogdToken) {
+        ogToken = _ogToken;
+        ogdToken = _ogdToken;
     }
     function setMaxLockTerm(uint _maxLockTerm) external onlySelf {
         maxLockTerm = _maxLockTerm;
@@ -307,7 +309,7 @@ contract OptinoGov {
                 lock.staked = lock.staked.sub(tokensToBurn);
                 lock.stakes[stakingKey] = lock.stakes[stakingKey].sub(tokensToBurn);
                 lock.locked = lock.locked.sub(tokensToBurn);
-                require(token.burn(tokensToBurn), "OptinoGov: burn failed");
+                require(ogToken.burn(tokensToBurn), "OptinoGov: burn failed");
                 emit StakeBurnt(tokenOwner, tokensToBurn, lock.stakes[stakingKey], stakingKey);
             }
         }
@@ -338,7 +340,7 @@ contract OptinoGov {
         user.votes = user.locked.mul(duration).div(maxLockTerm);
         totalVotes = totalVotes.add(user.votes);
 
-        require(token.transferFrom(msg.sender, address(this), tokens), "OptinoGov: transferFrom failed");
+        require(ogToken.transferFrom(msg.sender, address(this), tokens), "OptinoGov: transferFrom failed");
 
         emit Locked(msg.sender, tokens, user.locked, user.duration, user.end, user.votes, rewardPool, totalVotes);
     }
@@ -383,7 +385,7 @@ contract OptinoGov {
         uint payout = user.locked;
         user.locked = 0;
 
-        require(token.transfer(msg.sender, payout), "OptinoGov: transfer failed");
+        require(ogToken.transfer(msg.sender, payout), "OptinoGov: transfer failed");
 
         emit Unlocked(msg.sender, payout, tokens, user.duration, user.end, user.votes, rewardPool, totalVotes);
     }
