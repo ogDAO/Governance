@@ -22,7 +22,7 @@ See also:
 
 <hr />
 
-## Remix
+### Remix
 
 To test out these smart contracts in [Remix](http://remix.ethereum.org/), copy the contents of the files above into the same file names within Remix. Comment out the local `import ".\{file.sol}"` and uncomment the GitHub `import "https://github.com/ogDAO/Governance/blob/master/contracts/{file}.sol";`.
 
@@ -30,14 +30,19 @@ To test out these smart contracts in [Remix](http://remix.ethereum.org/), copy t
 
 <hr />
 
-## Testing
+### Testing
 
+#### Clone Repository
 Check out this repository into your projects subfolder:
 
 ```
 git clone https://github.com/ogDAO/Governance.git
 cd Governance
 ```
+
+<br />
+
+#### Install And Run Go Ethereum
 
 Install [Go-Ethereum](https://github.com/ethereum/go-ethereum) (also known as `geth`) on your local computer to run a development blockchain node for testing. Or install and use [Ganache](https://www.trufflesuite.com/ganache) instead.
 
@@ -47,6 +52,13 @@ If you have installed `geth`, run:
 ./00_runGeth.sh
 ```
 
+You may need to `chmod 700 00_runGeth.sh` before being able to execute it.
+
+<br />
+
+#### Install Truffle
+
+
 If not already installed, you will need [NPM](https://www.npmjs.com/). [NVM](https://github.com/nvm-sh/nvm) may take away some of your NPM versioning pain.
 
 You will need to install [Truffle](https://github.com/trufflesuite/truffle):
@@ -55,11 +67,22 @@ You will need to install [Truffle](https://github.com/trufflesuite/truffle):
 npm install -g truffle
 ```
 
+<br />
+
+#### Install Truffle Flattener And Flatten Solidity Files
+
 You may want to to install [Truffle Flattener](https://github.com/nomiclabs/truffle-flattener) using the command:
 
 ```
 npm install -g truffle-flattener
+./10_flattenSolidityFiles.sh
 ```
+
+The flattened files can be found in the [./flattened/](./flattened/) subdirectory.
+
+<br />
+
+#### Install Other Modules
 
 You will need the following modules installed:
 
@@ -71,13 +94,17 @@ npm install --save bignumber.js
 
 ```
 
-Compile
+<br />
+
+#### Compile
 
 ```
 truffle compile
 ```
 
-Migrate
+<br />
+
+#### Migrate
 
 ```
 truffle migrate [--reset]
