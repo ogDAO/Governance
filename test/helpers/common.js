@@ -2,8 +2,8 @@ const ZERO_ADDRESS = 0x0000000000000000000000000000000000000000;
 const BigNumber = require('bignumber.js');
 const util = require('util');
 
-var OFToken = artifacts.require("OFToken");
 var OGToken = artifacts.require("OGToken");
+var OGDToken = artifacts.require("OGDToken");
 var OptinoGov = artifacts.require("OptinoGov");
 var POAPOGTokenStation = artifacts.require("POAPOGTokenStation");
 var TestToken = artifacts.require("TestToken");
@@ -32,7 +32,7 @@ class MyData {
 
     // OptinoGov testing
     this.ogToken = null;
-    this.ofToken = null;
+    this.ogdToken = null;
     this.feeToken = null;
     this.optinoGov = null;
   }
@@ -60,18 +60,18 @@ class MyData {
     // console.log("    - MyData.setBaseBlock - this.baseBlock: " + this.baseBlock);
   }
 
-  async setOptinoGovData(ogToken, ofToken, feeToken, optinoGov) {
+  async setOptinoGovData(ogToken, ogdToken, feeToken, optinoGov) {
     this.ogToken = ogToken;
-    this.ofToken = ofToken;
+    this.ogdToken = ogdToken;
     this.feeToken = feeToken;
     this.optinoGov = optinoGov;
     this.addAccount(this.ogToken.address, "OGToken");
-    this.addAccount(this.ofToken.address, "OFToken");
+    this.addAccount(this.ogdToken.address, "OGDToken");
     this.addAccount(this.feeToken.address, "FeeToken");
     this.addAccount(this.optinoGov.address, "OptinoGov");
-    // console.log("    - MyData.setOptinoGovData - ogToken: " + util.inspect(ogToken) + ", ofToken: " + util.inspect(ofToken) + ", optinoGov: " + util.inspect(optinoGov));
-    // console.log("    - MyData.setOptinoGovData - ogToken: " + ogToken + ", ofToken: " + ofToken + ", feeToken: " + feeToken + ", optinoGov: " + optinoGov);
-    this.tokenContracts = [ogToken, ofToken, feeToken];
+    // console.log("    - MyData.setOptinoGovData - ogToken: " + util.inspect(ogToken) + ", ogdToken: " + util.inspect(ogdToken) + ", optinoGov: " + util.inspect(optinoGov));
+    // console.log("    - MyData.setOptinoGovData - ogToken: " + ogToken + ", ogdToken: " + ogdToken + ", feeToken: " + feeToken + ", optinoGov: " + optinoGov);
+    this.tokenContracts = [ogToken, ogdToken, feeToken];
     for (let i = 0; i < this.tokenContracts.length; i++) {
       let tokenContract = this.tokenContracts[i];
       if (tokenContract != null) {
@@ -203,8 +203,8 @@ const printBalances = async function (commonVariables) {
 module.exports = {
     MyData,
     ZERO_ADDRESS,
-    OFToken,
     OGToken,
+    OGDToken,
     OptinoGov,
     TestToken,
     printBalances,

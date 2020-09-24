@@ -1,4 +1,4 @@
-const { MyData, ZERO_ADDRESS, OFToken, OGToken, OptinoGov, TestToken, printBalances } = require('./helpers/common');
+const { MyData, ZERO_ADDRESS, OGToken, OGDToken, OptinoGov, TestToken, printBalances } = require('./helpers/common');
 const BigNumber = require('bignumber.js');
 const { TestTokenTests } = require('./TestToken.js');
 
@@ -28,14 +28,14 @@ contract('Test OptinoGov', async _accounts => {
     // this.myData = new MyData(_accounts);
     await myData.setBaseBlock();
     const _ogToken = await OGToken.new("OG", "Optino Governance", 18, myData.owner, new BigNumber("1000000").shiftedBy(18), { from: myData.owner, gas: 2000000 });
-    const _ofToken = await OFToken.new("OF", "Optino Fee", 18, myData.owner, new BigNumber("1000000").shiftedBy(18), { from: myData.owner, gas: 2000000 });
-    const _feeToken = await OFToken.new("FEE", "Fee", 18, myData.owner, new BigNumber("1000000").shiftedBy(18), { from: myData.owner, gas: 2000000 });
-    const [ogToken, ofToken, feeToken] = await Promise.all([_ogToken, _ofToken, _feeToken]);
+    const _ogdToken = await OGDToken.new("OGD", "Optino Governance Dividend", 18, myData.owner, new BigNumber("1000000").shiftedBy(18), { from: myData.owner, gas: 2000000 });
+    const _feeToken = await TestToken.new("FEE", "Fee", 18, myData.owner, new BigNumber("1000000").shiftedBy(18), { from: myData.owner, gas: 2000000 });
+    const [ogToken, ogdToken, feeToken] = await Promise.all([_ogToken, _ogdToken, _feeToken]);
     const optinoGov = await OptinoGov.new(ogToken.address, { from: myData.owner, gas: 5000000 });
     const _ogTokenTransferOwnership = ogToken.transferOwnership(optinoGov.address);
-    const _ofTokenTransferOwnership = ofToken.transferOwnership(optinoGov.address);
-    const [ogTokenTransferOwnership, ofTokenTransferOwnership] = await Promise.all([_ogTokenTransferOwnership, _ofTokenTransferOwnership]);
-    await myData.setOptinoGovData(ogToken, ofToken, feeToken, optinoGov);
+    const _ogdTokenTransferOwnership = ogdToken.transferOwnership(optinoGov.address);
+    const [ogTokenTransferOwnership, ogdTokenTransferOwnership] = await Promise.all([_ogTokenTransferOwnership, _ogdTokenTransferOwnership]);
+    await myData.setOptinoGovData(ogToken, ogdToken, feeToken, optinoGov);
   });
 
   it('Test getBlockNumber 2', async () => {

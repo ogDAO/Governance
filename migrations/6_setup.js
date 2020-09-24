@@ -1,5 +1,5 @@
-var OFToken = artifacts.require("OFToken");
 var OGToken = artifacts.require("OGToken");
+var OGDToken = artifacts.require("OGDToken");
 var OptinoGov = artifacts.require("OptinoGov");
 
 module.exports = function(deployer, network, accounts) {

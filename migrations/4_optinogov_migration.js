@@ -1,6 +1,6 @@
 const BigNumber = require('bignumber.js');
 
-var OFToken = artifacts.require("OFToken");
+var OGDToken = artifacts.require("OGDToken");
 var OGToken = artifacts.require("OGToken");
 var OptinoGov = artifacts.require("OptinoGov");
 // var POAPOGTokenStation = artifacts.require("POAPOGTokenStation");
