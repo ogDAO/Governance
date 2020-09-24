@@ -7,15 +7,8 @@ import "./Permissioned.sol";
 import "./OGTokenInterface.sol";
 
 
-// ----------------------------------------------------------------------------
-// Optino Governance Token
-//
-// OGToken = OGTokenInterface (ERC20 + mint + burn)
-//
-// Enjoy. (c) The Optino Project 2020
-//
+/// @notice Optino Governance Token = ERC20 + mint + burn. (c) The Optino Project 2020
 // SPDX-License-Identifier: GPLv2
-// ----------------------------------------------------------------------------
 contract OGToken is OGTokenInterface, Permissioned {
     using SafeMath for uint;
 

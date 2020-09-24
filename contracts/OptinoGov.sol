@@ -9,16 +9,9 @@ import "./OGTokenInterface.sol";
 import "./OGDTokenInterface.sol";
 import "./SafeMath.sol";
 
-// ----------------------------------------------------------------------------
-// Optino Governance
-//
-// Originally based on https://github.com/bartjman/XS2Option/blob/master/contracts/XS2Gov.sol (MIT)
-//
-// Enjoy. (c) The Optino Project 2020
-//
-// SPDX-License-Identifier: GPLv2
-// ----------------------------------------------------------------------------
 
+/// @notice Optino Governance. (c) The Optino Project 2020
+// SPDX-License-Identifier: GPLv2
 contract OptinoGov {
     using SafeMath for uint;
 

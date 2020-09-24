@@ -7,15 +7,8 @@ import "./Permissioned.sol";
 import "./OGDTokenInterface.sol";
 
 
-// ----------------------------------------------------------------------------
-// Optino Governance Dividend Token
-//
-// OGDToken = OGDTokenInterface (ERC20 + mint + burn) + dividend payment
-//
-// Enjoy. (c) The Optino Project 2020
-//
+/// @notice Optino Governance Dividend Token = ERC20 + mint + burn + dividend payments. (c) The Optino Project 2020
 // SPDX-License-Identifier: GPLv2
-// ----------------------------------------------------------------------------
 contract OGDToken is OGDTokenInterface, Permissioned {
     using SafeMath for uint;
 
