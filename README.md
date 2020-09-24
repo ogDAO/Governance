@@ -14,39 +14,79 @@ Following are the main smart contracts:
 * [contracts/OGToken.sol](contracts/OGToken.sol) - [flattened](flattened/OGToken_flattened.sol)
 * [contracts/OGDToken.sol](contracts/OGDToken.sol) - [flattened](flattened/OGDToken_flattened.sol)
 
-To test out these smart contracts in [Remix](http://remix.ethereum.org/), copy the contents of the files above into the same file names within Remix. Comment out the local `import ".\{file.sol}"` and uncomment the GitHub `import "https://github.com/ogDAO/Governance/blob/master/contracts/{file}.sol";`.
-
-
 See also:
 
 * https://wiki.optino.io
 
----
+<br />
 
-## Tidy Below
+<hr />
+
+## Remix
+
+To test out these smart contracts in [Remix](http://remix.ethereum.org/), copy the contents of the files above into the same file names within Remix. Comment out the local `import ".\{file.sol}"` and uncomment the GitHub `import "https://github.com/ogDAO/Governance/blob/master/contracts/{file}.sol";`.
+
+<br />
+
+<hr />
+
+## Testing
+
+Check out this repository into your projects subfolder:
 
 ```
-# https://github.com/trufflesuite/truffle
+git clone https://github.com/ogDAO/Governance.git
+cd Governance
+```
+
+Install [Go-Ethereum](https://github.com/ethereum/go-ethereum) (also known as `geth`) on your local computer to run a development blockchain node for testing. Or install and use [Ganache](https://www.trufflesuite.com/ganache) instead.
+
+If you have installed `geth`, run:
+
+```
+./00_runGeth.sh
+```
+
+If not already installed, you will need [NPM](https://www.npmjs.com/). [NVM](https://github.com/nvm-sh/nvm) may take away some of your NPM versioning pain.
+
+You will need to install [Truffle](https://github.com/trufflesuite/truffle):
+
+```
 npm install -g truffle
-truffle init
-truffle compile
-truffle migrate
-truffle migrate --reset
-npm install web3@1.2.1
-npm install --save ethers
-npm install eth-sig-util --save
+```
 
-npm install truffle-flattener -g
-truffle-flattener contracts/OGToken.sol > flattened/OGToken_flattened.sol
-npm install bignumber.js
-
-truffle console
-> let instance = await TestToken.deployed()
-> instance
-
-> let accounts = await web3.eth.getAccounts()
-> accounts
-
-let balanceOf = await instance.balanceOf(accounts[0])
+You may want to to install [Truffle Flattener](https://github.com/nomiclabs/truffle-flattener) using the command:
 
 ```
+npm install -g truffle-flattener
+```
+
+You will need the following modules installed:
+
+```
+npm install --save web3@1.2.1
+npm install --save ethers
+npm install --save eth-sig-util
+npm install --save bignumber.js
+
+```
+
+Compile
+
+```
+truffle compile
+```
+
+Migrate
+
+```
+truffle migrate [--reset]
+```
+
+<br />
+
+<br />
+
+Enjoy!
+
+(c) The Optino Project 2020. GPLv2
