@@ -111,6 +111,9 @@ contract OGDToken is OGDTokenInterface, Permissioned {
         dividendTokenIndex.push(_dividendToken);
         emit DividendTokensAdded(_dividendToken);
     }
+    function dividendTokenLength() public view returns (uint) {
+        return dividendTokenIndex.length;
+    }
 
     /*
     function disburse(uint amount) {

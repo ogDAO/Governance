@@ -96,6 +96,14 @@ npm install --save bignumber.js
 
 <br />
 
+#### Compile
+
+```
+truffle compile
+```
+
+<br />
+
 #### Run Tests
 
 ```
@@ -111,63 +119,61 @@ Using network 'development'.
 
 Compiling your contracts...
 ===========================
-> Compiling ./contracts/OGDToken.sol
-> Compiling ./contracts/OGToken.sol
-> Compiling ./contracts/OptinoGov.sol
-> Artifacts written to /var/folders/rd/71z0fb6j7yn2cnqp255v1l1h0000gn/T/test--40129-8D7f2yFAsm71
-> Compiled successfully using:
-   - solc: 0.7.1+commit.f4a555be.Emscripten.clang
+> Everything is up to date, there is nothing to compile.
 
 TestToken.test.js: describe(TestToken behavior tests)
 
 
   Contract: Test OptinoGov
 --- Setup completed ---
-RESULT:  # Account                                             EtherBalanceChange                             OG                            OGD @ 6807 -> 6817
+RESULT:  # Account                                             EtherBalanceChange                             OG                            OGD @ 26020 -> 26036
 RESULT:                                                                                                      FEE
 RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-RESULT: 0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E         0.000000000000000000     1000000.000000000000000000     1000000.000000000000000000 Owner:0xa00A
-RESULT:                                                                               1000000.000000000000000000
-RESULT: 1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433         0.000000000000000000           0.000000000000000000           0.000000000000000000 User1:0xa11A
+RESULT: 0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E         0.000000000000000000       10000.000000000000000000           0.000000000000000000 Owner:0xa00A
 RESULT:                                                                                     0.000000000000000000
-RESULT: 2 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976         0.000000000000000000           0.000000000000000000           0.000000000000000000 User2:0xa22A
+RESULT: 1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433         0.000000000000000000       10000.000000000000000000           0.000000000000000000 User1:0xa11A
 RESULT:                                                                                     0.000000000000000000
-RESULT: 3 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0         0.000000000000000000           0.000000000000000000           0.000000000000000000 User3:0xa33a
+RESULT: 2 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976         0.000000000000000000       10000.000000000000000000           0.000000000000000000 User2:0xa22A
 RESULT:                                                                                     0.000000000000000000
-RESULT: 4 0x4323fe2C61A023a28272B2688E04F2d7B24733Fc         0.000000000000000000           0.000000000000000000           0.000000000000000000 OGToken:0x4323
+RESULT: 3 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0         0.000000000000000000       10000.000000000000000000           0.000000000000000000 User3:0xa33a
 RESULT:                                                                                     0.000000000000000000
-RESULT: 5 0x42Ec980041D89C00022736e08820605A9AEDe165         0.000000000000000000           0.000000000000000000           0.000000000000000000 OGDToken:0x42Ec
+RESULT: 4 0x3E3Aa4C1ACef038483D48397C1af919CbE7E5D94         0.000000000000000000           0.000000000000000000           0.000000000000000000 OGToken:0x3E3A
 RESULT:                                                                                     0.000000000000000000
-RESULT: 6 0xff647E59b601F76563e56e27a54BFC0d72FC0962         0.000000000000000000           0.000000000000000000           0.000000000000000000 FeeToken:0xff64
+RESULT: 5 0x7637889f4e422dEe7fc321C641c2D6f0Fb471ef5         0.000000000000000000           0.000000000000000000           0.000000000000000000 OGDToken:0x7637
 RESULT:                                                                                     0.000000000000000000
-RESULT: 7 0x4eC881b09a29EbcA3FB7695008AB53b02283d22a         0.000000000000000000           0.000000000000000000           0.000000000000000000 OptinoGov:0x4eC8
+RESULT: 6 0x2D16Cd7f5790746a7E7b41cE1A7b19423F0bF23d         0.000000000000000000           0.000000000000000000           0.000000000000000000 FeeToken:0x2D16
+RESULT:                                                                                     0.000000000000000000
+RESULT: 7 0xdE0D83aD70C6EAC4f5A1859312840F943176444A         0.000000000000000000           0.000000000000000000           0.000000000000000000 OptinoGov:0xdE0D
 RESULT:                                                                                     0.000000000000000000
 RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-RESULT:                                                                               1000000.000000000000000000     1000000.000000000000000000 Total Token Balances
-RESULT:                                                                               1000000.000000000000000000
+RESULT:                                                                                 40000.000000000000000000           0.000000000000000000 Total Token Balances
+RESULT:                                                                                     0.000000000000000000
 RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
 RESULT:
-RESULT: Token 0 OGToken:0x4323 @ 0x4323fe2C61A023a28272B2688E04F2d7B24733Fc
+RESULT: Token 0 OGToken:0x3E3A @ 0x3E3Aa4C1ACef038483D48397C1af919CbE7E5D94
 RESULT: - symbol               : OG
 RESULT: - name                 : Optino Governance
 RESULT: - decimals             : 18
-RESULT: - totalSupply          : 1000000
-RESULT: - owner                : OptinoGov:0x4eC8
-RESULT: Token 1 OGDToken:0x42Ec @ 0x42Ec980041D89C00022736e08820605A9AEDe165
+RESULT: - totalSupply          : 40000
+RESULT: - owner                : OptinoGov:0xdE0D
+RESULT: Token 1 OGDToken:0x7637 @ 0x7637889f4e422dEe7fc321C641c2D6f0Fb471ef5
 RESULT: - symbol               : OGD
 RESULT: - name                 : Optino Governance Dividend
 RESULT: - decimals             : 18
-RESULT: - totalSupply          : 1000000
-RESULT: - owner                : OptinoGov:0x4eC8
-RESULT: Token 2 FeeToken:0xff64 @ 0xff647E59b601F76563e56e27a54BFC0d72FC0962
+RESULT: - totalSupply          : 0
+RESULT: - owner                : OptinoGov:0xdE0D
+RESULT: - dividendTokenLength  : 2
+RESULT: - dividendTokens       : 0 0x0000000000000000000000000000000000000000
+RESULT: - dividendTokens       : 1 FeeToken:0x2D16
+RESULT: Token 2 FeeToken:0x2D16 @ 0x2D16Cd7f5790746a7E7b41cE1A7b19423F0bF23d
 RESULT: - symbol               : FEE
 RESULT: - name                 : Fee
 RESULT: - decimals             : 18
-RESULT: - totalSupply          : 1000000
+RESULT: - totalSupply          : 0
 RESULT: - owner                : Owner:0xa00A
-RESULT: OptinoGov OptinoGov:0x4eC8 @ 0x4eC881b09a29EbcA3FB7695008AB53b02283d22a
-RESULT: - ogToken              : OGToken:0x4323
-RESULT: - ogdToken             : OGDToken:0x42Ec
+RESULT: OptinoGov OptinoGov:0xdE0D @ 0xdE0D83aD70C6EAC4f5A1859312840F943176444A
+RESULT: - ogToken              : OGToken:0x3E3A
+RESULT: - ogdToken             : OGDToken:0x7637
 RESULT: - maxLockTerm          : 1000 seconds = 0.01157407407407407407 days
 RESULT: - rewardsPerSecond     : 150000000000000000 = 12960 per day
 RESULT: - proposalCost         : 100000000000000000000 = 100
@@ -180,17 +186,10 @@ RESULT: - rewardPool           : 0 = 0
 RESULT: - totalVotes           : 0 = 0
 RESULT: - proposalCount        : 0
 RESULT: - stakeInfoLength      : 0
-    ✓ Test getBlockNumber 2 (252ms)
+    ✓ Test getBlockNumber 2 (211ms)
 
-    1 passing (11s)
-```
 
-<br />
-
-#### Compile
-
-```
-truffle compile
+  1 passing (17s)
 ```
 
 <br />

@@ -27,10 +27,21 @@ contract('Test OptinoGov', async _accounts => {
   beforeEach('Test OptinoGov beforeEach', async function () {
     // this.myData = new MyData(_accounts);
     await myData.setBaseBlock();
-    const _ogToken = await OGToken.new("OG", "Optino Governance", 18, myData.owner, new BigNumber("1000000").shiftedBy(18), { from: myData.owner, gas: 2000000 });
-    const _ogdToken = await OGDToken.new("OGD", "Optino Governance Dividend", 18, myData.owner, new BigNumber("1000000").shiftedBy(18), { from: myData.owner, gas: 2000000 });
-    const _feeToken = await TestToken.new("FEE", "Fee", 18, myData.owner, new BigNumber("1000000").shiftedBy(18), { from: myData.owner, gas: 2000000 });
+    const _ogToken = await OGToken.new("OG", "Optino Governance", 18, myData.owner, new BigNumber("10000").shiftedBy(18), { from: myData.owner, gas: 2000000 });
+    const _ogdToken = await OGDToken.new("OGD", "Optino Governance Dividend", 18, myData.owner, new BigNumber("0").shiftedBy(18), { from: myData.owner, gas: 2000000 });
+    const _feeToken = await TestToken.new("FEE", "Fee", 18, myData.owner, new BigNumber("0").shiftedBy(18), { from: myData.owner, gas: 2000000 });
     const [ogToken, ogdToken, feeToken] = await Promise.all([_ogToken, _ogdToken, _feeToken]);
+
+    var ogTokenDistributions = [];
+    var ogTokens = new BigNumber("10000").shiftedBy(18);
+    ogTokenDistributions.push(ogToken.mint(myData.user1, ogTokens, { from: myData.owner }));
+    ogTokenDistributions.push(ogToken.mint(myData.user2, ogTokens, { from: myData.owner }));
+    ogTokenDistributions.push(ogToken.mint(myData.user3, ogTokens, { from: myData.owner }));
+    await Promise.all(ogTokenDistributions);
+
+    await ogdToken.addDividendToken("0x0000000000000000000000000000000000000000", { from: myData.owner });
+    await ogdToken.addDividendToken(feeToken.address, { from: myData.owner });
+
     const optinoGov = await OptinoGov.new(ogToken.address, ogdToken.address, { from: myData.owner, gas: 5000000 });
     const _ogTokenTransferOwnership = ogToken.transferOwnership(optinoGov.address);
     const _ogdTokenTransferOwnership = ogdToken.transferOwnership(optinoGov.address);

@@ -126,14 +126,14 @@ contract OptinoGov {
 
     OGTokenInterface public ogToken;
     OGDTokenInterface public ogdToken;
-    uint public maxLockTerm = 365 days;
+    uint public maxLockTerm = 1000 seconds; // Testing 365 days;
     uint public rewardsPerSecond = 150000000000000000;
     uint public proposalCost = 100000000000000000000; // 100 tokens assuming 18 decimals
     uint public proposalThreshold = 1 * 10 ** 15; // 0.1%, 18 decimals
     uint public quorum = 2 * 10 ** 17; // 20%, 18 decimals
     uint public quorumDecayPerSecond = 4 * 10 ** 17 / uint(60 * 60 * 24 * 365); // 40% per year, i.e., 0 in 6 months
-    uint public votingDuration = 3 hours; // 3 days;
-    uint public executeDelay = 2 hours; // 2 days;
+    uint public votingDuration = 10 seconds; // 3 days;
+    uint public executeDelay = 10 seconds; // 2 days;
     uint public rewardPool;
     uint public totalVotes;
     mapping(address => Lock) public locks; // Locked tokens per address

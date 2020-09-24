@@ -153,6 +153,14 @@ class MyData {
       console.log("RESULT: - decimals             : " + decimals);
       console.log("RESULT: - totalSupply          : " + new BigNumber(totalSupply).shiftedBy(-decimals));
       console.log("RESULT: - owner                : " + this.getShortAccountName(owner));
+      if (symbol == "OGD") {
+        const dividendTokenLength = parseInt(await tokenContract.dividendTokenLength());
+        console.log("RESULT: - dividendTokenLength  : " + dividendTokenLength);
+        for (let j = 0; j < dividendTokenLength; j++) {
+          const dividendToken = await tokenContract.dividendTokenIndex(j);
+          console.log("RESULT: - dividendTokens       : " + j + " " + this.getShortAccountName(dividendToken));
+        }
+      }
     }
 
     console.log("RESULT: OptinoGov " + this.getShortAccountName(this.optinoGov.address) + " @ " + this.optinoGov.address);
