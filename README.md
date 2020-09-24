@@ -1,4 +1,4 @@
-# Optino Vending Machine Governance DAO Smart Contracts
+# Optino Governance DAO Smart Contracts
 
 Status: **Work In Progress**
 
@@ -13,6 +13,8 @@ Following are the main smart contracts:
 * [contracts/OptinoGov.sol](contracts/OptinoGov.sol) - [flattened](flattened/OptinoGov_flattened.sol)
 * [contracts/OGToken.sol](contracts/OGToken.sol) - [flattened](flattened/OGToken_flattened.sol)
 * [contracts/OGDToken.sol](contracts/OGDToken.sol) - [flattened](flattened/OGDToken_flattened.sol)
+
+To test out these smart contracts in [Remix](http://remix.ethereum.org/), copy the contents of the files above into the same file names within Remix. Comment out the local `import ".\{file.sol}"` and uncomment the GitHub `import "https://github.com/ogDAO/Governance/blob/master/contracts/{file}.sol";`.
 
 
 See also:
