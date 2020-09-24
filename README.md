@@ -111,14 +111,19 @@ Using network 'development'.
 
 Compiling your contracts...
 ===========================
-> Everything is up to date, there is nothing to compile.
+> Compiling ./contracts/OGDToken.sol
+> Compiling ./contracts/OGToken.sol
+> Compiling ./contracts/OptinoGov.sol
+> Artifacts written to /var/folders/rd/71z0fb6j7yn2cnqp255v1l1h0000gn/T/test--40129-8D7f2yFAsm71
+> Compiled successfully using:
+   - solc: 0.7.1+commit.f4a555be.Emscripten.clang
 
 TestToken.test.js: describe(TestToken behavior tests)
 
 
   Contract: Test OptinoGov
 --- Setup completed ---
-RESULT:  # Account                                             EtherBalanceChange                             OG                            OGD @ 94 -> 104
+RESULT:  # Account                                             EtherBalanceChange                             OG                            OGD @ 6807 -> 6817
 RESULT:                                                                                                      FEE
 RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
 RESULT: 0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E         0.000000000000000000     1000000.000000000000000000     1000000.000000000000000000 Owner:0xa00A
@@ -129,56 +134,55 @@ RESULT: 2 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976         0.00000000000000000
 RESULT:                                                                                     0.000000000000000000
 RESULT: 3 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0         0.000000000000000000           0.000000000000000000           0.000000000000000000 User3:0xa33a
 RESULT:                                                                                     0.000000000000000000
-RESULT: 4 0x3d529B9C88FA4D4cc8Ed968a81bc2B756aC9C0c6         0.000000000000000000           0.000000000000000000           0.000000000000000000 OGToken:0x3d52
+RESULT: 4 0x4323fe2C61A023a28272B2688E04F2d7B24733Fc         0.000000000000000000           0.000000000000000000           0.000000000000000000 OGToken:0x4323
 RESULT:                                                                                     0.000000000000000000
-RESULT: 5 0xB938100093d107E4998A9Cc61066A86a21aA509D         0.000000000000000000           0.000000000000000000           0.000000000000000000 OGDToken:0xB938
+RESULT: 5 0x42Ec980041D89C00022736e08820605A9AEDe165         0.000000000000000000           0.000000000000000000           0.000000000000000000 OGDToken:0x42Ec
 RESULT:                                                                                     0.000000000000000000
-RESULT: 6 0x759c3c04e2876f79f58ab7dC8B7C1Dead97b479A         0.000000000000000000           0.000000000000000000           0.000000000000000000 FeeToken:0x759c
+RESULT: 6 0xff647E59b601F76563e56e27a54BFC0d72FC0962         0.000000000000000000           0.000000000000000000           0.000000000000000000 FeeToken:0xff64
 RESULT:                                                                                     0.000000000000000000
-RESULT: 7 0x967C635e5b7C32B215b7255Ea5355D39F68fCDcc         0.000000000000000000           0.000000000000000000           0.000000000000000000 OptinoGov:0x967C
+RESULT: 7 0x4eC881b09a29EbcA3FB7695008AB53b02283d22a         0.000000000000000000           0.000000000000000000           0.000000000000000000 OptinoGov:0x4eC8
 RESULT:                                                                                     0.000000000000000000
 RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
 RESULT:                                                                               1000000.000000000000000000     1000000.000000000000000000 Total Token Balances
 RESULT:                                                                               1000000.000000000000000000
 RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
 RESULT:
-RESULT: Token 0 OGToken:0x3d52 @ 0x3d529B9C88FA4D4cc8Ed968a81bc2B756aC9C0c6
+RESULT: Token 0 OGToken:0x4323 @ 0x4323fe2C61A023a28272B2688E04F2d7B24733Fc
 RESULT: - symbol               : OG
 RESULT: - name                 : Optino Governance
 RESULT: - decimals             : 18
 RESULT: - totalSupply          : 1000000
-RESULT: - owner                : OptinoGov:0x967C
-RESULT: Token 1 OGDToken:0xB938 @ 0xB938100093d107E4998A9Cc61066A86a21aA509D
+RESULT: - owner                : OptinoGov:0x4eC8
+RESULT: Token 1 OGDToken:0x42Ec @ 0x42Ec980041D89C00022736e08820605A9AEDe165
 RESULT: - symbol               : OGD
 RESULT: - name                 : Optino Governance Dividend
 RESULT: - decimals             : 18
 RESULT: - totalSupply          : 1000000
-RESULT: - owner                : OptinoGov:0x967C
-RESULT: Token 2 FeeToken:0x759c @ 0x759c3c04e2876f79f58ab7dC8B7C1Dead97b479A
+RESULT: - owner                : OptinoGov:0x4eC8
+RESULT: Token 2 FeeToken:0xff64 @ 0xff647E59b601F76563e56e27a54BFC0d72FC0962
 RESULT: - symbol               : FEE
 RESULT: - name                 : Fee
 RESULT: - decimals             : 18
 RESULT: - totalSupply          : 1000000
 RESULT: - owner                : Owner:0xa00A
-RESULT: OptinoGov OptinoGov:0x967C @ 0x967C635e5b7C32B215b7255Ea5355D39F68fCDcc
-RESULT: - ogToken              : OGToken:0x3d52
-RESULT: - ogdToken             : OGDToken:0xB938
-RESULT: - maxLockTerm          : 31536000 = 365 days
+RESULT: OptinoGov OptinoGov:0x4eC8 @ 0x4eC881b09a29EbcA3FB7695008AB53b02283d22a
+RESULT: - ogToken              : OGToken:0x4323
+RESULT: - ogdToken             : OGDToken:0x42Ec
+RESULT: - maxLockTerm          : 1000 seconds = 0.01157407407407407407 days
 RESULT: - rewardsPerSecond     : 150000000000000000 = 12960 per day
 RESULT: - proposalCost         : 100000000000000000000 = 100
 RESULT: - proposalThreshold    : 1000000000000000 = 0.1%
 RESULT: - quorum               : 200000000000000000 = 20%
 RESULT: - quorumDecayPerSecond : 12683916793 = 39.9999999984048% per year
-RESULT: - votingDuration       : 10800 = 0.125 days
-RESULT: - executeDelay         : 7200 = 0.08333333333333333333 days
+RESULT: - votingDuration       : 10 seconds = 0.00011574074074074074 days
+RESULT: - executeDelay         : 10 seconds = 0.00011574074074074074 days
 RESULT: - rewardPool           : 0 = 0
 RESULT: - totalVotes           : 0 = 0
 RESULT: - proposalCount        : 0
 RESULT: - stakeInfoLength      : 0
-    ✓ Test getBlockNumber 2 (231ms)
+    ✓ Test getBlockNumber 2 (252ms)
 
-
-  1 passing (11s)
+    1 passing (11s)
 ```
 
 <br />

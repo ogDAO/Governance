@@ -163,14 +163,14 @@ class MyData {
     console.log("RESULT: - ogToken              : " + this.getShortAccountName(ogToken));
     console.log("RESULT: - ogdToken             : " + this.getShortAccountName(ogdToken));
     let decimals = 18;
-    console.log("RESULT: - maxLockTerm          : " + maxLockTerm + " = " + new BigNumber(maxLockTerm).dividedBy(60 * 60 * 24) + " days");
+    console.log("RESULT: - maxLockTerm          : " + maxLockTerm + " seconds = " + new BigNumber(maxLockTerm).dividedBy(60 * 60 * 24) + " days");
     console.log("RESULT: - rewardsPerSecond     : " + rewardsPerSecond + " = " + new BigNumber(rewardsPerSecond).multipliedBy(60 * 60 * 24).shiftedBy(-decimals) + " per day");
     console.log("RESULT: - proposalCost         : " + proposalCost + " = " + new BigNumber(proposalCost).shiftedBy(-decimals));
     console.log("RESULT: - proposalThreshold    : " + proposalThreshold + " = " + new BigNumber(proposalThreshold).shiftedBy(-16) + "%");
     console.log("RESULT: - quorum               : " + quorum + " = " + new BigNumber(quorum).shiftedBy(-16) + "%");
     console.log("RESULT: - quorumDecayPerSecond : " + quorumDecayPerSecond + " = " + new BigNumber(quorumDecayPerSecond).multipliedBy(60 * 60 * 24 * 365).shiftedBy(-16) + "% per year");
-    console.log("RESULT: - votingDuration       : " + votingDuration + " = " + new BigNumber(votingDuration).dividedBy(60 * 60 * 24) + " days");
-    console.log("RESULT: - executeDelay         : " + executeDelay + " = " + new BigNumber(executeDelay).dividedBy(60 * 60 * 24) + " days");
+    console.log("RESULT: - votingDuration       : " + votingDuration + " seconds = " + new BigNumber(votingDuration).dividedBy(60 * 60 * 24) + " days");
+    console.log("RESULT: - executeDelay         : " + executeDelay + " seconds = " + new BigNumber(executeDelay).dividedBy(60 * 60 * 24) + " days");
     console.log("RESULT: - rewardPool           : " + rewardPool + " = " + new BigNumber(rewardPool).shiftedBy(-decimals));
     console.log("RESULT: - totalVotes           : " + totalVotes + " = " + new BigNumber(totalVotes).shiftedBy(-decimals));
     console.log("RESULT: - proposalCount        : " + proposalCount);
