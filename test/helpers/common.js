@@ -135,7 +135,7 @@ class MyData {
         tokenBalances[j] = new BigNumber(await this.tokenContracts[j].balanceOf(account));
         totalTokenBalances[j] = totalTokenBalances[j].plus(tokenBalances[j]);
       }
-      console.log("RESULT: " + this.padLeft(i, 2) + " " + account + "  " + this.padToken(etherBalanceDiff, 18) + "    " + this.padToken(tokenBalances[0] || new BigNumber(0), this.decimals[0] || 18) + "    " + this.padToken(tokenBalances[1] || new BigNumber(0), this.decimals[1] || 18) + " " + this.accountNames[account.toLowerCase()]);
+      console.log("RESULT: " + this.padLeft(i, 2) + " " + account + "  " + this.padToken(etherBalanceDiff, 18) + "    " + this.padToken(tokenBalances[0] || new BigNumber(0), this.decimals[0] || 18) + "    " + this.padToken(tokenBalances[1] || new BigNumber(0), this.decimals[1] || 18) + " " + this.getShortAccountName(account));
       console.log("RESULT:                                                                              " + this.padToken(tokenBalances[2] || new BigNumber(0), this.decimals[2] || 18));
     }
     console.log("RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------");
@@ -146,7 +146,7 @@ class MyData {
 
     for (let i = 0; i < this.tokenContracts.length; i++) {
       let tokenContract = this.tokenContracts[i];
-      console.log("RESULT: Token " + i + " @ " + tokenContract.address);
+      console.log("RESULT: Token " + i + " " + this.getShortAccountName(tokenContract.address) + " @ " + tokenContract.address);
       let [symbol, name, decimals, totalSupply, owner] = await Promise.all([tokenContract.symbol(), tokenContract.name(), tokenContract.decimals(), tokenContract.totalSupply(), tokenContract.owner()]);
       console.log("RESULT: - symbol               : " + symbol);
       console.log("RESULT: - name                 : " + name);
@@ -155,7 +155,7 @@ class MyData {
       console.log("RESULT: - owner                : " + this.getShortAccountName(owner));
     }
 
-    console.log("RESULT: OptinoGov " + i + " @ " + this.optinoGov.address);
+    console.log("RESULT: OptinoGov " + this.getShortAccountName(this.optinoGov.address) + " @ " + this.optinoGov.address);
 
     let [token, maxLockTerm, rewardsPerSecond, proposalCost, proposalThreshold] = await Promise.all([this.optinoGov.token(), this.optinoGov.maxLockTerm(), this.optinoGov.rewardsPerSecond(), this.optinoGov.proposalCost(), this.optinoGov.proposalThreshold()]);
     let [quorum, quorumDecayPerSecond, votingDuration, executeDelay, rewardPool, totalVotes] = await Promise.all([this.optinoGov.quorum(), this.optinoGov.quorumDecayPerSecond(), this.optinoGov.votingDuration(), this.optinoGov.executeDelay(), this.optinoGov.rewardPool(), this.optinoGov.totalVotes()]);

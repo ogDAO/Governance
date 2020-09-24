@@ -1,22 +1,22 @@
 pragma solidity ^0.7.0;
 
 // import "https://github.com/ogDAO/Governance/blob/master/contracts/Permissioned.sol";
-// import "https://github.com/ogDAO/Governance/blob/master/contracts/OFTokenInterface.sol";
+// import "https://github.com/ogDAO/Governance/blob/master/contracts/OGDTokenInterface.sol";
 
 import "./Permissioned.sol";
-import "./OFTokenInterface.sol";
+import "./OGDTokenInterface.sol";
 
 
 // ----------------------------------------------------------------------------
-// Optino Fee Token
+// Optino Governance Dividend Token
 //
-// OFToken = OFTokenInterface (ERC20 + mint + burn) + dividend payment
+// OGDToken = OGDTokenInterface (ERC20 + mint + burn) + dividend payment
 //
 // Enjoy. (c) The Optino Project 2020
 //
 // SPDX-License-Identifier: GPLv2
 // ----------------------------------------------------------------------------
-contract OFToken is OFTokenInterface, Permissioned {
+contract OGDToken is OGDTokenInterface, Permissioned {
     using SafeMath for uint;
 
     struct Account {
