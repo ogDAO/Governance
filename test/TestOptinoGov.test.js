@@ -50,7 +50,23 @@ contract('Test OptinoGov', async _accounts => {
     await myData.setOptinoGovData(ogToken, ogdToken, feeToken, optinoGov);
   });
 
-  it('Test getBlockNumber 2', async () => {
+  it('Test OptinoGov Lock Tokens', async () => {
+    await myData.printBalances();
+    // Not working. Have to manually run web3.personal.unlockAccount(eth.accounts[x], "") in geth console await myData.unlockAccounts("");
+
+    var lockDuration = 1000;
+    var lockTokens = new BigNumber("1000").shiftedBy(18);
+    var batch1 = [];
+    batch1.push(myData.ogToken.approve(myData.optinoGov.address, lockTokens, { from: myData.user1 }));
+    // batch1.push(myData.ogToken.approve(myData.optinoGov.address, lockTokens, { from: myData.user2 }));
+    // batch1.push(myData.ogToken.approve(myData.optinoGov.address, lockTokens, { from: myData.user3 }));
+    await Promise.all(batch1);
+
+    var batch2 = [];
+    batch2.push(myData.optinoGov.lock(lockTokens, lockDuration, { from: myData.user1 }));
+    // batch2.push(myData.optinoGov.lock(lockTokens, lockDuration, { from: myData.user2 }));
+    // batch2.push(myData.optinoGov.lock(lockTokens, lockDuration, { from: myData.user3 }));
+    await Promise.all(batch2);
     await myData.printBalances();
     assert.equal(2, 2, "2 2=2");
   });

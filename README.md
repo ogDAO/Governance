@@ -50,9 +50,10 @@ If you have installed `geth`, run:
 
 ```
 ./00_runGeth.sh
+./01_unlockAndFundAccounts.sh
 ```
 
-You may need to `chmod 700 00_runGeth.sh` before being able to execute it.
+You may need to `chmod 700 00_runGeth.sh 01_unlockAndFundAccounts.sh` before being able to execute it.
 
 <br />
 
