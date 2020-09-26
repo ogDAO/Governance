@@ -27,25 +27,26 @@ contract('Test OptinoGov', async _accounts => {
   beforeEach('Test OptinoGov beforeEach', async function () {
     // this.myData = new MyData(_accounts);
     await myData.setBaseBlock();
-    const _ogToken = await OGToken.new("OG", "Optino Governance", 18, myData.owner, new BigNumber("10000").shiftedBy(18), { from: myData.owner, gas: 2000000 });
-    const _ogdToken = await OGDToken.new("OGD", "Optino Governance Dividend", 18, myData.owner, new BigNumber("0").shiftedBy(18), { from: myData.owner, gas: 2000000 });
-    const _feeToken = await TestToken.new("FEE", "Fee", 18, myData.owner, new BigNumber("0").shiftedBy(18), { from: myData.owner, gas: 2000000 });
-    const [ogToken, ogdToken, feeToken] = await Promise.all([_ogToken, _ogdToken, _feeToken]);
+    var batch1 = [];
+    batch1.push(OGToken.new("OG", "Optino Governance", 18, myData.owner, new BigNumber("10000").shiftedBy(18), { from: myData.owner, gas: 2000000 }));
+    batch1.push(OGDToken.new("OGD", "Optino Governance Dividend", 18, myData.owner, new BigNumber("0").shiftedBy(18), { from: myData.owner, gas: 2000000 }));
+    batch1.push(TestToken.new("FEE", "Fee", 18, myData.owner, new BigNumber("0").shiftedBy(18), { from: myData.owner, gas: 2000000 }));
+    const [ogToken, ogdToken, feeToken] = await Promise.all(batch1);
 
-    var ogTokenDistributions = [];
+    var batch2 = [];
     var ogTokens = new BigNumber("10000").shiftedBy(18);
-    ogTokenDistributions.push(ogToken.mint(myData.user1, ogTokens, { from: myData.owner }));
-    ogTokenDistributions.push(ogToken.mint(myData.user2, ogTokens, { from: myData.owner }));
-    ogTokenDistributions.push(ogToken.mint(myData.user3, ogTokens, { from: myData.owner }));
-    await Promise.all(ogTokenDistributions);
+    batch2.push(OptinoGov.new(ogToken.address, ogdToken.address, { from: myData.owner, gas: 5000000 }));
+    batch2.push(ogToken.mint(myData.user1, ogTokens, { from: myData.owner }));
+    batch2.push(ogToken.mint(myData.user2, ogTokens, { from: myData.owner }));
+    batch2.push(ogToken.mint(myData.user3, ogTokens, { from: myData.owner }));
+    batch2.push(ogdToken.addDividendToken("0x0000000000000000000000000000000000000000", { from: myData.owner }));
+    batch2.push(ogdToken.addDividendToken(feeToken.address, { from: myData.owner }));
+    const [optinoGov, mint1, mint2, mint3, addDividendToken1, addDividendToken2] = await Promise.all(batch2);
 
-    await ogdToken.addDividendToken("0x0000000000000000000000000000000000000000", { from: myData.owner });
-    await ogdToken.addDividendToken(feeToken.address, { from: myData.owner });
-
-    const optinoGov = await OptinoGov.new(ogToken.address, ogdToken.address, { from: myData.owner, gas: 5000000 });
-    const _ogTokenTransferOwnership = ogToken.transferOwnership(optinoGov.address);
-    const _ogdTokenTransferOwnership = ogdToken.transferOwnership(optinoGov.address);
-    const [ogTokenTransferOwnership, ogdTokenTransferOwnership] = await Promise.all([_ogTokenTransferOwnership, _ogdTokenTransferOwnership]);
+    var batch3 = [];
+    batch3.push(ogToken.transferOwnership(optinoGov.address));
+    batch3.push(ogdToken.transferOwnership(optinoGov.address));
+    const [ogTokenTransferOwnership, ogdTokenTransferOwnership] = await Promise.all(batch3);
     await myData.setOptinoGovData(ogToken, ogdToken, feeToken, optinoGov);
   });
 
