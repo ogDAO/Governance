@@ -3,7 +3,7 @@ const BigNumber = require('bignumber.js');
 
 // const { TestTokenTests } = require('./TestToken.js');
 
-contract('Test OptinoGov', async _accounts => {
+contract('Test OGDToken', async _accounts => {
 
   const myData = new MyData(_accounts);
 
@@ -25,7 +25,7 @@ contract('Test OptinoGov', async _accounts => {
   });
   */
 
-  beforeEach('Test OptinoGov beforeEach', async function () {
+  beforeEach('Test OGDToken beforeEach', async function () {
     // this.myData = new MyData(_accounts);
     await myData.setBaseBlock();
     var batch1 = [];
@@ -45,13 +45,19 @@ contract('Test OptinoGov', async _accounts => {
     const [optinoGov, mint1, mint2, mint3, addDividendToken1, addDividendToken2] = await Promise.all(batch2);
 
     var batch3 = [];
-    batch3.push(ogToken.transferOwnership(optinoGov.address));
-    batch3.push(ogdToken.transferOwnership(optinoGov.address));
-    const [ogTokenTransferOwnership, ogdTokenTransferOwnership] = await Promise.all(batch3);
+    batch3.push(ogToken.setPermission(optinoGov.address, 1, true, 0, { from: myData.owner }));
+    batch3.push(ogdToken.setPermission(optinoGov.address, 1, true, 0, { from: myData.owner }));
+    const [ogTokenSetPermission, ogdTokenSetPermission] = await Promise.all(batch3);
+
+    var batch4 = [];
+    batch4.push(ogToken.transferOwnership(optinoGov.address));
+    batch4.push(ogdToken.transferOwnership(optinoGov.address));
+    const [ogTokenTransferOwnership, ogdTokenTransferOwnership] = await Promise.all(batch4);
+
     await myData.setOptinoGovData(ogToken, ogdToken, feeToken, optinoGov);
   });
 
-  it('Test OptinoGov Lock Tokens', async () => {
+  it('Test OGDToken Lock Tokens', async () => {
     await myData.printBalances();
     // Not working. Have to manually run web3.personal.unlockAccount(eth.accounts[x], "") in geth console await myData.unlockAccounts("");
 
@@ -59,22 +65,22 @@ contract('Test OptinoGov', async _accounts => {
     var lockTokens = new BigNumber("1000").shiftedBy(18);
     var batch1 = [];
     batch1.push(myData.ogToken.approve(myData.optinoGov.address, lockTokens, { from: myData.user1 }));
-    // batch1.push(myData.ogToken.approve(myData.optinoGov.address, lockTokens, { from: myData.user2 }));
-    // batch1.push(myData.ogToken.approve(myData.optinoGov.address, lockTokens, { from: myData.user3 }));
+    batch1.push(myData.ogToken.approve(myData.optinoGov.address, lockTokens, { from: myData.user2 }));
+    batch1.push(myData.ogToken.approve(myData.optinoGov.address, lockTokens, { from: myData.user3 }));
     await Promise.all(batch1);
 
     var batch2 = [];
     batch2.push(myData.optinoGov.lock(lockTokens, lockDuration, { from: myData.user1 }));
-    // batch2.push(myData.optinoGov.lock(lockTokens, lockDuration, { from: myData.user2 }));
-    // batch2.push(myData.optinoGov.lock(lockTokens, lockDuration, { from: myData.user3 }));
+    batch2.push(myData.optinoGov.lock(lockTokens, lockDuration, { from: myData.user2 }));
+    batch2.push(myData.optinoGov.lock(lockTokens, lockDuration, { from: myData.user3 }));
     await Promise.all(batch2);
     await myData.printBalances();
     assert.equal(2, 2, "2 2=2");
   });
 
-  describe("Test OptinoGov tests", function () {
+  describe("Test OGDToken tests", function () {
     // web3 not available yet
-    console.log("TestToken.test.js: describe(TestToken behavior tests)");
+    console.log("TestOGDToken.test.js: describe(OGToken behavior tests)");
     // TestTokenTests(myData);
   });
 })

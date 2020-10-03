@@ -260,6 +260,14 @@ RESULT: - stakeInfoLength      : 0
 
 <br />
 
+#### Debug
+
+```
+truffle debug {txHash}
+```
+
+<br />
+
 #### Migrate
 
 ```

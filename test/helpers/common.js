@@ -5,7 +5,7 @@ const util = require('util');
 var OGToken = artifacts.require("OGToken");
 var OGDToken = artifacts.require("OGDToken");
 var OptinoGov = artifacts.require("OptinoGov");
-var POAPOGTokenStation = artifacts.require("POAPOGTokenStation");
+// var POAPOGTokenStation = artifacts.require("POAPOGTokenStation");
 var TestToken = artifacts.require("TestToken");
 
 class MyData {

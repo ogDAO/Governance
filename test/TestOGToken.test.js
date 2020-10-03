@@ -3,7 +3,7 @@ const BigNumber = require('bignumber.js');
 
 // const { TestTokenTests } = require('./TestToken.js');
 
-contract('Test OptinoGov', async _accounts => {
+contract('Test OGToken', async _accounts => {
 
   const myData = new MyData(_accounts);
 
