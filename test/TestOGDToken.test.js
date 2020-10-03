@@ -1,5 +1,7 @@
 const { MyData, ZERO_ADDRESS, OGToken, OGDToken, OptinoGov, TestToken, printBalances } = require('./helpers/common');
 const BigNumber = require('bignumber.js');
+const util = require('util');
+// BigNumber.prototype[require('util').inspect.custom] = BigNumber.prototype.valueOf;
 
 // const { TestTokenTests } = require('./TestToken.js');
 
@@ -94,10 +96,13 @@ contract('Test OGDToken', async _accounts => {
     console.log("RESULT: --- Users{1..3} withdrawing ---");
     var batch3 = [];
     batch3.push(myData.ogdToken.withdrawDividends({ from: myData.user1 }));
-    batch3.push(myData.ogdToken.transfer(myData.user2, "1", { from: myData.user2 }));
-    // batch3.push(myData.ogdToken.withdrawDividends({ from: myData.user2 }));
-    // batch3.push(myData.ogdToken.withdrawDividends({ from: myData.user3 }));
-    const [withdrawDividends1, dummyTransfer /*, withdrawDividends2, withdrawDividends3*/] = await Promise.all(batch3);
+    // batch3.push(myData.ogdToken.transfer(myData.user2, "1", { from: myData.user2 }));
+    batch3.push(myData.ogdToken.withdrawDividends({ from: myData.user2 }));
+    batch3.push(myData.ogdToken.withdrawDividends({ from: myData.user3 }));
+    const [withdrawDividends1, /* dummyTransfer, */ withdrawDividends2, withdrawDividends3] = await Promise.all(batch3);
+
+    // console.log("RESULT: dummyTransfer: " + util.inspect(dummyTransfer.logs));
+    // myData.ogdToken.getPastEvents("allEvents", { fromBlock: 0, toBlock: "latest" }).then(console.log);
 
     await myData.printBalances();
 

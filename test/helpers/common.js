@@ -59,7 +59,7 @@ class MyData {
 
   getShortAccountName(address) {
     if (address == ZERO_ADDRESS) {
-      return "ETH:" + ZERO_ADDRESS.substring(0, 6);
+      return "ETH|null:" + ZERO_ADDRESS.substring(0, 6);
     }
     if (address != null) {
       var a = address.toLowerCase();
@@ -213,7 +213,7 @@ class MyData {
           let tokenList = dividendsOwing[0];
           let owingList = dividendsOwing[1];
           for (let k = 0; k < dividendTokensLength; k++) {
-            console.log("RESULT:   -                    : " + this.getShortAccountName(tokenList[k]) + " " + owingList[k] + " " + new BigNumber(owingList[k]).shiftedBy(-18).toString());
+            console.log("RESULT:                            - " + this.getShortAccountName(tokenList[k]) + " " + owingList[k] + " = " + new BigNumber(owingList[k]).shiftedBy(-18).toString());
           }
         }
       }

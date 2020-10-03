@@ -91,7 +91,8 @@ contract OGDToken is OGDTokenInterface, Permissioned {
 
     DividendTokens.Data private dividendTokens;
 
-    uint public constant pointMultiplier = 10e18;
+    // uint public constant pointMultiplier = 10e18;
+    uint public constant pointMultiplier = 10e27;
     mapping(address => uint) public totalDividendPoints;
     mapping(address => uint) public unclaimedDividends;
 
@@ -191,17 +192,17 @@ contract OGDToken is OGDTokenInterface, Permissioned {
       unclaimedDividends += amount;
     }*/
     function _dividendsOwing(address dividendToken, address account) internal view returns (uint) {
-        uint newDividendPoints = totalDividendPoints[dividendToken] - accounts[account].lastDividendPoints[dividendToken];
-        return (accounts[account].balance * newDividendPoints) / pointMultiplier;
+        uint newDividendPoints = totalDividendPoints[dividendToken].sub(accounts[account].lastDividendPoints[dividendToken]);
+        return accounts[account].balance.mul(newDividendPoints).div(pointMultiplier);
     }
     function dividendsOwing(address account) public view returns (address[] memory tokenList, uint[] memory owingList) {
         tokenList = new address[](dividendTokens.index.length);
         owingList = new uint[](dividendTokens.index.length);
         for (uint i = 0; i < dividendTokens.index.length; i++) {
             DividendTokens.DividendToken memory dividendToken = dividendTokens.entries[dividendTokens.index[i]];
-            uint owing = dividendToken.enabled ? _dividendsOwing(dividendToken.token, account) : 0;
+            uint owing = dividendToken.enabled ? accounts[account].owing[dividendToken.token] + _dividendsOwing(dividendToken.token, account) : 0;
             tokenList[i] = dividendToken.token;
-            owingList[i] = owing ;
+            owingList[i] = owing;
         }
     }
 
@@ -252,9 +253,22 @@ contract OGDToken is OGDTokenInterface, Permissioned {
     receive () external payable {
         depositDividends(address(0), msg.value);
     }
-    function withdrawDividends() public returns (uint withdrawn) {
+    function withdrawDividends() public {
         updateAccount(msg.sender);
-        withdrawn = 0;
+        for (uint i = 0; i < dividendTokens.index.length; i++) {
+            DividendTokens.DividendToken memory dividendToken = dividendTokens.entries[dividendTokens.index[i]];
+            if (dividendToken.enabled) {
+                uint tokens = accounts[msg.sender].owing[dividendToken.token];
+                if (tokens > 0) {
+                    accounts[msg.sender].owing[dividendToken.token] = 0;
+                    if (dividendToken.token == address(0)) {
+                        payable(msg.sender).transfer(tokens);
+                    } else {
+                        ERC20(dividendToken.token).transfer(msg.sender, tokens);
+                    }
+                }
+            }
+        }
     }
     function mint(address tokenOwner, uint tokens) override external permitted(ROLE_MINTER, tokens) returns (bool success) {
         require(cap == 0 || _totalSupply + tokens <= cap, "Cap exceeded");
