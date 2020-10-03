@@ -87,13 +87,13 @@ contract('Test OGDToken', async _accounts => {
     var batch2 = [];
     var depositFeeTokens = new BigNumber("100").shiftedBy(18);
     var depositFeeETH = new BigNumber("10").shiftedBy(18);
-    batch2.push(myData.ogdToken.depositDividends(myData.feeToken.address, depositFeeTokens, { from: myData.owner }));
-    batch2.push(myData.ogdToken.depositDividends(ZERO_ADDRESS, depositFeeETH, { from: myData.owner, value: depositFeeETH }));
+    batch2.push(myData.ogdToken.depositDividend(myData.feeToken.address, depositFeeTokens, { from: myData.owner }));
+    batch2.push(myData.ogdToken.depositDividend(ZERO_ADDRESS, depositFeeETH, { from: myData.owner, value: depositFeeETH }));
     const [depositDividend] = await Promise.all(batch2);
 
     await myData.printBalances();
 
-    console.log("RESULT: --- Users{1..3} withdrawing ---");
+    console.log("RESULT: --- Users{1..2} withdrawing; User3 burning(10) ---");
     var batch3 = [];
     batch3.push(myData.ogdToken.withdrawDividends({ from: myData.user1 }));
     // batch3.push(myData.ogdToken.transfer(myData.user2, "1", { from: myData.user2 }));

@@ -94,9 +94,10 @@ contract OGDToken is OGDTokenInterface, Permissioned {
     mapping(address => uint) public totalDividendPoints;
     mapping(address => uint) public unclaimedDividends;
 
-    event CapUpdated(uint256 cap, bool freezeCap);
     event LogInfo(string topic, uint number, bytes32 data, string note, address addr);
     event UpdateAccountInfo(address dividendToken, address account, uint owing, uint totalOwing, uint lastDividendPoints, uint totalDividendPoints, uint unclaimedDividends);
+    event DividendDeposited(address indexed token, uint tokens);
+    event DividendWithdrawn(address indexed account, address indexed token, uint tokens);
 
     // CHECK: Duplicated from the library for ABI generation
     // event DividendTokenAdded(address indexed token, bool enabled);
@@ -220,7 +221,8 @@ contract OGDToken is OGDTokenInterface, Permissioned {
             }
         }
     }
-    function depositDividends(address token, uint tokens) public payable {
+
+    function depositDividend(address token, uint tokens) public payable {
         DividendTokens.DividendToken memory _dividendToken = dividendTokens.entries[token];
         require(_dividendToken.enabled, "Dividend token is not enabled");
         // emit LogInfo("depositDividends: token", 0, 0x0, "", token);
@@ -241,9 +243,10 @@ contract OGDToken is OGDTokenInterface, Permissioned {
         } else {
             ERC20(token).transferFrom(msg.sender, address(this), tokens);
         }
+        emit DividendDeposited(token, tokens);
     }
     receive () external payable {
-        depositDividends(address(0), msg.value);
+        depositDividend(address(0), msg.value);
     }
     function withdrawDividendsFor(address account) internal {
         updateAccount(account);
@@ -259,6 +262,7 @@ contract OGDToken is OGDTokenInterface, Permissioned {
                         ERC20(dividendToken.token).transfer(account, tokens);
                     }
                 }
+                emit DividendWithdrawn(account, dividendToken.token, tokens);
             }
         }
     }
