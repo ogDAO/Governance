@@ -98,7 +98,8 @@ contract('Test OGDToken', async _accounts => {
     batch3.push(myData.ogdToken.withdrawDividends({ from: myData.user1 }));
     // batch3.push(myData.ogdToken.transfer(myData.user2, "1", { from: myData.user2 }));
     batch3.push(myData.ogdToken.withdrawDividends({ from: myData.user2 }));
-    batch3.push(myData.ogdToken.withdrawDividends({ from: myData.user3 }));
+    // batch3.push(myData.ogdToken.withdrawDividends({ from: myData.user3 }));
+    batch3.push(myData.ogdToken.burn(new BigNumber("10").shiftedBy(18), { from: myData.user3 }));
     const [withdrawDividends1, /* dummyTransfer, */ withdrawDividends2, withdrawDividends3] = await Promise.all(batch3);
 
     // console.log("RESULT: dummyTransfer: " + util.inspect(dummyTransfer.logs));
