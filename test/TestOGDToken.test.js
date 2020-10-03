@@ -73,7 +73,7 @@ contract('Test OGDToken', async _accounts => {
     await myData.printBalances();
     // Have to manually run web3.personal.unlockAccount(eth.accounts[x], "") in geth console await myData.unlockAccounts("");
 
-    console.log("RESULT: --- Minting 10,000 OGD tokens for users{1..3}, Owner approve 100 FEE for OGToken to spend ---");
+    console.log("RESULT: --- Mint 10,000 OGD tokens for users{1..3}; Owner approve 100 FEE for OGToken to spend ---");
     var batch1 = [];
     var ogdTokens = new BigNumber("10000").shiftedBy(18);
     var approveFeeTokens = new BigNumber("100").shiftedBy(18);
@@ -83,7 +83,7 @@ contract('Test OGDToken', async _accounts => {
     batch1.push(myData.feeToken.approve(myData.ogdToken.address, approveFeeTokens, { from: myData.owner }));
     const [mint1, mint2, mint3, ownerApproveFeeTokens] = await Promise.all(batch1);
 
-    console.log("RESULT: --- Owner depositing as dividends 100 FEE and 10 ETH ---");
+    console.log("RESULT: --- Owner deposits dividends of 100 FEE and 10 ETH ---");
     var batch2 = [];
     var depositFeeTokens = new BigNumber("100").shiftedBy(18);
     var depositFeeETH = new BigNumber("10").shiftedBy(18);
@@ -93,13 +93,13 @@ contract('Test OGDToken', async _accounts => {
 
     await myData.printBalances();
 
-    console.log("RESULT: --- Users{1..2} withdrawing; User3 burning(10) ---");
+    console.log("RESULT: --- Users{1..3} withdraw 33.333333333333333333 FEE and 3.333333333333333333 ETH ---");
     var batch3 = [];
     batch3.push(myData.ogdToken.withdrawDividends({ from: myData.user1 }));
     // batch3.push(myData.ogdToken.transfer(myData.user2, "1", { from: myData.user2 }));
     batch3.push(myData.ogdToken.withdrawDividends({ from: myData.user2 }));
-    // batch3.push(myData.ogdToken.withdrawDividends({ from: myData.user3 }));
-    batch3.push(myData.ogdToken.burn(new BigNumber("10").shiftedBy(18), { from: myData.user3 }));
+    batch3.push(myData.ogdToken.withdrawDividends({ from: myData.user3 }));
+    // batch3.push(myData.ogdToken.burn(new BigNumber("10").shiftedBy(18), { from: myData.user3 }));
     const [withdrawDividends1, /* dummyTransfer, */ withdrawDividends2, withdrawDividends3] = await Promise.all(batch3);
 
     // console.log("RESULT: dummyTransfer: " + util.inspect(dummyTransfer.logs));

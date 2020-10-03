@@ -152,7 +152,7 @@ contract OGDToken is OGDTokenInterface, Permissioned {
     function depositDividend(address token, uint tokens) public payable {
         DividendTokens.DividendToken memory _dividendToken = dividendTokens.entries[token];
         require(_dividendToken.enabled, "Dividend token is not enabled");
-        totalDividendPoints[token] = totalDividendPoints[token].add((tokens.mul(pointMultiplier).div(_totalSupply)));
+        totalDividendPoints[token] = totalDividendPoints[token].add(tokens.mul(pointMultiplier).div(_totalSupply));
         unclaimedDividends[token] = unclaimedDividends[token].add(tokens);
         if (token == address(0)) {
             require(msg.value >= tokens, "Insufficient ETH sent");
