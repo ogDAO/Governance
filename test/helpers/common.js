@@ -1,4 +1,4 @@
-const ZERO_ADDRESS = 0x0000000000000000000000000000000000000000;
+const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
 const BigNumber = require('bignumber.js');
 const util = require('util');
 
@@ -58,6 +58,9 @@ class MyData {
 
 
   getShortAccountName(address) {
+    if (address == ZERO_ADDRESS) {
+      return "ETH:" + ZERO_ADDRESS.substring(0, 6);
+    }
     if (address != null) {
       var a = address.toLowerCase();
       var n = this.accountNames[a];
@@ -200,16 +203,17 @@ class MyData {
         console.log("RESULT: - dividendTokensLength : " + dividendTokensLength);
         for (let j = 0; j < dividendTokensLength; j++) {
           const dividendToken = await tokenContract.getDividendTokenByIndex(j);
-          console.log("RESULT: - dividendToken        : " + j + " " + this.getShortAccountName(dividendToken[0]) + ", enabled: " + dividendToken[1]);
+          const unclaimedDividends = await tokenContract.unclaimedDividends(dividendToken[0]);
+          console.log("RESULT: - dividendToken        : " + j + " " + this.getShortAccountName(dividendToken[0]) + ", enabled: " + dividendToken[1] + ", unclaimedDividends: " + unclaimedDividends + " = " + new BigNumber(unclaimedDividends).shiftedBy(-18));
         }
         for (let j = 1; j < this.accounts.length && j < 4; j++) {
           let account = this.accounts[j];
           const dividendsOwing = await tokenContract.dividendsOwing(account);
-          console.log("RESULT: - dividendsOwing        : " + j + " " + this.getShortAccountName(account));
+          console.log("RESULT: - dividendsOwing       : " + j + " " + this.getShortAccountName(account));
           let tokenList = dividendsOwing[0];
           let owingList = dividendsOwing[1];
           for (let k = 0; k < dividendTokensLength; k++) {
-            console.log("RESULT: -                       : " + this.getShortAccountName(tokenList[k]) + " " + owingList[k] + " " + new BigNumber(owingList[k]).shiftedBy(-18).toString());
+            console.log("RESULT:   -                    : " + this.getShortAccountName(tokenList[k]) + " " + owingList[k] + " " + new BigNumber(owingList[k]).shiftedBy(-18).toString());
           }
         }
       }
@@ -251,6 +255,8 @@ class MyData {
       //   console.log("RESULT: gov.getStakeInfoByKey[" + stakeInfoKey + "] =" + JSON.stringify(stakeInfo));
       // }
     }
+
+    console.log("RESULT: ");
   }
 }
 
