@@ -107,6 +107,10 @@ contract('Test OGDToken', async _accounts => {
 
     await myData.printBalances();
 
+    console.log("RESULT: mint1.receipt.gasUsed: " + mint1.receipt.gasUsed);
+    console.log("RESULT: depositDividend.receipt.gasUsed: " + depositDividend.receipt.gasUsed);
+    console.log("RESULT: withdrawDividends1.receipt.gasUsed: " + withdrawDividends1.receipt.gasUsed);
+
     assert.equal(2, 2, "2 2=2");
   });
 
