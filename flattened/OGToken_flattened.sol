@@ -144,10 +144,21 @@ pragma solidity ^0.7.0;
 contract OGToken is OGTokenInterface, Permissioned {
     using SafeMath for uint;
 
+    struct Stake {
+        uint dataType;
+        address[4] addresses;
+        uint[6] uints;
+        string[4] strings;
+    }
+
     struct Account {
       uint balance;
-      mapping(address => uint) lastDividendPoints;
-      mapping(address => uint) owing;
+      uint locked;
+      uint staked;
+      uint end;
+      mapping(bytes32 => uint) stakes;
+      // mapping(address => uint) lastDividendPoints;
+      // mapping(address => uint) owing;
     }
 
     string _symbol;
@@ -155,21 +166,26 @@ contract OGToken is OGTokenInterface, Permissioned {
     uint8 _decimals;
     uint _totalSupply;
     mapping(address => Account) accounts;
+
     mapping(address => mapping(address => uint)) allowed;
     uint public cap;
     bool public freezeCap;
-    uint public maxDividendTokens = 20;
-    mapping(address => bool) public dividendTokens;
-    address[] public dividendTokenIndex;
-    uint public constant pointMultiplier = 10e18;
-    mapping(address => uint) public totalDividendPoints;
-    mapping(address => uint) public unclaimedDividends;
+
+    mapping(bytes32 => Stake) public stakeInfoData;
+    bytes32[] public stakeInfoIndex;
+
+    // uint public maxDividendTokens = 20;
+    // mapping(address => bool) public dividendTokens;
+    // address[] public dividendTokenIndex;
+    // uint public constant pointMultiplier = 10e18;
+    // mapping(address => uint) public totalDividendPoints;
+    // mapping(address => uint) public unclaimedDividends;
 
     event CapUpdated(uint256 cap, bool freezeCap);
-    event MaxDividendTokensUpdated(uint256 maxDividendTokens);
-    event DividendTokensAdded(address dividendToken);
+    // event MaxDividendTokensUpdated(uint256 maxDividendTokens);
+    // event DividendTokensAdded(address dividendToken);
     event LogInfo(string topic, uint number, bytes32 data, string note, address addr);
-    event UpdateAccountInfo(address dividendToken, address account, uint owing, uint totalOwing, uint lastDividendPoints, uint totalDividendPoints, uint unclaimedDividends);
+    // event UpdateAccountInfo(address dividendToken, address account, uint owing, uint totalOwing, uint lastDividendPoints, uint totalDividendPoints, uint unclaimedDividends);
 
     constructor(string memory symbol, string memory name, uint8 decimals, address tokenOwner, uint initialSupply) {
         initPermissioned(msg.sender);
@@ -196,11 +212,11 @@ contract OGToken is OGTokenInterface, Permissioned {
         return accounts[tokenOwner].balance;
     }
     function transfer(address to, uint tokens) override external returns (bool success) {
-        for (uint i = 0; i < dividendTokenIndex.length; i++) {
-            address dividendToken = dividendTokenIndex[i];
-            updateAccount(dividendToken, msg.sender);
-            updateAccount(dividendToken, to);
-        }
+        // for (uint i = 0; i < dividendTokenIndex.length; i++) {
+        //     address dividendToken = dividendTokenIndex[i];
+        //     updateAccount(dividendToken, msg.sender);
+        //     updateAccount(dividendToken, to);
+        // }
         accounts[msg.sender].balance = accounts[msg.sender].balance.sub(tokens);
         accounts[to].balance = accounts[to].balance.add(tokens);
         emit Transfer(msg.sender, to, tokens);
@@ -212,11 +228,11 @@ contract OGToken is OGTokenInterface, Permissioned {
         return true;
     }
     function transferFrom(address from, address to, uint tokens) override external returns (bool success) {
-        for (uint i = 0; i < dividendTokenIndex.length; i++) {
-            address dividendToken = dividendTokenIndex[i];
-            updateAccount(dividendToken, msg.sender);
-            updateAccount(dividendToken, to);
-        }
+        // for (uint i = 0; i < dividendTokenIndex.length; i++) {
+        //     address dividendToken = dividendTokenIndex[i];
+        //     updateAccount(dividendToken, msg.sender);
+        //     updateAccount(dividendToken, to);
+        // }
         accounts[from].balance = accounts[from].balance.sub(tokens);
         allowed[from][msg.sender] = allowed[from][msg.sender].sub(tokens);
         accounts[to].balance = accounts[to].balance.add(tokens);
@@ -232,17 +248,21 @@ contract OGToken is OGTokenInterface, Permissioned {
         (cap, freezeCap) = (_cap, _freezeCap);
         emit CapUpdated(cap, freezeCap);
     }
+    /*
     function setMaxDividendTokens(uint _maxDividendTokens) external onlyOwner {
         require(_maxDividendTokens > dividendTokenIndex.length, "Max must be more than current list length");
         maxDividendTokens = _maxDividendTokens;
         emit MaxDividendTokensUpdated(maxDividendTokens);
     }
+    */
+    /*
     function addDividendToken(address _dividendToken) external onlyOwner {
         require(!dividendTokens[_dividendToken], "Token already in the list");
         dividendTokens[_dividendToken] = true;
         dividendTokenIndex.push(_dividendToken);
         emit DividendTokensAdded(_dividendToken);
     }
+    */
 
     /*
     function disburse(uint amount) {
@@ -250,10 +270,13 @@ contract OGToken is OGTokenInterface, Permissioned {
       totalSupply += amount;
       unclaimedDividends += amount;
     }*/
+    /*
     function dividendsOwing(address dividendToken, address account) public view returns (uint) {
         uint newDividendPoints = totalDividendPoints[dividendToken] - accounts[account].lastDividendPoints[dividendToken];
         return (accounts[account].balance * newDividendPoints) / pointMultiplier;
     }
+    */
+    /*
     function updateAccount(address dividendToken, address account) internal {
         uint owing = dividendsOwing(dividendToken, account);
         // emit LogInfo("updateAccount: owing", owing, 0x0, "", account);
@@ -271,6 +294,8 @@ contract OGToken is OGTokenInterface, Permissioned {
         }
         // emit UpdateAccountInfo(dividendToken, account, owing, accounts[account].owing[dividendToken], accounts[account].lastDividendPoints[dividendToken], totalDividendPoints[dividendToken], unclaimedDividends[dividendToken]);
     }
+    */
+    /*
     function depositDividends(address dividendToken, uint dividends) public {
         // emit LogInfo("depositDividends: dividendToken", 0, 0x0, "", dividendToken);
         // emit LogInfo("depositDividends: dividends", dividends, 0x0, "", address(0));
@@ -282,25 +307,28 @@ contract OGToken is OGTokenInterface, Permissioned {
         // emit LogInfo("depositDividends: unclaimedDividends[dividendToken]", unclaimedDividends[dividendToken], 0x0, "", address(0));
         ERC20(dividendToken).transferFrom(msg.sender, address(this), dividends);
     }
+    */
+    /*
     function withdrawDividends(address dividendToken) public returns (uint withdrawn) {
         updateAccount(dividendToken, msg.sender);
         withdrawn = 0;
     }
+    */
     function mint(address tokenOwner, uint tokens) override external permitted(ROLE_MINTER, tokens) returns (bool success) {
         require(cap == 0 || _totalSupply + tokens <= cap, "Cap exceeded");
         processed(ROLE_MINTER, tokens);
         accounts[tokenOwner].balance = accounts[tokenOwner].balance.add(tokens);
         _totalSupply = _totalSupply.add(tokens);
         emit Transfer(address(0), tokenOwner, tokens);
-        for (uint i = 0; i < dividendTokenIndex.length; i++) {
-            updateAccount(dividendTokenIndex[i], tokenOwner);
-        }
+        // for (uint i = 0; i < dividendTokenIndex.length; i++) {
+        //     updateAccount(dividendTokenIndex[i], tokenOwner);
+        // }
         return true;
     }
     function burn(uint tokens) override external returns (bool success) {
-        for (uint i = 0; i < dividendTokenIndex.length; i++) {
-            updateAccount(dividendTokenIndex[i], msg.sender);
-        }
+        // for (uint i = 0; i < dividendTokenIndex.length; i++) {
+        //     updateAccount(dividendTokenIndex[i], msg.sender);
+        // }
         // TODO Pay out
         accounts[msg.sender].balance = accounts[msg.sender].balance.sub(tokens);
         _totalSupply = _totalSupply.sub(tokens);

@@ -333,7 +333,8 @@ contract OptinoGov {
         user.votes = user.locked.mul(duration).div(maxLockTerm);
         totalVotes = totalVotes.add(user.votes);
 
-        require(ogToken.transferFrom(msg.sender, address(this), tokens), "OptinoGov: transferFrom failed");
+        require(ogToken.transferFrom(msg.sender, address(this), tokens), "OptinoGov: OGToken.transferFrom failed");
+        require(ogdToken.mint(msg.sender, tokens), "OptinoGov: OGDToken.mint failed");
 
         emit Locked(msg.sender, tokens, user.locked, user.duration, user.end, user.votes, rewardPool, totalVotes);
     }
