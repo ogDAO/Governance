@@ -141,6 +141,11 @@ contract('Test OGDToken', async _accounts => {
 
     await myData.printBalances();
 
+    console.log("RESULT: --- User2 transfer 1 OGD to User3 ---");
+    var batch8 = [];
+    batch8.push(myData.ogdToken.transfer(myData.user3, "1", { from: myData.user2 }));
+    const [transfer1] = await Promise.all(batch8);
+
     console.log("RESULT: mint1.receipt.gasUsed: " + mint1.receipt.gasUsed);
     console.log("RESULT: depositDividendFee0.receipt.gasUsed: " + depositDividendFee0.receipt.gasUsed);
     console.log("RESULT: depositDividendETH.receipt.gasUsed: " + depositDividendETH.receipt.gasUsed);
@@ -148,6 +153,7 @@ contract('Test OGDToken', async _accounts => {
     console.log("RESULT: withdrawDividends1.receipt.gasUsed: " + withdrawDividends1.receipt.gasUsed);
     console.log("RESULT: addDividendToken2.receipt.gasUsed: " + addDividendToken2.receipt.gasUsed);
     console.log("RESULT: depositDividendFee1.receipt.gasUsed: " + depositDividendFee1.receipt.gasUsed);
+    console.log("RESULT: transfer1.receipt.gasUsed: " + transfer1.receipt.gasUsed);
     // console.log("RESULT: dummyTransfer: " + util.inspect(dummyTransfer.logs));
     // myData.ogdToken.getPastEvents("allEvents", { fromBlock: 0, toBlock: "latest" }).then(console.log);
 
