@@ -3,68 +3,11 @@ pragma solidity ^0.7.0;
 
 // import "https://github.com/ogDAO/Governance/blob/master/contracts/Permissioned.sol";
 // import "https://github.com/ogDAO/Governance/blob/master/contracts/OGDTokenInterface.sol";
+// import "https://github.com/ogDAO/Governance/blob/master/contracts/DividendTokens.sol";
 
 import "./Permissioned.sol";
 import "./OGDTokenInterface.sol";
-
-
-// ----------------------------------------------------------------------------
-// DividendTokens - [token] => [enabled]
-// ----------------------------------------------------------------------------
-library DividendTokens {
-    struct DividendToken {
-        uint timestamp;
-        uint index;
-        address token;
-        bool enabled;
-    }
-    struct Data {
-        bool initialised;
-        mapping(address => DividendToken) entries;
-        address[] index;
-    }
-
-    event DividendTokenAdded(address indexed token, bool enabled);
-    event DividendTokenRemoved(address indexed token);
-    event DividendTokenUpdated(address indexed token, bool enabled);
-
-    function init(Data storage self) internal {
-        require(!self.initialised);
-        self.initialised = true;
-    }
-    function hasKey(Data storage self, address token) internal view returns (bool) {
-        return self.entries[token].timestamp > 0;
-    }
-    function add(Data storage self, address token, bool enabled) internal {
-        require(self.entries[token].timestamp == 0, "DividendToken.add: Cannot add duplicate");
-        self.index.push(token);
-        self.entries[token] = DividendToken(block.timestamp, self.index.length - 1, token, enabled);
-        emit DividendTokenAdded(token, enabled);
-    }
-    function remove(Data storage self, address token) internal {
-        require(self.entries[token].timestamp > 0, "DividendToken.update: Address not registered");
-        uint removeIndex = self.entries[token].index;
-        emit DividendTokenRemoved(token);
-        uint lastIndex = self.index.length - 1;
-        address lastIndexKey = self.index[lastIndex];
-        self.index[removeIndex] = lastIndexKey;
-        self.entries[lastIndexKey].index = removeIndex;
-        delete self.entries[token];
-        if (self.index.length > 0) {
-            self.index.pop();
-        }
-    }
-    function update(Data storage self, address token, bool enabled) internal {
-        DividendToken storage _value = self.entries[token];
-        require(_value.timestamp > 0, "DividendToken.update: Address not registered");
-        _value.timestamp = block.timestamp;
-        _value.enabled = enabled;
-        emit DividendTokenUpdated(token, enabled);
-    }
-    function length(Data storage self) internal view returns (uint) {
-        return self.index.length;
-    }
-}
+import "./DividendTokens.sol";
 
 
 /// @notice Optino Governance Dividend Token = ERC20 + mint + burn + dividend payments. (c) The Optino Project 2020
@@ -89,12 +32,10 @@ contract OGDToken is OGDTokenInterface, Permissioned {
 
     DividendTokens.Data private dividendTokens;
 
-    // uint public constant pointMultiplier = 10e18;
     uint public constant pointMultiplier = 10e27;
     mapping(address => uint) public totalDividendPoints;
     mapping(address => uint) public unclaimedDividends;
 
-    event LogInfo(string topic, uint number, bytes32 data, string note, address addr);
     event UpdateAccountInfo(address dividendToken, address account, uint owing, uint totalOwing, uint lastDividendPoints, uint totalDividendPoints, uint unclaimedDividends);
     event DividendDeposited(address indexed token, uint tokens);
     event DividendWithdrawn(address indexed account, address indexed token, uint tokens);
@@ -177,16 +118,18 @@ contract OGDToken is OGDTokenInterface, Permissioned {
         return dividendTokens.length();
     }
 
+    /// @notice New dividends owing since the last updateAccount(...)
     function newDividendsOwing(address dividendToken, address account) internal view returns (uint) {
         uint newDividendPoints = totalDividendPoints[dividendToken].sub(accounts[account].lastDividendPoints[dividendToken]);
         return accounts[account].balance.mul(newDividendPoints).div(pointMultiplier);
     }
+    /// @notice Dividends owning since the last updateAccount(...) + new dividends owing since the last updateAccount(...)
     function dividendsOwing(address account) public view returns (address[] memory tokenList, uint[] memory owingList) {
         tokenList = new address[](dividendTokens.index.length);
         owingList = new uint[](dividendTokens.index.length);
         for (uint i = 0; i < dividendTokens.index.length; i++) {
             DividendTokens.DividendToken memory dividendToken = dividendTokens.entries[dividendTokens.index[i]];
-            uint owing = dividendToken.enabled ? accounts[account].owing[dividendToken.token] + newDividendsOwing(dividendToken.token, account) : 0;
+            uint owing = accounts[account].owing[dividendToken.token].add(newDividendsOwing(dividendToken.token, account));
             tokenList[i] = dividendToken.token;
             owingList[i] = owing;
         }
@@ -205,10 +148,11 @@ contract OGDToken is OGDTokenInterface, Permissioned {
         }
     }
 
+    /// @notice Deposit enabled dividend token
     function depositDividend(address token, uint tokens) public payable {
         DividendTokens.DividendToken memory _dividendToken = dividendTokens.entries[token];
         require(_dividendToken.enabled, "Dividend token is not enabled");
-        totalDividendPoints[token] = totalDividendPoints[token].add((tokens * pointMultiplier / _totalSupply));
+        totalDividendPoints[token] = totalDividendPoints[token].add((tokens.mul(pointMultiplier).div(_totalSupply)));
         unclaimedDividends[token] = unclaimedDividends[token].add(tokens);
         if (token == address(0)) {
             require(msg.value >= tokens, "Insufficient ETH sent");
@@ -217,10 +161,11 @@ contract OGDToken is OGDTokenInterface, Permissioned {
                 require(msg.sender.send(refund), "ETH refund failure");
             }
         } else {
-            ERC20(token).transferFrom(msg.sender, address(this), tokens);
+            require(ERC20(token).transferFrom(msg.sender, address(this), tokens), "ERC20 transferFrom failure");
         }
         emit DividendDeposited(token, tokens);
     }
+    /// @notice Received ETH as dividends
     receive () external payable {
         depositDividend(address(0), msg.value);
     }
@@ -234,19 +179,34 @@ contract OGDToken is OGDTokenInterface, Permissioned {
                 if (tokens > 0) {
                     accounts[account].owing[dividendToken.token] = 0;
                     if (dividendToken.token == address(0)) {
-                        payable(account).transfer(tokens);
+                        require(payable(account).send(tokens), "ETH send failure");
                     } else {
-                        ERC20(dividendToken.token).transfer(account, tokens);
+                        require(ERC20(dividendToken.token).transfer(account, tokens), "ERC20 transfer failure");
                     }
                 }
                 emit DividendWithdrawn(account, dividendToken.token, tokens);
             }
         }
     }
+    /// @notice Withdraw enabled dividends tokens
     function withdrawDividends() public {
         withdrawDividendsFor(msg.sender);
     }
+    /// @notice Withdraw enabled and disabled dividends tokens. Does not include new dividends since last updateAccount(...) triggered by transfer(...) and transferFrom(...)
+    function withdrawDividend(address token) public {
+        uint tokens = accounts[msg.sender].owing[token];
+        if (tokens > 0) {
+            accounts[msg.sender].owing[token] = 0;
+            if (token == address(0)) {
+                require(payable(msg.sender).send(tokens), "ETH send failure");
+            } else {
+                require(ERC20(token).transfer(msg.sender, tokens), "ERC20 transfer failure");
+            }
+        }
+        emit DividendWithdrawn(msg.sender, token, tokens);
+    }
 
+    /// @notice Mint tokens
     function mint(address tokenOwner, uint tokens) override external permitted(ROLE_MINTER, tokens) returns (bool success) {
         processed(ROLE_MINTER, tokens);
         accounts[tokenOwner].balance = accounts[tokenOwner].balance.add(tokens);
@@ -255,6 +215,7 @@ contract OGDToken is OGDTokenInterface, Permissioned {
         updateAccount(tokenOwner);
         return true;
     }
+    /// @notice Withdraw dividends and then burn tokens
     function burn(uint tokens) override external returns (bool success) {
         updateAccount(msg.sender);
         withdrawDividendsFor(msg.sender);
@@ -264,13 +225,14 @@ contract OGDToken is OGDTokenInterface, Permissioned {
         return true;
     }
 
+    /// @notice Recover tokens for non enabled dividend tokens
     function recoverTokens(address token, uint tokens) public onlyOwner {
         DividendTokens.DividendToken memory dividendToken = dividendTokens.entries[token];
-        require(dividendToken.timestamp == 0, "Cannot recover tokens in dividend token list");
+        require(dividendToken.timestamp == 0 || !dividendToken.enabled, "Cannot recover tokens for enabled dividend token");
         if (token == address(0)) {
-            payable(owner).transfer((tokens == 0 ? address(this).balance : tokens));
+            require(payable(owner).send((tokens == 0 ? address(this).balance : tokens)), "ETH send failure");
         } else {
-            ERC20(token).transfer(owner, tokens == 0 ? ERC20(token).balanceOf(address(this)) : tokens);
+            require(ERC20(token).transfer(owner, tokens == 0 ? ERC20(token).balanceOf(address(this)) : tokens), "ERC20 transfer failure");
         }
     }
 }
