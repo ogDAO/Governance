@@ -196,11 +196,11 @@ class MyData {
       console.log("RESULT: - totalSupply          : " + new BigNumber(totalSupply).shiftedBy(-decimals));
       console.log("RESULT: - owner                : " + this.getShortAccountName(owner));
       if (symbol == "OGD") {
-        const dividendTokenLength = parseInt(await tokenContract.dividendTokenLength());
-        console.log("RESULT: - dividendTokenLength  : " + dividendTokenLength);
-        for (let j = 0; j < dividendTokenLength; j++) {
-          const dividendToken = await tokenContract.dividendTokenIndex(j);
-          console.log("RESULT: - dividendTokens       : " + j + " " + this.getShortAccountName(dividendToken));
+        const dividendTokensLength = parseInt(await tokenContract.dividendTokensLength());
+        console.log("RESULT: - dividendTokensLength  : " + dividendTokensLength);
+        for (let j = 0; j < dividendTokensLength; j++) {
+          const dividendToken = await tokenContract.getDividendTokenByIndex(j);
+          console.log("RESULT: - dividendToken        : " + j + " " + this.getShortAccountName(dividendToken[0]) + ", enabled: " + dividendToken[1]);
         }
       }
     }
