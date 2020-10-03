@@ -105,7 +105,7 @@ truffle compile
 
 <br />
 
-#### Run Tests
+#### Run OptinoGov Tests
 
 ```
 truffle test test/TestOptinoGov.test.js
@@ -251,6 +251,63 @@ RESULT: - stakeInfoLength      : 0
 
 
   1 passing (13s)
+```
+
+<br />
+
+#### Run OGDToken Tests
+
+```
+truffle test test/TestOGDToken.test.js
+```
+
+Sample output:
+
+```
+Iota:Governance bok$ truffle test test/TestOGDToken.test.js
+Using network 'development'.
+
+
+Compiling your contracts...
+===========================
+> Everything is up to date, there is nothing to compile.
+
+TestOGDToken.test.js: describe(OGToken behavior tests)
+
+
+  Contract: Test OGDToken
+--- Setup completed ---
+RESULT:  # Account                                             EtherBalanceChange                            OGD                            FEE @ 1007 -> 1011
+RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
+RESULT: 0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E         0.000000000000000000           0.000000000000000000           0.000000000000000000 Owner:0xa00A
+RESULT: 1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433         0.000000000000000000       10000.000000000000000000           0.000000000000000000 User1:0xa11A
+RESULT: 2 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976         0.000000000000000000       10000.000000000000000000           0.000000000000000000 User2:0xa22A
+RESULT: 3 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0         0.000000000000000000       10000.000000000000000000           0.000000000000000000 User3:0xa33a
+RESULT: 4 0x5265822F9a655f080d9eC48736b332203c173756         0.000000000000000000           0.000000000000000000           0.000000000000000000 OGDToken:0x5265
+RESULT: 5 0xF2E5aE3974a87038A7d7f438b7f441bA925b4187         0.000000000000000000           0.000000000000000000           0.000000000000000000 FeeToken:0xF2E5
+RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
+RESULT:                                                                                 30000.000000000000000000           0.000000000000000000 Total Token Balances
+RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
+RESULT:
+RESULT: Token 0 OGDToken:0x5265 @ 0x5265822F9a655f080d9eC48736b332203c173756
+RESULT: - symbol               : OGD
+RESULT: - name                 : Optino Governance Dividend
+RESULT: - decimals             : 18
+RESULT: - totalSupply          : 30000
+RESULT: - owner                : Owner:0xa00A
+RESULT: - dividendTokenLength  : 2
+RESULT: - dividendTokens       : 0 FeeToken:0xF2E5
+RESULT: - dividendTokens       : 1 0x0000000000000000000000000000000000000000
+RESULT: Token 1 FeeToken:0xF2E5 @ 0xF2E5aE3974a87038A7d7f438b7f441bA925b4187
+RESULT: - symbol               : FEE
+RESULT: - name                 : Fee
+RESULT: - decimals             : 18
+RESULT: - totalSupply          : 0
+RESULT: - owner                : Owner:0xa00A
+    ✓ Test OGDToken Lock Tokens (117ms)
+
+
+  1 passing (4s)
 ```
 
 <br />
