@@ -177,13 +177,6 @@ contract OGDToken is OGDTokenInterface, Permissioned {
         return dividendTokens.length();
     }
 
-
-    /*
-    function disburse(uint amount) {
-      totalDividendPoints += (amount * pointsMultiplier / totalSupply);
-      totalSupply += amount;
-      unclaimedDividends += amount;
-    }*/
     function newDividendsOwing(address dividendToken, address account) internal view returns (uint) {
         uint newDividendPoints = totalDividendPoints[dividendToken].sub(accounts[account].lastDividendPoints[dividendToken]);
         return accounts[account].balance.mul(newDividendPoints).div(pointMultiplier);
@@ -198,26 +191,16 @@ contract OGDToken is OGDTokenInterface, Permissioned {
             owingList[i] = owing;
         }
     }
-
     function updateAccount(address account) internal {
         for (uint i = 0; i < dividendTokens.index.length; i++) {
             DividendTokens.DividendToken memory dividendToken = dividendTokens.entries[dividendTokens.index[i]];
             if (dividendToken.enabled) {
                 uint owing = newDividendsOwing(dividendToken.token, account);
-                // emit LogInfo("updateAccount: owing", owing, 0x0, "", account);
                 if (owing > 0) {
-                    // emit LogInfo("updateAccount: _unclaimedDividends before", unclaimedDividends[dividendToken], 0x0, "", account);
                     unclaimedDividends[dividendToken.token] = unclaimedDividends[dividendToken.token].sub(owing);
-                    // emit LogInfo("updateAccount: _unclaimedDividends after", unclaimedDividends[dividendToken], 0x0, "", account);
-                    // // emit LogInfo("updateAccount: accounts[account].balance", accounts[account].balance, 0x0, "", account);
-                    // // accounts[account][dividendToken].balance = accounts[account][dividendToken].balance.add(owing);
-                    // // emit LogInfo("updateAccount: accounts[account][dividendToken].balance", accounts[account][dividendToken].balance, 0x0, "", account);
-                    // emit LogInfo("updateAccount: accounts[account].lastDividendPoints[dividendToken] before", accounts[account].lastDividendPoints[dividendToken], 0x0, "", account);
                     accounts[account].lastDividendPoints[dividendToken.token] = totalDividendPoints[dividendToken.token];
-                    // emit LogInfo("updateAccount: accounts[account].lastDividendPoints[dividendToken] after", accounts[account].lastDividendPoints[dividendToken], 0x0, "", account);
                     accounts[account].owing[dividendToken.token] = accounts[account].owing[dividendToken.token].add(owing);
                 }
-                // emit UpdateAccountInfo(dividendToken, account, owing, accounts[account].owing[dividendToken], accounts[account].lastDividendPoints[dividendToken], totalDividendPoints[dividendToken], unclaimedDividends[dividendToken]);
             }
         }
     }
@@ -225,15 +208,8 @@ contract OGDToken is OGDTokenInterface, Permissioned {
     function depositDividend(address token, uint tokens) public payable {
         DividendTokens.DividendToken memory _dividendToken = dividendTokens.entries[token];
         require(_dividendToken.enabled, "Dividend token is not enabled");
-        // emit LogInfo("depositDividends: token", 0, 0x0, "", token);
-        // emit LogInfo("depositDividends: dividends", dividends, 0x0, "", address(0));
-        // emit LogInfo("depositDividends: pointMultiplier", pointMultiplier, 0x0, "", address(0));
-        // emit LogInfo("depositDividends: _totalSupply", _totalSupply, 0x0, "", address(0));
         totalDividendPoints[token] = totalDividendPoints[token].add((tokens * pointMultiplier / _totalSupply));
         unclaimedDividends[token] = unclaimedDividends[token].add(tokens);
-        // emit LogInfo("depositDividends: totalDividendPoints[dividendToken]", totalDividendPoints[dividendToken], 0x0, "", address(0));
-        // emit LogInfo("depositDividends: unclaimedDividends[dividendToken]", unclaimedDividends[dividendToken], 0x0, "", address(0));
-
         if (token == address(0)) {
             require(msg.value >= tokens, "Insufficient ETH sent");
             uint refund = msg.value.sub(tokens);
@@ -248,6 +224,7 @@ contract OGDToken is OGDTokenInterface, Permissioned {
     receive () external payable {
         depositDividend(address(0), msg.value);
     }
+
     function withdrawDividendsFor(address account) internal {
         updateAccount(account);
         for (uint i = 0; i < dividendTokens.index.length; i++) {
@@ -269,6 +246,7 @@ contract OGDToken is OGDTokenInterface, Permissioned {
     function withdrawDividends() public {
         withdrawDividendsFor(msg.sender);
     }
+
     function mint(address tokenOwner, uint tokens) override external permitted(ROLE_MINTER, tokens) returns (bool success) {
         processed(ROLE_MINTER, tokens);
         accounts[tokenOwner].balance = accounts[tokenOwner].balance.add(tokens);
