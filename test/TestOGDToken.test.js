@@ -59,7 +59,7 @@ contract('Test OGDToken', async _accounts => {
 
   it('Test OGDToken Lock Tokens', async () => {
     await myData.printBalances();
-    // Not working. Have to manually run web3.personal.unlockAccount(eth.accounts[x], "") in geth console await myData.unlockAccounts("");
+    // Have to manually run web3.personal.unlockAccount(eth.accounts[x], "") in geth console await myData.unlockAccounts("");
 
     var lockDuration = 500;
     var lockTokens = new BigNumber("1000").shiftedBy(18);

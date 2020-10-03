@@ -45,9 +45,15 @@ contract('Test OGToken', async _accounts => {
     const [optinoGov, mint1, mint2, mint3, addDividendToken1, addDividendToken2] = await Promise.all(batch2);
 
     var batch3 = [];
-    batch3.push(ogToken.transferOwnership(optinoGov.address));
-    batch3.push(ogdToken.transferOwnership(optinoGov.address));
-    const [ogTokenTransferOwnership, ogdTokenTransferOwnership] = await Promise.all(batch3);
+    batch3.push(ogToken.setPermission(optinoGov.address, 1, true, 0, { from: myData.owner }));
+    batch3.push(ogdToken.setPermission(optinoGov.address, 1, true, 0, { from: myData.owner }));
+    const [ogTokenSetPermission, ogdTokenSetPermission] = await Promise.all(batch3);
+
+    var batch4 = [];
+    batch4.push(ogToken.transferOwnership(optinoGov.address));
+    batch4.push(ogdToken.transferOwnership(optinoGov.address));
+    const [ogTokenTransferOwnership, ogdTokenTransferOwnership] = await Promise.all(batch4);
+
     await myData.setOptinoGovData(ogToken, ogdToken, feeToken, optinoGov);
   });
 

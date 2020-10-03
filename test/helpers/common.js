@@ -44,16 +44,17 @@ class MyData {
     // console.log("MyData.addAccount: " + account + " => " + accountName);
   }
 
-  async unlockAccounts(password) {
-    for (var i = 0; i < this.accounts.length && i < 4; i++) {
-      console.log("MyData.unlockAccounts: " + this.accounts[i] + " '" + password + "'");
-      await web3.personal.unlockAccount(this.accounts[i], password, 100000);
-      // if (i > 0 && eth.getBalance(eth.accounts[i]) == 0) {
-      //   personal.sendTransaction({from: eth.accounts[0], to: eth.accounts[i], value: web3.toWei(1000000, "ether")});
-      // }
-    }
-    baseBlock = eth.blockNumber;
-  }
+  // Using with geth devnet, have to unlock the accounts
+  // async unlockAccounts(password) {
+  //   for (var i = 0; i < this.accounts.length && i < 4; i++) {
+  //     console.log("MyData.unlockAccounts: " + this.accounts[i] + " '" + password + "'");
+  //     await web3.personal.unlockAccount(this.accounts[i], password, 100000);
+  //     // if (i > 0 && eth.getBalance(eth.accounts[i]) == 0) {
+  //     //   personal.sendTransaction({from: eth.accounts[0], to: eth.accounts[i], value: web3.toWei(1000000, "ether")});
+  //     // }
+  //   }
+  //   baseBlock = eth.blockNumber;
+  // }
 
 
   getShortAccountName(address) {
