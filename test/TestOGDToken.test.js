@@ -33,17 +33,19 @@ contract('Test OGDToken', async _accounts => {
     var batch1 = [];
     // "OGD", "Optino Governance Dividend", "18", "0x5B38Da6a701c568545dCfcB03FcB875f56beddC4", "10000000000000000000000"
     batch1.push(OGDToken.new("OGD", "Optino Governance Dividend", 18, myData.owner, new BigNumber("0").shiftedBy(18), { from: myData.owner, gas: 3000000 }));
-    batch1.push(TestToken.new("FEE", "Fee", 18, myData.owner, new BigNumber("10000").shiftedBy(18), { from: myData.owner, gas: 2000000 }));
-    const [ogdToken, feeToken] = await Promise.all(batch1);
+    batch1.push(TestToken.new("FEE0", "Fee0", 18, myData.owner, new BigNumber("10000").shiftedBy(18), { from: myData.owner, gas: 2000000 }));
+    batch1.push(TestToken.new("FEE1", "Fee1", 18, myData.owner, new BigNumber("10000").shiftedBy(18), { from: myData.owner, gas: 2000000 }));
+    batch1.push(TestToken.new("FEE2", "Fee2", 18, myData.owner, new BigNumber("10000").shiftedBy(18), { from: myData.owner, gas: 2000000 }));
+    const [ogdToken, fee0Token, fee1Token, fee2Token] = await Promise.all(batch1);
 
     var batch2 = [];
     var ogdTokens = new BigNumber("10000").shiftedBy(18);
-    var approveFeeTokens = new BigNumber("10000").shiftedBy(18);
+    var approveFee0Tokens = new BigNumber("10000").shiftedBy(18);
     // batch2.push(ogdToken.mint(myData.user1, ogdTokens, { from: myData.owner }));
     // batch2.push(ogdToken.mint(myData.user2, ogdTokens, { from: myData.owner }));
     // batch2.push(ogdToken.mint(myData.user3, ogdTokens, { from: myData.owner }));
     batch2.push(ogdToken.addDividendToken(ZERO_ADDRESS, { from: myData.owner }));
-    batch2.push(ogdToken.addDividendToken(feeToken.address, { from: myData.owner }));
+    batch2.push(ogdToken.addDividendToken(fee0Token.address, { from: myData.owner }));
     // batch2.push(feeToken.approve(ogdToken.address, approveFeeTokens, { from: myData.owner }));
     // const [mint1, mint2, mint3, addDividendToken1, addDividendToken2, ownerApproveFeeTokens] = await Promise.all(batch2);
     const [addDividendToken1, addDividendToken2] = await Promise.all(batch2);
@@ -66,7 +68,7 @@ contract('Test OGDToken', async _accounts => {
     // batch4.push(ogdToken.transferOwnership(optinoGov.address));
     // const [ogTokenTransferOwnership, ogdTokenTransferOwnership] = await Promise.all(batch4);
 
-    await myData.setOGDTokenData(ogdToken, feeToken);
+    await myData.setOGDTokenData(ogdToken, fee0Token, fee1Token, fee2Token);
   });
 
   it('Test OGDToken workflow', async () => {
@@ -80,14 +82,14 @@ contract('Test OGDToken', async _accounts => {
     batch1.push(myData.ogdToken.mint(myData.user1, ogdTokens, { from: myData.owner }));
     batch1.push(myData.ogdToken.mint(myData.user2, ogdTokens, { from: myData.owner }));
     batch1.push(myData.ogdToken.mint(myData.user3, ogdTokens, { from: myData.owner }));
-    batch1.push(myData.feeToken.approve(myData.ogdToken.address, approveFeeTokens, { from: myData.owner }));
+    batch1.push(myData.fee0Token.approve(myData.ogdToken.address, approveFeeTokens, { from: myData.owner }));
     const [mint1, mint2, mint3, ownerApproveFeeTokens] = await Promise.all(batch1);
 
     console.log("RESULT: --- Owner deposits dividends of 100 FEE and 10 ETH ---");
     var batch2 = [];
-    var depositFeeTokens = new BigNumber("100").shiftedBy(18);
+    var depositFee0Tokens = new BigNumber("100").shiftedBy(18);
     var depositFeeETH = new BigNumber("10").shiftedBy(18);
-    batch2.push(myData.ogdToken.depositDividend(myData.feeToken.address, depositFeeTokens, { from: myData.owner }));
+    batch2.push(myData.ogdToken.depositDividend(myData.fee0Token.address, depositFee0Tokens, { from: myData.owner }));
     batch2.push(myData.ogdToken.depositDividend(ZERO_ADDRESS, depositFeeETH, { from: myData.owner, value: depositFeeETH }));
     const [depositDividend] = await Promise.all(batch2);
 

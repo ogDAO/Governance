@@ -33,7 +33,9 @@ class MyData {
     // OptinoGov testing
     this.ogToken = null;
     this.ogdToken = null;
-    this.feeToken = null;
+    this.fee0Token = null;
+    this.fee1Token = null;
+    this.fee2Token = null;
     this.optinoGov = null;
   }
 
@@ -76,18 +78,18 @@ class MyData {
     // console.log("    - MyData.setBaseBlock - this.baseBlock: " + this.baseBlock);
   }
 
-  async setOptinoGovData(ogToken, ogdToken, feeToken, optinoGov) {
+  async setOptinoGovData(ogToken, ogdToken, fee0Token, optinoGov) {
     this.ogToken = ogToken;
     this.ogdToken = ogdToken;
-    this.feeToken = feeToken;
+    this.fee0Token = fee0Token;
     this.optinoGov = optinoGov;
     this.addAccount(this.ogToken.address, "OGToken");
     this.addAccount(this.ogdToken.address, "OGDToken");
-    this.addAccount(this.feeToken.address, "FeeToken");
+    this.addAccount(this.fee0Token.address, "Fee0Token");
     this.addAccount(this.optinoGov.address, "OptinoGov");
     // console.log("    - MyData.setOptinoGovData - ogToken: " + util.inspect(ogToken) + ", ogdToken: " + util.inspect(ogdToken) + ", optinoGov: " + util.inspect(optinoGov));
     // console.log("    - MyData.setOptinoGovData - ogToken: " + ogToken + ", ogdToken: " + ogdToken + ", feeToken: " + feeToken + ", optinoGov: " + optinoGov);
-    this.tokenContracts = [ogToken, ogdToken, feeToken];
+    this.tokenContracts = [ogToken, ogdToken, fee0Token];
     for (let i = 0; i < this.tokenContracts.length; i++) {
       let tokenContract = this.tokenContracts[i];
       if (tokenContract != null) {
@@ -104,14 +106,18 @@ class MyData {
     }
   }
 
-  async setOGDTokenData(ogdToken, feeToken) {
+  async setOGDTokenData(ogdToken, fee0Token, fee1Token, fee2Token) {
     this.ogdToken = ogdToken;
-    this.feeToken = feeToken;
+    this.fee0Token = fee0Token;
+    this.fee1Token = fee1Token;
+    this.fee2Token = fee2Token;
     this.addAccount(this.ogdToken.address, "OGDToken");
-    this.addAccount(this.feeToken.address, "FeeToken");
+    this.addAccount(this.fee0Token.address, "Fee0Token");
+    this.addAccount(this.fee1Token.address, "Fee1Token");
+    this.addAccount(this.fee2Token.address, "Fee2Token");
     // console.log("    - MyData.setOptinoGovData - ogToken: " + util.inspect(ogToken) + ", ogdToken: " + util.inspect(ogdToken) + ", optinoGov: " + util.inspect(optinoGov));
     // console.log("    - MyData.setOptinoGovData - ogToken: " + ogToken + ", ogdToken: " + ogdToken + ", feeToken: " + feeToken + ", optinoGov: " + optinoGov);
-    this.tokenContracts = [ogdToken, feeToken];
+    this.tokenContracts = [ogdToken, fee0Token, fee1Token, fee2Token];
     for (let i = 0; i < this.tokenContracts.length; i++) {
       let tokenContract = this.tokenContracts[i];
       if (tokenContract != null) {
@@ -160,10 +166,10 @@ class MyData {
   async printBalances() {
     var blockNumber = await web3.eth.getBlockNumber();
     var i = 0;
-    var totalTokenBalances = [new BigNumber(0), new BigNumber(0), new BigNumber(0)];
+    var totalTokenBalances = [new BigNumber(0), new BigNumber(0), new BigNumber(0), new BigNumber(0)];
     console.log("RESULT:  # Account                                             EtherBalanceChange               " + this.padLeft(this.symbols[0] || "???", 16) +  "               " + this.padLeft(this.symbols[1] || "???", 16) + " @ " + this.baseBlock.toString() + " -> " + blockNumber.toString());
     if (this.tokenContracts.length > 2) {
-      console.log("RESULT:                                                                                         " + this.padLeft(this.symbols[2] || "???", 16));
+      console.log("RESULT:                                                                                         " + this.padLeft(this.symbols[2] || "???", 16) +  "               " + this.padLeft(this.symbols[3] || "???", 16));
     }
     console.log("RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------");
     for (let i = 0; i < this.accounts.length; i++) {
@@ -178,13 +184,13 @@ class MyData {
       }
       console.log("RESULT: " + this.padLeft(i, 2) + " " + account + "  " + this.padToken(etherBalanceDiff, 18) + "    " + this.padToken(tokenBalances[0] || new BigNumber(0), this.decimals[0] || 18) + "    " + this.padToken(tokenBalances[1] || new BigNumber(0), this.decimals[1] || 18) + " " + this.getShortAccountName(account));
       if (this.tokenContracts.length > 2) {
-        console.log("RESULT:                                                                              " + this.padToken(tokenBalances[2] || new BigNumber(0), this.decimals[2] || 18));
+        console.log("RESULT:                                                                              " + this.padToken(tokenBalances[2] || new BigNumber(0), this.decimals[2] || 18) + "    " + this.padToken(tokenBalances[3] || new BigNumber(0), this.decimals[3] || 18));
       }
     }
     console.log("RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------");
     console.log("RESULT:                                                                              " + this.padToken(totalTokenBalances[0], this.decimals[0] || 18) + "    " + this.padToken(totalTokenBalances[1], this.decimals[1] || 18) + " Total Token Balances");
     if (this.tokenContracts.length > 2) {
-      console.log("RESULT:                                                                              " + this.padToken(totalTokenBalances[2], this.decimals[2] || 18));
+      console.log("RESULT:                                                                              " + this.padToken(totalTokenBalances[2], this.decimals[2] || 18) + "    " + this.padToken(totalTokenBalances[3], this.decimals[3] || 18));
     }
     console.log("RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------");
     console.log("RESULT: ");

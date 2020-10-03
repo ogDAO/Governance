@@ -260,8 +260,7 @@ contract OGDToken is OGDTokenInterface, Permissioned {
         return accounts[tokenOwner].balance;
     }
     function transfer(address to, uint tokens) override external returns (bool success) {
-        updateAccount(msg.sender);
-        updateAccount(to);
+        updateAccounts(msg.sender, to);
         accounts[msg.sender].balance = accounts[msg.sender].balance.sub(tokens);
         accounts[to].balance = accounts[to].balance.add(tokens);
         emit Transfer(msg.sender, to, tokens);
@@ -273,8 +272,7 @@ contract OGDToken is OGDTokenInterface, Permissioned {
         return true;
     }
     function transferFrom(address from, address to, uint tokens) override external returns (bool success) {
-        updateAccount(msg.sender);
-        updateAccount(to);
+        updateAccounts(msg.sender, to);
         accounts[from].balance = accounts[from].balance.sub(tokens);
         allowed[from][msg.sender] = allowed[from][msg.sender].sub(tokens);
         accounts[to].balance = accounts[to].balance.add(tokens);
@@ -324,15 +322,23 @@ contract OGDToken is OGDTokenInterface, Permissioned {
             owingList[i] = owing;
         }
     }
-    function updateAccount(address account) internal {
+    function updateAccounts(address account1, address account2) internal {
         for (uint i = 0; i < dividendTokens.index.length; i++) {
             DividendTokens.DividendToken memory dividendToken = dividendTokens.entries[dividendTokens.index[i]];
             if (dividendToken.enabled) {
-                uint owing = newDividendsOwing(dividendToken.token, account);
+                uint owing = newDividendsOwing(dividendToken.token, account1);
                 if (owing > 0) {
                     unclaimedDividends[dividendToken.token] = unclaimedDividends[dividendToken.token].sub(owing);
-                    accounts[account].lastDividendPoints[dividendToken.token] = totalDividendPoints[dividendToken.token];
-                    accounts[account].owing[dividendToken.token] = accounts[account].owing[dividendToken.token].add(owing);
+                    accounts[account1].lastDividendPoints[dividendToken.token] = totalDividendPoints[dividendToken.token];
+                    accounts[account1].owing[dividendToken.token] = accounts[account1].owing[dividendToken.token].add(owing);
+                }
+                if (account1 != account2) {
+                    owing = newDividendsOwing(dividendToken.token, account2);
+                    if (owing > 0) {
+                        unclaimedDividends[dividendToken.token] = unclaimedDividends[dividendToken.token].sub(owing);
+                        accounts[account2].lastDividendPoints[dividendToken.token] = totalDividendPoints[dividendToken.token];
+                        accounts[account2].owing[dividendToken.token] = accounts[account2].owing[dividendToken.token].add(owing);
+                    }
                 }
             }
         }
@@ -361,7 +367,7 @@ contract OGDToken is OGDTokenInterface, Permissioned {
     }
 
     function withdrawDividendsFor(address account) internal {
-        updateAccount(account);
+        updateAccounts(account, account);
         for (uint i = 0; i < dividendTokens.index.length; i++) {
             DividendTokens.DividendToken memory dividendToken = dividendTokens.entries[dividendTokens.index[i]];
             if (dividendToken.enabled) {
@@ -402,12 +408,12 @@ contract OGDToken is OGDTokenInterface, Permissioned {
         accounts[tokenOwner].balance = accounts[tokenOwner].balance.add(tokens);
         _totalSupply = _totalSupply.add(tokens);
         emit Transfer(address(0), tokenOwner, tokens);
-        updateAccount(tokenOwner);
+        updateAccounts(tokenOwner, tokenOwner);
         return true;
     }
     /// @notice Withdraw dividends and then burn tokens
     function burn(uint tokens) override external returns (bool success) {
-        updateAccount(msg.sender);
+        updateAccounts(msg.sender, msg.sender);
         withdrawDividendsFor(msg.sender);
         accounts[msg.sender].balance = accounts[msg.sender].balance.sub(tokens);
         _totalSupply = _totalSupply.sub(tokens);
