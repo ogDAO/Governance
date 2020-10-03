@@ -163,7 +163,7 @@ class MyData {
       console.log("RESULT:                                                                                         " + this.padLeft(this.symbols[2] || "???", 16));
     }
     console.log("RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------");
-    for (var i = 0; i < this.accounts.length; i++) {
+    for (let i = 0; i < this.accounts.length; i++) {
       let account = this.accounts[i];
       let etherBalanceBaseBlock = await web3.eth.getBalance(account, this.baseBlock);
       let etherBalance = await web3.eth.getBalance(account, blockNumber);
@@ -201,6 +201,16 @@ class MyData {
         for (let j = 0; j < dividendTokensLength; j++) {
           const dividendToken = await tokenContract.getDividendTokenByIndex(j);
           console.log("RESULT: - dividendToken        : " + j + " " + this.getShortAccountName(dividendToken[0]) + ", enabled: " + dividendToken[1]);
+        }
+        for (let j = 1; j < this.accounts.length && j < 4; j++) {
+          let account = this.accounts[j];
+          const dividendsOwing = await tokenContract.dividendsOwing(account);
+          console.log("RESULT: - dividendsOwing        : " + j + " " + this.getShortAccountName(account));
+          let tokenList = dividendsOwing[0];
+          let owingList = dividendsOwing[1];
+          for (let k = 0; k < dividendTokensLength; k++) {
+            console.log("RESULT: -                       : " + this.getShortAccountName(tokenList[k]) + " " + owingList[k] + " " + new BigNumber(owingList[k]).shiftedBy(-18).toString());
+          }
         }
       }
     }
