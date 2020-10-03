@@ -263,10 +263,11 @@ truffle test test/TestOGDToken.test.js
 
 Sample output:
 
-* Mint 10,000 OGD tokens for users{1..3}
+* Mint 10,000 OGD tokens for User{1..3}
 * Owner approve 100 FEE for OGToken to spend
 * Owner deposits dividends of 100 FEE and 10 ETH
-* Users{1..3} withdraw 33.333333333333333333 FEE and 3.333333333333333333 ETH
+* User1 dummy transfer to same account
+* User{1..3} withdraw 33.333333333333333333 FEE and 3.333333333333333333 ETH
 
 ```
 Iota:Governance bok$ truffle test test/TestOGDToken.test.js
@@ -282,114 +283,115 @@ TestOGDToken.test.js: describe(OGToken behavior tests)
 
   Contract: Test OGDToken
 --- Setup completed ---
-RESULT:  # Account                                             EtherBalanceChange                            OGD                            FEE @ 26509 -> 26513
+RESULT:  # Account                                             EtherBalanceChange                            OGD                            FEE @ 27018 -> 27022
 RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
 RESULT: 0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E         0.000000000000000000           0.000000000000000000       10000.000000000000000000 Owner:0xa00A
 RESULT: 1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433         0.000000000000000000           0.000000000000000000           0.000000000000000000 User1:0xa11A
 RESULT: 2 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976         0.000000000000000000           0.000000000000000000           0.000000000000000000 User2:0xa22A
 RESULT: 3 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0         0.000000000000000000           0.000000000000000000           0.000000000000000000 User3:0xa33a
-RESULT: 4 0x28E2b9ed19B0b6446D55E6522C0A21339f376B2b         0.000000000000000000           0.000000000000000000           0.000000000000000000 OGDToken:0x28E2
-RESULT: 5 0x70914F453A53227964027E9fC25c185dB0Afb3e8         0.000000000000000000           0.000000000000000000           0.000000000000000000 FeeToken:0x7091
+RESULT: 4 0xB8F7Cc8c6f4BE270966D8cA8b7Df27179b4A4d29         0.000000000000000000           0.000000000000000000           0.000000000000000000 OGDToken:0xB8F7
+RESULT: 5 0xb136A795613Ea0eC80d2Be5b2787aFa23936B0E8         0.000000000000000000           0.000000000000000000           0.000000000000000000 FeeToken:0xb136
 RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
 RESULT:                                                                                     0.000000000000000000       10000.000000000000000000 Total Token Balances
 RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
 RESULT:
-RESULT: Token 0 OGDToken:0x28E2 @ 0x28E2b9ed19B0b6446D55E6522C0A21339f376B2b
+RESULT: Token 0 OGDToken:0xB8F7 @ 0xB8F7Cc8c6f4BE270966D8cA8b7Df27179b4A4d29
 RESULT: - symbol               : OGD
 RESULT: - name                 : Optino Governance Dividend
 RESULT: - decimals             : 18
 RESULT: - totalSupply          : 0
 RESULT: - owner                : Owner:0xa00A
 RESULT: - dividendTokensLength : 2
-RESULT: - dividendToken        : 0 FeeToken:0x7091, enabled: true, unclaimedDividends: 0 = 0.000000000000000000
-RESULT: - dividendToken        : 1 ETH|null:0x0000, enabled: true, unclaimedDividends: 0 = 0.000000000000000000
+RESULT: - dividendToken        : 0 ETH|null:0x0000, enabled: true, unclaimedDividends: 0 = 0.000000000000000000
+RESULT: - dividendToken        : 1 FeeToken:0xb136, enabled: true, unclaimedDividends: 0 = 0.000000000000000000
 RESULT: - dividendsOwing       : 1 User1:0xa11A
-RESULT:                            - FeeToken:0x7091 0 = 0.000000000000000000
 RESULT:                            - ETH|null:0x0000 0 = 0.000000000000000000
+RESULT:                            - FeeToken:0xb136 0 = 0.000000000000000000
 RESULT: - dividendsOwing       : 2 User2:0xa22A
-RESULT:                            - FeeToken:0x7091 0 = 0.000000000000000000
 RESULT:                            - ETH|null:0x0000 0 = 0.000000000000000000
+RESULT:                            - FeeToken:0xb136 0 = 0.000000000000000000
 RESULT: - dividendsOwing       : 3 User3:0xa33a
-RESULT:                            - FeeToken:0x7091 0 = 0.000000000000000000
 RESULT:                            - ETH|null:0x0000 0 = 0.000000000000000000
-RESULT: Token 1 FeeToken:0x7091 @ 0x70914F453A53227964027E9fC25c185dB0Afb3e8
+RESULT:                            - FeeToken:0xb136 0 = 0.000000000000000000
+RESULT: Token 1 FeeToken:0xb136 @ 0xb136A795613Ea0eC80d2Be5b2787aFa23936B0E8
 RESULT: - symbol               : FEE
 RESULT: - name                 : Fee
 RESULT: - decimals             : 18
 RESULT: - totalSupply          : 10000
 RESULT: - owner                : Owner:0xa00A
 RESULT:
-RESULT: --- Mint 10,000 OGD tokens for users{1..3}; Owner approve 100 FEE for OGToken to spend ---
+RESULT: --- Mint 10,000 OGD tokens for User{1..3}; Owner approve 100 FEE for OGToken to spend ---
 RESULT: --- Owner deposits dividends of 100 FEE and 10 ETH ---
-RESULT:  # Account                                             EtherBalanceChange                            OGD                            FEE @ 26509 -> 26517
+RESULT:  # Account                                             EtherBalanceChange                            OGD                            FEE @ 27018 -> 27026
 RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
 RESULT: 0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E       -10.000000000000000000           0.000000000000000000        9900.000000000000000000 Owner:0xa00A
 RESULT: 1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433         0.000000000000000000       10000.000000000000000000           0.000000000000000000 User1:0xa11A
 RESULT: 2 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976         0.000000000000000000       10000.000000000000000000           0.000000000000000000 User2:0xa22A
 RESULT: 3 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0         0.000000000000000000       10000.000000000000000000           0.000000000000000000 User3:0xa33a
-RESULT: 4 0x28E2b9ed19B0b6446D55E6522C0A21339f376B2b        10.000000000000000000           0.000000000000000000         100.000000000000000000 OGDToken:0x28E2
-RESULT: 5 0x70914F453A53227964027E9fC25c185dB0Afb3e8         0.000000000000000000           0.000000000000000000           0.000000000000000000 FeeToken:0x7091
+RESULT: 4 0xB8F7Cc8c6f4BE270966D8cA8b7Df27179b4A4d29        10.000000000000000000           0.000000000000000000         100.000000000000000000 OGDToken:0xB8F7
+RESULT: 5 0xb136A795613Ea0eC80d2Be5b2787aFa23936B0E8         0.000000000000000000           0.000000000000000000           0.000000000000000000 FeeToken:0xb136
 RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
 RESULT:                                                                                 30000.000000000000000000       10000.000000000000000000 Total Token Balances
 RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
 RESULT:
-RESULT: Token 0 OGDToken:0x28E2 @ 0x28E2b9ed19B0b6446D55E6522C0A21339f376B2b
+RESULT: Token 0 OGDToken:0xB8F7 @ 0xB8F7Cc8c6f4BE270966D8cA8b7Df27179b4A4d29
 RESULT: - symbol               : OGD
 RESULT: - name                 : Optino Governance Dividend
 RESULT: - decimals             : 18
 RESULT: - totalSupply          : 30000
 RESULT: - owner                : Owner:0xa00A
 RESULT: - dividendTokensLength : 2
-RESULT: - dividendToken        : 0 FeeToken:0x7091, enabled: true, unclaimedDividends: 100000000000000000000 = 100.000000000000000000
-RESULT: - dividendToken        : 1 ETH|null:0x0000, enabled: true, unclaimedDividends: 10000000000000000000 = 10.000000000000000000
+RESULT: - dividendToken        : 0 ETH|null:0x0000, enabled: true, unclaimedDividends: 10000000000000000000 = 10.000000000000000000
+RESULT: - dividendToken        : 1 FeeToken:0xb136, enabled: true, unclaimedDividends: 100000000000000000000 = 100.000000000000000000
 RESULT: - dividendsOwing       : 1 User1:0xa11A
-RESULT:                            - FeeToken:0x7091 33333333333333333333 = 33.333333333333333333
 RESULT:                            - ETH|null:0x0000 3333333333333333333 = 3.333333333333333333
+RESULT:                            - FeeToken:0xb136 33333333333333333333 = 33.333333333333333333
 RESULT: - dividendsOwing       : 2 User2:0xa22A
-RESULT:                            - FeeToken:0x7091 33333333333333333333 = 33.333333333333333333
 RESULT:                            - ETH|null:0x0000 3333333333333333333 = 3.333333333333333333
+RESULT:                            - FeeToken:0xb136 33333333333333333333 = 33.333333333333333333
 RESULT: - dividendsOwing       : 3 User3:0xa33a
-RESULT:                            - FeeToken:0x7091 33333333333333333333 = 33.333333333333333333
 RESULT:                            - ETH|null:0x0000 3333333333333333333 = 3.333333333333333333
-RESULT: Token 1 FeeToken:0x7091 @ 0x70914F453A53227964027E9fC25c185dB0Afb3e8
+RESULT:                            - FeeToken:0xb136 33333333333333333333 = 33.333333333333333333
+RESULT: Token 1 FeeToken:0xb136 @ 0xb136A795613Ea0eC80d2Be5b2787aFa23936B0E8
 RESULT: - symbol               : FEE
 RESULT: - name                 : Fee
 RESULT: - decimals             : 18
 RESULT: - totalSupply          : 10000
 RESULT: - owner                : Owner:0xa00A
 RESULT:
-RESULT: --- Users{1..3} withdraw 33.333333333333333333 FEE and 3.333333333333333333 ETH ---
-RESULT:  # Account                                             EtherBalanceChange                            OGD                            FEE @ 26509 -> 26519
+RESULT: --- User1 dummy transfer to same account ---
+RESULT: --- User{1..3} withdraw 33.333333333333333333 FEE and 3.333333333333333333 ETH ---
+RESULT:  # Account                                             EtherBalanceChange                            OGD                            FEE @ 27018 -> 27030
 RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-RESULT: 0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E        -9.990684700000000000           0.000000000000000000        9900.000000000000000000 Owner:0xa00A
-RESULT: 1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433         3.330228233333333333       10000.000000000000000000          33.333333333333333333 User1:0xa11A
-RESULT: 2 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976         3.330228233333333333       10000.000000000000000000          33.333333333333333333 User2:0xa22A
-RESULT: 3 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0         3.330228233333333333       10000.000000000000000000          33.333333333333333333 User3:0xa33a
-RESULT: 4 0x28E2b9ed19B0b6446D55E6522C0A21339f376B2b         0.000000000000000001           0.000000000000000000           0.000000000000000001 OGDToken:0x28E2
-RESULT: 5 0x70914F453A53227964027E9fC25c185dB0Afb3e8         0.000000000000000000           0.000000000000000000           0.000000000000000000 FeeToken:0x7091
+RESULT: 0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E        -9.989082420000000000           0.000000000000000000        9900.000000000000000000 Owner:0xa00A
+RESULT: 1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433         3.330228113333333333       10000.000000000000000000          33.333333333333333333 User1:0xa11A
+RESULT: 2 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976         3.328626193333333333       10000.000000000000000000          33.333333333333333333 User2:0xa22A
+RESULT: 3 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0         3.330228113333333333       10000.000000000000000000          33.333333333333333333 User3:0xa33a
+RESULT: 4 0xB8F7Cc8c6f4BE270966D8cA8b7Df27179b4A4d29         0.000000000000000001           0.000000000000000000           0.000000000000000001 OGDToken:0xB8F7
+RESULT: 5 0xb136A795613Ea0eC80d2Be5b2787aFa23936B0E8         0.000000000000000000           0.000000000000000000           0.000000000000000000 FeeToken:0xb136
 RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
 RESULT:                                                                                 30000.000000000000000000       10000.000000000000000000 Total Token Balances
 RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
 RESULT:
-RESULT: Token 0 OGDToken:0x28E2 @ 0x28E2b9ed19B0b6446D55E6522C0A21339f376B2b
+RESULT: Token 0 OGDToken:0xB8F7 @ 0xB8F7Cc8c6f4BE270966D8cA8b7Df27179b4A4d29
 RESULT: - symbol               : OGD
 RESULT: - name                 : Optino Governance Dividend
 RESULT: - decimals             : 18
 RESULT: - totalSupply          : 30000
 RESULT: - owner                : Owner:0xa00A
 RESULT: - dividendTokensLength : 2
-RESULT: - dividendToken        : 0 FeeToken:0x7091, enabled: true, unclaimedDividends: 1 = 0.000000000000000001
-RESULT: - dividendToken        : 1 ETH|null:0x0000, enabled: true, unclaimedDividends: 1 = 0.000000000000000001
+RESULT: - dividendToken        : 0 ETH|null:0x0000, enabled: true, unclaimedDividends: 1 = 0.000000000000000001
+RESULT: - dividendToken        : 1 FeeToken:0xb136, enabled: true, unclaimedDividends: 1 = 0.000000000000000001
 RESULT: - dividendsOwing       : 1 User1:0xa11A
-RESULT:                            - FeeToken:0x7091 0 = 0.000000000000000000
 RESULT:                            - ETH|null:0x0000 0 = 0.000000000000000000
+RESULT:                            - FeeToken:0xb136 0 = 0.000000000000000000
 RESULT: - dividendsOwing       : 2 User2:0xa22A
-RESULT:                            - FeeToken:0x7091 0 = 0.000000000000000000
 RESULT:                            - ETH|null:0x0000 0 = 0.000000000000000000
+RESULT:                            - FeeToken:0xb136 0 = 0.000000000000000000
 RESULT: - dividendsOwing       : 3 User3:0xa33a
-RESULT:                            - FeeToken:0x7091 0 = 0.000000000000000000
 RESULT:                            - ETH|null:0x0000 0 = 0.000000000000000000
-RESULT: Token 1 FeeToken:0x7091 @ 0x70914F453A53227964027E9fC25c185dB0Afb3e8
+RESULT:                            - FeeToken:0xb136 0 = 0.000000000000000000
+RESULT: Token 1 FeeToken:0xb136 @ 0xb136A795613Ea0eC80d2Be5b2787aFa23936B0E8
 RESULT: - symbol               : FEE
 RESULT: - name                 : Fee
 RESULT: - decimals             : 18
@@ -398,11 +400,12 @@ RESULT: - owner                : Owner:0xa00A
 RESULT:
 RESULT: mint1.receipt.gasUsed: 78477
 RESULT: depositDividend.receipt.gasUsed: 91483
-RESULT: withdrawDividends1.receipt.gasUsed: 155255
-    ✓ Test OGDToken worksflow (6547ms)
+RESULT: dummyTransfer.receipt.gasUsed: 159898
+RESULT: withdrawDividends1.receipt.gasUsed: 155261
+    ✓ Test OGDToken workflow (8514ms)
 
 
-  1 passing (11s)
+  1 passing (13s)
 ```
 
 <br />
