@@ -1,38 +1,16 @@
 const { MyData, ZERO_ADDRESS, OGToken, OGDToken, OptinoGov, TestToken, printBalances } = require('./helpers/common');
 const BigNumber = require('bignumber.js');
-const util = require('util');
+// const util = require('util');
 // BigNumber.prototype[require('util').inspect.custom] = BigNumber.prototype.valueOf;
-
-// const { TestTokenTests } = require('./TestToken.js');
 
 contract('Test OGDToken', async _accounts => {
 
   const myData = new MyData(_accounts);
 
-  /*
-  it('Test getBlockNumber 1', async () => {
-    await web3.eth.sendTransaction({ value: "100000000000000000", from: this.myData.owner, to: this.myData.user1 });
-
-    // this.TestToken.transfer.sendTransaction(myData.user1, "123", { from: myData.owner });
-    // console.log(this.TestToken);
-    // console.log(JSON.stringify(this.TestToken));
-    // await this.TestToken.transfer(myData.user1, "123");
-
-    await this.myData.printBalances();
-    assert.equal(1, 1, "1 1=1");
-  });
-  it('Test getBlockNumber 2', async () => {
-    await this.myData.printBalances();
-    assert.equal(2, 2, "2 2=2");
-  });
-  */
-
   beforeEach('Test OGDToken beforeEach', async function () {
-    // this.myData = new MyData(_accounts);
     await myData.setBaseBlock();
     console.log("RESULT: --- Setup - Deploy OGToken, Fee{0..2} ---");
     var batch1 = [];
-    // "OGD", "Optino Governance Dividend", "18", "0x5B38Da6a701c568545dCfcB03FcB875f56beddC4", "10000000000000000000000"
     batch1.push(OGDToken.new("OGD", "Optino Governance Dividend", 18, myData.owner, new BigNumber("0").shiftedBy(18), { from: myData.owner, gas: 3000000 }));
     batch1.push(TestToken.new("FEE0", "Fee0", 18, myData.owner, new BigNumber("10000").shiftedBy(18), { from: myData.owner, gas: 2000000 }));
     batch1.push(TestToken.new("FEE1", "Fee1", 18, myData.owner, new BigNumber("10000").shiftedBy(18), { from: myData.owner, gas: 2000000 }));
@@ -42,33 +20,9 @@ contract('Test OGDToken', async _accounts => {
     console.log("RESULT: --- Setup - OGToken.addDividendTokens for ETH and Fee0 ---");
     var batch2 = [];
     var ogdTokens = new BigNumber("10000").shiftedBy(18);
-    var approveFee0Tokens = new BigNumber("10000").shiftedBy(18);
-    // batch2.push(ogdToken.mint(myData.user1, ogdTokens, { from: myData.owner }));
-    // batch2.push(ogdToken.mint(myData.user2, ogdTokens, { from: myData.owner }));
-    // batch2.push(ogdToken.mint(myData.user3, ogdTokens, { from: myData.owner }));
     batch2.push(ogdToken.addDividendToken(ZERO_ADDRESS, { from: myData.owner }));
     batch2.push(ogdToken.addDividendToken(fee0Token.address, { from: myData.owner }));
-    // batch2.push(feeToken.approve(ogdToken.address, approveFee0Tokens, { from: myData.owner }));
-    // const [mint1, mint2, mint3, addDividendToken1, addDividendToken2, ownerApproveFee0Tokens] = await Promise.all(batch2);
     const [addDividendToken0, addDividendToken1] = await Promise.all(batch2);
-
-    // var batch3 = [];
-    // var depositFeeTokens = new BigNumber("100").shiftedBy(18);
-    // var depositFeeETH = new BigNumber("10").shiftedBy(18);
-    // batch3.push(ogdToken.depositDividends(feeToken.address, depositFeeTokens, { from: myData.owner }));
-    // batch3.push(ogdToken.depositDividends(ZERO_ADDRESS, depositFeeETH, { from: myData.owner, value: depositFeeETH }));
-    // const [depositDividend] = await Promise.all(batch3);
-
-    // await myData.printBalances();
-    // var batch3 = [];
-    // batch3.push(ogToken.setPermission(optinoGov.address, 1, true, 0, { from: myData.owner }));
-    // batch3.push(ogdToken.setPermission(optinoGov.address, 1, true, 0, { from: myData.owner }));
-    // const [ogTokenSetPermission, ogdTokenSetPermission] = await Promise.all(batch3);
-    //
-    // var batch4 = [];
-    // batch4.push(ogToken.transferOwnership(optinoGov.address));
-    // batch4.push(ogdToken.transferOwnership(optinoGov.address));
-    // const [ogTokenTransferOwnership, ogdTokenTransferOwnership] = await Promise.all(batch4);
 
     await myData.setOGDTokenData(ogdToken, fee0Token, fee1Token, fee2Token);
   });

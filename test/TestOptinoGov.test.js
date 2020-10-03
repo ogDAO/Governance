@@ -1,5 +1,6 @@
 const { MyData, ZERO_ADDRESS, OGToken, OGDToken, OptinoGov, TestToken, printBalances } = require('./helpers/common');
 const BigNumber = require('bignumber.js');
+// const util = require('util');
 
 // const { TestTokenTests } = require('./TestToken.js');
 
@@ -7,26 +8,7 @@ contract('Test OptinoGov', async _accounts => {
 
   const myData = new MyData(_accounts);
 
-  /*
-  it('Test getBlockNumber 1', async () => {
-    await web3.eth.sendTransaction({ value: "100000000000000000", from: this.myData.owner, to: this.myData.user1 });
-
-    // this.TestToken.transfer.sendTransaction(myData.user1, "123", { from: myData.owner });
-    // console.log(this.TestToken);
-    // console.log(JSON.stringify(this.TestToken));
-    // await this.TestToken.transfer(myData.user1, "123");
-
-    await this.myData.printBalances();
-    assert.equal(1, 1, "1 1=1");
-  });
-  it('Test getBlockNumber 2', async () => {
-    await this.myData.printBalances();
-    assert.equal(2, 2, "2 2=2");
-  });
-  */
-
   beforeEach('Test OptinoGov beforeEach', async function () {
-    // this.myData = new MyData(_accounts);
     await myData.setBaseBlock();
     var batch1 = [];
     batch1.push(OGToken.new("OG", "Optino Governance", 18, myData.owner, new BigNumber("10000").shiftedBy(18), { from: myData.owner, gas: 2000000 }));
