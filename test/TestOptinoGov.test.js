@@ -30,7 +30,7 @@ contract('Test OptinoGov', async _accounts => {
     await myData.setBaseBlock();
     var batch1 = [];
     batch1.push(OGToken.new("OG", "Optino Governance", 18, myData.owner, new BigNumber("10000").shiftedBy(18), { from: myData.owner, gas: 2000000 }));
-    batch1.push(OGDToken.new("OGD", "Optino Governance Dividend", 18, myData.owner, new BigNumber("0").shiftedBy(18), { from: myData.owner, gas: 2000000 }));
+    batch1.push(OGDToken.new("OGD", "Optino Governance Dividend", 18, myData.owner, new BigNumber("0").shiftedBy(18), { from: myData.owner, gas: 3000000 }));
     batch1.push(TestToken.new("FEE", "Fee", 18, myData.owner, new BigNumber("0").shiftedBy(18), { from: myData.owner, gas: 2000000 }));
     const [ogToken, ogdToken, feeToken] = await Promise.all(batch1);
 

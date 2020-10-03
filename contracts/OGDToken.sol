@@ -227,16 +227,30 @@ contract OGDToken is OGDTokenInterface, Permissioned {
             }
         }
     }
-    function depositDividends(address dividendToken, uint dividends) public {
-        // emit LogInfo("depositDividends: dividendToken", 0, 0x0, "", dividendToken);
+    function depositDividends(address token, uint tokens) public payable {
+        DividendTokens.DividendToken memory _dividendToken = dividendTokens.entries[token];
+        require(_dividendToken.enabled, "Dividend token is not enabled");
+        // emit LogInfo("depositDividends: token", 0, 0x0, "", token);
         // emit LogInfo("depositDividends: dividends", dividends, 0x0, "", address(0));
         // emit LogInfo("depositDividends: pointMultiplier", pointMultiplier, 0x0, "", address(0));
         // emit LogInfo("depositDividends: _totalSupply", _totalSupply, 0x0, "", address(0));
-        totalDividendPoints[dividendToken] = totalDividendPoints[dividendToken].add((dividends * pointMultiplier / _totalSupply));
-        unclaimedDividends[dividendToken] = unclaimedDividends[dividendToken].add(dividends);
+        totalDividendPoints[token] = totalDividendPoints[token].add((tokens * pointMultiplier / _totalSupply));
+        unclaimedDividends[token] = unclaimedDividends[token].add(tokens);
         // emit LogInfo("depositDividends: totalDividendPoints[dividendToken]", totalDividendPoints[dividendToken], 0x0, "", address(0));
         // emit LogInfo("depositDividends: unclaimedDividends[dividendToken]", unclaimedDividends[dividendToken], 0x0, "", address(0));
-        ERC20(dividendToken).transferFrom(msg.sender, address(this), dividends);
+
+        if (token == address(0)) {
+            require(msg.value >= tokens, "Insufficient ETH sent");
+            uint refund = msg.value.sub(tokens);
+            if (refund > 0) {
+                require(msg.sender.send(refund), "ETH refund failure");
+            }
+        } else {
+            ERC20(token).transferFrom(msg.sender, address(this), tokens);
+        }
+    }
+    receive () external payable {
+        depositDividends(address(0), msg.value);
     }
     function withdrawDividends() public returns (uint withdrawn) {
         updateAccount(msg.sender);
@@ -270,4 +284,14 @@ contract OGDToken is OGDTokenInterface, Permissioned {
     //     emit Transfer(tokenOwner, address(0), tokens);
     //     return true;
     // }
+
+    function recoverTokens(address token, uint tokens) public onlyOwner {
+        DividendTokens.DividendToken memory dividendToken = dividendTokens.entries[token];
+        require(dividendToken.timestamp == 0, "Cannot recover tokens in dividend token list");
+        if (token == address(0)) {
+            payable(owner).transfer((tokens == 0 ? address(this).balance : tokens));
+        } else {
+            ERC20(token).transfer(owner, tokens == 0 ? ERC20(token).balanceOf(address(this)) : tokens);
+        }
+    }
 }

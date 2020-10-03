@@ -197,7 +197,7 @@ class MyData {
       console.log("RESULT: - owner                : " + this.getShortAccountName(owner));
       if (symbol == "OGD") {
         const dividendTokensLength = parseInt(await tokenContract.dividendTokensLength());
-        console.log("RESULT: - dividendTokensLength  : " + dividendTokensLength);
+        console.log("RESULT: - dividendTokensLength : " + dividendTokensLength);
         for (let j = 0; j < dividendTokensLength; j++) {
           const dividendToken = await tokenContract.getDividendTokenByIndex(j);
           console.log("RESULT: - dividendToken        : " + j + " " + this.getShortAccountName(dividendToken[0]) + ", enabled: " + dividendToken[1]);
