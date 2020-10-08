@@ -22,7 +22,8 @@ contract('Test OGDToken', async _accounts => {
     var ogdTokens = new BigNumber("10000").shiftedBy(18);
     batch2.push(ogdToken.addDividendToken(ZERO_ADDRESS, { from: myData.owner }));
     batch2.push(ogdToken.addDividendToken(fee0Token.address, { from: myData.owner }));
-    const [addDividendToken0, addDividendToken1] = await Promise.all(batch2);
+    batch2.push(ogdToken.setPermission(myData.owner, 1, true, 0, { from: myData.owner }));
+    const [addDividendToken0, addDividendToken1, setPermission1] = await Promise.all(batch2);
 
     await myData.setOGDTokenData(ogdToken, fee0Token, fee1Token, fee2Token);
   });

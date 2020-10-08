@@ -84,45 +84,9 @@ pragma experimental ABIEncoderV2;
 
 
 
-/// @notice Optino Governance. (c) The Optino Project 2020
-// SPDX-License-Identifier: GPLv2
-contract OptinoGov {
+/// @notice Optino Governance config
+contract OptinoGovConfig {
     using SafeMath for uint;
-
-    struct Lock {
-        uint duration;
-        uint end;
-        uint locked;
-        uint votes;
-        uint staked;
-        mapping(bytes32 => uint) stakes;
-    }
-    // Token { dataType 1, address tokenAddress }
-    // Feed { dataType 2, address feedAddress, uint feedType, uint feedDecimals, string name }
-    // Conventions { dataType 3, address [token0, token1], address [feed0, feed1], uint[6] [type0, type1, decimals0, decimals1, inverse0, inverse1], string [feed0Name, feedName2, Market, Convention] }
-    // General { dataType 4, address[4] addresses, address [feed0, feed1], uint[6] uints, string[4] strings }
-    struct StakeInfo {
-        uint dataType;
-        address[4] addresses;
-        uint[6] uints;
-        string string0; // TODO: Check issues using string[4] strings
-        string string1;
-        string string2;
-        string string3;
-    }
-    struct Proposal {
-        uint start;
-        address proposer;
-        string description;
-        address[] targets;
-        uint[] values;
-        string[] signatures;
-        bytes[] data;
-        uint forVotes;
-        uint againstVotes;
-        mapping(address => bool) voted;
-        bool executed;
-    }
 
     OGTokenInterface public ogToken;
     OGDTokenInterface public ogdToken;
@@ -136,11 +100,6 @@ contract OptinoGov {
     uint public executeDelay = 10 seconds; // 2 days;
     uint public rewardPool;
     uint public totalVotes;
-    mapping(address => Lock) public locks; // Locked tokens per address
-    mapping(bytes32 => StakeInfo) public stakeInfoData;
-    bytes32[] public stakeInfoIndex;
-    uint public proposalCount;
-    mapping(uint => Proposal) public proposals;
 
     event MaxLockTermUpdated(uint maxLockTerm);
     event RewardsPerSecondUpdated(uint rewardsPerSecond);
@@ -150,17 +109,6 @@ contract OptinoGov {
     event QuorumDecayPerSecondUpdated(uint quorumDecayPerSecond);
     event VotingDurationUpdated(uint votingDuration);
     event ExecuteDelayUpdated(uint executeDelay);
-
-    event Locked(address indexed user, uint tokens, uint balance, uint duration, uint end, uint votes, uint rewardPool, uint totalVotes);
-    event StakeInfoAdded(bytes32 stakingKey, uint dataType, address[4] addresses, uint[6] uints, string string0, string string1, string string2, string string3);
-    event Staked(address tokenOwner, uint tokens, uint balance, bytes32 stakingKey);
-    event Unstaked(address tokenOwner, uint tokens, uint balance, bytes32 stakingKey);
-    event StakeBurnt(address tokenOwner, uint tokens, uint balance, bytes32 stakingKey);
-    event Collected(address indexed user, uint elapsed, uint reward, uint rewardPool, uint end, uint duration);
-    event Unlocked(address indexed user, uint amount, uint balance, uint duration, uint end, uint votes, uint rewardPool, uint totalVotes);
-    event Proposed(address indexed proposer, uint oip, string description, address[] targets, uint[] value, bytes[] data, uint start);
-    event Voted(address indexed user, uint oip, bool voteFor, uint forVotes, uint againstVotes);
-    event Executed(address indexed user, uint oip);
 
     modifier onlySelf {
         require(msg.sender == address(this), "Not self");
@@ -202,6 +150,67 @@ contract OptinoGov {
     function setExecuteDelay(uint _executeDelay) external onlySelf {
         executeDelay = _executeDelay;
         emit ExecuteDelayUpdated(executeDelay);
+    }
+}
+
+/// @notice Optino Governance. (c) The Optino Project 2020
+// SPDX-License-Identifier: GPLv2
+contract OptinoGov is OptinoGovConfig {
+    using SafeMath for uint;
+
+    struct Lock {
+        uint duration;
+        uint end;
+        uint locked;
+        uint votes;
+        uint staked;
+        mapping(bytes32 => uint) stakes;
+    }
+    // Token { dataType 1, address tokenAddress }
+    // Feed { dataType 2, address feedAddress, uint feedType, uint feedDecimals, string name }
+    // Conventions { dataType 3, address [token0, token1], address [feed0, feed1], uint[6] [type0, type1, decimals0, decimals1, inverse0, inverse1], string [feed0Name, feedName2, Market, Convention] }
+    // General { dataType 4, address[4] addresses, address [feed0, feed1], uint[6] uints, string[4] strings }
+    struct StakeInfo {
+        uint dataType;
+        address[4] addresses;
+        uint[6] uints;
+        string string0; // TODO: Check issues using string[4] strings
+        string string1;
+        string string2;
+        string string3;
+    }
+    struct Proposal {
+        uint start;
+        address proposer;
+        string description;
+        address[] targets;
+        uint[] values;
+        string[] signatures;
+        bytes[] data;
+        uint forVotes;
+        uint againstVotes;
+        mapping(address => bool) voted;
+        bool executed;
+    }
+
+    mapping(address => Lock) public locks; // Locked tokens per address
+    mapping(bytes32 => StakeInfo) public stakeInfoData;
+    bytes32[] public stakeInfoIndex;
+    uint public proposalCount;
+    mapping(uint => Proposal) public proposals;
+
+    event Locked(address indexed user, uint tokens, uint balance, uint duration, uint end, uint votes, uint rewardPool, uint totalVotes);
+    event StakeInfoAdded(bytes32 stakingKey, uint dataType, address[4] addresses, uint[6] uints, string string0, string string1, string string2, string string3);
+    event Staked(address tokenOwner, uint tokens, uint balance, bytes32 stakingKey);
+    event Unstaked(address tokenOwner, uint tokens, uint balance, bytes32 stakingKey);
+    event StakeBurnt(address tokenOwner, uint tokens, uint balance, bytes32 stakingKey);
+    event Collected(address indexed user, uint elapsed, uint reward, uint rewardPool, uint end, uint duration);
+    event Unlocked(address indexed user, uint amount, uint balance, uint duration, uint end, uint votes, uint rewardPool, uint totalVotes);
+    event Proposed(address indexed proposer, uint oip, string description, address[] targets, uint[] value, bytes[] data, uint start);
+    event Voted(address indexed user, uint oip, bool voteFor, uint forVotes, uint againstVotes);
+    event Executed(address indexed user, uint oip);
+
+    constructor(OGTokenInterface _ogToken, OGDTokenInterface _ogdToken) OptinoGovConfig(_ogToken, _ogdToken) {
     }
 
     function addStakeForToken(uint tokens, address tokenAddress, string memory name) external {
