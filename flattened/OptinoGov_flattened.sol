@@ -90,7 +90,7 @@ contract OptinoGovConfig {
 
     OGTokenInterface public ogToken;
     OGDTokenInterface public ogdToken;
-    uint public maxLockTerm = 1000 seconds; // Testing 365 days;
+    uint public maxCommittmentTerm = 1000 seconds; // Testing 365 days;
     uint public rewardsPerSecond = 150000000000000000;
     uint public proposalCost = 100000000000000000000; // 100 tokens assuming 18 decimals
     uint public proposalThreshold = 1 * 10 ** 15; // 0.1%, 18 decimals
@@ -101,7 +101,7 @@ contract OptinoGovConfig {
     uint public rewardPool;
     uint public totalVotes;
 
-    event MaxLockTermUpdated(uint maxLockTerm);
+    event MaxCommittmentTermUpdated(uint maxCommittmentTerm);
     event RewardsPerSecondUpdated(uint rewardsPerSecond);
     event ProposalCostUpdated(uint proposalCost);
     event ProposalThresholdUpdated(uint proposalThreshold);
@@ -119,9 +119,9 @@ contract OptinoGovConfig {
         ogToken = _ogToken;
         ogdToken = _ogdToken;
     }
-    function setMaxLockTerm(uint _maxLockTerm) external onlySelf {
-        maxLockTerm = _maxLockTerm;
-        emit MaxLockTermUpdated(maxLockTerm);
+    function setMaxLockTerm(uint _maxCommittmentTerm) external onlySelf {
+        maxCommittmentTerm = _maxCommittmentTerm;
+        emit MaxCommittmentTermUpdated(maxCommittmentTerm);
     }
     function setRewardsPerSecond(uint _rewardsPerSecond) external onlySelf {
         rewardsPerSecond = _rewardsPerSecond;
@@ -158,10 +158,10 @@ contract OptinoGovConfig {
 contract OptinoGov is OptinoGovConfig {
     using SafeMath for uint;
 
-    struct Lock {
+    struct Commitment {
         uint duration;
         uint end;
-        uint locked;
+        uint committed;
         uint votes;
         uint staked;
         mapping(bytes32 => uint) stakes;
@@ -193,19 +193,19 @@ contract OptinoGov is OptinoGovConfig {
         bool executed;
     }
 
-    mapping(address => Lock) public locks; // Locked tokens per address
+    mapping(address => Commitment) public commitments; // Committed tokens per address
     mapping(bytes32 => StakeInfo) public stakeInfoData;
     bytes32[] public stakeInfoIndex;
     uint public proposalCount;
     mapping(uint => Proposal) public proposals;
 
-    event Locked(address indexed user, uint tokens, uint balance, uint duration, uint end, uint votes, uint rewardPool, uint totalVotes);
+    event Committed(address indexed user, uint tokens, uint balance, uint duration, uint end, uint votes, uint rewardPool, uint totalVotes);
     event StakeInfoAdded(bytes32 stakingKey, uint dataType, address[4] addresses, uint[6] uints, string string0, string string1, string string2, string string3);
     event Staked(address tokenOwner, uint tokens, uint balance, bytes32 stakingKey);
     event Unstaked(address tokenOwner, uint tokens, uint balance, bytes32 stakingKey);
     event StakeBurnt(address tokenOwner, uint tokens, uint balance, bytes32 stakingKey);
     event Collected(address indexed user, uint elapsed, uint reward, uint rewardPool, uint end, uint duration);
-    event Unlocked(address indexed user, uint amount, uint balance, uint duration, uint end, uint votes, uint rewardPool, uint totalVotes);
+    event Uncommitted(address indexed user, uint amount, uint balance, uint duration, uint end, uint votes, uint rewardPool, uint totalVotes);
     event Proposed(address indexed proposer, uint oip, string description, address[] targets, uint[] value, bytes[] data, uint start);
     event Voted(address indexed user, uint oip, bool voteFor, uint forVotes, uint againstVotes);
     event Executed(address indexed user, uint oip);
@@ -270,20 +270,20 @@ contract OptinoGov is OptinoGovConfig {
         _subStake(tokens, stakingKey);
     }
     function _addStake(uint tokens, bytes32 stakingKey) internal {
-        Lock storage lock = locks[msg.sender];
-        require(lock.locked > 0, "OptinoGov: Lock tokens before staking");
-        require(lock.locked >= lock.staked + tokens, "OptinoGov: Insufficient tokens to stake");
-        lock.staked = lock.staked.add(tokens);
-        lock.stakes[stakingKey] = lock.stakes[stakingKey].add(tokens);
-        emit Staked(msg.sender, tokens, lock.stakes[stakingKey], stakingKey);
+        Commitment storage committment = commitments[msg.sender];
+        require(committment.committed > 0, "OptinoGov: Lock tokens before staking");
+        require(committment.committed >= committment.staked + tokens, "OptinoGov: Insufficient tokens to stake");
+        committment.staked = committment.staked.add(tokens);
+        committment.stakes[stakingKey] = committment.stakes[stakingKey].add(tokens);
+        emit Staked(msg.sender, tokens, committment.stakes[stakingKey], stakingKey);
     }
     function _subStake(uint tokens, bytes32 stakingKey) internal {
-        Lock storage lock = locks[msg.sender];
-        require(lock.locked > 0, "OptinoGov: Lock and stake tokens before unstaking");
-        require(lock.stakes[stakingKey] >= tokens, "OptinoGov: Insufficient staked tokens");
-        lock.staked = lock.staked.sub(tokens);
-        lock.stakes[stakingKey] = lock.stakes[stakingKey].sub(tokens);
-        emit Unstaked(msg.sender, tokens, lock.stakes[stakingKey], stakingKey);
+        Commitment storage committment = commitments[msg.sender];
+        require(committment.committed > 0, "OptinoGov: Lock and stake tokens before unstaking");
+        require(committment.stakes[stakingKey] >= tokens, "OptinoGov: Insufficient staked tokens");
+        committment.staked = committment.staked.sub(tokens);
+        committment.stakes[stakingKey] = committment.stakes[stakingKey].sub(tokens);
+        emit Unstaked(msg.sender, tokens, committment.stakes[stakingKey], stakingKey);
     }
     function stakeInfoLength() public view returns (uint _stakeInfoLength) {
         _stakeInfoLength = stakeInfoIndex.length;
@@ -297,61 +297,61 @@ contract OptinoGov is OptinoGovConfig {
         string3 = stakeInfo.string3;
     }
     function getStaked(address tokenOwner, bytes32 stakingKey) public view returns (uint _staked) {
-        Lock storage lock = locks[tokenOwner];
-        _staked = lock.stakes[stakingKey];
+        Commitment storage committment = commitments[tokenOwner];
+        _staked = committment.stakes[stakingKey];
     }
 
     function burnStake(address[] calldata tokenOwners, bytes32 stakingKey, uint percent) external onlySelf {
         for (uint i = 0; i < tokenOwners.length; i++) {
             address tokenOwner = tokenOwners[i];
-            Lock storage lock = locks[tokenOwner];
-            uint staked = lock.stakes[stakingKey];
+            Commitment storage committment = commitments[tokenOwner];
+            uint staked = committment.stakes[stakingKey];
             if (staked > 0) {
                 uint tokensToBurn = staked * percent / uint(100);
-                lock.staked = lock.staked.sub(tokensToBurn);
-                lock.stakes[stakingKey] = lock.stakes[stakingKey].sub(tokensToBurn);
-                lock.locked = lock.locked.sub(tokensToBurn);
+                committment.staked = committment.staked.sub(tokensToBurn);
+                committment.stakes[stakingKey] = committment.stakes[stakingKey].sub(tokensToBurn);
+                committment.committed = committment.committed.sub(tokensToBurn);
                 require(ogToken.burn(tokensToBurn), "OptinoGov: burn failed");
-                emit StakeBurnt(tokenOwner, tokensToBurn, lock.stakes[stakingKey], stakingKey);
+                emit StakeBurnt(tokenOwner, tokensToBurn, committment.stakes[stakingKey], stakingKey);
             }
         }
     }
 
-    // Lock tokens for a duration. If you already locked some tokens, you cannot set a duration that ends before the current one.
-    function lock(uint tokens, uint duration) public {
-        require(duration <= maxLockTerm, "OptinoGov: Cannot exceed maxLockTerm");
-        Lock storage user = locks[msg.sender];
+    // Lock tokens for a duration. If you already committed some tokens, you cannot set a duration that ends before the current one.
+    function commit(uint tokens, uint duration) public {
+        require(duration <= maxCommittmentTerm, "OptinoGov: Cannot exceed maxCommittmentTerm");
+        Commitment storage user = commitments[msg.sender];
 
         // TODO: Take into account any staked tokens
-        if (user.locked > 0) {
+        if (user.committed > 0) {
             require(block.timestamp + duration >= user.end, "OptinoGov: duration cannot end before existing stake");
 
             // Pay rewards until now and reset
             uint elapsed = block.timestamp.sub(user.end.sub(user.duration));
             uint reward = elapsed.mul(rewardsPerSecond).mul(user.votes).div(totalVotes);
             rewardPool = rewardPool.sub(reward);
-            user.locked = user.locked.add(reward);
+            user.committed = user.committed.add(reward);
             totalVotes = totalVotes.sub(user.votes);
             user.votes = 0;
         }
 
         // Create stake
-        user.locked = user.locked.add(tokens);
+        user.committed = user.committed.add(tokens);
         user.duration = duration;
         user.end = block.timestamp.add(duration);
-        user.votes = user.locked.mul(duration).div(maxLockTerm);
+        user.votes = user.committed.mul(duration).div(maxCommittmentTerm);
         totalVotes = totalVotes.add(user.votes);
 
         require(ogToken.transferFrom(msg.sender, address(this), tokens), "OptinoGov: OGToken.transferFrom failed");
         require(ogdToken.mint(msg.sender, tokens), "OptinoGov: OGDToken.mint failed");
 
-        emit Locked(msg.sender, tokens, user.locked, user.duration, user.end, user.votes, rewardPool, totalVotes);
+        emit Committed(msg.sender, tokens, user.committed, user.duration, user.end, user.votes, rewardPool, totalVotes);
     }
 
     // TODO
     function collectLockReward() public {
-        Lock storage user = locks[msg.sender];
-        require(user.locked > 0);
+        Commitment storage user = commitments[msg.sender];
+        require(user.committed > 0);
 
         // Pay rewards until now
         uint elapsed = block.timestamp.sub(user.end.sub(user.duration));
@@ -371,30 +371,30 @@ contract OptinoGov is OptinoGovConfig {
 
     // Unstake all and pay all rewards
     // TODO
-    function unlock() public {
-        Lock storage user = locks[msg.sender];
-        uint tokens = user.locked;
-        require(user.locked > 0);
-        require(block.timestamp > user.end, "OptinoGov: Staking period not ended yet");
+    function uncommit() public {
+        Commitment storage user = commitments[msg.sender];
+        uint tokens = user.committed;
+        require(user.committed > 0);
+        require(block.timestamp > user.end, "OptinoGov: Commitment period not ended yet");
 
         // Reward
         uint elapsed = block.timestamp.sub(user.end.sub(user.duration));
         uint reward = elapsed.mul(rewardsPerSecond).mul(user.votes).div(totalVotes);
         rewardPool = rewardPool.sub(reward);
-        user.locked = user.locked.add(reward);
+        user.committed = user.committed.add(reward);
         totalVotes = totalVotes.sub(user.votes);
         user.votes = 0;
 
-        uint payout = user.locked;
-        user.locked = 0;
+        uint payout = user.committed;
+        user.committed = 0;
 
         require(ogToken.transfer(msg.sender, payout), "OptinoGov: transfer failed");
 
-        emit Unlocked(msg.sender, payout, tokens, user.duration, user.end, user.votes, rewardPool, totalVotes);
+        emit Uncommitted(msg.sender, payout, tokens, user.duration, user.end, user.votes, rewardPool, totalVotes);
     }
 
     function propose(string memory description, address[] memory targets, uint[] memory values, bytes[] memory data) public returns(uint) {
-        // require(locks[msg.sender].votes >= totalVotes.mul(proposalThreshold).div(10 ** 18), "OptinoGov: Not enough votes to propose");
+        // require(commitments[msg.sender].votes >= totalVotes.mul(proposalThreshold).div(10 ** 18), "OptinoGov: Not enough votes to propose");
 
         proposalCount++;
         Proposal storage proposal = proposals[proposalCount];
@@ -432,10 +432,10 @@ contract OptinoGov is OptinoGovConfig {
         require(start != 0 && block.timestamp < start.add(votingDuration), "OptinoGov: Voting closed");
         require(!proposals[oip].voted[msg.sender], "OptinoGov: Already voted");
         if (voteFor) {
-            proposals[oip].forVotes = proposals[oip].forVotes.add(locks[msg.sender].votes);
+            proposals[oip].forVotes = proposals[oip].forVotes.add(commitments[msg.sender].votes);
         }
         else {
-            proposals[oip].againstVotes = proposals[oip].forVotes.add(locks[msg.sender].votes);
+            proposals[oip].againstVotes = proposals[oip].forVotes.add(commitments[msg.sender].votes);
         }
         proposals[oip].voted[msg.sender] = true;
 
