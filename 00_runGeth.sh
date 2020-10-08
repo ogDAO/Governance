@@ -1,4 +1,9 @@
 #!/bin/sh
+# ----------------------------------------------------------------------------------------------
+# Run `geth --dev` with additional parameters
+#
+# Enjoy. (c) The Optino Project. GPLv2
+# ----------------------------------------------------------------------------------------------
 
 rm -f ./testchain/geth/chaindata/ancient/*
 rmdir ./testchain/geth/chaindata/ancient

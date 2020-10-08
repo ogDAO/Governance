@@ -1,6 +1,6 @@
 #!/bin/bash
 # ----------------------------------------------------------------------------------------------
-# Testing the smart contract
+# Unlock a few accounts and transfer some funds from eth.accounts[0] 
 #
 # Enjoy. (c) The Optino Project. GPLv2
 # ----------------------------------------------------------------------------------------------
