@@ -50,8 +50,8 @@ contract('Test OptinoGov', async _accounts => {
     await myData.printBalances();
     // Have to manually run web3.personal.unlockAccount(eth.accounts[x], "") in geth console await myData.unlockAccounts("");
 
-    console.log("RESULT: --- Test 1 - User{1..3} approve 1000 OGTokens to OptinoGov. Owner approves 1000 FEE to OGDToken ---");
-    var approveTokens = new BigNumber("1000").shiftedBy(18);
+    console.log("RESULT: --- Test 1 - User{1..3} approve 2,000 OGTokens to OptinoGov. Owner approves 1,000 FEE to OGDToken ---");
+    var approveTokens = new BigNumber("2000").shiftedBy(18);
     var batch1 = [];
     batch1.push(myData.ogToken.approve(myData.optinoGov.address, approveTokens, { from: myData.user1 }));
     batch1.push(myData.ogToken.approve(myData.optinoGov.address, approveTokens, { from: myData.user2 }));
@@ -68,49 +68,53 @@ contract('Test OptinoGov', async _accounts => {
     await Promise.all(batch2);
     await myData.printBalances();
 
-    console.log("RESULT: --- Test 3 - User1 collecting rewards, user2 collecting and committing rewards leaving duration unchanged, user3 collecting and committing rewards and extending duration ---");
+    console.log("RESULT: --- Test 3 - User{2} commit again for {55} seconds duration ---");
     var batch3 = [];
-    batch3.push(myData.optinoGov.collectReward(false, 0, { from: myData.user1 }));
-    batch3.push(myData.optinoGov.collectReward(true, 0, { from: myData.user2 }));
-    batch3.push(myData.optinoGov.collectReward(true, 5000, { from: myData.user3 }));
+    batch3.push(myData.optinoGov.commit(lockTokens, 55, { from: myData.user2 }));
     await Promise.all(batch3);
-    const [collectRewardFor1, collectRewardFor2, collectRewardFor3] = await Promise.all(batch3);
     await myData.printBalances();
 
-    console.log("RESULT: --- Test 4 - Owner collecting rewards on behalf of user1 for a % fee ---");
-    myData.pause("Waiting", 5);
+    console.log("RESULT: --- Test 4 - User1 collecting rewards, user2 collecting and committing rewards leaving duration unchanged, user3 collecting and committing rewards and extending duration ---");
     var batch4 = [];
-    batch4.push(myData.optinoGov.collectRewardFor(myData.user1, { from: myData.owner }));
-    const [collectRewardFor4] = await Promise.all(batch4);
-    await myData.printBalances();
-
-    console.log("RESULT: --- Test 5 - Owner deposits dividends of 10 ETH and 100 FEE ---");
-    var batch5 = [];
-    var depositFee1Tokens = new BigNumber("10").shiftedBy(18);
-    var depositFee2Tokens = new BigNumber("100").shiftedBy(18);
-    batch5.push(myData.ogdToken.depositDividend(ZERO_ADDRESS, depositFee1Tokens, { value: depositFee1Tokens, from: myData.owner }));
-    batch5.push(myData.ogdToken.depositDividend(myData.fee0Token.address, depositFee2Tokens, { from: myData.owner }));
-    const [depositDividendFee1, depositDividendFee2] = await Promise.all(batch5);
-    await myData.printBalances();
-
-    console.log("RESULT: --- User{1..3} withdraw ETH and FEE dividends ---");
-    var batch6 = [];
-    batch6.push(myData.ogdToken.withdrawDividends({ from: myData.user1 }));
-    batch6.push(myData.ogdToken.withdrawDividends({ from: myData.user2 }));
-    batch6.push(myData.ogdToken.withdrawDividends({ from: myData.user3 }));
-    const [withdrawDividends1, withdrawDividends2, withdrawDividends3] = await Promise.all(batch6);
-
-    await myData.printBalances();
-
+    batch4.push(myData.optinoGov.collectReward(false, 0, { from: myData.user1 }));
+    batch4.push(myData.optinoGov.collectReward(true, 0, { from: myData.user2 }));
+    batch4.push(myData.optinoGov.collectReward(true, 5000, { from: myData.user3 }));
+    await Promise.all(batch4);
+    const [collectRewardFor1, collectRewardFor2, collectRewardFor3] = await Promise.all(batch4);
     console.log("RESULT: collectRewardFor1.receipt.gasUsed: " + collectRewardFor1.receipt.gasUsed);
     console.log("RESULT: collectRewardFor2.receipt.gasUsed: " + collectRewardFor2.receipt.gasUsed);
     console.log("RESULT: collectRewardFor3.receipt.gasUsed: " + collectRewardFor3.receipt.gasUsed);
+    await myData.printBalances();
+
+    console.log("RESULT: --- Test 5 - Owner collecting rewards on behalf of user1 for a % fee ---");
+    myData.pause("Waiting", 5);
+    var batch5 = [];
+    batch5.push(myData.optinoGov.collectRewardFor(myData.user1, { from: myData.owner }));
+    const [collectRewardFor4] = await Promise.all(batch5);
     console.log("RESULT: collectRewardFor4.receipt.gasUsed: " + collectRewardFor4.receipt.gasUsed);
+    await myData.printBalances();
+
+    console.log("RESULT: --- Test 6 - Owner deposits dividends of 10 ETH and 100 FEE ---");
+    var batch6 = [];
+    var depositFee1Tokens = new BigNumber("10").shiftedBy(18);
+    var depositFee2Tokens = new BigNumber("100").shiftedBy(18);
+    batch6.push(myData.ogdToken.depositDividend(ZERO_ADDRESS, depositFee1Tokens, { value: depositFee1Tokens, from: myData.owner }));
+    batch6.push(myData.ogdToken.depositDividend(myData.fee0Token.address, depositFee2Tokens, { from: myData.owner }));
+    const [depositDividendFee1, depositDividendFee2] = await Promise.all(batch6);
     console.log("RESULT: depositDividendFee1.receipt.gasUsed: " + depositDividendFee1.receipt.gasUsed);
     console.log("RESULT: depositDividendFee2.receipt.gasUsed: " + depositDividendFee2.receipt.gasUsed);
+    await myData.printBalances();
+
+    console.log("RESULT: --- Test 7 - User{1..3} withdraw ETH and FEE dividends ---");
+    var batch7 = [];
+    batch7.push(myData.ogdToken.withdrawDividends({ from: myData.user1 }));
+    batch7.push(myData.ogdToken.withdrawDividends({ from: myData.user2 }));
+    batch7.push(myData.ogdToken.withdrawDividends({ from: myData.user3 }));
+    const [withdrawDividends1, withdrawDividends2, withdrawDividends3] = await Promise.all(batch7);
     console.log("RESULT: withdrawDividends1.receipt.gasUsed: " + withdrawDividends1.receipt.gasUsed);
     console.log("RESULT: withdrawDividends2.receipt.gasUsed: " + withdrawDividends2.receipt.gasUsed);
     console.log("RESULT: withdrawDividends3.receipt.gasUsed: " + withdrawDividends3.receipt.gasUsed);
+    await myData.printBalances();
 
     assert.equal(2, 2, "2 2=2");
   });

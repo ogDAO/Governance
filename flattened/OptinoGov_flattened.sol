@@ -331,23 +331,30 @@ contract OptinoGov is OptinoGovConfig {
         }
     }
 
-    // Commit tokens for some duration. If you already committed some tokens, you cannot set a duration that ends before the current one
+    // Commit OGTokens for some duration. If you already committed some tokens, you cannot set a duration that ends before the current one
     function commit(uint tokens, uint duration) public {
         require(duration <= maxDuration, "Cannot exceed maxDuration");
         Commitment storage user = commitments[msg.sender];
 
+        uint reward = 0;
         // TODO: Take into account any staked tokens
         if (user.tokens > 0) {
             require(block.timestamp + duration >= user.end, "duration cannot end before existing commitment period");
 
             // Pay rewards until now and reset
             uint elapsed = block.timestamp.sub(uint(user.end).sub(user.duration));
-            uint reward = elapsed.mul(rewardsPerSecond).mul(user.votes).div(totalVotes);
+            reward = elapsed.mul(rewardsPerSecond).mul(user.votes).div(totalVotes);
+            if (reward > rewardPool) {
+                reward = rewardPool;
+            }
             rewardPool = rewardPool.sub(reward);
             user.tokens = user.tokens.add(reward);
             totalVotes = totalVotes.sub(user.votes);
-            user.votes = 0;
+            // user.votes = 0;
+            emit Collected(msg.sender, elapsed, reward, 0, rewardPool, user.end, user.duration);
         }
+
+        require(ogToken.transferFrom(msg.sender, address(this), tokens), "OG transferFrom failed");
 
         // Create stake
         user.tokens = user.tokens.add(tokens);
@@ -356,8 +363,8 @@ contract OptinoGov is OptinoGovConfig {
         user.votes = user.tokens.mul(duration).div(SECONDS_PER_YEAR);
         totalVotes = totalVotes.add(user.votes);
 
-        require(ogToken.transferFrom(msg.sender, address(this), tokens), "OG transferFrom failed");
-        require(ogdToken.mint(msg.sender, tokens), "OGD mint failed");
+        require(ogToken.mint(address(this), reward), "OGD mint failed");
+        require(ogdToken.mint(msg.sender, tokens.add(reward)), "OGD mint failed");
 
         emit Committed(msg.sender, tokens, user.tokens, user.duration, user.end, user.votes, rewardPool, totalVotes);
     }
