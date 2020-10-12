@@ -111,7 +111,7 @@ truffle compile
 truffle test test/TestOptinoGov.test.js
 ```
 
-Sample output:
+Sample output generated from the script [test/TestOptinoGov.test.js](test/TestOptinoGov.test.js):
 
 ```
 Iota:Governance bok$ truffle test test/TestOptinoGov.test.js
@@ -865,7 +865,7 @@ DividendWithdrawn(0: 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0, 1: 0x0000000000
 truffle test test/TestOGDToken.test.js
 ```
 
-Sample output:
+Sample output generated from the script [test/TestOGDToken.test.js](test/TestOGDToken.test.js):
 
 * Mint 10,000 OGD tokens for User{1..3}
 * Owner approve 100 FEE0 for OGToken to spend
