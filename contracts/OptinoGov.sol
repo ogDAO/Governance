@@ -144,7 +144,7 @@ contract OptinoGov is OptinoGovConfig {
     event Staked(address tokenOwner, uint tokens, uint balance, bytes32 stakingKey);
     event Unstaked(address tokenOwner, uint tokens, uint balance, bytes32 stakingKey);
     event StakeBurnt(address tokenOwner, uint tokens, uint balance, bytes32 stakingKey);
-    event Collected(address indexed user, uint elapsed, uint reward, uint rewardPool, uint end, uint duration);
+    event Collected(address indexed user, uint elapsed, uint reward, uint callerReward, uint rewardPool, uint end, uint duration);
     event Uncommitted(address indexed user, uint amount, uint balance, uint duration, uint end, uint votes, uint rewardPool, uint totalVotes);
     event Proposed(address indexed proposer, uint oip, string description, address[] targets, uint[] value, bytes[] data, uint start);
     event Voted(address indexed user, uint oip, bool voteFor, uint forVotes, uint againstVotes);
@@ -301,11 +301,11 @@ contract OptinoGov is OptinoGovConfig {
         // Pay rewards for period = now - beginning = now - (end - duration)
         uint elapsed = block.timestamp.sub(uint(user.end).sub(user.duration));
         uint reward = elapsed.mul(rewardsPerSecond).mul(user.votes).div(totalVotes);
+        uint callerReward = 0;
         if (reward > rewardPool) {
             reward = rewardPool;
         }
         if (reward > 0) {
-            uint callerReward = 0;
             rewardPool = rewardPool.sub(reward);
             if (msg.sender != tokenOwner) {
                 require(user.end + collectOnBehalfDelay < block.timestamp, "Commitment not ended");
@@ -341,7 +341,7 @@ contract OptinoGov is OptinoGovConfig {
                 require(ogToken.mint(msg.sender, callerReward), "callerReward OG mint failed");
             }
         }
-        emit Collected(msg.sender, elapsed, reward, rewardPool, user.end, user.duration);
+        emit Collected(msg.sender, elapsed, reward, callerReward, rewardPool, user.end, user.duration);
     }
 
     // Unstake all and pay all rewards
