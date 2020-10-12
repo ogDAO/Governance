@@ -7,7 +7,6 @@ const OGDToken = artifacts.require("OGDToken");
 const OptinoGov = artifacts.require("OptinoGov");
 // var POAPOGTokenStation = artifacts.require("POAPOGTokenStation");
 const TestToken = artifacts.require("TestToken");
-const truffleAssert = require('truffle-assertions');
 
 class MyData {
 
