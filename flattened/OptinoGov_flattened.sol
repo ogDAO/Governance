@@ -333,13 +333,13 @@ contract OptinoGov is OptinoGovConfig {
 
     // Commit OGTokens for some duration. If you already committed some tokens, you cannot set a duration that ends before the current one
     function commit(uint tokens, uint duration) public {
-        require(duration <= maxDuration, "Cannot exceed maxDuration");
+        require(duration <= maxDuration, "duration too long");
         Commitment storage user = commitments[msg.sender];
 
         uint reward = 0;
         // TODO: Take into account any staked tokens
         if (user.tokens > 0) {
-            require(block.timestamp + duration >= user.end, "duration cannot end before existing commitment period");
+            require(block.timestamp + duration >= user.end, "Cannot shorten duration");
 
             // Pay rewards until now and reset
             uint elapsed = block.timestamp.sub(uint(user.end).sub(user.duration));
@@ -363,7 +363,7 @@ contract OptinoGov is OptinoGovConfig {
         user.votes = user.tokens.mul(duration).div(SECONDS_PER_YEAR);
         totalVotes = totalVotes.add(user.votes);
 
-        require(ogToken.mint(address(this), reward), "OGD mint failed");
+        require(ogToken.mint(address(this), reward), "OG mint failed");
         require(ogdToken.mint(msg.sender, tokens.add(reward)), "OGD mint failed");
 
         emit Committed(msg.sender, tokens, user.tokens, user.duration, user.end, user.votes, rewardPool, totalVotes);
@@ -389,7 +389,7 @@ contract OptinoGov is OptinoGovConfig {
         if (reward > 0) {
             rewardPool = rewardPool.sub(reward);
             if (msg.sender != tokenOwner) {
-                require(user.end + collectOnBehalfDelay < block.timestamp, "Commitment not ended");
+                require(user.end + collectOnBehalfDelay < block.timestamp, "Commitment with delay not ended");
                 callerReward = reward.mul(collectOnBehalfFee).div(10 ** 18);
                 reward = reward.sub(callerReward);
             }
@@ -399,7 +399,7 @@ contract OptinoGov is OptinoGovConfig {
                     user.end = uint128(block.timestamp);
                 }
                 if (duration > 0) {
-                    require(duration <= maxDuration, "Cannot exceed maxDuration");
+                    require(duration <= maxDuration, "duration too long");
                     user.duration = uint128(duration);
                     user.end = uint128(block.timestamp.add(duration));
                     totalVotes = totalVotes.sub(user.votes);
@@ -409,14 +409,14 @@ contract OptinoGov is OptinoGovConfig {
                     user.duration = uint128(uint(user.end).sub(block.timestamp));
                     // NOTE - Voting left as proportion of the original duration
                 }
-                require(ogToken.mint(address(this), reward), "reward OG mint failed");
-                require(ogdToken.mint(msg.sender, reward), "reward OGD mint failed");
+                require(ogToken.mint(address(this), reward), "OG mint failed");
+                require(ogdToken.mint(msg.sender, reward), "OGD mint failed");
             } else {
                 user.duration = uint(user.end) <= block.timestamp ? 0 : uint128(uint(user.end).sub(block.timestamp));
                 totalVotes = totalVotes.sub(user.votes);
                 user.votes = user.tokens.mul(user.duration).div(SECONDS_PER_YEAR);
                 totalVotes = totalVotes.add(user.votes);
-                require(ogToken.mint(tokenOwner, reward), "reward OG mint failed");
+                require(ogToken.mint(tokenOwner, reward), "OG mint failed");
             }
             if (callerReward > 0) {
                 require(ogToken.mint(msg.sender, callerReward), "callerReward OG mint failed");
@@ -431,7 +431,7 @@ contract OptinoGov is OptinoGovConfig {
         Commitment storage user = commitments[msg.sender];
         uint tokens = user.tokens;
         require(user.tokens > 0);
-        require(block.timestamp > user.end, "OptinoGov: Commitment period not ended yet");
+        require(block.timestamp > user.end, "Commitment not ended");
 
         // Reward
         uint elapsed = block.timestamp.sub(uint(user.end).sub(user.duration));
@@ -485,8 +485,8 @@ contract OptinoGov is OptinoGovConfig {
     // TODO
     function vote(uint oip, bool voteFor) public {
         uint start = proposals[oip].start;
-        require(start != 0 && block.timestamp < start.add(votingDuration), "OptinoGov: Voting closed");
-        require(!proposals[oip].voted[msg.sender], "OptinoGov: Already voted");
+        require(start != 0 && block.timestamp < start.add(votingDuration), "Voting closed");
+        require(!proposals[oip].voted[msg.sender], "Already voted");
         if (voteFor) {
             proposals[oip].forVotes = proposals[oip].forVotes.add(commitments[msg.sender].votes);
         }
@@ -517,7 +517,7 @@ contract OptinoGov is OptinoGovConfig {
 
         for (uint i = 0; i < proposal.targets.length; i++) {
             (bool success,) = proposal.targets[i].call{value: proposal.values[i]}(proposal.data[i]);
-            require(success, "OptinoGov: Execution failed");
+            require(success, "Execution failed");
         }
 
         emit Executed(msg.sender, oip);
