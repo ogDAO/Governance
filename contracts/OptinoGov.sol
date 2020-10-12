@@ -14,10 +14,14 @@ import "./SafeMath.sol";
 contract OptinoGovConfig {
     using SafeMath for uint;
 
+    uint constant SECONDS_PER_YEAR = 10000; // Testing 24 * 60 * 60 * 365;
+
     OGTokenInterface public ogToken;
     OGDTokenInterface public ogdToken;
-    uint public maxDuration = 1000 seconds; // Testing 365 days;
+    uint public maxDuration = 10000 seconds; // Testing 365 days;
     uint public rewardsPerSecond = 150_000_000_000_000_000; // 0.15
+    uint public collectOnBehalfFee = 5 * 10**16; // 5%, 18 decimals
+    uint public collectOnBehalfDelay = 1 seconds; // Testing 7 days
     uint public proposalCost = 100_000_000_000_000_000_000; // 100 tokens assuming 18 decimals
     uint public proposalThreshold = 1 * 10**15; // 0.1%, 18 decimals
     uint public quorum = 2 * 10 ** 17; // 20%, 18 decimals
@@ -29,6 +33,8 @@ contract OptinoGovConfig {
 
     event MaxDurationUpdated(uint maxDuration);
     event RewardsPerSecondUpdated(uint rewardsPerSecond);
+    event CollectOnBehalfFeeUpdated(uint collectOnBehalfFee);
+    event CollectOnBehalfDelayUpdated(uint collectOnBehalfDelay);
     event ProposalCostUpdated(uint proposalCost);
     event ProposalThresholdUpdated(uint proposalThreshold);
     event QuorumUpdated(uint quorum);
@@ -48,6 +54,14 @@ contract OptinoGovConfig {
     function setMaxDuration(uint _maxDuration) external onlySelf {
         maxDuration = _maxDuration;
         emit MaxDurationUpdated(maxDuration);
+    }
+    function setCollectOnBehalfFee(uint _collectOnBehalfFee) external onlySelf {
+        collectOnBehalfFee = _collectOnBehalfFee;
+        emit CollectOnBehalfFeeUpdated(collectOnBehalfFee);
+    }
+    function setCollectOnBehalfDelay(uint _collectOnBehalfDelay) external onlySelf {
+        collectOnBehalfDelay = _collectOnBehalfDelay;
+        emit CollectOnBehalfDelayUpdated(collectOnBehalfDelay);
     }
     function setRewardsPerSecond(uint _rewardsPerSecond) external onlySelf {
         rewardsPerSecond = _rewardsPerSecond;
@@ -245,12 +259,12 @@ contract OptinoGov is OptinoGovConfig {
 
     // Commit tokens for some duration. If you already committed some tokens, you cannot set a duration that ends before the current one
     function commit(uint tokens, uint duration) public {
-        require(duration <= maxDuration, "OptinoGov: Cannot exceed maxDuration");
+        require(duration <= maxDuration, "Cannot exceed maxDuration");
         Commitment storage user = commitments[msg.sender];
 
         // TODO: Take into account any staked tokens
         if (user.tokens > 0) {
-            require(block.timestamp + duration >= user.end, "OptinoGov: duration cannot end before existing commitment period");
+            require(block.timestamp + duration >= user.end, "duration cannot end before existing commitment period");
 
             // Pay rewards until now and reset
             uint elapsed = block.timestamp.sub(uint(user.end).sub(user.duration));
@@ -265,33 +279,68 @@ contract OptinoGov is OptinoGovConfig {
         user.tokens = user.tokens.add(tokens);
         user.duration = uint128(duration);
         user.end = uint128(block.timestamp.add(duration));
-        user.votes = user.tokens.mul(duration).div(maxDuration);
+        user.votes = user.tokens.mul(duration).div(SECONDS_PER_YEAR);
         totalVotes = totalVotes.add(user.votes);
 
-        require(ogToken.transferFrom(msg.sender, address(this), tokens), "OptinoGov: OGToken.transferFrom failed");
-        require(ogdToken.mint(msg.sender, tokens), "OptinoGov: OGDToken.mint failed");
+        require(ogToken.transferFrom(msg.sender, address(this), tokens), "OG transferFrom failed");
+        require(ogdToken.mint(msg.sender, tokens), "OGD mint failed");
 
         emit Committed(msg.sender, tokens, user.tokens, user.duration, user.end, user.votes, rewardPool, totalVotes);
     }
 
-    // TODO
-    function collectReward() public {
-        Commitment storage user = commitments[msg.sender];
+    function collectRewardFor(address tokenOwner) public {
+        _collectReward(tokenOwner, false, 0);
+    }
+    function collectReward(bool commitRewards, uint duration) public {
+        _collectReward(msg.sender, commitRewards, duration);
+    }
+    function _collectReward(address tokenOwner, bool commitRewards, uint duration) internal {
+        Commitment storage user = commitments[tokenOwner];
         require(user.tokens > 0);
 
         // Pay rewards for period = now - beginning = now - (end - duration)
         uint elapsed = block.timestamp.sub(uint(user.end).sub(user.duration));
         uint reward = elapsed.mul(rewardsPerSecond).mul(user.votes).div(totalVotes);
-        // BK DEBUG rewardPool = rewardPool.sub(reward);
-
-        if (user.end < block.timestamp) {
-            user.end = uint128(block.timestamp);
+        if (reward > rewardPool) {
+            reward = rewardPool;
         }
-        user.duration = uint128(uint(user.end).sub(block.timestamp));
-        // BK TEST user.end = user.duration.add(block.timestamp);
-
-        // BK DEBUG require(token.transfer(msg.sender, reward), "OptinoGov: transfer failed");
-
+        if (reward > 0) {
+            uint callerReward = 0;
+            rewardPool = rewardPool.sub(reward);
+            if (msg.sender != tokenOwner) {
+                require(user.end + collectOnBehalfDelay < block.timestamp, "Commitment not ended");
+                callerReward = reward.mul(collectOnBehalfFee).div(10 ** 18);
+                reward = reward.sub(callerReward);
+            }
+            if (commitRewards) {
+                user.tokens = user.tokens.add(reward);
+                if (user.end < block.timestamp) {
+                    user.end = uint128(block.timestamp);
+                }
+                if (duration > 0) {
+                    require(duration <= maxDuration, "Cannot exceed maxDuration");
+                    user.duration = uint128(duration);
+                    user.end = uint128(block.timestamp.add(duration));
+                    totalVotes = totalVotes.sub(user.votes);
+                    user.votes = user.tokens.mul(user.duration).div(SECONDS_PER_YEAR);
+                    totalVotes = totalVotes.add(user.votes);
+                } else {
+                    user.duration = uint128(uint(user.end).sub(block.timestamp));
+                    // NOTE - Voting left as proportion of the original duration
+                }
+                require(ogToken.mint(address(this), reward), "reward OG mint failed");
+                require(ogdToken.mint(msg.sender, reward), "reward OGD mint failed");
+            } else {
+                user.duration = uint(user.end) <= block.timestamp ? 0 : uint128(uint(user.end).sub(block.timestamp));
+                totalVotes = totalVotes.sub(user.votes);
+                user.votes = user.tokens.mul(user.duration).div(SECONDS_PER_YEAR);
+                totalVotes = totalVotes.add(user.votes);
+                require(ogToken.mint(tokenOwner, reward), "reward OG mint failed");
+            }
+            if (callerReward > 0) {
+                require(ogToken.mint(msg.sender, callerReward), "callerReward OG mint failed");
+            }
+        }
         emit Collected(msg.sender, elapsed, reward, rewardPool, user.end, user.duration);
     }
 

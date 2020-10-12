@@ -114,7 +114,7 @@ truffle test test/TestOptinoGov.test.js
 Sample output:
 
 ```
-$ truffle test test/TestOptinoGov.test.js --show-events
+Iota:Governance bok$ truffle test test/TestOptinoGov.test.js --show-events
 Using network 'development'.
 
 
@@ -126,8 +126,12 @@ TestToken.test.js: describe(TestToken behavior tests)
 
 
   Contract: Test OptinoGov
+RESULT: --- Setup 1 - Deploy OGToken, OGDToken, FEE ---
 --- Setup completed ---
-RESULT:  # Account                                             EtherBalanceChange                             OG                            OGD @ 4065 -> 4073
+RESULT: --- Setup 2 - Deploy OptinoGov, Distributed OGTokens, AddDividendTokens([0x00, FEE]) ---
+RESULT: --- Setup 3 - Permission OptinoGov to mint OGTokens and OGDTokens ---
+RESULT: --- Setup 4 - Transfer ownership of OGToken and OGDToken to OptinoGov ---
+RESULT:  # Account                                             EtherBalanceChange                             OG                            OGD @ 16808 -> 16816
 RESULT:                                                                                                      FEE                            ???
 RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
 RESULT: 0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E         0.000000000000000000       10000.000000000000000000           0.000000000000000000 Owner:0xa00A
@@ -138,151 +142,323 @@ RESULT: 2 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976         0.00000000000000000
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000
 RESULT: 3 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0         0.000000000000000000       10000.000000000000000000           0.000000000000000000 User3:0xa33a
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000
-RESULT: 4 0x60e1510D8509FbB3E37CE756bcbBEef857970A7E         0.000000000000000000           0.000000000000000000           0.000000000000000000 OGToken:0x60e1
+RESULT: 4 0x3886efCbD830a8013Ee1997570B3BB9a12197A94         0.000000000000000000           0.000000000000000000           0.000000000000000000 OGToken:0x3886
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000
-RESULT: 5 0xD85dc24395f871EC335d991d4F454Bc26Abc490c         0.000000000000000000           0.000000000000000000           0.000000000000000000 OGDToken:0xD85d
+RESULT: 5 0x5d1Fbb5f2Ab6878C0AeDbF0B4BA9646E207b4b84         0.000000000000000000           0.000000000000000000           0.000000000000000000 OGDToken:0x5d1F
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000
-RESULT: 6 0xd7C0D017eEA9b74e72dF94EF5C92B3E999Ae5435         0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee0Token:0xd7C0
+RESULT: 6 0x16F86971d6E621c45983B3D221a8E408D887aeC9         0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee0Token:0x16F8
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000
-RESULT: 7 0x83f7d4673BdEf4b06Dc8cd3B17CaaA16AEE9c925         0.000000000000000000           0.000000000000000000           0.000000000000000000 OptinoGov:0x83f7
+RESULT: 7 0x621ceB6A68cAb49f86585D6073E055FB520F7a36         0.000000000000000000           0.000000000000000000           0.000000000000000000 OptinoGov:0x621c
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000
 RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
 RESULT:                                                                                 40000.000000000000000000           0.000000000000000000 Total Token Balances
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000
 RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
 RESULT:
-RESULT: Token 0 OGToken:0x60e1 @ 0x60e1510D8509FbB3E37CE756bcbBEef857970A7E
+RESULT: Token 0 OGToken:0x3886 @ 0x3886efCbD830a8013Ee1997570B3BB9a12197A94
 RESULT: - symbol               : OG
 RESULT: - name                 : Optino Governance
 RESULT: - decimals             : 18
 RESULT: - totalSupply          : 40000
-RESULT: - owner                : OptinoGov:0x83f7
-RESULT: Token 1 OGDToken:0xD85d @ 0xD85dc24395f871EC335d991d4F454Bc26Abc490c
+RESULT: - owner                : OptinoGov:0x621c
+RESULT: Token 1 OGDToken:0x5d1F @ 0x5d1Fbb5f2Ab6878C0AeDbF0B4BA9646E207b4b84
 RESULT: - symbol               : OGD
 RESULT: - name                 : Optino Governance Dividend
 RESULT: - decimals             : 18
 RESULT: - totalSupply          : 0
-RESULT: - owner                : OptinoGov:0x83f7
+RESULT: - owner                : OptinoGov:0x621c
 RESULT: - dividendTokensLength : 2
-RESULT: - dividendToken        : 0 ETH|null:0x0000, enabled: true, unclaimedDividends: 0 = 0.000000000000000000
-RESULT: - dividendToken        : 1 Fee0Token:0xd7C0, enabled: true, unclaimedDividends: 0 = 0.000000000000000000
+RESULT: - dividendToken        : 0 Fee0Token:0x16F8, enabled: true, unclaimedDividends: 0 = 0.000000000000000000
+RESULT: - dividendToken        : 1 ETH|null:0x0000, enabled: true, unclaimedDividends: 0 = 0.000000000000000000
 RESULT: - dividendsOwing       : 1 User1:0xa11A
+RESULT:                            - Fee0Token:0x16F8 0 = 0.000000000000000000
 RESULT:                            - ETH|null:0x0000 0 = 0.000000000000000000
-RESULT:                            - Fee0Token:0xd7C0 0 = 0.000000000000000000
 RESULT: - dividendsOwing       : 2 User2:0xa22A
+RESULT:                            - Fee0Token:0x16F8 0 = 0.000000000000000000
 RESULT:                            - ETH|null:0x0000 0 = 0.000000000000000000
-RESULT:                            - Fee0Token:0xd7C0 0 = 0.000000000000000000
 RESULT: - dividendsOwing       : 3 User3:0xa33a
+RESULT:                            - Fee0Token:0x16F8 0 = 0.000000000000000000
 RESULT:                            - ETH|null:0x0000 0 = 0.000000000000000000
-RESULT:                            - Fee0Token:0xd7C0 0 = 0.000000000000000000
-RESULT: Token 2 Fee0Token:0xd7C0 @ 0xd7C0D017eEA9b74e72dF94EF5C92B3E999Ae5435
+RESULT: Token 2 Fee0Token:0x16F8 @ 0x16F86971d6E621c45983B3D221a8E408D887aeC9
 RESULT: - symbol               : FEE
 RESULT: - name                 : Fee
 RESULT: - decimals             : 18
 RESULT: - totalSupply          : 0
 RESULT: - owner                : Owner:0xa00A
-RESULT: OptinoGov OptinoGov:0x83f7 @ 0x83f7d4673BdEf4b06Dc8cd3B17CaaA16AEE9c925
-RESULT: - ogToken              : OGToken:0x60e1
-RESULT: - ogdToken             : OGDToken:0xD85d
-RESULT: - maxCommittmentTerm   : 1000 seconds = 0.01157407407407407407 days
-RESULT: - rewardsPerSecond     : 150000000000000000 = 12960 per day
+RESULT: OptinoGov OptinoGov:0x621c @ 0x621ceB6A68cAb49f86585D6073E055FB520F7a36
+RESULT: - ogToken              : OGToken:0x3886
+RESULT: - ogdToken             : OGDToken:0x5d1F
+RESULT: - maxDuration          : 10000 seconds = 0.11574074074074074074 days
+RESULT: - rewardsPerSecond     : 150000000000000000 = 0.15 = 12960 per day
+RESULT: - collectOnBehalfFee   : 50000000000000000 = 5%
+RESULT: - collectOnBehalfDelay : 1 seconds = 0.00001157407407407407 days
 RESULT: - proposalCost         : 100000000000000000000 = 100
 RESULT: - proposalThreshold    : 1000000000000000 = 0.1%
 RESULT: - quorum               : 200000000000000000 = 20%
 RESULT: - quorumDecayPerSecond : 12683916793 = 39.9999999984048% per year
 RESULT: - votingDuration       : 10 seconds = 0.00011574074074074074 days
 RESULT: - executeDelay         : 10 seconds = 0.00011574074074074074 days
-RESULT: - rewardPool           : 0 = 0
+RESULT: - rewardPool           : 1000000000000000000000000 = 1000000
 RESULT: - totalVotes           : 0 = 0
 RESULT: - proposalCount        : 0
 RESULT: - stakeInfoLength      : 0
+RESULT: - commitment           : 1 User1:0xa11A duration: 0, end: 0, tokens: 0, votes: 0, staked: 0
+RESULT: - commitment           : 2 User2:0xa22A duration: 0, end: 0, tokens: 0, votes: 0, staked: 0
+RESULT: - commitment           : 3 User3:0xa33a duration: 0, end: 0, tokens: 0, votes: 0, staked: 0
 RESULT:
-RESULT:  # Account                                             EtherBalanceChange                             OG                            OGD @ 4065 -> 4077
+RESULT: --- Test 1 - Approve OGTokens for User{1..3} ---
+RESULT: --- Test 2 - Commit OGTokens for User{1..3} for duration {5, 50, 500} seconds ---
+RESULT:  # Account                                             EtherBalanceChange                             OG                            OGD @ 16808 -> 16820
 RESULT:                                                                                                      FEE                            ???
 RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-RESULT: 0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E         0.015122640000000000       10000.000000000000000000           0.000000000000000000 Owner:0xa00A
+RESULT: 0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E         0.013973880000000000       10000.000000000000000000           0.000000000000000000 Owner:0xa00A
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000
-RESULT: 1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433        -0.004640880000000000        9000.000000000000000000        1000.000000000000000000 User1:0xa11A
+RESULT: 1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433        -0.004257880000000000        9000.000000000000000000        1000.000000000000000000 User1:0xa11A
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000
-RESULT: 2 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976        -0.005840880000000000        9000.000000000000000000        1000.000000000000000000 User2:0xa22A
+RESULT: 2 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976        -0.005457880000000000        9000.000000000000000000        1000.000000000000000000 User2:0xa22A
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000
-RESULT: 3 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0        -0.004640880000000000        9000.000000000000000000        1000.000000000000000000 User3:0xa33a
+RESULT: 3 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0        -0.004258120000000000        9000.000000000000000000        1000.000000000000000000 User3:0xa33a
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000
-RESULT: 4 0x60e1510D8509FbB3E37CE756bcbBEef857970A7E         0.000000000000000000           0.000000000000000000           0.000000000000000000 OGToken:0x60e1
+RESULT: 4 0x3886efCbD830a8013Ee1997570B3BB9a12197A94         0.000000000000000000           0.000000000000000000           0.000000000000000000 OGToken:0x3886
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000
-RESULT: 5 0xD85dc24395f871EC335d991d4F454Bc26Abc490c         0.000000000000000000           0.000000000000000000           0.000000000000000000 OGDToken:0xD85d
+RESULT: 5 0x5d1Fbb5f2Ab6878C0AeDbF0B4BA9646E207b4b84         0.000000000000000000           0.000000000000000000           0.000000000000000000 OGDToken:0x5d1F
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000
-RESULT: 6 0xd7C0D017eEA9b74e72dF94EF5C92B3E999Ae5435         0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee0Token:0xd7C0
+RESULT: 6 0x16F86971d6E621c45983B3D221a8E408D887aeC9         0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee0Token:0x16F8
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000
-RESULT: 7 0x83f7d4673BdEf4b06Dc8cd3B17CaaA16AEE9c925         0.000000000000000000        3000.000000000000000000           0.000000000000000000 OptinoGov:0x83f7
+RESULT: 7 0x621ceB6A68cAb49f86585D6073E055FB520F7a36         0.000000000000000000        3000.000000000000000000           0.000000000000000000 OptinoGov:0x621c
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000
 RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
 RESULT:                                                                                 40000.000000000000000000        3000.000000000000000000 Total Token Balances
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000
 RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
 RESULT:
-RESULT: Token 0 OGToken:0x60e1 @ 0x60e1510D8509FbB3E37CE756bcbBEef857970A7E
+RESULT: Token 0 OGToken:0x3886 @ 0x3886efCbD830a8013Ee1997570B3BB9a12197A94
 RESULT: - symbol               : OG
 RESULT: - name                 : Optino Governance
 RESULT: - decimals             : 18
 RESULT: - totalSupply          : 40000
-RESULT: - owner                : OptinoGov:0x83f7
-RESULT: Token 1 OGDToken:0xD85d @ 0xD85dc24395f871EC335d991d4F454Bc26Abc490c
+RESULT: - owner                : OptinoGov:0x621c
+RESULT: Token 1 OGDToken:0x5d1F @ 0x5d1Fbb5f2Ab6878C0AeDbF0B4BA9646E207b4b84
 RESULT: - symbol               : OGD
 RESULT: - name                 : Optino Governance Dividend
 RESULT: - decimals             : 18
 RESULT: - totalSupply          : 3000
-RESULT: - owner                : OptinoGov:0x83f7
+RESULT: - owner                : OptinoGov:0x621c
 RESULT: - dividendTokensLength : 2
-RESULT: - dividendToken        : 0 ETH|null:0x0000, enabled: true, unclaimedDividends: 0 = 0.000000000000000000
-RESULT: - dividendToken        : 1 Fee0Token:0xd7C0, enabled: true, unclaimedDividends: 0 = 0.000000000000000000
+RESULT: - dividendToken        : 0 Fee0Token:0x16F8, enabled: true, unclaimedDividends: 0 = 0.000000000000000000
+RESULT: - dividendToken        : 1 ETH|null:0x0000, enabled: true, unclaimedDividends: 0 = 0.000000000000000000
 RESULT: - dividendsOwing       : 1 User1:0xa11A
+RESULT:                            - Fee0Token:0x16F8 0 = 0.000000000000000000
 RESULT:                            - ETH|null:0x0000 0 = 0.000000000000000000
-RESULT:                            - Fee0Token:0xd7C0 0 = 0.000000000000000000
 RESULT: - dividendsOwing       : 2 User2:0xa22A
+RESULT:                            - Fee0Token:0x16F8 0 = 0.000000000000000000
 RESULT:                            - ETH|null:0x0000 0 = 0.000000000000000000
-RESULT:                            - Fee0Token:0xd7C0 0 = 0.000000000000000000
 RESULT: - dividendsOwing       : 3 User3:0xa33a
+RESULT:                            - Fee0Token:0x16F8 0 = 0.000000000000000000
 RESULT:                            - ETH|null:0x0000 0 = 0.000000000000000000
-RESULT:                            - Fee0Token:0xd7C0 0 = 0.000000000000000000
-RESULT: Token 2 Fee0Token:0xd7C0 @ 0xd7C0D017eEA9b74e72dF94EF5C92B3E999Ae5435
+RESULT: Token 2 Fee0Token:0x16F8 @ 0x16F86971d6E621c45983B3D221a8E408D887aeC9
 RESULT: - symbol               : FEE
 RESULT: - name                 : Fee
 RESULT: - decimals             : 18
 RESULT: - totalSupply          : 0
 RESULT: - owner                : Owner:0xa00A
-RESULT: OptinoGov OptinoGov:0x83f7 @ 0x83f7d4673BdEf4b06Dc8cd3B17CaaA16AEE9c925
-RESULT: - ogToken              : OGToken:0x60e1
-RESULT: - ogdToken             : OGDToken:0xD85d
-RESULT: - maxCommittmentTerm   : 1000 seconds = 0.01157407407407407407 days
-RESULT: - rewardsPerSecond     : 150000000000000000 = 12960 per day
+RESULT: OptinoGov OptinoGov:0x621c @ 0x621ceB6A68cAb49f86585D6073E055FB520F7a36
+RESULT: - ogToken              : OGToken:0x3886
+RESULT: - ogdToken             : OGDToken:0x5d1F
+RESULT: - maxDuration          : 10000 seconds = 0.11574074074074074074 days
+RESULT: - rewardsPerSecond     : 150000000000000000 = 0.15 = 12960 per day
+RESULT: - collectOnBehalfFee   : 50000000000000000 = 5%
+RESULT: - collectOnBehalfDelay : 1 seconds = 0.00001157407407407407 days
 RESULT: - proposalCost         : 100000000000000000000 = 100
 RESULT: - proposalThreshold    : 1000000000000000 = 0.1%
 RESULT: - quorum               : 200000000000000000 = 20%
 RESULT: - quorumDecayPerSecond : 12683916793 = 39.9999999984048% per year
 RESULT: - votingDuration       : 10 seconds = 0.00011574074074074074 days
 RESULT: - executeDelay         : 10 seconds = 0.00011574074074074074 days
-RESULT: - rewardPool           : 0 = 0
-RESULT: - totalVotes           : 1500000000000000000000 = 1500
+RESULT: - rewardPool           : 1000000000000000000000000 = 1000000
+RESULT: - totalVotes           : 55500000000000000000 = 55.5
 RESULT: - proposalCount        : 0
 RESULT: - stakeInfoLength      : 0
+RESULT: - commitment           : 1 User1:0xa11A duration: 5, end: 1602473138, tokens: 1000, votes: 0.5, staked: 0
+RESULT: - commitment           : 2 User2:0xa22A duration: 50, end: 1602473183, tokens: 1000, votes: 5, staked: 0
+RESULT: - commitment           : 3 User3:0xa33a duration: 500, end: 1602473633, tokens: 1000, votes: 50, staked: 0
 RESULT:
-    ✓ Test OptinoGov Commit Tokens (4502ms)
+RESULT: --- Test 3 - Collect Rewards. User1 not committing rewards, user2 committing rewards leaving duration unchanged, user3 committing for longer period ---
+RESULT:  # Account                                             EtherBalanceChange                             OG                            OGD @ 16808 -> 16823
+RESULT:                                                                                                      FEE                            ???
+RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
+RESULT: 0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E         0.021293300000000000       10000.000000000000000000           0.000000000000000000 Owner:0xa00A
+RESULT:                                                                                     0.000000000000000000           0.000000000000000000
+RESULT: 1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433        -0.006014420000000000        9000.004054054054054054        1000.000000000000000000 User1:0xa11A
+RESULT:                                                                                     0.000000000000000000           0.000000000000000000
+RESULT: 2 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976        -0.008220300000000000        9000.000000000000000000        1000.040540540540540540 User2:0xa22A
+RESULT:                                                                                     0.000000000000000000           0.000000000000000000
+RESULT: 3 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0        -0.007058580000000000        9000.000000000000000000        1000.407608695652173913 User3:0xa33a
+RESULT:                                                                                     0.000000000000000000           0.000000000000000000
+RESULT: 4 0x3886efCbD830a8013Ee1997570B3BB9a12197A94         0.000000000000000000           0.000000000000000000           0.000000000000000000 OGToken:0x3886
+RESULT:                                                                                     0.000000000000000000           0.000000000000000000
+RESULT: 5 0x5d1Fbb5f2Ab6878C0AeDbF0B4BA9646E207b4b84         0.000000000000000000           0.000000000000000000           0.000000000000000000 OGDToken:0x5d1F
+RESULT:                                                                                     0.000000000000000000           0.000000000000000000
+RESULT: 6 0x16F86971d6E621c45983B3D221a8E408D887aeC9         0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee0Token:0x16F8
+RESULT:                                                                                     0.000000000000000000           0.000000000000000000
+RESULT: 7 0x621ceB6A68cAb49f86585D6073E055FB520F7a36         0.000000000000000000        3000.448149236192714453           0.000000000000000000 OptinoGov:0x621c
+RESULT:                                                                                     0.000000000000000000           0.000000000000000000
+RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
+RESULT:                                                                                 40000.452203290246768507        3000.448149236192714453 Total Token Balances
+RESULT:                                                                                     0.000000000000000000           0.000000000000000000
+RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
+RESULT:
+RESULT: Token 0 OGToken:0x3886 @ 0x3886efCbD830a8013Ee1997570B3BB9a12197A94
+RESULT: - symbol               : OG
+RESULT: - name                 : Optino Governance
+RESULT: - decimals             : 18
+RESULT: - totalSupply          : 40000.452203290246768507
+RESULT: - owner                : OptinoGov:0x621c
+RESULT: Token 1 OGDToken:0x5d1F @ 0x5d1Fbb5f2Ab6878C0AeDbF0B4BA9646E207b4b84
+RESULT: - symbol               : OGD
+RESULT: - name                 : Optino Governance Dividend
+RESULT: - decimals             : 18
+RESULT: - totalSupply          : 3000.448149236192714453
+RESULT: - owner                : OptinoGov:0x621c
+RESULT: - dividendTokensLength : 2
+RESULT: - dividendToken        : 0 Fee0Token:0x16F8, enabled: true, unclaimedDividends: 0 = 0.000000000000000000
+RESULT: - dividendToken        : 1 ETH|null:0x0000, enabled: true, unclaimedDividends: 0 = 0.000000000000000000
+RESULT: - dividendsOwing       : 1 User1:0xa11A
+RESULT:                            - Fee0Token:0x16F8 0 = 0.000000000000000000
+RESULT:                            - ETH|null:0x0000 0 = 0.000000000000000000
+RESULT: - dividendsOwing       : 2 User2:0xa22A
+RESULT:                            - Fee0Token:0x16F8 0 = 0.000000000000000000
+RESULT:                            - ETH|null:0x0000 0 = 0.000000000000000000
+RESULT: - dividendsOwing       : 3 User3:0xa33a
+RESULT:                            - Fee0Token:0x16F8 0 = 0.000000000000000000
+RESULT:                            - ETH|null:0x0000 0 = 0.000000000000000000
+RESULT: Token 2 Fee0Token:0x16F8 @ 0x16F86971d6E621c45983B3D221a8E408D887aeC9
+RESULT: - symbol               : FEE
+RESULT: - name                 : Fee
+RESULT: - decimals             : 18
+RESULT: - totalSupply          : 0
+RESULT: - owner                : Owner:0xa00A
+RESULT: OptinoGov OptinoGov:0x621c @ 0x621ceB6A68cAb49f86585D6073E055FB520F7a36
+RESULT: - ogToken              : OGToken:0x3886
+RESULT: - ogdToken             : OGDToken:0x5d1F
+RESULT: - maxDuration          : 10000 seconds = 0.11574074074074074074 days
+RESULT: - rewardsPerSecond     : 150000000000000000 = 0.15 = 12960 per day
+RESULT: - collectOnBehalfFee   : 50000000000000000 = 5%
+RESULT: - collectOnBehalfDelay : 1 seconds = 0.00001157407407407407 days
+RESULT: - proposalCost         : 100000000000000000000 = 100
+RESULT: - proposalThreshold    : 1000000000000000 = 0.1%
+RESULT: - quorum               : 200000000000000000 = 20%
+RESULT: - quorumDecayPerSecond : 12683916793 = 39.9999999984048% per year
+RESULT: - votingDuration       : 10 seconds = 0.00011574074074074074 days
+RESULT: - executeDelay         : 10 seconds = 0.00011574074074074074 days
+RESULT: - rewardPool           : 999999547796709753231493 = 999999.547796709753231493
+RESULT: - totalVotes           : 505403804347826086956 = 505.403804347826086956
+RESULT: - proposalCount        : 0
+RESULT: - stakeInfoLength      : 0
+RESULT: - commitment           : 1 User1:0xa11A duration: 2, end: 1602473138, tokens: 1000, votes: 0.2, staked: 0
+RESULT: - commitment           : 2 User2:0xa22A duration: 47, end: 1602473183, tokens: 1000.04054054054054054, votes: 5, staked: 0
+RESULT: - commitment           : 3 User3:0xa33a duration: 5000, end: 1602478136, tokens: 1000.407608695652173913, votes: 500.203804347826086956, staked: 0
+RESULT:
+RESULT: --- Test 4 - Collect Rewards. Owner collecting rewards on behalf of user1 ---
+RESULT: Pausing 'Waiting' for 5s=Mon Oct 12 2020 14:25:41 GMT+1100 (Australian Eastern Daylight Time) now=Mon Oct 12 2020 14:25:36 GMT+1100 (Australian Eastern Daylight Time)
+RESULT: Paused 'Waiting' for 5s=Mon Oct 12 2020 14:25:41 GMT+1100 (Australian Eastern Daylight Time) now=Mon Oct 12 2020 14:25:41 GMT+1100 (Australian Eastern Daylight Time)
+RESULT:
+RESULT:  # Account                                             EtherBalanceChange                             OG                            OGD @ 16808 -> 16830
+RESULT:                                                                                                      FEE                            ???
+RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
+RESULT: 0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E         0.021293300000000000       10000.000020775466883454           0.000000000000000000 Owner:0xa00A
+RESULT:                                                                                     0.000000000000000000           0.000000000000000000
+RESULT: 1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433        -0.006014420000000000        9000.004448787924839682        1000.000000000000000000 User1:0xa11A
+RESULT:                                                                                     0.000000000000000000           0.000000000000000000
+RESULT: 2 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976        -0.008220300000000000        9000.000000000000000000        1000.040540540540540540 User2:0xa22A
+RESULT:                                                                                     0.000000000000000000           0.000000000000000000
+RESULT: 3 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0        -0.007058580000000000        9000.000000000000000000        1000.407608695652173913 User3:0xa33a
+RESULT:                                                                                     0.000000000000000000           0.000000000000000000
+RESULT: 4 0x3886efCbD830a8013Ee1997570B3BB9a12197A94         0.000000000000000000           0.000000000000000000           0.000000000000000000 OGToken:0x3886
+RESULT:                                                                                     0.000000000000000000           0.000000000000000000
+RESULT: 5 0x5d1Fbb5f2Ab6878C0AeDbF0B4BA9646E207b4b84         0.000000000000000000           0.000000000000000000           0.000000000000000000 OGDToken:0x5d1F
+RESULT:                                                                                     0.000000000000000000           0.000000000000000000
+RESULT: 6 0x16F86971d6E621c45983B3D221a8E408D887aeC9         0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee0Token:0x16F8
+RESULT:                                                                                     0.000000000000000000           0.000000000000000000
+RESULT: 7 0x621ceB6A68cAb49f86585D6073E055FB520F7a36         0.000000000000000000        3000.448149236192714453           0.000000000000000000 OptinoGov:0x621c
+RESULT:                                                                                     0.000000000000000000           0.000000000000000000
+RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
+RESULT:                                                                                 40000.452618799584437589        3000.448149236192714453 Total Token Balances
+RESULT:                                                                                     0.000000000000000000           0.000000000000000000
+RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
+RESULT:
+RESULT: Token 0 OGToken:0x3886 @ 0x3886efCbD830a8013Ee1997570B3BB9a12197A94
+RESULT: - symbol               : OG
+RESULT: - name                 : Optino Governance
+RESULT: - decimals             : 18
+RESULT: - totalSupply          : 40000.452618799584437589
+RESULT: - owner                : OptinoGov:0x621c
+RESULT: Token 1 OGDToken:0x5d1F @ 0x5d1Fbb5f2Ab6878C0AeDbF0B4BA9646E207b4b84
+RESULT: - symbol               : OGD
+RESULT: - name                 : Optino Governance Dividend
+RESULT: - decimals             : 18
+RESULT: - totalSupply          : 3000.448149236192714453
+RESULT: - owner                : OptinoGov:0x621c
+RESULT: - dividendTokensLength : 2
+RESULT: - dividendToken        : 0 Fee0Token:0x16F8, enabled: true, unclaimedDividends: 0 = 0.000000000000000000
+RESULT: - dividendToken        : 1 ETH|null:0x0000, enabled: true, unclaimedDividends: 0 = 0.000000000000000000
+RESULT: - dividendsOwing       : 1 User1:0xa11A
+RESULT:                            - Fee0Token:0x16F8 0 = 0.000000000000000000
+RESULT:                            - ETH|null:0x0000 0 = 0.000000000000000000
+RESULT: - dividendsOwing       : 2 User2:0xa22A
+RESULT:                            - Fee0Token:0x16F8 0 = 0.000000000000000000
+RESULT:                            - ETH|null:0x0000 0 = 0.000000000000000000
+RESULT: - dividendsOwing       : 3 User3:0xa33a
+RESULT:                            - Fee0Token:0x16F8 0 = 0.000000000000000000
+RESULT:                            - ETH|null:0x0000 0 = 0.000000000000000000
+RESULT: Token 2 Fee0Token:0x16F8 @ 0x16F86971d6E621c45983B3D221a8E408D887aeC9
+RESULT: - symbol               : FEE
+RESULT: - name                 : Fee
+RESULT: - decimals             : 18
+RESULT: - totalSupply          : 0
+RESULT: - owner                : Owner:0xa00A
+RESULT: OptinoGov OptinoGov:0x621c @ 0x621ceB6A68cAb49f86585D6073E055FB520F7a36
+RESULT: - ogToken              : OGToken:0x3886
+RESULT: - ogdToken             : OGDToken:0x5d1F
+RESULT: - maxDuration          : 10000 seconds = 0.11574074074074074074 days
+RESULT: - rewardsPerSecond     : 150000000000000000 = 0.15 = 12960 per day
+RESULT: - collectOnBehalfFee   : 50000000000000000 = 5%
+RESULT: - collectOnBehalfDelay : 1 seconds = 0.00001157407407407407 days
+RESULT: - proposalCost         : 100000000000000000000 = 100
+RESULT: - proposalThreshold    : 1000000000000000 = 0.1%
+RESULT: - quorum               : 200000000000000000 = 20%
+RESULT: - quorumDecayPerSecond : 12683916793 = 39.9999999984048% per year
+RESULT: - votingDuration       : 10 seconds = 0.00011574074074074074 days
+RESULT: - executeDelay         : 10 seconds = 0.00011574074074074074 days
+RESULT: - rewardPool           : 999999547381200415562411 = 999999.547381200415562411
+RESULT: - totalVotes           : 505203804347826086956 = 505.203804347826086956
+RESULT: - proposalCount        : 0
+RESULT: - stakeInfoLength      : 0
+RESULT: - commitment           : 1 User1:0xa11A duration: 0, end: 1602473138, tokens: 1000, votes: 0, staked: 0
+RESULT: - commitment           : 2 User2:0xa22A duration: 47, end: 1602473183, tokens: 1000.04054054054054054, votes: 5, staked: 0
+RESULT: - commitment           : 3 User3:0xa33a duration: 5000, end: 1602478136, tokens: 1000.407608695652173913, votes: 500.203804347826086956, staked: 0
+RESULT:
+RESULT: collectRewardFor1.receipt.gasUsed: 87827
+RESULT: collectRewardFor2.receipt.gasUsed: 138121
+RESULT: collectRewardFor3.receipt.gasUsed: 140023
+RESULT: collectRewardFor4.receipt.gasUsed: 93780
+    ✓ Test OptinoGov Commit Tokens (13748ms)
 
     Events emitted during test:
     ---------------------------
 
-    Ambiguous event, possible interpretations:
-    * OGDToken.OwnershipTransferred(
-        _from: <indexed> 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E (type: address),
-        _to: <indexed> 0x59D2056EB8B12Fa4d88e036463DaF94E01dcAa65 (type: address)
-      )
-    * OGDToken.OwnershipTransferred(
-        _from: <indexed> 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E (type: address),
-        _to: <indexed> 0x59D2056EB8B12Fa4d88e036463DaF94E01dcAa65 (type: address)
-      )
+    Owned.OwnershipTransferred(
+      _from: <indexed> 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E (type: address),
+      _to: <indexed> 0xaBF44c1c7025C0c0C925A6e5fA824ddcf08613A5 (type: address)
+    )
 
-    OGDToken.Transfer(
+    ERC20.Transfer(
+      from: <indexed> 0x0000000000000000000000000000000000000000 (type: address),
+      to: <indexed> 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E (type: address),
+      tokens: 40000000000000000000000 (type: uint256)
+    )
+
+    ERC20.Transfer(
       from: <indexed> 0x0000000000000000000000000000000000000000 (type: address),
       to: <indexed> 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E (type: address),
       tokens: 0 (type: uint256)
@@ -294,22 +470,15 @@ RESULT:
       tokens: 0 (type: uint256)
     )
 
-    OGToken.Transfer(
-      from: <indexed> 0x0000000000000000000000000000000000000000 (type: address),
-      to: <indexed> 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E (type: address),
-      tokens: 40000000000000000000000 (type: uint256)
-    )
-
-    OGToken.Transfer(
-      from: <indexed> 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E (type: address),
-      to: <indexed> 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976 (type: address),
-      tokens: 10000000000000000000000 (type: uint256)
-    )
-
-    OGToken.Transfer(
+    ERC20.Transfer(
       from: <indexed> 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E (type: address),
       to: <indexed> 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0 (type: address),
       tokens: 10000000000000000000000 (type: uint256)
+    )
+
+    DividendTokens.DividendTokenAdded(
+      token: <indexed> 0x16F86971d6E621c45983B3D221a8E408D887aeC9 (type: address),
+      enabled: true (type: bool)
     )
 
     DividendTokens.DividendTokenAdded(
@@ -317,19 +486,20 @@ RESULT:
       enabled: true (type: bool)
     )
 
-    OGToken.Transfer(
+    ERC20.Transfer(
+      from: <indexed> 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E (type: address),
+      to: <indexed> 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976 (type: address),
+      tokens: 10000000000000000000000 (type: uint256)
+    )
+
+    ERC20.Transfer(
       from: <indexed> 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E (type: address),
       to: <indexed> 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433 (type: address),
       tokens: 10000000000000000000000 (type: uint256)
     )
 
-    DividendTokens.DividendTokenAdded(
-      token: <indexed> 0xd7C0D017eEA9b74e72dF94EF5C92B3E999Ae5435 (type: address),
-      enabled: true (type: bool)
-    )
-
     Permissioned.PermissionUpdated(
-      account: <indexed> 0x83f7d4673BdEf4b06Dc8cd3B17CaaA16AEE9c925 (type: address),
+      account: <indexed> 0x621ceB6A68cAb49f86585D6073E055FB520F7a36 (type: address),
       role: 1 (type: uint256),
       active: true (type: bool),
       maximum: 0 (type: uint256),
@@ -337,58 +507,48 @@ RESULT:
     )
 
     Permissioned.PermissionUpdated(
-      account: <indexed> 0x83f7d4673BdEf4b06Dc8cd3B17CaaA16AEE9c925 (type: address),
+      account: <indexed> 0x621ceB6A68cAb49f86585D6073E055FB520F7a36 (type: address),
       role: 1 (type: uint256),
       active: true (type: bool),
       maximum: 0 (type: uint256),
       processed: 0 (type: uint256)
     )
 
-    Ambiguous event, possible interpretations:
-    * OGDToken.OwnershipTransferred(
-        _from: <indexed> 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E (type: address),
-        _to: <indexed> 0x83f7d4673BdEf4b06Dc8cd3B17CaaA16AEE9c925 (type: address)
-      )
-    * OGDToken.OwnershipTransferred(
-        _from: <indexed> 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E (type: address),
-        _to: <indexed> 0x83f7d4673BdEf4b06Dc8cd3B17CaaA16AEE9c925 (type: address)
-      )
-
-    Ambiguous event, possible interpretations:
-    * OGToken.OwnershipTransferred(
-        _from: <indexed> 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E (type: address),
-        _to: <indexed> 0x83f7d4673BdEf4b06Dc8cd3B17CaaA16AEE9c925 (type: address)
-      )
-    * OGToken.OwnershipTransferred(
-        _from: <indexed> 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E (type: address),
-        _to: <indexed> 0x83f7d4673BdEf4b06Dc8cd3B17CaaA16AEE9c925 (type: address)
-      )
-
-    OGToken.Approval(
-      tokenOwner: <indexed> 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0 (type: address),
-      spender: <indexed> 0x83f7d4673BdEf4b06Dc8cd3B17CaaA16AEE9c925 (type: address),
-      tokens: 1000000000000000000000 (type: uint256)
+    Owned.OwnershipTransferred(
+      _from: <indexed> 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E (type: address),
+      _to: <indexed> 0x621ceB6A68cAb49f86585D6073E055FB520F7a36 (type: address)
     )
 
-    OGToken.Approval(
+    Owned.OwnershipTransferred(
+      _from: <indexed> 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E (type: address),
+      _to: <indexed> 0x621ceB6A68cAb49f86585D6073E055FB520F7a36 (type: address)
+    )
+
+    ERC20.Approval(
       tokenOwner: <indexed> 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433 (type: address),
-      spender: <indexed> 0x83f7d4673BdEf4b06Dc8cd3B17CaaA16AEE9c925 (type: address),
+      spender: <indexed> 0x621ceB6A68cAb49f86585D6073E055FB520F7a36 (type: address),
       tokens: 1000000000000000000000 (type: uint256)
     )
 
-    OGToken.Approval(
+    ERC20.Approval(
+      tokenOwner: <indexed> 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0 (type: address),
+      spender: <indexed> 0x621ceB6A68cAb49f86585D6073E055FB520F7a36 (type: address),
+      tokens: 1000000000000000000000 (type: uint256)
+    )
+
+    ERC20.Approval(
       tokenOwner: <indexed> 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976 (type: address),
-      spender: <indexed> 0x83f7d4673BdEf4b06Dc8cd3B17CaaA16AEE9c925 (type: address),
+      spender: <indexed> 0x621ceB6A68cAb49f86585D6073E055FB520F7a36 (type: address),
       tokens: 1000000000000000000000 (type: uint256)
     )
 
-    OGToken.Transfer(
+    ERC20.Transfer(
       from: <indexed> 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976 (type: address),
-      to: <indexed> 0x83f7d4673BdEf4b06Dc8cd3B17CaaA16AEE9c925 (type: address),
+      to: <indexed> 0x621ceB6A68cAb49f86585D6073E055FB520F7a36 (type: address),
       tokens: 1000000000000000000000 (type: uint256)
     )
 
-    OGDToken.Transfer(
+    ERC20.Transfer(
       from: <indexed> 0x0000000000000000000000000000000000000000 (type: address),
       to: <indexed> 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976 (type: address),
       tokens: 1000000000000000000000 (type: uint256)
@@ -398,43 +558,20 @@ RESULT:
       user: <indexed> 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976 (type: address),
       tokens: 1000000000000000000000 (type: uint256),
       balance: 1000000000000000000000 (type: uint256),
-      term: 500 (type: uint256),
-      end: 1602131857 (type: uint256),
-      votes: 500000000000000000000 (type: uint256),
-      rewardPool: 0 (type: uint256),
-      totalVotes: 500000000000000000000 (type: uint256)
+      duration: 50 (type: uint256),
+      end: 1602473183 (type: uint256),
+      votes: 5000000000000000000 (type: uint256),
+      rewardPool: 1000000000000000000000000 (type: uint256),
+      totalVotes: 5000000000000000000 (type: uint256)
     )
 
-    OGToken.Transfer(
-      from: <indexed> 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0 (type: address),
-      to: <indexed> 0x83f7d4673BdEf4b06Dc8cd3B17CaaA16AEE9c925 (type: address),
-      tokens: 1000000000000000000000 (type: uint256)
-    )
-
-    OGDToken.Transfer(
-      from: <indexed> 0x0000000000000000000000000000000000000000 (type: address),
-      to: <indexed> 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0 (type: address),
-      tokens: 1000000000000000000000 (type: uint256)
-    )
-
-    OptinoGov.Committed(
-      user: <indexed> 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0 (type: address),
-      tokens: 1000000000000000000000 (type: uint256),
-      balance: 1000000000000000000000 (type: uint256),
-      term: 500 (type: uint256),
-      end: 1602131857 (type: uint256),
-      votes: 500000000000000000000 (type: uint256),
-      rewardPool: 0 (type: uint256),
-      totalVotes: 1000000000000000000000 (type: uint256)
-    )
-
-    OGToken.Transfer(
+    ERC20.Transfer(
       from: <indexed> 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433 (type: address),
-      to: <indexed> 0x83f7d4673BdEf4b06Dc8cd3B17CaaA16AEE9c925 (type: address),
+      to: <indexed> 0x621ceB6A68cAb49f86585D6073E055FB520F7a36 (type: address),
       tokens: 1000000000000000000000 (type: uint256)
     )
 
-    OGDToken.Transfer(
+    ERC20.Transfer(
       from: <indexed> 0x0000000000000000000000000000000000000000 (type: address),
       to: <indexed> 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433 (type: address),
       tokens: 1000000000000000000000 (type: uint256)
@@ -444,18 +581,119 @@ RESULT:
       user: <indexed> 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433 (type: address),
       tokens: 1000000000000000000000 (type: uint256),
       balance: 1000000000000000000000 (type: uint256),
-      term: 500 (type: uint256),
-      end: 1602131857 (type: uint256),
-      votes: 500000000000000000000 (type: uint256),
-      rewardPool: 0 (type: uint256),
-      totalVotes: 1500000000000000000000 (type: uint256)
+      duration: 5 (type: uint256),
+      end: 1602473138 (type: uint256),
+      votes: 500000000000000000 (type: uint256),
+      rewardPool: 1000000000000000000000000 (type: uint256),
+      totalVotes: 5500000000000000000 (type: uint256)
+    )
+
+    ERC20.Transfer(
+      from: <indexed> 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0 (type: address),
+      to: <indexed> 0x621ceB6A68cAb49f86585D6073E055FB520F7a36 (type: address),
+      tokens: 1000000000000000000000 (type: uint256)
+    )
+
+    ERC20.Transfer(
+      from: <indexed> 0x0000000000000000000000000000000000000000 (type: address),
+      to: <indexed> 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0 (type: address),
+      tokens: 1000000000000000000000 (type: uint256)
+    )
+
+    OptinoGov.Committed(
+      user: <indexed> 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0 (type: address),
+      tokens: 1000000000000000000000 (type: uint256),
+      balance: 1000000000000000000000 (type: uint256),
+      duration: 500 (type: uint256),
+      end: 1602473633 (type: uint256),
+      votes: 50000000000000000000 (type: uint256),
+      rewardPool: 1000000000000000000000000 (type: uint256),
+      totalVotes: 55500000000000000000 (type: uint256)
+    )
+
+    ERC20.Transfer(
+      from: <indexed> 0x0000000000000000000000000000000000000000 (type: address),
+      to: <indexed> 0x621ceB6A68cAb49f86585D6073E055FB520F7a36 (type: address),
+      tokens: 40540540540540540 (type: uint256)
+    )
+
+    ERC20.Transfer(
+      from: <indexed> 0x0000000000000000000000000000000000000000 (type: address),
+      to: <indexed> 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976 (type: address),
+      tokens: 40540540540540540 (type: uint256)
+    )
+
+    OptinoGov.Collected(
+      user: <indexed> 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976 (type: address),
+      elapsed: 3 (type: uint256),
+      reward: 40540540540540540 (type: uint256),
+      rewardPool: 999999959459459459459460 (type: uint256),
+      end: 1602473183 (type: uint256),
+      duration: 47 (type: uint256)
+    )
+
+    ERC20.Transfer(
+      from: <indexed> 0x0000000000000000000000000000000000000000 (type: address),
+      to: <indexed> 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433 (type: address),
+      tokens: 4054054054054054 (type: uint256)
+    )
+
+    OptinoGov.Collected(
+      user: <indexed> 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433 (type: address),
+      elapsed: 3 (type: uint256),
+      reward: 4054054054054054 (type: uint256),
+      rewardPool: 999999955405405405405406 (type: uint256),
+      end: 1602473138 (type: uint256),
+      duration: 2 (type: uint256)
+    )
+
+    ERC20.Transfer(
+      from: <indexed> 0x0000000000000000000000000000000000000000 (type: address),
+      to: <indexed> 0x621ceB6A68cAb49f86585D6073E055FB520F7a36 (type: address),
+      tokens: 407608695652173913 (type: uint256)
+    )
+
+    ERC20.Transfer(
+      from: <indexed> 0x0000000000000000000000000000000000000000 (type: address),
+      to: <indexed> 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0 (type: address),
+      tokens: 407608695652173913 (type: uint256)
+    )
+
+    OptinoGov.Collected(
+      user: <indexed> 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0 (type: address),
+      elapsed: 3 (type: uint256),
+      reward: 407608695652173913 (type: uint256),
+      rewardPool: 999999547796709753231493 (type: uint256),
+      end: 1602478136 (type: uint256),
+      duration: 5000 (type: uint256)
+    )
+
+    ERC20.Transfer(
+      from: <indexed> 0x0000000000000000000000000000000000000000 (type: address),
+      to: <indexed> 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433 (type: address),
+      tokens: 394733870785628 (type: uint256)
+    )
+
+    ERC20.Transfer(
+      from: <indexed> 0x0000000000000000000000000000000000000000 (type: address),
+      to: <indexed> 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E (type: address),
+      tokens: 20775466883454 (type: uint256)
+    )
+
+    OptinoGov.Collected(
+      user: <indexed> 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E (type: address),
+      elapsed: 7 (type: uint256),
+      reward: 394733870785628 (type: uint256),
+      rewardPool: 999999547381200415562411 (type: uint256),
+      end: 1602473138 (type: uint256),
+      duration: 0 (type: uint256)
     )
 
 
     ---------------------------
 
 
-  1 passing (13s)
+  1 passing (22s)
 ```
 
 <br />

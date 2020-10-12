@@ -163,6 +163,31 @@ class MyData {
     return o;
   }
 
+  //-----------------------------------------------------------------------------
+  //Wait until some unixTime + additional seconds
+  //-----------------------------------------------------------------------------
+  waitUntil(message, unixTime, addSeconds) {
+    var t = parseInt(unixTime) + parseInt(addSeconds) + parseInt(1);
+    var time = new Date(t * 1000);
+    console.log("RESULT: Waiting until '" + message + "' at " + unixTime + "+" + addSeconds + "s=" + time + " now=" + new Date());
+    while ((new Date()).getTime() <= time.getTime()) {
+    }
+    console.log("RESULT: Waited until '" + message + "' at " + unixTime + "+" + addSeconds + "s=" + time + " now=" + new Date());
+    console.log("RESULT: ");
+  }
+
+  //-----------------------------------------------------------------------------
+  // Pause for {x} seconds
+  //-----------------------------------------------------------------------------
+  pause(message, addSeconds) {
+    var time = new Date((parseInt(new Date().getTime()/1000) + addSeconds) * 1000);
+    console.log("RESULT: Pausing '" + message + "' for " + addSeconds + "s=" + time + " now=" + new Date());
+    while ((new Date()).getTime() <= time.getTime()) {
+    }
+    console.log("RESULT: Paused '" + message + "' for " + addSeconds + "s=" + time + " now=" + new Date());
+    console.log("RESULT: ");
+  }
+
   async printBalances() {
     var blockNumber = await web3.eth.getBlockNumber();
     var i = 0;
@@ -228,7 +253,7 @@ class MyData {
     if (this.optinoGov != null) {
       console.log("RESULT: OptinoGov " + this.getShortAccountName(this.optinoGov.address) + " @ " + this.optinoGov.address);
 
-      let [ogToken, ogdToken, maxDuration, rewardsPerSecond, proposalCost, proposalThreshold] = await Promise.all([this.optinoGov.ogToken(), this.optinoGov.ogdToken(), this.optinoGov.maxDuration(), this.optinoGov.rewardsPerSecond(), this.optinoGov.proposalCost(), this.optinoGov.proposalThreshold()]);
+      let [ogToken, ogdToken, maxDuration, rewardsPerSecond, collectOnBehalfFee, collectOnBehalfDelay, proposalCost, proposalThreshold] = await Promise.all([this.optinoGov.ogToken(), this.optinoGov.ogdToken(), this.optinoGov.maxDuration(), this.optinoGov.rewardsPerSecond(), this.optinoGov.collectOnBehalfFee(), this.optinoGov.collectOnBehalfDelay(), this.optinoGov.proposalCost(), this.optinoGov.proposalThreshold()]);
       let [quorum, quorumDecayPerSecond, votingDuration, executeDelay, rewardPool, totalVotes] = await Promise.all([this.optinoGov.quorum(), this.optinoGov.quorumDecayPerSecond(), this.optinoGov.votingDuration(), this.optinoGov.executeDelay(), this.optinoGov.rewardPool(), this.optinoGov.totalVotes()]);
       let [proposalCount, stakeInfoLength] = await Promise.all([this.optinoGov.proposalCount(), this.optinoGov.stakeInfoLength()]);
       console.log("RESULT: - ogToken              : " + this.getShortAccountName(ogToken));
@@ -236,6 +261,8 @@ class MyData {
       let decimals = 18;
       console.log("RESULT: - maxDuration          : " + maxDuration + " seconds = " + new BigNumber(maxDuration).dividedBy(60 * 60 * 24) + " days");
       console.log("RESULT: - rewardsPerSecond     : " + rewardsPerSecond + " = " + new BigNumber(rewardsPerSecond).shiftedBy(-18) + " = " + new BigNumber(rewardsPerSecond).multipliedBy(60 * 60 * 24).shiftedBy(-decimals) + " per day");
+      console.log("RESULT: - collectOnBehalfFee   : " + collectOnBehalfFee + " = " + new BigNumber(collectOnBehalfFee).shiftedBy(-16) + "%");
+      console.log("RESULT: - collectOnBehalfDelay : " + collectOnBehalfDelay + " seconds = " + new BigNumber(collectOnBehalfDelay).dividedBy(60 * 60 * 24) + " days");
       console.log("RESULT: - proposalCost         : " + proposalCost + " = " + new BigNumber(proposalCost).shiftedBy(-decimals));
       console.log("RESULT: - proposalThreshold    : " + proposalThreshold + " = " + new BigNumber(proposalThreshold).shiftedBy(-16) + "%");
       console.log("RESULT: - quorum               : " + quorum + " = " + new BigNumber(quorum).shiftedBy(-16) + "%");
