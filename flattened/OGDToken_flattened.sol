@@ -8,7 +8,7 @@ contract Owned {
     bool initialised;
     address public owner;
 
-    event OwnershipTransferred(address indexed from, address indexed to);
+    event OwnershipTransferred(address indexed to);
 
     modifier onlyOwner {
         require(msg.sender == owner, "Not owner");
@@ -20,9 +20,9 @@ contract Owned {
         owner = address(uint160(_owner));
         initialised = true;
     }
-    function transferOwnership(address _newOwner) public onlyOwner {
-        emit OwnershipTransferred(owner, _newOwner);
-        owner = _newOwner;
+    function transferOwnership(address _owner) public onlyOwner {
+        owner = _owner;
+        emit OwnershipTransferred(_owner);
     }
 }
 
@@ -233,10 +233,10 @@ contract OGDToken is OGDTokenInterface, Permissioned {
     event DividendDeposited(address indexed token, uint tokens);
     event DividendWithdrawn(address indexed account, address indexed token, uint tokens);
 
-    // CHECK: Duplicated from the library for ABI generation
-    // event DividendTokenAdded(address indexed token, bool enabled);
-    // event DividendTokenRemoved(address indexed token);
-    // event DividendTokenUpdated(address indexed token, bool enabled);
+    // Duplicated from the library for ABI generation
+    event DividendTokenAdded(address indexed token, bool enabled);
+    event DividendTokenRemoved(address indexed token);
+    event DividendTokenUpdated(address indexed token, bool enabled);
 
     constructor(string memory symbol, string memory name, uint8 decimals, address tokenOwner, uint initialSupply) {
         initPermissioned(msg.sender);
