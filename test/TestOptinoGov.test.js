@@ -46,18 +46,26 @@ contract('Test OptinoGov', async _accounts => {
     // Have to manually run web3.personal.unlockAccount(eth.accounts[x], "") in geth console await myData.unlockAccounts("");
 
     var lockDuration = 500;
-    var lockTokens = new BigNumber("1000").shiftedBy(18);
+    var approveTokens = new BigNumber("10000").shiftedBy(18);
     var batch1 = [];
-    batch1.push(myData.ogToken.approve(myData.optinoGov.address, lockTokens, { from: myData.user1 }));
-    batch1.push(myData.ogToken.approve(myData.optinoGov.address, lockTokens, { from: myData.user2 }));
-    batch1.push(myData.ogToken.approve(myData.optinoGov.address, lockTokens, { from: myData.user3 }));
+    batch1.push(myData.ogToken.approve(myData.optinoGov.address, approveTokens, { from: myData.user1 }));
+    batch1.push(myData.ogToken.approve(myData.optinoGov.address, approveTokens, { from: myData.user2 }));
+    batch1.push(myData.ogToken.approve(myData.optinoGov.address, approveTokens, { from: myData.user3 }));
     await Promise.all(batch1);
 
+    var lockTokens = new BigNumber("1000").shiftedBy(18);
     var batch2 = [];
     batch2.push(myData.optinoGov.commit(lockTokens, lockDuration, { from: myData.user1 }));
     batch2.push(myData.optinoGov.commit(lockTokens, lockDuration, { from: myData.user2 }));
     batch2.push(myData.optinoGov.commit(lockTokens, lockDuration, { from: myData.user3 }));
     await Promise.all(batch2);
+    await myData.printBalances();
+
+    var batch3 = [];
+    batch3.push(myData.optinoGov.commit(lockTokens, lockDuration, { from: myData.user1 }));
+    // batch3.push(myData.optinoGov.commit(lockTokens, lockDuration, { from: myData.user2 }));
+    // batch3.push(myData.optinoGov.commit(lockTokens, lockDuration, { from: myData.user3 }));
+    await Promise.all(batch3);
     await myData.printBalances();
     assert.equal(2, 2, "2 2=2");
   });

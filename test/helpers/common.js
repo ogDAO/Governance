@@ -228,14 +228,14 @@ class MyData {
     if (this.optinoGov != null) {
       console.log("RESULT: OptinoGov " + this.getShortAccountName(this.optinoGov.address) + " @ " + this.optinoGov.address);
 
-      let [ogToken, ogdToken, maxCommittmentTerm, rewardsPerSecond, proposalCost, proposalThreshold] = await Promise.all([this.optinoGov.ogToken(), this.optinoGov.ogdToken(), this.optinoGov.maxCommittmentTerm(), this.optinoGov.rewardsPerSecond(), this.optinoGov.proposalCost(), this.optinoGov.proposalThreshold()]);
+      let [ogToken, ogdToken, maxDuration, rewardsPerSecond, proposalCost, proposalThreshold] = await Promise.all([this.optinoGov.ogToken(), this.optinoGov.ogdToken(), this.optinoGov.maxDuration(), this.optinoGov.rewardsPerSecond(), this.optinoGov.proposalCost(), this.optinoGov.proposalThreshold()]);
       let [quorum, quorumDecayPerSecond, votingDuration, executeDelay, rewardPool, totalVotes] = await Promise.all([this.optinoGov.quorum(), this.optinoGov.quorumDecayPerSecond(), this.optinoGov.votingDuration(), this.optinoGov.executeDelay(), this.optinoGov.rewardPool(), this.optinoGov.totalVotes()]);
       let [proposalCount, stakeInfoLength] = await Promise.all([this.optinoGov.proposalCount(), this.optinoGov.stakeInfoLength()]);
       console.log("RESULT: - ogToken              : " + this.getShortAccountName(ogToken));
       console.log("RESULT: - ogdToken             : " + this.getShortAccountName(ogdToken));
       let decimals = 18;
-      console.log("RESULT: - maxCommittmentTerm   : " + maxCommittmentTerm + " seconds = " + new BigNumber(maxCommittmentTerm).dividedBy(60 * 60 * 24) + " days");
-      console.log("RESULT: - rewardsPerSecond     : " + rewardsPerSecond + " = " + new BigNumber(rewardsPerSecond).multipliedBy(60 * 60 * 24).shiftedBy(-decimals) + " per day");
+      console.log("RESULT: - maxDuration          : " + maxDuration + " seconds = " + new BigNumber(maxDuration).dividedBy(60 * 60 * 24) + " days");
+      console.log("RESULT: - rewardsPerSecond     : " + rewardsPerSecond + " = " + new BigNumber(rewardsPerSecond).shiftedBy(-18) + " = " + new BigNumber(rewardsPerSecond).multipliedBy(60 * 60 * 24).shiftedBy(-decimals) + " per day");
       console.log("RESULT: - proposalCost         : " + proposalCost + " = " + new BigNumber(proposalCost).shiftedBy(-decimals));
       console.log("RESULT: - proposalThreshold    : " + proposalThreshold + " = " + new BigNumber(proposalThreshold).shiftedBy(-16) + "%");
       console.log("RESULT: - quorum               : " + quorum + " = " + new BigNumber(quorum).shiftedBy(-16) + "%");
@@ -246,6 +246,30 @@ class MyData {
       console.log("RESULT: - totalVotes           : " + totalVotes + " = " + new BigNumber(totalVotes).shiftedBy(-decimals));
       console.log("RESULT: - proposalCount        : " + proposalCount);
       console.log("RESULT: - stakeInfoLength      : " + stakeInfoLength);
+
+      for (let j = 1; j < this.accounts.length && j < 4; j++) {
+        let account = this.accounts[j];
+        const commitment = await this.optinoGov.commitments(account);
+        if (commitment != null) {
+          console.log("RESULT: - commitment           : " + j + " " + this.getShortAccountName(account) + " duration: " + commitment.duration + ", end: " + commitment.end + ", tokens: " + new BigNumber(commitment.tokens).shiftedBy(-18) + ", votes: " + new BigNumber(commitment.votes).shiftedBy(-18) + ", staked: " + new BigNumber(commitment.staked).shiftedBy(-18));
+          // console.log("RESULT: - commitment           : " + j + " " + this.getShortAccountName(account) + " " + JSON.stringify(commitment));
+        }
+
+        // uint term;
+        // uint end;
+        // uint tokens;
+        // uint votes;
+        // uint staked;
+        // mapping(bytes32 => uint) stakes;
+
+        // let tokenList = dividendsOwing[0];
+        // let owingList = dividendsOwing[1];
+        // for (let k = 0; k < dividendTokensLength; k++) {
+        //   console.log("RESULT:                            - " + this.getShortAccountName(tokenList[k]) + " " + owingList[k] + " = " + new BigNumber(owingList[k]).shiftedBy(-18).toFixed(18));
+        // }
+      }
+
+
       // console.log("RESULT: gov.totalVotes=" + contract.totalVotes.call().shift(-18));
       // var proposalCount = contract.proposalCount.call();
       // console.log("RESULT: gov.proposalCount=" + proposalCount);
