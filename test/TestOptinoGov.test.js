@@ -1,5 +1,6 @@
 const { MyData, ZERO_ADDRESS, OGToken, OGDToken, OptinoGov, TestToken, printBalances } = require('./helpers/common');
 const BigNumber = require('bignumber.js');
+const truffleAssert = require('truffle-assertions');
 // const util = require('util');
 
 // const { TestTokenTests } = require('./TestToken.js');
@@ -57,7 +58,7 @@ contract('Test OptinoGov', async _accounts => {
     batch1.push(myData.ogToken.approve(myData.optinoGov.address, approveTokens, { from: myData.user2 }));
     batch1.push(myData.ogToken.approve(myData.optinoGov.address, approveTokens, { from: myData.user3 }));
     batch1.push(myData.fee0Token.approve(myData.ogdToken.address, approveTokens, { from: myData.owner }));
-    await Promise.all(batch1);
+    const [approve1, approve2, approve3, approve4] = await Promise.all(batch1);
 
     console.log("RESULT: --- Test 2 - User{1..3} commit OGTokens for {5, 50, 500} seconds duration ---");
     var lockTokens = new BigNumber("1000").shiftedBy(18);
@@ -65,34 +66,45 @@ contract('Test OptinoGov', async _accounts => {
     batch2.push(myData.optinoGov.commit(lockTokens, 5, { from: myData.user1 }));
     batch2.push(myData.optinoGov.commit(lockTokens, 50, { from: myData.user2 }));
     batch2.push(myData.optinoGov.commit(lockTokens, 500, { from: myData.user3 }));
-    await Promise.all(batch2);
+    const [commit1, commit2, commit3] = await Promise.all(batch2);
     await myData.printBalances();
+    console.log("RESULT: commit1.receipt.gasUsed: " + commit1.receipt.gasUsed);
+    truffleAssert.prettyPrintEmittedEvents(commit1);
+    console.log("RESULT: commit2.receipt.gasUsed: " + commit2.receipt.gasUsed);
+    truffleAssert.prettyPrintEmittedEvents(commit2);
+    console.log("RESULT: commit3.receipt.gasUsed: " + commit3.receipt.gasUsed);
+    truffleAssert.prettyPrintEmittedEvents(commit3);
 
     console.log("RESULT: --- Test 3 - User{2} commit again for {55} seconds duration ---");
     var batch3 = [];
     batch3.push(myData.optinoGov.commit(lockTokens, 55, { from: myData.user2 }));
-    await Promise.all(batch3);
+    const [commit4] = await Promise.all(batch3);
     await myData.printBalances();
+    console.log("RESULT: commit4.receipt.gasUsed: " + commit4.receipt.gasUsed);
+    truffleAssert.prettyPrintEmittedEvents(commit4);
 
     console.log("RESULT: --- Test 4 - User1 collecting rewards, user2 collecting and committing rewards leaving duration unchanged, user3 collecting and committing rewards and extending duration ---");
     var batch4 = [];
     batch4.push(myData.optinoGov.collectReward(false, 0, { from: myData.user1 }));
     batch4.push(myData.optinoGov.collectReward(true, 0, { from: myData.user2 }));
     batch4.push(myData.optinoGov.collectReward(true, 5000, { from: myData.user3 }));
-    await Promise.all(batch4);
-    const [collectRewardFor1, collectRewardFor2, collectRewardFor3] = await Promise.all(batch4);
-    console.log("RESULT: collectRewardFor1.receipt.gasUsed: " + collectRewardFor1.receipt.gasUsed);
-    console.log("RESULT: collectRewardFor2.receipt.gasUsed: " + collectRewardFor2.receipt.gasUsed);
-    console.log("RESULT: collectRewardFor3.receipt.gasUsed: " + collectRewardFor3.receipt.gasUsed);
+    const [collectReward1, collectReward2, collectReward3] = await Promise.all(batch4);
     await myData.printBalances();
+    console.log("RESULT: collectReward1.receipt.gasUsed: " + collectReward1.receipt.gasUsed);
+    truffleAssert.prettyPrintEmittedEvents(collectReward1);
+    console.log("RESULT: collectReward2.receipt.gasUsed: " + collectReward2.receipt.gasUsed);
+    truffleAssert.prettyPrintEmittedEvents(collectReward2);
+    console.log("RESULT: collectReward3.receipt.gasUsed: " + collectReward3.receipt.gasUsed);
+    truffleAssert.prettyPrintEmittedEvents(collectReward3);
 
     console.log("RESULT: --- Test 5 - Owner collecting rewards on behalf of user1 for a % fee ---");
     myData.pause("Waiting", 5);
     var batch5 = [];
     batch5.push(myData.optinoGov.collectRewardFor(myData.user1, { from: myData.owner }));
-    const [collectRewardFor4] = await Promise.all(batch5);
-    console.log("RESULT: collectRewardFor4.receipt.gasUsed: " + collectRewardFor4.receipt.gasUsed);
+    const [collectRewardFor1] = await Promise.all(batch5);
     await myData.printBalances();
+    console.log("RESULT: collectRewardFor1.receipt.gasUsed: " + collectRewardFor1.receipt.gasUsed);
+    truffleAssert.prettyPrintEmittedEvents(collectRewardFor1);
 
     console.log("RESULT: --- Test 6 - Owner deposits dividends of 10 ETH and 100 FEE ---");
     var batch6 = [];
@@ -101,9 +113,11 @@ contract('Test OptinoGov', async _accounts => {
     batch6.push(myData.ogdToken.depositDividend(ZERO_ADDRESS, depositFee1Tokens, { value: depositFee1Tokens, from: myData.owner }));
     batch6.push(myData.ogdToken.depositDividend(myData.fee0Token.address, depositFee2Tokens, { from: myData.owner }));
     const [depositDividendFee1, depositDividendFee2] = await Promise.all(batch6);
-    console.log("RESULT: depositDividendFee1.receipt.gasUsed: " + depositDividendFee1.receipt.gasUsed);
-    console.log("RESULT: depositDividendFee2.receipt.gasUsed: " + depositDividendFee2.receipt.gasUsed);
     await myData.printBalances();
+    console.log("RESULT: depositDividendFee1.receipt.gasUsed: " + depositDividendFee1.receipt.gasUsed);
+    truffleAssert.prettyPrintEmittedEvents(depositDividendFee1);
+    console.log("RESULT: depositDividendFee2.receipt.gasUsed: " + depositDividendFee2.receipt.gasUsed);
+    truffleAssert.prettyPrintEmittedEvents(depositDividendFee2);
 
     console.log("RESULT: --- Test 7 - User{1..3} withdraw ETH and FEE dividends ---");
     var batch7 = [];
@@ -111,10 +125,13 @@ contract('Test OptinoGov', async _accounts => {
     batch7.push(myData.ogdToken.withdrawDividends({ from: myData.user2 }));
     batch7.push(myData.ogdToken.withdrawDividends({ from: myData.user3 }));
     const [withdrawDividends1, withdrawDividends2, withdrawDividends3] = await Promise.all(batch7);
-    console.log("RESULT: withdrawDividends1.receipt.gasUsed: " + withdrawDividends1.receipt.gasUsed);
-    console.log("RESULT: withdrawDividends2.receipt.gasUsed: " + withdrawDividends2.receipt.gasUsed);
-    console.log("RESULT: withdrawDividends3.receipt.gasUsed: " + withdrawDividends3.receipt.gasUsed);
     await myData.printBalances();
+    console.log("RESULT: withdrawDividends1.receipt.gasUsed: " + withdrawDividends1.receipt.gasUsed);
+    truffleAssert.prettyPrintEmittedEvents(withdrawDividends1);
+    console.log("RESULT: withdrawDividends2.receipt.gasUsed: " + withdrawDividends2.receipt.gasUsed);
+    truffleAssert.prettyPrintEmittedEvents(withdrawDividends2);
+    console.log("RESULT: withdrawDividends3.receipt.gasUsed: " + withdrawDividends3.receipt.gasUsed);
+    truffleAssert.prettyPrintEmittedEvents(withdrawDividends3);
 
     assert.equal(2, 2, "2 2=2");
   });

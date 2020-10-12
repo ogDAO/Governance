@@ -2,11 +2,12 @@ const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
 const BigNumber = require('bignumber.js');
 const util = require('util');
 
-var OGToken = artifacts.require("OGToken");
-var OGDToken = artifacts.require("OGDToken");
-var OptinoGov = artifacts.require("OptinoGov");
+const OGToken = artifacts.require("OGToken");
+const OGDToken = artifacts.require("OGDToken");
+const OptinoGov = artifacts.require("OptinoGov");
 // var POAPOGTokenStation = artifacts.require("POAPOGTokenStation");
-var TestToken = artifacts.require("TestToken");
+const TestToken = artifacts.require("TestToken");
+const truffleAssert = require('truffle-assertions');
 
 class MyData {
 
