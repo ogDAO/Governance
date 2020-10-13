@@ -94,8 +94,8 @@ contract OptinoGovConfig {
     OGDTokenInterface public ogdToken;
     uint public maxDuration = 10000 seconds; // Testing 365 days;
     uint public rewardsPerSecond = 150_000_000_000_000_000; // 0.15
-    uint public collectOnBehalfFee = 5 * 10**16; // 5%, 18 decimals
-    uint public collectOnBehalfDelay = 1 seconds; // Testing 7 days
+    uint public collectRewardForFee = 5 * 10**16; // 5%, 18 decimals
+    uint public collectRewardForDelay = 1 seconds; // Testing 7 days
     uint public proposalCost = 100_000_000_000_000_000_000; // 100 tokens assuming 18 decimals
     uint public proposalThreshold = 1 * 10**15; // 0.1%, 18 decimals
     uint public quorum = 2 * 10 ** 17; // 20%, 18 decimals
@@ -107,8 +107,8 @@ contract OptinoGovConfig {
 
     event MaxDurationUpdated(uint maxDuration);
     event RewardsPerSecondUpdated(uint rewardsPerSecond);
-    event CollectOnBehalfFeeUpdated(uint collectOnBehalfFee);
-    event CollectOnBehalfDelayUpdated(uint collectOnBehalfDelay);
+    event CollectRewardForFeeUpdated(uint collectRewardForFee);
+    event CollectRewardForDelayUpdated(uint collectRewardForDelay);
     event ProposalCostUpdated(uint proposalCost);
     event ProposalThresholdUpdated(uint proposalThreshold);
     event QuorumUpdated(uint quorum);
@@ -129,13 +129,13 @@ contract OptinoGovConfig {
         maxDuration = _maxDuration;
         emit MaxDurationUpdated(maxDuration);
     }
-    function setCollectOnBehalfFee(uint _collectOnBehalfFee) external onlySelf {
-        collectOnBehalfFee = _collectOnBehalfFee;
-        emit CollectOnBehalfFeeUpdated(collectOnBehalfFee);
+    function setCollectRewardForFee(uint _collectRewardForFee) external onlySelf {
+        collectRewardForFee = _collectRewardForFee;
+        emit CollectRewardForFeeUpdated(collectRewardForFee);
     }
-    function setCollectOnBehalfDelay(uint _collectOnBehalfDelay) external onlySelf {
-        collectOnBehalfDelay = _collectOnBehalfDelay;
-        emit CollectOnBehalfDelayUpdated(collectOnBehalfDelay);
+    function setCollectRewardForDelay(uint _collectRewardForDelay) external onlySelf {
+        collectRewardForDelay = _collectRewardForDelay;
+        emit CollectRewardForDelayUpdated(collectRewardForDelay);
     }
     function setRewardsPerSecond(uint _rewardsPerSecond) external onlySelf {
         rewardsPerSecond = _rewardsPerSecond;
@@ -389,8 +389,8 @@ contract OptinoGov is OptinoGovConfig {
         if (reward > 0) {
             rewardPool = rewardPool.sub(reward);
             if (msg.sender != tokenOwner) {
-                require(user.end + collectOnBehalfDelay < block.timestamp, "Commitment with delay not ended");
-                callerReward = reward.mul(collectOnBehalfFee).div(10 ** 18);
+                require(user.end + collectRewardForDelay < block.timestamp, "Commitment with delay not ended");
+                callerReward = reward.mul(collectRewardForFee).div(10 ** 18);
                 reward = reward.sub(callerReward);
             }
             if (commitRewards) {

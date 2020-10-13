@@ -128,85 +128,85 @@ TestToken.test.js: describe(TestToken behavior tests)
   Contract: Test OptinoGov
 RESULT: --- Setup 1 - Deploy OGToken, OGDToken, FEE ---
 --- Setup completed ---
-RESULT: ogTokenTx.receipt.gasUsed: 1001269
-Events emitted in tx 0x5c5b8ddcf41158b2900e7a035bafc31cffd01d5fae2b327abf0bc80c51dc626e:
-----------------------------------------------------------------------------------------
-Transfer(0: 0x0000000000000000000000000000000000000000, 1: 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E, 2: 40000000000000000000000, __length__: 3, from: 0x0000000000000000000000000000000000000000, to: 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E, tokens: 40000000000000000000000)
-----------------------------------------------------------------------------------------
+RESULT: ogTokenTx - gasUsed: 1001269, txFee: 0.05006345 @ 50 gwei, txFeeUsd: 19.3079707615 @ 385.67 ETH/USD
+  Events emitted in tx 0x3ee0d38778a74eed17c6f21f0c05d6e66f0701c7275bf23198e9bfa99dff9c12:
+  ----------------------------------------------------------------------------------------
+  Transfer(0: 0x0000000000000000000000000000000000000000, 1: 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E, 2: 40000000000000000000000, __length__: 3, from: 0x0000000000000000000000000000000000000000, to: 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E, tokens: 40000000000000000000000)
+  ----------------------------------------------------------------------------------------
 
-RESULT: ogdTokenTx.receipt.gasUsed: 2390322
-Events emitted in tx 0x1d07e2d8ed0d48c2522b3c778e1f294c88710191857af9547487914243540521:
-----------------------------------------------------------------------------------------
-Transfer(0: 0x0000000000000000000000000000000000000000, 1: 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E, 2: 0, __length__: 3, from: 0x0000000000000000000000000000000000000000, to: 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E, tokens: 0)
-----------------------------------------------------------------------------------------
+RESULT: ogdTokenTx - gasUsed: 2390322, txFee: 0.1195161 @ 50 gwei, txFeeUsd: 46.093774287 @ 385.67 ETH/USD
+  Events emitted in tx 0xa5cd3a3e5fdd8c5417e32628ef760850dca32cc11c52e9a447e63b93f2996f50:
+  ----------------------------------------------------------------------------------------
+  Transfer(0: 0x0000000000000000000000000000000000000000, 1: 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E, 2: 0, __length__: 3, from: 0x0000000000000000000000000000000000000000, to: 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E, tokens: 0)
+  ----------------------------------------------------------------------------------------
 
-RESULT: feeTokenTx.receipt.gasUsed: 818690
-Events emitted in tx 0xa0af9a4362d465ef45abda1cd52cb7f79e235c7fff43dbadb95c3ba858ea780c:
-----------------------------------------------------------------------------------------
-Transfer(0: 0x0000000000000000000000000000000000000000, 1: 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E, 2: 10000000000000000000000, __length__: 3, from: 0x0000000000000000000000000000000000000000, to: 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E, tokens: 10000000000000000000000)
-----------------------------------------------------------------------------------------
+RESULT: feeTokenTx - gasUsed: 818690, txFee: 0.0409345 @ 50 gwei, txFeeUsd: 15.787208615 @ 385.67 ETH/USD
+  Events emitted in tx 0xb231c34e9f034f9b14ccc7181b0a98a4c3580cece458dc81bc0d4c4f31deb1a9:
+  ----------------------------------------------------------------------------------------
+  Transfer(0: 0x0000000000000000000000000000000000000000, 1: 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E, 2: 10000000000000000000000, __length__: 3, from: 0x0000000000000000000000000000000000000000, to: 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E, tokens: 10000000000000000000000)
+  ----------------------------------------------------------------------------------------
 
 RESULT: --- Setup 2 - Deploy OptinoGov, Distributed OGTokens, AddDividendTokens([0x00, FEE]) ---
-RESULT: optinoGovTx.receipt.gasUsed: 4703438
-No events emitted in tx 0x7eb6d04c0f90f1cf731dc4c66f62120712e663fafe72b3dd38a4f5e44ccfba27
+RESULT: optinoGovTx - gasUsed: 4702970, txFee: 0.2351485 @ 50 gwei, txFeeUsd: 90.689721995 @ 385.67 ETH/USD
+  No events emitted in tx 0x0c52c5d295c87db3682fb7dcdc99f435a782c4a4ee903996b389772da0b9ebe7
 
-RESULT: mint1.receipt.gasUsed: 50915
-Events emitted in tx 0xb00c8ca0cc745cfdc4ae482a9f1003533095b181f34afb34f7536dca8472601d:
-----------------------------------------------------------------------------------------
-Transfer(0: 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E, 1: 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433, 2: 10000000000000000000000, __length__: 3, from: 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E, to: 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433, tokens: 10000000000000000000000)
-----------------------------------------------------------------------------------------
+RESULT: mint1 - gasUsed: 50915, txFee: 0.00254575 @ 50 gwei, txFeeUsd: 0.9818194025 @ 385.67 ETH/USD
+  Events emitted in tx 0x4f8295ba4284a9344c8a4c032b6e06b9c232d0ef8c9622391b44a6f9e43e6b06:
+  ----------------------------------------------------------------------------------------
+  Transfer(0: 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E, 1: 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433, 2: 10000000000000000000000, __length__: 3, from: 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E, to: 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433, tokens: 10000000000000000000000)
+  ----------------------------------------------------------------------------------------
 
-RESULT: mint2.receipt.gasUsed: 50915
-Events emitted in tx 0x3b16ce5b285dcc9da348fdc23e42d7e294cb752605b27cc405a7072ce62154ad:
-----------------------------------------------------------------------------------------
-Transfer(0: 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E, 1: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, 2: 10000000000000000000000, __length__: 3, from: 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E, to: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, tokens: 10000000000000000000000)
-----------------------------------------------------------------------------------------
+RESULT: mint2 - gasUsed: 50915, txFee: 0.00254575 @ 50 gwei, txFeeUsd: 0.9818194025 @ 385.67 ETH/USD
+  Events emitted in tx 0x0e07e27ded19901b0459f8eefcb747f200a0ff207236605913baf505269c6b37:
+  ----------------------------------------------------------------------------------------
+  Transfer(0: 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E, 1: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, 2: 10000000000000000000000, __length__: 3, from: 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E, to: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, tokens: 10000000000000000000000)
+  ----------------------------------------------------------------------------------------
 
-RESULT: mint3.receipt.gasUsed: 50915
-Events emitted in tx 0x21eacd86a6866bf9af4609dfa0914f4a42b21708aa5fe68cc61ced6dc630a691:
-----------------------------------------------------------------------------------------
-Transfer(0: 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E, 1: 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0, 2: 10000000000000000000000, __length__: 3, from: 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E, to: 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0, tokens: 10000000000000000000000)
-----------------------------------------------------------------------------------------
+RESULT: mint3 - gasUsed: 50915, txFee: 0.00254575 @ 50 gwei, txFeeUsd: 0.9818194025 @ 385.67 ETH/USD
+  Events emitted in tx 0x7b8e2557e365eee894c38ef69480464da15eeb41ed304fda0ca4d9b8f5d5ee3b:
+  ----------------------------------------------------------------------------------------
+  Transfer(0: 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E, 1: 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0, 2: 10000000000000000000000, __length__: 3, from: 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E, to: 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0, tokens: 10000000000000000000000)
+  ----------------------------------------------------------------------------------------
 
-RESULT: addDividendToken1.receipt.gasUsed: 96891
-Events emitted in tx 0x88b1c75f7b85613ffd215fa9f5cd500d651f3a6a7bd32f66404c2d3347ce6d5f:
-----------------------------------------------------------------------------------------
-DividendTokenAdded(0: 0x0000000000000000000000000000000000000000, 1: true, __length__: 2, token: 0x0000000000000000000000000000000000000000, enabled: true)
-----------------------------------------------------------------------------------------
+RESULT: addDividendToken1 - gasUsed: 96891, txFee: 0.00484455 @ 50 gwei, txFeeUsd: 1.8683975985 @ 385.67 ETH/USD
+  Events emitted in tx 0xaceeaeabff9944e4a193338c39fd0fb695b9d1885438f87cb1984bc78750f76f:
+  ----------------------------------------------------------------------------------------
+  DividendTokenAdded(0: 0x0000000000000000000000000000000000000000, 1: true, __length__: 2, token: 0x0000000000000000000000000000000000000000, enabled: true)
+  ----------------------------------------------------------------------------------------
 
-RESULT: addDividendToken2.receipt.gasUsed: 133804
-Events emitted in tx 0x2a4186dcb3b1e34da151680930406b57226e930c7e88d4e061e7eff304b0a606:
-----------------------------------------------------------------------------------------
-DividendTokenAdded(0: 0x2e1594F2F6fc67EE7Bd24A9e30C95bc55fc6A476, 1: true, __length__: 2, token: 0x2e1594F2F6fc67EE7Bd24A9e30C95bc55fc6A476, enabled: true)
-----------------------------------------------------------------------------------------
+RESULT: addDividendToken2 - gasUsed: 133804, txFee: 0.0066902 @ 50 gwei, txFeeUsd: 2.580209434 @ 385.67 ETH/USD
+  Events emitted in tx 0x250834514af060110e0333637cc18585b20b8891c41fa5f239c4d8eac419019e:
+  ----------------------------------------------------------------------------------------
+  DividendTokenAdded(0: 0xc29cA706a8Fbfb04878f768890B9FdeBD9068FaB, 1: true, __length__: 2, token: 0xc29cA706a8Fbfb04878f768890B9FdeBD9068FaB, enabled: true)
+  ----------------------------------------------------------------------------------------
 
 RESULT: --- Setup 3 - Permission OptinoGov to mint OGTokens and OGDTokens ---
-RESULT: ogTokenSetPermission.receipt.gasUsed: 49100
-Events emitted in tx 0xe60a769020af1e1ccf065a8febf8edf177da0933a4185b82d4f554382509a5fc:
-----------------------------------------------------------------------------------------
-PermissionUpdated(0: 0xB4FF3Cbfe8739A220714911fFfd225445e8A9cDC, 1: 1, 2: true, 3: 0, 4: 0, __length__: 5, account: 0xB4FF3Cbfe8739A220714911fFfd225445e8A9cDC, role: 1, active: true, maximum: 0, processed: 0)
-----------------------------------------------------------------------------------------
+RESULT: ogTokenSetPermission - gasUsed: 49100, txFee: 0.002455 @ 50 gwei, txFeeUsd: 0.94681985 @ 385.67 ETH/USD
+  Events emitted in tx 0x0ad1466f4b1dbc3e86ed839c4e43e6a86f547fc80d461b516801e3a188e89095:
+  ----------------------------------------------------------------------------------------
+  PermissionUpdated(0: 0xeF05931Ba780DCF92b56477731900bd84E2f20F4, 1: 1, 2: true, 3: 0, 4: 0, __length__: 5, account: 0xeF05931Ba780DCF92b56477731900bd84E2f20F4, role: 1, active: true, maximum: 0, processed: 0)
+  ----------------------------------------------------------------------------------------
 
-RESULT: ogdTokenSetPermission.receipt.gasUsed: 49123
-Events emitted in tx 0x2dd370ee27ec4ff9c1c382a13d34918ea56fc3541f9bc32830ce33596768e551:
-----------------------------------------------------------------------------------------
-PermissionUpdated(0: 0xB4FF3Cbfe8739A220714911fFfd225445e8A9cDC, 1: 1, 2: true, 3: 0, 4: 0, __length__: 5, account: 0xB4FF3Cbfe8739A220714911fFfd225445e8A9cDC, role: 1, active: true, maximum: 0, processed: 0)
-----------------------------------------------------------------------------------------
+RESULT: ogdTokenSetPermission - gasUsed: 49123, txFee: 0.00245615 @ 50 gwei, txFeeUsd: 0.9472633705 @ 385.67 ETH/USD
+  Events emitted in tx 0x8af2926115b98c3bf26155bd9106c304e83bdfdc23ed8190259ca5b1439580d6:
+  ----------------------------------------------------------------------------------------
+  PermissionUpdated(0: 0xeF05931Ba780DCF92b56477731900bd84E2f20F4, 1: 1, 2: true, 3: 0, 4: 0, __length__: 5, account: 0xeF05931Ba780DCF92b56477731900bd84E2f20F4, role: 1, active: true, maximum: 0, processed: 0)
+  ----------------------------------------------------------------------------------------
 
 RESULT: --- Setup 4 - Transfer ownership of OGToken and OGDToken to OptinoGov ---
-RESULT: ogTokenTransferOwnership.receipt.gasUsed: 29641
-Events emitted in tx 0x4c9e1a2dcb9f2cc38ae3f9940133c489788024253da2cc908bfe439cc3e801c0:
-----------------------------------------------------------------------------------------
-OwnershipTransferred(0: 0xB4FF3Cbfe8739A220714911fFfd225445e8A9cDC, __length__: 1, to: 0xB4FF3Cbfe8739A220714911fFfd225445e8A9cDC)
-----------------------------------------------------------------------------------------
+RESULT: ogTokenTransferOwnership - gasUsed: 29641, txFee: 0.00148205 @ 50 gwei, txFeeUsd: 0.5715822235 @ 385.67 ETH/USD
+  Events emitted in tx 0x207496e4037bcf9105bfe96204c90af069dde0ca3bc475f1a7db53f9cb765b13:
+  ----------------------------------------------------------------------------------------
+  OwnershipTransferred(0: 0xeF05931Ba780DCF92b56477731900bd84E2f20F4, __length__: 1, to: 0xeF05931Ba780DCF92b56477731900bd84E2f20F4)
+  ----------------------------------------------------------------------------------------
 
-RESULT: ogdTokenTransferOwnership.receipt.gasUsed: 29619
-Events emitted in tx 0x2bb0433da5d39c785d8d3404558f6fbcc3b45d6f6161a80fa1234263b8ab6e79:
-----------------------------------------------------------------------------------------
-OwnershipTransferred(0: 0xB4FF3Cbfe8739A220714911fFfd225445e8A9cDC, __length__: 1, to: 0xB4FF3Cbfe8739A220714911fFfd225445e8A9cDC)
-----------------------------------------------------------------------------------------
+RESULT: ogdTokenTransferOwnership - gasUsed: 29619, txFee: 0.00148095 @ 50 gwei, txFeeUsd: 0.5711579865 @ 385.67 ETH/USD
+  Events emitted in tx 0x5c46a66241de2eea639a67e8e086dab240e3ce4d00e1e4dd04a0c137edbe3c27:
+  ----------------------------------------------------------------------------------------
+  OwnershipTransferred(0: 0xeF05931Ba780DCF92b56477731900bd84E2f20F4, __length__: 1, to: 0xeF05931Ba780DCF92b56477731900bd84E2f20F4)
+  ----------------------------------------------------------------------------------------
 
-RESULT:  # Account                                             EtherBalanceChange                             OG                            OGD @ 60204 -> 60212
+RESULT:  # Account                                             EtherBalanceChange                             OG                            OGD @ 72959 -> 72967
 RESULT:                                                                                                      FEE                            ???
 RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
 RESULT: 0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E         0.000000000000000000       10000.000000000000000000           0.000000000000000000 Owner:0xa00A
@@ -217,56 +217,56 @@ RESULT: 2 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976         0.00000000000000000
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000
 RESULT: 3 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0         0.000000000000000000       10000.000000000000000000           0.000000000000000000 User3:0xa33a
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000
-RESULT: 4 0xE8563ddeD0DbC8a4B75B097D6c18AFD91D266F74         0.000000000000000000           0.000000000000000000           0.000000000000000000 OGToken:0xE856
+RESULT: 4 0x6A60DEe899c0eA32EDA0e835D5D6ca39d99ed908         0.000000000000000000           0.000000000000000000           0.000000000000000000 OGToken:0x6A60
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000
-RESULT: 5 0xb4909969B989e53ea5E18aC5ca39393149f3f8C6         0.000000000000000000           0.000000000000000000           0.000000000000000000 OGDToken:0xb490
+RESULT: 5 0x1c37865aa37E1bE7e3ec76529BBFc1d914824370         0.000000000000000000           0.000000000000000000           0.000000000000000000 OGDToken:0x1c37
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000
-RESULT: 6 0x2e1594F2F6fc67EE7Bd24A9e30C95bc55fc6A476         0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee0Token:0x2e15
+RESULT: 6 0xc29cA706a8Fbfb04878f768890B9FdeBD9068FaB         0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee0Token:0xc29c
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000
-RESULT: 7 0xB4FF3Cbfe8739A220714911fFfd225445e8A9cDC         0.000000000000000000           0.000000000000000000           0.000000000000000000 OptinoGov:0xB4FF
+RESULT: 7 0xeF05931Ba780DCF92b56477731900bd84E2f20F4         0.000000000000000000           0.000000000000000000           0.000000000000000000 OptinoGov:0xeF05
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000
 RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
 RESULT:                                                                                 40000.000000000000000000           0.000000000000000000 Total Token Balances
 RESULT:                                                                                 10000.000000000000000000           0.000000000000000000
 RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
 RESULT:
-RESULT: Token 0 OGToken:0xE856 @ 0xE8563ddeD0DbC8a4B75B097D6c18AFD91D266F74
+RESULT: Token 0 OGToken:0x6A60 @ 0x6A60DEe899c0eA32EDA0e835D5D6ca39d99ed908
 RESULT: - symbol               : OG
 RESULT: - name                 : Optino Governance
 RESULT: - decimals             : 18
 RESULT: - totalSupply          : 40000
-RESULT: - owner                : OptinoGov:0xB4FF
-RESULT: Token 1 OGDToken:0xb490 @ 0xb4909969B989e53ea5E18aC5ca39393149f3f8C6
+RESULT: - owner                : OptinoGov:0xeF05
+RESULT: Token 1 OGDToken:0x1c37 @ 0x1c37865aa37E1bE7e3ec76529BBFc1d914824370
 RESULT: - symbol               : OGD
 RESULT: - name                 : Optino Governance Dividend
 RESULT: - decimals             : 18
 RESULT: - totalSupply          : 0
-RESULT: - owner                : OptinoGov:0xB4FF
+RESULT: - owner                : OptinoGov:0xeF05
 RESULT: - dividendTokensLength : 2
-RESULT: - dividendToken        : 0 Fee0Token:0x2e15, enabled: true, unclaimedDividends: 0 = 0.000000000000000000
+RESULT: - dividendToken        : 0 Fee0Token:0xc29c, enabled: true, unclaimedDividends: 0 = 0.000000000000000000
 RESULT: - dividendToken        : 1 ETH|null:0x0000, enabled: true, unclaimedDividends: 0 = 0.000000000000000000
 RESULT: - dividendsOwing       : 1 User1:0xa11A
-RESULT:                            - Fee0Token:0x2e15 0 = 0.000000000000000000
+RESULT:                            - Fee0Token:0xc29c 0 = 0.000000000000000000
 RESULT:                            - ETH|null:0x0000 0 = 0.000000000000000000
 RESULT: - dividendsOwing       : 2 User2:0xa22A
-RESULT:                            - Fee0Token:0x2e15 0 = 0.000000000000000000
+RESULT:                            - Fee0Token:0xc29c 0 = 0.000000000000000000
 RESULT:                            - ETH|null:0x0000 0 = 0.000000000000000000
 RESULT: - dividendsOwing       : 3 User3:0xa33a
-RESULT:                            - Fee0Token:0x2e15 0 = 0.000000000000000000
+RESULT:                            - Fee0Token:0xc29c 0 = 0.000000000000000000
 RESULT:                            - ETH|null:0x0000 0 = 0.000000000000000000
-RESULT: Token 2 Fee0Token:0x2e15 @ 0x2e1594F2F6fc67EE7Bd24A9e30C95bc55fc6A476
+RESULT: Token 2 Fee0Token:0xc29c @ 0xc29cA706a8Fbfb04878f768890B9FdeBD9068FaB
 RESULT: - symbol               : FEE
 RESULT: - name                 : Fee
 RESULT: - decimals             : 18
 RESULT: - totalSupply          : 10000
 RESULT: - owner                : Owner:0xa00A
-RESULT: OptinoGov OptinoGov:0xB4FF @ 0xB4FF3Cbfe8739A220714911fFfd225445e8A9cDC
-RESULT: - ogToken              : OGToken:0xE856
-RESULT: - ogdToken             : OGDToken:0xb490
+RESULT: OptinoGov OptinoGov:0xeF05 @ 0xeF05931Ba780DCF92b56477731900bd84E2f20F4
+RESULT: - ogToken              : OGToken:0x6A60
+RESULT: - ogdToken             : OGDToken:0x1c37
 RESULT: - maxDuration          : 10000 seconds = 0.11574074074074074074 days
 RESULT: - rewardsPerSecond     : 150000000000000000 = 0.15 = 12960 per day
-RESULT: - collectOnBehalfFee   : 50000000000000000 = 5%
-RESULT: - collectOnBehalfDelay : 1 seconds = 0.00001157407407407407 days
+RESULT: - collectRewardForFee  : 50000000000000000 = 5%
+RESULT: - collectRewardForDelay: 1 seconds = 0.00001157407407407407 days
 RESULT: - proposalCost         : 100000000000000000000 = 100
 RESULT: - proposalThreshold    : 1000000000000000 = 0.1%
 RESULT: - quorum               : 200000000000000000 = 20%
@@ -282,92 +282,92 @@ RESULT: - commitment           : 2 User2:0xa22A duration: 0, end: 0, tokens: 0, 
 RESULT: - commitment           : 3 User3:0xa33a duration: 0, end: 0, tokens: 0, votes: 0, staked: 0
 RESULT:
 RESULT: --- Test 1 - User{1..3} approve 2,000 OGTokens to OptinoGov. Owner approves 1,000 FEE to OGDToken ---
-RESULT: approve1.receipt.gasUsed: 43968
-Events emitted in tx 0xbd38af94e5d880d6db0e714020b019b59a78d053bfbbc907d1d1ecf0f2e844b9:
-----------------------------------------------------------------------------------------
-Approval(0: 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433, 1: 0xB4FF3Cbfe8739A220714911fFfd225445e8A9cDC, 2: 2000000000000000000000, __length__: 3, tokenOwner: 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433, spender: 0xB4FF3Cbfe8739A220714911fFfd225445e8A9cDC, tokens: 2000000000000000000000)
-----------------------------------------------------------------------------------------
+RESULT: approve1 - gasUsed: 43968, txFee: 0.0021984 @ 50 gwei, txFeeUsd: 0.847856928 @ 385.67 ETH/USD
+  Events emitted in tx 0xb52d553c62ff85da56c87bb5478b4bd2191f523db23cf242dd75d83cb0f9ea1b:
+  ----------------------------------------------------------------------------------------
+  Approval(0: 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433, 1: 0xeF05931Ba780DCF92b56477731900bd84E2f20F4, 2: 2000000000000000000000, __length__: 3, tokenOwner: 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433, spender: 0xeF05931Ba780DCF92b56477731900bd84E2f20F4, tokens: 2000000000000000000000)
+  ----------------------------------------------------------------------------------------
 
-RESULT: approve2.receipt.gasUsed: 43968
-Events emitted in tx 0x9659f38e567ac33078b62fa0c9cf0329f581c0ab58ebc5eaea8b5411a1d90be9:
-----------------------------------------------------------------------------------------
-Approval(0: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, 1: 0xB4FF3Cbfe8739A220714911fFfd225445e8A9cDC, 2: 2000000000000000000000, __length__: 3, tokenOwner: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, spender: 0xB4FF3Cbfe8739A220714911fFfd225445e8A9cDC, tokens: 2000000000000000000000)
-----------------------------------------------------------------------------------------
+RESULT: approve2 - gasUsed: 43968, txFee: 0.0021984 @ 50 gwei, txFeeUsd: 0.847856928 @ 385.67 ETH/USD
+  Events emitted in tx 0x1c800cf0f146460bd02b0e247ddf54aa6d8260c700baeb3f8bccc0a431c94051:
+  ----------------------------------------------------------------------------------------
+  Approval(0: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, 1: 0xeF05931Ba780DCF92b56477731900bd84E2f20F4, 2: 2000000000000000000000, __length__: 3, tokenOwner: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, spender: 0xeF05931Ba780DCF92b56477731900bd84E2f20F4, tokens: 2000000000000000000000)
+  ----------------------------------------------------------------------------------------
 
-RESULT: approve3.receipt.gasUsed: 43968
-Events emitted in tx 0x4bd1ab3c91dc07012d351e780b0cbaabf321c94c31f3bf09540608d7e269dccb:
-----------------------------------------------------------------------------------------
-Approval(0: 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0, 1: 0xB4FF3Cbfe8739A220714911fFfd225445e8A9cDC, 2: 2000000000000000000000, __length__: 3, tokenOwner: 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0, spender: 0xB4FF3Cbfe8739A220714911fFfd225445e8A9cDC, tokens: 2000000000000000000000)
-----------------------------------------------------------------------------------------
+RESULT: approve3 - gasUsed: 43968, txFee: 0.0021984 @ 50 gwei, txFeeUsd: 0.847856928 @ 385.67 ETH/USD
+  Events emitted in tx 0xa79ec55f3e58fb1cec84879df4634cd504e831d17dd3432c54e13e90269374f7:
+  ----------------------------------------------------------------------------------------
+  Approval(0: 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0, 1: 0xeF05931Ba780DCF92b56477731900bd84E2f20F4, 2: 2000000000000000000000, __length__: 3, tokenOwner: 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0, spender: 0xeF05931Ba780DCF92b56477731900bd84E2f20F4, tokens: 2000000000000000000000)
+  ----------------------------------------------------------------------------------------
 
-RESULT: approve4.receipt.gasUsed: 43968
-Events emitted in tx 0xff5098fd77c85ff4ef5c4b30183e165244a6ec7d3bee1b72a8c255460f23186c:
-----------------------------------------------------------------------------------------
-Approval(0: 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E, 1: 0xb4909969B989e53ea5E18aC5ca39393149f3f8C6, 2: 2000000000000000000000, __length__: 3, tokenOwner: 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E, spender: 0xb4909969B989e53ea5E18aC5ca39393149f3f8C6, tokens: 2000000000000000000000)
-----------------------------------------------------------------------------------------
+RESULT: approve4 - gasUsed: 43968, txFee: 0.0021984 @ 50 gwei, txFeeUsd: 0.847856928 @ 385.67 ETH/USD
+  Events emitted in tx 0x8942abfbab2e8f92bd9ab47ca5df63856e7e84b57562029b9dcb2b9f5318422f:
+  ----------------------------------------------------------------------------------------
+  Approval(0: 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E, 1: 0x1c37865aa37E1bE7e3ec76529BBFc1d914824370, 2: 2000000000000000000000, __length__: 3, tokenOwner: 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E, spender: 0x1c37865aa37E1bE7e3ec76529BBFc1d914824370, tokens: 2000000000000000000000)
+  ----------------------------------------------------------------------------------------
 
 RESULT: --- Test 2 - User{1..3} commit OGTokens for {5, 50, 500} seconds duration ---
-RESULT:  # Account                                             EtherBalanceChange                             OG                            OGD @ 60204 -> 60217
+RESULT:  # Account                                             EtherBalanceChange                             OG                            OGD @ 72959 -> 72971
 RESULT:                                                                                                      FEE                            ???
 RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-RESULT: 0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E         0.015767340000000000       10000.000000000000000000           0.000000000000000000 Owner:0xa00A
+RESULT: 0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E         0.015774000000000000       10000.000000000000000000           0.000000000000000000 Owner:0xa00A
 RESULT:                                                                                 10000.000000000000000000           0.000000000000000000
-RESULT: 1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433        -0.004855700000000000        9000.000000000000000000        1000.000000000000000000 User1:0xa11A
+RESULT: 1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433        -0.004857920000000000        9000.000000000000000000        1000.000000000000000000 User1:0xa11A
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000
-RESULT: 2 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976        -0.006055700000000000        9000.000000000000000000        1000.000000000000000000 User2:0xa22A
+RESULT: 2 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976        -0.006057920000000000        9000.000000000000000000        1000.000000000000000000 User2:0xa22A
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000
-RESULT: 3 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0        -0.004855940000000000        9000.000000000000000000        1000.000000000000000000 User3:0xa33a
+RESULT: 3 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0        -0.004858160000000000        9000.000000000000000000        1000.000000000000000000 User3:0xa33a
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000
-RESULT: 4 0xE8563ddeD0DbC8a4B75B097D6c18AFD91D266F74         0.000000000000000000           0.000000000000000000           0.000000000000000000 OGToken:0xE856
+RESULT: 4 0x6A60DEe899c0eA32EDA0e835D5D6ca39d99ed908         0.000000000000000000           0.000000000000000000           0.000000000000000000 OGToken:0x6A60
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000
-RESULT: 5 0xb4909969B989e53ea5E18aC5ca39393149f3f8C6         0.000000000000000000           0.000000000000000000           0.000000000000000000 OGDToken:0xb490
+RESULT: 5 0x1c37865aa37E1bE7e3ec76529BBFc1d914824370         0.000000000000000000           0.000000000000000000           0.000000000000000000 OGDToken:0x1c37
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000
-RESULT: 6 0x2e1594F2F6fc67EE7Bd24A9e30C95bc55fc6A476         0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee0Token:0x2e15
+RESULT: 6 0xc29cA706a8Fbfb04878f768890B9FdeBD9068FaB         0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee0Token:0xc29c
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000
-RESULT: 7 0xB4FF3Cbfe8739A220714911fFfd225445e8A9cDC         0.000000000000000000        3000.000000000000000000           0.000000000000000000 OptinoGov:0xB4FF
+RESULT: 7 0xeF05931Ba780DCF92b56477731900bd84E2f20F4         0.000000000000000000        3000.000000000000000000           0.000000000000000000 OptinoGov:0xeF05
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000
 RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
 RESULT:                                                                                 40000.000000000000000000        3000.000000000000000000 Total Token Balances
 RESULT:                                                                                 10000.000000000000000000           0.000000000000000000
 RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
 RESULT:
-RESULT: Token 0 OGToken:0xE856 @ 0xE8563ddeD0DbC8a4B75B097D6c18AFD91D266F74
+RESULT: Token 0 OGToken:0x6A60 @ 0x6A60DEe899c0eA32EDA0e835D5D6ca39d99ed908
 RESULT: - symbol               : OG
 RESULT: - name                 : Optino Governance
 RESULT: - decimals             : 18
 RESULT: - totalSupply          : 40000
-RESULT: - owner                : OptinoGov:0xB4FF
-RESULT: Token 1 OGDToken:0xb490 @ 0xb4909969B989e53ea5E18aC5ca39393149f3f8C6
+RESULT: - owner                : OptinoGov:0xeF05
+RESULT: Token 1 OGDToken:0x1c37 @ 0x1c37865aa37E1bE7e3ec76529BBFc1d914824370
 RESULT: - symbol               : OGD
 RESULT: - name                 : Optino Governance Dividend
 RESULT: - decimals             : 18
 RESULT: - totalSupply          : 3000
-RESULT: - owner                : OptinoGov:0xB4FF
+RESULT: - owner                : OptinoGov:0xeF05
 RESULT: - dividendTokensLength : 2
-RESULT: - dividendToken        : 0 Fee0Token:0x2e15, enabled: true, unclaimedDividends: 0 = 0.000000000000000000
+RESULT: - dividendToken        : 0 Fee0Token:0xc29c, enabled: true, unclaimedDividends: 0 = 0.000000000000000000
 RESULT: - dividendToken        : 1 ETH|null:0x0000, enabled: true, unclaimedDividends: 0 = 0.000000000000000000
 RESULT: - dividendsOwing       : 1 User1:0xa11A
-RESULT:                            - Fee0Token:0x2e15 0 = 0.000000000000000000
+RESULT:                            - Fee0Token:0xc29c 0 = 0.000000000000000000
 RESULT:                            - ETH|null:0x0000 0 = 0.000000000000000000
 RESULT: - dividendsOwing       : 2 User2:0xa22A
-RESULT:                            - Fee0Token:0x2e15 0 = 0.000000000000000000
+RESULT:                            - Fee0Token:0xc29c 0 = 0.000000000000000000
 RESULT:                            - ETH|null:0x0000 0 = 0.000000000000000000
 RESULT: - dividendsOwing       : 3 User3:0xa33a
-RESULT:                            - Fee0Token:0x2e15 0 = 0.000000000000000000
+RESULT:                            - Fee0Token:0xc29c 0 = 0.000000000000000000
 RESULT:                            - ETH|null:0x0000 0 = 0.000000000000000000
-RESULT: Token 2 Fee0Token:0x2e15 @ 0x2e1594F2F6fc67EE7Bd24A9e30C95bc55fc6A476
+RESULT: Token 2 Fee0Token:0xc29c @ 0xc29cA706a8Fbfb04878f768890B9FdeBD9068FaB
 RESULT: - symbol               : FEE
 RESULT: - name                 : Fee
 RESULT: - decimals             : 18
 RESULT: - totalSupply          : 10000
 RESULT: - owner                : Owner:0xa00A
-RESULT: OptinoGov OptinoGov:0xB4FF @ 0xB4FF3Cbfe8739A220714911fFfd225445e8A9cDC
-RESULT: - ogToken              : OGToken:0xE856
-RESULT: - ogdToken             : OGDToken:0xb490
+RESULT: OptinoGov OptinoGov:0xeF05 @ 0xeF05931Ba780DCF92b56477731900bd84E2f20F4
+RESULT: - ogToken              : OGToken:0x6A60
+RESULT: - ogdToken             : OGDToken:0x1c37
 RESULT: - maxDuration          : 10000 seconds = 0.11574074074074074074 days
 RESULT: - rewardsPerSecond     : 150000000000000000 = 0.15 = 12960 per day
-RESULT: - collectOnBehalfFee   : 50000000000000000 = 5%
-RESULT: - collectOnBehalfDelay : 1 seconds = 0.00001157407407407407 days
+RESULT: - collectRewardForFee  : 50000000000000000 = 5%
+RESULT: - collectRewardForDelay: 1 seconds = 0.00001157407407407407 days
 RESULT: - proposalCost         : 100000000000000000000 = 100
 RESULT: - proposalThreshold    : 1000000000000000 = 0.1%
 RESULT: - quorum               : 200000000000000000 = 20%
@@ -378,480 +378,480 @@ RESULT: - rewardPool           : 1000000000000000000000000 = 1000000
 RESULT: - totalVotes           : 55500000000000000000 = 55.5
 RESULT: - proposalCount        : 0
 RESULT: - stakeInfoLength      : 0
-RESULT: - commitment           : 1 User1:0xa11A duration: 5, end: 1602542137, tokens: 1000, votes: 0.5, staked: 0
-RESULT: - commitment           : 2 User2:0xa22A duration: 50, end: 1602542182, tokens: 1000, votes: 5, staked: 0
-RESULT: - commitment           : 3 User3:0xa33a duration: 500, end: 1602542632, tokens: 1000, votes: 50, staked: 0
+RESULT: - commitment           : 1 User1:0xa11A duration: 5, end: 1602555865, tokens: 1000, votes: 0.5, staked: 0
+RESULT: - commitment           : 2 User2:0xa22A duration: 50, end: 1602555910, tokens: 1000, votes: 5, staked: 0
+RESULT: - commitment           : 3 User3:0xa33a duration: 500, end: 1602556360, tokens: 1000, votes: 50, staked: 0
 RESULT:
-RESULT: commit1.receipt.gasUsed: 198817
-Events emitted in tx 0x1dab99cd8b87e8eb1ad40663ce98d98fc680e1329e604cdfdee66ec7706137af:
-----------------------------------------------------------------------------------------
-Committed(0: 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433, 1: 1000000000000000000000, 2: 1000000000000000000000, 3: 5, 4: 1602542137, 5: 500000000000000000, 6: 1000000000000000000000000, 7: 5500000000000000000, __length__: 8, user: 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433, tokens: 1000000000000000000000, balance: 1000000000000000000000, duration: 5, end: 1602542137, votes: 500000000000000000, rewardPool: 1000000000000000000000000, totalVotes: 5500000000000000000)
-----------------------------------------------------------------------------------------
+RESULT: commit1 - gasUsed: 198928, txFee: 0.0099464 @ 50 gwei, txFeeUsd: 3.836028088 @ 385.67 ETH/USD
+  Events emitted in tx 0xa8b2fa1c0b050e363b5be4dcb1fdd5eb4fcffd9f1ec116665f2cb8210ab41397:
+  ----------------------------------------------------------------------------------------
+  Committed(0: 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433, 1: 1000000000000000000000, 2: 1000000000000000000000, 3: 5, 4: 1602555865, 5: 500000000000000000, 6: 1000000000000000000000000, 7: 5500000000000000000, __length__: 8, user: 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433, tokens: 1000000000000000000000, balance: 1000000000000000000000, duration: 5, end: 1602555865, votes: 500000000000000000, rewardPool: 1000000000000000000000000, totalVotes: 5500000000000000000)
+  ----------------------------------------------------------------------------------------
 
-RESULT: commit2.receipt.gasUsed: 258817
-Events emitted in tx 0x0c8e6444b1d20b4e6c3a7cad6d3f1edf3ecb0c03c8e376544034414457e77cf2:
-----------------------------------------------------------------------------------------
-Committed(0: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, 1: 1000000000000000000000, 2: 1000000000000000000000, 3: 50, 4: 1602542182, 5: 5000000000000000000, 6: 1000000000000000000000000, 7: 5000000000000000000, __length__: 8, user: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, tokens: 1000000000000000000000, balance: 1000000000000000000000, duration: 50, end: 1602542182, votes: 5000000000000000000, rewardPool: 1000000000000000000000000, totalVotes: 5000000000000000000)
-----------------------------------------------------------------------------------------
+RESULT: commit2 - gasUsed: 258928, txFee: 0.0129464 @ 50 gwei, txFeeUsd: 4.993038088 @ 385.67 ETH/USD
+  Events emitted in tx 0x1f5d5e4c1522b0594be91d8908371450646de2303bb78857681ceefb91cfc337:
+  ----------------------------------------------------------------------------------------
+  Committed(0: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, 1: 1000000000000000000000, 2: 1000000000000000000000, 3: 50, 4: 1602555910, 5: 5000000000000000000, 6: 1000000000000000000000000, 7: 5000000000000000000, __length__: 8, user: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, tokens: 1000000000000000000000, balance: 1000000000000000000000, duration: 50, end: 1602555910, votes: 5000000000000000000, rewardPool: 1000000000000000000000000, totalVotes: 5000000000000000000)
+  ----------------------------------------------------------------------------------------
 
-RESULT: commit3.receipt.gasUsed: 198829
-Events emitted in tx 0x8067656c05f6bfa619326ef1d3efd8bb5e91534f26e94df68050eb681a3676f6:
-----------------------------------------------------------------------------------------
-Committed(0: 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0, 1: 1000000000000000000000, 2: 1000000000000000000000, 3: 500, 4: 1602542632, 5: 50000000000000000000, 6: 1000000000000000000000000, 7: 55500000000000000000, __length__: 8, user: 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0, tokens: 1000000000000000000000, balance: 1000000000000000000000, duration: 500, end: 1602542632, votes: 50000000000000000000, rewardPool: 1000000000000000000000000, totalVotes: 55500000000000000000)
-----------------------------------------------------------------------------------------
+RESULT: commit3 - gasUsed: 198940, txFee: 0.009947 @ 50 gwei, txFeeUsd: 3.83625949 @ 385.67 ETH/USD
+  Events emitted in tx 0x71138980efdbb629bbecedc851f1263695a9360c49644676fec804cb7547ee2f:
+  ----------------------------------------------------------------------------------------
+  Committed(0: 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0, 1: 1000000000000000000000, 2: 1000000000000000000000, 3: 500, 4: 1602556360, 5: 50000000000000000000, 6: 1000000000000000000000000, 7: 55500000000000000000, __length__: 8, user: 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0, tokens: 1000000000000000000000, balance: 1000000000000000000000, duration: 500, end: 1602556360, votes: 50000000000000000000, rewardPool: 1000000000000000000000000, totalVotes: 55500000000000000000)
+  ----------------------------------------------------------------------------------------
 
 RESULT: --- Test 3 - User{2} commit again for {55} seconds duration ---
-RESULT:  # Account                                             EtherBalanceChange                             OG                            OGD @ 60204 -> 60219
+RESULT:  # Account                                             EtherBalanceChange                             OG                            OGD @ 72959 -> 72974
 RESULT:                                                                                                      FEE                            ???
 RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-RESULT: 0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E         0.019112260000000000       10000.000000000000000000           0.000000000000000000 Owner:0xa00A
+RESULT: 0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E         0.019121140000000000       10000.000000000000000000           0.000000000000000000 Owner:0xa00A
 RESULT:                                                                                 10000.000000000000000000           0.000000000000000000
-RESULT: 1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433        -0.004855700000000000        9000.000000000000000000        1000.000000000000000000 User1:0xa11A
+RESULT: 1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433        -0.004857920000000000        9000.000000000000000000        1000.000000000000000000 User1:0xa11A
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000
-RESULT: 2 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976        -0.009400620000000000        8000.000000000000000000        2000.027027027027027027 User2:0xa22A
+RESULT: 2 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976        -0.009405060000000000        8000.000000000000000000        2000.040540540540540540 User2:0xa22A
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000
-RESULT: 3 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0        -0.004855940000000000        9000.000000000000000000        1000.000000000000000000 User3:0xa33a
+RESULT: 3 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0        -0.004858160000000000        9000.000000000000000000        1000.000000000000000000 User3:0xa33a
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000
-RESULT: 4 0xE8563ddeD0DbC8a4B75B097D6c18AFD91D266F74         0.000000000000000000           0.000000000000000000           0.000000000000000000 OGToken:0xE856
+RESULT: 4 0x6A60DEe899c0eA32EDA0e835D5D6ca39d99ed908         0.000000000000000000           0.000000000000000000           0.000000000000000000 OGToken:0x6A60
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000
-RESULT: 5 0xb4909969B989e53ea5E18aC5ca39393149f3f8C6         0.000000000000000000           0.000000000000000000           0.000000000000000000 OGDToken:0xb490
+RESULT: 5 0x1c37865aa37E1bE7e3ec76529BBFc1d914824370         0.000000000000000000           0.000000000000000000           0.000000000000000000 OGDToken:0x1c37
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000
-RESULT: 6 0x2e1594F2F6fc67EE7Bd24A9e30C95bc55fc6A476         0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee0Token:0x2e15
+RESULT: 6 0xc29cA706a8Fbfb04878f768890B9FdeBD9068FaB         0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee0Token:0xc29c
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000
-RESULT: 7 0xB4FF3Cbfe8739A220714911fFfd225445e8A9cDC         0.000000000000000000        4000.027027027027027027           0.000000000000000000 OptinoGov:0xB4FF
+RESULT: 7 0xeF05931Ba780DCF92b56477731900bd84E2f20F4         0.000000000000000000        4000.040540540540540540           0.000000000000000000 OptinoGov:0xeF05
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000
 RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-RESULT:                                                                                 40000.027027027027027027        4000.027027027027027027 Total Token Balances
+RESULT:                                                                                 40000.040540540540540540        4000.040540540540540540 Total Token Balances
 RESULT:                                                                                 10000.000000000000000000           0.000000000000000000
 RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
 RESULT:
-RESULT: Token 0 OGToken:0xE856 @ 0xE8563ddeD0DbC8a4B75B097D6c18AFD91D266F74
+RESULT: Token 0 OGToken:0x6A60 @ 0x6A60DEe899c0eA32EDA0e835D5D6ca39d99ed908
 RESULT: - symbol               : OG
 RESULT: - name                 : Optino Governance
 RESULT: - decimals             : 18
-RESULT: - totalSupply          : 40000.027027027027027027
-RESULT: - owner                : OptinoGov:0xB4FF
-RESULT: Token 1 OGDToken:0xb490 @ 0xb4909969B989e53ea5E18aC5ca39393149f3f8C6
+RESULT: - totalSupply          : 40000.04054054054054054
+RESULT: - owner                : OptinoGov:0xeF05
+RESULT: Token 1 OGDToken:0x1c37 @ 0x1c37865aa37E1bE7e3ec76529BBFc1d914824370
 RESULT: - symbol               : OGD
 RESULT: - name                 : Optino Governance Dividend
 RESULT: - decimals             : 18
-RESULT: - totalSupply          : 4000.027027027027027027
-RESULT: - owner                : OptinoGov:0xB4FF
+RESULT: - totalSupply          : 4000.04054054054054054
+RESULT: - owner                : OptinoGov:0xeF05
 RESULT: - dividendTokensLength : 2
-RESULT: - dividendToken        : 0 Fee0Token:0x2e15, enabled: true, unclaimedDividends: 0 = 0.000000000000000000
+RESULT: - dividendToken        : 0 Fee0Token:0xc29c, enabled: true, unclaimedDividends: 0 = 0.000000000000000000
 RESULT: - dividendToken        : 1 ETH|null:0x0000, enabled: true, unclaimedDividends: 0 = 0.000000000000000000
 RESULT: - dividendsOwing       : 1 User1:0xa11A
-RESULT:                            - Fee0Token:0x2e15 0 = 0.000000000000000000
+RESULT:                            - Fee0Token:0xc29c 0 = 0.000000000000000000
 RESULT:                            - ETH|null:0x0000 0 = 0.000000000000000000
 RESULT: - dividendsOwing       : 2 User2:0xa22A
-RESULT:                            - Fee0Token:0x2e15 0 = 0.000000000000000000
+RESULT:                            - Fee0Token:0xc29c 0 = 0.000000000000000000
 RESULT:                            - ETH|null:0x0000 0 = 0.000000000000000000
 RESULT: - dividendsOwing       : 3 User3:0xa33a
-RESULT:                            - Fee0Token:0x2e15 0 = 0.000000000000000000
+RESULT:                            - Fee0Token:0xc29c 0 = 0.000000000000000000
 RESULT:                            - ETH|null:0x0000 0 = 0.000000000000000000
-RESULT: Token 2 Fee0Token:0x2e15 @ 0x2e1594F2F6fc67EE7Bd24A9e30C95bc55fc6A476
+RESULT: Token 2 Fee0Token:0xc29c @ 0xc29cA706a8Fbfb04878f768890B9FdeBD9068FaB
 RESULT: - symbol               : FEE
 RESULT: - name                 : Fee
 RESULT: - decimals             : 18
 RESULT: - totalSupply          : 10000
 RESULT: - owner                : Owner:0xa00A
-RESULT: OptinoGov OptinoGov:0xB4FF @ 0xB4FF3Cbfe8739A220714911fFfd225445e8A9cDC
-RESULT: - ogToken              : OGToken:0xE856
-RESULT: - ogdToken             : OGDToken:0xb490
+RESULT: OptinoGov OptinoGov:0xeF05 @ 0xeF05931Ba780DCF92b56477731900bd84E2f20F4
+RESULT: - ogToken              : OGToken:0x6A60
+RESULT: - ogdToken             : OGDToken:0x1c37
 RESULT: - maxDuration          : 10000 seconds = 0.11574074074074074074 days
 RESULT: - rewardsPerSecond     : 150000000000000000 = 0.15 = 12960 per day
-RESULT: - collectOnBehalfFee   : 50000000000000000 = 5%
-RESULT: - collectOnBehalfDelay : 1 seconds = 0.00001157407407407407 days
+RESULT: - collectRewardForFee  : 50000000000000000 = 5%
+RESULT: - collectRewardForDelay: 1 seconds = 0.00001157407407407407 days
 RESULT: - proposalCost         : 100000000000000000000 = 100
 RESULT: - proposalThreshold    : 1000000000000000 = 0.1%
 RESULT: - quorum               : 200000000000000000 = 20%
 RESULT: - quorumDecayPerSecond : 12683916793 = 39.9999999984048% per year
 RESULT: - votingDuration       : 10 seconds = 0.00011574074074074074 days
 RESULT: - executeDelay         : 10 seconds = 0.00011574074074074074 days
-RESULT: - rewardPool           : 999999972972972972972973 = 999999.972972972972972973
-RESULT: - totalVotes           : 61500148648648648648 = 61.500148648648648648
+RESULT: - rewardPool           : 999999959459459459459460 = 999999.95945945945945946
+RESULT: - totalVotes           : 61500222972972972972 = 61.500222972972972972
 RESULT: - proposalCount        : 0
 RESULT: - stakeInfoLength      : 0
-RESULT: - commitment           : 1 User1:0xa11A duration: 5, end: 1602542137, tokens: 1000, votes: 0.5, staked: 0
-RESULT: - commitment           : 2 User2:0xa22A duration: 55, end: 1602542189, tokens: 2000.027027027027027027, votes: 11.000148648648648648, staked: 0
-RESULT: - commitment           : 3 User3:0xa33a duration: 500, end: 1602542632, tokens: 1000, votes: 50, staked: 0
+RESULT: - commitment           : 1 User1:0xa11A duration: 5, end: 1602555865, tokens: 1000, votes: 0.5, staked: 0
+RESULT: - commitment           : 2 User2:0xa22A duration: 55, end: 1602555918, tokens: 2000.04054054054054054, votes: 11.000222972972972972, staked: 0
+RESULT: - commitment           : 3 User3:0xa33a duration: 500, end: 1602556360, tokens: 1000, votes: 50, staked: 0
 RESULT:
-RESULT: commit4.receipt.gasUsed: 167246
-Events emitted in tx 0xe8bb5b1e8169c9b6e1ad3f6dc04398dbe4f4ce7e044abc68377c9342b64156a9:
-----------------------------------------------------------------------------------------
-Collected(0: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, 1: 2, 2: 27027027027027027, 3: 0, 4: 999999972972972972972973, 5: 1602542182, 6: 50, __length__: 7, user: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, elapsed: 2, reward: 27027027027027027, callerReward: 0, rewardPool: 999999972972972972972973, end: 1602542182, duration: 50)
-Committed(0: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, 1: 1000000000000000000000, 2: 2000027027027027027027, 3: 55, 4: 1602542189, 5: 11000148648648648648, 6: 999999972972972972972973, 7: 61500148648648648648, __length__: 8, user: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, tokens: 1000000000000000000000, balance: 2000027027027027027027, duration: 55, end: 1602542189, votes: 11000148648648648648, rewardPool: 999999972972972972972973, totalVotes: 61500148648648648648)
-----------------------------------------------------------------------------------------
+RESULT: commit4 - gasUsed: 167357, txFee: 0.00836785 @ 50 gwei, txFeeUsd: 3.2272287095 @ 385.67 ETH/USD
+  Events emitted in tx 0x42b7aa831e85b263a8eb035564354ab88143b24a3aff00c4667ec914a837d47c:
+  ----------------------------------------------------------------------------------------
+  Collected(0: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, 1: 3, 2: 40540540540540540, 3: 0, 4: 999999959459459459459460, 5: 1602555910, 6: 50, __length__: 7, user: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, elapsed: 3, reward: 40540540540540540, callerReward: 0, rewardPool: 999999959459459459459460, end: 1602555910, duration: 50)
+  Committed(0: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, 1: 1000000000000000000000, 2: 2000040540540540540540, 3: 55, 4: 1602555918, 5: 11000222972972972972, 6: 999999959459459459459460, 7: 61500222972972972972, __length__: 8, user: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, tokens: 1000000000000000000000, balance: 2000040540540540540540, duration: 55, end: 1602555918, votes: 11000222972972972972, rewardPool: 999999959459459459459460, totalVotes: 61500222972972972972)
+  ----------------------------------------------------------------------------------------
 
 RESULT: --- Test 4 - User1 collecting rewards, user2 collecting and committing rewards leaving duration unchanged, user3 collecting and committing rewards and extending duration ---
-RESULT:  # Account                                             EtherBalanceChange                             OG                            OGD @ 60204 -> 60221
+RESULT:  # Account                                             EtherBalanceChange                             OG                            OGD @ 72959 -> 72976
 RESULT:                                                                                                      FEE                            ???
 RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-RESULT: 0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E         0.026147700000000000       10000.000000000000000000           0.000000000000000000 Owner:0xa00A
+RESULT: 0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E         0.025839620000000000       10000.000000000000000000           0.000000000000000000 Owner:0xa00A
 RESULT:                                                                                 10000.000000000000000000           0.000000000000000000
-RESULT: 1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433        -0.006617580000000000        9000.004878036990022656        1000.000000000000000000 User1:0xa11A
+RESULT: 1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433        -0.006301960000000000        9000.006097538868514319        1000.000000000000000000 User1:0xa11A
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000
-RESULT: 2 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976        -0.011868380000000000        8000.000000000000000000        2000.080686159030882873 User2:0xa22A
+RESULT: 2 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976        -0.011873260000000000        8000.000000000000000000        2000.094199970252562019 User2:0xa22A
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000
-RESULT: 3 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0        -0.007661740000000000        9000.000000000000000000        1000.490997168804163125 User3:0xa33a
+RESULT: 3 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0        -0.007664400000000000        9000.000000000000000000        1000.614751851261509566 User3:0xa33a
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000
-RESULT: 4 0xE8563ddeD0DbC8a4B75B097D6c18AFD91D266F74         0.000000000000000000           0.000000000000000000           0.000000000000000000 OGToken:0xE856
+RESULT: 4 0x6A60DEe899c0eA32EDA0e835D5D6ca39d99ed908         0.000000000000000000           0.000000000000000000           0.000000000000000000 OGToken:0x6A60
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000
-RESULT: 5 0xb4909969B989e53ea5E18aC5ca39393149f3f8C6         0.000000000000000000           0.000000000000000000           0.000000000000000000 OGDToken:0xb490
+RESULT: 5 0x1c37865aa37E1bE7e3ec76529BBFc1d914824370         0.000000000000000000           0.000000000000000000           0.000000000000000000 OGDToken:0x1c37
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000
-RESULT: 6 0x2e1594F2F6fc67EE7Bd24A9e30C95bc55fc6A476         0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee0Token:0x2e15
+RESULT: 6 0xc29cA706a8Fbfb04878f768890B9FdeBD9068FaB         0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee0Token:0xc29c
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000
-RESULT: 7 0xB4FF3Cbfe8739A220714911fFfd225445e8A9cDC         0.000000000000000000        4000.571683327835045998           0.000000000000000000 OptinoGov:0xB4FF
+RESULT: 7 0xeF05931Ba780DCF92b56477731900bd84E2f20F4         0.000000000000000000        4000.708951821514071585           0.000000000000000000 OptinoGov:0xeF05
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000
 RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-RESULT:                                                                                 40000.576561364825068654        4000.571683327835045998 Total Token Balances
+RESULT:                                                                                 40000.715049360382585904        4000.708951821514071585 Total Token Balances
 RESULT:                                                                                 10000.000000000000000000           0.000000000000000000
 RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
 RESULT:
-RESULT: Token 0 OGToken:0xE856 @ 0xE8563ddeD0DbC8a4B75B097D6c18AFD91D266F74
+RESULT: Token 0 OGToken:0x6A60 @ 0x6A60DEe899c0eA32EDA0e835D5D6ca39d99ed908
 RESULT: - symbol               : OG
 RESULT: - name                 : Optino Governance
 RESULT: - decimals             : 18
-RESULT: - totalSupply          : 40000.576561364825068654
-RESULT: - owner                : OptinoGov:0xB4FF
-RESULT: Token 1 OGDToken:0xb490 @ 0xb4909969B989e53ea5E18aC5ca39393149f3f8C6
+RESULT: - totalSupply          : 40000.715049360382585904
+RESULT: - owner                : OptinoGov:0xeF05
+RESULT: Token 1 OGDToken:0x1c37 @ 0x1c37865aa37E1bE7e3ec76529BBFc1d914824370
 RESULT: - symbol               : OGD
 RESULT: - name                 : Optino Governance Dividend
 RESULT: - decimals             : 18
-RESULT: - totalSupply          : 4000.571683327835045998
-RESULT: - owner                : OptinoGov:0xB4FF
+RESULT: - totalSupply          : 4000.708951821514071585
+RESULT: - owner                : OptinoGov:0xeF05
 RESULT: - dividendTokensLength : 2
-RESULT: - dividendToken        : 0 Fee0Token:0x2e15, enabled: true, unclaimedDividends: 0 = 0.000000000000000000
+RESULT: - dividendToken        : 0 Fee0Token:0xc29c, enabled: true, unclaimedDividends: 0 = 0.000000000000000000
 RESULT: - dividendToken        : 1 ETH|null:0x0000, enabled: true, unclaimedDividends: 0 = 0.000000000000000000
 RESULT: - dividendsOwing       : 1 User1:0xa11A
-RESULT:                            - Fee0Token:0x2e15 0 = 0.000000000000000000
+RESULT:                            - Fee0Token:0xc29c 0 = 0.000000000000000000
 RESULT:                            - ETH|null:0x0000 0 = 0.000000000000000000
 RESULT: - dividendsOwing       : 2 User2:0xa22A
-RESULT:                            - Fee0Token:0x2e15 0 = 0.000000000000000000
+RESULT:                            - Fee0Token:0xc29c 0 = 0.000000000000000000
 RESULT:                            - ETH|null:0x0000 0 = 0.000000000000000000
 RESULT: - dividendsOwing       : 3 User3:0xa33a
-RESULT:                            - Fee0Token:0x2e15 0 = 0.000000000000000000
+RESULT:                            - Fee0Token:0xc29c 0 = 0.000000000000000000
 RESULT:                            - ETH|null:0x0000 0 = 0.000000000000000000
-RESULT: Token 2 Fee0Token:0x2e15 @ 0x2e1594F2F6fc67EE7Bd24A9e30C95bc55fc6A476
+RESULT: Token 2 Fee0Token:0xc29c @ 0xc29cA706a8Fbfb04878f768890B9FdeBD9068FaB
 RESULT: - symbol               : FEE
 RESULT: - name                 : Fee
 RESULT: - decimals             : 18
 RESULT: - totalSupply          : 10000
 RESULT: - owner                : Owner:0xa00A
-RESULT: OptinoGov OptinoGov:0xB4FF @ 0xB4FF3Cbfe8739A220714911fFfd225445e8A9cDC
-RESULT: - ogToken              : OGToken:0xE856
-RESULT: - ogdToken             : OGDToken:0xb490
+RESULT: OptinoGov OptinoGov:0xeF05 @ 0xeF05931Ba780DCF92b56477731900bd84E2f20F4
+RESULT: - ogToken              : OGToken:0x6A60
+RESULT: - ogdToken             : OGDToken:0x1c37
 RESULT: - maxDuration          : 10000 seconds = 0.11574074074074074074 days
 RESULT: - rewardsPerSecond     : 150000000000000000 = 0.15 = 12960 per day
-RESULT: - collectOnBehalfFee   : 50000000000000000 = 5%
-RESULT: - collectOnBehalfDelay : 1 seconds = 0.00001157407407407407 days
+RESULT: - collectRewardForFee  : 50000000000000000 = 5%
+RESULT: - collectRewardForDelay: 1 seconds = 0.00001157407407407407 days
 RESULT: - proposalCost         : 100000000000000000000 = 100
 RESULT: - proposalThreshold    : 1000000000000000 = 0.1%
 RESULT: - quorum               : 200000000000000000 = 20%
 RESULT: - quorumDecayPerSecond : 12683916793 = 39.9999999984048% per year
 RESULT: - votingDuration       : 10 seconds = 0.00011574074074074074 days
 RESULT: - executeDelay         : 10 seconds = 0.00011574074074074074 days
-RESULT: - rewardPool           : 999999423438635174931346 = 999999.423438635174931346
-RESULT: - totalVotes           : 511345647233050730210 = 511.34564723305073021
+RESULT: - rewardPool           : 999999284950639617414096 = 999999.284950639617414096
+RESULT: - totalVotes           : 511307598898603727755 = 511.307598898603727755
 RESULT: - proposalCount        : 0
 RESULT: - stakeInfoLength      : 0
-RESULT: - commitment           : 1 User1:0xa11A duration: 1, end: 1602542137, tokens: 1000, votes: 0.1, staked: 0
-RESULT: - commitment           : 2 User2:0xa22A duration: 53, end: 1602542189, tokens: 2000.080686159030882873, votes: 11.000148648648648648, staked: 0
-RESULT: - commitment           : 3 User3:0xa33a duration: 5000, end: 1602547136, tokens: 1000.490997168804163125, votes: 500.245498584402081562, staked: 0
+RESULT: - commitment           : 1 User1:0xa11A duration: 0, end: 1602555865, tokens: 1000, votes: 0, staked: 0
+RESULT: - commitment           : 2 User2:0xa22A duration: 53, end: 1602555918, tokens: 2000.094199970252562019, votes: 11.000222972972972972, staked: 0
+RESULT: - commitment           : 3 User3:0xa33a duration: 5000, end: 1602560865, tokens: 1000.614751851261509566, votes: 500.307375925630754783, staked: 0
 RESULT:
-RESULT: collectReward1.receipt.gasUsed: 88094
-Events emitted in tx 0x3063ce9b8055cf5828f29db3ae55540963836e732d8c1248d011478f1a15b86e:
-----------------------------------------------------------------------------------------
-Collected(0: 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433, 1: 4, 2: 4878036990022656, 3: 0, 4: 999999914435803979094471, 5: 1602542137, 6: 1, __length__: 7, user: 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433, elapsed: 4, reward: 4878036990022656, callerReward: 0, rewardPool: 999999914435803979094471, end: 1602542137, duration: 1)
-----------------------------------------------------------------------------------------
+RESULT: collectReward1 - gasUsed: 72202, txFee: 0.0036101 @ 50 gwei, txFeeUsd: 1.392307267 @ 385.67 ETH/USD
+  Events emitted in tx 0xf87848478447195a2f32adc2e2ebb94723ab37ebb336e168ed09ac2252378c7b:
+  ----------------------------------------------------------------------------------------
+  Collected(0: 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433, 1: 5, 2: 6097538868514319, 3: 0, 4: 999999899702490878923662, 5: 1602555865, 6: 0, __length__: 7, user: 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433, elapsed: 5, reward: 6097538868514319, callerReward: 0, rewardPool: 999999899702490878923662, end: 1602555865, duration: 0)
+  ----------------------------------------------------------------------------------------
 
-RESULT: collectReward2.receipt.gasUsed: 123388
-Events emitted in tx 0x1ace995eb1cc92e8012977ded4d35302a2d66df13a3f4ef3b0c9bc8d82984c75:
-----------------------------------------------------------------------------------------
-Collected(0: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, 1: 2, 2: 53659132003855846, 3: 0, 4: 999999919313840969117127, 5: 1602542189, 6: 53, __length__: 7, user: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, elapsed: 2, reward: 53659132003855846, callerReward: 0, rewardPool: 999999919313840969117127, end: 1602542189, duration: 53)
-----------------------------------------------------------------------------------------
+RESULT: collectReward2 - gasUsed: 123410, txFee: 0.0061705 @ 50 gwei, txFeeUsd: 2.379776735 @ 385.67 ETH/USD
+  Events emitted in tx 0x062e06523f349e07053fa6e08b56109e8b1f50451972d71d1222f5b185295ce3:
+  ----------------------------------------------------------------------------------------
+  Collected(0: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, 1: 2, 2: 53659429712021479, 3: 0, 4: 999999905800029747437981, 5: 1602555918, 6: 53, __length__: 7, user: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, elapsed: 2, reward: 53659429712021479, callerReward: 0, rewardPool: 999999905800029747437981, end: 1602555918, duration: 53)
+  ----------------------------------------------------------------------------------------
 
-RESULT: collectReward3.receipt.gasUsed: 140290
-Events emitted in tx 0x6c9338e871af8914e1bcfb30632b465bd7bc0da6fef09a6818fd748d96780da4:
-----------------------------------------------------------------------------------------
-Collected(0: 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0, 1: 4, 2: 490997168804163125, 3: 0, 4: 999999423438635174931346, 5: 1602547136, 6: 5000, __length__: 7, user: 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0, elapsed: 4, reward: 490997168804163125, callerReward: 0, rewardPool: 999999423438635174931346, end: 1602547136, duration: 5000)
-----------------------------------------------------------------------------------------
+RESULT: collectReward3 - gasUsed: 140312, txFee: 0.0070156 @ 50 gwei, txFeeUsd: 2.705706452 @ 385.67 ETH/USD
+  Events emitted in tx 0x3f9ef4a70918d2f6364859590db29c0c57092de369e8082ae7dd491387c27b49:
+  ----------------------------------------------------------------------------------------
+  Collected(0: 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0, 1: 5, 2: 614751851261509566, 3: 0, 4: 999999284950639617414096, 5: 1602560865, 6: 5000, __length__: 7, user: 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0, elapsed: 5, reward: 614751851261509566, callerReward: 0, rewardPool: 999999284950639617414096, end: 1602560865, duration: 5000)
+  ----------------------------------------------------------------------------------------
 
 RESULT: --- Test 5 - Owner collecting rewards on behalf of user1 for a % fee ---
-RESULT: Pausing 'Waiting' for 5s=Tue Oct 13 2020 09:35:42 GMT+1100 (Australian Eastern Daylight Time) now=Tue Oct 13 2020 09:35:37 GMT+1100 (Australian Eastern Daylight Time)
-RESULT: Paused 'Waiting' for 5s=Tue Oct 13 2020 09:35:42 GMT+1100 (Australian Eastern Daylight Time) now=Tue Oct 13 2020 09:35:42 GMT+1100 (Australian Eastern Daylight Time)
+RESULT: Pausing 'Waiting' for 5s=Tue Oct 13 2020 13:24:30 GMT+1100 (Australian Eastern Daylight Time) now=Tue Oct 13 2020 13:24:25 GMT+1100 (Australian Eastern Daylight Time)
+RESULT: Paused 'Waiting' for 5s=Tue Oct 13 2020 13:24:30 GMT+1100 (Australian Eastern Daylight Time) now=Tue Oct 13 2020 13:24:30 GMT+1100 (Australian Eastern Daylight Time)
 RESULT:
-RESULT:  # Account                                             EtherBalanceChange                             OG                            OGD @ 60204 -> 60229
+RESULT:  # Account                                             EtherBalanceChange                             OG                            OGD @ 72959 -> 72983
 RESULT:                                                                                                      FEE                            ???
 RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-RESULT: 0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E         0.026147700000000000       10000.000011733746111786           0.000000000000000000 Owner:0xa00A
+RESULT: 0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E         0.025839620000000000       10000.000000000000000000           0.000000000000000000 Owner:0xa00A
 RESULT:                                                                                 10000.000000000000000000           0.000000000000000000
-RESULT: 1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433        -0.006617580000000000        9000.005100978166146609        1000.000000000000000000 User1:0xa11A
+RESULT: 1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433        -0.006301960000000000        9000.006097538868514319        1000.000000000000000000 User1:0xa11A
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000
-RESULT: 2 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976        -0.011868380000000000        8000.000000000000000000        2000.080686159030882873 User2:0xa22A
+RESULT: 2 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976        -0.011873260000000000        8000.000000000000000000        2000.094199970252562019 User2:0xa22A
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000
-RESULT: 3 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0        -0.007661740000000000        9000.000000000000000000        1000.490997168804163125 User3:0xa33a
+RESULT: 3 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0        -0.007664400000000000        9000.000000000000000000        1000.614751851261509566 User3:0xa33a
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000
-RESULT: 4 0xE8563ddeD0DbC8a4B75B097D6c18AFD91D266F74         0.000000000000000000           0.000000000000000000           0.000000000000000000 OGToken:0xE856
+RESULT: 4 0x6A60DEe899c0eA32EDA0e835D5D6ca39d99ed908         0.000000000000000000           0.000000000000000000           0.000000000000000000 OGToken:0x6A60
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000
-RESULT: 5 0xb4909969B989e53ea5E18aC5ca39393149f3f8C6         0.000000000000000000           0.000000000000000000           0.000000000000000000 OGDToken:0xb490
+RESULT: 5 0x1c37865aa37E1bE7e3ec76529BBFc1d914824370         0.000000000000000000           0.000000000000000000           0.000000000000000000 OGDToken:0x1c37
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000
-RESULT: 6 0x2e1594F2F6fc67EE7Bd24A9e30C95bc55fc6A476         0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee0Token:0x2e15
+RESULT: 6 0xc29cA706a8Fbfb04878f768890B9FdeBD9068FaB         0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee0Token:0xc29c
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000
-RESULT: 7 0xB4FF3Cbfe8739A220714911fFfd225445e8A9cDC         0.000000000000000000        4000.571683327835045998           0.000000000000000000 OptinoGov:0xB4FF
+RESULT: 7 0xeF05931Ba780DCF92b56477731900bd84E2f20F4         0.000000000000000000        4000.708951821514071585           0.000000000000000000 OptinoGov:0xeF05
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000
 RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-RESULT:                                                                                 40000.576796039747304393        4000.571683327835045998 Total Token Balances
+RESULT:                                                                                 40000.715049360382585904        4000.708951821514071585 Total Token Balances
 RESULT:                                                                                 10000.000000000000000000           0.000000000000000000
 RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
 RESULT:
-RESULT: Token 0 OGToken:0xE856 @ 0xE8563ddeD0DbC8a4B75B097D6c18AFD91D266F74
+RESULT: Token 0 OGToken:0x6A60 @ 0x6A60DEe899c0eA32EDA0e835D5D6ca39d99ed908
 RESULT: - symbol               : OG
 RESULT: - name                 : Optino Governance
 RESULT: - decimals             : 18
-RESULT: - totalSupply          : 40000.576796039747304393
-RESULT: - owner                : OptinoGov:0xB4FF
-RESULT: Token 1 OGDToken:0xb490 @ 0xb4909969B989e53ea5E18aC5ca39393149f3f8C6
+RESULT: - totalSupply          : 40000.715049360382585904
+RESULT: - owner                : OptinoGov:0xeF05
+RESULT: Token 1 OGDToken:0x1c37 @ 0x1c37865aa37E1bE7e3ec76529BBFc1d914824370
 RESULT: - symbol               : OGD
 RESULT: - name                 : Optino Governance Dividend
 RESULT: - decimals             : 18
-RESULT: - totalSupply          : 4000.571683327835045998
-RESULT: - owner                : OptinoGov:0xB4FF
+RESULT: - totalSupply          : 4000.708951821514071585
+RESULT: - owner                : OptinoGov:0xeF05
 RESULT: - dividendTokensLength : 2
-RESULT: - dividendToken        : 0 Fee0Token:0x2e15, enabled: true, unclaimedDividends: 0 = 0.000000000000000000
+RESULT: - dividendToken        : 0 Fee0Token:0xc29c, enabled: true, unclaimedDividends: 0 = 0.000000000000000000
 RESULT: - dividendToken        : 1 ETH|null:0x0000, enabled: true, unclaimedDividends: 0 = 0.000000000000000000
 RESULT: - dividendsOwing       : 1 User1:0xa11A
-RESULT:                            - Fee0Token:0x2e15 0 = 0.000000000000000000
+RESULT:                            - Fee0Token:0xc29c 0 = 0.000000000000000000
 RESULT:                            - ETH|null:0x0000 0 = 0.000000000000000000
 RESULT: - dividendsOwing       : 2 User2:0xa22A
-RESULT:                            - Fee0Token:0x2e15 0 = 0.000000000000000000
+RESULT:                            - Fee0Token:0xc29c 0 = 0.000000000000000000
 RESULT:                            - ETH|null:0x0000 0 = 0.000000000000000000
 RESULT: - dividendsOwing       : 3 User3:0xa33a
-RESULT:                            - Fee0Token:0x2e15 0 = 0.000000000000000000
+RESULT:                            - Fee0Token:0xc29c 0 = 0.000000000000000000
 RESULT:                            - ETH|null:0x0000 0 = 0.000000000000000000
-RESULT: Token 2 Fee0Token:0x2e15 @ 0x2e1594F2F6fc67EE7Bd24A9e30C95bc55fc6A476
+RESULT: Token 2 Fee0Token:0xc29c @ 0xc29cA706a8Fbfb04878f768890B9FdeBD9068FaB
 RESULT: - symbol               : FEE
 RESULT: - name                 : Fee
 RESULT: - decimals             : 18
 RESULT: - totalSupply          : 10000
 RESULT: - owner                : Owner:0xa00A
-RESULT: OptinoGov OptinoGov:0xB4FF @ 0xB4FF3Cbfe8739A220714911fFfd225445e8A9cDC
-RESULT: - ogToken              : OGToken:0xE856
-RESULT: - ogdToken             : OGDToken:0xb490
+RESULT: OptinoGov OptinoGov:0xeF05 @ 0xeF05931Ba780DCF92b56477731900bd84E2f20F4
+RESULT: - ogToken              : OGToken:0x6A60
+RESULT: - ogdToken             : OGDToken:0x1c37
 RESULT: - maxDuration          : 10000 seconds = 0.11574074074074074074 days
 RESULT: - rewardsPerSecond     : 150000000000000000 = 0.15 = 12960 per day
-RESULT: - collectOnBehalfFee   : 50000000000000000 = 5%
-RESULT: - collectOnBehalfDelay : 1 seconds = 0.00001157407407407407 days
+RESULT: - collectRewardForFee  : 50000000000000000 = 5%
+RESULT: - collectRewardForDelay: 1 seconds = 0.00001157407407407407 days
 RESULT: - proposalCost         : 100000000000000000000 = 100
 RESULT: - proposalThreshold    : 1000000000000000 = 0.1%
 RESULT: - quorum               : 200000000000000000 = 20%
 RESULT: - quorumDecayPerSecond : 12683916793 = 39.9999999984048% per year
 RESULT: - votingDuration       : 10 seconds = 0.00011574074074074074 days
 RESULT: - executeDelay         : 10 seconds = 0.00011574074074074074 days
-RESULT: - rewardPool           : 999999423203960252695607 = 999999.423203960252695607
-RESULT: - totalVotes           : 511245647233050730210 = 511.24564723305073021
+RESULT: - rewardPool           : 999999284950639617414096 = 999999.284950639617414096
+RESULT: - totalVotes           : 511307598898603727755 = 511.307598898603727755
 RESULT: - proposalCount        : 0
 RESULT: - stakeInfoLength      : 0
-RESULT: - commitment           : 1 User1:0xa11A duration: 0, end: 1602542137, tokens: 1000, votes: 0, staked: 0
-RESULT: - commitment           : 2 User2:0xa22A duration: 53, end: 1602542189, tokens: 2000.080686159030882873, votes: 11.000148648648648648, staked: 0
-RESULT: - commitment           : 3 User3:0xa33a duration: 5000, end: 1602547136, tokens: 1000.490997168804163125, votes: 500.245498584402081562, staked: 0
+RESULT: - commitment           : 1 User1:0xa11A duration: 0, end: 1602555865, tokens: 1000, votes: 0, staked: 0
+RESULT: - commitment           : 2 User2:0xa22A duration: 53, end: 1602555918, tokens: 2000.094199970252562019, votes: 11.000222972972972972, staked: 0
+RESULT: - commitment           : 3 User3:0xa33a duration: 5000, end: 1602560865, tokens: 1000.614751851261509566, votes: 500.307375925630754783, staked: 0
 RESULT:
-RESULT: collectRewardFor1.receipt.gasUsed: 94047
-Events emitted in tx 0xfe407d2c8e62cfc36eaca269575716514e855b574f5665a0c9f5c74b022acc65:
-----------------------------------------------------------------------------------------
-Collected(0: 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E, 1: 8, 2: 222941176123953, 3: 11733746111786, 4: 999999423203960252695607, 5: 1602542137, 6: 0, __length__: 7, user: 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E, elapsed: 8, reward: 222941176123953, callerReward: 11733746111786, rewardPool: 999999423203960252695607, end: 1602542137, duration: 0)
-----------------------------------------------------------------------------------------
+RESULT: collectRewardFor1 - gasUsed: 31925, txFee: 0.00159625 @ 50 gwei, txFeeUsd: 0.6156257375 @ 385.67 ETH/USD
+  Events emitted in tx 0x82e0d07664ee26b001e0a96bb387e49c09b6272abf622df52815d97bfd7f1a99:
+  ----------------------------------------------------------------------------------------
+  Collected(0: 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E, 1: 7, 2: 0, 3: 0, 4: 999999284950639617414096, 5: 1602555865, 6: 0, __length__: 7, user: 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E, elapsed: 7, reward: 0, callerReward: 0, rewardPool: 999999284950639617414096, end: 1602555865, duration: 0)
+  ----------------------------------------------------------------------------------------
 
 RESULT: --- Test 6 - Owner deposits dividends of 10 ETH and 100 FEE ---
-RESULT:  # Account                                             EtherBalanceChange                             OG                            OGD @ 60204 -> 60231
+RESULT:  # Account                                             EtherBalanceChange                             OG                            OGD @ 72959 -> 72985
 RESULT:                                                                                                      FEE                            ???
 RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-RESULT: 0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E        -9.973852300000000000       10000.000011733746111786           0.000000000000000000 Owner:0xa00A
+RESULT: 0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E        -9.974160380000000000       10000.000000000000000000           0.000000000000000000 Owner:0xa00A
 RESULT:                                                                                  9900.000000000000000000           0.000000000000000000
-RESULT: 1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433        -0.006617580000000000        9000.005100978166146609        1000.000000000000000000 User1:0xa11A
+RESULT: 1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433        -0.006301960000000000        9000.006097538868514319        1000.000000000000000000 User1:0xa11A
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000
-RESULT: 2 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976        -0.011868380000000000        8000.000000000000000000        2000.080686159030882873 User2:0xa22A
+RESULT: 2 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976        -0.011873260000000000        8000.000000000000000000        2000.094199970252562019 User2:0xa22A
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000
-RESULT: 3 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0        -0.007661740000000000        9000.000000000000000000        1000.490997168804163125 User3:0xa33a
+RESULT: 3 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0        -0.007664400000000000        9000.000000000000000000        1000.614751851261509566 User3:0xa33a
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000
-RESULT: 4 0xE8563ddeD0DbC8a4B75B097D6c18AFD91D266F74         0.000000000000000000           0.000000000000000000           0.000000000000000000 OGToken:0xE856
+RESULT: 4 0x6A60DEe899c0eA32EDA0e835D5D6ca39d99ed908         0.000000000000000000           0.000000000000000000           0.000000000000000000 OGToken:0x6A60
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000
-RESULT: 5 0xb4909969B989e53ea5E18aC5ca39393149f3f8C6        10.000000000000000000           0.000000000000000000           0.000000000000000000 OGDToken:0xb490
+RESULT: 5 0x1c37865aa37E1bE7e3ec76529BBFc1d914824370        10.000000000000000000           0.000000000000000000           0.000000000000000000 OGDToken:0x1c37
 RESULT:                                                                                   100.000000000000000000           0.000000000000000000
-RESULT: 6 0x2e1594F2F6fc67EE7Bd24A9e30C95bc55fc6A476         0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee0Token:0x2e15
+RESULT: 6 0xc29cA706a8Fbfb04878f768890B9FdeBD9068FaB         0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee0Token:0xc29c
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000
-RESULT: 7 0xB4FF3Cbfe8739A220714911fFfd225445e8A9cDC         0.000000000000000000        4000.571683327835045998           0.000000000000000000 OptinoGov:0xB4FF
+RESULT: 7 0xeF05931Ba780DCF92b56477731900bd84E2f20F4         0.000000000000000000        4000.708951821514071585           0.000000000000000000 OptinoGov:0xeF05
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000
 RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-RESULT:                                                                                 40000.576796039747304393        4000.571683327835045998 Total Token Balances
+RESULT:                                                                                 40000.715049360382585904        4000.708951821514071585 Total Token Balances
 RESULT:                                                                                 10000.000000000000000000           0.000000000000000000
 RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
 RESULT:
-RESULT: Token 0 OGToken:0xE856 @ 0xE8563ddeD0DbC8a4B75B097D6c18AFD91D266F74
+RESULT: Token 0 OGToken:0x6A60 @ 0x6A60DEe899c0eA32EDA0e835D5D6ca39d99ed908
 RESULT: - symbol               : OG
 RESULT: - name                 : Optino Governance
 RESULT: - decimals             : 18
-RESULT: - totalSupply          : 40000.576796039747304393
-RESULT: - owner                : OptinoGov:0xB4FF
-RESULT: Token 1 OGDToken:0xb490 @ 0xb4909969B989e53ea5E18aC5ca39393149f3f8C6
+RESULT: - totalSupply          : 40000.715049360382585904
+RESULT: - owner                : OptinoGov:0xeF05
+RESULT: Token 1 OGDToken:0x1c37 @ 0x1c37865aa37E1bE7e3ec76529BBFc1d914824370
 RESULT: - symbol               : OGD
 RESULT: - name                 : Optino Governance Dividend
 RESULT: - decimals             : 18
-RESULT: - totalSupply          : 4000.571683327835045998
-RESULT: - owner                : OptinoGov:0xB4FF
+RESULT: - totalSupply          : 4000.708951821514071585
+RESULT: - owner                : OptinoGov:0xeF05
 RESULT: - dividendTokensLength : 2
-RESULT: - dividendToken        : 0 Fee0Token:0x2e15, enabled: true, unclaimedDividends: 100000000000000000000 = 100.000000000000000000
+RESULT: - dividendToken        : 0 Fee0Token:0xc29c, enabled: true, unclaimedDividends: 100000000000000000000 = 100.000000000000000000
 RESULT: - dividendToken        : 1 ETH|null:0x0000, enabled: true, unclaimedDividends: 10000000000000000000 = 10.000000000000000000
 RESULT: - dividendsOwing       : 1 User1:0xa11A
-RESULT:                            - Fee0Token:0x2e15 24996427489787162762 = 24.996427489787162762
-RESULT:                            - ETH|null:0x0000 2499642748978716276 = 2.499642748978716276
+RESULT:                            - Fee0Token:0xc29c 24995569836308691692 = 24.995569836308691692
+RESULT:                            - ETH|null:0x0000 2499556983630869169 = 2.499556983630869169
 RESULT: - dividendsOwing       : 2 User2:0xa22A
-RESULT:                            - Fee0Token:0x2e15 49994871845297970424 = 49.994871845297970424
-RESULT:                            - ETH|null:0x0000 4999487184529797042 = 4.999487184529797042
+RESULT:                            - Fee0Token:0xc29c 49993494254552409499 = 49.993494254552409499
+RESULT:                            - ETH|null:0x0000 4999349425455240949 = 4.999349425455240949
 RESULT: - dividendsOwing       : 3 User3:0xa33a
-RESULT:                            - Fee0Token:0x2e15 25008700664914866813 = 25.008700664914866813
-RESULT:                            - ETH|null:0x0000 2500870066491486681 = 2.500870066491486681
-RESULT: Token 2 Fee0Token:0x2e15 @ 0x2e1594F2F6fc67EE7Bd24A9e30C95bc55fc6A476
+RESULT:                            - Fee0Token:0xc29c 25010935909138898808 = 25.010935909138898808
+RESULT:                            - ETH|null:0x0000 2501093590913889880 = 2.501093590913889880
+RESULT: Token 2 Fee0Token:0xc29c @ 0xc29cA706a8Fbfb04878f768890B9FdeBD9068FaB
 RESULT: - symbol               : FEE
 RESULT: - name                 : Fee
 RESULT: - decimals             : 18
 RESULT: - totalSupply          : 10000
 RESULT: - owner                : Owner:0xa00A
-RESULT: OptinoGov OptinoGov:0xB4FF @ 0xB4FF3Cbfe8739A220714911fFfd225445e8A9cDC
-RESULT: - ogToken              : OGToken:0xE856
-RESULT: - ogdToken             : OGDToken:0xb490
+RESULT: OptinoGov OptinoGov:0xeF05 @ 0xeF05931Ba780DCF92b56477731900bd84E2f20F4
+RESULT: - ogToken              : OGToken:0x6A60
+RESULT: - ogdToken             : OGDToken:0x1c37
 RESULT: - maxDuration          : 10000 seconds = 0.11574074074074074074 days
 RESULT: - rewardsPerSecond     : 150000000000000000 = 0.15 = 12960 per day
-RESULT: - collectOnBehalfFee   : 50000000000000000 = 5%
-RESULT: - collectOnBehalfDelay : 1 seconds = 0.00001157407407407407 days
+RESULT: - collectRewardForFee  : 50000000000000000 = 5%
+RESULT: - collectRewardForDelay: 1 seconds = 0.00001157407407407407 days
 RESULT: - proposalCost         : 100000000000000000000 = 100
 RESULT: - proposalThreshold    : 1000000000000000 = 0.1%
 RESULT: - quorum               : 200000000000000000 = 20%
 RESULT: - quorumDecayPerSecond : 12683916793 = 39.9999999984048% per year
 RESULT: - votingDuration       : 10 seconds = 0.00011574074074074074 days
 RESULT: - executeDelay         : 10 seconds = 0.00011574074074074074 days
-RESULT: - rewardPool           : 999999423203960252695607 = 999999.423203960252695607
-RESULT: - totalVotes           : 511245647233050730210 = 511.24564723305073021
+RESULT: - rewardPool           : 999999284950639617414096 = 999999.284950639617414096
+RESULT: - totalVotes           : 511307598898603727755 = 511.307598898603727755
 RESULT: - proposalCount        : 0
 RESULT: - stakeInfoLength      : 0
-RESULT: - commitment           : 1 User1:0xa11A duration: 0, end: 1602542137, tokens: 1000, votes: 0, staked: 0
-RESULT: - commitment           : 2 User2:0xa22A duration: 53, end: 1602542189, tokens: 2000.080686159030882873, votes: 11.000148648648648648, staked: 0
-RESULT: - commitment           : 3 User3:0xa33a duration: 5000, end: 1602547136, tokens: 1000.490997168804163125, votes: 500.245498584402081562, staked: 0
+RESULT: - commitment           : 1 User1:0xa11A duration: 0, end: 1602555865, tokens: 1000, votes: 0, staked: 0
+RESULT: - commitment           : 2 User2:0xa22A duration: 53, end: 1602555918, tokens: 2000.094199970252562019, votes: 11.000222972972972972, staked: 0
+RESULT: - commitment           : 3 User3:0xa33a duration: 5000, end: 1602560865, tokens: 1000.614751851261509566, votes: 500.307375925630754783, staked: 0
 RESULT:
-RESULT: depositDividendFee1.receipt.gasUsed: 69215
-Events emitted in tx 0x174cc7a33b8aa89eb3fcccbb67cd4b26ce97618c6974d9c9857679f549be5a27:
-----------------------------------------------------------------------------------------
-DividendDeposited(0: 0x0000000000000000000000000000000000000000, 1: 10000000000000000000, __length__: 2, token: 0x0000000000000000000000000000000000000000, tokens: 10000000000000000000)
-----------------------------------------------------------------------------------------
+RESULT: depositDividendFee1 - gasUsed: 69215, txFee: 0.00346075 @ 50 gwei, txFeeUsd: 1.3347074525 @ 385.67 ETH/USD
+  Events emitted in tx 0x4a5751d8f7c4b6e253786638c90ab9743247f91c6d05a7303749b5396c912f45:
+  ----------------------------------------------------------------------------------------
+  DividendDeposited(0: 0x0000000000000000000000000000000000000000, 1: 10000000000000000000, __length__: 2, token: 0x0000000000000000000000000000000000000000, tokens: 10000000000000000000)
+  ----------------------------------------------------------------------------------------
 
-RESULT: depositDividendFee2.receipt.gasUsed: 106483
-Events emitted in tx 0xdebc2bfd0988e24351dedccfe82a015a0434633f7fe3a8061288c145be0156e8:
-----------------------------------------------------------------------------------------
-Transfer(0: 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E, 1: 0xb4909969B989e53ea5E18aC5ca39393149f3f8C6, 2: 100000000000000000000, __length__: 3, from: 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E, to: 0xb4909969B989e53ea5E18aC5ca39393149f3f8C6, tokens: 100000000000000000000)
-DividendDeposited(0: 0x2e1594F2F6fc67EE7Bd24A9e30C95bc55fc6A476, 1: 100000000000000000000, __length__: 2, token: 0x2e1594F2F6fc67EE7Bd24A9e30C95bc55fc6A476, tokens: 100000000000000000000)
-----------------------------------------------------------------------------------------
+RESULT: depositDividendFee2 - gasUsed: 106483, txFee: 0.00532415 @ 50 gwei, txFeeUsd: 2.0533649305 @ 385.67 ETH/USD
+  Events emitted in tx 0x5b6ed66fc8a5748fe147288c93f4a0b29707aa07d5e55c698fbbeba6af5ed889:
+  ----------------------------------------------------------------------------------------
+  Transfer(0: 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E, 1: 0x1c37865aa37E1bE7e3ec76529BBFc1d914824370, 2: 100000000000000000000, __length__: 3, from: 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E, to: 0x1c37865aa37E1bE7e3ec76529BBFc1d914824370, tokens: 100000000000000000000)
+  DividendDeposited(0: 0xc29cA706a8Fbfb04878f768890B9FdeBD9068FaB, 1: 100000000000000000000, __length__: 2, token: 0xc29cA706a8Fbfb04878f768890B9FdeBD9068FaB, tokens: 100000000000000000000)
+  ----------------------------------------------------------------------------------------
 
 RESULT: --- Test 7 - User{1..3} withdraw ETH and FEE dividends ---
-RESULT:  # Account                                             EtherBalanceChange                             OG                            OGD @ 60204 -> 60233
+RESULT:  # Account                                             EtherBalanceChange                             OG                            OGD @ 72959 -> 72987
 RESULT:                                                                                                      FEE                            ???
 RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-RESULT: 0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E        -9.964529620000000000       10000.000011733746111786           0.000000000000000000 Owner:0xa00A
+RESULT: 0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E        -9.964837700000000000       10000.000000000000000000           0.000000000000000000 Owner:0xa00A
 RESULT:                                                                                  9900.000000000000000000           0.000000000000000000
-RESULT: 1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433         2.489917608978716276        9000.005100978166146609        1000.000000000000000000 User1:0xa11A
-RESULT:                                                                                    24.996427489787162762           0.000000000000000000
-RESULT: 2 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976         4.984511244529797042        8000.000000000000000000        2000.080686159030882873 User2:0xa22A
-RESULT:                                                                                    49.994871845297970424           0.000000000000000000
-RESULT: 3 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0         2.490100766491486681        9000.000000000000000000        1000.490997168804163125 User3:0xa33a
-RESULT:                                                                                    25.008700664914866813           0.000000000000000000
-RESULT: 4 0xE8563ddeD0DbC8a4B75B097D6c18AFD91D266F74         0.000000000000000000           0.000000000000000000           0.000000000000000000 OGToken:0xE856
+RESULT: 1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433         2.490147463630869169        9000.006097538868514319        1000.000000000000000000 User1:0xa11A
+RESULT:                                                                                    24.995569836308691692           0.000000000000000000
+RESULT: 2 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976         4.984368605455240949        8000.000000000000000000        2000.094199970252562019 User2:0xa22A
+RESULT:                                                                                    49.993494254552409499           0.000000000000000000
+RESULT: 3 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0         2.490321630913889880        9000.000000000000000000        1000.614751851261509566 User3:0xa33a
+RESULT:                                                                                    25.010935909138898808           0.000000000000000000
+RESULT: 4 0x6A60DEe899c0eA32EDA0e835D5D6ca39d99ed908         0.000000000000000000           0.000000000000000000           0.000000000000000000 OGToken:0x6A60
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000
-RESULT: 5 0xb4909969B989e53ea5E18aC5ca39393149f3f8C6         0.000000000000000001           0.000000000000000000           0.000000000000000000 OGDToken:0xb490
+RESULT: 5 0x1c37865aa37E1bE7e3ec76529BBFc1d914824370         0.000000000000000002           0.000000000000000000           0.000000000000000000 OGDToken:0x1c37
 RESULT:                                                                                     0.000000000000000001           0.000000000000000000
-RESULT: 6 0x2e1594F2F6fc67EE7Bd24A9e30C95bc55fc6A476         0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee0Token:0x2e15
+RESULT: 6 0xc29cA706a8Fbfb04878f768890B9FdeBD9068FaB         0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee0Token:0xc29c
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000
-RESULT: 7 0xB4FF3Cbfe8739A220714911fFfd225445e8A9cDC         0.000000000000000000        4000.571683327835045998           0.000000000000000000 OptinoGov:0xB4FF
+RESULT: 7 0xeF05931Ba780DCF92b56477731900bd84E2f20F4         0.000000000000000000        4000.708951821514071585           0.000000000000000000 OptinoGov:0xeF05
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000
 RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-RESULT:                                                                                 40000.576796039747304393        4000.571683327835045998 Total Token Balances
+RESULT:                                                                                 40000.715049360382585904        4000.708951821514071585 Total Token Balances
 RESULT:                                                                                 10000.000000000000000000           0.000000000000000000
 RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
 RESULT:
-RESULT: Token 0 OGToken:0xE856 @ 0xE8563ddeD0DbC8a4B75B097D6c18AFD91D266F74
+RESULT: Token 0 OGToken:0x6A60 @ 0x6A60DEe899c0eA32EDA0e835D5D6ca39d99ed908
 RESULT: - symbol               : OG
 RESULT: - name                 : Optino Governance
 RESULT: - decimals             : 18
-RESULT: - totalSupply          : 40000.576796039747304393
-RESULT: - owner                : OptinoGov:0xB4FF
-RESULT: Token 1 OGDToken:0xb490 @ 0xb4909969B989e53ea5E18aC5ca39393149f3f8C6
+RESULT: - totalSupply          : 40000.715049360382585904
+RESULT: - owner                : OptinoGov:0xeF05
+RESULT: Token 1 OGDToken:0x1c37 @ 0x1c37865aa37E1bE7e3ec76529BBFc1d914824370
 RESULT: - symbol               : OGD
 RESULT: - name                 : Optino Governance Dividend
 RESULT: - decimals             : 18
-RESULT: - totalSupply          : 4000.571683327835045998
-RESULT: - owner                : OptinoGov:0xB4FF
+RESULT: - totalSupply          : 4000.708951821514071585
+RESULT: - owner                : OptinoGov:0xeF05
 RESULT: - dividendTokensLength : 2
-RESULT: - dividendToken        : 0 Fee0Token:0x2e15, enabled: true, unclaimedDividends: 1 = 0.000000000000000001
-RESULT: - dividendToken        : 1 ETH|null:0x0000, enabled: true, unclaimedDividends: 1 = 0.000000000000000001
+RESULT: - dividendToken        : 0 Fee0Token:0xc29c, enabled: true, unclaimedDividends: 1 = 0.000000000000000001
+RESULT: - dividendToken        : 1 ETH|null:0x0000, enabled: true, unclaimedDividends: 2 = 0.000000000000000002
 RESULT: - dividendsOwing       : 1 User1:0xa11A
-RESULT:                            - Fee0Token:0x2e15 0 = 0.000000000000000000
+RESULT:                            - Fee0Token:0xc29c 0 = 0.000000000000000000
 RESULT:                            - ETH|null:0x0000 0 = 0.000000000000000000
 RESULT: - dividendsOwing       : 2 User2:0xa22A
-RESULT:                            - Fee0Token:0x2e15 0 = 0.000000000000000000
+RESULT:                            - Fee0Token:0xc29c 0 = 0.000000000000000000
 RESULT:                            - ETH|null:0x0000 0 = 0.000000000000000000
 RESULT: - dividendsOwing       : 3 User3:0xa33a
-RESULT:                            - Fee0Token:0x2e15 0 = 0.000000000000000000
+RESULT:                            - Fee0Token:0xc29c 0 = 0.000000000000000000
 RESULT:                            - ETH|null:0x0000 0 = 0.000000000000000000
-RESULT: Token 2 Fee0Token:0x2e15 @ 0x2e1594F2F6fc67EE7Bd24A9e30C95bc55fc6A476
+RESULT: Token 2 Fee0Token:0xc29c @ 0xc29cA706a8Fbfb04878f768890B9FdeBD9068FaB
 RESULT: - symbol               : FEE
 RESULT: - name                 : Fee
 RESULT: - decimals             : 18
 RESULT: - totalSupply          : 10000
 RESULT: - owner                : Owner:0xa00A
-RESULT: OptinoGov OptinoGov:0xB4FF @ 0xB4FF3Cbfe8739A220714911fFfd225445e8A9cDC
-RESULT: - ogToken              : OGToken:0xE856
-RESULT: - ogdToken             : OGDToken:0xb490
+RESULT: OptinoGov OptinoGov:0xeF05 @ 0xeF05931Ba780DCF92b56477731900bd84E2f20F4
+RESULT: - ogToken              : OGToken:0x6A60
+RESULT: - ogdToken             : OGDToken:0x1c37
 RESULT: - maxDuration          : 10000 seconds = 0.11574074074074074074 days
 RESULT: - rewardsPerSecond     : 150000000000000000 = 0.15 = 12960 per day
-RESULT: - collectOnBehalfFee   : 50000000000000000 = 5%
-RESULT: - collectOnBehalfDelay : 1 seconds = 0.00001157407407407407 days
+RESULT: - collectRewardForFee  : 50000000000000000 = 5%
+RESULT: - collectRewardForDelay: 1 seconds = 0.00001157407407407407 days
 RESULT: - proposalCost         : 100000000000000000000 = 100
 RESULT: - proposalThreshold    : 1000000000000000 = 0.1%
 RESULT: - quorum               : 200000000000000000 = 20%
 RESULT: - quorumDecayPerSecond : 12683916793 = 39.9999999984048% per year
 RESULT: - votingDuration       : 10 seconds = 0.00011574074074074074 days
 RESULT: - executeDelay         : 10 seconds = 0.00011574074074074074 days
-RESULT: - rewardPool           : 999999423203960252695607 = 999999.423203960252695607
-RESULT: - totalVotes           : 511245647233050730210 = 511.24564723305073021
+RESULT: - rewardPool           : 999999284950639617414096 = 999999.284950639617414096
+RESULT: - totalVotes           : 511307598898603727755 = 511.307598898603727755
 RESULT: - proposalCount        : 0
 RESULT: - stakeInfoLength      : 0
-RESULT: - commitment           : 1 User1:0xa11A duration: 0, end: 1602542137, tokens: 1000, votes: 0, staked: 0
-RESULT: - commitment           : 2 User2:0xa22A duration: 53, end: 1602542189, tokens: 2000.080686159030882873, votes: 11.000148648648648648, staked: 0
-RESULT: - commitment           : 3 User3:0xa33a duration: 5000, end: 1602547136, tokens: 1000.490997168804163125, votes: 500.245498584402081562, staked: 0
+RESULT: - commitment           : 1 User1:0xa11A duration: 0, end: 1602555865, tokens: 1000, votes: 0, staked: 0
+RESULT: - commitment           : 2 User2:0xa22A duration: 53, end: 1602555918, tokens: 2000.094199970252562019, votes: 11.000222972972972972, staked: 0
+RESULT: - commitment           : 3 User3:0xa33a duration: 5000, end: 1602560865, tokens: 1000.614751851261509566, votes: 500.307375925630754783, staked: 0
 RESULT:
-RESULT: withdrawDividends1.receipt.gasUsed: 155378
-Events emitted in tx 0x5386f2152632a270d0fe9b3ce728aa811b315445f6046b0a02cc37fa26cdfb89:
-----------------------------------------------------------------------------------------
-Transfer(0: 0xb4909969B989e53ea5E18aC5ca39393149f3f8C6, 1: 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433, 2: 24996427489787162762, __length__: 3, from: 0xb4909969B989e53ea5E18aC5ca39393149f3f8C6, to: 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433, tokens: 24996427489787162762)
-DividendWithdrawn(0: 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433, 1: 0x2e1594F2F6fc67EE7Bd24A9e30C95bc55fc6A476, 2: 24996427489787162762, __length__: 3, account: 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433, token: 0x2e1594F2F6fc67EE7Bd24A9e30C95bc55fc6A476, tokens: 24996427489787162762)
-DividendWithdrawn(0: 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433, 1: 0x0000000000000000000000000000000000000000, 2: 2499642748978716276, __length__: 3, account: 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433, token: 0x0000000000000000000000000000000000000000, tokens: 2499642748978716276)
-----------------------------------------------------------------------------------------
+RESULT: withdrawDividends1 - gasUsed: 155378, txFee: 0.0077689 @ 50 gwei, txFeeUsd: 2.996231663 @ 385.67 ETH/USD
+  Events emitted in tx 0xda52a138bf8925b39c3ed71dfd01f6233b21e9986c1c763c2adc780e1bae7ea7:
+  ----------------------------------------------------------------------------------------
+  Transfer(0: 0x1c37865aa37E1bE7e3ec76529BBFc1d914824370, 1: 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433, 2: 24995569836308691692, __length__: 3, from: 0x1c37865aa37E1bE7e3ec76529BBFc1d914824370, to: 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433, tokens: 24995569836308691692)
+  DividendWithdrawn(0: 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433, 1: 0xc29cA706a8Fbfb04878f768890B9FdeBD9068FaB, 2: 24995569836308691692, __length__: 3, account: 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433, token: 0xc29cA706a8Fbfb04878f768890B9FdeBD9068FaB, tokens: 24995569836308691692)
+  DividendWithdrawn(0: 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433, 1: 0x0000000000000000000000000000000000000000, 2: 2499556983630869169, __length__: 3, account: 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433, token: 0x0000000000000000000000000000000000000000, tokens: 2499556983630869169)
+  ----------------------------------------------------------------------------------------
 
-RESULT: withdrawDividends2.receipt.gasUsed: 155378
-Events emitted in tx 0xab8d632f75b60278f48c1c492fd2aad23d8973e920fc745afb388ee0f7c871da:
-----------------------------------------------------------------------------------------
-Transfer(0: 0xb4909969B989e53ea5E18aC5ca39393149f3f8C6, 1: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, 2: 49994871845297970424, __length__: 3, from: 0xb4909969B989e53ea5E18aC5ca39393149f3f8C6, to: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, tokens: 49994871845297970424)
-DividendWithdrawn(0: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, 1: 0x2e1594F2F6fc67EE7Bd24A9e30C95bc55fc6A476, 2: 49994871845297970424, __length__: 3, account: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, token: 0x2e1594F2F6fc67EE7Bd24A9e30C95bc55fc6A476, tokens: 49994871845297970424)
-DividendWithdrawn(0: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, 1: 0x0000000000000000000000000000000000000000, 2: 4999487184529797042, __length__: 3, account: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, token: 0x0000000000000000000000000000000000000000, tokens: 4999487184529797042)
-----------------------------------------------------------------------------------------
+RESULT: withdrawDividends2 - gasUsed: 155378, txFee: 0.0077689 @ 50 gwei, txFeeUsd: 2.996231663 @ 385.67 ETH/USD
+  Events emitted in tx 0x78ca7dd2992f48b9df3014ce572a1e412cdb800e01f241720e1ffad3393b2c01:
+  ----------------------------------------------------------------------------------------
+  Transfer(0: 0x1c37865aa37E1bE7e3ec76529BBFc1d914824370, 1: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, 2: 49993494254552409499, __length__: 3, from: 0x1c37865aa37E1bE7e3ec76529BBFc1d914824370, to: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, tokens: 49993494254552409499)
+  DividendWithdrawn(0: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, 1: 0xc29cA706a8Fbfb04878f768890B9FdeBD9068FaB, 2: 49993494254552409499, __length__: 3, account: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, token: 0xc29cA706a8Fbfb04878f768890B9FdeBD9068FaB, tokens: 49993494254552409499)
+  DividendWithdrawn(0: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, 1: 0x0000000000000000000000000000000000000000, 2: 4999349425455240949, __length__: 3, account: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, token: 0x0000000000000000000000000000000000000000, tokens: 4999349425455240949)
+  ----------------------------------------------------------------------------------------
 
-RESULT: withdrawDividends3.receipt.gasUsed: 155378
-Events emitted in tx 0xad6351e4f9895f83eeef4decd3d716e466ba3c631b62decdffc72849278de8f2:
-----------------------------------------------------------------------------------------
-Transfer(0: 0xb4909969B989e53ea5E18aC5ca39393149f3f8C6, 1: 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0, 2: 25008700664914866813, __length__: 3, from: 0xb4909969B989e53ea5E18aC5ca39393149f3f8C6, to: 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0, tokens: 25008700664914866813)
-DividendWithdrawn(0: 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0, 1: 0x2e1594F2F6fc67EE7Bd24A9e30C95bc55fc6A476, 2: 25008700664914866813, __length__: 3, account: 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0, token: 0x2e1594F2F6fc67EE7Bd24A9e30C95bc55fc6A476, tokens: 25008700664914866813)
-DividendWithdrawn(0: 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0, 1: 0x0000000000000000000000000000000000000000, 2: 2500870066491486681, __length__: 3, account: 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0, token: 0x0000000000000000000000000000000000000000, tokens: 2500870066491486681)
-----------------------------------------------------------------------------------------
+RESULT: withdrawDividends3 - gasUsed: 155378, txFee: 0.0077689 @ 50 gwei, txFeeUsd: 2.996231663 @ 385.67 ETH/USD
+  Events emitted in tx 0xd1c17a818741ae2126b3584c6f4f1becac27d7ffb716853f525dae179fbd1aa3:
+  ----------------------------------------------------------------------------------------
+  Transfer(0: 0x1c37865aa37E1bE7e3ec76529BBFc1d914824370, 1: 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0, 2: 25010935909138898808, __length__: 3, from: 0x1c37865aa37E1bE7e3ec76529BBFc1d914824370, to: 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0, tokens: 25010935909138898808)
+  DividendWithdrawn(0: 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0, 1: 0xc29cA706a8Fbfb04878f768890B9FdeBD9068FaB, 2: 25010935909138898808, __length__: 3, account: 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0, token: 0xc29cA706a8Fbfb04878f768890B9FdeBD9068FaB, tokens: 25010935909138898808)
+  DividendWithdrawn(0: 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0, 1: 0x0000000000000000000000000000000000000000, 2: 2501093590913889880, __length__: 3, account: 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0, token: 0x0000000000000000000000000000000000000000, tokens: 2501093590913889880)
+  ----------------------------------------------------------------------------------------
 
-    ✓ Test OptinoGov Commit Tokens (20989ms)
+    ✓ Test OptinoGov Commit Tokens (20373ms)
 
 
   1 passing (29s)
@@ -893,50 +893,50 @@ TestOGDToken.test.js: describe(OGToken behavior tests)
   Contract: Test OGDToken
 RESULT: --- Setup 1 - Deploy OGToken, Fee{0..2} ---
 --- Setup completed ---
-RESULT: ogdTokenTx.receipt.gasUsed: 2390322
-Events emitted in tx 0xbc5eaf493ea24a698692c8871e001b18419738693d50debca819ced34bddac5b:
-----------------------------------------------------------------------------------------
-Transfer(0: 0x0000000000000000000000000000000000000000, 1: 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E, 2: 0, __length__: 3, from: 0x0000000000000000000000000000000000000000, to: 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E, tokens: 0)
-----------------------------------------------------------------------------------------
+RESULT: ogdTokenTx - gasUsed: 2390322, txFee: 0.1195161 @ 50 gwei, txFeeUsd: 46.093774287 @ 385.67 ETH/USD
+  Events emitted in tx 0xf794ab8c192667c84ae7b061a47c3c2422164787511a2808e047743bfa53462e:
+  ----------------------------------------------------------------------------------------
+  Transfer(0: 0x0000000000000000000000000000000000000000, 1: 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E, 2: 0, __length__: 3, from: 0x0000000000000000000000000000000000000000, to: 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E, tokens: 0)
+  ----------------------------------------------------------------------------------------
 
-RESULT: fee0TokenTx.receipt.gasUsed: 818714
-Events emitted in tx 0x8527bc977939dcc28e8be2fe5972a678f9e2ba8567453e5900c99c1e75b6057c:
-----------------------------------------------------------------------------------------
-Transfer(0: 0x0000000000000000000000000000000000000000, 1: 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E, 2: 10000000000000000000000, __length__: 3, from: 0x0000000000000000000000000000000000000000, to: 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E, tokens: 10000000000000000000000)
-----------------------------------------------------------------------------------------
+RESULT: fee0TokenTx - gasUsed: 818714, txFee: 0.0409357 @ 50 gwei, txFeeUsd: 15.787671419 @ 385.67 ETH/USD
+  Events emitted in tx 0x19cd8fcf33fbfb7a00902292d9fb885444f0cb9dd4d031528649d00c5c3a4a49:
+  ----------------------------------------------------------------------------------------
+  Transfer(0: 0x0000000000000000000000000000000000000000, 1: 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E, 2: 10000000000000000000000, __length__: 3, from: 0x0000000000000000000000000000000000000000, to: 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E, tokens: 10000000000000000000000)
+  ----------------------------------------------------------------------------------------
 
-RESULT: fee1TokenTx.receipt.gasUsed: 818714
-Events emitted in tx 0x43ac25e66e4ec5c0b10559c59de4a6f6a0ce8d461949314c1366c9c7dada9322:
-----------------------------------------------------------------------------------------
-Transfer(0: 0x0000000000000000000000000000000000000000, 1: 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E, 2: 10000000000000000000000, __length__: 3, from: 0x0000000000000000000000000000000000000000, to: 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E, tokens: 10000000000000000000000)
-----------------------------------------------------------------------------------------
+RESULT: fee1TokenTx - gasUsed: 818714, txFee: 0.0409357 @ 50 gwei, txFeeUsd: 15.787671419 @ 385.67 ETH/USD
+  Events emitted in tx 0x55e3d7632da8b80ab381db080cdbba5cf5541dccdad6f41fde7f9ad7728e8fd6:
+  ----------------------------------------------------------------------------------------
+  Transfer(0: 0x0000000000000000000000000000000000000000, 1: 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E, 2: 10000000000000000000000, __length__: 3, from: 0x0000000000000000000000000000000000000000, to: 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E, tokens: 10000000000000000000000)
+  ----------------------------------------------------------------------------------------
 
-RESULT: fee2TokenTx.receipt.gasUsed: 818714
-Events emitted in tx 0x5cb448fcf81cf664b7c334ad3033e766e6d376fb6b44710bd8d3e61814674c01:
-----------------------------------------------------------------------------------------
-Transfer(0: 0x0000000000000000000000000000000000000000, 1: 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E, 2: 10000000000000000000000, __length__: 3, from: 0x0000000000000000000000000000000000000000, to: 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E, tokens: 10000000000000000000000)
-----------------------------------------------------------------------------------------
+RESULT: fee2TokenTx - gasUsed: 818714, txFee: 0.0409357 @ 50 gwei, txFeeUsd: 15.787671419 @ 385.67 ETH/USD
+  Events emitted in tx 0x33e587e718a483d60ce3683d3cf88601a02453db4c2907f5e8b35e3d8ad3c581:
+  ----------------------------------------------------------------------------------------
+  Transfer(0: 0x0000000000000000000000000000000000000000, 1: 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E, 2: 10000000000000000000000, __length__: 3, from: 0x0000000000000000000000000000000000000000, to: 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E, tokens: 10000000000000000000000)
+  ----------------------------------------------------------------------------------------
 
 RESULT: --- Setup 2 - OGToken.addDividendTokens for ETH and Fee0 ---
-RESULT: addDividendToken0.receipt.gasUsed: 96891
-Events emitted in tx 0xa6599debb83f93ac66210af902b1337f1ffe945ecce517a1ab25e88fb5bdec67:
-----------------------------------------------------------------------------------------
-DividendTokenAdded(0: 0x0000000000000000000000000000000000000000, 1: true, __length__: 2, token: 0x0000000000000000000000000000000000000000, enabled: true)
-----------------------------------------------------------------------------------------
+RESULT: addDividendToken0 - gasUsed: 96891, txFee: 0.00484455 @ 50 gwei, txFeeUsd: 1.8683975985 @ 385.67 ETH/USD
+  Events emitted in tx 0xb9322e70b18544d2d9885ab5c76dbba07d0b0dc2b2b01716a76167e683ce3aa3:
+  ----------------------------------------------------------------------------------------
+  DividendTokenAdded(0: 0x0000000000000000000000000000000000000000, 1: true, __length__: 2, token: 0x0000000000000000000000000000000000000000, enabled: true)
+  ----------------------------------------------------------------------------------------
 
-RESULT: addDividendToken1.receipt.gasUsed: 133804
-Events emitted in tx 0x4d875bda2544c46ca54b55c5d7b56470e6662eb3832307bdcf04174acfffb736:
-----------------------------------------------------------------------------------------
-DividendTokenAdded(0: 0x93bf95dE27B85710cE859c771374df8012Bf4fe7, 1: true, __length__: 2, token: 0x93bf95dE27B85710cE859c771374df8012Bf4fe7, enabled: true)
-----------------------------------------------------------------------------------------
+RESULT: addDividendToken1 - gasUsed: 133804, txFee: 0.0066902 @ 50 gwei, txFeeUsd: 2.580209434 @ 385.67 ETH/USD
+  Events emitted in tx 0x662d7d87f98ef4322dc5d49c6bb2238b9aac2bcf8f283c91db37822b7f29bb36:
+  ----------------------------------------------------------------------------------------
+  DividendTokenAdded(0: 0x98b06815E25685c72f2bc2aBD77fA0779A5336D5, 1: true, __length__: 2, token: 0x98b06815E25685c72f2bc2aBD77fA0779A5336D5, enabled: true)
+  ----------------------------------------------------------------------------------------
 
-RESULT: setPermission1.receipt.gasUsed: 49123
-Events emitted in tx 0x79ca8064c15435515171af31145950c8fdd1eb2c29f72bfc3ffdeb6d95720b28:
-----------------------------------------------------------------------------------------
-PermissionUpdated(0: 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E, 1: 1, 2: true, 3: 0, 4: 0, __length__: 5, account: 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E, role: 1, active: true, maximum: 0, processed: 0)
-----------------------------------------------------------------------------------------
+RESULT: setPermission1 - gasUsed: 49123, txFee: 0.00245615 @ 50 gwei, txFeeUsd: 0.9472633705 @ 385.67 ETH/USD
+  Events emitted in tx 0x0e764357c1279065e18396c96a1b8f572f791c1c1b7e12f0b65e9fff7b7c8413:
+  ----------------------------------------------------------------------------------------
+  PermissionUpdated(0: 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E, 1: 1, 2: true, 3: 0, 4: 0, __length__: 5, account: 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E, role: 1, active: true, maximum: 0, processed: 0)
+  ----------------------------------------------------------------------------------------
 
-RESULT:  # Account                                             EtherBalanceChange                            OGD                           FEE0 @ 63448 -> 63452
+RESULT:  # Account                                             EtherBalanceChange                            OGD                           FEE0 @ 73306 -> 73310
 RESULT:                                                                                                     FEE1                           FEE2
 RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
 RESULT: 0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E         0.000000000000000000           0.000000000000000000       10000.000000000000000000 Owner:0xa00A
@@ -947,50 +947,50 @@ RESULT: 2 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976         0.00000000000000000
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000
 RESULT: 3 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0         0.000000000000000000           0.000000000000000000           0.000000000000000000 User3:0xa33a
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000
-RESULT: 4 0x7D649f97F399FE30bdbc0d1f6207cBcfcFA4a905         0.000000000000000000           0.000000000000000000           0.000000000000000000 OGDToken:0x7D64
+RESULT: 4 0xeDcDF10549EE2274B1C5989cd4cE58A6b0cBcda8         0.000000000000000000           0.000000000000000000           0.000000000000000000 OGDToken:0xeDcD
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000
-RESULT: 5 0x93bf95dE27B85710cE859c771374df8012Bf4fe7         0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee0Token:0x93bf
+RESULT: 5 0x98b06815E25685c72f2bc2aBD77fA0779A5336D5         0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee0Token:0x98b0
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000
-RESULT: 6 0xa3e56A718a2f831aE973eC45db89202BA652a25F         0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee1Token:0xa3e5
+RESULT: 6 0xf9d93EE3bd1b541E0b520a3fC2e9058Ef22396f4         0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee1Token:0xf9d9
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000
-RESULT: 7 0xec0Bb4A5952833C588c1e31D4fa0Fb2c2C3009d9         0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee2Token:0xec0B
+RESULT: 7 0xD59fE94014C75606c5Ccac2B38649F20B28b0c8D         0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee2Token:0xD59f
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000
 RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
 RESULT:                                                                                     0.000000000000000000       10000.000000000000000000 Total Token Balances
 RESULT:                                                                                 10000.000000000000000000       10000.000000000000000000
 RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
 RESULT:
-RESULT: Token 0 OGDToken:0x7D64 @ 0x7D649f97F399FE30bdbc0d1f6207cBcfcFA4a905
+RESULT: Token 0 OGDToken:0xeDcD @ 0xeDcDF10549EE2274B1C5989cd4cE58A6b0cBcda8
 RESULT: - symbol               : OGD
 RESULT: - name                 : Optino Governance Dividend
 RESULT: - decimals             : 18
 RESULT: - totalSupply          : 0
 RESULT: - owner                : Owner:0xa00A
 RESULT: - dividendTokensLength : 2
-RESULT: - dividendToken        : 0 Fee0Token:0x93bf, enabled: true, unclaimedDividends: 0 = 0.000000000000000000
+RESULT: - dividendToken        : 0 Fee0Token:0x98b0, enabled: true, unclaimedDividends: 0 = 0.000000000000000000
 RESULT: - dividendToken        : 1 ETH|null:0x0000, enabled: true, unclaimedDividends: 0 = 0.000000000000000000
 RESULT: - dividendsOwing       : 1 User1:0xa11A
-RESULT:                            - Fee0Token:0x93bf 0 = 0.000000000000000000
+RESULT:                            - Fee0Token:0x98b0 0 = 0.000000000000000000
 RESULT:                            - ETH|null:0x0000 0 = 0.000000000000000000
 RESULT: - dividendsOwing       : 2 User2:0xa22A
-RESULT:                            - Fee0Token:0x93bf 0 = 0.000000000000000000
+RESULT:                            - Fee0Token:0x98b0 0 = 0.000000000000000000
 RESULT:                            - ETH|null:0x0000 0 = 0.000000000000000000
 RESULT: - dividendsOwing       : 3 User3:0xa33a
-RESULT:                            - Fee0Token:0x93bf 0 = 0.000000000000000000
+RESULT:                            - Fee0Token:0x98b0 0 = 0.000000000000000000
 RESULT:                            - ETH|null:0x0000 0 = 0.000000000000000000
-RESULT: Token 1 Fee0Token:0x93bf @ 0x93bf95dE27B85710cE859c771374df8012Bf4fe7
+RESULT: Token 1 Fee0Token:0x98b0 @ 0x98b06815E25685c72f2bc2aBD77fA0779A5336D5
 RESULT: - symbol               : FEE0
 RESULT: - name                 : Fee0
 RESULT: - decimals             : 18
 RESULT: - totalSupply          : 10000
 RESULT: - owner                : Owner:0xa00A
-RESULT: Token 2 Fee1Token:0xa3e5 @ 0xa3e56A718a2f831aE973eC45db89202BA652a25F
+RESULT: Token 2 Fee1Token:0xf9d9 @ 0xf9d93EE3bd1b541E0b520a3fC2e9058Ef22396f4
 RESULT: - symbol               : FEE1
 RESULT: - name                 : Fee1
 RESULT: - decimals             : 18
 RESULT: - totalSupply          : 10000
 RESULT: - owner                : Owner:0xa00A
-RESULT: Token 3 Fee2Token:0xec0B @ 0xec0Bb4A5952833C588c1e31D4fa0Fb2c2C3009d9
+RESULT: Token 3 Fee2Token:0xD59f @ 0xD59fE94014C75606c5Ccac2B38649F20B28b0c8D
 RESULT: - symbol               : FEE2
 RESULT: - name                 : Fee2
 RESULT: - decimals             : 18
@@ -998,44 +998,44 @@ RESULT: - totalSupply          : 10000
 RESULT: - owner                : Owner:0xa00A
 RESULT:
 RESULT: --- Test 1 - Mint 10,000 OGD tokens for User{1..3}; Owner approve 100 FEE for OGToken to spend ---
-RESULT: mint1.receipt.gasUsed: 78600
-Events emitted in tx 0x55a19396606830aa704ff43c4dc6adaba0af515d7625e0dc6e338cf41a5cca4e:
-----------------------------------------------------------------------------------------
-Transfer(0: 0x0000000000000000000000000000000000000000, 1: 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433, 2: 10000000000000000000000, __length__: 3, from: 0x0000000000000000000000000000000000000000, to: 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433, tokens: 10000000000000000000000)
-----------------------------------------------------------------------------------------
+RESULT: mint1 - gasUsed: 78600, txFee: 0.00393 @ 50 gwei, txFeeUsd: 1.5156831 @ 385.67 ETH/USD
+  Events emitted in tx 0x3d088ce20ae882936939914588f3ff1bb3caf241a54d638fee399898131bfc2d:
+  ----------------------------------------------------------------------------------------
+  Transfer(0: 0x0000000000000000000000000000000000000000, 1: 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433, 2: 10000000000000000000000, __length__: 3, from: 0x0000000000000000000000000000000000000000, to: 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433, tokens: 10000000000000000000000)
+  ----------------------------------------------------------------------------------------
 
-RESULT: mint2.receipt.gasUsed: 108600
-Events emitted in tx 0xbe67be729eb0fc2ec9afb1aafc269360839c7c8df62deacde4076d41ac3f8594:
-----------------------------------------------------------------------------------------
-Transfer(0: 0x0000000000000000000000000000000000000000, 1: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, 2: 10000000000000000000000, __length__: 3, from: 0x0000000000000000000000000000000000000000, to: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, tokens: 10000000000000000000000)
-----------------------------------------------------------------------------------------
+RESULT: mint2 - gasUsed: 78600, txFee: 0.00393 @ 50 gwei, txFeeUsd: 1.5156831 @ 385.67 ETH/USD
+  Events emitted in tx 0x72fd96d2a32fbb59a7490cbaf1c9d22a20492e92c4def0589b969b51130d1a04:
+  ----------------------------------------------------------------------------------------
+  Transfer(0: 0x0000000000000000000000000000000000000000, 1: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, 2: 10000000000000000000000, __length__: 3, from: 0x0000000000000000000000000000000000000000, to: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, tokens: 10000000000000000000000)
+  ----------------------------------------------------------------------------------------
 
-RESULT: mint3.receipt.gasUsed: 78600
-Events emitted in tx 0x893d9021ab0e8159644ba0e3fac45e16ab9e28de528284a31eedb6b7e3536d29:
-----------------------------------------------------------------------------------------
-Transfer(0: 0x0000000000000000000000000000000000000000, 1: 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0, 2: 10000000000000000000000, __length__: 3, from: 0x0000000000000000000000000000000000000000, to: 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0, tokens: 10000000000000000000000)
-----------------------------------------------------------------------------------------
+RESULT: mint3 - gasUsed: 108600, txFee: 0.00543 @ 50 gwei, txFeeUsd: 2.0941881 @ 385.67 ETH/USD
+  Events emitted in tx 0x14df81fa212e720d50d71f6555b069c8a6f2bf026a87facd966d111635060494:
+  ----------------------------------------------------------------------------------------
+  Transfer(0: 0x0000000000000000000000000000000000000000, 1: 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0, 2: 10000000000000000000000, __length__: 3, from: 0x0000000000000000000000000000000000000000, to: 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0, tokens: 10000000000000000000000)
+  ----------------------------------------------------------------------------------------
 
-RESULT: ownerApproveFee0Tokens.receipt.gasUsed: 43968
-Events emitted in tx 0xb58f7392f06e2259b32e46e3bd9f2b0482ce965b68ab6851eb6a6460227978af:
-----------------------------------------------------------------------------------------
-Approval(0: 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E, 1: 0x7D649f97F399FE30bdbc0d1f6207cBcfcFA4a905, 2: 100000000000000000000, __length__: 3, tokenOwner: 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E, spender: 0x7D649f97F399FE30bdbc0d1f6207cBcfcFA4a905, tokens: 100000000000000000000)
-----------------------------------------------------------------------------------------
+RESULT: ownerApproveFee0Tokens - gasUsed: 43968, txFee: 0.0021984 @ 50 gwei, txFeeUsd: 0.847856928 @ 385.67 ETH/USD
+  Events emitted in tx 0xfebccef3fe5b6062b972a51bf9a2e5e85aadc8b2ac8f19aae226f57a6192c4e3:
+  ----------------------------------------------------------------------------------------
+  Approval(0: 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E, 1: 0xeDcDF10549EE2274B1C5989cd4cE58A6b0cBcda8, 2: 100000000000000000000, __length__: 3, tokenOwner: 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E, spender: 0xeDcDF10549EE2274B1C5989cd4cE58A6b0cBcda8, tokens: 100000000000000000000)
+  ----------------------------------------------------------------------------------------
 
-RESULT: ownerApproveFee1Tokens.receipt.gasUsed: 43968
-Events emitted in tx 0x7b3ed2d727777b3b7d9f237f7bf7f89ead885854dc72b008684370d5e17f4df3:
-----------------------------------------------------------------------------------------
-Approval(0: 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E, 1: 0x7D649f97F399FE30bdbc0d1f6207cBcfcFA4a905, 2: 1000000000000000000000, __length__: 3, tokenOwner: 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E, spender: 0x7D649f97F399FE30bdbc0d1f6207cBcfcFA4a905, tokens: 1000000000000000000000)
-----------------------------------------------------------------------------------------
+RESULT: ownerApproveFee1Tokens - gasUsed: 43968, txFee: 0.0021984 @ 50 gwei, txFeeUsd: 0.847856928 @ 385.67 ETH/USD
+  Events emitted in tx 0xd53fb24dbe28b26347a2d123d9df819adcce71d7df3ae285b0ecf38233c0925e:
+  ----------------------------------------------------------------------------------------
+  Approval(0: 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E, 1: 0xeDcDF10549EE2274B1C5989cd4cE58A6b0cBcda8, 2: 1000000000000000000000, __length__: 3, tokenOwner: 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E, spender: 0xeDcDF10549EE2274B1C5989cd4cE58A6b0cBcda8, tokens: 1000000000000000000000)
+  ----------------------------------------------------------------------------------------
 
-RESULT: ownerApproveFee2Tokens.receipt.gasUsed: 43980
-Events emitted in tx 0xb00e97800487e5db3afa96fd0db84d5f8a3ab8840bb971f3a6b1433946d608ae:
-----------------------------------------------------------------------------------------
-Approval(0: 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E, 1: 0x7D649f97F399FE30bdbc0d1f6207cBcfcFA4a905, 2: 10000000000000000000000, __length__: 3, tokenOwner: 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E, spender: 0x7D649f97F399FE30bdbc0d1f6207cBcfcFA4a905, tokens: 10000000000000000000000)
-----------------------------------------------------------------------------------------
+RESULT: ownerApproveFee2Tokens - gasUsed: 43980, txFee: 0.002199 @ 50 gwei, txFeeUsd: 0.84808833 @ 385.67 ETH/USD
+  Events emitted in tx 0x9484b53707001cd69663a1b1a66bff8a0f9bec6e2151a21914ff0cff6040b5a0:
+  ----------------------------------------------------------------------------------------
+  Approval(0: 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E, 1: 0xeDcDF10549EE2274B1C5989cd4cE58A6b0cBcda8, 2: 10000000000000000000000, __length__: 3, tokenOwner: 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E, spender: 0xeDcDF10549EE2274B1C5989cd4cE58A6b0cBcda8, tokens: 10000000000000000000000)
+  ----------------------------------------------------------------------------------------
 
 RESULT: --- Test 2 - Owner deposits dividends of 100 FEE0 and 10 ETH ---
-RESULT:  # Account                                             EtherBalanceChange                            OGD                           FEE0 @ 63448 -> 63456
+RESULT:  # Account                                             EtherBalanceChange                            OGD                           FEE0 @ 73306 -> 73314
 RESULT:                                                                                                     FEE1                           FEE2
 RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
 RESULT: 0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E       -10.000000000000000000           0.000000000000000000        9900.000000000000000000 Owner:0xa00A
@@ -1046,71 +1046,71 @@ RESULT: 2 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976         0.00000000000000000
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000
 RESULT: 3 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0         0.000000000000000000       10000.000000000000000000           0.000000000000000000 User3:0xa33a
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000
-RESULT: 4 0x7D649f97F399FE30bdbc0d1f6207cBcfcFA4a905        10.000000000000000000           0.000000000000000000         100.000000000000000000 OGDToken:0x7D64
+RESULT: 4 0xeDcDF10549EE2274B1C5989cd4cE58A6b0cBcda8        10.000000000000000000           0.000000000000000000         100.000000000000000000 OGDToken:0xeDcD
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000
-RESULT: 5 0x93bf95dE27B85710cE859c771374df8012Bf4fe7         0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee0Token:0x93bf
+RESULT: 5 0x98b06815E25685c72f2bc2aBD77fA0779A5336D5         0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee0Token:0x98b0
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000
-RESULT: 6 0xa3e56A718a2f831aE973eC45db89202BA652a25F         0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee1Token:0xa3e5
+RESULT: 6 0xf9d93EE3bd1b541E0b520a3fC2e9058Ef22396f4         0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee1Token:0xf9d9
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000
-RESULT: 7 0xec0Bb4A5952833C588c1e31D4fa0Fb2c2C3009d9         0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee2Token:0xec0B
+RESULT: 7 0xD59fE94014C75606c5Ccac2B38649F20B28b0c8D         0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee2Token:0xD59f
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000
 RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
 RESULT:                                                                                 30000.000000000000000000       10000.000000000000000000 Total Token Balances
 RESULT:                                                                                 10000.000000000000000000       10000.000000000000000000
 RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
 RESULT:
-RESULT: Token 0 OGDToken:0x7D64 @ 0x7D649f97F399FE30bdbc0d1f6207cBcfcFA4a905
+RESULT: Token 0 OGDToken:0xeDcD @ 0xeDcDF10549EE2274B1C5989cd4cE58A6b0cBcda8
 RESULT: - symbol               : OGD
 RESULT: - name                 : Optino Governance Dividend
 RESULT: - decimals             : 18
 RESULT: - totalSupply          : 30000
 RESULT: - owner                : Owner:0xa00A
 RESULT: - dividendTokensLength : 2
-RESULT: - dividendToken        : 0 Fee0Token:0x93bf, enabled: true, unclaimedDividends: 100000000000000000000 = 100.000000000000000000
+RESULT: - dividendToken        : 0 Fee0Token:0x98b0, enabled: true, unclaimedDividends: 100000000000000000000 = 100.000000000000000000
 RESULT: - dividendToken        : 1 ETH|null:0x0000, enabled: true, unclaimedDividends: 10000000000000000000 = 10.000000000000000000
 RESULT: - dividendsOwing       : 1 User1:0xa11A
-RESULT:                            - Fee0Token:0x93bf 33333333333333333333 = 33.333333333333333333
+RESULT:                            - Fee0Token:0x98b0 33333333333333333333 = 33.333333333333333333
 RESULT:                            - ETH|null:0x0000 3333333333333333333 = 3.333333333333333333
 RESULT: - dividendsOwing       : 2 User2:0xa22A
-RESULT:                            - Fee0Token:0x93bf 33333333333333333333 = 33.333333333333333333
+RESULT:                            - Fee0Token:0x98b0 33333333333333333333 = 33.333333333333333333
 RESULT:                            - ETH|null:0x0000 3333333333333333333 = 3.333333333333333333
 RESULT: - dividendsOwing       : 3 User3:0xa33a
-RESULT:                            - Fee0Token:0x93bf 33333333333333333333 = 33.333333333333333333
+RESULT:                            - Fee0Token:0x98b0 33333333333333333333 = 33.333333333333333333
 RESULT:                            - ETH|null:0x0000 3333333333333333333 = 3.333333333333333333
-RESULT: Token 1 Fee0Token:0x93bf @ 0x93bf95dE27B85710cE859c771374df8012Bf4fe7
+RESULT: Token 1 Fee0Token:0x98b0 @ 0x98b06815E25685c72f2bc2aBD77fA0779A5336D5
 RESULT: - symbol               : FEE0
 RESULT: - name                 : Fee0
 RESULT: - decimals             : 18
 RESULT: - totalSupply          : 10000
 RESULT: - owner                : Owner:0xa00A
-RESULT: Token 2 Fee1Token:0xa3e5 @ 0xa3e56A718a2f831aE973eC45db89202BA652a25F
+RESULT: Token 2 Fee1Token:0xf9d9 @ 0xf9d93EE3bd1b541E0b520a3fC2e9058Ef22396f4
 RESULT: - symbol               : FEE1
 RESULT: - name                 : Fee1
 RESULT: - decimals             : 18
 RESULT: - totalSupply          : 10000
 RESULT: - owner                : Owner:0xa00A
-RESULT: Token 3 Fee2Token:0xec0B @ 0xec0Bb4A5952833C588c1e31D4fa0Fb2c2C3009d9
+RESULT: Token 3 Fee2Token:0xD59f @ 0xD59fE94014C75606c5Ccac2B38649F20B28b0c8D
 RESULT: - symbol               : FEE2
 RESULT: - name                 : Fee2
 RESULT: - decimals             : 18
 RESULT: - totalSupply          : 10000
 RESULT: - owner                : Owner:0xa00A
 RESULT:
-RESULT: depositDividendFee0.receipt.gasUsed: 91483
-Events emitted in tx 0x4fed21bfd8fd715cf31a616c401482e6e8ec34f84d8e97f27d405140433e570a:
-----------------------------------------------------------------------------------------
-Transfer(0: 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E, 1: 0x7D649f97F399FE30bdbc0d1f6207cBcfcFA4a905, 2: 100000000000000000000, __length__: 3, from: 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E, to: 0x7D649f97F399FE30bdbc0d1f6207cBcfcFA4a905, tokens: 100000000000000000000)
-DividendDeposited(0: 0x93bf95dE27B85710cE859c771374df8012Bf4fe7, 1: 100000000000000000000, __length__: 2, token: 0x93bf95dE27B85710cE859c771374df8012Bf4fe7, tokens: 100000000000000000000)
-----------------------------------------------------------------------------------------
+RESULT: depositDividendFee0 - gasUsed: 91483, txFee: 0.00457415 @ 50 gwei, txFeeUsd: 1.7641124305 @ 385.67 ETH/USD
+  Events emitted in tx 0x21550f6b75337323f8b4183b2a382c0048b55840ba20e29f06d900ce572a2ddb:
+  ----------------------------------------------------------------------------------------
+  Transfer(0: 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E, 1: 0xeDcDF10549EE2274B1C5989cd4cE58A6b0cBcda8, 2: 100000000000000000000, __length__: 3, from: 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E, to: 0xeDcDF10549EE2274B1C5989cd4cE58A6b0cBcda8, tokens: 100000000000000000000)
+  DividendDeposited(0: 0x98b06815E25685c72f2bc2aBD77fA0779A5336D5, 1: 100000000000000000000, __length__: 2, token: 0x98b06815E25685c72f2bc2aBD77fA0779A5336D5, tokens: 100000000000000000000)
+  ----------------------------------------------------------------------------------------
 
-RESULT: depositDividendETH.receipt.gasUsed: 69215
-Events emitted in tx 0x319a5702964acaf2a466f6a53faa2c3573a248dbfab0559ccf891d483a8b3926:
-----------------------------------------------------------------------------------------
-DividendDeposited(0: 0x0000000000000000000000000000000000000000, 1: 10000000000000000000, __length__: 2, token: 0x0000000000000000000000000000000000000000, tokens: 10000000000000000000)
-----------------------------------------------------------------------------------------
+RESULT: depositDividendETH - gasUsed: 69215, txFee: 0.00346075 @ 50 gwei, txFeeUsd: 1.3347074525 @ 385.67 ETH/USD
+  Events emitted in tx 0xbdbf62983d704c406d548e5f226d191617be3feeded7dcd9391121d3e73a1884:
+  ----------------------------------------------------------------------------------------
+  DividendDeposited(0: 0x0000000000000000000000000000000000000000, 1: 10000000000000000000, __length__: 2, token: 0x0000000000000000000000000000000000000000, tokens: 10000000000000000000)
+  ----------------------------------------------------------------------------------------
 
 RESULT: --- Test 3 - User1 dummy transfer to same account (internal stats update) ---
-RESULT:  # Account                                             EtherBalanceChange                            OGD                           FEE0 @ 63448 -> 63458
+RESULT:  # Account                                             EtherBalanceChange                            OGD                           FEE0 @ 73306 -> 73316
 RESULT:                                                                                                     FEE1                           FEE2
 RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
 RESULT: 0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E        -9.997157560000000000           0.000000000000000000        9900.000000000000000000 Owner:0xa00A
@@ -1121,64 +1121,64 @@ RESULT: 2 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976        -0.00284244000000000
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000
 RESULT: 3 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0         0.000000000000000000       10000.000000000000000000           0.000000000000000000 User3:0xa33a
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000
-RESULT: 4 0x7D649f97F399FE30bdbc0d1f6207cBcfcFA4a905        10.000000000000000000           0.000000000000000000         100.000000000000000000 OGDToken:0x7D64
+RESULT: 4 0xeDcDF10549EE2274B1C5989cd4cE58A6b0cBcda8        10.000000000000000000           0.000000000000000000         100.000000000000000000 OGDToken:0xeDcD
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000
-RESULT: 5 0x93bf95dE27B85710cE859c771374df8012Bf4fe7         0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee0Token:0x93bf
+RESULT: 5 0x98b06815E25685c72f2bc2aBD77fA0779A5336D5         0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee0Token:0x98b0
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000
-RESULT: 6 0xa3e56A718a2f831aE973eC45db89202BA652a25F         0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee1Token:0xa3e5
+RESULT: 6 0xf9d93EE3bd1b541E0b520a3fC2e9058Ef22396f4         0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee1Token:0xf9d9
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000
-RESULT: 7 0xec0Bb4A5952833C588c1e31D4fa0Fb2c2C3009d9         0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee2Token:0xec0B
+RESULT: 7 0xD59fE94014C75606c5Ccac2B38649F20B28b0c8D         0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee2Token:0xD59f
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000
 RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
 RESULT:                                                                                 30000.000000000000000000       10000.000000000000000000 Total Token Balances
 RESULT:                                                                                 10000.000000000000000000       10000.000000000000000000
 RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
 RESULT:
-RESULT: Token 0 OGDToken:0x7D64 @ 0x7D649f97F399FE30bdbc0d1f6207cBcfcFA4a905
+RESULT: Token 0 OGDToken:0xeDcD @ 0xeDcDF10549EE2274B1C5989cd4cE58A6b0cBcda8
 RESULT: - symbol               : OGD
 RESULT: - name                 : Optino Governance Dividend
 RESULT: - decimals             : 18
 RESULT: - totalSupply          : 30000
 RESULT: - owner                : Owner:0xa00A
 RESULT: - dividendTokensLength : 2
-RESULT: - dividendToken        : 0 Fee0Token:0x93bf, enabled: true, unclaimedDividends: 66666666666666666667 = 66.666666666666666667
+RESULT: - dividendToken        : 0 Fee0Token:0x98b0, enabled: true, unclaimedDividends: 66666666666666666667 = 66.666666666666666667
 RESULT: - dividendToken        : 1 ETH|null:0x0000, enabled: true, unclaimedDividends: 6666666666666666667 = 6.666666666666666667
 RESULT: - dividendsOwing       : 1 User1:0xa11A
-RESULT:                            - Fee0Token:0x93bf 33333333333333333333 = 33.333333333333333333
+RESULT:                            - Fee0Token:0x98b0 33333333333333333333 = 33.333333333333333333
 RESULT:                            - ETH|null:0x0000 3333333333333333333 = 3.333333333333333333
 RESULT: - dividendsOwing       : 2 User2:0xa22A
-RESULT:                            - Fee0Token:0x93bf 33333333333333333333 = 33.333333333333333333
+RESULT:                            - Fee0Token:0x98b0 33333333333333333333 = 33.333333333333333333
 RESULT:                            - ETH|null:0x0000 3333333333333333333 = 3.333333333333333333
 RESULT: - dividendsOwing       : 3 User3:0xa33a
-RESULT:                            - Fee0Token:0x93bf 33333333333333333333 = 33.333333333333333333
+RESULT:                            - Fee0Token:0x98b0 33333333333333333333 = 33.333333333333333333
 RESULT:                            - ETH|null:0x0000 3333333333333333333 = 3.333333333333333333
-RESULT: Token 1 Fee0Token:0x93bf @ 0x93bf95dE27B85710cE859c771374df8012Bf4fe7
+RESULT: Token 1 Fee0Token:0x98b0 @ 0x98b06815E25685c72f2bc2aBD77fA0779A5336D5
 RESULT: - symbol               : FEE0
 RESULT: - name                 : Fee0
 RESULT: - decimals             : 18
 RESULT: - totalSupply          : 10000
 RESULT: - owner                : Owner:0xa00A
-RESULT: Token 2 Fee1Token:0xa3e5 @ 0xa3e56A718a2f831aE973eC45db89202BA652a25F
+RESULT: Token 2 Fee1Token:0xf9d9 @ 0xf9d93EE3bd1b541E0b520a3fC2e9058Ef22396f4
 RESULT: - symbol               : FEE1
 RESULT: - name                 : Fee1
 RESULT: - decimals             : 18
 RESULT: - totalSupply          : 10000
 RESULT: - owner                : Owner:0xa00A
-RESULT: Token 3 Fee2Token:0xec0B @ 0xec0Bb4A5952833C588c1e31D4fa0Fb2c2C3009d9
+RESULT: Token 3 Fee2Token:0xD59f @ 0xD59fE94014C75606c5Ccac2B38649F20B28b0c8D
 RESULT: - symbol               : FEE2
 RESULT: - name                 : Fee2
 RESULT: - decimals             : 18
 RESULT: - totalSupply          : 10000
 RESULT: - owner                : Owner:0xa00A
 RESULT:
-RESULT: dummyTransfer.receipt.gasUsed: 142122
-Events emitted in tx 0x5db91e0bbb237fb0c94a42df9ff92a855cddf4f28560d797077bc9933318dbbf:
-----------------------------------------------------------------------------------------
-Transfer(0: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, 1: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, 2: 1, __length__: 3, from: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, to: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, tokens: 1)
-----------------------------------------------------------------------------------------
+RESULT: dummyTransfer - gasUsed: 142122, txFee: 0.0071061 @ 50 gwei, txFeeUsd: 2.740609587 @ 385.67 ETH/USD
+  Events emitted in tx 0x499324a104252a02e9161d94ff65709bc11ce1037310114d0623178f420bd9cf:
+  ----------------------------------------------------------------------------------------
+  Transfer(0: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, 1: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, 2: 1, __length__: 3, from: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, to: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, tokens: 1)
+  ----------------------------------------------------------------------------------------
 
 RESULT: --- Test 4 - User{1..3} withdraw 33.333333333333333333 FEE0 and 3.333333333333333333 ETH ---
-RESULT:  # Account                                             EtherBalanceChange                            OGD                           FEE0 @ 63448 -> 63461
+RESULT:  # Account                                             EtherBalanceChange                            OGD                           FEE0 @ 73306 -> 73319
 RESULT:                                                                                                     FEE1                           FEE2
 RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
 RESULT: 0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E        -9.989430920000000000           0.000000000000000000        9900.000000000000000000 Owner:0xa00A
@@ -1189,95 +1189,95 @@ RESULT: 2 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976         3.32897937333333333
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000
 RESULT: 3 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0         3.330225773333333333       10000.000000000000000000          33.333333333333333333 User3:0xa33a
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000
-RESULT: 4 0x7D649f97F399FE30bdbc0d1f6207cBcfcFA4a905         0.000000000000000001           0.000000000000000000           0.000000000000000001 OGDToken:0x7D64
+RESULT: 4 0xeDcDF10549EE2274B1C5989cd4cE58A6b0cBcda8         0.000000000000000001           0.000000000000000000           0.000000000000000001 OGDToken:0xeDcD
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000
-RESULT: 5 0x93bf95dE27B85710cE859c771374df8012Bf4fe7         0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee0Token:0x93bf
+RESULT: 5 0x98b06815E25685c72f2bc2aBD77fA0779A5336D5         0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee0Token:0x98b0
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000
-RESULT: 6 0xa3e56A718a2f831aE973eC45db89202BA652a25F         0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee1Token:0xa3e5
+RESULT: 6 0xf9d93EE3bd1b541E0b520a3fC2e9058Ef22396f4         0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee1Token:0xf9d9
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000
-RESULT: 7 0xec0Bb4A5952833C588c1e31D4fa0Fb2c2C3009d9         0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee2Token:0xec0B
+RESULT: 7 0xD59fE94014C75606c5Ccac2B38649F20B28b0c8D         0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee2Token:0xD59f
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000
 RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
 RESULT:                                                                                 30000.000000000000000000       10000.000000000000000000 Total Token Balances
 RESULT:                                                                                 10000.000000000000000000       10000.000000000000000000
 RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
 RESULT:
-RESULT: Token 0 OGDToken:0x7D64 @ 0x7D649f97F399FE30bdbc0d1f6207cBcfcFA4a905
+RESULT: Token 0 OGDToken:0xeDcD @ 0xeDcDF10549EE2274B1C5989cd4cE58A6b0cBcda8
 RESULT: - symbol               : OGD
 RESULT: - name                 : Optino Governance Dividend
 RESULT: - decimals             : 18
 RESULT: - totalSupply          : 30000
 RESULT: - owner                : Owner:0xa00A
 RESULT: - dividendTokensLength : 2
-RESULT: - dividendToken        : 0 Fee0Token:0x93bf, enabled: true, unclaimedDividends: 1 = 0.000000000000000001
+RESULT: - dividendToken        : 0 Fee0Token:0x98b0, enabled: true, unclaimedDividends: 1 = 0.000000000000000001
 RESULT: - dividendToken        : 1 ETH|null:0x0000, enabled: true, unclaimedDividends: 1 = 0.000000000000000001
 RESULT: - dividendsOwing       : 1 User1:0xa11A
-RESULT:                            - Fee0Token:0x93bf 0 = 0.000000000000000000
+RESULT:                            - Fee0Token:0x98b0 0 = 0.000000000000000000
 RESULT:                            - ETH|null:0x0000 0 = 0.000000000000000000
 RESULT: - dividendsOwing       : 2 User2:0xa22A
-RESULT:                            - Fee0Token:0x93bf 0 = 0.000000000000000000
+RESULT:                            - Fee0Token:0x98b0 0 = 0.000000000000000000
 RESULT:                            - ETH|null:0x0000 0 = 0.000000000000000000
 RESULT: - dividendsOwing       : 3 User3:0xa33a
-RESULT:                            - Fee0Token:0x93bf 0 = 0.000000000000000000
+RESULT:                            - Fee0Token:0x98b0 0 = 0.000000000000000000
 RESULT:                            - ETH|null:0x0000 0 = 0.000000000000000000
-RESULT: Token 1 Fee0Token:0x93bf @ 0x93bf95dE27B85710cE859c771374df8012Bf4fe7
+RESULT: Token 1 Fee0Token:0x98b0 @ 0x98b06815E25685c72f2bc2aBD77fA0779A5336D5
 RESULT: - symbol               : FEE0
 RESULT: - name                 : Fee0
 RESULT: - decimals             : 18
 RESULT: - totalSupply          : 10000
 RESULT: - owner                : Owner:0xa00A
-RESULT: Token 2 Fee1Token:0xa3e5 @ 0xa3e56A718a2f831aE973eC45db89202BA652a25F
+RESULT: Token 2 Fee1Token:0xf9d9 @ 0xf9d93EE3bd1b541E0b520a3fC2e9058Ef22396f4
 RESULT: - symbol               : FEE1
 RESULT: - name                 : Fee1
 RESULT: - decimals             : 18
 RESULT: - totalSupply          : 10000
 RESULT: - owner                : Owner:0xa00A
-RESULT: Token 3 Fee2Token:0xec0B @ 0xec0Bb4A5952833C588c1e31D4fa0Fb2c2C3009d9
+RESULT: Token 3 Fee2Token:0xD59f @ 0xD59fE94014C75606c5Ccac2B38649F20B28b0c8D
 RESULT: - symbol               : FEE2
 RESULT: - name                 : Fee2
 RESULT: - decimals             : 18
 RESULT: - totalSupply          : 10000
 RESULT: - owner                : Owner:0xa00A
 RESULT:
-RESULT: withdrawDividends1.receipt.gasUsed: 155378
-Events emitted in tx 0xbe3a558a0df0e5d379ab729297f3470e79f560d8a3ba641337c9460e695f8b5f:
-----------------------------------------------------------------------------------------
-Transfer(0: 0x7D649f97F399FE30bdbc0d1f6207cBcfcFA4a905, 1: 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433, 2: 33333333333333333333, __length__: 3, from: 0x7D649f97F399FE30bdbc0d1f6207cBcfcFA4a905, to: 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433, tokens: 33333333333333333333)
-DividendWithdrawn(0: 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433, 1: 0x93bf95dE27B85710cE859c771374df8012Bf4fe7, 2: 33333333333333333333, __length__: 3, account: 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433, token: 0x93bf95dE27B85710cE859c771374df8012Bf4fe7, tokens: 33333333333333333333)
-DividendWithdrawn(0: 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433, 1: 0x0000000000000000000000000000000000000000, 2: 3333333333333333333, __length__: 3, account: 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433, token: 0x0000000000000000000000000000000000000000, tokens: 3333333333333333333)
-----------------------------------------------------------------------------------------
+RESULT: withdrawDividends1 - gasUsed: 155378, txFee: 0.0077689 @ 50 gwei, txFeeUsd: 2.996231663 @ 385.67 ETH/USD
+  Events emitted in tx 0xf4712f92323826f19f727cc93a09edbad37477ff4118b87657fc133b68b986aa:
+  ----------------------------------------------------------------------------------------
+  Transfer(0: 0xeDcDF10549EE2274B1C5989cd4cE58A6b0cBcda8, 1: 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433, 2: 33333333333333333333, __length__: 3, from: 0xeDcDF10549EE2274B1C5989cd4cE58A6b0cBcda8, to: 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433, tokens: 33333333333333333333)
+  DividendWithdrawn(0: 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433, 1: 0x98b06815E25685c72f2bc2aBD77fA0779A5336D5, 2: 33333333333333333333, __length__: 3, account: 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433, token: 0x98b06815E25685c72f2bc2aBD77fA0779A5336D5, tokens: 33333333333333333333)
+  DividendWithdrawn(0: 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433, 1: 0x0000000000000000000000000000000000000000, 2: 3333333333333333333, __length__: 3, account: 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433, token: 0x0000000000000000000000000000000000000000, tokens: 3333333333333333333)
+  ----------------------------------------------------------------------------------------
 
-RESULT: withdrawDividends2.receipt.gasUsed: 75576
-Events emitted in tx 0x64bdcae81161460cb3c237b3378edbd16489887238f736c2ae2df4ebace6c9ac:
-----------------------------------------------------------------------------------------
-Transfer(0: 0x7D649f97F399FE30bdbc0d1f6207cBcfcFA4a905, 1: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, 2: 33333333333333333333, __length__: 3, from: 0x7D649f97F399FE30bdbc0d1f6207cBcfcFA4a905, to: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, tokens: 33333333333333333333)
-DividendWithdrawn(0: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, 1: 0x93bf95dE27B85710cE859c771374df8012Bf4fe7, 2: 33333333333333333333, __length__: 3, account: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, token: 0x93bf95dE27B85710cE859c771374df8012Bf4fe7, tokens: 33333333333333333333)
-DividendWithdrawn(0: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, 1: 0x0000000000000000000000000000000000000000, 2: 3333333333333333333, __length__: 3, account: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, token: 0x0000000000000000000000000000000000000000, tokens: 3333333333333333333)
-----------------------------------------------------------------------------------------
+RESULT: withdrawDividends2 - gasUsed: 75576, txFee: 0.0037788 @ 50 gwei, txFeeUsd: 1.457369796 @ 385.67 ETH/USD
+  Events emitted in tx 0x1a8571bc35032ced461790c15b29a42581b3ed9b7689f216c407a65bb9183283:
+  ----------------------------------------------------------------------------------------
+  Transfer(0: 0xeDcDF10549EE2274B1C5989cd4cE58A6b0cBcda8, 1: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, 2: 33333333333333333333, __length__: 3, from: 0xeDcDF10549EE2274B1C5989cd4cE58A6b0cBcda8, to: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, tokens: 33333333333333333333)
+  DividendWithdrawn(0: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, 1: 0x98b06815E25685c72f2bc2aBD77fA0779A5336D5, 2: 33333333333333333333, __length__: 3, account: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, token: 0x98b06815E25685c72f2bc2aBD77fA0779A5336D5, tokens: 33333333333333333333)
+  DividendWithdrawn(0: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, 1: 0x0000000000000000000000000000000000000000, 2: 3333333333333333333, __length__: 3, account: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, token: 0x0000000000000000000000000000000000000000, tokens: 3333333333333333333)
+  ----------------------------------------------------------------------------------------
 
-RESULT: withdrawDividends3.receipt.gasUsed: 155378
-Events emitted in tx 0xd36bff9357278e082685770ba6601f48675ae68d466ef83c6481287a9db83ba1:
-----------------------------------------------------------------------------------------
-Transfer(0: 0x7D649f97F399FE30bdbc0d1f6207cBcfcFA4a905, 1: 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0, 2: 33333333333333333333, __length__: 3, from: 0x7D649f97F399FE30bdbc0d1f6207cBcfcFA4a905, to: 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0, tokens: 33333333333333333333)
-DividendWithdrawn(0: 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0, 1: 0x93bf95dE27B85710cE859c771374df8012Bf4fe7, 2: 33333333333333333333, __length__: 3, account: 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0, token: 0x93bf95dE27B85710cE859c771374df8012Bf4fe7, tokens: 33333333333333333333)
-DividendWithdrawn(0: 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0, 1: 0x0000000000000000000000000000000000000000, 2: 3333333333333333333, __length__: 3, account: 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0, token: 0x0000000000000000000000000000000000000000, tokens: 3333333333333333333)
-----------------------------------------------------------------------------------------
+RESULT: withdrawDividends3 - gasUsed: 155378, txFee: 0.0077689 @ 50 gwei, txFeeUsd: 2.996231663 @ 385.67 ETH/USD
+  Events emitted in tx 0xebb68a2c732b050809d3c3199d14e33a4fab15b373976f7a944da9209041824b:
+  ----------------------------------------------------------------------------------------
+  Transfer(0: 0xeDcDF10549EE2274B1C5989cd4cE58A6b0cBcda8, 1: 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0, 2: 33333333333333333333, __length__: 3, from: 0xeDcDF10549EE2274B1C5989cd4cE58A6b0cBcda8, to: 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0, tokens: 33333333333333333333)
+  DividendWithdrawn(0: 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0, 1: 0x98b06815E25685c72f2bc2aBD77fA0779A5336D5, 2: 33333333333333333333, __length__: 3, account: 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0, token: 0x98b06815E25685c72f2bc2aBD77fA0779A5336D5, tokens: 33333333333333333333)
+  DividendWithdrawn(0: 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0, 1: 0x0000000000000000000000000000000000000000, 2: 3333333333333333333, __length__: 3, account: 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0, token: 0x0000000000000000000000000000000000000000, tokens: 3333333333333333333)
+  ----------------------------------------------------------------------------------------
 
 RESULT: --- Test 5 - Add Fee{1..2} Dividend Token ---
-RESULT: addDividendToken2.receipt.gasUsed: 116331
-Events emitted in tx 0x21169bd471fcab3abcad00f0a3bd5ffab385df17f1e0316da4872cf909b59ee1:
-----------------------------------------------------------------------------------------
-DividendTokenAdded(0: 0xa3e56A718a2f831aE973eC45db89202BA652a25F, 1: true, __length__: 2, token: 0xa3e56A718a2f831aE973eC45db89202BA652a25F, enabled: true)
-----------------------------------------------------------------------------------------
+RESULT: addDividendToken2 - gasUsed: 116331, txFee: 0.00581655 @ 50 gwei, txFeeUsd: 2.2432688385 @ 385.67 ETH/USD
+  Events emitted in tx 0x42bd7bf8ab52528f7b1716ca9c729240f2134e4d07706238ed6262d08923621d:
+  ----------------------------------------------------------------------------------------
+  DividendTokenAdded(0: 0xf9d93EE3bd1b541E0b520a3fC2e9058Ef22396f4, 1: true, __length__: 2, token: 0xf9d93EE3bd1b541E0b520a3fC2e9058Ef22396f4, enabled: true)
+  ----------------------------------------------------------------------------------------
 
-RESULT: addDividendToken3.receipt.gasUsed: 116331
-Events emitted in tx 0xe05fd3e48207fb36f0e3da953b539495bde94364556b4751e3f13fca8f28ab6c:
-----------------------------------------------------------------------------------------
-DividendTokenAdded(0: 0xec0Bb4A5952833C588c1e31D4fa0Fb2c2C3009d9, 1: true, __length__: 2, token: 0xec0Bb4A5952833C588c1e31D4fa0Fb2c2C3009d9, enabled: true)
-----------------------------------------------------------------------------------------
+RESULT: addDividendToken3 - gasUsed: 116331, txFee: 0.00581655 @ 50 gwei, txFeeUsd: 2.2432688385 @ 385.67 ETH/USD
+  Events emitted in tx 0xd9de53f90393096186d8f66b565a903ef8c69de5306b8e4914b56b1bf93de07e:
+  ----------------------------------------------------------------------------------------
+  DividendTokenAdded(0: 0xD59fE94014C75606c5Ccac2B38649F20B28b0c8D, 1: true, __length__: 2, token: 0xD59fE94014C75606c5Ccac2B38649F20B28b0c8D, enabled: true)
+  ----------------------------------------------------------------------------------------
 
 RESULT: --- Test 6 - Owner deposits dividends of 1,000 FEE1 and 10,000 FEE2 ---
-RESULT:  # Account                                             EtherBalanceChange                            OGD                           FEE0 @ 63448 -> 63465
+RESULT:  # Account                                             EtherBalanceChange                            OGD                           FEE0 @ 73306 -> 73323
 RESULT:                                                                                                     FEE1                           FEE2
 RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
 RESULT: 0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E        -9.989430920000000000           0.000000000000000000        9900.000000000000000000 Owner:0xa00A
@@ -1288,80 +1288,80 @@ RESULT: 2 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976         3.32897937333333333
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000
 RESULT: 3 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0         3.330225773333333333       10000.000000000000000000          33.333333333333333333 User3:0xa33a
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000
-RESULT: 4 0x7D649f97F399FE30bdbc0d1f6207cBcfcFA4a905         0.000000000000000001           0.000000000000000000           0.000000000000000001 OGDToken:0x7D64
+RESULT: 4 0xeDcDF10549EE2274B1C5989cd4cE58A6b0cBcda8         0.000000000000000001           0.000000000000000000           0.000000000000000001 OGDToken:0xeDcD
 RESULT:                                                                                  1000.000000000000000000       10000.000000000000000000
-RESULT: 5 0x93bf95dE27B85710cE859c771374df8012Bf4fe7         0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee0Token:0x93bf
+RESULT: 5 0x98b06815E25685c72f2bc2aBD77fA0779A5336D5         0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee0Token:0x98b0
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000
-RESULT: 6 0xa3e56A718a2f831aE973eC45db89202BA652a25F         0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee1Token:0xa3e5
+RESULT: 6 0xf9d93EE3bd1b541E0b520a3fC2e9058Ef22396f4         0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee1Token:0xf9d9
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000
-RESULT: 7 0xec0Bb4A5952833C588c1e31D4fa0Fb2c2C3009d9         0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee2Token:0xec0B
+RESULT: 7 0xD59fE94014C75606c5Ccac2B38649F20B28b0c8D         0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee2Token:0xD59f
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000
 RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
 RESULT:                                                                                 30000.000000000000000000       10000.000000000000000000 Total Token Balances
 RESULT:                                                                                 10000.000000000000000000       10000.000000000000000000
 RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
 RESULT:
-RESULT: Token 0 OGDToken:0x7D64 @ 0x7D649f97F399FE30bdbc0d1f6207cBcfcFA4a905
+RESULT: Token 0 OGDToken:0xeDcD @ 0xeDcDF10549EE2274B1C5989cd4cE58A6b0cBcda8
 RESULT: - symbol               : OGD
 RESULT: - name                 : Optino Governance Dividend
 RESULT: - decimals             : 18
 RESULT: - totalSupply          : 30000
 RESULT: - owner                : Owner:0xa00A
 RESULT: - dividendTokensLength : 4
-RESULT: - dividendToken        : 0 Fee0Token:0x93bf, enabled: true, unclaimedDividends: 1 = 0.000000000000000001
+RESULT: - dividendToken        : 0 Fee0Token:0x98b0, enabled: true, unclaimedDividends: 1 = 0.000000000000000001
 RESULT: - dividendToken        : 1 ETH|null:0x0000, enabled: true, unclaimedDividends: 1 = 0.000000000000000001
-RESULT: - dividendToken        : 2 Fee2Token:0xec0B, enabled: true, unclaimedDividends: 10000000000000000000000 = 10000.000000000000000000
-RESULT: - dividendToken        : 3 Fee1Token:0xa3e5, enabled: true, unclaimedDividends: 1000000000000000000000 = 1000.000000000000000000
+RESULT: - dividendToken        : 2 Fee2Token:0xD59f, enabled: true, unclaimedDividends: 10000000000000000000000 = 10000.000000000000000000
+RESULT: - dividendToken        : 3 Fee1Token:0xf9d9, enabled: true, unclaimedDividends: 1000000000000000000000 = 1000.000000000000000000
 RESULT: - dividendsOwing       : 1 User1:0xa11A
-RESULT:                            - Fee0Token:0x93bf 0 = 0.000000000000000000
+RESULT:                            - Fee0Token:0x98b0 0 = 0.000000000000000000
 RESULT:                            - ETH|null:0x0000 0 = 0.000000000000000000
-RESULT:                            - Fee2Token:0xec0B 3333333333333333333333 = 3333.333333333333333333
-RESULT:                            - Fee1Token:0xa3e5 333333333333333333333 = 333.333333333333333333
+RESULT:                            - Fee2Token:0xD59f 3333333333333333333333 = 3333.333333333333333333
+RESULT:                            - Fee1Token:0xf9d9 333333333333333333333 = 333.333333333333333333
 RESULT: - dividendsOwing       : 2 User2:0xa22A
-RESULT:                            - Fee0Token:0x93bf 0 = 0.000000000000000000
+RESULT:                            - Fee0Token:0x98b0 0 = 0.000000000000000000
 RESULT:                            - ETH|null:0x0000 0 = 0.000000000000000000
-RESULT:                            - Fee2Token:0xec0B 3333333333333333333333 = 3333.333333333333333333
-RESULT:                            - Fee1Token:0xa3e5 333333333333333333333 = 333.333333333333333333
+RESULT:                            - Fee2Token:0xD59f 3333333333333333333333 = 3333.333333333333333333
+RESULT:                            - Fee1Token:0xf9d9 333333333333333333333 = 333.333333333333333333
 RESULT: - dividendsOwing       : 3 User3:0xa33a
-RESULT:                            - Fee0Token:0x93bf 0 = 0.000000000000000000
+RESULT:                            - Fee0Token:0x98b0 0 = 0.000000000000000000
 RESULT:                            - ETH|null:0x0000 0 = 0.000000000000000000
-RESULT:                            - Fee2Token:0xec0B 3333333333333333333333 = 3333.333333333333333333
-RESULT:                            - Fee1Token:0xa3e5 333333333333333333333 = 333.333333333333333333
-RESULT: Token 1 Fee0Token:0x93bf @ 0x93bf95dE27B85710cE859c771374df8012Bf4fe7
+RESULT:                            - Fee2Token:0xD59f 3333333333333333333333 = 3333.333333333333333333
+RESULT:                            - Fee1Token:0xf9d9 333333333333333333333 = 333.333333333333333333
+RESULT: Token 1 Fee0Token:0x98b0 @ 0x98b06815E25685c72f2bc2aBD77fA0779A5336D5
 RESULT: - symbol               : FEE0
 RESULT: - name                 : Fee0
 RESULT: - decimals             : 18
 RESULT: - totalSupply          : 10000
 RESULT: - owner                : Owner:0xa00A
-RESULT: Token 2 Fee1Token:0xa3e5 @ 0xa3e56A718a2f831aE973eC45db89202BA652a25F
+RESULT: Token 2 Fee1Token:0xf9d9 @ 0xf9d93EE3bd1b541E0b520a3fC2e9058Ef22396f4
 RESULT: - symbol               : FEE1
 RESULT: - name                 : Fee1
 RESULT: - decimals             : 18
 RESULT: - totalSupply          : 10000
 RESULT: - owner                : Owner:0xa00A
-RESULT: Token 3 Fee2Token:0xec0B @ 0xec0Bb4A5952833C588c1e31D4fa0Fb2c2C3009d9
+RESULT: Token 3 Fee2Token:0xD59f @ 0xD59fE94014C75606c5Ccac2B38649F20B28b0c8D
 RESULT: - symbol               : FEE2
 RESULT: - name                 : Fee2
 RESULT: - decimals             : 18
 RESULT: - totalSupply          : 10000
 RESULT: - owner                : Owner:0xa00A
 RESULT:
-RESULT: depositDividendFee1.receipt.gasUsed: 91483
-Events emitted in tx 0x42133d9ad5919afb07d083bbabb1a2945fe9a96692c1c2a500e4ffc1b27f5670:
-----------------------------------------------------------------------------------------
-Transfer(0: 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E, 1: 0x7D649f97F399FE30bdbc0d1f6207cBcfcFA4a905, 2: 1000000000000000000000, __length__: 3, from: 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E, to: 0x7D649f97F399FE30bdbc0d1f6207cBcfcFA4a905, tokens: 1000000000000000000000)
-DividendDeposited(0: 0xa3e56A718a2f831aE973eC45db89202BA652a25F, 1: 1000000000000000000000, __length__: 2, token: 0xa3e56A718a2f831aE973eC45db89202BA652a25F, tokens: 1000000000000000000000)
-----------------------------------------------------------------------------------------
+RESULT: depositDividendFee1 - gasUsed: 91483, txFee: 0.00457415 @ 50 gwei, txFeeUsd: 1.7641124305 @ 385.67 ETH/USD
+  Events emitted in tx 0x047eb86b7b0d89caa0d0a8543fdae7f871fcb9846b8618fab1a2e065928adf1d:
+  ----------------------------------------------------------------------------------------
+  Transfer(0: 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E, 1: 0xeDcDF10549EE2274B1C5989cd4cE58A6b0cBcda8, 2: 1000000000000000000000, __length__: 3, from: 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E, to: 0xeDcDF10549EE2274B1C5989cd4cE58A6b0cBcda8, tokens: 1000000000000000000000)
+  DividendDeposited(0: 0xf9d93EE3bd1b541E0b520a3fC2e9058Ef22396f4, 1: 1000000000000000000000, __length__: 2, token: 0xf9d93EE3bd1b541E0b520a3fC2e9058Ef22396f4, tokens: 1000000000000000000000)
+  ----------------------------------------------------------------------------------------
 
-RESULT: depositDividendFee2.receipt.gasUsed: 76495
-Events emitted in tx 0x847d648336fe86b458a608ba55204cb13ae1651a9b66c167ce6204d4f7a4b18e:
-----------------------------------------------------------------------------------------
-Transfer(0: 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E, 1: 0x7D649f97F399FE30bdbc0d1f6207cBcfcFA4a905, 2: 10000000000000000000000, __length__: 3, from: 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E, to: 0x7D649f97F399FE30bdbc0d1f6207cBcfcFA4a905, tokens: 10000000000000000000000)
-DividendDeposited(0: 0xec0Bb4A5952833C588c1e31D4fa0Fb2c2C3009d9, 1: 10000000000000000000000, __length__: 2, token: 0xec0Bb4A5952833C588c1e31D4fa0Fb2c2C3009d9, tokens: 10000000000000000000000)
-----------------------------------------------------------------------------------------
+RESULT: depositDividendFee2 - gasUsed: 76495, txFee: 0.00382475 @ 50 gwei, txFeeUsd: 1.4750913325 @ 385.67 ETH/USD
+  Events emitted in tx 0x4a5e965457208dcab38aa452347227470c704c8d0b4905bcb38e3dda13889929:
+  ----------------------------------------------------------------------------------------
+  Transfer(0: 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E, 1: 0xeDcDF10549EE2274B1C5989cd4cE58A6b0cBcda8, 2: 10000000000000000000000, __length__: 3, from: 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E, to: 0xeDcDF10549EE2274B1C5989cd4cE58A6b0cBcda8, tokens: 10000000000000000000000)
+  DividendDeposited(0: 0xD59fE94014C75606c5Ccac2B38649F20B28b0c8D, 1: 10000000000000000000000, __length__: 2, token: 0xD59fE94014C75606c5Ccac2B38649F20B28b0c8D, tokens: 10000000000000000000000)
+  ----------------------------------------------------------------------------------------
 
 RESULT: --- Test 7 - User{1..3} withdraw 333.333333333333333333 FEE1 and 3333.333333333333333333 FEE2 ---
-RESULT:  # Account                                             EtherBalanceChange                            OGD                           FEE0 @ 63448 -> 63467
+RESULT:  # Account                                             EtherBalanceChange                            OGD                           FEE0 @ 73306 -> 73325
 RESULT:                                                                                                     FEE1                           FEE2
 RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
 RESULT: 0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E        -9.976682780000000000           0.000000000000000000        9900.000000000000000000 Owner:0xa00A
@@ -1372,99 +1372,99 @@ RESULT: 2 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976         3.32472999333333333
 RESULT:                                                                                   333.333333333333333333        3333.333333333333333333
 RESULT: 3 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0         3.325976393333333333       10000.000000000000000000          33.333333333333333333 User3:0xa33a
 RESULT:                                                                                   333.333333333333333333        3333.333333333333333333
-RESULT: 4 0x7D649f97F399FE30bdbc0d1f6207cBcfcFA4a905         0.000000000000000001           0.000000000000000000           0.000000000000000001 OGDToken:0x7D64
+RESULT: 4 0xeDcDF10549EE2274B1C5989cd4cE58A6b0cBcda8         0.000000000000000001           0.000000000000000000           0.000000000000000001 OGDToken:0xeDcD
 RESULT:                                                                                     0.000000000000000001           0.000000000000000001
-RESULT: 5 0x93bf95dE27B85710cE859c771374df8012Bf4fe7         0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee0Token:0x93bf
+RESULT: 5 0x98b06815E25685c72f2bc2aBD77fA0779A5336D5         0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee0Token:0x98b0
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000
-RESULT: 6 0xa3e56A718a2f831aE973eC45db89202BA652a25F         0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee1Token:0xa3e5
+RESULT: 6 0xf9d93EE3bd1b541E0b520a3fC2e9058Ef22396f4         0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee1Token:0xf9d9
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000
-RESULT: 7 0xec0Bb4A5952833C588c1e31D4fa0Fb2c2C3009d9         0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee2Token:0xec0B
+RESULT: 7 0xD59fE94014C75606c5Ccac2B38649F20B28b0c8D         0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee2Token:0xD59f
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000
 RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
 RESULT:                                                                                 30000.000000000000000000       10000.000000000000000000 Total Token Balances
 RESULT:                                                                                 10000.000000000000000000       10000.000000000000000000
 RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
 RESULT:
-RESULT: Token 0 OGDToken:0x7D64 @ 0x7D649f97F399FE30bdbc0d1f6207cBcfcFA4a905
+RESULT: Token 0 OGDToken:0xeDcD @ 0xeDcDF10549EE2274B1C5989cd4cE58A6b0cBcda8
 RESULT: - symbol               : OGD
 RESULT: - name                 : Optino Governance Dividend
 RESULT: - decimals             : 18
 RESULT: - totalSupply          : 30000
 RESULT: - owner                : Owner:0xa00A
 RESULT: - dividendTokensLength : 4
-RESULT: - dividendToken        : 0 Fee0Token:0x93bf, enabled: true, unclaimedDividends: 1 = 0.000000000000000001
+RESULT: - dividendToken        : 0 Fee0Token:0x98b0, enabled: true, unclaimedDividends: 1 = 0.000000000000000001
 RESULT: - dividendToken        : 1 ETH|null:0x0000, enabled: true, unclaimedDividends: 1 = 0.000000000000000001
-RESULT: - dividendToken        : 2 Fee2Token:0xec0B, enabled: true, unclaimedDividends: 1 = 0.000000000000000001
-RESULT: - dividendToken        : 3 Fee1Token:0xa3e5, enabled: true, unclaimedDividends: 1 = 0.000000000000000001
+RESULT: - dividendToken        : 2 Fee2Token:0xD59f, enabled: true, unclaimedDividends: 1 = 0.000000000000000001
+RESULT: - dividendToken        : 3 Fee1Token:0xf9d9, enabled: true, unclaimedDividends: 1 = 0.000000000000000001
 RESULT: - dividendsOwing       : 1 User1:0xa11A
-RESULT:                            - Fee0Token:0x93bf 0 = 0.000000000000000000
+RESULT:                            - Fee0Token:0x98b0 0 = 0.000000000000000000
 RESULT:                            - ETH|null:0x0000 0 = 0.000000000000000000
-RESULT:                            - Fee2Token:0xec0B 0 = 0.000000000000000000
-RESULT:                            - Fee1Token:0xa3e5 0 = 0.000000000000000000
+RESULT:                            - Fee2Token:0xD59f 0 = 0.000000000000000000
+RESULT:                            - Fee1Token:0xf9d9 0 = 0.000000000000000000
 RESULT: - dividendsOwing       : 2 User2:0xa22A
-RESULT:                            - Fee0Token:0x93bf 0 = 0.000000000000000000
+RESULT:                            - Fee0Token:0x98b0 0 = 0.000000000000000000
 RESULT:                            - ETH|null:0x0000 0 = 0.000000000000000000
-RESULT:                            - Fee2Token:0xec0B 0 = 0.000000000000000000
-RESULT:                            - Fee1Token:0xa3e5 0 = 0.000000000000000000
+RESULT:                            - Fee2Token:0xD59f 0 = 0.000000000000000000
+RESULT:                            - Fee1Token:0xf9d9 0 = 0.000000000000000000
 RESULT: - dividendsOwing       : 3 User3:0xa33a
-RESULT:                            - Fee0Token:0x93bf 0 = 0.000000000000000000
+RESULT:                            - Fee0Token:0x98b0 0 = 0.000000000000000000
 RESULT:                            - ETH|null:0x0000 0 = 0.000000000000000000
-RESULT:                            - Fee2Token:0xec0B 0 = 0.000000000000000000
-RESULT:                            - Fee1Token:0xa3e5 0 = 0.000000000000000000
-RESULT: Token 1 Fee0Token:0x93bf @ 0x93bf95dE27B85710cE859c771374df8012Bf4fe7
+RESULT:                            - Fee2Token:0xD59f 0 = 0.000000000000000000
+RESULT:                            - Fee1Token:0xf9d9 0 = 0.000000000000000000
+RESULT: Token 1 Fee0Token:0x98b0 @ 0x98b06815E25685c72f2bc2aBD77fA0779A5336D5
 RESULT: - symbol               : FEE0
 RESULT: - name                 : Fee0
 RESULT: - decimals             : 18
 RESULT: - totalSupply          : 10000
 RESULT: - owner                : Owner:0xa00A
-RESULT: Token 2 Fee1Token:0xa3e5 @ 0xa3e56A718a2f831aE973eC45db89202BA652a25F
+RESULT: Token 2 Fee1Token:0xf9d9 @ 0xf9d93EE3bd1b541E0b520a3fC2e9058Ef22396f4
 RESULT: - symbol               : FEE1
 RESULT: - name                 : Fee1
 RESULT: - decimals             : 18
 RESULT: - totalSupply          : 10000
 RESULT: - owner                : Owner:0xa00A
-RESULT: Token 3 Fee2Token:0xec0B @ 0xec0Bb4A5952833C588c1e31D4fa0Fb2c2C3009d9
+RESULT: Token 3 Fee2Token:0xD59f @ 0xD59fE94014C75606c5Ccac2B38649F20B28b0c8D
 RESULT: - symbol               : FEE2
 RESULT: - name                 : Fee2
 RESULT: - decimals             : 18
 RESULT: - totalSupply          : 10000
 RESULT: - owner                : Owner:0xa00A
 RESULT:
-RESULT: withdrawDividends4.receipt.gasUsed: 212469
-Events emitted in tx 0x18d48bdb67dfd2a1c0e603d5c6ca2479c0f9f910f6103d53a72598b752031b1c:
-----------------------------------------------------------------------------------------
-DividendWithdrawn(0: 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433, 1: 0x93bf95dE27B85710cE859c771374df8012Bf4fe7, 2: 0, __length__: 3, account: 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433, token: 0x93bf95dE27B85710cE859c771374df8012Bf4fe7, tokens: 0)
-DividendWithdrawn(0: 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433, 1: 0x0000000000000000000000000000000000000000, 2: 0, __length__: 3, account: 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433, token: 0x0000000000000000000000000000000000000000, tokens: 0)
-Transfer(0: 0x7D649f97F399FE30bdbc0d1f6207cBcfcFA4a905, 1: 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433, 2: 3333333333333333333333, __length__: 3, from: 0x7D649f97F399FE30bdbc0d1f6207cBcfcFA4a905, to: 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433, tokens: 3333333333333333333333)
-DividendWithdrawn(0: 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433, 1: 0xec0Bb4A5952833C588c1e31D4fa0Fb2c2C3009d9, 2: 3333333333333333333333, __length__: 3, account: 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433, token: 0xec0Bb4A5952833C588c1e31D4fa0Fb2c2C3009d9, tokens: 3333333333333333333333)
-Transfer(0: 0x7D649f97F399FE30bdbc0d1f6207cBcfcFA4a905, 1: 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433, 2: 333333333333333333333, __length__: 3, from: 0x7D649f97F399FE30bdbc0d1f6207cBcfcFA4a905, to: 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433, tokens: 333333333333333333333)
-DividendWithdrawn(0: 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433, 1: 0xa3e56A718a2f831aE973eC45db89202BA652a25F, 2: 333333333333333333333, __length__: 3, account: 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433, token: 0xa3e56A718a2f831aE973eC45db89202BA652a25F, tokens: 333333333333333333333)
-----------------------------------------------------------------------------------------
+RESULT: withdrawDividends4 - gasUsed: 212469, txFee: 0.01062345 @ 50 gwei, txFeeUsd: 4.0971459615 @ 385.67 ETH/USD
+  Events emitted in tx 0x3b11f351dee9969e8456b8e4681444f5ee1a34a3a0111f86c46a6d85890512a1:
+  ----------------------------------------------------------------------------------------
+  DividendWithdrawn(0: 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433, 1: 0x98b06815E25685c72f2bc2aBD77fA0779A5336D5, 2: 0, __length__: 3, account: 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433, token: 0x98b06815E25685c72f2bc2aBD77fA0779A5336D5, tokens: 0)
+  DividendWithdrawn(0: 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433, 1: 0x0000000000000000000000000000000000000000, 2: 0, __length__: 3, account: 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433, token: 0x0000000000000000000000000000000000000000, tokens: 0)
+  Transfer(0: 0xeDcDF10549EE2274B1C5989cd4cE58A6b0cBcda8, 1: 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433, 2: 3333333333333333333333, __length__: 3, from: 0xeDcDF10549EE2274B1C5989cd4cE58A6b0cBcda8, to: 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433, tokens: 3333333333333333333333)
+  DividendWithdrawn(0: 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433, 1: 0xD59fE94014C75606c5Ccac2B38649F20B28b0c8D, 2: 3333333333333333333333, __length__: 3, account: 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433, token: 0xD59fE94014C75606c5Ccac2B38649F20B28b0c8D, tokens: 3333333333333333333333)
+  Transfer(0: 0xeDcDF10549EE2274B1C5989cd4cE58A6b0cBcda8, 1: 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433, 2: 333333333333333333333, __length__: 3, from: 0xeDcDF10549EE2274B1C5989cd4cE58A6b0cBcda8, to: 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433, tokens: 333333333333333333333)
+  DividendWithdrawn(0: 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433, 1: 0xf9d93EE3bd1b541E0b520a3fC2e9058Ef22396f4, 2: 333333333333333333333, __length__: 3, account: 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433, token: 0xf9d93EE3bd1b541E0b520a3fC2e9058Ef22396f4, tokens: 333333333333333333333)
+  ----------------------------------------------------------------------------------------
 
-RESULT: withdrawDividends5.receipt.gasUsed: 212469
-Events emitted in tx 0x5c12fd869d397ba8f3891ce84b7ef2c966402662ed64b4cc2c40d62a162226f8:
-----------------------------------------------------------------------------------------
-DividendWithdrawn(0: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, 1: 0x93bf95dE27B85710cE859c771374df8012Bf4fe7, 2: 0, __length__: 3, account: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, token: 0x93bf95dE27B85710cE859c771374df8012Bf4fe7, tokens: 0)
-DividendWithdrawn(0: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, 1: 0x0000000000000000000000000000000000000000, 2: 0, __length__: 3, account: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, token: 0x0000000000000000000000000000000000000000, tokens: 0)
-Transfer(0: 0x7D649f97F399FE30bdbc0d1f6207cBcfcFA4a905, 1: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, 2: 3333333333333333333333, __length__: 3, from: 0x7D649f97F399FE30bdbc0d1f6207cBcfcFA4a905, to: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, tokens: 3333333333333333333333)
-DividendWithdrawn(0: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, 1: 0xec0Bb4A5952833C588c1e31D4fa0Fb2c2C3009d9, 2: 3333333333333333333333, __length__: 3, account: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, token: 0xec0Bb4A5952833C588c1e31D4fa0Fb2c2C3009d9, tokens: 3333333333333333333333)
-Transfer(0: 0x7D649f97F399FE30bdbc0d1f6207cBcfcFA4a905, 1: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, 2: 333333333333333333333, __length__: 3, from: 0x7D649f97F399FE30bdbc0d1f6207cBcfcFA4a905, to: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, tokens: 333333333333333333333)
-DividendWithdrawn(0: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, 1: 0xa3e56A718a2f831aE973eC45db89202BA652a25F, 2: 333333333333333333333, __length__: 3, account: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, token: 0xa3e56A718a2f831aE973eC45db89202BA652a25F, tokens: 333333333333333333333)
-----------------------------------------------------------------------------------------
+RESULT: withdrawDividends5 - gasUsed: 212469, txFee: 0.01062345 @ 50 gwei, txFeeUsd: 4.0971459615 @ 385.67 ETH/USD
+  Events emitted in tx 0x8bf494e673a2b1105acdc97985f1739bae79d7284443be1295c19e0d09073b91:
+  ----------------------------------------------------------------------------------------
+  DividendWithdrawn(0: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, 1: 0x98b06815E25685c72f2bc2aBD77fA0779A5336D5, 2: 0, __length__: 3, account: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, token: 0x98b06815E25685c72f2bc2aBD77fA0779A5336D5, tokens: 0)
+  DividendWithdrawn(0: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, 1: 0x0000000000000000000000000000000000000000, 2: 0, __length__: 3, account: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, token: 0x0000000000000000000000000000000000000000, tokens: 0)
+  Transfer(0: 0xeDcDF10549EE2274B1C5989cd4cE58A6b0cBcda8, 1: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, 2: 3333333333333333333333, __length__: 3, from: 0xeDcDF10549EE2274B1C5989cd4cE58A6b0cBcda8, to: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, tokens: 3333333333333333333333)
+  DividendWithdrawn(0: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, 1: 0xD59fE94014C75606c5Ccac2B38649F20B28b0c8D, 2: 3333333333333333333333, __length__: 3, account: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, token: 0xD59fE94014C75606c5Ccac2B38649F20B28b0c8D, tokens: 3333333333333333333333)
+  Transfer(0: 0xeDcDF10549EE2274B1C5989cd4cE58A6b0cBcda8, 1: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, 2: 333333333333333333333, __length__: 3, from: 0xeDcDF10549EE2274B1C5989cd4cE58A6b0cBcda8, to: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, tokens: 333333333333333333333)
+  DividendWithdrawn(0: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, 1: 0xf9d93EE3bd1b541E0b520a3fC2e9058Ef22396f4, 2: 333333333333333333333, __length__: 3, account: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, token: 0xf9d93EE3bd1b541E0b520a3fC2e9058Ef22396f4, tokens: 333333333333333333333)
+  ----------------------------------------------------------------------------------------
 
-RESULT: withdrawDividends6.receipt.gasUsed: 212469
-Events emitted in tx 0xdd56f85ad0c8327680a26b9f9b92f457be03b8d66a3e12971187361bbbfcc98a:
-----------------------------------------------------------------------------------------
-DividendWithdrawn(0: 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0, 1: 0x93bf95dE27B85710cE859c771374df8012Bf4fe7, 2: 0, __length__: 3, account: 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0, token: 0x93bf95dE27B85710cE859c771374df8012Bf4fe7, tokens: 0)
-DividendWithdrawn(0: 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0, 1: 0x0000000000000000000000000000000000000000, 2: 0, __length__: 3, account: 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0, token: 0x0000000000000000000000000000000000000000, tokens: 0)
-Transfer(0: 0x7D649f97F399FE30bdbc0d1f6207cBcfcFA4a905, 1: 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0, 2: 3333333333333333333333, __length__: 3, from: 0x7D649f97F399FE30bdbc0d1f6207cBcfcFA4a905, to: 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0, tokens: 3333333333333333333333)
-DividendWithdrawn(0: 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0, 1: 0xec0Bb4A5952833C588c1e31D4fa0Fb2c2C3009d9, 2: 3333333333333333333333, __length__: 3, account: 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0, token: 0xec0Bb4A5952833C588c1e31D4fa0Fb2c2C3009d9, tokens: 3333333333333333333333)
-Transfer(0: 0x7D649f97F399FE30bdbc0d1f6207cBcfcFA4a905, 1: 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0, 2: 333333333333333333333, __length__: 3, from: 0x7D649f97F399FE30bdbc0d1f6207cBcfcFA4a905, to: 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0, tokens: 333333333333333333333)
-DividendWithdrawn(0: 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0, 1: 0xa3e56A718a2f831aE973eC45db89202BA652a25F, 2: 333333333333333333333, __length__: 3, account: 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0, token: 0xa3e56A718a2f831aE973eC45db89202BA652a25F, tokens: 333333333333333333333)
-----------------------------------------------------------------------------------------
+RESULT: withdrawDividends6 - gasUsed: 212469, txFee: 0.01062345 @ 50 gwei, txFeeUsd: 4.0971459615 @ 385.67 ETH/USD
+  Events emitted in tx 0x096a5869fd5e32018e2234ba37e990d098232175bba80da9a1fa78400e1f893f:
+  ----------------------------------------------------------------------------------------
+  DividendWithdrawn(0: 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0, 1: 0x98b06815E25685c72f2bc2aBD77fA0779A5336D5, 2: 0, __length__: 3, account: 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0, token: 0x98b06815E25685c72f2bc2aBD77fA0779A5336D5, tokens: 0)
+  DividendWithdrawn(0: 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0, 1: 0x0000000000000000000000000000000000000000, 2: 0, __length__: 3, account: 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0, token: 0x0000000000000000000000000000000000000000, tokens: 0)
+  Transfer(0: 0xeDcDF10549EE2274B1C5989cd4cE58A6b0cBcda8, 1: 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0, 2: 3333333333333333333333, __length__: 3, from: 0xeDcDF10549EE2274B1C5989cd4cE58A6b0cBcda8, to: 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0, tokens: 3333333333333333333333)
+  DividendWithdrawn(0: 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0, 1: 0xD59fE94014C75606c5Ccac2B38649F20B28b0c8D, 2: 3333333333333333333333, __length__: 3, account: 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0, token: 0xD59fE94014C75606c5Ccac2B38649F20B28b0c8D, tokens: 3333333333333333333333)
+  Transfer(0: 0xeDcDF10549EE2274B1C5989cd4cE58A6b0cBcda8, 1: 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0, 2: 333333333333333333333, __length__: 3, from: 0xeDcDF10549EE2274B1C5989cd4cE58A6b0cBcda8, to: 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0, tokens: 333333333333333333333)
+  DividendWithdrawn(0: 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0, 1: 0xf9d93EE3bd1b541E0b520a3fC2e9058Ef22396f4, 2: 333333333333333333333, __length__: 3, account: 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0, token: 0xf9d93EE3bd1b541E0b520a3fC2e9058Ef22396f4, tokens: 333333333333333333333)
+  ----------------------------------------------------------------------------------------
 
 RESULT: --- Test 8 - User2 transfer 1 OGD to User3 ---
-RESULT:  # Account                                             EtherBalanceChange                            OGD                           FEE0 @ 63448 -> 63469
+RESULT:  # Account                                             EtherBalanceChange                            OGD                           FEE0 @ 73306 -> 73328
 RESULT:                                                                                                     FEE1                           FEE2
 RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
 RESULT: 0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E        -9.975011420000000000           0.000000000000000000        9900.000000000000000000 Owner:0xa00A
@@ -1475,74 +1475,74 @@ RESULT: 2 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976         3.32305863333333333
 RESULT:                                                                                   333.333333333333333333        3333.333333333333333333
 RESULT: 3 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0         3.325976393333333333       10000.000000000000000001          33.333333333333333333 User3:0xa33a
 RESULT:                                                                                   333.333333333333333333        3333.333333333333333333
-RESULT: 4 0x7D649f97F399FE30bdbc0d1f6207cBcfcFA4a905         0.000000000000000001           0.000000000000000000           0.000000000000000001 OGDToken:0x7D64
+RESULT: 4 0xeDcDF10549EE2274B1C5989cd4cE58A6b0cBcda8         0.000000000000000001           0.000000000000000000           0.000000000000000001 OGDToken:0xeDcD
 RESULT:                                                                                     0.000000000000000001           0.000000000000000001
-RESULT: 5 0x93bf95dE27B85710cE859c771374df8012Bf4fe7         0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee0Token:0x93bf
+RESULT: 5 0x98b06815E25685c72f2bc2aBD77fA0779A5336D5         0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee0Token:0x98b0
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000
-RESULT: 6 0xa3e56A718a2f831aE973eC45db89202BA652a25F         0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee1Token:0xa3e5
+RESULT: 6 0xf9d93EE3bd1b541E0b520a3fC2e9058Ef22396f4         0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee1Token:0xf9d9
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000
-RESULT: 7 0xec0Bb4A5952833C588c1e31D4fa0Fb2c2C3009d9         0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee2Token:0xec0B
+RESULT: 7 0xD59fE94014C75606c5Ccac2B38649F20B28b0c8D         0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee2Token:0xD59f
 RESULT:                                                                                     0.000000000000000000           0.000000000000000000
 RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
 RESULT:                                                                                 30000.000000000000000000       10000.000000000000000000 Total Token Balances
 RESULT:                                                                                 10000.000000000000000000       10000.000000000000000000
 RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
 RESULT:
-RESULT: Token 0 OGDToken:0x7D64 @ 0x7D649f97F399FE30bdbc0d1f6207cBcfcFA4a905
+RESULT: Token 0 OGDToken:0xeDcD @ 0xeDcDF10549EE2274B1C5989cd4cE58A6b0cBcda8
 RESULT: - symbol               : OGD
 RESULT: - name                 : Optino Governance Dividend
 RESULT: - decimals             : 18
 RESULT: - totalSupply          : 30000
 RESULT: - owner                : Owner:0xa00A
 RESULT: - dividendTokensLength : 4
-RESULT: - dividendToken        : 0 Fee0Token:0x93bf, enabled: true, unclaimedDividends: 1 = 0.000000000000000001
+RESULT: - dividendToken        : 0 Fee0Token:0x98b0, enabled: true, unclaimedDividends: 1 = 0.000000000000000001
 RESULT: - dividendToken        : 1 ETH|null:0x0000, enabled: true, unclaimedDividends: 1 = 0.000000000000000001
-RESULT: - dividendToken        : 2 Fee2Token:0xec0B, enabled: true, unclaimedDividends: 1 = 0.000000000000000001
-RESULT: - dividendToken        : 3 Fee1Token:0xa3e5, enabled: true, unclaimedDividends: 1 = 0.000000000000000001
+RESULT: - dividendToken        : 2 Fee2Token:0xD59f, enabled: true, unclaimedDividends: 1 = 0.000000000000000001
+RESULT: - dividendToken        : 3 Fee1Token:0xf9d9, enabled: true, unclaimedDividends: 1 = 0.000000000000000001
 RESULT: - dividendsOwing       : 1 User1:0xa11A
-RESULT:                            - Fee0Token:0x93bf 0 = 0.000000000000000000
+RESULT:                            - Fee0Token:0x98b0 0 = 0.000000000000000000
 RESULT:                            - ETH|null:0x0000 0 = 0.000000000000000000
-RESULT:                            - Fee2Token:0xec0B 0 = 0.000000000000000000
-RESULT:                            - Fee1Token:0xa3e5 0 = 0.000000000000000000
+RESULT:                            - Fee2Token:0xD59f 0 = 0.000000000000000000
+RESULT:                            - Fee1Token:0xf9d9 0 = 0.000000000000000000
 RESULT: - dividendsOwing       : 2 User2:0xa22A
-RESULT:                            - Fee0Token:0x93bf 0 = 0.000000000000000000
+RESULT:                            - Fee0Token:0x98b0 0 = 0.000000000000000000
 RESULT:                            - ETH|null:0x0000 0 = 0.000000000000000000
-RESULT:                            - Fee2Token:0xec0B 0 = 0.000000000000000000
-RESULT:                            - Fee1Token:0xa3e5 0 = 0.000000000000000000
+RESULT:                            - Fee2Token:0xD59f 0 = 0.000000000000000000
+RESULT:                            - Fee1Token:0xf9d9 0 = 0.000000000000000000
 RESULT: - dividendsOwing       : 3 User3:0xa33a
-RESULT:                            - Fee0Token:0x93bf 0 = 0.000000000000000000
+RESULT:                            - Fee0Token:0x98b0 0 = 0.000000000000000000
 RESULT:                            - ETH|null:0x0000 0 = 0.000000000000000000
-RESULT:                            - Fee2Token:0xec0B 0 = 0.000000000000000000
-RESULT:                            - Fee1Token:0xa3e5 0 = 0.000000000000000000
-RESULT: Token 1 Fee0Token:0x93bf @ 0x93bf95dE27B85710cE859c771374df8012Bf4fe7
+RESULT:                            - Fee2Token:0xD59f 0 = 0.000000000000000000
+RESULT:                            - Fee1Token:0xf9d9 0 = 0.000000000000000000
+RESULT: Token 1 Fee0Token:0x98b0 @ 0x98b06815E25685c72f2bc2aBD77fA0779A5336D5
 RESULT: - symbol               : FEE0
 RESULT: - name                 : Fee0
 RESULT: - decimals             : 18
 RESULT: - totalSupply          : 10000
 RESULT: - owner                : Owner:0xa00A
-RESULT: Token 2 Fee1Token:0xa3e5 @ 0xa3e56A718a2f831aE973eC45db89202BA652a25F
+RESULT: Token 2 Fee1Token:0xf9d9 @ 0xf9d93EE3bd1b541E0b520a3fC2e9058Ef22396f4
 RESULT: - symbol               : FEE1
 RESULT: - name                 : Fee1
 RESULT: - decimals             : 18
 RESULT: - totalSupply          : 10000
 RESULT: - owner                : Owner:0xa00A
-RESULT: Token 3 Fee2Token:0xec0B @ 0xec0Bb4A5952833C588c1e31D4fa0Fb2c2C3009d9
+RESULT: Token 3 Fee2Token:0xD59f @ 0xD59fE94014C75606c5Ccac2B38649F20B28b0c8D
 RESULT: - symbol               : FEE2
 RESULT: - name                 : Fee2
 RESULT: - decimals             : 18
 RESULT: - totalSupply          : 10000
 RESULT: - owner                : Owner:0xa00A
 RESULT:
-RESULT: transfer1.receipt.gasUsed: 83568
-Events emitted in tx 0x405663a3e3d3d394da9b99553991e7f703fcec272b35df271cf123e891dd5075:
-----------------------------------------------------------------------------------------
-Transfer(0: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, 1: 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0, 2: 1, __length__: 3, from: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, to: 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0, tokens: 1)
-----------------------------------------------------------------------------------------
+RESULT: transfer1 - gasUsed: 83568, txFee: 0.0041784 @ 50 gwei, txFeeUsd: 1.611483528 @ 385.67 ETH/USD
+  Events emitted in tx 0xfa7cd0e11719367cbc12b7faf25a14ba35b66737721d5ea33fbce1e34b5d5cf8:
+  ----------------------------------------------------------------------------------------
+  Transfer(0: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, 1: 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0, 2: 1, __length__: 3, from: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, to: 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0, tokens: 1)
+  ----------------------------------------------------------------------------------------
 
-    ✓ Test OGDToken workflow (18135ms)
+    ✓ Test OGDToken workflow (18145ms)
 
 
-  1 passing (22s)
+  1 passing (23s)
 ```
 
 <br />

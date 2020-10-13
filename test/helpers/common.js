@@ -1,5 +1,6 @@
 const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
 const BigNumber = require('bignumber.js');
+const truffleAssert = require('truffle-assertions');
 const util = require('util');
 
 const OGToken = artifacts.require("OGToken");
@@ -37,6 +38,10 @@ class MyData {
     this.fee1Token = null;
     this.fee2Token = null;
     this.optinoGov = null;
+
+    // USD and gas price - https://ethgasstation.info/ Standard
+    this.gasPrice = new BigNumber("50").shiftedBy(9);
+    this.ethUsd = new BigNumber("385.67");
   }
 
   addAccount(account, accountName) {
@@ -188,6 +193,14 @@ class MyData {
     console.log("RESULT: ");
   }
 
+  printTxData(message, tx) {
+    var txFee = new BigNumber(tx.receipt.gasUsed).multipliedBy(this.gasPrice).shiftedBy(-18);
+    var txFeeUsd = txFee.multipliedBy(this.ethUsd);
+    console.log("RESULT: " + message + " - gasUsed: " + tx.receipt.gasUsed + ", txFee: " + txFee + " @ " + this.gasPrice.shiftedBy(-9) + " gwei, txFeeUsd: " + txFeeUsd + " @ " + this.ethUsd + " ETH/USD");
+    truffleAssert.prettyPrintEmittedEvents(tx, 2);
+    // .replace(/0:.*length__: \d+, /,"")
+  }
+
   async printBalances() {
     var blockNumber = await web3.eth.getBlockNumber();
     var i = 0;
@@ -253,7 +266,7 @@ class MyData {
     if (this.optinoGov != null) {
       console.log("RESULT: OptinoGov " + this.getShortAccountName(this.optinoGov.address) + " @ " + this.optinoGov.address);
 
-      let [ogToken, ogdToken, maxDuration, rewardsPerSecond, collectOnBehalfFee, collectOnBehalfDelay, proposalCost, proposalThreshold] = await Promise.all([this.optinoGov.ogToken(), this.optinoGov.ogdToken(), this.optinoGov.maxDuration(), this.optinoGov.rewardsPerSecond(), this.optinoGov.collectOnBehalfFee(), this.optinoGov.collectOnBehalfDelay(), this.optinoGov.proposalCost(), this.optinoGov.proposalThreshold()]);
+      let [ogToken, ogdToken, maxDuration, rewardsPerSecond, collectRewardForFee, collectRewardForDelay, proposalCost, proposalThreshold] = await Promise.all([this.optinoGov.ogToken(), this.optinoGov.ogdToken(), this.optinoGov.maxDuration(), this.optinoGov.rewardsPerSecond(), this.optinoGov.collectRewardForFee(), this.optinoGov.collectRewardForDelay(), this.optinoGov.proposalCost(), this.optinoGov.proposalThreshold()]);
       let [quorum, quorumDecayPerSecond, votingDuration, executeDelay, rewardPool, totalVotes] = await Promise.all([this.optinoGov.quorum(), this.optinoGov.quorumDecayPerSecond(), this.optinoGov.votingDuration(), this.optinoGov.executeDelay(), this.optinoGov.rewardPool(), this.optinoGov.totalVotes()]);
       let [proposalCount, stakeInfoLength] = await Promise.all([this.optinoGov.proposalCount(), this.optinoGov.stakeInfoLength()]);
       console.log("RESULT: - ogToken              : " + this.getShortAccountName(ogToken));
@@ -261,8 +274,8 @@ class MyData {
       let decimals = 18;
       console.log("RESULT: - maxDuration          : " + maxDuration + " seconds = " + new BigNumber(maxDuration).dividedBy(60 * 60 * 24) + " days");
       console.log("RESULT: - rewardsPerSecond     : " + rewardsPerSecond + " = " + new BigNumber(rewardsPerSecond).shiftedBy(-18) + " = " + new BigNumber(rewardsPerSecond).multipliedBy(60 * 60 * 24).shiftedBy(-decimals) + " per day");
-      console.log("RESULT: - collectOnBehalfFee   : " + collectOnBehalfFee + " = " + new BigNumber(collectOnBehalfFee).shiftedBy(-16) + "%");
-      console.log("RESULT: - collectOnBehalfDelay : " + collectOnBehalfDelay + " seconds = " + new BigNumber(collectOnBehalfDelay).dividedBy(60 * 60 * 24) + " days");
+      console.log("RESULT: - collectRewardForFee  : " + collectRewardForFee + " = " + new BigNumber(collectRewardForFee).shiftedBy(-16) + "%");
+      console.log("RESULT: - collectRewardForDelay: " + collectRewardForDelay + " seconds = " + new BigNumber(collectRewardForDelay).dividedBy(60 * 60 * 24) + " days");
       console.log("RESULT: - proposalCost         : " + proposalCost + " = " + new BigNumber(proposalCost).shiftedBy(-decimals));
       console.log("RESULT: - proposalThreshold    : " + proposalThreshold + " = " + new BigNumber(proposalThreshold).shiftedBy(-16) + "%");
       console.log("RESULT: - quorum               : " + quorum + " = " + new BigNumber(quorum).shiftedBy(-16) + "%");
