@@ -22,6 +22,11 @@ contract('Test OptinoGov', async _accounts => {
     let ogdTokenTx = await truffleAssert.createTransactionResult(ogdToken, ogdToken.transactionHash);
     let feeTokenTx = await truffleAssert.createTransactionResult(feeToken, feeToken.transactionHash);
     myData.printTxData("ogTokenTx", ogTokenTx);
+    truffleAssert.eventEmitted(ogTokenTx, 'Transfer', (ev) => {
+      return ev.from == ZERO_ADDRESS && 
+        ev.to == "0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E" &&
+        new BigNumber(ev.tokens).isEqualTo(new BigNumber("40000").shiftedBy(18));
+    }, 'Transfer should be emitted');
     myData.printTxData("ogdTokenTx", ogdTokenTx);
     myData.printTxData("feeTokenTx", feeTokenTx);
 
