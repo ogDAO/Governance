@@ -23,10 +23,11 @@ contract('Test OptinoGov', async _accounts => {
     let feeTokenTx = await truffleAssert.createTransactionResult(feeToken, feeToken.transactionHash);
     myData.printTxData("ogTokenTx", ogTokenTx);
     truffleAssert.eventEmitted(ogTokenTx, 'Transfer', (ev) => {
-      return ev.from == ZERO_ADDRESS && 
+      return ev.from == ZERO_ADDRESS &&
         ev.to == "0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E" &&
         new BigNumber(ev.tokens).isEqualTo(new BigNumber("40000").shiftedBy(18));
     }, 'Transfer should be emitted');
+    assert.equal(new BigNumber(await ogToken.balanceOf(myData.owner)).toFixed(0), new BigNumber("40000").shiftedBy(18).toFixed(0), "OGToken balance should be 40,000");
     myData.printTxData("ogdTokenTx", ogdTokenTx);
     myData.printTxData("feeTokenTx", feeTokenTx);
 
