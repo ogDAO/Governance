@@ -28,6 +28,7 @@ contract('Test OptinoGov', async _accounts => {
         new BigNumber(ev.tokens).isEqualTo(new BigNumber("40000").shiftedBy(18));
     }, 'Transfer should be emitted');
     assert.equal(new BigNumber(await ogToken.balanceOf(myData.owner)).toFixed(0), new BigNumber("40000").shiftedBy(18).toFixed(0), "OGToken balance should be 40,000");
+    assert(new BigNumber(await ogToken.balanceOf(myData.owner)).isEqualTo(new BigNumber("40000").shiftedBy(18)), "OGToken balance should be 40,000");
     myData.printTxData("ogdTokenTx", ogdTokenTx);
     myData.printTxData("feeTokenTx", feeTokenTx);
 
