@@ -291,7 +291,25 @@ class MyData {
         let account = this.accounts[j];
         const commitment = await this.optinoGov.commitments(account);
         if (commitment != null) {
-          console.log("RESULT: - commitment           : " + j + " " + this.getShortAccountName(account) + " duration: " + commitment.duration + ", end: " + commitment.end + ", tokens: " + new BigNumber(commitment.tokens).shiftedBy(-18) + ", votes: " + new BigNumber(commitment.votes).shiftedBy(-18) + ", staked: " + new BigNumber(commitment.staked).shiftedBy(-18));
+          console.log("RESULT: - commitment           : " + j + " " + this.getShortAccountName(account) +
+            " duration: " + commitment.duration +
+            ", end: " + commitment.end +
+            ", tokens: " + new BigNumber(commitment.tokens).shiftedBy(-18) +
+            ", votes: " + new BigNumber(commitment.votes).shiftedBy(-18) +
+            ", staked: " + new BigNumber(commitment.staked).shiftedBy(-18) +
+            ", delegatedVotes: " + new BigNumber(commitment.delegatedVotes).shiftedBy(-18) + 
+            ", delegatee: " + commitment.delegatee);
+
+          // struct Commitment {
+          //     uint128 duration;
+          //     uint128 end;
+          //     uint tokens;
+          //     uint staked;
+          //     uint votes;
+          //     uint delegatedVotes;
+          //     address delegatee;
+          // }
+
           // console.log("RESULT: - commitment           : " + j + " " + this.getShortAccountName(account) + " " + JSON.stringify(commitment));
         }
 

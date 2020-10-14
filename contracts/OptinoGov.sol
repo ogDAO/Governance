@@ -102,8 +102,10 @@ contract OptinoGov is OptinoGovConfig {
         uint128 duration;
         uint128 end;
         uint tokens;
-        uint votes;
         uint staked;
+        uint votes;
+        uint delegatedVotes;
+        address delegatee;
     }
     // Token { dataType 1, address tokenAddress }
     // Feed { dataType 2, address feedAddress, uint feedType, uint feedDecimals, string name }
@@ -139,7 +141,8 @@ contract OptinoGov is OptinoGovConfig {
     uint public proposalCount;
     mapping(uint => Proposal) public proposals;
 
-    event Committed(address indexed user, uint tokens, uint balance, uint duration, uint end, uint votes, uint rewardPool, uint totalVotes);
+    event DelegateUpdated(address indexed oldDelegatee, address indexed delegatee, uint votes);
+    event Committed(address indexed user, uint tokens, uint balance, uint duration, uint end, address delegatee, uint votes, uint rewardPool, uint totalVotes);
     event StakeInfoAdded(bytes32 stakingKey, uint dataType, address[4] addresses, uint[6] uints, string string0, string string1, string string2, string string3);
     event Staked(address tokenOwner, uint tokens, uint balance, bytes32 stakingKey);
     event Unstaked(address tokenOwner, uint tokens, uint balance, bytes32 stakingKey);
@@ -257,12 +260,26 @@ contract OptinoGov is OptinoGovConfig {
         }
     }
 
+    function delegate(address delegatee) public {
+        Commitment storage user = commitments[msg.sender];
+        address oldDelegatee = user.delegatee;
+        if (user.delegatee != address(0)) {
+            commitments[user.delegatee].delegatedVotes = commitments[user.delegatee].delegatedVotes.sub(user.votes);
+        }
+        user.delegatee = delegatee;
+        if (user.delegatee != address(0)) {
+            commitments[user.delegatee].delegatedVotes = commitments[user.delegatee].delegatedVotes.add(user.votes);
+        }
+        emit DelegateUpdated(oldDelegatee, delegatee, user.votes);
+    }
+
     // Commit OGTokens for some duration. If you already committed some tokens, you cannot set a duration that ends before the current one
     function commit(uint tokens, uint duration) public {
         require(duration <= maxDuration, "duration too long");
         Commitment storage user = commitments[msg.sender];
 
         uint reward = 0;
+        uint oldUserVotes = user.votes;
         // TODO: Take into account any staked tokens
         if (user.tokens > 0) {
             require(block.timestamp + duration >= user.end, "Cannot shorten duration");
@@ -275,8 +292,6 @@ contract OptinoGov is OptinoGovConfig {
             }
             rewardPool = rewardPool.sub(reward);
             user.tokens = user.tokens.add(reward);
-            totalVotes = totalVotes.sub(user.votes);
-            // user.votes = 0;
             emit Collected(msg.sender, elapsed, reward, 0, rewardPool, user.end, user.duration);
         }
 
@@ -287,12 +302,16 @@ contract OptinoGov is OptinoGovConfig {
         user.duration = uint128(duration);
         user.end = uint128(block.timestamp.add(duration));
         user.votes = user.tokens.mul(duration).div(SECONDS_PER_YEAR);
-        totalVotes = totalVotes.add(user.votes);
+
+        totalVotes = totalVotes.sub(oldUserVotes).add(user.votes);
+        if (user.delegatee != address(0)) {
+            commitments[user.delegatee].delegatedVotes = commitments[user.delegatee].delegatedVotes.sub(oldUserVotes).add(user.votes);
+        }
 
         require(ogToken.mint(address(this), reward), "OG mint failed");
         require(ogdToken.mint(msg.sender, tokens.add(reward)), "OGD mint failed");
 
-        emit Committed(msg.sender, tokens, user.tokens, user.duration, user.end, user.votes, rewardPool, totalVotes);
+        emit Committed(msg.sender, tokens, user.tokens, user.duration, user.end, user.delegatee, user.votes, rewardPool, totalVotes);
     }
 
     function collectRewardFor(address tokenOwner) public {
@@ -319,6 +338,7 @@ contract OptinoGov is OptinoGovConfig {
                 callerReward = reward.mul(collectRewardForFee).div(10 ** 18);
                 reward = reward.sub(callerReward);
             }
+            uint oldUserVotes = user.votes;
             if (commitRewards) {
                 user.tokens = user.tokens.add(reward);
                 if (user.end < block.timestamp) {
@@ -328,21 +348,20 @@ contract OptinoGov is OptinoGovConfig {
                     require(duration <= maxDuration, "duration too long");
                     user.duration = uint128(duration);
                     user.end = uint128(block.timestamp.add(duration));
-                    totalVotes = totalVotes.sub(user.votes);
-                    user.votes = user.tokens.mul(user.duration).div(SECONDS_PER_YEAR);
-                    totalVotes = totalVotes.add(user.votes);
                 } else {
                     user.duration = uint128(uint(user.end).sub(block.timestamp));
-                    // NOTE - Voting left as proportion of the original duration
                 }
+                user.votes = user.tokens.mul(user.duration).div(SECONDS_PER_YEAR);
                 require(ogToken.mint(address(this), reward), "OG mint failed");
                 require(ogdToken.mint(msg.sender, reward), "OGD mint failed");
             } else {
                 user.duration = uint(user.end) <= block.timestamp ? 0 : uint128(uint(user.end).sub(block.timestamp));
-                totalVotes = totalVotes.sub(user.votes);
                 user.votes = user.tokens.mul(user.duration).div(SECONDS_PER_YEAR);
-                totalVotes = totalVotes.add(user.votes);
                 require(ogToken.mint(tokenOwner, reward), "OG mint failed");
+            }
+            totalVotes = totalVotes.sub(oldUserVotes).add(user.votes);
+            if (user.delegatee != address(0)) {
+                commitments[user.delegatee].delegatedVotes = commitments[user.delegatee].delegatedVotes.sub(oldUserVotes).add(user.votes);
             }
             if (callerReward > 0) {
                 require(ogToken.mint(msg.sender, callerReward), "callerReward OG mint failed");
@@ -365,6 +384,9 @@ contract OptinoGov is OptinoGovConfig {
         rewardPool = rewardPool.sub(reward);
         user.tokens = user.tokens.add(reward);
         totalVotes = totalVotes.sub(user.votes);
+        if (user.delegatee != address(0)) {
+            commitments[user.delegatee].delegatedVotes = commitments[user.delegatee].delegatedVotes.sub(user.votes);
+        }
         user.votes = 0;
 
         uint payout = user.tokens;
