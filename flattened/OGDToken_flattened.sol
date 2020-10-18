@@ -8,7 +8,7 @@ contract Owned {
     bool initialised;
     address public owner;
 
-    event OwnershipTransferred(address indexed to);
+    event OwnershipTransferred(address indexed from, address indexed to);
 
     modifier onlyOwner {
         require(msg.sender == owner, "Not owner");
@@ -20,9 +20,9 @@ contract Owned {
         owner = address(uint160(_owner));
         initialised = true;
     }
-    function transferOwnership(address _owner) public onlyOwner {
-        owner = _owner;
-        emit OwnershipTransferred(_owner);
+    function transferOwnership(address _newOwner) public onlyOwner {
+        emit OwnershipTransferred(owner, _newOwner);
+        owner = _newOwner;
     }
 }
 

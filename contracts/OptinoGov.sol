@@ -31,6 +31,7 @@ contract OptinoGovConfig {
     uint public rewardPool = 1_000_000 * 10**18;
     uint public totalVotes;
 
+    /*
     event MaxDurationUpdated(uint maxDuration);
     event RewardsPerSecondUpdated(uint rewardsPerSecond);
     event CollectRewardForFeeUpdated(uint collectRewardForFee);
@@ -41,6 +42,8 @@ contract OptinoGovConfig {
     event QuorumDecayPerSecondUpdated(uint quorumDecayPerSecond);
     event VotingDurationUpdated(uint votingDuration);
     event ExecuteDelayUpdated(uint executeDelay);
+    */
+    event ConfigUpdated(string key, uint value);
 
     modifier onlySelf {
         require(msg.sender == address(this), "Not self");
@@ -51,6 +54,37 @@ contract OptinoGovConfig {
         ogToken = _ogToken;
         ogdToken = _ogdToken;
     }
+
+    function equalString(string memory s1, string memory s2) internal pure returns(bool) {
+        return keccak256(abi.encodePacked(s1)) == keccak256(abi.encodePacked(s2));
+    }
+    function setConfig(string memory key, uint value) external onlySelf {
+        if (equalString(key, "maxDuration")) {
+            maxDuration = value;
+        } else if (equalString(key, "collectRewardForFee")) {
+            collectRewardForFee = value;
+        } else if (equalString(key, "collectRewardForDelay")) {
+            collectRewardForDelay = value;
+        } else if (equalString(key, "rewardsPerSecond")) {
+            rewardsPerSecond = value;
+        } else if (equalString(key, "proposalCost")) {
+            proposalCost = value;
+        } else if (equalString(key, "proposalThreshold")) {
+            proposalThreshold = value;
+        } else if (equalString(key, "quorum")) {
+            quorum = value;
+        } else if (equalString(key, "quorumDecayPerSecond")) {
+            quorumDecayPerSecond = value;
+        } else if (equalString(key, "votingDuration")) {
+            votingDuration = value;
+        } else if (equalString(key, "executeDelay")) {
+            executeDelay = value;
+        } else {
+            revert("Invalid key");
+        }
+        emit ConfigUpdated(key, value);
+    }
+    /*
     function setMaxDuration(uint _maxDuration) external onlySelf {
         maxDuration = _maxDuration;
         emit MaxDurationUpdated(maxDuration);
@@ -91,6 +125,7 @@ contract OptinoGovConfig {
         executeDelay = _executeDelay;
         emit ExecuteDelayUpdated(executeDelay);
     }
+    */
 }
 
 /// @notice Optino Governance. (c) The Optino Project 2020
@@ -99,8 +134,10 @@ contract OptinoGov is OptinoGovConfig {
     using SafeMath for uint;
 
     struct Commitment {
-        uint128 duration;
-        uint128 end;
+        uint64 duration;
+        uint64 end;
+        uint64 lastDelegated;
+        uint64 lastVoted;
         uint tokens;
         uint staked;
         uint votes;
@@ -153,7 +190,7 @@ contract OptinoGov is OptinoGovConfig {
     event Voted(address indexed user, uint oip, bool voteFor, uint forVotes, uint againstVotes);
     event Executed(address indexed user, uint oip);
 
-    constructor(OGTokenInterface _ogToken, OGDTokenInterface _ogdToken) OptinoGovConfig(_ogToken, _ogdToken) {
+    constructor(OGTokenInterface ogToken, OGDTokenInterface ogdToken) OptinoGovConfig(ogToken, ogdToken) {
     }
 
     function addStakeForToken(uint tokens, address tokenAddress, string memory name) external {
@@ -262,11 +299,13 @@ contract OptinoGov is OptinoGovConfig {
 
     function delegate(address delegatee) public {
         Commitment storage user = commitments[msg.sender];
+        require(uint(user.lastVoted) + votingDuration < block.timestamp, "Cannot delegate after recent vote");
         address oldDelegatee = user.delegatee;
         if (user.delegatee != address(0)) {
             commitments[user.delegatee].delegatedVotes = commitments[user.delegatee].delegatedVotes.sub(user.votes);
         }
         user.delegatee = delegatee;
+        user.lastDelegated = uint64(block.timestamp);
         if (user.delegatee != address(0)) {
             commitments[user.delegatee].delegatedVotes = commitments[user.delegatee].delegatedVotes.add(user.votes);
         }
@@ -299,8 +338,8 @@ contract OptinoGov is OptinoGovConfig {
 
         // Create stake
         user.tokens = user.tokens.add(tokens);
-        user.duration = uint128(duration);
-        user.end = uint128(block.timestamp.add(duration));
+        user.duration = uint64(duration);
+        user.end = uint64(block.timestamp.add(duration));
         user.votes = user.tokens.mul(duration).div(SECONDS_PER_YEAR);
 
         totalVotes = totalVotes.sub(oldUserVotes).add(user.votes);
@@ -342,20 +381,20 @@ contract OptinoGov is OptinoGovConfig {
             if (commitRewards) {
                 user.tokens = user.tokens.add(reward);
                 if (user.end < block.timestamp) {
-                    user.end = uint128(block.timestamp);
+                    user.end = uint64(block.timestamp);
                 }
                 if (duration > 0) {
                     require(duration <= maxDuration, "duration too long");
-                    user.duration = uint128(duration);
-                    user.end = uint128(block.timestamp.add(duration));
+                    user.duration = uint64(duration);
+                    user.end = uint64(block.timestamp.add(duration));
                 } else {
-                    user.duration = uint128(uint(user.end).sub(block.timestamp));
+                    user.duration = uint64(uint(user.end).sub(block.timestamp));
                 }
                 user.votes = user.tokens.mul(user.duration).div(SECONDS_PER_YEAR);
                 require(ogToken.mint(address(this), reward), "OG mint failed");
                 require(ogdToken.mint(msg.sender, reward), "OGD mint failed");
             } else {
-                user.duration = uint(user.end) <= block.timestamp ? 0 : uint128(uint(user.end).sub(block.timestamp));
+                user.duration = uint(user.end) <= block.timestamp ? 0 : uint64(uint(user.end).sub(block.timestamp));
                 user.votes = user.tokens.mul(user.duration).div(SECONDS_PER_YEAR);
                 require(ogToken.mint(tokenOwner, reward), "OG mint failed");
             }
@@ -434,6 +473,7 @@ contract OptinoGov is OptinoGovConfig {
     function vote(uint oip, bool voteFor) public {
         uint start = proposals[oip].start;
         require(start != 0 && block.timestamp < start.add(votingDuration), "Voting closed");
+        require(commitments[msg.sender].lastDelegated + votingDuration < block.timestamp, "Cannot vote after recent delegation");
         require(!proposals[oip].voted[msg.sender], "Already voted");
         if (voteFor) {
             proposals[oip].forVotes = proposals[oip].forVotes.add(commitments[msg.sender].votes);
@@ -443,6 +483,7 @@ contract OptinoGov is OptinoGovConfig {
         }
         proposals[oip].voted[msg.sender] = true;
 
+        commitments[msg.sender].lastVoted = uint64(block.timestamp);
         emit Voted(msg.sender, oip, voteFor, proposals[oip].forVotes, proposals[oip].againstVotes);
     }
 

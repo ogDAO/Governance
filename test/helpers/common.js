@@ -297,8 +297,8 @@ class MyData {
             ", tokens: " + new BigNumber(commitment.tokens).shiftedBy(-18) +
             ", votes: " + new BigNumber(commitment.votes).shiftedBy(-18) +
             ", staked: " + new BigNumber(commitment.staked).shiftedBy(-18) +
-            ", delegatedVotes: " + new BigNumber(commitment.delegatedVotes).shiftedBy(-18) + 
-            ", delegatee: " + commitment.delegatee);
+            ", delegatedVotes: " + new BigNumber(commitment.delegatedVotes).shiftedBy(-18) +
+            ", delegatee: " + this.getShortAccountName(commitment.delegatee));
 
           // struct Commitment {
           //     uint128 duration;

@@ -86,6 +86,15 @@ contract('Test OptinoGov', async _accounts => {
     myData.printTxData("approve3", approve3);
     myData.printTxData("approve4", approve4);
 
+    console.log("RESULT: --- Test 2a - User{1..3} delegate ---");
+    var batch2a = [];
+    batch2a.push(myData.optinoGov.delegate(myData.user3, { from: myData.user1 }));
+    batch2a.push(myData.optinoGov.delegate(myData.user3, { from: myData.user2 }));
+    const [delegate1, delegate2] = await Promise.all(batch2a);
+    await myData.printBalances();
+    myData.printTxData("delegate1", delegate1);
+    myData.printTxData("delegate2", delegate2);
+
     console.log("RESULT: --- Test 2 - User{1..3} commit OGTokens for {5, 50, 500} seconds duration ---");
     var lockTokens = new BigNumber("1000").shiftedBy(18);
     var batch2 = [];
