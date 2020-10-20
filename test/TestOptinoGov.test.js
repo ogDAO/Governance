@@ -2,6 +2,7 @@ const { MyData, ZERO_ADDRESS, OGToken, OGDToken, OptinoGov, TestToken, printBala
 const BigNumber = require('bignumber.js');
 const truffleAssert = require('truffle-assertions');
 const util = require('util');
+// var ethers = require('ethers');
 
 // const { TestTokenTests } = require('./TestToken.js');
 
