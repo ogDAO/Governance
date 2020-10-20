@@ -1,10 +1,7 @@
 pragma solidity ^0.7.0;
 // pragma experimental ABIEncoderV2;
 
-// import "https://github.com/ogDAO/Governance/blob/master/contracts/Permissioned.sol";
-// import "https://github.com/ogDAO/Governance/blob/master/contracts/OGDTokenInterface.sol";
-// import "https://github.com/ogDAO/Governance/blob/master/contracts/DividendTokens.sol";
-
+// Use prefix "./" normally and "https://github.com/ogDAO/Governance/blob/master/contracts/" in Remix
 import "./Permissioned.sol";
 import "./OGDTokenInterface.sol";
 import "./DividendTokens.sol";

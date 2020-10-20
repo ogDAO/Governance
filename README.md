@@ -163,3 +163,19 @@ truffle migrate [--reset]
 Enjoy!
 
 (c) The Optino Project 2020. GPLv2
+
+
+npm install --save-dev @nomiclabs/buidler
+npm install --save-dev @nomiclabs/buidler-waffle
+npm install --save-dev @nomiclabs/buidler-waffle ethereum-waffle chai @nomiclabs/buidler-ethers ethers
+
+npm install --save-dev @nomiclabs/buidler-waffle@^2.0.0 ethereum-waffle@^3.0.0 chai@^4.2.0 @nomiclabs/buidler-ethers@^2.0.0 ethers@^5.0.0
+
+npx buidler accounts
+npx buidler node
+npx buidler compile
+vi buidler.config.js
+npx buidler clean
+npx buidler console
+npx buidler test
+npx buidler test test/TestOGDToken.js

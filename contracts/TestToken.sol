@@ -1,9 +1,6 @@
 pragma solidity ^0.7.0;
 
-// import "https://github.com/ogDAO/Governance/blob/master/contracts/Owned.sol";
-// import "https://github.com/ogDAO/Governance/blob/master/contracts/SafeMath.sol";
-// import "https://github.com/ogDAO/Governance/blob/master/contracts/ERC20.sol";
-
+// Use prefix "./" normally and "https://github.com/ogDAO/Governance/blob/master/contracts/" in Remix
 import "./Owned.sol";
 import "./SafeMath.sol";
 import "./ERC20.sol";

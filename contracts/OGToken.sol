@@ -1,8 +1,6 @@
 pragma solidity ^0.7.0;
 
-// import "https://github.com/ogDAO/Governance/blob/master/contracts/Permissioned.sol";
-// import "https://github.com/ogDAO/Governance/blob/master/contracts/OGTokenInterface.sol";
-
+// Use prefix "./" normally and "https://github.com/ogDAO/Governance/blob/master/contracts/" in Remix
 import "./Permissioned.sol";
 import "./OGTokenInterface.sol";
 
