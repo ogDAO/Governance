@@ -113,7 +113,7 @@ truffle compile
 
 You may need to `chmod 700 20_testOptinoGov.sh` before being able to execute it.
 
-The latest output generated from the script [test/TestOptinoGov.test.js](test/TestOptinoGov.test.js) can be found in [results/TestOptinoGov.txt](results/TestOptinoGov.txt).
+The latest output generated from the script [test/TestOptinoGov.js](test/TestOptinoGov.js) can be found in [results/TestOptinoGov.txt](results/TestOptinoGov.txt).
 
 
 <br />
