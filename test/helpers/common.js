@@ -8,6 +8,7 @@ class MyData {
     // console.log("    MyData.constructor()");
     this.accounts = [];
     this.accountNames = {};
+    this.contractsByAddress = {};
     this.baseBlock = null;
 
     this.tokenContracts = [];
@@ -51,6 +52,15 @@ class MyData {
     // console.log("    MyData.addAccount: " + account + " => " + accountName);
   }
 
+  addContract(contract, contractName) {
+    this.contractsByAddress[contract.address.toLowerCase()] = {
+      address: contract.address,
+      name: contractName,
+      interface: contract.interface,
+    };
+    // console.log("    MyData.addContract: " + contract.address.toLowerCase() + " => " + this.contractsByAddress[contract.address.toLowerCase()]);
+  }
+
   getShortAccountName(address) {
     if (address == ZERO_ADDRESS) {
       return "ETH|null:" + ZERO_ADDRESS.substring(0, 6);
@@ -74,8 +84,10 @@ class MyData {
     this.addAccount(this.fee0Token.address, "Fee0Token");
     this.addAccount(this.fee1Token.address, "Fee1Token");
     this.addAccount(this.fee2Token.address, "Fee2Token");
-    // console.log("    - MyData.setOptinoGovData - ogToken: " + util.inspect(ogToken) + ", ogdToken: " + util.inspect(ogdToken) + ", optinoGov: " + util.inspect(optinoGov));
-    // console.log("    - MyData.setOptinoGovData - ogToken: " + ogToken + ", ogdToken: " + ogdToken + ", feeToken: " + feeToken + ", optinoGov: " + optinoGov);
+    this.addContract(this.ogdToken, "OGDToken");
+    this.addContract(this.fee0Token, "Fee0Token");
+    this.addContract(this.fee1Token, "Fee1Token");
+    this.addContract(this.fee2Token, "Fee2Token");
     this.tokenContracts = [ogdToken, fee0Token, fee1Token, fee2Token];
     for (let i = 0; i < this.tokenContracts.length; i++) {
       let tokenContract = this.tokenContracts[i];
@@ -122,36 +134,44 @@ class MyData {
     return o;
   }
 
-  printEvent(log, _interface) {
-    var data = _interface.parseLog(log);
-    var result = data.name + "(";
-    let separator = "";
-    data.eventFragment.inputs.forEach((a) => {
-      // console.log("a: " + util.inspect(a));
-      result = result + separator + a.name + ": ";
-      if (a.type == 'address') {
-        result = result + this.getShortAccountName(data.args[a.name].toString());
-      } else if (a.type == 'uint256') {
-        result = result + new BigNumber(data.args[a.name].toString()).toFixed(0); //.shiftedBy(-18);
-      } else {
-        result = result + data.args[a.name].toString();
-      }
-      separator = ", ";
-    });
-    result = result + ")";
-    console.log("    + " + result);
+  printEvent(log) {
+    var address = log.address;
+    var _contract = this.contractsByAddress[address.toLowerCase()];
+    if (_contract != null) {
+      var data = _contract.interface.parseLog(log);
+      var result = _contract.name + "." + data.name + "(";
+      let separator = "";
+      data.eventFragment.inputs.forEach((a) => {
+        result = result + separator + a.name + ": ";
+        if (a.type == 'address') {
+          result = result + this.getShortAccountName(data.args[a.name].toString());
+        } else if (a.type == 'uint256') {
+          if (a.name == 'tokens' || a.name == 'amount') {
+            // TODO Get decimals from token contracts, and only convert for token contract values
+            result = result + new BigNumber(data.args[a.name].toString()).shiftedBy(-18).toString();
+          } else {
+            result = result + new BigNumber(data.args[a.name].toString()).toFixed(0); //.shiftedBy(-18);
+          }
+        } else {
+          result = result + data.args[a.name].toString();
+        }
+        separator = ", ";
+      });
+      result = result + ")";
+      console.log("    + " + result);
+    } else {
+      console.log("    + " + JSON.stringify(log));
+    }
   }
 
-  async printTxData(message, tx, _contract) {
+  async printTxData(message, tx) {
     const receipt = await tx.wait();
     var fee = new BigNumber(receipt.gasUsed.toString()).multipliedBy(tx.gasPrice.toString()).shiftedBy(-18);
     var feeUsd = fee.multipliedBy(this.ethUsd);
-    console.log("    " + message + " - gasUsed: " + receipt.gasUsed.toString() + ", fee: " + fee + ", feeUsd: " + feeUsd + ", @gasPrice(gwei): " + new BigNumber(tx.gasPrice.toString()).shiftedBy(-9).toString() + "; @ETH/USD: " + this.ethUsd + " " + tx.hash);
+    console.log("    " + message + " - gasUsed: " + receipt.gasUsed.toString() + ", fee: " + fee + ", feeUsd: " + feeUsd + ", @ " + new BigNumber(tx.gasPrice.toString()).shiftedBy(-9).toString() + " gwei & " + this.ethUsd + " ETH/USD, " + tx.hash);
     receipt.logs.forEach((log) => {
-      this.printEvent(log, _contract.interface);
+      this.printEvent(log);
     });
-    // truffleAssert.prettyPrintEmittedEvents(tx, 2);
-    // .replace(/0:.*length__: \d+, /,"")
   }
 
   async printBalances() {
@@ -159,7 +179,7 @@ class MyData {
     var i = 0;
     var totalTokenBalances = [new BigNumber(0), new BigNumber(0), new BigNumber(0), new BigNumber(0)];
     console.log("    ");
-    console.log("     # Account                                             EtherBalanceChange               " + this.padLeft(this.symbols[0] || "???", 16) +  "               " + this.padLeft(this.symbols[1] || "???", 16) + " @ " + this.baseBlock.toString() + " -> " + blockNumber.toString());
+    console.log("     # Account                                             EtherBalanceChange               " + this.padLeft(this.symbols[0] || "???", 16) +  "               " + this.padLeft(this.symbols[1] || "???", 16) + " Blocks " + this.baseBlock.toString() + " to " + blockNumber.toString());
     if (this.tokenContracts.length > 2) {
       console.log("                                                                                            " + this.padLeft(this.symbols[2] || "???", 16) +  "               " + this.padLeft(this.symbols[3] || "???", 16));
     }
@@ -202,7 +222,7 @@ class MyData {
         for (let j = 0; j < dividendTokensLength; j++) {
           const dividendToken = await tokenContract.getDividendTokenByIndex(j);
           const unclaimedDividends = await tokenContract.unclaimedDividends(dividendToken[0]);
-          console.log("    - dividendToken        : " + j + " " + this.getShortAccountName(dividendToken[0]) + ", enabled: " + dividendToken[1].toString() + ", unclaimedDividends: " + unclaimedDividends + " = " + new BigNumber(unclaimedDividends.toString()).shiftedBy(-18).toFixed(18));
+          console.log("    - dividendToken        : " + j + " " + this.getShortAccountName(dividendToken[0]) + ", enabled: " + dividendToken[1].toString() + ", unclaimedDividends: " + new BigNumber(unclaimedDividends.toString()).shiftedBy(-18).toString());
         }
         for (let j = 1; j < this.accounts.length && j < 4; j++) {
           let account = this.accounts[j];
@@ -211,7 +231,7 @@ class MyData {
           let tokenList = dividendsOwing[0];
           let owingList = dividendsOwing[1];
           for (let k = 0; k < dividendTokensLength; k++) {
-            console.log("                               - " + this.getShortAccountName(tokenList[k]) + " " + owingList[k].toString() + " = " + new BigNumber(owingList[k].toString()).shiftedBy(-18).toFixed(18));
+            console.log("                               - " + this.getShortAccountName(tokenList[k]) + " " + new BigNumber(owingList[k].toString()).shiftedBy(-18).toString());
           }
         }
       }
