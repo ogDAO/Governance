@@ -75,6 +75,40 @@ class MyData {
     return address;
   }
 
+  async setOptinoGovData(ogToken, ogdToken, fee0Token, optinoGov) {
+    this.ogToken = ogToken;
+    this.ogdToken = ogdToken;
+    this.fee0Token = fee0Token;
+    this.optinoGov = optinoGov;
+    this.addAccount(this.ogToken.address, "OGToken");
+    this.addAccount(this.ogdToken.address, "OGDToken");
+    this.addAccount(this.fee0Token.address, "Fee0Token");
+    this.addAccount(this.optinoGov.address, "OptinoGov");
+
+    this.addContract(this.ogToken, "OGToken");
+    this.addContract(this.ogdToken, "OGDToken");
+    this.addContract(this.fee0Token, "Fee0Token");
+    this.addContract(this.optinoGov, "OptinoGov");
+
+    // console.log("    - MyData.setOptinoGovData - ogToken: " + util.inspect(ogToken) + ", ogdToken: " + util.inspect(ogdToken) + ", optinoGov: " + util.inspect(optinoGov));
+    // console.log("    - MyData.setOptinoGovData - ogToken: " + ogToken + ", ogdToken: " + ogdToken + ", feeToken: " + feeToken + ", optinoGov: " + optinoGov);
+    this.tokenContracts = [ogToken, ogdToken, fee0Token];
+    for (let i = 0; i < this.tokenContracts.length; i++) {
+      let tokenContract = this.tokenContracts[i];
+      if (tokenContract != null) {
+        let _symbol = tokenContract.symbol();
+        let _decimals = tokenContract.decimals();
+        let [symbol, decimals] = await Promise.all([_symbol, _decimals]);
+        // console.log("    - MyData.setOptinoGovData - token: " + tokenContract.address + " => " + symbol + " " + decimals);
+        this.symbols.push(symbol);
+        this.decimals.push(decimals);
+      } else {
+        this.symbols.push("???");
+        this.decimals.push(18);
+      }
+    }
+  }
+
   async setOGDTokenData(ogdToken, fee0Token, fee1Token, fee2Token) {
     this.ogdToken = ogdToken;
     this.fee0Token = fee0Token;
@@ -115,11 +149,8 @@ class MyData {
   }
 
   padToken(s, decimals) {
-    // var o = parseFloat(s).toFixed(18);
-    // var o = web3.utils.fromWei(s, "ether", { pad: false });
     decimals = parseInt(decimals);
     var o = new BigNumber(s).shiftedBy(-decimals).toFixed(decimals);
-    // var o = new BigNumber(s).shiftedBy(-18).toFixed(18);
     while (o.length < 27) {
       o = " " + o;
     }
@@ -162,6 +193,18 @@ class MyData {
     } else {
       console.log("    + " + JSON.stringify(log));
     }
+  }
+
+  //-----------------------------------------------------------------------------
+  // Pause for {x} seconds
+  //-----------------------------------------------------------------------------
+  pause(message, addSeconds) {
+    var time = new Date((parseInt(new Date().getTime()/1000) + addSeconds) * 1000);
+    console.log("RESULT: Pausing '" + message + "' for " + addSeconds + "s=" + time + " now=" + new Date());
+    while ((new Date()).getTime() <= time.getTime()) {
+    }
+    console.log("RESULT: Paused '" + message + "' for " + addSeconds + "s=" + time + " now=" + new Date());
+    console.log("RESULT: ");
   }
 
   async printTxData(message, tx) {
@@ -211,9 +254,6 @@ class MyData {
       let tokenContract = this.tokenContracts[i];
       let [symbol, name, decimals, totalSupply, owner] = await Promise.all([tokenContract.symbol(), tokenContract.name(), tokenContract.decimals(), tokenContract.totalSupply(), tokenContract.owner()]);
       console.log("    Token " + i + " symbol: '" + symbol + "', name: '" + name + "', decimals: " + decimals + ", totalSupply: " + new BigNumber(totalSupply.toString()).shiftedBy(-decimals) + ", owner: " + this.getShortAccountName(owner) + ", address: " + this.getShortAccountName(tokenContract.address));
-      // console.log("    - symbol/name/decimals : '" + symbol + "', '" + name + "', " + decimals);
-      // console.log("    - totalSupply          : " + new BigNumber(totalSupply.toString()).shiftedBy(-decimals));
-      // console.log("    - owner                : " + this.getShortAccountName(owner));
       if (symbol == "OGD") {
         const dividendTokensLength = parseInt(await tokenContract.dividendTokensLength());
         console.log("    - dividendTokensLength : " + dividendTokensLength);
@@ -270,18 +310,18 @@ class MyData {
       console.log("    - ogToken              : " + this.getShortAccountName(ogToken));
       console.log("    - ogdToken             : " + this.getShortAccountName(ogdToken));
       let decimals = 18;
-      console.log("    - maxDuration          : " + maxDuration + " seconds = " + new BigNumber(maxDuration).dividedBy(60 * 60 * 24) + " days");
-      console.log("    - rewardsPerSecond     : " + rewardsPerSecond + " = " + new BigNumber(rewardsPerSecond).shiftedBy(-18) + " = " + new BigNumber(rewardsPerSecond).multipliedBy(60 * 60 * 24).shiftedBy(-decimals) + " per day");
-      console.log("    - collectRewardForFee  : " + collectRewardForFee + " = " + new BigNumber(collectRewardForFee).shiftedBy(-16) + "%");
-      console.log("    - collectRewardForDelay: " + collectRewardForDelay + " seconds = " + new BigNumber(collectRewardForDelay).dividedBy(60 * 60 * 24) + " days");
-      console.log("    - proposalCost         : " + proposalCost + " = " + new BigNumber(proposalCost).shiftedBy(-decimals));
-      console.log("    - proposalThreshold    : " + proposalThreshold + " = " + new BigNumber(proposalThreshold).shiftedBy(-16) + "%");
-      console.log("    - quorum               : " + quorum + " = " + new BigNumber(quorum).shiftedBy(-16) + "%");
-      console.log("    - quorumDecayPerSecond : " + quorumDecayPerSecond + " = " + new BigNumber(quorumDecayPerSecond).multipliedBy(60 * 60 * 24 * 365).shiftedBy(-16) + "% per year");
-      console.log("    - votingDuration       : " + votingDuration + " seconds = " + new BigNumber(votingDuration).dividedBy(60 * 60 * 24) + " days");
-      console.log("    - executeDelay         : " + executeDelay + " seconds = " + new BigNumber(executeDelay).dividedBy(60 * 60 * 24) + " days");
-      console.log("    - rewardPool           : " + rewardPool + " = " + new BigNumber(rewardPool).shiftedBy(-decimals));
-      console.log("    - totalVotes           : " + totalVotes + " = " + new BigNumber(totalVotes).shiftedBy(-decimals));
+      console.log("    - maxDuration          : " + maxDuration + " seconds = " + new BigNumber(maxDuration.toString()).dividedBy(60 * 60 * 24) + " days");
+      console.log("    - rewardsPerSecond     : " + rewardsPerSecond + " = " + new BigNumber(rewardsPerSecond.toString()).shiftedBy(-18) + " = " + new BigNumber(rewardsPerSecond.toString()).multipliedBy(60 * 60 * 24).shiftedBy(-decimals) + " per day");
+      console.log("    - collectRewardForFee  : " + collectRewardForFee + " = " + new BigNumber(collectRewardForFee.toString()).shiftedBy(-16) + "%");
+      console.log("    - collectRewardForDelay: " + collectRewardForDelay + " seconds = " + new BigNumber(collectRewardForDelay.toString()).dividedBy(60 * 60 * 24) + " days");
+      console.log("    - proposalCost         : " + proposalCost + " = " + new BigNumber(proposalCost.toString()).shiftedBy(-decimals));
+      console.log("    - proposalThreshold    : " + proposalThreshold + " = " + new BigNumber(proposalThreshold.toString()).shiftedBy(-16) + "%");
+      console.log("    - quorum               : " + quorum + " = " + new BigNumber(quorum.toString()).shiftedBy(-16) + "%");
+      console.log("    - quorumDecayPerSecond : " + quorumDecayPerSecond + " = " + new BigNumber(quorumDecayPerSecond.toString()).multipliedBy(60 * 60 * 24 * 365).shiftedBy(-16) + "% per year");
+      console.log("    - votingDuration       : " + votingDuration + " seconds = " + new BigNumber(votingDuration.toString()).dividedBy(60 * 60 * 24) + " days");
+      console.log("    - executeDelay         : " + executeDelay + " seconds = " + new BigNumber(executeDelay.toString()).dividedBy(60 * 60 * 24) + " days");
+      console.log("    - rewardPool           : " + rewardPool + " = " + new BigNumber(rewardPool.toString()).shiftedBy(-decimals));
+      console.log("    - totalVotes           : " + totalVotes + " = " + new BigNumber(totalVotes.toString()).shiftedBy(-decimals));
       console.log("    - proposalCount        : " + proposalCount);
       console.log("    - stakeInfoLength      : " + stakeInfoLength);
 
@@ -292,10 +332,10 @@ class MyData {
           console.log("    - commitment           : " + j + " " + this.getShortAccountName(account) +
             " duration: " + commitment.duration +
             ", end: " + commitment.end +
-            ", tokens: " + new BigNumber(commitment.tokens).shiftedBy(-18) +
-            ", votes: " + new BigNumber(commitment.votes).shiftedBy(-18) +
-            ", staked: " + new BigNumber(commitment.staked).shiftedBy(-18) +
-            ", delegatedVotes: " + new BigNumber(commitment.delegatedVotes).shiftedBy(-18) +
+            ", tokens: " + new BigNumber(commitment.tokens.toString()).shiftedBy(-18) +
+            ", votes: " + new BigNumber(commitment.votes.toString()).shiftedBy(-18) +
+            ", staked: " + new BigNumber(commitment.staked.toString()).shiftedBy(-18) +
+            ", delegatedVotes: " + new BigNumber(commitment.delegatedVotes.toString()).shiftedBy(-18) +
             ", delegatee: " + this.getShortAccountName(commitment.delegatee));
 
           // struct Commitment {
