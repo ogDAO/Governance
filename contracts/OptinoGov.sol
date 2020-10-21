@@ -344,8 +344,10 @@ contract OptinoGov is OptinoGovConfig {
             commitments[user.delegatee].delegatedVotes = commitments[user.delegatee].delegatedVotes.sub(oldUserVotes).add(user.votes);
         }
 
-        require(ogToken.mint(address(this), reward), "OG mint failed");
-        require(ogdToken.mint(msg.sender, tokens.add(reward)), "OGD mint failed");
+        if (reward > 0) {
+            require(ogToken.mint(address(this), reward), "reward OG mint failed");
+        }
+        require(ogdToken.mint(msg.sender, tokens.add(reward)), "commitment + reward OGD mint failed");
 
         emit Committed(msg.sender, tokens, user.tokens, user.duration, user.end, user.delegatee, user.votes, rewardPool, totalVotes);
     }

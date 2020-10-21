@@ -27,12 +27,8 @@ class MyData {
   }
 
   async init() {
-    const _accounts = await ethers.getSigners();
-    this.owner = await _accounts[0].getAddress();
-    this.user1 = await _accounts[1].getAddress();
-    this.user2 = await _accounts[2].getAddress();
-    this.user3 = await _accounts[3].getAddress();
-
+    [this.ownerSigner, this.user1Signer, this.user2Signer, this.user3Signer] = await ethers.getSigners();
+    [this.owner, this.user1, this.user2, this.user3] = await Promise.all([this.ownerSigner.getAddress(), this.user1Signer.getAddress(), this.user2Signer.getAddress(), this.user3Signer.getAddress()]);
     this.addAccount(this.owner, "Owner");
     this.addAccount(this.user1, "User1");
     this.addAccount(this.user2, "User2");
@@ -42,14 +38,11 @@ class MyData {
     //   console.log("Current block number: " + blockNumber);
     // });
     this.baseBlock = await ethers.provider.getBlockNumber();
-    // console.log("    MyData.init - baseBlock: " + this.baseBlock);
   }
 
   addAccount(account, accountName) {
     this.accounts.push(account);
     this.accountNames[account.toLowerCase()] = accountName;
-    // addAddressNames(account, accountName);
-    // console.log("    MyData.addAccount: " + account + " => " + accountName);
   }
 
   addContract(contract, contractName) {
@@ -58,7 +51,6 @@ class MyData {
       name: contractName,
       interface: contract.interface,
     };
-    // console.log("    MyData.addContract: " + contract.address.toLowerCase() + " => " + this.contractsByAddress[contract.address.toLowerCase()]);
   }
 
   getShortAccountName(address) {
@@ -90,8 +82,6 @@ class MyData {
     this.addContract(this.fee0Token, "Fee0Token");
     this.addContract(this.optinoGov, "OptinoGov");
 
-    // console.log("    - MyData.setOptinoGovData - ogToken: " + util.inspect(ogToken) + ", ogdToken: " + util.inspect(ogdToken) + ", optinoGov: " + util.inspect(optinoGov));
-    // console.log("    - MyData.setOptinoGovData - ogToken: " + ogToken + ", ogdToken: " + ogdToken + ", feeToken: " + feeToken + ", optinoGov: " + optinoGov);
     this.tokenContracts = [ogToken, ogdToken, fee0Token];
     for (let i = 0; i < this.tokenContracts.length; i++) {
       let tokenContract = this.tokenContracts[i];
@@ -99,7 +89,6 @@ class MyData {
         let _symbol = tokenContract.symbol();
         let _decimals = tokenContract.decimals();
         let [symbol, decimals] = await Promise.all([_symbol, _decimals]);
-        // console.log("    - MyData.setOptinoGovData - token: " + tokenContract.address + " => " + symbol + " " + decimals);
         this.symbols.push(symbol);
         this.decimals.push(decimals);
       } else {
@@ -129,7 +118,6 @@ class MyData {
         let _symbol = tokenContract.symbol();
         let _decimals = tokenContract.decimals();
         let [symbol, decimals] = await Promise.all([_symbol, _decimals]);
-        // console.log("    - MyData.setOptinoGovData - token: " + tokenContract.address + " => " + symbol + " " + decimals);
         this.symbols.push(symbol);
         this.decimals.push(decimals);
       } else {
@@ -139,14 +127,14 @@ class MyData {
     }
   }
 
-  async addToken(tokenContract) {
-    let symbol = await tokenContract.symbol();
-    let decimals = await tokenContract.decimals();
-    console.log("    - MyData.addToken - tokenContract.address: " + tokenContract.address + " " + symbol + " " + decimals);
-    this.tokenContracts.push(tokenContract);
-    this.symbols.push(symbol);
-    this.decimals.push(decimals);
-  }
+  // async addToken(tokenContract) {
+  //   let symbol = await tokenContract.symbol();
+  //   let decimals = await tokenContract.decimals();
+  //   console.log("    - MyData.addToken - tokenContract.address: " + tokenContract.address + " " + symbol + " " + decimals);
+  //   this.tokenContracts.push(tokenContract);
+  //   this.symbols.push(symbol);
+  //   this.decimals.push(decimals);
+  // }
 
   padToken(s, decimals) {
     decimals = parseInt(decimals);
@@ -177,7 +165,7 @@ class MyData {
         if (a.type == 'address') {
           result = result + this.getShortAccountName(data.args[a.name].toString());
         } else if (a.type == 'uint256') {
-          if (a.name == 'tokens' || a.name == 'amount') {
+          if (a.name == 'tokens' || a.name == 'amount' || a.name == 'balance' || a.name == 'votes' || a.name == 'reward' || a.name == 'rewardPool' || a.name == 'totalVotes') {
             // TODO Get decimals from token contracts, and only convert for token contract values
             result = result + new BigNumber(data.args[a.name].toString()).shiftedBy(-18);
           } else {
@@ -200,11 +188,11 @@ class MyData {
   //-----------------------------------------------------------------------------
   pause(message, addSeconds) {
     var time = new Date((parseInt(new Date().getTime()/1000) + addSeconds) * 1000);
-    console.log("RESULT: Pausing '" + message + "' for " + addSeconds + "s=" + time + " now=" + new Date());
+    console.log("    Pausing '" + message + "' for " + addSeconds + "s=" + time + " now=" + new Date());
     while ((new Date()).getTime() <= time.getTime()) {
     }
-    console.log("RESULT: Paused '" + message + "' for " + addSeconds + "s=" + time + " now=" + new Date());
-    console.log("RESULT: ");
+    console.log("    Paused '" + message + "' for " + addSeconds + "s=" + time + " now=" + new Date());
+    console.log("    ");
   }
 
   async printTxData(message, tx) {
@@ -337,32 +325,7 @@ class MyData {
             ", staked: " + new BigNumber(commitment.staked.toString()).shiftedBy(-18) +
             ", delegatedVotes: " + new BigNumber(commitment.delegatedVotes.toString()).shiftedBy(-18) +
             ", delegatee: " + this.getShortAccountName(commitment.delegatee));
-
-          // struct Commitment {
-          //     uint128 duration;
-          //     uint128 end;
-          //     uint tokens;
-          //     uint staked;
-          //     uint votes;
-          //     uint delegatedVotes;
-          //     address delegatee;
-          // }
-
-          // console.log("    - commitment           : " + j + " " + this.getShortAccountName(account) + " " + JSON.stringify(commitment));
         }
-
-        // uint term;
-        // uint end;
-        // uint tokens;
-        // uint votes;
-        // uint staked;
-        // mapping(bytes32 => uint) stakes;
-
-        // let tokenList = dividendsOwing[0];
-        // let owingList = dividendsOwing[1];
-        // for (let k = 0; k < dividendTokensLength; k++) {
-        //   console.log("                               - " + this.getShortAccountName(tokenList[k]) + " " + owingList[k] + " = " + new BigNumber(owingList[k]).shiftedBy(-18).toFixed(18));
-        // }
       }
 
 
