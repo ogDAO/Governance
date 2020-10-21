@@ -148,7 +148,7 @@ class MyData {
         } else if (a.type == 'uint256') {
           if (a.name == 'tokens' || a.name == 'amount') {
             // TODO Get decimals from token contracts, and only convert for token contract values
-            result = result + new BigNumber(data.args[a.name].toString()).shiftedBy(-18).toString();
+            result = result + new BigNumber(data.args[a.name].toString()).shiftedBy(-18);
           } else {
             result = result + new BigNumber(data.args[a.name].toString()).toFixed(0); //.shiftedBy(-18);
           }
@@ -209,20 +209,18 @@ class MyData {
 
     for (let i = 0; i < this.tokenContracts.length; i++) {
       let tokenContract = this.tokenContracts[i];
-      console.log("    Token " + i + " " + this.getShortAccountName(tokenContract.address) + " @ " + tokenContract.address);
       let [symbol, name, decimals, totalSupply, owner] = await Promise.all([tokenContract.symbol(), tokenContract.name(), tokenContract.decimals(), tokenContract.totalSupply(), tokenContract.owner()]);
-      console.log("    - symbol               : " + symbol);
-      console.log("    - name                 : " + name);
-      console.log("    - decimals             : " + decimals);
-      console.log("    - totalSupply          : " + new BigNumber(totalSupply.toString()).shiftedBy(-decimals));
-      console.log("    - owner                : " + this.getShortAccountName(owner));
+      console.log("    Token " + i + " symbol: '" + symbol + "', name: '" + name + "', decimals: " + decimals + ", totalSupply: " + new BigNumber(totalSupply.toString()).shiftedBy(-decimals) + ", owner: " + this.getShortAccountName(owner) + ", address: " + this.getShortAccountName(tokenContract.address));
+      // console.log("    - symbol/name/decimals : '" + symbol + "', '" + name + "', " + decimals);
+      // console.log("    - totalSupply          : " + new BigNumber(totalSupply.toString()).shiftedBy(-decimals));
+      // console.log("    - owner                : " + this.getShortAccountName(owner));
       if (symbol == "OGD") {
         const dividendTokensLength = parseInt(await tokenContract.dividendTokensLength());
         console.log("    - dividendTokensLength : " + dividendTokensLength);
         for (let j = 0; j < dividendTokensLength; j++) {
           const dividendToken = await tokenContract.getDividendTokenByIndex(j);
           const unclaimedDividends = await tokenContract.unclaimedDividends(dividendToken[0]);
-          console.log("    - dividendToken        : " + j + " " + this.getShortAccountName(dividendToken[0]) + ", enabled: " + dividendToken[1].toString() + ", unclaimedDividends: " + new BigNumber(unclaimedDividends.toString()).shiftedBy(-18).toString());
+          console.log("    - dividendToken        : " + j + " " + this.getShortAccountName(dividendToken[0]) + ", enabled: " + dividendToken[1].toString() + ", unclaimedDividends: " + new BigNumber(unclaimedDividends.toString()).shiftedBy(-18));
         }
         for (let j = 1; j < this.accounts.length && j < 4; j++) {
           let account = this.accounts[j];
@@ -231,7 +229,7 @@ class MyData {
           let tokenList = dividendsOwing[0];
           let owingList = dividendsOwing[1];
           for (let k = 0; k < dividendTokensLength; k++) {
-            console.log("                               - " + this.getShortAccountName(tokenList[k]) + " " + new BigNumber(owingList[k].toString()).shiftedBy(-18).toString());
+            console.log("                               - " + this.getShortAccountName(tokenList[k]) + " " + new BigNumber(owingList[k].toString()).shiftedBy(-18));
           }
         }
       }
