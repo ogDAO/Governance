@@ -126,7 +126,7 @@ The latest output generated from the script [test/TestOptinoGov.test.js](test/Te
 
 You may need to `chmod 700 30_testOGDToken.sh` before being able to execute it.
 
-The latest output generated from the script [test/TestOGDToken.test.js](test/TestOGDToken.test.js) can be found in [results/TestOGDToken.txt](results/TestOGDToken.txt).
+The latest output generated from the script [test/TestOGDToken.js](test/TestOGDToken.js) can be found in [results/TestOGDToken.txt](results/TestOGDToken.txt).
 
 The tests are roughly:
 
