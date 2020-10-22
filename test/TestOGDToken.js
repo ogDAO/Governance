@@ -18,8 +18,6 @@ describe("TestOGDToken", function() {
     const myData = new MyData();
     await myData.init();
 
-    const [ownerSigner, user1Signer, user2Signer, user3Signer] = await ethers.getSigners();
-
     console.log("    --- Setup 1 - Deploy OGDToken, FEE{0..2} ---");
     var batch1 = [];
     batch1.push(OGDToken.deploy("OGD", "Optino Governance Dividend", 18, myData.owner, new BigNumber("0").shiftedBy(18).toFixed(0)));
@@ -80,16 +78,16 @@ describe("TestOGDToken", function() {
 
     console.log("    --- Test 2 - User1 dummy transfer to same account (internal stats update) ---");
     var batch5 = [];
-    batch5.push(ogdToken.connect(user2Signer).transfer(myData.user2, "1"));
+    batch5.push(ogdToken.connect(myData.user2Signer).transfer(myData.user2, "1"));
     const [transfer1] = await Promise.all(batch5);
     await myData.printTxData("transfer1", transfer1);
     await myData.printBalances();
 
     console.log("    --- Test 3 - User{1..3} withdraw 33.333333333333333333 FEE0 and 3.333333333333333333 ETH ---");
     var batch6 = [];
-    batch6.push(ogdToken.connect(user1Signer).withdrawDividends());
-    batch6.push(ogdToken.connect(user2Signer).withdrawDividends());
-    batch6.push(ogdToken.connect(user3Signer).withdrawDividends());
+    batch6.push(ogdToken.connect(myData.user1Signer).withdrawDividends());
+    batch6.push(ogdToken.connect(myData.user2Signer).withdrawDividends());
+    batch6.push(ogdToken.connect(myData.user3Signer).withdrawDividends());
     const [withdrawDividends1, withdrawDividends2, withdrawDividends3] = await Promise.all(batch6);
     await myData.printTxData("withdrawDividends1", withdrawDividends1);
     await myData.printTxData("withdrawDividends2", withdrawDividends2);
@@ -118,9 +116,9 @@ describe("TestOGDToken", function() {
 
     console.log("    --- Test 6 - User{1..3} withdraw 333.333333333333333333 FEE1 and 3333.333333333333333333 FEE2 ---");
     var batch9 = [];
-    batch9.push(ogdToken.connect(user1Signer).withdrawDividends());
-    batch9.push(ogdToken.connect(user2Signer).withdrawDividends());
-    batch9.push(ogdToken.connect(user3Signer).withdrawDividends());
+    batch9.push(ogdToken.connect(myData.user1Signer).withdrawDividends());
+    batch9.push(ogdToken.connect(myData.user2Signer).withdrawDividends());
+    batch9.push(ogdToken.connect(myData.user3Signer).withdrawDividends());
     const [withdrawDividends4, withdrawDividends5, withdrawDividends6] = await Promise.all(batch9);
     await myData.printTxData("withdrawDividends4", withdrawDividends4);
     await myData.printTxData("withdrawDividends5", withdrawDividends5);
@@ -129,7 +127,7 @@ describe("TestOGDToken", function() {
 
     console.log("    --- Test 7 - User2 transfer 1 OGD to User3 ---");
     var batch10 = [];
-    batch10.push(ogdToken.connect(user2Signer).transfer(myData.user3, new BigNumber("0.123456789123456789").shiftedBy(18).toFixed(0)));
+    batch10.push(ogdToken.connect(myData.user2Signer).transfer(myData.user3, new BigNumber("0.123456789123456789").shiftedBy(18).toFixed(0)));
     const [transfer2] = await Promise.all(batch10);
     await myData.printTxData("transfer2", transfer2);
     await myData.printBalances();

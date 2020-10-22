@@ -419,8 +419,13 @@ contract OptinoGov is OptinoGovConfig {
         // Reward
         uint elapsed = block.timestamp.sub(uint(user.end).sub(user.duration));
         uint reward = elapsed.mul(rewardsPerSecond).mul(user.votes).div(totalVotes);
-        rewardPool = rewardPool.sub(reward);
-        user.tokens = user.tokens.add(reward);
+        if (reward > rewardPool) {
+            reward = rewardPool;
+        }
+        if (reward > 0) {
+            rewardPool = rewardPool.sub(reward);
+        }
+        // user.tokens = user.tokens.add(reward);
         totalVotes = totalVotes.sub(user.votes);
         if (user.delegatee != address(0)) {
             commitments[user.delegatee].delegatedVotes = commitments[user.delegatee].delegatedVotes.sub(user.votes);
@@ -429,8 +434,12 @@ contract OptinoGov is OptinoGovConfig {
 
         uint payout = user.tokens;
         user.tokens = 0;
+        user.end = 0;
+        user.duration = 0;
 
-        require(ogToken.transfer(msg.sender, payout), "OptinoGov: transfer failed");
+        require(ogdToken.transferFrom(msg.sender, address(this), payout), "OGD transfer failed");
+        require(ogToken.transfer(msg.sender, payout), "OG transfer failed");
+        require(ogToken.mint(msg.sender, reward), "OG mint failed");
 
         emit Uncommitted(msg.sender, payout, tokens, user.duration, user.end, user.votes, rewardPool, totalVotes);
     }

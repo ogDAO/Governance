@@ -20,8 +20,6 @@ describe("TestOptinoGov", function() {
     const myData = new MyData();
     await myData.init();
 
-    const [ownerSigner, user1Signer, user2Signer, user3Signer] = await ethers.getSigners();
-
     console.log("    --- Setup 1 - Deploy OGToken, OGDToken, FEE0, then OptinoGov ---");
     var batch1 = [];
     batch1.push(OGToken.deploy("OG", "Optino Governance", 18, myData.owner, new BigNumber("40000").shiftedBy(18).toFixed(0)));
@@ -37,7 +35,6 @@ describe("TestOptinoGov", function() {
     await myData.printTxData("fee0Token.deployTransaction", fee0Token.deployTransaction);
     await myData.printTxData("optinoGov.deployTransaction", optinoGov.deployTransaction);
     await myData.printBalances();
-
 
     console.log("    --- Setup 2 - OGDToken.addDividendToken([ETH, FEE0]), OGDToken mint(...) permissioning ---");
     var batch3 = [];
@@ -59,9 +56,9 @@ describe("TestOptinoGov", function() {
     batch4.push(ogToken.transfer(myData.user1, ogTokens.toFixed(0)));
     batch4.push(ogToken.transfer(myData.user2, ogTokens.toFixed(0)));
     batch4.push(ogToken.transfer(myData.user3, ogTokens.toFixed(0)));
-    batch4.push(ogToken.connect(user1Signer).approve(optinoGov.address, approveTokens.toFixed(0)));
-    batch4.push(ogToken.connect(user2Signer).approve(optinoGov.address, approveTokens.toFixed(0)));
-    batch4.push(ogToken.connect(user3Signer).approve(optinoGov.address, approveTokens.toFixed(0)));
+    batch4.push(ogToken.connect(myData.user1Signer).approve(optinoGov.address, approveTokens.toFixed(0)));
+    batch4.push(ogToken.connect(myData.user2Signer).approve(optinoGov.address, approveTokens.toFixed(0)));
+    batch4.push(ogToken.connect(myData.user3Signer).approve(optinoGov.address, approveTokens.toFixed(0)));
     batch4.push(fee0Token.approve(ogdToken.address, approveTokens.toFixed(0)));
     batch4.push(ogToken.transferOwnership(optinoGov.address));
     batch4.push(ogdToken.transferOwnership(optinoGov.address));
@@ -79,8 +76,8 @@ describe("TestOptinoGov", function() {
 
     console.log("    --- Test 1 - User{1,2} delegate to User3---");
     var batch5 = [];
-    batch5.push(optinoGov.connect(user1Signer).delegate(myData.user3));
-    batch5.push(optinoGov.connect(user2Signer).delegate(myData.user3));
+    batch5.push(optinoGov.connect(myData.user1Signer).delegate(myData.user3));
+    batch5.push(optinoGov.connect(myData.user2Signer).delegate(myData.user3));
     const [delegate1, delegate2] = await Promise.all(batch5);
     await myData.printTxData("delegate1", delegate1);
     await myData.printTxData("delegate2", delegate2);
@@ -89,9 +86,9 @@ describe("TestOptinoGov", function() {
     console.log("    --- Test 2 - User{1..3} commit OGTokens for {5, 50, 500} seconds duration ---");
     var lockTokens = new BigNumber("1000").shiftedBy(18);
     var batch6 = [];
-    batch6.push(optinoGov.connect(user1Signer).commit(lockTokens.toFixed(0), 5));
-    batch6.push(optinoGov.connect(user2Signer).commit(lockTokens.toFixed(0), 50));
-    batch6.push(optinoGov.connect(user3Signer).commit(lockTokens.toFixed(0), 500));
+    batch6.push(optinoGov.connect(myData.user1Signer).commit(lockTokens.toFixed(0), 5));
+    batch6.push(optinoGov.connect(myData.user2Signer).commit(lockTokens.toFixed(0), 50));
+    batch6.push(optinoGov.connect(myData.user3Signer).commit(lockTokens.toFixed(0), 500));
     const [commit1, commit2, commit3] = await Promise.all(batch6);
     await myData.printTxData("commit1", commit1);
     await myData.printTxData("commit2", commit2);
@@ -100,16 +97,16 @@ describe("TestOptinoGov", function() {
 
     console.log("    --- Test 3 - User{2} commit again for {55} seconds duration ---");
     var batch7 = [];
-    batch7.push(optinoGov.connect(user2Signer).commit(lockTokens.toFixed(0), 55));
+    batch7.push(optinoGov.connect(myData.user2Signer).commit(lockTokens.toFixed(0), 55));
     const [commit4] = await Promise.all(batch7);
     await myData.printTxData("commit4", commit4);
     await myData.printBalances();
 
     console.log("    --- Test 4 - User1 collecting rewards, user2 collecting and committing rewards leaving duration unchanged, user3 collecting and committing rewards and extending duration ---");
     var batch8 = [];
-    batch8.push(optinoGov.connect(user1Signer).collectReward(false, 0));
-    batch8.push(optinoGov.connect(user2Signer).collectReward(true, 0));
-    batch8.push(optinoGov.connect(user3Signer).collectReward(true, 5000));
+    batch8.push(optinoGov.connect(myData.user1Signer).collectReward(false, 0));
+    batch8.push(optinoGov.connect(myData.user2Signer).collectReward(true, 0));
+    batch8.push(optinoGov.connect(myData.user3Signer).collectReward(true, 5000));
     const [collectReward1, collectReward2, collectReward3] = await Promise.all(batch8);
     await myData.printTxData("collectReward1", collectReward1);
     await myData.printTxData("collectReward2", collectReward2);
@@ -137,9 +134,9 @@ describe("TestOptinoGov", function() {
 
     console.log("    --- Test 7 - User{1..3} withdraw ETH and FEE dividends ---");
     var batch11 = [];
-    batch11.push(ogdToken.connect(user1Signer).withdrawDividends());
-    batch11.push(ogdToken.connect(user2Signer).withdrawDividends());
-    batch11.push(ogdToken.connect(user3Signer).withdrawDividends());
+    batch11.push(ogdToken.connect(myData.user1Signer).withdrawDividends());
+    batch11.push(ogdToken.connect(myData.user2Signer).withdrawDividends());
+    batch11.push(ogdToken.connect(myData.user3Signer).withdrawDividends());
     const [withdrawDividends1, withdrawDividends2, withdrawDividends3] = await Promise.all(batch11);
     await myData.printTxData("withdrawDividends1", withdrawDividends1);
     await myData.printTxData("withdrawDividends2", withdrawDividends2);
