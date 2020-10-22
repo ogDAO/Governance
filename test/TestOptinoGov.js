@@ -81,7 +81,7 @@ describe("TestOptinoGov", function() {
     console.log("");
   });
 
-  describe.only("TestOptinoGov - Standard Workflow #0", function() {
+  describe("TestOptinoGov - Standard Workflow #0", function() {
     it("Standard Workflow #0", async function() {
       console.log("        --- Test 1 - User{1,2} delegate to User3---");
       const test1 = [];
@@ -183,11 +183,47 @@ describe("TestOptinoGov", function() {
 
   describe("TestOptinoGov - Standard Workflow #1", function() {
     it("Standard Workflow #1", async function() {
-      console.log("Standard Workflow #1");
+      console.log("        --- Test 1 - User{1..3} commit OGTokens for {1, 1, 1} seconds duration ---");
+      const lockTokens = new BigNumber("1000").shiftedBy(18);
+      const test1 = [];
+      test1.push(data.optinoGov.connect(data.user1Signer).commit(lockTokens.toFixed(0), 1));
+      test1.push(data.optinoGov.connect(data.user2Signer).commit(lockTokens.toFixed(0), 1));
+      test1.push(data.optinoGov.connect(data.user3Signer).commit(lockTokens.toFixed(0), 1));
+      const [commit1, commit2, commit3] = await Promise.all(test1);
+      await data.printTxData("commit1", commit1);
+      await data.printTxData("commit2", commit2);
+      await data.printTxData("commit3", commit3);
+      await data.printBalances();
+
+      console.log("        --- Test 2 - User{1..3} approve 2,000 OGDTokens to OptinoGov ---");
+      const approveTokens = new BigNumber("2000").shiftedBy(18);
+      const test2 = [];
+      test2.push(data.ogdToken.connect(data.user1Signer).approve(data.optinoGov.address, approveTokens.toFixed(0)));
+      test2.push(data.ogdToken.connect(data.user2Signer).approve(data.optinoGov.address, approveTokens.toFixed(0)));
+      test2.push(data.ogdToken.connect(data.user3Signer).approve(data.optinoGov.address, approveTokens.toFixed(0)));
+      const [approve1, approve2, approve3] = await Promise.all(test2);
+      await data.printTxData("approve1", approve1);
+      await data.printTxData("approve2", approve2);
+      await data.printTxData("approve3", approve3);
+      await data.printBalances();
+
+      console.log("        --- Test 3 - User{1..3} commit OGTokens for {500, 500, 500} seconds duration ---");
+      const test3 = [];
+      test3.push(data.optinoGov.connect(data.user1Signer).uncommit());
+      test3.push(data.optinoGov.connect(data.user2Signer).uncommit());
+      test3.push(data.optinoGov.connect(data.user3Signer).uncommit());
+      const [uncommit1, uncommit2, uncommit3] = await Promise.all(test3);
+      await data.printTxData("uncommit1", uncommit1);
+      await data.printTxData("uncommit2", uncommit2);
+      await data.printTxData("uncommit3", uncommit3);
+      await data.printBalances();
+
+      console.log("        --- Test Completed ---");
+      console.log("");
     });
   });
 
-  describe("TestOptinoGov - Standard Workflow #2", function() {
+  describe.skip("TestOptinoGov - Standard Workflow #2", function() {
     it("Standard Workflow #2", async function() {
       console.log("Standard Workflow #2");
     });
