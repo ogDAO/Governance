@@ -261,14 +261,14 @@ class Data {
         for (let j = 1; j < this.accounts.length; j++) {
           let account = this.accounts[j];
           let accountName = this.getShortAccountName(account);
-          if (!accountName.startsWith("Fee")) {
+          if (!accountName.startsWith("Fee") && !accountName.startsWith("OG")) {
             const dividendsOwing = await tokenContract.dividendsOwing(account);
             let result = "";
             let tokenList = dividendsOwing[0];
             let owingList = dividendsOwing[1];
             let newOwingList = dividendsOwing[2];
             for (let k = 0; k < dividendTokensLength; k++) {
-              result = result + this.padRight(this.getShortAccountName(tokenList[k]) + " " + new BigNumber(owingList[k].toString()).shiftedBy(-18) + " " + new BigNumber(newOwingList[k].toString()).shiftedBy(-18), 30);
+              result = result + this.padRight(this.getShortAccountName(tokenList[k]) + " " + new BigNumber(owingList[k].toString()).shiftedBy(-18) + " " + new BigNumber(newOwingList[k].toString()).shiftedBy(-18), 40);
             }
             console.log("        - dividendsOwing       : " + j + " " + this.padRight(this.getShortAccountName(account), 18) + " " + result);
           }

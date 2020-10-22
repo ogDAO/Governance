@@ -52,14 +52,14 @@ describe("TestOGDToken", function() {
     const approveFee2Tokens = new BigNumber("10000").shiftedBy(18);
     setup3.push(data.ogdToken.mint(data.user1, ogdTokens.toFixed(0)));
     setup3.push(data.ogdToken.mint(data.user2, ogdTokens.toFixed(0)));
-    // setup3.push(data.ogdToken.mint(data.user3, ogdTokens.toFixed(0)));
+    setup3.push(data.ogdToken.mint(data.user3, new BigNumber("0").shiftedBy(18).toFixed(0)));
     setup3.push(data.fee0Token.approve(data.ogdToken.address, approveFee0Tokens.toFixed(0)));
     setup3.push(data.fee1Token.approve(data.ogdToken.address, approveFee1Tokens.toFixed(0)));
     setup3.push(data.fee2Token.approve(data.ogdToken.address, approveFee2Tokens.toFixed(0)));
-    const [mint1, mint2, /*mint3, */ownerApproveFee0Tokens, ownerApproveFee1Tokens, ownerApproveFee2Tokens] = await Promise.all(setup3);
+    const [mint1, mint2, mint3, ownerApproveFee0Tokens, ownerApproveFee1Tokens, ownerApproveFee2Tokens] = await Promise.all(setup3);
     await data.printTxData("mint1", mint1);
     await data.printTxData("mint2", mint2);
-    // await data.printTxData("mint3", mint3);
+    await data.printTxData("mint3", mint3);
     await data.printTxData("ownerApproveFee0Tokens", ownerApproveFee0Tokens);
     await data.printTxData("ownerApproveFee1Tokens", ownerApproveFee1Tokens);
     await data.printTxData("ownerApproveFee2Tokens", ownerApproveFee2Tokens);
@@ -176,17 +176,17 @@ describe("TestOGDToken", function() {
       await data.printTxData("transfer1", transfer1);
       await data.printBalances();
 
-      // console.log("        --- Test 3 - User{1..3} withdraw 33.333333333333333333 FEE0 and 3.333333333333333333 ETH ---");
-      // const test3 = [];
-      // test3.push(data.ogdToken.connect(data.user1Signer).withdrawDividends());
-      // test3.push(data.ogdToken.connect(data.user2Signer).withdrawDividends());
-      // test3.push(data.ogdToken.connect(data.user3Signer).withdrawDividends());
-      // const [withdrawDividends1, withdrawDividends2, withdrawDividends3] = await Promise.all(test3);
-      // await data.printTxData("withdrawDividends1", withdrawDividends1);
-      // await data.printTxData("withdrawDividends2", withdrawDividends2);
-      // await data.printTxData("withdrawDividends3", withdrawDividends3);
-      // await data.printBalances();
-      //
+      console.log("        --- Test 3 - User{1..3} withdraw 33.333333333333333333 FEE0 and 3.333333333333333333 ETH ---");
+      const test3 = [];
+      test3.push(data.ogdToken.connect(data.user1Signer).withdrawDividends());
+      test3.push(data.ogdToken.connect(data.user2Signer).withdrawDividends());
+      test3.push(data.ogdToken.connect(data.user3Signer).withdrawDividends());
+      const [withdrawDividends1, withdrawDividends2, withdrawDividends3] = await Promise.all(test3);
+      await data.printTxData("withdrawDividends1", withdrawDividends1);
+      await data.printTxData("withdrawDividends2", withdrawDividends2);
+      await data.printTxData("withdrawDividends3", withdrawDividends3);
+      await data.printBalances();
+
       // console.log("        --- Test 4 - Add Fee{1..2} Dividend Token ---");
       // const test4 = [];
       // test4.push(data.ogdToken.addDividendToken(data.fee1Token.address));

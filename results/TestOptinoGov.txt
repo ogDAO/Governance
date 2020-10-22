@@ -1,17 +1,18 @@
-$ npx buidler test test/TestOptinoGov.js > results/TestOptinoGov.txt
-All contracts have already been compiled, skipping compilation.
+$ npx hardhat test test/TestOptinoGov.js > results/TestOptinoGov.txt
+Compiling 16 files with 0.7.1
+Compilation finished successfully
 
 
   TestOptinoGov
     TestOptinoGov - Standard Workflow #1
         --- Setup 1 - Deploy OGToken, OGDToken, FEE0, then OptinoGov ---
-        ogToken.deployTransaction - gasUsed: 1006016, fee: 0.08048128, feeUsd: 31.0392152576, @ 80 gwei & 385.67 ETH/USD, 0x279c8938cc52eb13e350beec79aacbd8fb08bf18c4244c84a8e1f7e1d9b77570
+        ogToken.deployTransaction - gasUsed: 1006016, fee: 0.08048128, feeUsd: 31.0392152576, @ 80 gwei & 385.67 ETH/USD, 0xd67d2630e78acb964863793eaed390b21bde59e1628ae4337b4498e1b78d9959
         + OGToken.Transfer(from: ETH|null:0x0000, to: Owner:0xa00A, tokens: 40000)
-        ogdToken.deployTransaction - gasUsed: 2481016, fee: 0.19848128, feeUsd: 76.5482752576, @ 80 gwei & 385.67 ETH/USD, 0x13b5a0685bbf776a73c2949e1d4560a5efae38d2ea111e87cd963a0969b561aa
+        ogdToken.deployTransaction - gasUsed: 2385742, fee: 0.19085936, feeUsd: 73.6087293712, @ 80 gwei & 385.67 ETH/USD, 0x1a92a7b39177685f8298ff419e26d8550346833e5dda0303502c49d1096cab8c
         + OGDToken.Transfer(from: ETH|null:0x0000, to: Owner:0xa00A, tokens: 0)
-        fee0Token.deployTransaction - gasUsed: 823454, fee: 0.06587632, feeUsd: 25.4065203344, @ 80 gwei & 385.67 ETH/USD, 0x16739ea9cf86f36fc3d283778ea0cd6c2d7dbeaa028c2bed72288c91d1fd7eb8
+        fee0Token.deployTransaction - gasUsed: 823454, fee: 0.06587632, feeUsd: 25.4065203344, @ 80 gwei & 385.67 ETH/USD, 0x794d0c8b7d0e783f65ad436746f4accdff0ff3677c86dc7a6cc6008ca74c6a6e
         + Fee0Token.Transfer(from: ETH|null:0x0000, to: Owner:0xa00A, tokens: 1000)
-        optinoGov.deployTransaction - gasUsed: 5194910, fee: 0.4155928, feeUsd: 160.281675176, @ 80 gwei & 385.67 ETH/USD, 0x2e780f1a204b2aaaac5e15e3eebb9e3476005626ca0a845ed56fddaebe772098
+        optinoGov.deployTransaction - gasUsed: 5116265, fee: 0.4093012, feeUsd: 157.855193804, @ 80 gwei & 385.67 ETH/USD, 0xd3a3f0111bdf6fa3426e33025759282f64d0626a2cb92b865f5d638a745f81ce
         --- Setup 2 - OGDToken.addDividendToken([ETH, FEE0]), OGDToken mint(...) permissioning ---
         addDividendToken0 - gasUsed: 114431, fee: 0.00915448, feeUsd: 3.5306083016, @ 80 gwei & 385.67 ETH/USD, 0xa7f10ca590c58a04f90a0196f061498f8bb4b9a23b5112ff600d8a8b47808c87
         + OGDToken.DividendTokenAdded(token: ETH|null:0x0000, enabled: true)
@@ -44,7 +45,7 @@ All contracts have already been compiled, skipping compilation.
          # Account                                             EtherBalanceChange                             OG                            OGD Blocks 0 to 17
                                                                                                             FEE0                            ???
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E       -0.807432800000000000       10000.000000000000000000           0.000000000000000000 Owner:0xa00A
+         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E       -0.793519280000000000       10000.000000000000000000           0.000000000000000000 Owner:0xa00A
                                                                                          1000.000000000000000000           0.000000000000000000
          1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433       -0.003517440000000000       10000.000000000000000000           0.000000000000000000 User1:0xa11A
                                                                                             0.000000000000000000           0.000000000000000000
@@ -70,13 +71,10 @@ All contracts have already been compiled, skipping compilation.
         - dividendTokensLength : 2
         - dividendToken        : 0 ETH|null:0x0000, enabled: true, unclaimedDividends: 0
         - dividendToken        : 1 Fee0Token:0x6eaC, enabled: true, unclaimedDividends: 0
-        - dividendsOwing       : 1 User1:0xa11A       ETH|null:0x0000 0   Fee0Token:0x6eaC 0  
-        - dividendsOwing       : 2 User2:0xa22A       ETH|null:0x0000 0   Fee0Token:0x6eaC 0  
-        - dividendsOwing       : 3 User3:0xa33a       ETH|null:0x0000 0   Fee0Token:0x6eaC 0  
-        - dividendsOwing       : 4 OGToken:0x1647     ETH|null:0x0000 0   Fee0Token:0x6eaC 0  
-        - dividendsOwing       : 5 OGDToken:0x0f4e    ETH|null:0x0000 0   Fee0Token:0x6eaC 0  
-        - dividendsOwing       : 6 Fee0Token:0x6eaC   ETH|null:0x0000 0   Fee0Token:0x6eaC 0  
-        - dividendsOwing       : 7 OptinoGov:0xBa1F   ETH|null:0x0000 0   Fee0Token:0x6eaC 0  
+        - dividendsOwing       : 1 User1:0xa11A       ETH|null:0x0000 0 0                     Fee0Token:0x6eaC 0 0                    
+        - dividendsOwing       : 2 User2:0xa22A       ETH|null:0x0000 0 0                     Fee0Token:0x6eaC 0 0                    
+        - dividendsOwing       : 3 User3:0xa33a       ETH|null:0x0000 0 0                     Fee0Token:0x6eaC 0 0                    
+        - dividendsOwing       : 7 OptinoGov:0xBa1F   ETH|null:0x0000 0 0                     Fee0Token:0x6eaC 0 0                    
         Token 2 symbol: 'FEE0', name: 'Fee0', decimals: 18, totalSupply: 1000, owner: Owner:0xa00A, address: Fee0Token:0x6eaC
         OptinoGov OptinoGov:0xBa1F @ 0xBa1FCDaE835E77cAB2a76a7C3884AdC630f7a5B0
         - ogToken              : OGToken:0x1647
@@ -102,27 +100,29 @@ All contracts have already been compiled, skipping compilation.
         --- Setup Completed ---
 
         --- Test 1 - User{1..3} commit OGTokens for {1, 1, 1} seconds duration ---
-updateAccounts '0xa11aae29840fbb5c86e6fd4cf809eba183aef433' to '0xa11aae29840fbb5c86e6fd4cf809eba183aef433'
-updateAccounts '0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976' to '0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976'
-        commit1 - gasUsed: 248405, fee: 0.0198724, feeUsd: 7.664188508, @ 80 gwei & 385.67 ETH/USD, 0xd03c209ec9bb328ffe66941c09b7493511a9a1bc9be80490ef1739a3afcb2e64
+        commit1 - gasUsed: 250622, fee: 0.02004976, feeUsd: 7.7325909392, @ 80 gwei & 385.67 ETH/USD, 0xd03c209ec9bb328ffe66941c09b7493511a9a1bc9be80490ef1739a3afcb2e64
         + OGToken.Transfer(from: User1:0xa11A, to: OptinoGov:0xBa1F, tokens: 1000)
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User1:0xa11A, tokens: 1000)
-        + OptinoGov.Committed(user: User1:0xa11A, tokens: 1000, balance: 1000, duration: 1, end: 1603359645, delegatee: ETH|null:0x0000, votes: 0.1, rewardPool: 1000000, totalVotes: 0.1)
-        commit2 - gasUsed: 188405, fee: 0.0150724, feeUsd: 5.812972508, @ 80 gwei & 385.67 ETH/USD, 0xbb80f9b5fe4453939a58cafb5e2f364f82236999bcd9a308b4f01281c3c86ab5
+        + OptinoGov.Committed(user: User1:0xa11A, tokens: 1000, balance: 1000, duration: 1, end: 1603403606, delegatee: ETH|null:0x0000, votes: 0.1, rewardPool: 1000000, totalVotes: 0.1)
+        commit2 - gasUsed: 190622, fee: 0.01524976, feeUsd: 5.8813749392, @ 80 gwei & 385.67 ETH/USD, 0xbb80f9b5fe4453939a58cafb5e2f364f82236999bcd9a308b4f01281c3c86ab5
         + OGToken.Transfer(from: User2:0xa22A, to: OptinoGov:0xBa1F, tokens: 1000)
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User2:0xa22A, tokens: 1000)
-        + OptinoGov.Committed(user: User2:0xa22A, tokens: 1000, balance: 1000, duration: 1, end: 1603359646, delegatee: ETH|null:0x0000, votes: 0.1, rewardPool: 1000000, totalVotes: 0.2)
+        + OptinoGov.Committed(user: User2:0xa22A, tokens: 1000, balance: 1000, duration: 1, end: 1603403607, delegatee: ETH|null:0x0000, votes: 0.1, rewardPool: 1000000, totalVotes: 0.2)
+        commit3 - gasUsed: 190622, fee: 0.01524976, feeUsd: 5.8813749392, @ 80 gwei & 385.67 ETH/USD, 0x8a61778426c14116dcf5d25e6f68fedaf4422d0dea57bf650fd7a02541e2f016
+        + OGToken.Transfer(from: User3:0xa33a, to: OptinoGov:0xBa1F, tokens: 1000)
+        + OGDToken.Transfer(from: ETH|null:0x0000, to: User3:0xa33a, tokens: 1000)
+        + OptinoGov.Committed(user: User3:0xa33a, tokens: 1000, balance: 1000, duration: 1, end: 1603403608, delegatee: ETH|null:0x0000, votes: 0.1, rewardPool: 1000000, totalVotes: 0.3)
         
-         # Account                                             EtherBalanceChange                             OG                            OGD Blocks 0 to 19
+         # Account                                             EtherBalanceChange                             OG                            OGD Blocks 0 to 20
                                                                                                             FEE0                            ???
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E       -0.807432800000000000       10000.000000000000000000           0.000000000000000000 Owner:0xa00A
+         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E       -0.793519280000000000       10000.000000000000000000           0.000000000000000000 Owner:0xa00A
                                                                                          1000.000000000000000000           0.000000000000000000
-         1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433       -0.023389840000000000        9000.000000000000000000        1000.000000000000000000 User1:0xa11A
+         1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433       -0.023567200000000000        9000.000000000000000000        1000.000000000000000000 User1:0xa11A
                                                                                             0.000000000000000000           0.000000000000000000
-         2 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976       -0.018589840000000000        9000.000000000000000000        1000.000000000000000000 User2:0xa22A
+         2 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976       -0.018767200000000000        9000.000000000000000000        1000.000000000000000000 User2:0xa22A
                                                                                             0.000000000000000000           0.000000000000000000
-         3 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0       -0.003517440000000000       10000.000000000000000000           0.000000000000000000 User3:0xa33a
+         3 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0       -0.018767200000000000        9000.000000000000000000        1000.000000000000000000 User3:0xa33a
                                                                                             0.000000000000000000           0.000000000000000000
          4 0x1647B1461251A0c6D3E14a227dE0F16E36ba80B1        0.000000000000000000           0.000000000000000000           0.000000000000000000 OGToken:0x1647
                                                                                             0.000000000000000000           0.000000000000000000
@@ -130,25 +130,22 @@ updateAccounts '0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976' to '0xa22ab8a9d641ce
                                                                                             0.000000000000000000           0.000000000000000000
          6 0x6eaC8DFBdEB9588C9FEEe24783B4137b082f9708        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee0Token:0x6eaC
                                                                                             0.000000000000000000           0.000000000000000000
-         7 0xBa1FCDaE835E77cAB2a76a7C3884AdC630f7a5B0        0.000000000000000000        2000.000000000000000000           0.000000000000000000 OptinoGov:0xBa1F
+         7 0xBa1FCDaE835E77cAB2a76a7C3884AdC630f7a5B0        0.000000000000000000        3000.000000000000000000           0.000000000000000000 OptinoGov:0xBa1F
                                                                                             0.000000000000000000           0.000000000000000000
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-                                                                                        40000.000000000000000000        2000.000000000000000000 Total Token Balances
+                                                                                        40000.000000000000000000        3000.000000000000000000 Total Token Balances
                                                                                          1000.000000000000000000           0.000000000000000000
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
         
         Token 0 symbol: 'OG', name: 'Optino Governance', decimals: 18, totalSupply: 40000, owner: OptinoGov:0xBa1F, address: OGToken:0x1647
-        Token 1 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 2000, owner: OptinoGov:0xBa1F, address: OGDToken:0x0f4e
+        Token 1 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 3000, owner: OptinoGov:0xBa1F, address: OGDToken:0x0f4e
         - dividendTokensLength : 2
         - dividendToken        : 0 ETH|null:0x0000, enabled: true, unclaimedDividends: 0
         - dividendToken        : 1 Fee0Token:0x6eaC, enabled: true, unclaimedDividends: 0
-        - dividendsOwing       : 1 User1:0xa11A       ETH|null:0x0000 0   Fee0Token:0x6eaC 0  
-        - dividendsOwing       : 2 User2:0xa22A       ETH|null:0x0000 0   Fee0Token:0x6eaC 0  
-        - dividendsOwing       : 3 User3:0xa33a       ETH|null:0x0000 0   Fee0Token:0x6eaC 0  
-        - dividendsOwing       : 4 OGToken:0x1647     ETH|null:0x0000 0   Fee0Token:0x6eaC 0  
-        - dividendsOwing       : 5 OGDToken:0x0f4e    ETH|null:0x0000 0   Fee0Token:0x6eaC 0  
-        - dividendsOwing       : 6 Fee0Token:0x6eaC   ETH|null:0x0000 0   Fee0Token:0x6eaC 0  
-        - dividendsOwing       : 7 OptinoGov:0xBa1F   ETH|null:0x0000 0   Fee0Token:0x6eaC 0  
+        - dividendsOwing       : 1 User1:0xa11A       ETH|null:0x0000 0 0                     Fee0Token:0x6eaC 0 0                    
+        - dividendsOwing       : 2 User2:0xa22A       ETH|null:0x0000 0 0                     Fee0Token:0x6eaC 0 0                    
+        - dividendsOwing       : 3 User3:0xa33a       ETH|null:0x0000 0 0                     Fee0Token:0x6eaC 0 0                    
+        - dividendsOwing       : 7 OptinoGov:0xBa1F   ETH|null:0x0000 0 0                     Fee0Token:0x6eaC 0 0                    
         Token 2 symbol: 'FEE0', name: 'Fee0', decimals: 18, totalSupply: 1000, owner: Owner:0xa00A, address: Fee0Token:0x6eaC
         OptinoGov OptinoGov:0xBa1F @ 0xBa1FCDaE835E77cAB2a76a7C3884AdC630f7a5B0
         - ogToken              : OGToken:0x1647
@@ -164,33 +161,33 @@ updateAccounts '0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976' to '0xa22ab8a9d641ce
         - votingDuration       : 10 seconds = 0.00011574074074074074 days
         - executeDelay         : 10 seconds = 0.00011574074074074074 days
         - rewardPool           : 1000000000000000000000000 = 1000000
-        - totalVotes           : 200000000000000000 = 0.2
+        - totalVotes           : 300000000000000000 = 0.3
         - proposalCount        : 0
         - stakeInfoLength      : 0
-        - commitment           : 1 User1:0xa11A duration: 1, end: 1603359645, tokens: 1000, votes: 0.1, staked: 0, delegatedVotes: 0, delegatee: ETH|null:0x0000
-        - commitment           : 2 User2:0xa22A duration: 1, end: 1603359646, tokens: 1000, votes: 0.1, staked: 0, delegatedVotes: 0, delegatee: ETH|null:0x0000
-        - commitment           : 3 User3:0xa33a duration: 0, end: 0, tokens: 0, votes: 0, staked: 0, delegatedVotes: 0, delegatee: ETH|null:0x0000
+        - commitment           : 1 User1:0xa11A duration: 1, end: 1603403606, tokens: 1000, votes: 0.1, staked: 0, delegatedVotes: 0, delegatee: ETH|null:0x0000
+        - commitment           : 2 User2:0xa22A duration: 1, end: 1603403607, tokens: 1000, votes: 0.1, staked: 0, delegatedVotes: 0, delegatee: ETH|null:0x0000
+        - commitment           : 3 User3:0xa33a duration: 1, end: 1603403608, tokens: 1000, votes: 0.1, staked: 0, delegatedVotes: 0, delegatee: ETH|null:0x0000
         
         --- Test 2 - User{1..3} approve 2,000 OGDTokens to OptinoGov ---
         approve1 - gasUsed: 43968, fee: 0.00351744, feeUsd: 1.3565710848, @ 80 gwei & 385.67 ETH/USD, 0x96384fffb21641745c2eacbb3910695a2a67d08a62093879d7798a8d4edbba24
         + OGDToken.Approval(tokenOwner: User1:0xa11A, spender: OptinoGov:0xBa1F, tokens: 2000)
         approve2 - gasUsed: 43968, fee: 0.00351744, feeUsd: 1.3565710848, @ 80 gwei & 385.67 ETH/USD, 0x5d12297a56270e2b5da50441fe7e3361ad70119a63f8af962195dd582ac3aa41
         + OGDToken.Approval(tokenOwner: User2:0xa22A, spender: OptinoGov:0xBa1F, tokens: 2000)
-        approve3 - gasUsed: 43968, fee: 0.00351744, feeUsd: 1.3565710848, @ 80 gwei & 385.67 ETH/USD, 0xe69283d66540841b970ca67724a46c96450f228a0c2a21dc06f1dd172b8bcc2a
+        approve3 - gasUsed: 43968, fee: 0.00351744, feeUsd: 1.3565710848, @ 80 gwei & 385.67 ETH/USD, 0x6eb4e2be23c7a7eb80ff6d006b36b749ed630654236f333f35eb0976e15260b5
         + OGDToken.Approval(tokenOwner: User3:0xa33a, spender: OptinoGov:0xBa1F, tokens: 2000)
         approve3 - gasUsed: 24768, fee: 0.00198144, feeUsd: 0.7641819648, @ 80 gwei & 385.67 ETH/USD, 0x7dd6d9710d228158bd5a6e23180f81bef868cc40537713e5644377d32541f322
         + Fee0Token.Approval(tokenOwner: Owner:0xa00A, spender: OGDToken:0x0f4e, tokens: 2000)
         
-         # Account                                             EtherBalanceChange                             OG                            OGD Blocks 0 to 23
+         # Account                                             EtherBalanceChange                             OG                            OGD Blocks 0 to 24
                                                                                                             FEE0                            ???
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E       -0.809414240000000000       10000.000000000000000000           0.000000000000000000 Owner:0xa00A
+         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E       -0.795500720000000000       10000.000000000000000000           0.000000000000000000 Owner:0xa00A
                                                                                          1000.000000000000000000           0.000000000000000000
-         1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433       -0.026907280000000000        9000.000000000000000000        1000.000000000000000000 User1:0xa11A
+         1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433       -0.027084640000000000        9000.000000000000000000        1000.000000000000000000 User1:0xa11A
                                                                                             0.000000000000000000           0.000000000000000000
-         2 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976       -0.022107280000000000        9000.000000000000000000        1000.000000000000000000 User2:0xa22A
+         2 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976       -0.022284640000000000        9000.000000000000000000        1000.000000000000000000 User2:0xa22A
                                                                                             0.000000000000000000           0.000000000000000000
-         3 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0       -0.007034880000000000       10000.000000000000000000           0.000000000000000000 User3:0xa33a
+         3 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0       -0.022284640000000000        9000.000000000000000000        1000.000000000000000000 User3:0xa33a
                                                                                             0.000000000000000000           0.000000000000000000
          4 0x1647B1461251A0c6D3E14a227dE0F16E36ba80B1        0.000000000000000000           0.000000000000000000           0.000000000000000000 OGToken:0x1647
                                                                                             0.000000000000000000           0.000000000000000000
@@ -198,25 +195,22 @@ updateAccounts '0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976' to '0xa22ab8a9d641ce
                                                                                             0.000000000000000000           0.000000000000000000
          6 0x6eaC8DFBdEB9588C9FEEe24783B4137b082f9708        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee0Token:0x6eaC
                                                                                             0.000000000000000000           0.000000000000000000
-         7 0xBa1FCDaE835E77cAB2a76a7C3884AdC630f7a5B0        0.000000000000000000        2000.000000000000000000           0.000000000000000000 OptinoGov:0xBa1F
+         7 0xBa1FCDaE835E77cAB2a76a7C3884AdC630f7a5B0        0.000000000000000000        3000.000000000000000000           0.000000000000000000 OptinoGov:0xBa1F
                                                                                             0.000000000000000000           0.000000000000000000
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-                                                                                        40000.000000000000000000        2000.000000000000000000 Total Token Balances
+                                                                                        40000.000000000000000000        3000.000000000000000000 Total Token Balances
                                                                                          1000.000000000000000000           0.000000000000000000
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
         
         Token 0 symbol: 'OG', name: 'Optino Governance', decimals: 18, totalSupply: 40000, owner: OptinoGov:0xBa1F, address: OGToken:0x1647
-        Token 1 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 2000, owner: OptinoGov:0xBa1F, address: OGDToken:0x0f4e
+        Token 1 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 3000, owner: OptinoGov:0xBa1F, address: OGDToken:0x0f4e
         - dividendTokensLength : 2
         - dividendToken        : 0 ETH|null:0x0000, enabled: true, unclaimedDividends: 0
         - dividendToken        : 1 Fee0Token:0x6eaC, enabled: true, unclaimedDividends: 0
-        - dividendsOwing       : 1 User1:0xa11A       ETH|null:0x0000 0   Fee0Token:0x6eaC 0  
-        - dividendsOwing       : 2 User2:0xa22A       ETH|null:0x0000 0   Fee0Token:0x6eaC 0  
-        - dividendsOwing       : 3 User3:0xa33a       ETH|null:0x0000 0   Fee0Token:0x6eaC 0  
-        - dividendsOwing       : 4 OGToken:0x1647     ETH|null:0x0000 0   Fee0Token:0x6eaC 0  
-        - dividendsOwing       : 5 OGDToken:0x0f4e    ETH|null:0x0000 0   Fee0Token:0x6eaC 0  
-        - dividendsOwing       : 6 Fee0Token:0x6eaC   ETH|null:0x0000 0   Fee0Token:0x6eaC 0  
-        - dividendsOwing       : 7 OptinoGov:0xBa1F   ETH|null:0x0000 0   Fee0Token:0x6eaC 0  
+        - dividendsOwing       : 1 User1:0xa11A       ETH|null:0x0000 0 0                     Fee0Token:0x6eaC 0 0                    
+        - dividendsOwing       : 2 User2:0xa22A       ETH|null:0x0000 0 0                     Fee0Token:0x6eaC 0 0                    
+        - dividendsOwing       : 3 User3:0xa33a       ETH|null:0x0000 0 0                     Fee0Token:0x6eaC 0 0                    
+        - dividendsOwing       : 7 OptinoGov:0xBa1F   ETH|null:0x0000 0 0                     Fee0Token:0x6eaC 0 0                    
         Token 2 symbol: 'FEE0', name: 'Fee0', decimals: 18, totalSupply: 1000, owner: Owner:0xa00A, address: Fee0Token:0x6eaC
         OptinoGov OptinoGov:0xBa1F @ 0xBa1FCDaE835E77cAB2a76a7C3884AdC630f7a5B0
         - ogToken              : OGToken:0x1647
@@ -232,12 +226,12 @@ updateAccounts '0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976' to '0xa22ab8a9d641ce
         - votingDuration       : 10 seconds = 0.00011574074074074074 days
         - executeDelay         : 10 seconds = 0.00011574074074074074 days
         - rewardPool           : 1000000000000000000000000 = 1000000
-        - totalVotes           : 200000000000000000 = 0.2
+        - totalVotes           : 300000000000000000 = 0.3
         - proposalCount        : 0
         - stakeInfoLength      : 0
-        - commitment           : 1 User1:0xa11A duration: 1, end: 1603359645, tokens: 1000, votes: 0.1, staked: 0, delegatedVotes: 0, delegatee: ETH|null:0x0000
-        - commitment           : 2 User2:0xa22A duration: 1, end: 1603359646, tokens: 1000, votes: 0.1, staked: 0, delegatedVotes: 0, delegatee: ETH|null:0x0000
-        - commitment           : 3 User3:0xa33a duration: 0, end: 0, tokens: 0, votes: 0, staked: 0, delegatedVotes: 0, delegatee: ETH|null:0x0000
+        - commitment           : 1 User1:0xa11A duration: 1, end: 1603403606, tokens: 1000, votes: 0.1, staked: 0, delegatedVotes: 0, delegatee: ETH|null:0x0000
+        - commitment           : 2 User2:0xa22A duration: 1, end: 1603403607, tokens: 1000, votes: 0.1, staked: 0, delegatedVotes: 0, delegatee: ETH|null:0x0000
+        - commitment           : 3 User3:0xa33a duration: 1, end: 1603403608, tokens: 1000, votes: 0.1, staked: 0, delegatedVotes: 0, delegatee: ETH|null:0x0000
         
         --- Test 3 - Owner deposits dividends of 10 ETH and 100 FEE ---
         depositDividendFee1 - gasUsed: 69193, fee: 0.00553544, feeUsd: 2.1348531448, @ 80 gwei & 385.67 ETH/USD, 0x4c0a205785fc16769fdd88b6a3e5b205cec67b29e1dac2232d334e97eb35d84e
@@ -246,79 +240,16 @@ updateAccounts '0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976' to '0xa22ab8a9d641ce
         + Fee0Token.Transfer(from: Owner:0xa00A, to: OGDToken:0x0f4e, tokens: 100)
         + OGDToken.DividendDeposited(token: Fee0Token:0x6eaC, tokens: 100)
         
-         # Account                                             EtherBalanceChange                             OG                            OGD Blocks 0 to 25
-                                                                                                            FEE0                            ???
-        -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E      -10.823466560000000000       10000.000000000000000000           0.000000000000000000 Owner:0xa00A
-                                                                                          900.000000000000000000           0.000000000000000000
-         1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433       -0.026907280000000000        9000.000000000000000000        1000.000000000000000000 User1:0xa11A
-                                                                                            0.000000000000000000           0.000000000000000000
-         2 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976       -0.022107280000000000        9000.000000000000000000        1000.000000000000000000 User2:0xa22A
-                                                                                            0.000000000000000000           0.000000000000000000
-         3 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0       -0.007034880000000000       10000.000000000000000000           0.000000000000000000 User3:0xa33a
-                                                                                            0.000000000000000000           0.000000000000000000
-         4 0x1647B1461251A0c6D3E14a227dE0F16E36ba80B1        0.000000000000000000           0.000000000000000000           0.000000000000000000 OGToken:0x1647
-                                                                                            0.000000000000000000           0.000000000000000000
-         5 0x0f4eA6f2be49d822b7cAEf4175450A4D83A32e72       10.000000000000000000           0.000000000000000000           0.000000000000000000 OGDToken:0x0f4e
-                                                                                          100.000000000000000000           0.000000000000000000
-         6 0x6eaC8DFBdEB9588C9FEEe24783B4137b082f9708        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee0Token:0x6eaC
-                                                                                            0.000000000000000000           0.000000000000000000
-         7 0xBa1FCDaE835E77cAB2a76a7C3884AdC630f7a5B0        0.000000000000000000        2000.000000000000000000           0.000000000000000000 OptinoGov:0xBa1F
-                                                                                            0.000000000000000000           0.000000000000000000
-        -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-                                                                                        40000.000000000000000000        2000.000000000000000000 Total Token Balances
-                                                                                         1000.000000000000000000           0.000000000000000000
-        -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-        
-        Token 0 symbol: 'OG', name: 'Optino Governance', decimals: 18, totalSupply: 40000, owner: OptinoGov:0xBa1F, address: OGToken:0x1647
-        Token 1 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 2000, owner: OptinoGov:0xBa1F, address: OGDToken:0x0f4e
-        - dividendTokensLength : 2
-        - dividendToken        : 0 ETH|null:0x0000, enabled: true, unclaimedDividends: 10
-        - dividendToken        : 1 Fee0Token:0x6eaC, enabled: true, unclaimedDividends: 100
-        - dividendsOwing       : 1 User1:0xa11A       ETH|null:0x0000 5   Fee0Token:0x6eaC 50 
-        - dividendsOwing       : 2 User2:0xa22A       ETH|null:0x0000 5   Fee0Token:0x6eaC 50 
-        - dividendsOwing       : 3 User3:0xa33a       ETH|null:0x0000 0   Fee0Token:0x6eaC 0  
-        - dividendsOwing       : 4 OGToken:0x1647     ETH|null:0x0000 0   Fee0Token:0x6eaC 0  
-        - dividendsOwing       : 5 OGDToken:0x0f4e    ETH|null:0x0000 0   Fee0Token:0x6eaC 0  
-        - dividendsOwing       : 6 Fee0Token:0x6eaC   ETH|null:0x0000 0   Fee0Token:0x6eaC 0  
-        - dividendsOwing       : 7 OptinoGov:0xBa1F   ETH|null:0x0000 0   Fee0Token:0x6eaC 0  
-        Token 2 symbol: 'FEE0', name: 'Fee0', decimals: 18, totalSupply: 1000, owner: Owner:0xa00A, address: Fee0Token:0x6eaC
-        OptinoGov OptinoGov:0xBa1F @ 0xBa1FCDaE835E77cAB2a76a7C3884AdC630f7a5B0
-        - ogToken              : OGToken:0x1647
-        - ogdToken             : OGDToken:0x0f4e
-        - maxDuration          : 10000 seconds = 0.11574074074074074074 days
-        - rewardsPerSecond     : 150000000000000000 = 0.15 = 12960 per day
-        - collectRewardForFee  : 50000000000000000 = 5%
-        - collectRewardForDelay: 1 seconds = 0.00001157407407407407 days
-        - proposalCost         : 100000000000000000000 = 100
-        - proposalThreshold    : 1000000000000000 = 0.1%
-        - quorum               : 200000000000000000 = 20%
-        - quorumDecayPerSecond : 12683916793 = 39.9999999984048% per year
-        - votingDuration       : 10 seconds = 0.00011574074074074074 days
-        - executeDelay         : 10 seconds = 0.00011574074074074074 days
-        - rewardPool           : 1000000000000000000000000 = 1000000
-        - totalVotes           : 200000000000000000 = 0.2
-        - proposalCount        : 0
-        - stakeInfoLength      : 0
-        - commitment           : 1 User1:0xa11A duration: 1, end: 1603359645, tokens: 1000, votes: 0.1, staked: 0, delegatedVotes: 0, delegatee: ETH|null:0x0000
-        - commitment           : 2 User2:0xa22A duration: 1, end: 1603359646, tokens: 1000, votes: 0.1, staked: 0, delegatedVotes: 0, delegatee: ETH|null:0x0000
-        - commitment           : 3 User3:0xa33a duration: 0, end: 0, tokens: 0, votes: 0, staked: 0, delegatedVotes: 0, delegatee: ETH|null:0x0000
-        
-        --- Test 4 - User2 transfer all to user3 ---
-updateAccounts '0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976' to '0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0'
-        transfer1 - gasUsed: 158174, fee: 0.01265392, feeUsd: 4.8802373264, @ 80 gwei & 385.67 ETH/USD, 0x32b9887dc46367bcf4a10bcda1ec8bb49cf841bc411302333d37832ccda4d0dc
-        + OGDToken.Transfer(from: User2:0xa22A, to: User3:0xa33a, tokens: 1000)
-        
          # Account                                             EtherBalanceChange                             OG                            OGD Blocks 0 to 26
                                                                                                             FEE0                            ???
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E      -10.823466560000000000       10000.000000000000000000           0.000000000000000000 Owner:0xa00A
+         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E      -10.809553040000000000       10000.000000000000000000           0.000000000000000000 Owner:0xa00A
                                                                                           900.000000000000000000           0.000000000000000000
-         1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433       -0.026907280000000000        9000.000000000000000000        1000.000000000000000000 User1:0xa11A
+         1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433       -0.027084640000000000        9000.000000000000000000        1000.000000000000000000 User1:0xa11A
                                                                                             0.000000000000000000           0.000000000000000000
-         2 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976       -0.034761200000000000        9000.000000000000000000           0.000000000000000000 User2:0xa22A
+         2 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976       -0.022284640000000000        9000.000000000000000000        1000.000000000000000000 User2:0xa22A
                                                                                             0.000000000000000000           0.000000000000000000
-         3 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0       -0.007034880000000000       10000.000000000000000000        1000.000000000000000000 User3:0xa33a
+         3 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0       -0.022284640000000000        9000.000000000000000000        1000.000000000000000000 User3:0xa33a
                                                                                             0.000000000000000000           0.000000000000000000
          4 0x1647B1461251A0c6D3E14a227dE0F16E36ba80B1        0.000000000000000000           0.000000000000000000           0.000000000000000000 OGToken:0x1647
                                                                                             0.000000000000000000           0.000000000000000000
@@ -326,25 +257,22 @@ updateAccounts '0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976' to '0xa33a6c312d9ad0
                                                                                           100.000000000000000000           0.000000000000000000
          6 0x6eaC8DFBdEB9588C9FEEe24783B4137b082f9708        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee0Token:0x6eaC
                                                                                             0.000000000000000000           0.000000000000000000
-         7 0xBa1FCDaE835E77cAB2a76a7C3884AdC630f7a5B0        0.000000000000000000        2000.000000000000000000           0.000000000000000000 OptinoGov:0xBa1F
+         7 0xBa1FCDaE835E77cAB2a76a7C3884AdC630f7a5B0        0.000000000000000000        3000.000000000000000000           0.000000000000000000 OptinoGov:0xBa1F
                                                                                             0.000000000000000000           0.000000000000000000
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-                                                                                        40000.000000000000000000        2000.000000000000000000 Total Token Balances
+                                                                                        40000.000000000000000000        3000.000000000000000000 Total Token Balances
                                                                                          1000.000000000000000000           0.000000000000000000
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
         
         Token 0 symbol: 'OG', name: 'Optino Governance', decimals: 18, totalSupply: 40000, owner: OptinoGov:0xBa1F, address: OGToken:0x1647
-        Token 1 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 2000, owner: OptinoGov:0xBa1F, address: OGDToken:0x0f4e
+        Token 1 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 3000, owner: OptinoGov:0xBa1F, address: OGDToken:0x0f4e
         - dividendTokensLength : 2
-        - dividendToken        : 0 ETH|null:0x0000, enabled: true, unclaimedDividends: 5
-        - dividendToken        : 1 Fee0Token:0x6eaC, enabled: true, unclaimedDividends: 50
-        - dividendsOwing       : 1 User1:0xa11A       ETH|null:0x0000 5   Fee0Token:0x6eaC 50 
-        - dividendsOwing       : 2 User2:0xa22A       ETH|null:0x0000 5   Fee0Token:0x6eaC 50 
-        - dividendsOwing       : 3 User3:0xa33a       ETH|null:0x0000 5   Fee0Token:0x6eaC 50 
-        - dividendsOwing       : 4 OGToken:0x1647     ETH|null:0x0000 0   Fee0Token:0x6eaC 0  
-        - dividendsOwing       : 5 OGDToken:0x0f4e    ETH|null:0x0000 0   Fee0Token:0x6eaC 0  
-        - dividendsOwing       : 6 Fee0Token:0x6eaC   ETH|null:0x0000 0   Fee0Token:0x6eaC 0  
-        - dividendsOwing       : 7 OptinoGov:0xBa1F   ETH|null:0x0000 0   Fee0Token:0x6eaC 0  
+        - dividendToken        : 0 ETH|null:0x0000, enabled: true, unclaimedDividends: 10
+        - dividendToken        : 1 Fee0Token:0x6eaC, enabled: true, unclaimedDividends: 100
+        - dividendsOwing       : 1 User1:0xa11A       ETH|null:0x0000 0 3.333333333333333333  Fee0Token:0x6eaC 0 33.333333333333333333
+        - dividendsOwing       : 2 User2:0xa22A       ETH|null:0x0000 0 3.333333333333333333  Fee0Token:0x6eaC 0 33.333333333333333333
+        - dividendsOwing       : 3 User3:0xa33a       ETH|null:0x0000 0 3.333333333333333333  Fee0Token:0x6eaC 0 33.333333333333333333
+        - dividendsOwing       : 7 OptinoGov:0xBa1F   ETH|null:0x0000 0 0                     Fee0Token:0x6eaC 0 0                    
         Token 2 symbol: 'FEE0', name: 'Fee0', decimals: 18, totalSupply: 1000, owner: Owner:0xa00A, address: Fee0Token:0x6eaC
         OptinoGov OptinoGov:0xBa1F @ 0xBa1FCDaE835E77cAB2a76a7C3884AdC630f7a5B0
         - ogToken              : OGToken:0x1647
@@ -360,39 +288,92 @@ updateAccounts '0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976' to '0xa33a6c312d9ad0
         - votingDuration       : 10 seconds = 0.00011574074074074074 days
         - executeDelay         : 10 seconds = 0.00011574074074074074 days
         - rewardPool           : 1000000000000000000000000 = 1000000
-        - totalVotes           : 200000000000000000 = 0.2
+        - totalVotes           : 300000000000000000 = 0.3
         - proposalCount        : 0
         - stakeInfoLength      : 0
-        - commitment           : 1 User1:0xa11A duration: 1, end: 1603359645, tokens: 1000, votes: 0.1, staked: 0, delegatedVotes: 0, delegatee: ETH|null:0x0000
-        - commitment           : 2 User2:0xa22A duration: 1, end: 1603359646, tokens: 1000, votes: 0.1, staked: 0, delegatedVotes: 0, delegatee: ETH|null:0x0000
+        - commitment           : 1 User1:0xa11A duration: 1, end: 1603403606, tokens: 1000, votes: 0.1, staked: 0, delegatedVotes: 0, delegatee: ETH|null:0x0000
+        - commitment           : 2 User2:0xa22A duration: 1, end: 1603403607, tokens: 1000, votes: 0.1, staked: 0, delegatedVotes: 0, delegatee: ETH|null:0x0000
+        - commitment           : 3 User3:0xa33a duration: 1, end: 1603403608, tokens: 1000, votes: 0.1, staked: 0, delegatedVotes: 0, delegatee: ETH|null:0x0000
+        
+        --- Test 4 - User{1..3} uncommit OGTokens ---
+        uncommit1 - gasUsed: 250255, fee: 0.0200204, feeUsd: 7.721267668, @ 80 gwei & 385.67 ETH/USD, 0x459cc75b1490913a07a52875f9752c2a3ecb7a85841393c3fb7ec51c33dacfdd
+        + OGDToken.Transfer(from: User1:0xa11A, to: OptinoGov:0xBa1F, tokens: 1000)
+        + OGDToken.DividendWithdrawn(account: OptinoGov:0xBa1F, destination: User1:0xa11A, token: ETH|null:0x0000, tokens: 0)
+        + OGDToken.DividendWithdrawn(account: OptinoGov:0xBa1F, destination: User1:0xa11A, token: Fee0Token:0x6eaC, tokens: 0)
+        + OGDToken.Transfer(from: OptinoGov:0xBa1F, to: ETH|null:0x0000, tokens: 1000)
+        + OptinoGov.Uncommitted(user: User1:0xa11A, amount: 1000, balance: 1000, duration: 0, end: 0, votes: 0, rewardPool: 999999.55, totalVotes: 0.2)
+        uncommit2 - gasUsed: 211855, fee: 0.0169484, feeUsd: 6.536489428, @ 80 gwei & 385.67 ETH/USD, 0xb9df22eb4f01a695e97044e93acbee4a1cbcad79922c3c9a9527770f163ffac7
+        + OGDToken.Transfer(from: User2:0xa22A, to: OptinoGov:0xBa1F, tokens: 1000)
+        + OGDToken.DividendWithdrawn(account: OptinoGov:0xBa1F, destination: User2:0xa22A, token: ETH|null:0x0000, tokens: 0)
+        + OGDToken.DividendWithdrawn(account: OptinoGov:0xBa1F, destination: User2:0xa22A, token: Fee0Token:0x6eaC, tokens: 0)
+        + OGDToken.Transfer(from: OptinoGov:0xBa1F, to: ETH|null:0x0000, tokens: 1000)
+        + OptinoGov.Uncommitted(user: User2:0xa22A, amount: 1000, balance: 1000, duration: 0, end: 0, votes: 0, rewardPool: 999998.875, totalVotes: 0.1)
+        uncommit3 - gasUsed: 181855, fee: 0.0145484, feeUsd: 5.610881428, @ 80 gwei & 385.67 ETH/USD, 0x1deff7c67dd8cf138a46ee91714baf6af96229a62d5c9d8f90105207bb3fb2ff
+        + OGDToken.Transfer(from: User3:0xa33a, to: OptinoGov:0xBa1F, tokens: 1000)
+        + OGDToken.DividendWithdrawn(account: OptinoGov:0xBa1F, destination: User3:0xa33a, token: ETH|null:0x0000, tokens: 0)
+        + OGDToken.DividendWithdrawn(account: OptinoGov:0xBa1F, destination: User3:0xa33a, token: Fee0Token:0x6eaC, tokens: 0)
+        + OGDToken.Transfer(from: OptinoGov:0xBa1F, to: ETH|null:0x0000, tokens: 1000)
+        + OptinoGov.Uncommitted(user: User3:0xa33a, amount: 1000, balance: 1000, duration: 0, end: 0, votes: 0, rewardPool: 999997.525, totalVotes: 0)
+        
+         # Account                                             EtherBalanceChange                             OG                            OGD Blocks 0 to 29
+                                                                                                            FEE0                            ???
+        -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
+         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E      -10.809553040000000000       10000.000000000000000000           0.000000000000000000 Owner:0xa00A
+                                                                                          900.000000000000000000           0.000000000000000000
+         1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433       -0.047105040000000000        9000.000000000000000000           0.000000000000000000 User1:0xa11A
+                                                                                            0.000000000000000000           0.000000000000000000
+         2 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976       -0.039233040000000000        9000.000000000000000000           0.000000000000000000 User2:0xa22A
+                                                                                            0.000000000000000000           0.000000000000000000
+         3 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0       -0.036833040000000000        9000.000000000000000000           0.000000000000000000 User3:0xa33a
+                                                                                            0.000000000000000000           0.000000000000000000
+         4 0x1647B1461251A0c6D3E14a227dE0F16E36ba80B1        0.000000000000000000           0.000000000000000000           0.000000000000000000 OGToken:0x1647
+                                                                                            0.000000000000000000           0.000000000000000000
+         5 0x0f4eA6f2be49d822b7cAEf4175450A4D83A32e72       10.000000000000000000           0.000000000000000000           0.000000000000000000 OGDToken:0x0f4e
+                                                                                          100.000000000000000000           0.000000000000000000
+         6 0x6eaC8DFBdEB9588C9FEEe24783B4137b082f9708        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee0Token:0x6eaC
+                                                                                            0.000000000000000000           0.000000000000000000
+         7 0xBa1FCDaE835E77cAB2a76a7C3884AdC630f7a5B0        0.000000000000000000        3000.000000000000000000           0.000000000000000000 OptinoGov:0xBa1F
+                                                                                            0.000000000000000000           0.000000000000000000
+        -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
+                                                                                        40000.000000000000000000           0.000000000000000000 Total Token Balances
+                                                                                         1000.000000000000000000           0.000000000000000000
+        -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
+        
+        Token 0 symbol: 'OG', name: 'Optino Governance', decimals: 18, totalSupply: 40000, owner: OptinoGov:0xBa1F, address: OGToken:0x1647
+        Token 1 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 0, owner: OptinoGov:0xBa1F, address: OGDToken:0x0f4e
+        - dividendTokensLength : 2
+        - dividendToken        : 0 ETH|null:0x0000, enabled: true, unclaimedDividends: 1e-18
+        - dividendToken        : 1 Fee0Token:0x6eaC, enabled: true, unclaimedDividends: 1e-18
+        - dividendsOwing       : 1 User1:0xa11A       ETH|null:0x0000 3.333333333333333333 0  Fee0Token:0x6eaC 33.333333333333333333 0
+        - dividendsOwing       : 2 User2:0xa22A       ETH|null:0x0000 3.333333333333333333 0  Fee0Token:0x6eaC 33.333333333333333333 0
+        - dividendsOwing       : 3 User3:0xa33a       ETH|null:0x0000 3.333333333333333333 0  Fee0Token:0x6eaC 33.333333333333333333 0
+        - dividendsOwing       : 7 OptinoGov:0xBa1F   ETH|null:0x0000 0 0                     Fee0Token:0x6eaC 0 0                    
+        Token 2 symbol: 'FEE0', name: 'Fee0', decimals: 18, totalSupply: 1000, owner: Owner:0xa00A, address: Fee0Token:0x6eaC
+        OptinoGov OptinoGov:0xBa1F @ 0xBa1FCDaE835E77cAB2a76a7C3884AdC630f7a5B0
+        - ogToken              : OGToken:0x1647
+        - ogdToken             : OGDToken:0x0f4e
+        - maxDuration          : 10000 seconds = 0.11574074074074074074 days
+        - rewardsPerSecond     : 150000000000000000 = 0.15 = 12960 per day
+        - collectRewardForFee  : 50000000000000000 = 5%
+        - collectRewardForDelay: 1 seconds = 0.00001157407407407407 days
+        - proposalCost         : 100000000000000000000 = 100
+        - proposalThreshold    : 1000000000000000 = 0.1%
+        - quorum               : 200000000000000000 = 20%
+        - quorumDecayPerSecond : 12683916793 = 39.9999999984048% per year
+        - votingDuration       : 10 seconds = 0.00011574074074074074 days
+        - executeDelay         : 10 seconds = 0.00011574074074074074 days
+        - rewardPool           : 999997525000000000000000 = 999997.525
+        - totalVotes           : 0 = 0
+        - proposalCount        : 0
+        - stakeInfoLength      : 0
+        - commitment           : 1 User1:0xa11A duration: 0, end: 0, tokens: 0, votes: 0, staked: 0, delegatedVotes: 0, delegatee: ETH|null:0x0000
+        - commitment           : 2 User2:0xa22A duration: 0, end: 0, tokens: 0, votes: 0, staked: 0, delegatedVotes: 0, delegatee: ETH|null:0x0000
         - commitment           : 3 User3:0xa33a duration: 0, end: 0, tokens: 0, votes: 0, staked: 0, delegatedVotes: 0, delegatee: ETH|null:0x0000
         
-        --- Test 5 - User{1..3} withdraw ETH and FEE dividends ---
-withdrawDividendsFor '0xa11aae29840fbb5c86e6fd4cf809eba183aef433' to destination '0xa11aae29840fbb5c86e6fd4cf809eba183aef433'
-updateAccounts '0xa11aae29840fbb5c86e6fd4cf809eba183aef433' to '0xa11aae29840fbb5c86e6fd4cf809eba183aef433'
-withdrawDividendsFor '0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976' to destination '0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976'
-updateAccounts '0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976' to '0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976'
-withdrawDividendsFor '0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0' to destination '0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0'
-updateAccounts '0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0' to '0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0'
-      1) Standard Workflow #1
+        --- Test Completed ---
+
+      ✓ Standard Workflow #1 (2596ms)
 
 
-  0 passing (5s)
-  1 failing
-
-  1) TestOptinoGov
-       TestOptinoGov - Standard Workflow #1
-         Standard Workflow #1:
-     Error: VM Exception while processing transaction: revert Sub underflow
-      at OGDToken.sub (contracts/SafeMath.sol:11)
-      at OGDToken.updateAccounts (contracts/OGDToken.sol:141)
-      at OGDToken.withdrawDividendsFor (contracts/OGDToken.sol:181)
-      at OGDToken.withdrawDividends (contracts/OGDToken.sol:200)
-      at runMicrotasks (<anonymous>)
-      at processTicksAndRejections (internal/process/task_queues.js:97:5)
-      at EthModule._sendTransactionAndReturnHash (node_modules/@nomiclabs/buidler/src/internal/buidler-evm/provider/modules/eth.ts:1306:9)
-      at BuidlerEVMProvider.send (node_modules/@nomiclabs/buidler/src/internal/buidler-evm/provider/provider.ts:85:14)
-      at EthersProviderWrapper.send (node_modules/@nomiclabs/buidler-ethers/src/ethers-provider-wrapper.ts:13:20)
-
-
+  1 passing (6s)
 

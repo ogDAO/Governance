@@ -188,11 +188,11 @@ describe("TestOptinoGov", function() {
       const test1 = [];
       test1.push(data.optinoGov.connect(data.user1Signer).commit(lockTokens.toFixed(0), 1));
       test1.push(data.optinoGov.connect(data.user2Signer).commit(lockTokens.toFixed(0), 1));
-      // test1.push(data.optinoGov.connect(data.user3Signer).commit(lockTokens.toFixed(0), 1));
-      const [commit1, commit2 /*, commit3*/] = await Promise.all(test1);
+      test1.push(data.optinoGov.connect(data.user3Signer).commit(lockTokens.toFixed(0), 1));
+      const [commit1, commit2, commit3] = await Promise.all(test1);
       await data.printTxData("commit1", commit1);
       await data.printTxData("commit2", commit2);
-      // await data.printTxData("commit3", commit3);
+      await data.printTxData("commit3", commit3);
       await data.printBalances();
 
       console.log("        --- Test 2 - User{1..3} approve 2,000 OGDTokens to OptinoGov ---");
@@ -220,34 +220,34 @@ describe("TestOptinoGov", function() {
       await data.printTxData("depositDividendFee2", depositDividendFee2);
       await data.printBalances();
 
-      console.log("        --- Test 4 - User2 transfer all to user3 ---");
-      const test4 = [];
-      test4.push(data.ogdToken.connect(data.user2Signer).transfer(data.user3, lockTokens.toFixed(0)));
-      const [transfer1] = await Promise.all(test4);
-      await data.printTxData("transfer1", transfer1);
-      await data.printBalances();
-
-      console.log("        --- Test 5 - User{1..3} withdraw ETH and FEE dividends ---");
-      const test5 = [];
-      test5.push(data.ogdToken.connect(data.user1Signer).withdrawDividends());
-      test5.push(data.ogdToken.connect(data.user2Signer).withdrawDividends());
-      test5.push(data.ogdToken.connect(data.user3Signer).withdrawDividends());
-      const [withdrawDividends1, withdrawDividends2, withdrawDividends3] = await Promise.all(test5);
-      await data.printTxData("withdrawDividends1", withdrawDividends1);
-      await data.printTxData("withdrawDividends2", withdrawDividends2);
-      await data.printTxData("withdrawDividends3", withdrawDividends3);
-      await data.printBalances();
-
-      // console.log("        --- Test 4 - User{1..3} uncommit OGTokens ---");
+      // console.log("        --- Test 4 - User2 transfer all to user3 ---");
       // const test4 = [];
-      // test4.push(data.optinoGov.connect(data.user1Signer).uncommit());
-      // test4.push(data.optinoGov.connect(data.user2Signer).uncommit());
-      // // test4.push(data.optinoGov.connect(data.user3Signer).uncommit());
-      // const [uncommit1, uncommit2/*, uncommit3*/] = await Promise.all(test4);
-      // await data.printTxData("uncommit1", uncommit1);
-      // await data.printTxData("uncommit2", uncommit2);
-      // // await data.printTxData("uncommit3", uncommit3);
+      // test4.push(data.ogdToken.connect(data.user2Signer).transfer(data.user3, lockTokens.toFixed(0)));
+      // const [transfer1] = await Promise.all(test4);
+      // await data.printTxData("transfer1", transfer1);
       // await data.printBalances();
+      //
+      // console.log("        --- Test 5 - User{1..3} withdraw ETH and FEE dividends ---");
+      // const test5 = [];
+      // test5.push(data.ogdToken.connect(data.user1Signer).withdrawDividends());
+      // test5.push(data.ogdToken.connect(data.user2Signer).withdrawDividends());
+      // test5.push(data.ogdToken.connect(data.user3Signer).withdrawDividends());
+      // const [withdrawDividends1, withdrawDividends2, withdrawDividends3] = await Promise.all(test5);
+      // await data.printTxData("withdrawDividends1", withdrawDividends1);
+      // await data.printTxData("withdrawDividends2", withdrawDividends2);
+      // await data.printTxData("withdrawDividends3", withdrawDividends3);
+      // await data.printBalances();
+
+      console.log("        --- Test 4 - User{1..3} uncommit OGTokens ---");
+      const test4 = [];
+      test4.push(data.optinoGov.connect(data.user1Signer).uncommit());
+      test4.push(data.optinoGov.connect(data.user2Signer).uncommit());
+      test4.push(data.optinoGov.connect(data.user3Signer).uncommit());
+      const [uncommit1, uncommit2, uncommit3] = await Promise.all(test4);
+      await data.printTxData("uncommit1", uncommit1);
+      await data.printTxData("uncommit2", uncommit2);
+      await data.printTxData("uncommit3", uncommit3);
+      await data.printBalances();
 
       console.log("        --- Test Completed ---");
       console.log("");

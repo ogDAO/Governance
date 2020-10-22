@@ -1,47 +1,40 @@
-$ npx buidler test test/TestOGDToken.js > results/TestOGDToken.txt
-All contracts have already been compiled, skipping compilation.
+$ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
 
 
   TestOGDToken
     TestOGDToken - Standard Workflow #1
         --- Setup 1 - Deploy OGDToken, FEE{0..2} ---
-        ogdTokenTx - gasUsed: 2626407, fee: 0.21011256, feeUsd: 81.0341110152, @ 80 gwei & 385.67 ETH/USD, 0xe5951af94f6c3613d34ed4a60416165f961f1ff5c84182a6adbd446da69aef96
+        ogdTokenTx - gasUsed: 2385742, fee: 0.19085936, feeUsd: 73.6087293712, @ 80 gwei & 385.67 ETH/USD, 0x71b6f450615125a849d3689bf70111c769ed9409231af81b03abbc5b1ed2c2be
         + OGDToken.Transfer(from: ETH|null:0x0000, to: Owner:0xa00A, tokens: 0)
-        fee0TokenTx - gasUsed: 823466, fee: 0.06587728, feeUsd: 25.4068905776, @ 80 gwei & 385.67 ETH/USD, 0x97c653543bc50bd0aa1acdc92deeeb20cabd8b07c00a92a70773a3b316b8d3b0
+        fee0TokenTx - gasUsed: 823466, fee: 0.06587728, feeUsd: 25.4068905776, @ 80 gwei & 385.67 ETH/USD, 0x0b4b2c0562caa8700af6d002095751952277cf0def194925c675da0ab257e27a
         + Fee0Token.Transfer(from: ETH|null:0x0000, to: Owner:0xa00A, tokens: 10000)
-        fee1TokenTx - gasUsed: 823466, fee: 0.06587728, feeUsd: 25.4068905776, @ 80 gwei & 385.67 ETH/USD, 0x4cc2ed84e792fce3eea4e18679d6ce9eec401bb8b01ca14c6a21d27c686af272
+        fee1TokenTx - gasUsed: 823466, fee: 0.06587728, feeUsd: 25.4068905776, @ 80 gwei & 385.67 ETH/USD, 0x1b720cf5fa21928dc5f82e8964047d14cd468ffbecfe6a76d010d95b6a4ad8a2
         + Fee1Token.Transfer(from: ETH|null:0x0000, to: Owner:0xa00A, tokens: 10000)
-        fee2TokenTx - gasUsed: 823466, fee: 0.06587728, feeUsd: 25.4068905776, @ 80 gwei & 385.67 ETH/USD, 0xea33460a4dee6d829df9dfb04a298bd83b3736312351bfb4f557b0fa16f361d0
+        fee2TokenTx - gasUsed: 823466, fee: 0.06587728, feeUsd: 25.4068905776, @ 80 gwei & 385.67 ETH/USD, 0xd3e376832727e48ac0f3d54a61006da7df7d196c7fa53c893549befbb058a8ca
         + Fee2Token.Transfer(from: ETH|null:0x0000, to: Owner:0xa00A, tokens: 10000)
         --- Setup 2 - OGDToken.addDividendTokens for ETH and FEE0, OGDToken mint(...) permissioning ---
         --- Setup 3 - Mint 10,000 OGD tokens for User{1..3}; Owner approve 100 FEE for OGToken to spend ---
-newDividendsOwing balance 10000000000000000000000; totalDividendPoints 0; lastDividendPoints 0
-newDividendsOwing for 0xa11aae29840fbb5c86e6fd4cf809eba183aef433 0
-updateAccount '0xa11aae29840fbb5c86e6fd4cf809eba183aef433' newOwing1 '0'
-updateAccount '0xa11aae29840fbb5c86e6fd4cf809eba183aef433' owing1 '0'
-newDividendsOwing balance 10000000000000000000000; totalDividendPoints 0; lastDividendPoints 0
-newDividendsOwing for 0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976 0
-updateAccount '0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976' newOwing1 '0'
-updateAccount '0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976' owing1 '0'
         addDividendToken1 - gasUsed: 133871, fee: 0.01070968, feeUsd: 4.1304022856, @ 80 gwei & 385.67 ETH/USD, 0x6c56335dbae914767d3d8c1db4668c768b43caed2f7ad7391fdd75172c140e6a
         + OGDToken.DividendTokenAdded(token: Fee0Token:0x0f4e, enabled: true)
         setPermission1 - gasUsed: 49188, fee: 0.00393504, feeUsd: 1.5176268768, @ 80 gwei & 385.67 ETH/USD, 0xd8a56b2d806990f1c8fff8a077986f2bbb7a6e235031d9342febb5179fa8fa76
         + OGDToken.PermissionUpdated(account: Owner:0xa00A, role: 1, active: true, maximum: 0, processed: 0)
-        mint1 - gasUsed: 109525, fee: 0.008762, feeUsd: 3.37924054, @ 80 gwei & 385.67 ETH/USD, 0xa5e06f39b45f250e611a11c9b9c09e0743488935a8d099216632770e7f303b8f
+        mint1 - gasUsed: 101843, fee: 0.00814744, feeUsd: 3.1422231848, @ 80 gwei & 385.67 ETH/USD, 0xa5e06f39b45f250e611a11c9b9c09e0743488935a8d099216632770e7f303b8f
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User1:0xa11A, tokens: 10000)
-        mint2 - gasUsed: 79525, fee: 0.006362, feeUsd: 2.45363254, @ 80 gwei & 385.67 ETH/USD, 0xb3f0642518adbbe519fc53c08bc0d96115f87fbe2d9654ee1ebd2d7fb828e3a7
+        mint2 - gasUsed: 71843, fee: 0.00574744, feeUsd: 2.2166151848, @ 80 gwei & 385.67 ETH/USD, 0xb3f0642518adbbe519fc53c08bc0d96115f87fbe2d9654ee1ebd2d7fb828e3a7
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User2:0xa22A, tokens: 10000)
-        ownerApproveFee0Tokens - gasUsed: 43968, fee: 0.00351744, feeUsd: 1.3565710848, @ 80 gwei & 385.67 ETH/USD, 0x0cd71543a46de6ef42de18cd76c0b260437ad646bca53c97197f623a767118ef
+        mint3 - gasUsed: 44111, fee: 0.00352888, feeUsd: 1.3609831496, @ 80 gwei & 385.67 ETH/USD, 0x860534120bdf736fdd6c107ebd74c76b586f0a1894edfd8fa17e0403be29beaf
+        + OGDToken.Transfer(from: ETH|null:0x0000, to: User3:0xa33a, tokens: 0)
+        ownerApproveFee0Tokens - gasUsed: 43968, fee: 0.00351744, feeUsd: 1.3565710848, @ 80 gwei & 385.67 ETH/USD, 0xdd018634786b9ae6401eb981bf1ef28b4d21a0f672d2f2b524c73d329be5feb3
         + Fee0Token.Approval(tokenOwner: Owner:0xa00A, spender: OGDToken:0x1647, tokens: 100)
-        ownerApproveFee1Tokens - gasUsed: 43968, fee: 0.00351744, feeUsd: 1.3565710848, @ 80 gwei & 385.67 ETH/USD, 0x4001f564721666dae2856491c688bf64a7882861e6cc582cc1273fc7cb2e9380
+        ownerApproveFee1Tokens - gasUsed: 43968, fee: 0.00351744, feeUsd: 1.3565710848, @ 80 gwei & 385.67 ETH/USD, 0xa4e3259e4c42dd7a2e69b7818cf77589f102fef4a713fe4f7b0d401183f86c7d
         + Fee1Token.Approval(tokenOwner: Owner:0xa00A, spender: OGDToken:0x1647, tokens: 1000)
-        ownerApproveFee2Tokens - gasUsed: 43980, fee: 0.0035184, feeUsd: 1.356941328, @ 80 gwei & 385.67 ETH/USD, 0x2c56afa45533a7297c388832abacc2593854922bd07491ff29b86af585b8c7df
+        ownerApproveFee2Tokens - gasUsed: 43980, fee: 0.0035184, feeUsd: 1.356941328, @ 80 gwei & 385.67 ETH/USD, 0x0e0a494c42b9161517b784264ab541df4881776bec735a25acad61bfb9f383dd
         + Fee2Token.Approval(tokenOwner: Owner:0xa00A, spender: OGDToken:0x1647, tokens: 10000)
         
-         # Account                                             EtherBalanceChange                            OGD                           FEE0 Blocks 0 to 11
+         # Account                                             EtherBalanceChange                            OGD                           FEE0 Blocks 0 to 12
                                                                                                             FEE1                           FEE2
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E       -0.448066400000000000           0.000000000000000000       10000.000000000000000000 Owner:0xa00A
+         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E       -0.431112960000000000           0.000000000000000000       10000.000000000000000000 Owner:0xa00A
                                                                                         10000.000000000000000000       10000.000000000000000000
          1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433        0.000000000000000000       10000.000000000000000000           0.000000000000000000 User1:0xa11A
                                                                                             0.000000000000000000           0.000000000000000000
@@ -65,18 +58,9 @@ updateAccount '0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976' owing1 '0'
         Token 0 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 20000, owner: Owner:0xa00A, address: OGDToken:0x1647
         - dividendTokensLength : 1
         - dividendToken        : 0 Fee0Token:0x0f4e, enabled: true, unclaimedDividends: 0
-newDividendsOwing balance 10000000000000000000000; totalDividendPoints 0; lastDividendPoints 0
-newDividendsOwing for 0xa11aae29840fbb5c86e6fd4cf809eba183aef433 0
-        - dividendsOwing       : 1 User1:0xa11A       Fee0Token:0x0f4e 0 0          
-newDividendsOwing balance 10000000000000000000000; totalDividendPoints 0; lastDividendPoints 0
-newDividendsOwing for 0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976 0
-        - dividendsOwing       : 2 User2:0xa22A       Fee0Token:0x0f4e 0 0          
-newDividendsOwing balance 0; totalDividendPoints 0; lastDividendPoints 0
-newDividendsOwing for 0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0 0
-        - dividendsOwing       : 3 User3:0xa33a       Fee0Token:0x0f4e 0 0          
-newDividendsOwing balance 0; totalDividendPoints 0; lastDividendPoints 0
-newDividendsOwing for 0x1647b1461251a0c6d3e14a227de0f16e36ba80b1 0
-        - dividendsOwing       : 4 OGDToken:0x1647    Fee0Token:0x0f4e 0 0          
+        - dividendsOwing       : 1 User1:0xa11A       Fee0Token:0x0f4e 0 0                    
+        - dividendsOwing       : 2 User2:0xa22A       Fee0Token:0x0f4e 0 0                    
+        - dividendsOwing       : 3 User3:0xa33a       Fee0Token:0x0f4e 0 0                    
         Token 1 symbol: 'FEE0', name: 'Fee0', decimals: 18, totalSupply: 10000, owner: Owner:0xa00A, address: Fee0Token:0x0f4e
         Token 2 symbol: 'FEE1', name: 'Fee1', decimals: 18, totalSupply: 10000, owner: Owner:0xa00A, address: Fee1Token:0x6eaC
         Token 3 symbol: 'FEE2', name: 'Fee2', decimals: 18, totalSupply: 10000, owner: Owner:0xa00A, address: Fee2Token:0xBa1F
@@ -84,14 +68,14 @@ newDividendsOwing for 0x1647b1461251a0c6d3e14a227de0f16e36ba80b1 0
         --- Setup Completed ---
 
         --- Test 1 - Owner deposits dividends of 100 FEE0 and 10 ETH ---
-        depositDividendFee0 - gasUsed: 91461, fee: 0.00731688, feeUsd: 2.8219011096, @ 80 gwei & 385.67 ETH/USD, 0x6cac2c82431974841be7878bb1b014201d45bdff58d70698a6a3eeee3c79aa20
+        depositDividendFee0 - gasUsed: 91461, fee: 0.00731688, feeUsd: 2.8219011096, @ 80 gwei & 385.67 ETH/USD, 0x4c3c847e3eff5bc4dcfacf6e6bee1e4e19be45cac01cbc4c1d28ba487df7ea3b
         + Fee0Token.Transfer(from: Owner:0xa00A, to: OGDToken:0x1647, tokens: 100)
         + OGDToken.DividendDeposited(token: Fee0Token:0x0f4e, tokens: 100)
         
-         # Account                                             EtherBalanceChange                            OGD                           FEE0 Blocks 0 to 12
+         # Account                                             EtherBalanceChange                            OGD                           FEE0 Blocks 0 to 13
                                                                                                             FEE1                           FEE2
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E       -0.455383280000000000           0.000000000000000000        9900.000000000000000000 Owner:0xa00A
+         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E       -0.438429840000000000           0.000000000000000000        9900.000000000000000000 Owner:0xa00A
                                                                                         10000.000000000000000000       10000.000000000000000000
          1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433        0.000000000000000000       10000.000000000000000000           0.000000000000000000 User1:0xa11A
                                                                                             0.000000000000000000           0.000000000000000000
@@ -115,42 +99,25 @@ newDividendsOwing for 0x1647b1461251a0c6d3e14a227de0f16e36ba80b1 0
         Token 0 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 20000, owner: Owner:0xa00A, address: OGDToken:0x1647
         - dividendTokensLength : 1
         - dividendToken        : 0 Fee0Token:0x0f4e, enabled: true, unclaimedDividends: 100
-newDividendsOwing balance 10000000000000000000000; totalDividendPoints 50000000000000000000000000; lastDividendPoints 0
-newDividendsOwing for 0xa11aae29840fbb5c86e6fd4cf809eba183aef433 50000000000000000000
-        - dividendsOwing       : 1 User1:0xa11A       Fee0Token:0x0f4e 0 50         
-newDividendsOwing balance 10000000000000000000000; totalDividendPoints 50000000000000000000000000; lastDividendPoints 0
-newDividendsOwing for 0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976 50000000000000000000
-        - dividendsOwing       : 2 User2:0xa22A       Fee0Token:0x0f4e 0 50         
-newDividendsOwing balance 0; totalDividendPoints 50000000000000000000000000; lastDividendPoints 0
-newDividendsOwing for 0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0 0
-        - dividendsOwing       : 3 User3:0xa33a       Fee0Token:0x0f4e 0 0          
-newDividendsOwing balance 0; totalDividendPoints 50000000000000000000000000; lastDividendPoints 0
-newDividendsOwing for 0x1647b1461251a0c6d3e14a227de0f16e36ba80b1 0
-        - dividendsOwing       : 4 OGDToken:0x1647    Fee0Token:0x0f4e 0 0          
+        - dividendsOwing       : 1 User1:0xa11A       Fee0Token:0x0f4e 0 50                   
+        - dividendsOwing       : 2 User2:0xa22A       Fee0Token:0x0f4e 0 50                   
+        - dividendsOwing       : 3 User3:0xa33a       Fee0Token:0x0f4e 0 0                    
         Token 1 symbol: 'FEE0', name: 'Fee0', decimals: 18, totalSupply: 10000, owner: Owner:0xa00A, address: Fee0Token:0x0f4e
         Token 2 symbol: 'FEE1', name: 'Fee1', decimals: 18, totalSupply: 10000, owner: Owner:0xa00A, address: Fee1Token:0x6eaC
         Token 3 symbol: 'FEE2', name: 'Fee2', decimals: 18, totalSupply: 10000, owner: Owner:0xa00A, address: Fee2Token:0xBa1F
         
         --- Test 2 - User1 dummy transfer to same account (internal stats update) ---
-newDividendsOwing balance 10000000000000000000000; totalDividendPoints 50000000000000000000000000; lastDividendPoints 0
-newDividendsOwing for 0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976 50000000000000000000
-updateAccount '0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976' newOwing1 '50000000000000000000'
-updateAccount '0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976' owing1 '50000000000000000000'
-newDividendsOwing balance 0; totalDividendPoints 50000000000000000000000000; lastDividendPoints 0
-newDividendsOwing for 0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0 0
-updateAccount '0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0' newOwing1 '0'
-updateAccount '0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0' owing1 '0'
-        transfer1 - gasUsed: 122123, fee: 0.00976984, feeUsd: 3.7679341928, @ 80 gwei & 385.67 ETH/USD, 0xc0debac0bea34a4ceb4b87ea9ed619945373528ec5a8655320ff3c4432c3f09d
+        transfer1 - gasUsed: 124167, fee: 0.00993336, feeUsd: 3.8309989512, @ 80 gwei & 385.67 ETH/USD, 0xc0debac0bea34a4ceb4b87ea9ed619945373528ec5a8655320ff3c4432c3f09d
         + OGDToken.Transfer(from: User2:0xa22A, to: User3:0xa33a, tokens: 10000)
         
-         # Account                                             EtherBalanceChange                            OGD                           FEE0 Blocks 0 to 13
+         # Account                                             EtherBalanceChange                            OGD                           FEE0 Blocks 0 to 14
                                                                                                             FEE1                           FEE2
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E       -0.455383280000000000           0.000000000000000000        9900.000000000000000000 Owner:0xa00A
+         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E       -0.438429840000000000           0.000000000000000000        9900.000000000000000000 Owner:0xa00A
                                                                                         10000.000000000000000000       10000.000000000000000000
          1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433        0.000000000000000000       10000.000000000000000000           0.000000000000000000 User1:0xa11A
                                                                                             0.000000000000000000           0.000000000000000000
-         2 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976       -0.009769840000000000           0.000000000000000000           0.000000000000000000 User2:0xa22A
+         2 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976       -0.009933360000000000           0.000000000000000000           0.000000000000000000 User2:0xa22A
                                                                                             0.000000000000000000           0.000000000000000000
          3 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0        0.000000000000000000       10000.000000000000000000           0.000000000000000000 User3:0xa33a
                                                                                             0.000000000000000000           0.000000000000000000
@@ -170,24 +137,59 @@ updateAccount '0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0' owing1 '0'
         Token 0 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 20000, owner: Owner:0xa00A, address: OGDToken:0x1647
         - dividendTokensLength : 1
         - dividendToken        : 0 Fee0Token:0x0f4e, enabled: true, unclaimedDividends: 50
-newDividendsOwing balance 10000000000000000000000; totalDividendPoints 50000000000000000000000000; lastDividendPoints 0
-newDividendsOwing for 0xa11aae29840fbb5c86e6fd4cf809eba183aef433 50000000000000000000
-        - dividendsOwing       : 1 User1:0xa11A       Fee0Token:0x0f4e 0 50         
-newDividendsOwing balance 0; totalDividendPoints 50000000000000000000000000; lastDividendPoints 50000000000000000000000000
-newDividendsOwing for 0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976 0
-        - dividendsOwing       : 2 User2:0xa22A       Fee0Token:0x0f4e 50 0         
-newDividendsOwing balance 10000000000000000000000; totalDividendPoints 50000000000000000000000000; lastDividendPoints 0
-newDividendsOwing for 0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0 50000000000000000000
-        - dividendsOwing       : 3 User3:0xa33a       Fee0Token:0x0f4e 0 50         
-newDividendsOwing balance 0; totalDividendPoints 50000000000000000000000000; lastDividendPoints 0
-newDividendsOwing for 0x1647b1461251a0c6d3e14a227de0f16e36ba80b1 0
-        - dividendsOwing       : 4 OGDToken:0x1647    Fee0Token:0x0f4e 0 0          
+        - dividendsOwing       : 1 User1:0xa11A       Fee0Token:0x0f4e 0 50                   
+        - dividendsOwing       : 2 User2:0xa22A       Fee0Token:0x0f4e 50 0                   
+        - dividendsOwing       : 3 User3:0xa33a       Fee0Token:0x0f4e 0 0                    
         Token 1 symbol: 'FEE0', name: 'Fee0', decimals: 18, totalSupply: 10000, owner: Owner:0xa00A, address: Fee0Token:0x0f4e
         Token 2 symbol: 'FEE1', name: 'Fee1', decimals: 18, totalSupply: 10000, owner: Owner:0xa00A, address: Fee1Token:0x6eaC
         Token 3 symbol: 'FEE2', name: 'Fee2', decimals: 18, totalSupply: 10000, owner: Owner:0xa00A, address: Fee2Token:0xBa1F
         
-      ✓ Standard Workflow #1 (1078ms)
+        --- Test 3 - User{1..3} withdraw 33.333333333333333333 FEE0 and 3.333333333333333333 ETH ---
+        withdrawDividends1 - gasUsed: 86344, fee: 0.00690752, feeUsd: 2.6640232384, @ 80 gwei & 385.67 ETH/USD, 0xcbec2a6157ff5ca3108c233ecd1bf267de846802feea62cf774f6ca76b8e7c67
+        + Fee0Token.Transfer(from: OGDToken:0x1647, to: User1:0xa11A, tokens: 50)
+        + OGDToken.DividendWithdrawn(account: User1:0xa11A, destination: User1:0xa11A, token: Fee0Token:0x0f4e, tokens: 50)
+        withdrawDividends2 - gasUsed: 48193, fee: 0.00385544, feeUsd: 1.4869275448, @ 80 gwei & 385.67 ETH/USD, 0xee6131b9a8f2029672aa3b8f084b2c58ebb217910a2d27457ba3f8451b7ea73b
+        + Fee0Token.Transfer(from: OGDToken:0x1647, to: User2:0xa22A, tokens: 50)
+        + OGDToken.DividendWithdrawn(account: User2:0xa22A, destination: User2:0xa22A, token: Fee0Token:0x0f4e, tokens: 50)
+        withdrawDividends3 - gasUsed: 42089, fee: 0.00336712, feeUsd: 1.2985971704, @ 80 gwei & 385.67 ETH/USD, 0x6829e5bbbe274b7d1bce1ad95e0e83543a0fe5490a8bdf734272d8f3e935c013
+        + OGDToken.DividendWithdrawn(account: User3:0xa33a, destination: User3:0xa33a, token: Fee0Token:0x0f4e, tokens: 0)
+        
+         # Account                                             EtherBalanceChange                            OGD                           FEE0 Blocks 0 to 17
+                                                                                                            FEE1                           FEE2
+        -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
+         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E       -0.438429840000000000           0.000000000000000000        9900.000000000000000000 Owner:0xa00A
+                                                                                        10000.000000000000000000       10000.000000000000000000
+         1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433       -0.006907520000000000       10000.000000000000000000          50.000000000000000000 User1:0xa11A
+                                                                                            0.000000000000000000           0.000000000000000000
+         2 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976       -0.013788800000000000           0.000000000000000000          50.000000000000000000 User2:0xa22A
+                                                                                            0.000000000000000000           0.000000000000000000
+         3 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0       -0.003367120000000000       10000.000000000000000000           0.000000000000000000 User3:0xa33a
+                                                                                            0.000000000000000000           0.000000000000000000
+         4 0x1647B1461251A0c6D3E14a227dE0F16E36ba80B1        0.000000000000000000           0.000000000000000000           0.000000000000000000 OGDToken:0x1647
+                                                                                            0.000000000000000000           0.000000000000000000
+         5 0x0f4eA6f2be49d822b7cAEf4175450A4D83A32e72        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee0Token:0x0f4e
+                                                                                            0.000000000000000000           0.000000000000000000
+         6 0x6eaC8DFBdEB9588C9FEEe24783B4137b082f9708        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee1Token:0x6eaC
+                                                                                            0.000000000000000000           0.000000000000000000
+         7 0xBa1FCDaE835E77cAB2a76a7C3884AdC630f7a5B0        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee2Token:0xBa1F
+                                                                                            0.000000000000000000           0.000000000000000000
+        -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
+                                                                                        20000.000000000000000000       10000.000000000000000000 Total Token Balances
+                                                                                        10000.000000000000000000       10000.000000000000000000
+        -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
+        
+        Token 0 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 20000, owner: Owner:0xa00A, address: OGDToken:0x1647
+        - dividendTokensLength : 1
+        - dividendToken        : 0 Fee0Token:0x0f4e, enabled: true, unclaimedDividends: 0
+        - dividendsOwing       : 1 User1:0xa11A       Fee0Token:0x0f4e 0 0                    
+        - dividendsOwing       : 2 User2:0xa22A       Fee0Token:0x0f4e 0 0                    
+        - dividendsOwing       : 3 User3:0xa33a       Fee0Token:0x0f4e 0 0                    
+        Token 1 symbol: 'FEE0', name: 'Fee0', decimals: 18, totalSupply: 10000, owner: Owner:0xa00A, address: Fee0Token:0x0f4e
+        Token 2 symbol: 'FEE1', name: 'Fee1', decimals: 18, totalSupply: 10000, owner: Owner:0xa00A, address: Fee1Token:0x6eaC
+        Token 3 symbol: 'FEE2', name: 'Fee2', decimals: 18, totalSupply: 10000, owner: Owner:0xa00A, address: Fee2Token:0xBa1F
+        
+      ✓ Standard Workflow #1 (1756ms)
 
 
-  1 passing (3s)
+  1 passing (4s)
 

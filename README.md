@@ -57,22 +57,24 @@ You may need to `chmod 700 00_runGeth.sh 01_unlockAndFundAccounts.sh` before bei
 
 <br />
 
-#### Install Truffle
+#### Install Hardhat
 
 
 If not already installed, you will need [NPM](https://www.npmjs.com/). [NVM](https://github.com/nvm-sh/nvm) may take away some of your NPM versioning pain.
 
-You will need to install [Truffle](https://github.com/trufflesuite/truffle):
+You will need to install the [Hardhat](https://hardhat.org/) testing framework:
 
 ```
-npm install -g truffle
+npm install --save-dev hardhat @nomiclabs/hardhat-ethers chai ethers @nomiclabs/hardhat-waffle ethereum-waffle
+npm install --save bignumber.js
+
 ```
 
 <br />
 
 #### Install Truffle Flattener And Flatten Solidity Files
 
-You may want to to install [Truffle Flattener](https://github.com/nomiclabs/truffle-flattener) using the command:
+Install [Truffle Flattener](https://github.com/nomiclabs/truffle-flattener) using the command:
 
 ```
 npm install -g truffle-flattener
@@ -88,11 +90,8 @@ The flattened files can be found in the [./flattened/](./flattened/) subdirector
 You will need the following modules installed:
 
 ```
-npm install --save web3@1.2.1
-npm install --save ethers
-npm install --save eth-sig-util
+# npm install --save eth-sig-util
 npm install --save bignumber.js
-npm install --save truffle-assertions
 ```
 
 <br />
@@ -100,7 +99,7 @@ npm install --save truffle-assertions
 #### Compile
 
 ```
-truffle compile
+npx hardhat compile
 ```
 
 <br />
@@ -142,40 +141,8 @@ The tests are roughly:
 
 <br />
 
-#### Debug
-
-```
-truffle debug {txHash}
-```
-
-<br />
-
-#### Migrate
-
-```
-truffle migrate [--reset]
-```
-
-<br />
-
 <br />
 
 Enjoy!
 
 (c) The Optino Project 2020. GPLv2
-
-
-npm install --save-dev @nomiclabs/buidler
-npm install --save-dev @nomiclabs/buidler-waffle
-npm install --save-dev @nomiclabs/buidler-waffle ethereum-waffle chai @nomiclabs/buidler-ethers ethers
-
-npm install --save-dev @nomiclabs/buidler-waffle@^2.0.0 ethereum-waffle@^3.0.0 chai@^4.2.0 @nomiclabs/buidler-ethers@^2.0.0 ethers@^5.0.0
-
-npx buidler accounts
-npx buidler node
-npx buidler compile
-vi buidler.config.js
-npx buidler clean
-npx buidler console
-npx buidler test
-npx buidler test test/TestOGDToken.js

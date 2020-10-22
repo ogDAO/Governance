@@ -1,7 +1,7 @@
 //SPDX-License-Identifier: Unlicense
 pragma solidity ^0.7.1;
 
-import "@nomiclabs/buidler/console.sol";
+import "hardhat/console.sol";
 
 
 contract Greeter {

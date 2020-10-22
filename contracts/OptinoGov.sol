@@ -439,8 +439,8 @@ contract OptinoGov is OptinoGovConfig {
 
         require(ogdToken.transferFrom(msg.sender, address(this), payout), "OGD transfer failed");
         require(ogdToken.burn(payout, msg.sender), "OGD burn failed");
-        require(ogToken.transfer(msg.sender, payout), "OG transfer failed");
-        require(ogToken.mint(msg.sender, reward), "OG mint failed");
+        // require(ogToken.transfer(msg.sender, payout), "OG transfer failed");
+        // require(ogToken.mint(msg.sender, reward), "OG mint failed");
 
         emit Uncommitted(msg.sender, payout, tokens, user.duration, user.end, user.votes, rewardPool, totalVotes);
     }
