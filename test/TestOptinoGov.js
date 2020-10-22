@@ -8,6 +8,7 @@ let OGDToken;
 let TestToken;
 let OptinoGov;
 let data;
+const verbose = false;
 
 describe("TestOptinoGov", function() {
   beforeEach("Setup", async function() {
@@ -32,7 +33,9 @@ describe("TestOptinoGov", function() {
     await data.printTxData("ogdToken.deployTransaction", ogdToken.deployTransaction);
     await data.printTxData("fee0Token.deployTransaction", fee0Token.deployTransaction);
     await data.printTxData("optinoGov.deployTransaction", optinoGov.deployTransaction);
-    // await data.printBalances();
+    if (verbose) {
+      await data.printBalances();
+    }
 
     console.log("        --- Setup 2 - OGDToken.addDividendToken([ETH, FEE0]), OGDToken mint(...) permissioning ---");
     const setup2 = [];
@@ -45,7 +48,9 @@ describe("TestOptinoGov", function() {
     await data.printTxData("addDividendToken1", addDividendToken1);
     await data.printTxData("setPermission1", setPermission1);
     await data.printTxData("setPermission2", setPermission2);
-    // await data.printBalances();
+    if (verbose) {
+      await data.printBalances();
+    }
 
     console.log("        --- Setup 3 - Transfer OGTokens, User{1..3} approve 2,000 OGTokens to OptinoGov, Owner approve 2,000 FEE0 tokens to OGDToken, Transfer OGToken and OGDToken ownership to OptinoGov ---");
     const ogTokens = new BigNumber("10000").shiftedBy(18);
@@ -76,20 +81,8 @@ describe("TestOptinoGov", function() {
     console.log("");
   });
 
-  describe("TestOptinoGov - Standard Workflow #0", function() {
+  describe.only("TestOptinoGov - Standard Workflow #0", function() {
     it("Standard Workflow #0", async function() {
-      console.log("Standard Workflow #0");
-    });
-  });
-
-  describe("TestOptinoGov - Standard Workflow #1", function() {
-    it("Standard Workflow #1", async function() {
-      console.log("Standard Workflow #1");
-    });
-  });
-
-  describe.only("TestOptinoGov - Standard Workflow #2", function() {
-    it("Standard Workflow #2", async function() {
       console.log("        --- Test 1 - User{1,2} delegate to User3---");
       const test1 = [];
       test1.push(data.optinoGov.connect(data.user1Signer).delegate(data.user3));
@@ -109,7 +102,9 @@ describe("TestOptinoGov", function() {
       await data.printTxData("commit1", commit1);
       await data.printTxData("commit2", commit2);
       await data.printTxData("commit3", commit3);
-      await data.printBalances();
+      if (verbose) {
+        await data.printBalances();
+      }
 
       console.log("        --- Test 3 - User{2} commit again for {55} seconds duration ---");
       const test3 = [];
@@ -127,7 +122,9 @@ describe("TestOptinoGov", function() {
       await data.printTxData("collectReward1", collectReward1);
       await data.printTxData("collectReward2", collectReward2);
       await data.printTxData("collectReward3", collectReward3);
-      await data.printBalances();
+      if (verbose) {
+        await data.printBalances();
+      }
 
       console.log("        --- Test 5 - Owner collecting rewards on behalf of user1 for a % fee ---");
       data.pause("Waiting", 5);
@@ -146,7 +143,9 @@ describe("TestOptinoGov", function() {
       const [depositDividendFee1, depositDividendFee2] = await Promise.all(test6);
       await data.printTxData("depositDividendFee1", depositDividendFee1);
       await data.printTxData("depositDividendFee2", depositDividendFee2);
-      await data.printBalances();
+      if (verbose) {
+        await data.printBalances();
+      }
 
       console.log("        --- Test 7 - User{1..3} withdraw ETH and FEE dividends ---");
       const test7 = [];
@@ -179,6 +178,18 @@ describe("TestOptinoGov", function() {
       // await ethers.provider.getLogs({}).then((data) => {
       //   console.log("getLogs: " + util.inspect(data));
       // });
+    });
+  });
+
+  describe("TestOptinoGov - Standard Workflow #1", function() {
+    it("Standard Workflow #1", async function() {
+      console.log("Standard Workflow #1");
+    });
+  });
+
+  describe("TestOptinoGov - Standard Workflow #2", function() {
+    it("Standard Workflow #2", async function() {
+      console.log("Standard Workflow #2");
     });
   });
 });
