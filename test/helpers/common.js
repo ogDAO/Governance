@@ -153,6 +153,14 @@ class Data {
     return o;
   }
 
+  padRight(s, n) {
+    var o = s;
+    while (o.length < n) {
+      o = o + " ";
+    }
+    return o;
+  }
+
   printEvent(log) {
     var address = log.address;
     var _contract = this.contractsByAddress[address.toLowerCase()];
@@ -250,14 +258,19 @@ class Data {
           const unclaimedDividends = await tokenContract.unclaimedDividends(dividendToken[0]);
           console.log("        - dividendToken        : " + j + " " + this.getShortAccountName(dividendToken[0]) + ", enabled: " + dividendToken[1].toString() + ", unclaimedDividends: " + new BigNumber(unclaimedDividends.toString()).shiftedBy(-18));
         }
-        for (let j = 1; j < this.accounts.length && j < 4; j++) {
+        for (let j = 1; j < this.accounts.length; j++) {
           let account = this.accounts[j];
-          const dividendsOwing = await tokenContract.dividendsOwing(account);
-          console.log("        - dividendsOwing       : " + j + " " + this.getShortAccountName(account));
-          let tokenList = dividendsOwing[0];
-          let owingList = dividendsOwing[1];
-          for (let k = 0; k < dividendTokensLength; k++) {
-            console.log("                                   - " + this.getShortAccountName(tokenList[k]) + " " + new BigNumber(owingList[k].toString()).shiftedBy(-18));
+          let accountName = this.getShortAccountName(account);
+          if (!accountName.startsWith("Fee")) {
+            const dividendsOwing = await tokenContract.dividendsOwing(account);
+            let result = "";
+            let tokenList = dividendsOwing[0];
+            let owingList = dividendsOwing[1];
+            let newOwingList = dividendsOwing[2];
+            for (let k = 0; k < dividendTokensLength; k++) {
+              result = result + this.padRight(this.getShortAccountName(tokenList[k]) + " " + new BigNumber(owingList[k].toString()).shiftedBy(-18) + " " + new BigNumber(newOwingList[k].toString()).shiftedBy(-18), 30);
+            }
+            console.log("        - dividendsOwing       : " + j + " " + this.padRight(this.getShortAccountName(account), 18) + " " + result);
           }
         }
       }

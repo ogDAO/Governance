@@ -6,6 +6,6 @@ import "./ERC20.sol";
 // SPDX-License-Identifier: GPLv2
 interface OGDTokenInterface is ERC20 {
     function mint(address tokenOwner, uint tokens) external returns (bool success);
-    function burn(uint tokens) external returns (bool success);
+    function burn(uint tokens, address payDividendsTo) external returns (bool success);
     // function burnFrom(address tokenOwner, uint tokens) external returns (bool success);
 }

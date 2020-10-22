@@ -438,7 +438,7 @@ contract OptinoGov is OptinoGovConfig {
         user.duration = 0;
 
         require(ogdToken.transferFrom(msg.sender, address(this), payout), "OGD transfer failed");
-        require(ogdToken.burn(payout), "OGD burn failed");
+        require(ogdToken.burn(payout, msg.sender), "OGD burn failed");
         require(ogToken.transfer(msg.sender, payout), "OG transfer failed");
         require(ogToken.mint(msg.sender, reward), "OG mint failed");
 
@@ -519,5 +519,9 @@ contract OptinoGov is OptinoGovConfig {
         }
 
         emit Executed(msg.sender, oip);
+    }
+
+    receive () external payable {
+        // TODO depositDividend(address(0), msg.value);
     }
 }
