@@ -9,7 +9,6 @@ let TestToken;
 let OptinoGov;
 let data;
 
-// describe.only, describe.skip
 describe("TestOptinoGov", function() {
   beforeEach("Setup", async function() {
     OGToken = await ethers.getContractFactory("OGToken");
@@ -73,10 +72,8 @@ describe("TestOptinoGov", function() {
     await data.printTxData("transferOwnership2", transferOwnership2);
     await data.printBalances();
 
-  // const filter = {};
-  //    ethers.provider.on(filter, (result) => {
-  //      console.log("Event: " + result);
-  //    });
+    console.log("        --- Setup Completed ---");
+    console.log("");
   });
 
   describe("TestOptinoGov - Standard Workflow #0", function() {
@@ -161,6 +158,9 @@ describe("TestOptinoGov", function() {
       await data.printTxData("withdrawDividends2", withdrawDividends2);
       await data.printTxData("withdrawDividends3", withdrawDividends3);
       await data.printBalances();
+
+      console.log("        --- Test Completed ---");
+      console.log("");
 
       // const user1Fee1Balance = await fee1Token.balanceOf(data.user1);
       // console.log("user1Fee1Balance: " + user1Fee1Balance);

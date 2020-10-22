@@ -59,14 +59,10 @@ describe("TestOGDToken", function() {
     await data.printTxData("ownerApproveFee1Tokens", ownerApproveFee1Tokens);
     await data.printTxData("ownerApproveFee2Tokens", ownerApproveFee2Tokens);
     await data.printBalances();
-  // const filter = {};
-  //    ethers.provider.on(filter, (result) => {
-  //      console.log("Event: " + result);
-  //    });
-  });
 
-  // it("Standard Workflow #0", async function() {
-  // });
+    console.log("        --- Setup Completed ---");
+    console.log("");
+  });
 
   describe("TestOGDToken - Standard Workflow #0", function() {
     it("Standard Workflow #0", async function() {
@@ -153,6 +149,8 @@ describe("TestOGDToken", function() {
       console.log("        user1Fee1Balance: " + user1Fee1Balance);
       expect(new BigNumber(user1Fee1Balance.toString()).toFixed(0)).to.equal(new BigNumber("333.333333333333333333").shiftedBy(18).toFixed(0));
 
+      console.log("        --- Test Completed ---");
+      console.log("");
 
       // const Greeter = await ethers.getContractFactory("Greeter");
       // const greeter = await Greeter.deploy("Hello, world!");
