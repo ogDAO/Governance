@@ -168,8 +168,8 @@ contract OGDToken is OGDTokenInterface, Permissioned {
                 if (newOwing > 0) {
                     unclaimedDividends[dividendToken.token] = unclaimedDividends[dividendToken.token].sub(newOwing);
                     accounts[account].owing[dividendToken.token] = accounts[account].owing[dividendToken.token].add(newOwing);
+                    accounts[account].lastDividendPoints[dividendToken.token] = totalDividendPoints[dividendToken.token];
                 }
-                accounts[account].lastDividendPoints[dividendToken.token] = totalDividendPoints[dividendToken.token];
                 // console.log("    updateAccount after - owing %s", accounts[account].owing[dividendToken.token]);
             }
         }
