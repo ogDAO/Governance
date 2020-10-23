@@ -1,6 +1,4 @@
 $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
-Compiling 12 files with 0.7.1
-Compilation finished successfully
 
 
   TestOGDToken
@@ -15,7 +13,7 @@ Compilation finished successfully
         fee2TokenTx - gasUsed: 823466, fee: 0.06587728, feeUsd: 25.4068905776, @ 80 gwei & 385.67 ETH/USD, 0xd3e376832727e48ac0f3d54a61006da7df7d196c7fa53c893549befbb058a8ca
         + Fee2Token.Transfer(from: ETH|null:0x0000, to: Owner:0xa00A, tokens: 10000)
         --- Setup 2 - OGDToken.addDividendTokens for ETH and FEE0, OGDToken mint(...) permissioning ---
-        --- Setup 3 - Mint 10,000 OGD tokens for User{1..3}; Owner approve 100 FEE for OGToken to spend ---
+        --- Setup 3 - Mint 10,000 OGD tokens for User{1,2}; Owner approve 100 FEE for OGToken to spend ---
         addDividendToken1 - gasUsed: 133871, fee: 0.01070968, feeUsd: 4.1304022856, @ 80 gwei & 385.67 ETH/USD, 0x6c56335dbae914767d3d8c1db4668c768b43caed2f7ad7391fdd75172c140e6a
         + OGDToken.DividendTokenAdded(token: Fee0Token:0x0f4e, enabled: true)
         setPermission1 - gasUsed: 49188, fee: 0.00393504, feeUsd: 1.5176268768, @ 80 gwei & 385.67 ETH/USD, 0xd8a56b2d806990f1c8fff8a077986f2bbb7a6e235031d9342febb5179fa8fa76
@@ -69,7 +67,7 @@ Compilation finished successfully
         
         --- Setup Completed ---
 
-        --- Test 1 - Owner deposits dividends of 100 FEE0 and 10 ETH ---
+        --- Test 1 - Owner deposits dividends of 100 FEE0 ---
         depositDividendFee0 - gasUsed: 91461, fee: 0.00731688, feeUsd: 2.8219011096, @ 80 gwei & 385.67 ETH/USD, 0x4c3c847e3eff5bc4dcfacf6e6bee1e4e19be45cac01cbc4c1d28ba487df7ea3b
         + Fee0Token.Transfer(from: Owner:0xa00A, to: OGDToken:0x1647, tokens: 100)
         + OGDToken.DividendDeposited(token: Fee0Token:0x0f4e, tokens: 100)
@@ -108,7 +106,7 @@ Compilation finished successfully
         Token 2 symbol: 'FEE1', name: 'Fee1', decimals: 18, totalSupply: 10000, owner: Owner:0xa00A, address: Fee1Token:0x6eaC
         Token 3 symbol: 'FEE2', name: 'Fee2', decimals: 18, totalSupply: 10000, owner: Owner:0xa00A, address: Fee2Token:0xBa1F
         
-        --- Test 2 - User1 dummy transfer to same account (internal stats update) ---
+        --- Test 2 - User2 transfer all tokens to user3 ---
         transfer1 - gasUsed: 102998, fee: 0.00823984, feeUsd: 3.1778590928, @ 80 gwei & 385.67 ETH/USD, 0xc0debac0bea34a4ceb4b87ea9ed619945373528ec5a8655320ff3c4432c3f09d
         + OGDToken.Transfer(from: User2:0xa22A, to: User3:0xa33a, tokens: 10000)
         
@@ -146,7 +144,6 @@ Compilation finished successfully
         Token 2 symbol: 'FEE1', name: 'Fee1', decimals: 18, totalSupply: 10000, owner: Owner:0xa00A, address: Fee1Token:0x6eaC
         Token 3 symbol: 'FEE2', name: 'Fee2', decimals: 18, totalSupply: 10000, owner: Owner:0xa00A, address: Fee2Token:0xBa1F
         
-        --- Test 3 - User{1..3} withdraw 33.333333333333333333 FEE0 and 3.333333333333333333 ETH ---
       1) Standard Workflow #1
 
 
