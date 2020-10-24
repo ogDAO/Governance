@@ -267,8 +267,10 @@ class Data {
             let tokenList = dividendsOwing[0];
             let owingList = dividendsOwing[1];
             let newOwingList = dividendsOwing[2];
+            let separator = "";
             for (let k = 0; k < dividendTokensLength; k++) {
-              result = result + new BigNumber(owingList[k].toString()).shiftedBy(-18) + ", " + new BigNumber(newOwingList[k].toString()).shiftedBy(-18) + " " + this.getShortAccountName(tokenList[k]);
+              result = result + separator + new BigNumber(owingList[k].toString()).shiftedBy(-18) + ", " + new BigNumber(newOwingList[k].toString()).shiftedBy(-18) + " " + this.getShortAccountName(tokenList[k]);
+              separator = "; ";
             }
             console.log("        - dividendsOwing,new   : " + j + " " + this.padRight(this.getShortAccountName(account), 18) + " " + result);
           }

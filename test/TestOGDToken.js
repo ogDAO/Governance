@@ -153,7 +153,7 @@ describe("TestOGDToken", function() {
     });
   });
 
-  describe.skip("TestOGDToken - Workflow #1 - Transfer Test", function() {
+  describe("TestOGDToken - Workflow #1 - Transfer Test", function() {
     it("Workflow #1 - Transfer Test", async function() {
       console.log("        --- Test 1 - OGDToken.addDividendTokens for ETH and FEE0, OGDToken mint(...) permissioning ---");
       const test1 = [];
@@ -219,12 +219,6 @@ describe("TestOGDToken", function() {
       await data.printTxData("withdrawDividends2", withdrawDividends2);
       await data.printTxData("withdrawDividends3", withdrawDividends3);
       await data.printBalances();
-    });
-  });
-
-  describe("TestOGDToken - Workflow #2 - TODO", function() {
-    it("Workflow #2 - TODO", async function() {
-      console.log("Workflow #2 - TODO");
     });
   });
 });
