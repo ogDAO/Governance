@@ -1,7 +1,7 @@
 pragma solidity ^0.7.0;
 // pragma experimental ABIEncoderV2;
 
-// import "@nomiclabs/buidler/console.sol";
+// import "hardhat/console.sol";
 
 // Use prefix "./" normally and "https://github.com/ogDAO/Governance/blob/master/contracts/" in Remix
 import "./Permissioned.sol";
@@ -185,8 +185,8 @@ contract OGDToken is OGDTokenInterface, Permissioned {
     //             if (newOwing1 > 0) {
     //                 unclaimedDividends[dividendToken.token] = unclaimedDividends[dividendToken.token].sub(newOwing1);
     //                 accounts[account1].lastDividendPoints[dividendToken.token] = totalDividendPoints[dividendToken.token];
-    //                 accounts[account1].owing[dividendToken.token] = accounts[account1].owing[dividendToken.token].add(newOwing1);
     //             }
+    //             accounts[account1].owing[dividendToken.token] = accounts[account1].owing[dividendToken.token].add(newOwing1);
     //             console.log("updateAccounts '%s' owing1 '%s'", account1, accounts[account1].owing[dividendToken.token]);
     //             if (account1 != account2) {
     //                 uint newOwing2 = newDividendsOwing(dividendToken.token, account2);
@@ -194,8 +194,8 @@ contract OGDToken is OGDTokenInterface, Permissioned {
     //                 if (newOwing2 > 0) {
     //                     unclaimedDividends[dividendToken.token] = unclaimedDividends[dividendToken.token].sub(newOwing2);
     //                     accounts[account2].lastDividendPoints[dividendToken.token] = totalDividendPoints[dividendToken.token];
-    //                     accounts[account2].owing[dividendToken.token] = accounts[account2].owing[dividendToken.token].add(newOwing2);
     //                 }
+    //                 accounts[account2].owing[dividendToken.token] = accounts[account2].owing[dividendToken.token].add(newOwing2);
     //                 console.log("  updateAccounts '%s' owing2 '%s'", account2, accounts[account2].owing[dividendToken.token]);
     //             }
     //         }
@@ -229,8 +229,8 @@ contract OGDToken is OGDTokenInterface, Permissioned {
         depositDividend(address(0), msg.value);
     }
 
-    function withdrawDividendsFor(address account, address destination) internal {
-        // console.log("withdrawDividendsFor '%s' to destination '%s'", account, destination);
+    function _withdrawDividendsFor(address account, address destination) internal {
+        // console.log("%s called _withdrawDividendsFor(account %s, destination %s)", msg.sender, account, destination);
         // updateAccounts(account, account);
         updateAccount(account);
         for (uint i = 0; i < dividendTokens.index.length; i++) {
@@ -251,7 +251,14 @@ contract OGDToken is OGDTokenInterface, Permissioned {
     }
     /// @notice Withdraw enabled dividends tokens
     function withdrawDividends() public {
-        withdrawDividendsFor(msg.sender, msg.sender);
+        _withdrawDividendsFor(msg.sender, msg.sender);
+    }
+    /// @notice Withdraw enabled dividends tokens -
+    function withdrawDividendsFor(address account, address destination) override external permitted(ROLE_DIVIDENDWITHDRAWER, 0) returns (bool success) {
+        processed(ROLE_DIVIDENDWITHDRAWER, 0);
+        // console.log("%s called withdrawDividendsFor(account %s, destination %s)", msg.sender, account, destination);
+        _withdrawDividendsFor(account, destination);
+        return true;
     }
     /// @notice Withdraw enabled and disabled dividends tokens. Does not include new dividends since last updateAccount(...) triggered by transfer(...) and transferFrom(...)
     function withdrawDividend(address token) public {
@@ -279,7 +286,9 @@ contract OGDToken is OGDTokenInterface, Permissioned {
     }
     /// @notice Withdraw dividends and then burn tokens
     function burn(uint tokens, address payDividendsTo) override external returns (bool success) {
-        withdrawDividendsFor(msg.sender, payDividendsTo);
+        // console.log("%s called burn(tokens %s, payDividendsTo %s)", msg.sender, tokens, payDividendsTo);
+        // console.log("%s -> _withdrawDividendsFor(tokens %s, payDividendsTo %s", msg.sender, tokens, payDividendsTo);
+        // _withdrawDividendsFor(msg.sender, payDividendsTo);
         accounts[msg.sender].balance = accounts[msg.sender].balance.sub(tokens);
         _totalSupply = _totalSupply.sub(tokens);
         emit Transfer(msg.sender, address(0), tokens);

@@ -15,6 +15,7 @@ contract Permissioned is Owned {
     }
 
     uint public constant ROLE_MINTER = 1;
+    uint public constant ROLE_DIVIDENDWITHDRAWER = 2;
     // Don't need ROLE_BURNER at the moment
     // uint public constant ROLE_BURNER = 2;
     mapping(address => mapping(uint => Permission)) public permissions;

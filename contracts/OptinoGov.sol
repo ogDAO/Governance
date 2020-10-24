@@ -1,11 +1,12 @@
 pragma solidity ^0.7.0;
 pragma experimental ABIEncoderV2;
 
+// import "hardhat/console.sol";
+
 // Use prefix "./" normally and "https://github.com/ogDAO/Governance/blob/master/contracts/" in Remix
 import "./OGTokenInterface.sol";
 import "./OGDTokenInterface.sol";
 import "./SafeMath.sol";
-
 
 /// @notice Optino Governance config
 contract OptinoGovConfig {
@@ -182,7 +183,7 @@ contract OptinoGov is OptinoGovConfig {
     event Unstaked(address tokenOwner, uint tokens, uint balance, bytes32 stakingKey);
     event StakeBurnt(address tokenOwner, uint tokens, uint balance, bytes32 stakingKey);
     event Collected(address indexed user, uint elapsed, uint reward, uint callerReward, uint rewardPool, uint end, uint duration);
-    event Uncommitted(address indexed user, uint amount, uint balance, uint duration, uint end, uint votes, uint rewardPool, uint totalVotes);
+    event Uncommitted(address indexed user, uint tokens, uint balance, uint duration, uint end, uint votes, uint rewardPool, uint totalVotes);
     event Proposed(address indexed proposer, uint oip, string description, address[] targets, uint[] value, bytes[] data, uint start);
     event Voted(address indexed user, uint oip, bool voteFor, uint forVotes, uint againstVotes);
     event Executed(address indexed user, uint oip);
@@ -309,46 +310,38 @@ contract OptinoGov is OptinoGovConfig {
         emit DelegateUpdated(oldDelegatee, delegatee, user.votes);
     }
 
-    // Commit OGTokens for some duration. If you already committed some tokens, you cannot set a duration that ends before the current one
+    // Commit OGTokens for specified duration. Cannot shorten duration if there is an existing unexpired commitment
     function commit(uint tokens, uint duration) public {
         require(duration <= maxDuration, "duration too long");
         Commitment storage user = commitments[msg.sender];
-
         uint reward = 0;
         uint oldUserVotes = user.votes;
-        // TODO: Take into account any staked tokens
         if (user.tokens > 0) {
             require(block.timestamp + duration >= user.end, "Cannot shorten duration");
-
-            // Pay rewards until now and reset
-            uint elapsed = block.timestamp.sub(uint(user.end).sub(user.duration));
+            uint elapsed = block.timestamp.sub(uint(user.end).sub(uint(user.duration)));
             reward = elapsed.mul(rewardsPerSecond).mul(user.votes).div(totalVotes);
             if (reward > rewardPool) {
                 reward = rewardPool;
             }
-            rewardPool = rewardPool.sub(reward);
-            user.tokens = user.tokens.add(reward);
+            if (reward > 0) {
+                rewardPool = rewardPool.sub(reward);
+                user.tokens = user.tokens.add(reward);
+            }
             emit Collected(msg.sender, elapsed, reward, 0, rewardPool, user.end, user.duration);
         }
-
         require(ogToken.transferFrom(msg.sender, address(this), tokens), "OG transferFrom failed");
-
-        // Create stake
         user.tokens = user.tokens.add(tokens);
         user.duration = uint64(duration);
         user.end = uint64(block.timestamp.add(duration));
         user.votes = user.tokens.mul(duration).div(SECONDS_PER_YEAR);
-
         totalVotes = totalVotes.sub(oldUserVotes).add(user.votes);
         if (user.delegatee != address(0)) {
             commitments[user.delegatee].delegatedVotes = commitments[user.delegatee].delegatedVotes.sub(oldUserVotes).add(user.votes);
         }
-
         if (reward > 0) {
             require(ogToken.mint(address(this), reward), "reward OG mint failed");
         }
         require(ogdToken.mint(msg.sender, tokens.add(reward)), "commitment + reward OGD mint failed");
-
         emit Committed(msg.sender, tokens, user.tokens, user.duration, user.end, user.delegatee, user.votes, rewardPool, totalVotes);
     }
 
@@ -363,7 +356,7 @@ contract OptinoGov is OptinoGovConfig {
         require(user.tokens > 0);
 
         // Pay rewards for period = now - beginning = now - (end - duration)
-        uint elapsed = block.timestamp.sub(uint(user.end).sub(user.duration));
+        uint elapsed = block.timestamp.sub(uint(user.end).sub(uint(user.duration)));
         uint reward = elapsed.mul(rewardsPerSecond).mul(user.votes).div(totalVotes);
         uint callerReward = 0;
         if (reward > rewardPool) {
@@ -389,12 +382,12 @@ contract OptinoGov is OptinoGovConfig {
                 } else {
                     user.duration = uint64(uint(user.end).sub(block.timestamp));
                 }
-                user.votes = user.tokens.mul(user.duration).div(SECONDS_PER_YEAR);
+                user.votes = user.tokens.mul(uint(user.duration)).div(SECONDS_PER_YEAR);
                 require(ogToken.mint(address(this), reward), "OG mint failed");
                 require(ogdToken.mint(msg.sender, reward), "OGD mint failed");
             } else {
                 user.duration = uint(user.end) <= block.timestamp ? 0 : uint64(uint(user.end).sub(block.timestamp));
-                user.votes = user.tokens.mul(user.duration).div(SECONDS_PER_YEAR);
+                user.votes = user.tokens.mul(uint(user.duration)).div(SECONDS_PER_YEAR);
                 require(ogToken.mint(tokenOwner, reward), "OG mint failed");
             }
             totalVotes = totalVotes.sub(oldUserVotes).add(user.votes);
@@ -408,16 +401,11 @@ contract OptinoGov is OptinoGovConfig {
         emit Collected(msg.sender, elapsed, reward, callerReward, rewardPool, user.end, user.duration);
     }
 
-    // Unstake all and pay all rewards
-    // TODO
-    function uncommit() public {
+    function uncommit(uint tokens) public {
         Commitment storage user = commitments[msg.sender];
-        uint tokens = user.tokens;
-        require(user.tokens > 0);
+        require(tokens <= user.tokens, "Insufficient tokens");
         require(block.timestamp > user.end, "Commitment not ended");
-
-        // Reward
-        uint elapsed = block.timestamp.sub(uint(user.end).sub(user.duration));
+        uint elapsed = block.timestamp.sub(uint(user.end).sub(uint(user.duration)));
         uint reward = elapsed.mul(rewardsPerSecond).mul(user.votes).div(totalVotes);
         if (reward > rewardPool) {
             reward = rewardPool;
@@ -425,24 +413,29 @@ contract OptinoGov is OptinoGovConfig {
         if (reward > 0) {
             rewardPool = rewardPool.sub(reward);
         }
-        // user.tokens = user.tokens.add(reward);
         totalVotes = totalVotes.sub(user.votes);
         if (user.delegatee != address(0)) {
             commitments[user.delegatee].delegatedVotes = commitments[user.delegatee].delegatedVotes.sub(user.votes);
         }
-        user.votes = 0;
-
-        uint payout = user.tokens;
-        user.tokens = 0;
-        user.end = 0;
-        user.duration = 0;
-
-        require(ogdToken.transferFrom(msg.sender, address(this), payout), "OGD transfer failed");
-        require(ogdToken.burn(payout, msg.sender), "OGD burn failed");
-        // require(ogToken.transfer(msg.sender, payout), "OG transfer failed");
-        // require(ogToken.mint(msg.sender, reward), "OG mint failed");
-
-        emit Uncommitted(msg.sender, payout, tokens, user.duration, user.end, user.votes, rewardPool, totalVotes);
+        user.tokens = user.tokens.sub(tokens);
+        if (user.tokens == 0) {
+            user.duration = 0;
+            user.end = 0;
+            user.votes = 0;
+        } else {
+            // NOTE Rolling over remaining balance for previous duration
+            user.end = uint64(block.timestamp.add(uint(user.duration)));
+            user.votes = user.tokens.mul(uint(user.duration)).div(SECONDS_PER_YEAR);
+            totalVotes = totalVotes.add(user.votes);
+            if (user.delegatee != address(0)) {
+                commitments[user.delegatee].delegatedVotes = commitments[user.delegatee].delegatedVotes.add(user.votes);
+            }
+        }
+        require(ogdToken.withdrawDividendsFor(msg.sender, msg.sender), "OGD withdrawDividendsFor failed");
+        require(ogdToken.transferFrom(msg.sender, address(0), tokens), "OGD transfer failed");
+        require(ogToken.transfer(msg.sender, tokens), "OG transfer failed");
+        require(ogToken.mint(msg.sender, reward), "OG mint failed");
+        emit Uncommitted(msg.sender, tokens, user.tokens, user.duration, user.end, user.votes, rewardPool, totalVotes);
     }
 
     function propose(string memory description, address[] memory targets, uint[] memory values, bytes[] memory data) public returns(uint) {
