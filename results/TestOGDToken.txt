@@ -4,7 +4,7 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
   TestOGDToken
     TestOGDToken - Workflow #0
         --- Setup 1 - Deploy OGDToken, FEE{0..2} ---
-        ogdTokenTx - gasUsed: 2385742, fee: 0.19085936, feeUsd: 73.6087293712, @ 80 gwei & 385.67 ETH/USD, 0x71b6f450615125a849d3689bf70111c769ed9409231af81b03abbc5b1ed2c2be
+        ogdTokenTx - gasUsed: 2445424, fee: 0.19563392, feeUsd: 75.4501339264, @ 80 gwei & 385.67 ETH/USD, 0xf4edeac1dd3c7f295e6717e6a1bed3501529716a939524afc85fdceca7819ba5
         + OGDToken.Transfer(from: ETH|null:0x0000, to: Owner:0xa00A, tokens: 0)
         fee0TokenTx - gasUsed: 823466, fee: 0.06587728, feeUsd: 25.4068905776, @ 80 gwei & 385.67 ETH/USD, 0x0b4b2c0562caa8700af6d002095751952277cf0def194925c675da0ab257e27a
         + Fee0Token.Transfer(from: ETH|null:0x0000, to: Owner:0xa00A, tokens: 10000)
@@ -16,7 +16,7 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
          # Account                                             EtherBalanceChange                            OGD                           FEE0 Blocks 0 to 4
                                                                                                             FEE1                           FEE2
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E       -0.388491200000000000           0.000000000000000000       10000.000000000000000000 Owner:0xa00A
+         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E       -0.393265760000000000           0.000000000000000000       10000.000000000000000000 Owner:0xa00A
                                                                                         10000.000000000000000000       10000.000000000000000000
          1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433        0.000000000000000000           0.000000000000000000           0.000000000000000000 User1:0xa11A
                                                                                             0.000000000000000000           0.000000000000000000
@@ -39,9 +39,9 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         
         Token 0 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 0, owner: Owner:0xa00A, address: OGDToken:0x1647
         - dividendTokensLength : 0
-        - dividendsOwing       : 1 User1:0xa11A       
-        - dividendsOwing       : 2 User2:0xa22A       
-        - dividendsOwing       : 3 User3:0xa33a       
+        - dividendsOwing,new   : 1 User1:0xa11A       
+        - dividendsOwing,new   : 2 User2:0xa22A       
+        - dividendsOwing,new   : 3 User3:0xa33a       
         Token 1 symbol: 'FEE0', name: 'Fee0', decimals: 18, totalSupply: 10000, owner: Owner:0xa00A, address: Fee0Token:0x0f4e
         Token 2 symbol: 'FEE1', name: 'Fee1', decimals: 18, totalSupply: 10000, owner: Owner:0xa00A, address: Fee1Token:0x6eaC
         Token 3 symbol: 'FEE2', name: 'Fee2', decimals: 18, totalSupply: 10000, owner: Owner:0xa00A, address: Fee2Token:0xBa1F
@@ -50,9 +50,9 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
 
         --- Test 1 - OGDToken.addDividendTokens for ETH and FEE0, OGDToken mint(...) permissioning ---
         --- Test 2 - Mint 10,000 OGD tokens for User{1..3}; Owner approve 100 FEE for OGToken to spend ---
-        addDividendToken0 - gasUsed: 114431, fee: 0.00915448, feeUsd: 3.5306083016, @ 80 gwei & 385.67 ETH/USD, 0x2c3a0b52edba81c67119b6420685529e1db6c0ebc53795a2c6fee9d36cf8426a
+        addDividendToken0 - gasUsed: 114409, fee: 0.00915272, feeUsd: 3.5299295224, @ 80 gwei & 385.67 ETH/USD, 0x2c3a0b52edba81c67119b6420685529e1db6c0ebc53795a2c6fee9d36cf8426a
         + OGDToken.DividendTokenAdded(token: ETH|null:0x0000, enabled: true)
-        addDividendToken1 - gasUsed: 116398, fee: 0.00931184, feeUsd: 3.5912973328, @ 80 gwei & 385.67 ETH/USD, 0x2749755abde190e8d5e1f494986e2042eaa7d2469610a90508b0c43e65aecf90
+        addDividendToken1 - gasUsed: 116376, fee: 0.00931008, feeUsd: 3.5906185536, @ 80 gwei & 385.67 ETH/USD, 0x2749755abde190e8d5e1f494986e2042eaa7d2469610a90508b0c43e65aecf90
         + OGDToken.DividendTokenAdded(token: Fee0Token:0x0f4e, enabled: true)
         setPermission1 - gasUsed: 49188, fee: 0.00393504, feeUsd: 1.5176268768, @ 80 gwei & 385.67 ETH/USD, 0xed4de26800303c67fabcf19c7427445e2bbbcc86760ad110c11f410bafeaa94b
         + OGDToken.PermissionUpdated(account: Owner:0xa00A, role: 1, active: true, maximum: 0, processed: 0)
@@ -72,7 +72,7 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
          # Account                                             EtherBalanceChange                            OGD                           FEE0 Blocks 0 to 13
                                                                                                             FEE1                           FEE2
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E       -0.443584640000000000           0.000000000000000000       10000.000000000000000000 Owner:0xa00A
+         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E       -0.448355680000000000           0.000000000000000000       10000.000000000000000000 Owner:0xa00A
                                                                                         10000.000000000000000000       10000.000000000000000000
          1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433        0.000000000000000000       10000.000000000000000000           0.000000000000000000 User1:0xa11A
                                                                                             0.000000000000000000           0.000000000000000000
@@ -97,9 +97,9 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         - dividendTokensLength : 2
         - dividendToken        : 0 ETH|null:0x0000, enabled: true, unclaimedDividends: 0
         - dividendToken        : 1 Fee0Token:0x0f4e, enabled: true, unclaimedDividends: 0
-        - dividendsOwing       : 1 User1:0xa11A       ETH|null:0x0000 0 0                     Fee0Token:0x0f4e 0 0                    
-        - dividendsOwing       : 2 User2:0xa22A       ETH|null:0x0000 0 0                     Fee0Token:0x0f4e 0 0                    
-        - dividendsOwing       : 3 User3:0xa33a       ETH|null:0x0000 0 0                     Fee0Token:0x0f4e 0 0                    
+        - dividendsOwing,new   : 1 User1:0xa11A       0, 0 ETH|null:0x00000, 0 Fee0Token:0x0f4e
+        - dividendsOwing,new   : 2 User2:0xa22A       0, 0 ETH|null:0x00000, 0 Fee0Token:0x0f4e
+        - dividendsOwing,new   : 3 User3:0xa33a       0, 0 ETH|null:0x00000, 0 Fee0Token:0x0f4e
         Token 1 symbol: 'FEE0', name: 'Fee0', decimals: 18, totalSupply: 10000, owner: Owner:0xa00A, address: Fee0Token:0x0f4e
         Token 2 symbol: 'FEE1', name: 'Fee1', decimals: 18, totalSupply: 10000, owner: Owner:0xa00A, address: Fee1Token:0x6eaC
         Token 3 symbol: 'FEE2', name: 'Fee2', decimals: 18, totalSupply: 10000, owner: Owner:0xa00A, address: Fee2Token:0xBa1F
@@ -114,7 +114,7 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
          # Account                                             EtherBalanceChange                            OGD                           FEE0 Blocks 0 to 15
                                                                                                             FEE1                           FEE2
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E      -10.456436960000000000           0.000000000000000000        9900.000000000000000000 Owner:0xa00A
+         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E      -10.461208000000000000           0.000000000000000000        9900.000000000000000000 Owner:0xa00A
                                                                                         10000.000000000000000000       10000.000000000000000000
          1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433        0.000000000000000000       10000.000000000000000000           0.000000000000000000 User1:0xa11A
                                                                                             0.000000000000000000           0.000000000000000000
@@ -139,26 +139,26 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         - dividendTokensLength : 2
         - dividendToken        : 0 ETH|null:0x0000, enabled: true, unclaimedDividends: 10
         - dividendToken        : 1 Fee0Token:0x0f4e, enabled: true, unclaimedDividends: 100
-        - dividendsOwing       : 1 User1:0xa11A       ETH|null:0x0000 0 3.333333333333333333  Fee0Token:0x0f4e 0 33.333333333333333333
-        - dividendsOwing       : 2 User2:0xa22A       ETH|null:0x0000 0 3.333333333333333333  Fee0Token:0x0f4e 0 33.333333333333333333
-        - dividendsOwing       : 3 User3:0xa33a       ETH|null:0x0000 0 3.333333333333333333  Fee0Token:0x0f4e 0 33.333333333333333333
+        - dividendsOwing,new   : 1 User1:0xa11A       0, 3.333333333333333333 ETH|null:0x00000, 33.333333333333333333 Fee0Token:0x0f4e
+        - dividendsOwing,new   : 2 User2:0xa22A       0, 3.333333333333333333 ETH|null:0x00000, 33.333333333333333333 Fee0Token:0x0f4e
+        - dividendsOwing,new   : 3 User3:0xa33a       0, 3.333333333333333333 ETH|null:0x00000, 33.333333333333333333 Fee0Token:0x0f4e
         Token 1 symbol: 'FEE0', name: 'Fee0', decimals: 18, totalSupply: 10000, owner: Owner:0xa00A, address: Fee0Token:0x0f4e
         Token 2 symbol: 'FEE1', name: 'Fee1', decimals: 18, totalSupply: 10000, owner: Owner:0xa00A, address: Fee1Token:0x6eaC
         Token 3 symbol: 'FEE2', name: 'Fee2', decimals: 18, totalSupply: 10000, owner: Owner:0xa00A, address: Fee2Token:0xBa1F
         
         --- Test 4 - User1 dummy transfer to same account (internal stats update) ---
-        transfer1 - gasUsed: 163840, fee: 0.0131072, feeUsd: 5.055053824, @ 80 gwei & 385.67 ETH/USD, 0x361f82e27e299edcc5880788540594dc8dc2e0865868d243c888b7cd82bdcf21
+        transfer1 - gasUsed: 163818, fee: 0.01310544, feeUsd: 5.0543750448, @ 80 gwei & 385.67 ETH/USD, 0x361f82e27e299edcc5880788540594dc8dc2e0865868d243c888b7cd82bdcf21
         + OGDToken.Transfer(from: User2:0xa22A, to: User2:0xa22A, tokens: 1e-18)
         --- Test 5 - User{1..3} withdraw 33.333333333333333333 FEE0 and 3.333333333333333333 ETH ---
-        withdrawDividends1 - gasUsed: 156253, fee: 0.01250024, feeUsd: 4.8209675608, @ 80 gwei & 385.67 ETH/USD, 0xcbec2a6157ff5ca3108c233ecd1bf267de846802feea62cf774f6ca76b8e7c67
+        withdrawDividends1 - gasUsed: 156275, fee: 0.012502, feeUsd: 4.82164634, @ 80 gwei & 385.67 ETH/USD, 0xcbec2a6157ff5ca3108c233ecd1bf267de846802feea62cf774f6ca76b8e7c67
         + OGDToken.DividendWithdrawn(account: User1:0xa11A, destination: User1:0xa11A, token: ETH|null:0x0000, tokens: 3.333333333333333333)
         + Fee0Token.Transfer(from: OGDToken:0x1647, to: User1:0xa11A, tokens: 33.333333333333333333)
         + OGDToken.DividendWithdrawn(account: User1:0xa11A, destination: User1:0xa11A, token: Fee0Token:0x0f4e, tokens: 33.333333333333333333)
-        withdrawDividends2 - gasUsed: 80023, fee: 0.00640184, feeUsd: 2.4689976328, @ 80 gwei & 385.67 ETH/USD, 0xee6131b9a8f2029672aa3b8f084b2c58ebb217910a2d27457ba3f8451b7ea73b
+        withdrawDividends2 - gasUsed: 80045, fee: 0.0064036, feeUsd: 2.469676412, @ 80 gwei & 385.67 ETH/USD, 0xee6131b9a8f2029672aa3b8f084b2c58ebb217910a2d27457ba3f8451b7ea73b
         + OGDToken.DividendWithdrawn(account: User2:0xa22A, destination: User2:0xa22A, token: ETH|null:0x0000, tokens: 3.333333333333333333)
         + Fee0Token.Transfer(from: OGDToken:0x1647, to: User2:0xa22A, tokens: 33.333333333333333333)
         + OGDToken.DividendWithdrawn(account: User2:0xa22A, destination: User2:0xa22A, token: Fee0Token:0x0f4e, tokens: 33.333333333333333333)
-        withdrawDividends3 - gasUsed: 156253, fee: 0.01250024, feeUsd: 4.8209675608, @ 80 gwei & 385.67 ETH/USD, 0x6829e5bbbe274b7d1bce1ad95e0e83543a0fe5490a8bdf734272d8f3e935c013
+        withdrawDividends3 - gasUsed: 156275, fee: 0.012502, feeUsd: 4.82164634, @ 80 gwei & 385.67 ETH/USD, 0x6829e5bbbe274b7d1bce1ad95e0e83543a0fe5490a8bdf734272d8f3e935c013
         + OGDToken.DividendWithdrawn(account: User3:0xa33a, destination: User3:0xa33a, token: ETH|null:0x0000, tokens: 3.333333333333333333)
         + Fee0Token.Transfer(from: OGDToken:0x1647, to: User3:0xa33a, tokens: 33.333333333333333333)
         + OGDToken.DividendWithdrawn(account: User3:0xa33a, destination: User3:0xa33a, token: Fee0Token:0x0f4e, tokens: 33.333333333333333333)
@@ -166,13 +166,13 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
          # Account                                             EtherBalanceChange                            OGD                           FEE0 Blocks 0 to 19
                                                                                                             FEE1                           FEE2
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E      -10.456436960000000000           0.000000000000000000        9900.000000000000000000 Owner:0xa00A
+         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E      -10.461208000000000000           0.000000000000000000        9900.000000000000000000 Owner:0xa00A
                                                                                         10000.000000000000000000       10000.000000000000000000
-         1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433        3.320833093333333333       10000.000000000000000000          33.333333333333333333 User1:0xa11A
+         1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433        3.320831333333333333       10000.000000000000000000          33.333333333333333333 User1:0xa11A
                                                                                             0.000000000000000000           0.000000000000000000
          2 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976        3.313824293333333333       10000.000000000000000000          33.333333333333333333 User2:0xa22A
                                                                                             0.000000000000000000           0.000000000000000000
-         3 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0        3.320833093333333333       10000.000000000000000000          33.333333333333333333 User3:0xa33a
+         3 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0        3.320831333333333333       10000.000000000000000000          33.333333333333333333 User3:0xa33a
                                                                                             0.000000000000000000           0.000000000000000000
          4 0x1647B1461251A0c6D3E14a227dE0F16E36ba80B1        0.000000000000000001           0.000000000000000000           0.000000000000000001 OGDToken:0x1647
                                                                                             0.000000000000000000           0.000000000000000000
@@ -191,17 +191,17 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         - dividendTokensLength : 2
         - dividendToken        : 0 ETH|null:0x0000, enabled: true, unclaimedDividends: 1e-18
         - dividendToken        : 1 Fee0Token:0x0f4e, enabled: true, unclaimedDividends: 1e-18
-        - dividendsOwing       : 1 User1:0xa11A       ETH|null:0x0000 0 0                     Fee0Token:0x0f4e 0 0                    
-        - dividendsOwing       : 2 User2:0xa22A       ETH|null:0x0000 0 0                     Fee0Token:0x0f4e 0 0                    
-        - dividendsOwing       : 3 User3:0xa33a       ETH|null:0x0000 0 0                     Fee0Token:0x0f4e 0 0                    
+        - dividendsOwing,new   : 1 User1:0xa11A       0, 0 ETH|null:0x00000, 0 Fee0Token:0x0f4e
+        - dividendsOwing,new   : 2 User2:0xa22A       0, 0 ETH|null:0x00000, 0 Fee0Token:0x0f4e
+        - dividendsOwing,new   : 3 User3:0xa33a       0, 0 ETH|null:0x00000, 0 Fee0Token:0x0f4e
         Token 1 symbol: 'FEE0', name: 'Fee0', decimals: 18, totalSupply: 10000, owner: Owner:0xa00A, address: Fee0Token:0x0f4e
         Token 2 symbol: 'FEE1', name: 'Fee1', decimals: 18, totalSupply: 10000, owner: Owner:0xa00A, address: Fee1Token:0x6eaC
         Token 3 symbol: 'FEE2', name: 'Fee2', decimals: 18, totalSupply: 10000, owner: Owner:0xa00A, address: Fee2Token:0xBa1F
         
         --- Test 6 - Add Fee{1..2} Dividend Token ---
-        addDividendToken2 - gasUsed: 116398, fee: 0.00931184, feeUsd: 3.5912973328, @ 80 gwei & 385.67 ETH/USD, 0x3ba684c34fd3e23ac5775730c9e50f9123578cf40854a990645a62ce3bb43e55
+        addDividendToken2 - gasUsed: 116376, fee: 0.00931008, feeUsd: 3.5906185536, @ 80 gwei & 385.67 ETH/USD, 0x3ba684c34fd3e23ac5775730c9e50f9123578cf40854a990645a62ce3bb43e55
         + OGDToken.DividendTokenAdded(token: Fee1Token:0x6eaC, enabled: true)
-        addDividendToken3 - gasUsed: 116398, fee: 0.00931184, feeUsd: 3.5912973328, @ 80 gwei & 385.67 ETH/USD, 0x6636fa7cc209624153b961e0caf4088ae38990c3253af601b95eaba779de883e
+        addDividendToken3 - gasUsed: 116376, fee: 0.00931008, feeUsd: 3.5906185536, @ 80 gwei & 385.67 ETH/USD, 0x6636fa7cc209624153b961e0caf4088ae38990c3253af601b95eaba779de883e
         + OGDToken.DividendTokenAdded(token: Fee2Token:0xBa1F, enabled: true)
         --- Test 7 - Owner deposits dividends of 1,000 FEE1 and 10,000 FEE2 ---
         depositDividendFee1 - gasUsed: 91461, fee: 0.00731688, feeUsd: 2.8219011096, @ 80 gwei & 385.67 ETH/USD, 0xe72dd038a48e0c2da56418ebadead6d7a7bab936e8bf762fdfb0e1e2874bc6e8
@@ -211,21 +211,21 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         + Fee2Token.Transfer(from: Owner:0xa00A, to: OGDToken:0x1647, tokens: 10000)
         + OGDToken.DividendDeposited(token: Fee2Token:0xBa1F, tokens: 10000)
         --- Test 8 - User{1..3} withdraw 333.333333333333333333 FEE1 and 3333.333333333333333333 FEE2 ---
-        withdrawDividends4 - gasUsed: 217780, fee: 0.0174224, feeUsd: 6.719297008, @ 80 gwei & 385.67 ETH/USD, 0x47597c2701d878ed659e15d2f6916cee66ded687bc4e5e59b558c5e95ea12de0
+        withdrawDividends4 - gasUsed: 217802, fee: 0.01742416, feeUsd: 6.7199757872, @ 80 gwei & 385.67 ETH/USD, 0x47597c2701d878ed659e15d2f6916cee66ded687bc4e5e59b558c5e95ea12de0
         + OGDToken.DividendWithdrawn(account: User1:0xa11A, destination: User1:0xa11A, token: ETH|null:0x0000, tokens: 0)
         + OGDToken.DividendWithdrawn(account: User1:0xa11A, destination: User1:0xa11A, token: Fee0Token:0x0f4e, tokens: 0)
         + Fee1Token.Transfer(from: OGDToken:0x1647, to: User1:0xa11A, tokens: 333.333333333333333333)
         + OGDToken.DividendWithdrawn(account: User1:0xa11A, destination: User1:0xa11A, token: Fee1Token:0x6eaC, tokens: 333.333333333333333333)
         + Fee2Token.Transfer(from: OGDToken:0x1647, to: User1:0xa11A, tokens: 3333.333333333333333333)
         + OGDToken.DividendWithdrawn(account: User1:0xa11A, destination: User1:0xa11A, token: Fee2Token:0xBa1F, tokens: 3333.333333333333333333)
-        withdrawDividends5 - gasUsed: 217780, fee: 0.0174224, feeUsd: 6.719297008, @ 80 gwei & 385.67 ETH/USD, 0x1202b43f1f8c6378bbba4058c93d90a62e0da764afe656ba48c3dc3a3e2b8766
+        withdrawDividends5 - gasUsed: 217802, fee: 0.01742416, feeUsd: 6.7199757872, @ 80 gwei & 385.67 ETH/USD, 0x1202b43f1f8c6378bbba4058c93d90a62e0da764afe656ba48c3dc3a3e2b8766
         + OGDToken.DividendWithdrawn(account: User2:0xa22A, destination: User2:0xa22A, token: ETH|null:0x0000, tokens: 0)
         + OGDToken.DividendWithdrawn(account: User2:0xa22A, destination: User2:0xa22A, token: Fee0Token:0x0f4e, tokens: 0)
         + Fee1Token.Transfer(from: OGDToken:0x1647, to: User2:0xa22A, tokens: 333.333333333333333333)
         + OGDToken.DividendWithdrawn(account: User2:0xa22A, destination: User2:0xa22A, token: Fee1Token:0x6eaC, tokens: 333.333333333333333333)
         + Fee2Token.Transfer(from: OGDToken:0x1647, to: User2:0xa22A, tokens: 3333.333333333333333333)
         + OGDToken.DividendWithdrawn(account: User2:0xa22A, destination: User2:0xa22A, token: Fee2Token:0xBa1F, tokens: 3333.333333333333333333)
-        withdrawDividends6 - gasUsed: 217780, fee: 0.0174224, feeUsd: 6.719297008, @ 80 gwei & 385.67 ETH/USD, 0x5d3f696a0e18423733ac57fa04e0960729991cc064c55a60525428ccd92f0d0a
+        withdrawDividends6 - gasUsed: 217802, fee: 0.01742416, feeUsd: 6.7199757872, @ 80 gwei & 385.67 ETH/USD, 0x5d3f696a0e18423733ac57fa04e0960729991cc064c55a60525428ccd92f0d0a
         + OGDToken.DividendWithdrawn(account: User3:0xa33a, destination: User3:0xa33a, token: ETH|null:0x0000, tokens: 0)
         + OGDToken.DividendWithdrawn(account: User3:0xa33a, destination: User3:0xa33a, token: Fee0Token:0x0f4e, tokens: 0)
         + Fee1Token.Transfer(from: OGDToken:0x1647, to: User3:0xa33a, tokens: 333.333333333333333333)
@@ -236,13 +236,13 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
          # Account                                             EtherBalanceChange                            OGD                           FEE0 Blocks 0 to 26
                                                                                                             FEE1                           FEE2
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E      -10.488495360000000000           0.000000000000000000        9900.000000000000000000 Owner:0xa00A
+         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E      -10.493262880000000000           0.000000000000000000        9900.000000000000000000 Owner:0xa00A
                                                                                          9000.000000000000000000           0.000000000000000000
-         1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433        3.303410693333333333       10000.000000000000000000          33.333333333333333333 User1:0xa11A
+         1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433        3.303407173333333333       10000.000000000000000000          33.333333333333333333 User1:0xa11A
                                                                                           333.333333333333333333        3333.333333333333333333
-         2 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976        3.296401893333333333       10000.000000000000000000          33.333333333333333333 User2:0xa22A
+         2 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976        3.296400133333333333       10000.000000000000000000          33.333333333333333333 User2:0xa22A
                                                                                           333.333333333333333333        3333.333333333333333333
-         3 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0        3.303410693333333333       10000.000000000000000000          33.333333333333333333 User3:0xa33a
+         3 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0        3.303407173333333333       10000.000000000000000000          33.333333333333333333 User3:0xa33a
                                                                                           333.333333333333333333        3333.333333333333333333
          4 0x1647B1461251A0c6D3E14a227dE0F16E36ba80B1        0.000000000000000001           0.000000000000000000           0.000000000000000001 OGDToken:0x1647
                                                                                             0.000000000000000001           0.000000000000000001
@@ -263,27 +263,27 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         - dividendToken        : 1 Fee0Token:0x0f4e, enabled: true, unclaimedDividends: 1e-18
         - dividendToken        : 2 Fee1Token:0x6eaC, enabled: true, unclaimedDividends: 1e-18
         - dividendToken        : 3 Fee2Token:0xBa1F, enabled: true, unclaimedDividends: 1e-18
-        - dividendsOwing       : 1 User1:0xa11A       ETH|null:0x0000 0 0                     Fee0Token:0x0f4e 0 0                    Fee1Token:0x6eaC 0 0                    Fee2Token:0xBa1F 0 0                    
-        - dividendsOwing       : 2 User2:0xa22A       ETH|null:0x0000 0 0                     Fee0Token:0x0f4e 0 0                    Fee1Token:0x6eaC 0 0                    Fee2Token:0xBa1F 0 0                    
-        - dividendsOwing       : 3 User3:0xa33a       ETH|null:0x0000 0 0                     Fee0Token:0x0f4e 0 0                    Fee1Token:0x6eaC 0 0                    Fee2Token:0xBa1F 0 0                    
+        - dividendsOwing,new   : 1 User1:0xa11A       0, 0 ETH|null:0x00000, 0 Fee0Token:0x0f4e0, 0 Fee1Token:0x6eaC0, 0 Fee2Token:0xBa1F
+        - dividendsOwing,new   : 2 User2:0xa22A       0, 0 ETH|null:0x00000, 0 Fee0Token:0x0f4e0, 0 Fee1Token:0x6eaC0, 0 Fee2Token:0xBa1F
+        - dividendsOwing,new   : 3 User3:0xa33a       0, 0 ETH|null:0x00000, 0 Fee0Token:0x0f4e0, 0 Fee1Token:0x6eaC0, 0 Fee2Token:0xBa1F
         Token 1 symbol: 'FEE0', name: 'Fee0', decimals: 18, totalSupply: 10000, owner: Owner:0xa00A, address: Fee0Token:0x0f4e
         Token 2 symbol: 'FEE1', name: 'Fee1', decimals: 18, totalSupply: 10000, owner: Owner:0xa00A, address: Fee1Token:0x6eaC
         Token 3 symbol: 'FEE2', name: 'Fee2', decimals: 18, totalSupply: 10000, owner: Owner:0xa00A, address: Fee2Token:0xBa1F
         
         --- Test 9 - User2 transfer 1 OGD to User3 ---
-        transfer2 - gasUsed: 120909, fee: 0.00967272, feeUsd: 3.7304779224, @ 80 gwei & 385.67 ETH/USD, 0xe6027c9392633b69e0c0223c2e8b90e0035f196b696546f18ef9e6bc93cca620
+        transfer2 - gasUsed: 120887, fee: 0.00967096, feeUsd: 3.7297991432, @ 80 gwei & 385.67 ETH/USD, 0xe6027c9392633b69e0c0223c2e8b90e0035f196b696546f18ef9e6bc93cca620
         + OGDToken.Transfer(from: User2:0xa22A, to: User3:0xa33a, tokens: 0.123456789123456789)
         
          # Account                                             EtherBalanceChange                            OGD                           FEE0 Blocks 0 to 27
                                                                                                             FEE1                           FEE2
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E      -10.488495360000000000           0.000000000000000000        9900.000000000000000000 Owner:0xa00A
+         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E      -10.493262880000000000           0.000000000000000000        9900.000000000000000000 Owner:0xa00A
                                                                                          9000.000000000000000000           0.000000000000000000
-         1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433        3.303410693333333333       10000.000000000000000000          33.333333333333333333 User1:0xa11A
+         1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433        3.303407173333333333       10000.000000000000000000          33.333333333333333333 User1:0xa11A
                                                                                           333.333333333333333333        3333.333333333333333333
          2 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976        3.286729173333333333        9999.876543210876543211          33.333333333333333333 User2:0xa22A
                                                                                           333.333333333333333333        3333.333333333333333333
-         3 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0        3.303410693333333333       10000.123456789123456789          33.333333333333333333 User3:0xa33a
+         3 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0        3.303407173333333333       10000.123456789123456789          33.333333333333333333 User3:0xa33a
                                                                                           333.333333333333333333        3333.333333333333333333
          4 0x1647B1461251A0c6D3E14a227dE0F16E36ba80B1        0.000000000000000001           0.000000000000000000           0.000000000000000001 OGDToken:0x1647
                                                                                             0.000000000000000001           0.000000000000000001
@@ -304,21 +304,21 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         - dividendToken        : 1 Fee0Token:0x0f4e, enabled: true, unclaimedDividends: 1e-18
         - dividendToken        : 2 Fee1Token:0x6eaC, enabled: true, unclaimedDividends: 1e-18
         - dividendToken        : 3 Fee2Token:0xBa1F, enabled: true, unclaimedDividends: 1e-18
-        - dividendsOwing       : 1 User1:0xa11A       ETH|null:0x0000 0 0                     Fee0Token:0x0f4e 0 0                    Fee1Token:0x6eaC 0 0                    Fee2Token:0xBa1F 0 0                    
-        - dividendsOwing       : 2 User2:0xa22A       ETH|null:0x0000 0 0                     Fee0Token:0x0f4e 0 0                    Fee1Token:0x6eaC 0 0                    Fee2Token:0xBa1F 0 0                    
-        - dividendsOwing       : 3 User3:0xa33a       ETH|null:0x0000 0 0                     Fee0Token:0x0f4e 0 0                    Fee1Token:0x6eaC 0 0                    Fee2Token:0xBa1F 0 0                    
+        - dividendsOwing,new   : 1 User1:0xa11A       0, 0 ETH|null:0x00000, 0 Fee0Token:0x0f4e0, 0 Fee1Token:0x6eaC0, 0 Fee2Token:0xBa1F
+        - dividendsOwing,new   : 2 User2:0xa22A       0, 0 ETH|null:0x00000, 0 Fee0Token:0x0f4e0, 0 Fee1Token:0x6eaC0, 0 Fee2Token:0xBa1F
+        - dividendsOwing,new   : 3 User3:0xa33a       0, 0 ETH|null:0x00000, 0 Fee0Token:0x0f4e0, 0 Fee1Token:0x6eaC0, 0 Fee2Token:0xBa1F
         Token 1 symbol: 'FEE0', name: 'Fee0', decimals: 18, totalSupply: 10000, owner: Owner:0xa00A, address: Fee0Token:0x0f4e
         Token 2 symbol: 'FEE1', name: 'Fee1', decimals: 18, totalSupply: 10000, owner: Owner:0xa00A, address: Fee1Token:0x6eaC
         Token 3 symbol: 'FEE2', name: 'Fee2', decimals: 18, totalSupply: 10000, owner: Owner:0xa00A, address: Fee2Token:0xBa1F
         
         --- Test Completed ---
 
-      ✓ Workflow #0 (3705ms)
+      ✓ Workflow #0 (3186ms)
     TestOGDToken - Workflow #1 - Transfer Test
       - Workflow #1 - Transfer Test
     TestOGDToken - Workflow #2 - TODO
         --- Setup 1 - Deploy OGDToken, FEE{0..2} ---
-        ogdTokenTx - gasUsed: 2385742, fee: 0.19085936, feeUsd: 73.6087293712, @ 80 gwei & 385.67 ETH/USD, 0x65bfd7934ad60b57189c1be4645fbb9cb4eb6f14eaaa182ec9e3fa6dc69e2e68
+        ogdTokenTx - gasUsed: 2445424, fee: 0.19563392, feeUsd: 75.4501339264, @ 80 gwei & 385.67 ETH/USD, 0x96d8466f87d4808c7548777ec1e9d325d2b77eea9ea2bbc003ecebf083f8c03e
         + OGDToken.Transfer(from: ETH|null:0x0000, to: Owner:0xa00A, tokens: 0)
         fee0TokenTx - gasUsed: 823466, fee: 0.06587728, feeUsd: 25.4068905776, @ 80 gwei & 385.67 ETH/USD, 0xca3c6e525a5f30539ee1cc18eaf078cd8391bb36b4c2f6be5e381e27fa429e64
         + Fee0Token.Transfer(from: ETH|null:0x0000, to: Owner:0xa00A, tokens: 10000)
@@ -330,7 +330,7 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
          # Account                                             EtherBalanceChange                            OGD                           FEE0 Blocks 27 to 31
                                                                                                             FEE1                           FEE2
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E       -0.388491200000000000           0.000000000000000000       10000.000000000000000000 Owner:0xa00A
+         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E       -0.393265760000000000           0.000000000000000000       10000.000000000000000000 Owner:0xa00A
                                                                                         10000.000000000000000000       10000.000000000000000000
          1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433        0.000000000000000000           0.000000000000000000           0.000000000000000000 User1:0xa11A
                                                                                             0.000000000000000000           0.000000000000000000
@@ -353,9 +353,9 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         
         Token 0 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 0, owner: Owner:0xa00A, address: OGDToken:0x5fe7
         - dividendTokensLength : 0
-        - dividendsOwing       : 1 User1:0xa11A       
-        - dividendsOwing       : 2 User2:0xa22A       
-        - dividendsOwing       : 3 User3:0xa33a       
+        - dividendsOwing,new   : 1 User1:0xa11A       
+        - dividendsOwing,new   : 2 User2:0xa22A       
+        - dividendsOwing,new   : 3 User3:0xa33a       
         Token 1 symbol: 'FEE0', name: 'Fee0', decimals: 18, totalSupply: 10000, owner: Owner:0xa00A, address: Fee0Token:0xA3FD
         Token 2 symbol: 'FEE1', name: 'Fee1', decimals: 18, totalSupply: 10000, owner: Owner:0xa00A, address: Fee1Token:0xee9a
         Token 3 symbol: 'FEE2', name: 'Fee2', decimals: 18, totalSupply: 10000, owner: Owner:0xa00A, address: Fee2Token:0x0b70
