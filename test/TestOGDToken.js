@@ -18,8 +18,8 @@ describe("TestOGDToken", function() {
     console.log("        --- Setup 1 - Deploy OGDToken, FEE{0..2} ---");
     const setup1 = [];
     setup1.push(OGDToken.deploy("OGD", "Optino Governance Dividend", 18, data.owner, new BigNumber("0").shiftedBy(18).toFixed(0)));
-    setup1.push(TestToken.deploy("FEE0", "Fee0", 18, data.owner, new BigNumber("10000").shiftedBy(18).toFixed(0)));
-    setup1.push(TestToken.deploy("FEE1", "Fee1", 18, data.owner, new BigNumber("10000").shiftedBy(18).toFixed(0)));
+    setup1.push(TestToken.deploy("FEE0", "Fee0", 18, data.owner, new BigNumber("100").shiftedBy(18).toFixed(0)));
+    setup1.push(TestToken.deploy("FEE1", "Fee1", 18, data.owner, new BigNumber("1000").shiftedBy(18).toFixed(0)));
     setup1.push(TestToken.deploy("FEE2", "Fee2", 18, data.owner, new BigNumber("10000").shiftedBy(18).toFixed(0)));
     const [ogdToken, fee0Token, fee1Token, fee2Token] = await Promise.all(setup1);
     await data.setOGDTokenData(ogdToken, fee0Token, fee1Token, fee2Token);
@@ -85,9 +85,7 @@ describe("TestOGDToken", function() {
       test4.push(data.ogdToken.connect(data.user2Signer).transfer(data.user2, "1"));
       const [transfer1] = await Promise.all(test4);
       await data.printTxData("transfer1", transfer1);
-      if (verbose) {
-        await data.printBalances();
-      }
+      await data.printBalances();
 
       console.log("        --- Test 5 - User{1..3} withdraw 33.333333333333333333 FEE0 and 3.333333333333333333 ETH ---");
       const test5 = [];

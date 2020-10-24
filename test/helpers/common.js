@@ -27,12 +27,13 @@ class Data {
   }
 
   async init() {
-    [this.ownerSigner, this.user1Signer, this.user2Signer, this.user3Signer] = await ethers.getSigners();
-    [this.owner, this.user1, this.user2, this.user3] = await Promise.all([this.ownerSigner.getAddress(), this.user1Signer.getAddress(), this.user2Signer.getAddress(), this.user3Signer.getAddress()]);
+    [this.ownerSigner, this.user1Signer, this.user2Signer, this.user3Signer, this.user4Signer] = await ethers.getSigners();
+    [this.owner, this.user1, this.user2, this.user3, this.user4] = await Promise.all([this.ownerSigner.getAddress(), this.user1Signer.getAddress(), this.user2Signer.getAddress(), this.user3Signer.getAddress(), this.user4Signer.getAddress()]);
     this.addAccount(this.owner, "Owner");
     this.addAccount(this.user1, "User1");
     this.addAccount(this.user2, "User2");
     this.addAccount(this.user3, "User3");
+    this.addAccount(this.user4, "User4");
 
     // await ethers.provider.getBlockNumber().then((blockNumber) => {
     //   console.log("Current block number: " + blockNumber);

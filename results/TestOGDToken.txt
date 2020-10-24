@@ -6,35 +6,37 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         --- Setup 1 - Deploy OGDToken, FEE{0..2} ---
         ogdTokenTx - gasUsed: 2445424, fee: 0.19563392, feeUsd: 75.4501339264, @ 80 gwei & 385.67 ETH/USD, 0xf4edeac1dd3c7f295e6717e6a1bed3501529716a939524afc85fdceca7819ba5
         + OGDToken.Transfer(from: ETH|null:0x0000, to: Owner:0xa00A, tokens: 0)
-        fee0TokenTx - gasUsed: 823466, fee: 0.06587728, feeUsd: 25.4068905776, @ 80 gwei & 385.67 ETH/USD, 0x0b4b2c0562caa8700af6d002095751952277cf0def194925c675da0ab257e27a
-        + Fee0Token.Transfer(from: ETH|null:0x0000, to: Owner:0xa00A, tokens: 10000)
-        fee1TokenTx - gasUsed: 823466, fee: 0.06587728, feeUsd: 25.4068905776, @ 80 gwei & 385.67 ETH/USD, 0x1b720cf5fa21928dc5f82e8964047d14cd468ffbecfe6a76d010d95b6a4ad8a2
-        + Fee1Token.Transfer(from: ETH|null:0x0000, to: Owner:0xa00A, tokens: 10000)
+        fee0TokenTx - gasUsed: 823454, fee: 0.06587632, feeUsd: 25.4065203344, @ 80 gwei & 385.67 ETH/USD, 0xc4c5bd4723108b18e6d5585ec11217affdcdd044ab0b3dc5679fb4a6da0b23a6
+        + Fee0Token.Transfer(from: ETH|null:0x0000, to: Owner:0xa00A, tokens: 100)
+        fee1TokenTx - gasUsed: 823454, fee: 0.06587632, feeUsd: 25.4065203344, @ 80 gwei & 385.67 ETH/USD, 0x73b60b4bb5c21d897f4a0e52028cfa74e44e313dbd3419e711a9057b75ab0fd7
+        + Fee1Token.Transfer(from: ETH|null:0x0000, to: Owner:0xa00A, tokens: 1000)
         fee2TokenTx - gasUsed: 823466, fee: 0.06587728, feeUsd: 25.4068905776, @ 80 gwei & 385.67 ETH/USD, 0xd3e376832727e48ac0f3d54a61006da7df7d196c7fa53c893549befbb058a8ca
         + Fee2Token.Transfer(from: ETH|null:0x0000, to: Owner:0xa00A, tokens: 10000)
         
          # Account                                             EtherBalanceChange                            OGD                           FEE0 Blocks 0 to 4
                                                                                                             FEE1                           FEE2
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E       -0.393265760000000000           0.000000000000000000       10000.000000000000000000 Owner:0xa00A
-                                                                                        10000.000000000000000000       10000.000000000000000000
+         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E       -0.393263840000000000           0.000000000000000000         100.000000000000000000 Owner:0xa00A
+                                                                                         1000.000000000000000000       10000.000000000000000000
          1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433        0.000000000000000000           0.000000000000000000           0.000000000000000000 User1:0xa11A
                                                                                             0.000000000000000000           0.000000000000000000
          2 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976        0.000000000000000000           0.000000000000000000           0.000000000000000000 User2:0xa22A
                                                                                             0.000000000000000000           0.000000000000000000
          3 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0        0.000000000000000000           0.000000000000000000           0.000000000000000000 User3:0xa33a
                                                                                             0.000000000000000000           0.000000000000000000
-         4 0x1647B1461251A0c6D3E14a227dE0F16E36ba80B1        0.000000000000000000           0.000000000000000000           0.000000000000000000 OGDToken:0x1647
+         4 0xa44a08d3F6933c69212114bb66E2Df1813651844        0.000000000000000000           0.000000000000000000           0.000000000000000000 User4:0xa44a
                                                                                             0.000000000000000000           0.000000000000000000
-         5 0x0f4eA6f2be49d822b7cAEf4175450A4D83A32e72        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee0Token:0x0f4e
+         5 0x1647B1461251A0c6D3E14a227dE0F16E36ba80B1        0.000000000000000000           0.000000000000000000           0.000000000000000000 OGDToken:0x1647
                                                                                             0.000000000000000000           0.000000000000000000
-         6 0x6eaC8DFBdEB9588C9FEEe24783B4137b082f9708        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee1Token:0x6eaC
+         6 0x0f4eA6f2be49d822b7cAEf4175450A4D83A32e72        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee0Token:0x0f4e
                                                                                             0.000000000000000000           0.000000000000000000
-         7 0xBa1FCDaE835E77cAB2a76a7C3884AdC630f7a5B0        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee2Token:0xBa1F
+         7 0x6eaC8DFBdEB9588C9FEEe24783B4137b082f9708        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee1Token:0x6eaC
+                                                                                            0.000000000000000000           0.000000000000000000
+         8 0xBa1FCDaE835E77cAB2a76a7C3884AdC630f7a5B0        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee2Token:0xBa1F
                                                                                             0.000000000000000000           0.000000000000000000
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-                                                                                            0.000000000000000000       10000.000000000000000000 Total Token Balances
-                                                                                        10000.000000000000000000       10000.000000000000000000
+                                                                                            0.000000000000000000         100.000000000000000000 Total Token Balances
+                                                                                         1000.000000000000000000       10000.000000000000000000
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
         
         Token 0 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 0, owner: Owner:0xa00A, address: OGDToken:0x1647
@@ -42,8 +44,9 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         - dividendsOwing,new   : 1 User1:0xa11A       
         - dividendsOwing,new   : 2 User2:0xa22A       
         - dividendsOwing,new   : 3 User3:0xa33a       
-        Token 1 symbol: 'FEE0', name: 'Fee0', decimals: 18, totalSupply: 10000, owner: Owner:0xa00A, address: Fee0Token:0x0f4e
-        Token 2 symbol: 'FEE1', name: 'Fee1', decimals: 18, totalSupply: 10000, owner: Owner:0xa00A, address: Fee1Token:0x6eaC
+        - dividendsOwing,new   : 4 User4:0xa44a       
+        Token 1 symbol: 'FEE0', name: 'Fee0', decimals: 18, totalSupply: 100, owner: Owner:0xa00A, address: Fee0Token:0x0f4e
+        Token 2 symbol: 'FEE1', name: 'Fee1', decimals: 18, totalSupply: 1000, owner: Owner:0xa00A, address: Fee1Token:0x6eaC
         Token 3 symbol: 'FEE2', name: 'Fee2', decimals: 18, totalSupply: 10000, owner: Owner:0xa00A, address: Fee2Token:0xBa1F
         
         --- Setup Completed ---
@@ -72,25 +75,27 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
          # Account                                             EtherBalanceChange                            OGD                           FEE0 Blocks 0 to 13
                                                                                                             FEE1                           FEE2
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E       -0.448355680000000000           0.000000000000000000       10000.000000000000000000 Owner:0xa00A
-                                                                                        10000.000000000000000000       10000.000000000000000000
+         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E       -0.448353760000000000           0.000000000000000000         100.000000000000000000 Owner:0xa00A
+                                                                                         1000.000000000000000000       10000.000000000000000000
          1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433        0.000000000000000000       10000.000000000000000000           0.000000000000000000 User1:0xa11A
                                                                                             0.000000000000000000           0.000000000000000000
          2 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976        0.000000000000000000       10000.000000000000000000           0.000000000000000000 User2:0xa22A
                                                                                             0.000000000000000000           0.000000000000000000
          3 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0        0.000000000000000000       10000.000000000000000000           0.000000000000000000 User3:0xa33a
                                                                                             0.000000000000000000           0.000000000000000000
-         4 0x1647B1461251A0c6D3E14a227dE0F16E36ba80B1        0.000000000000000000           0.000000000000000000           0.000000000000000000 OGDToken:0x1647
+         4 0xa44a08d3F6933c69212114bb66E2Df1813651844        0.000000000000000000           0.000000000000000000           0.000000000000000000 User4:0xa44a
                                                                                             0.000000000000000000           0.000000000000000000
-         5 0x0f4eA6f2be49d822b7cAEf4175450A4D83A32e72        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee0Token:0x0f4e
+         5 0x1647B1461251A0c6D3E14a227dE0F16E36ba80B1        0.000000000000000000           0.000000000000000000           0.000000000000000000 OGDToken:0x1647
                                                                                             0.000000000000000000           0.000000000000000000
-         6 0x6eaC8DFBdEB9588C9FEEe24783B4137b082f9708        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee1Token:0x6eaC
+         6 0x0f4eA6f2be49d822b7cAEf4175450A4D83A32e72        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee0Token:0x0f4e
                                                                                             0.000000000000000000           0.000000000000000000
-         7 0xBa1FCDaE835E77cAB2a76a7C3884AdC630f7a5B0        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee2Token:0xBa1F
+         7 0x6eaC8DFBdEB9588C9FEEe24783B4137b082f9708        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee1Token:0x6eaC
+                                                                                            0.000000000000000000           0.000000000000000000
+         8 0xBa1FCDaE835E77cAB2a76a7C3884AdC630f7a5B0        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee2Token:0xBa1F
                                                                                             0.000000000000000000           0.000000000000000000
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-                                                                                        30000.000000000000000000       10000.000000000000000000 Total Token Balances
-                                                                                        10000.000000000000000000       10000.000000000000000000
+                                                                                        30000.000000000000000000         100.000000000000000000 Total Token Balances
+                                                                                         1000.000000000000000000       10000.000000000000000000
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
         
         Token 0 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 30000, owner: Owner:0xa00A, address: OGDToken:0x1647
@@ -100,12 +105,13 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         - dividendsOwing,new   : 1 User1:0xa11A       0, 0 ETH|null:0x0000; 0, 0 Fee0Token:0x0f4e
         - dividendsOwing,new   : 2 User2:0xa22A       0, 0 ETH|null:0x0000; 0, 0 Fee0Token:0x0f4e
         - dividendsOwing,new   : 3 User3:0xa33a       0, 0 ETH|null:0x0000; 0, 0 Fee0Token:0x0f4e
-        Token 1 symbol: 'FEE0', name: 'Fee0', decimals: 18, totalSupply: 10000, owner: Owner:0xa00A, address: Fee0Token:0x0f4e
-        Token 2 symbol: 'FEE1', name: 'Fee1', decimals: 18, totalSupply: 10000, owner: Owner:0xa00A, address: Fee1Token:0x6eaC
+        - dividendsOwing,new   : 4 User4:0xa44a       0, 0 ETH|null:0x0000; 0, 0 Fee0Token:0x0f4e
+        Token 1 symbol: 'FEE0', name: 'Fee0', decimals: 18, totalSupply: 100, owner: Owner:0xa00A, address: Fee0Token:0x0f4e
+        Token 2 symbol: 'FEE1', name: 'Fee1', decimals: 18, totalSupply: 1000, owner: Owner:0xa00A, address: Fee1Token:0x6eaC
         Token 3 symbol: 'FEE2', name: 'Fee2', decimals: 18, totalSupply: 10000, owner: Owner:0xa00A, address: Fee2Token:0xBa1F
         
         --- Test 3 - Owner deposits dividends of 100 FEE0 and 10 ETH ---
-        depositDividendFee0 - gasUsed: 91461, fee: 0.00731688, feeUsd: 2.8219011096, @ 80 gwei & 385.67 ETH/USD, 0x5cd94abf4daddefe4883002d70a3c480257b58bdbcf8aa7e2f7d0ec6aba9d07b
+        depositDividendFee0 - gasUsed: 76461, fee: 0.00611688, feeUsd: 2.3590971096, @ 80 gwei & 385.67 ETH/USD, 0x5cd94abf4daddefe4883002d70a3c480257b58bdbcf8aa7e2f7d0ec6aba9d07b
         + Fee0Token.Transfer(from: Owner:0xa00A, to: OGDToken:0x1647, tokens: 100)
         + OGDToken.DividendDeposited(token: Fee0Token:0x0f4e, tokens: 100)
         depositDividendETH0 - gasUsed: 69193, fee: 0.00553544, feeUsd: 2.1348531448, @ 80 gwei & 385.67 ETH/USD, 0x350a6178f29df82a9a4f689510acbfcec22908fb91e4f51df1fc8725c95c2cf1
@@ -114,25 +120,27 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
          # Account                                             EtherBalanceChange                            OGD                           FEE0 Blocks 0 to 15
                                                                                                             FEE1                           FEE2
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E      -10.461208000000000000           0.000000000000000000        9900.000000000000000000 Owner:0xa00A
-                                                                                        10000.000000000000000000       10000.000000000000000000
+         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E      -10.460006080000000000           0.000000000000000000           0.000000000000000000 Owner:0xa00A
+                                                                                         1000.000000000000000000       10000.000000000000000000
          1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433        0.000000000000000000       10000.000000000000000000           0.000000000000000000 User1:0xa11A
                                                                                             0.000000000000000000           0.000000000000000000
          2 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976        0.000000000000000000       10000.000000000000000000           0.000000000000000000 User2:0xa22A
                                                                                             0.000000000000000000           0.000000000000000000
          3 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0        0.000000000000000000       10000.000000000000000000           0.000000000000000000 User3:0xa33a
                                                                                             0.000000000000000000           0.000000000000000000
-         4 0x1647B1461251A0c6D3E14a227dE0F16E36ba80B1       10.000000000000000000           0.000000000000000000         100.000000000000000000 OGDToken:0x1647
+         4 0xa44a08d3F6933c69212114bb66E2Df1813651844        0.000000000000000000           0.000000000000000000           0.000000000000000000 User4:0xa44a
                                                                                             0.000000000000000000           0.000000000000000000
-         5 0x0f4eA6f2be49d822b7cAEf4175450A4D83A32e72        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee0Token:0x0f4e
+         5 0x1647B1461251A0c6D3E14a227dE0F16E36ba80B1       10.000000000000000000           0.000000000000000000         100.000000000000000000 OGDToken:0x1647
                                                                                             0.000000000000000000           0.000000000000000000
-         6 0x6eaC8DFBdEB9588C9FEEe24783B4137b082f9708        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee1Token:0x6eaC
+         6 0x0f4eA6f2be49d822b7cAEf4175450A4D83A32e72        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee0Token:0x0f4e
                                                                                             0.000000000000000000           0.000000000000000000
-         7 0xBa1FCDaE835E77cAB2a76a7C3884AdC630f7a5B0        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee2Token:0xBa1F
+         7 0x6eaC8DFBdEB9588C9FEEe24783B4137b082f9708        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee1Token:0x6eaC
+                                                                                            0.000000000000000000           0.000000000000000000
+         8 0xBa1FCDaE835E77cAB2a76a7C3884AdC630f7a5B0        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee2Token:0xBa1F
                                                                                             0.000000000000000000           0.000000000000000000
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-                                                                                        30000.000000000000000000       10000.000000000000000000 Total Token Balances
-                                                                                        10000.000000000000000000       10000.000000000000000000
+                                                                                        30000.000000000000000000         100.000000000000000000 Total Token Balances
+                                                                                         1000.000000000000000000       10000.000000000000000000
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
         
         Token 0 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 30000, owner: Owner:0xa00A, address: OGDToken:0x1647
@@ -142,13 +150,53 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         - dividendsOwing,new   : 1 User1:0xa11A       0, 3.333333333333333333 ETH|null:0x0000; 0, 33.333333333333333333 Fee0Token:0x0f4e
         - dividendsOwing,new   : 2 User2:0xa22A       0, 3.333333333333333333 ETH|null:0x0000; 0, 33.333333333333333333 Fee0Token:0x0f4e
         - dividendsOwing,new   : 3 User3:0xa33a       0, 3.333333333333333333 ETH|null:0x0000; 0, 33.333333333333333333 Fee0Token:0x0f4e
-        Token 1 symbol: 'FEE0', name: 'Fee0', decimals: 18, totalSupply: 10000, owner: Owner:0xa00A, address: Fee0Token:0x0f4e
-        Token 2 symbol: 'FEE1', name: 'Fee1', decimals: 18, totalSupply: 10000, owner: Owner:0xa00A, address: Fee1Token:0x6eaC
+        - dividendsOwing,new   : 4 User4:0xa44a       0, 0 ETH|null:0x0000; 0, 0 Fee0Token:0x0f4e
+        Token 1 symbol: 'FEE0', name: 'Fee0', decimals: 18, totalSupply: 100, owner: Owner:0xa00A, address: Fee0Token:0x0f4e
+        Token 2 symbol: 'FEE1', name: 'Fee1', decimals: 18, totalSupply: 1000, owner: Owner:0xa00A, address: Fee1Token:0x6eaC
         Token 3 symbol: 'FEE2', name: 'Fee2', decimals: 18, totalSupply: 10000, owner: Owner:0xa00A, address: Fee2Token:0xBa1F
         
         --- Test 4 - User1 dummy transfer to same account (internal stats update) ---
         transfer1 - gasUsed: 163818, fee: 0.01310544, feeUsd: 5.0543750448, @ 80 gwei & 385.67 ETH/USD, 0x361f82e27e299edcc5880788540594dc8dc2e0865868d243c888b7cd82bdcf21
         + OGDToken.Transfer(from: User2:0xa22A, to: User2:0xa22A, tokens: 1e-18)
+        
+         # Account                                             EtherBalanceChange                            OGD                           FEE0 Blocks 0 to 16
+                                                                                                            FEE1                           FEE2
+        -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
+         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E      -10.460006080000000000           0.000000000000000000           0.000000000000000000 Owner:0xa00A
+                                                                                         1000.000000000000000000       10000.000000000000000000
+         1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433        0.000000000000000000       10000.000000000000000000           0.000000000000000000 User1:0xa11A
+                                                                                            0.000000000000000000           0.000000000000000000
+         2 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976       -0.013105440000000000       10000.000000000000000000           0.000000000000000000 User2:0xa22A
+                                                                                            0.000000000000000000           0.000000000000000000
+         3 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0        0.000000000000000000       10000.000000000000000000           0.000000000000000000 User3:0xa33a
+                                                                                            0.000000000000000000           0.000000000000000000
+         4 0xa44a08d3F6933c69212114bb66E2Df1813651844        0.000000000000000000           0.000000000000000000           0.000000000000000000 User4:0xa44a
+                                                                                            0.000000000000000000           0.000000000000000000
+         5 0x1647B1461251A0c6D3E14a227dE0F16E36ba80B1       10.000000000000000000           0.000000000000000000         100.000000000000000000 OGDToken:0x1647
+                                                                                            0.000000000000000000           0.000000000000000000
+         6 0x0f4eA6f2be49d822b7cAEf4175450A4D83A32e72        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee0Token:0x0f4e
+                                                                                            0.000000000000000000           0.000000000000000000
+         7 0x6eaC8DFBdEB9588C9FEEe24783B4137b082f9708        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee1Token:0x6eaC
+                                                                                            0.000000000000000000           0.000000000000000000
+         8 0xBa1FCDaE835E77cAB2a76a7C3884AdC630f7a5B0        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee2Token:0xBa1F
+                                                                                            0.000000000000000000           0.000000000000000000
+        -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
+                                                                                        30000.000000000000000000         100.000000000000000000 Total Token Balances
+                                                                                         1000.000000000000000000       10000.000000000000000000
+        -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
+        
+        Token 0 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 30000, owner: Owner:0xa00A, address: OGDToken:0x1647
+        - dividendTokensLength : 2
+        - dividendToken        : 0 ETH|null:0x0000, enabled: true, unclaimedDividends: 6.666666666666666667
+        - dividendToken        : 1 Fee0Token:0x0f4e, enabled: true, unclaimedDividends: 66.666666666666666667
+        - dividendsOwing,new   : 1 User1:0xa11A       0, 3.333333333333333333 ETH|null:0x0000; 0, 33.333333333333333333 Fee0Token:0x0f4e
+        - dividendsOwing,new   : 2 User2:0xa22A       3.333333333333333333, 0 ETH|null:0x0000; 33.333333333333333333, 0 Fee0Token:0x0f4e
+        - dividendsOwing,new   : 3 User3:0xa33a       0, 3.333333333333333333 ETH|null:0x0000; 0, 33.333333333333333333 Fee0Token:0x0f4e
+        - dividendsOwing,new   : 4 User4:0xa44a       0, 0 ETH|null:0x0000; 0, 0 Fee0Token:0x0f4e
+        Token 1 symbol: 'FEE0', name: 'Fee0', decimals: 18, totalSupply: 100, owner: Owner:0xa00A, address: Fee0Token:0x0f4e
+        Token 2 symbol: 'FEE1', name: 'Fee1', decimals: 18, totalSupply: 1000, owner: Owner:0xa00A, address: Fee1Token:0x6eaC
+        Token 3 symbol: 'FEE2', name: 'Fee2', decimals: 18, totalSupply: 10000, owner: Owner:0xa00A, address: Fee2Token:0xBa1F
+        
         --- Test 5 - User{1..3} withdraw 33.333333333333333333 FEE0 and 3.333333333333333333 ETH ---
         withdrawDividends1 - gasUsed: 156275, fee: 0.012502, feeUsd: 4.82164634, @ 80 gwei & 385.67 ETH/USD, 0xcbec2a6157ff5ca3108c233ecd1bf267de846802feea62cf774f6ca76b8e7c67
         + OGDToken.DividendWithdrawn(account: User1:0xa11A, destination: User1:0xa11A, token: ETH|null:0x0000, tokens: 3.333333333333333333)
@@ -166,25 +214,27 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
          # Account                                             EtherBalanceChange                            OGD                           FEE0 Blocks 0 to 19
                                                                                                             FEE1                           FEE2
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E      -10.461208000000000000           0.000000000000000000        9900.000000000000000000 Owner:0xa00A
-                                                                                        10000.000000000000000000       10000.000000000000000000
+         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E      -10.460006080000000000           0.000000000000000000           0.000000000000000000 Owner:0xa00A
+                                                                                         1000.000000000000000000       10000.000000000000000000
          1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433        3.320831333333333333       10000.000000000000000000          33.333333333333333333 User1:0xa11A
                                                                                             0.000000000000000000           0.000000000000000000
          2 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976        3.313824293333333333       10000.000000000000000000          33.333333333333333333 User2:0xa22A
                                                                                             0.000000000000000000           0.000000000000000000
          3 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0        3.320831333333333333       10000.000000000000000000          33.333333333333333333 User3:0xa33a
                                                                                             0.000000000000000000           0.000000000000000000
-         4 0x1647B1461251A0c6D3E14a227dE0F16E36ba80B1        0.000000000000000001           0.000000000000000000           0.000000000000000001 OGDToken:0x1647
+         4 0xa44a08d3F6933c69212114bb66E2Df1813651844        0.000000000000000000           0.000000000000000000           0.000000000000000000 User4:0xa44a
                                                                                             0.000000000000000000           0.000000000000000000
-         5 0x0f4eA6f2be49d822b7cAEf4175450A4D83A32e72        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee0Token:0x0f4e
+         5 0x1647B1461251A0c6D3E14a227dE0F16E36ba80B1        0.000000000000000001           0.000000000000000000           0.000000000000000001 OGDToken:0x1647
                                                                                             0.000000000000000000           0.000000000000000000
-         6 0x6eaC8DFBdEB9588C9FEEe24783B4137b082f9708        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee1Token:0x6eaC
+         6 0x0f4eA6f2be49d822b7cAEf4175450A4D83A32e72        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee0Token:0x0f4e
                                                                                             0.000000000000000000           0.000000000000000000
-         7 0xBa1FCDaE835E77cAB2a76a7C3884AdC630f7a5B0        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee2Token:0xBa1F
+         7 0x6eaC8DFBdEB9588C9FEEe24783B4137b082f9708        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee1Token:0x6eaC
+                                                                                            0.000000000000000000           0.000000000000000000
+         8 0xBa1FCDaE835E77cAB2a76a7C3884AdC630f7a5B0        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee2Token:0xBa1F
                                                                                             0.000000000000000000           0.000000000000000000
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-                                                                                        30000.000000000000000000       10000.000000000000000000 Total Token Balances
-                                                                                        10000.000000000000000000       10000.000000000000000000
+                                                                                        30000.000000000000000000         100.000000000000000000 Total Token Balances
+                                                                                         1000.000000000000000000       10000.000000000000000000
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
         
         Token 0 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 30000, owner: Owner:0xa00A, address: OGDToken:0x1647
@@ -194,8 +244,9 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         - dividendsOwing,new   : 1 User1:0xa11A       0, 0 ETH|null:0x0000; 0, 0 Fee0Token:0x0f4e
         - dividendsOwing,new   : 2 User2:0xa22A       0, 0 ETH|null:0x0000; 0, 0 Fee0Token:0x0f4e
         - dividendsOwing,new   : 3 User3:0xa33a       0, 0 ETH|null:0x0000; 0, 0 Fee0Token:0x0f4e
-        Token 1 symbol: 'FEE0', name: 'Fee0', decimals: 18, totalSupply: 10000, owner: Owner:0xa00A, address: Fee0Token:0x0f4e
-        Token 2 symbol: 'FEE1', name: 'Fee1', decimals: 18, totalSupply: 10000, owner: Owner:0xa00A, address: Fee1Token:0x6eaC
+        - dividendsOwing,new   : 4 User4:0xa44a       0, 0 ETH|null:0x0000; 0, 0 Fee0Token:0x0f4e
+        Token 1 symbol: 'FEE0', name: 'Fee0', decimals: 18, totalSupply: 100, owner: Owner:0xa00A, address: Fee0Token:0x0f4e
+        Token 2 symbol: 'FEE1', name: 'Fee1', decimals: 18, totalSupply: 1000, owner: Owner:0xa00A, address: Fee1Token:0x6eaC
         Token 3 symbol: 'FEE2', name: 'Fee2', decimals: 18, totalSupply: 10000, owner: Owner:0xa00A, address: Fee2Token:0xBa1F
         
         --- Test 6 - Add Fee{1..2} Dividend Token ---
@@ -204,7 +255,7 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         addDividendToken3 - gasUsed: 116376, fee: 0.00931008, feeUsd: 3.5906185536, @ 80 gwei & 385.67 ETH/USD, 0x6636fa7cc209624153b961e0caf4088ae38990c3253af601b95eaba779de883e
         + OGDToken.DividendTokenAdded(token: Fee2Token:0xBa1F, enabled: true)
         --- Test 7 - Owner deposits dividends of 1,000 FEE1 and 10,000 FEE2 ---
-        depositDividendFee1 - gasUsed: 91461, fee: 0.00731688, feeUsd: 2.8219011096, @ 80 gwei & 385.67 ETH/USD, 0xe72dd038a48e0c2da56418ebadead6d7a7bab936e8bf762fdfb0e1e2874bc6e8
+        depositDividendFee1 - gasUsed: 76461, fee: 0.00611688, feeUsd: 2.3590971096, @ 80 gwei & 385.67 ETH/USD, 0xe72dd038a48e0c2da56418ebadead6d7a7bab936e8bf762fdfb0e1e2874bc6e8
         + Fee1Token.Transfer(from: Owner:0xa00A, to: OGDToken:0x1647, tokens: 1000)
         + OGDToken.DividendDeposited(token: Fee1Token:0x6eaC, tokens: 1000)
         depositDividendFee2 - gasUsed: 76473, fee: 0.00611784, feeUsd: 2.3594673528, @ 80 gwei & 385.67 ETH/USD, 0xda3944310d5f3935a2ac23acb794f75868ae237f0662b43f3f4740590062e5ce
@@ -236,25 +287,27 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
          # Account                                             EtherBalanceChange                            OGD                           FEE0 Blocks 0 to 26
                                                                                                             FEE1                           FEE2
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E      -10.493262880000000000           0.000000000000000000        9900.000000000000000000 Owner:0xa00A
-                                                                                         9000.000000000000000000           0.000000000000000000
+         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E      -10.490860960000000000           0.000000000000000000           0.000000000000000000 Owner:0xa00A
+                                                                                            0.000000000000000000           0.000000000000000000
          1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433        3.303407173333333333       10000.000000000000000000          33.333333333333333333 User1:0xa11A
                                                                                           333.333333333333333333        3333.333333333333333333
          2 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976        3.296400133333333333       10000.000000000000000000          33.333333333333333333 User2:0xa22A
                                                                                           333.333333333333333333        3333.333333333333333333
          3 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0        3.303407173333333333       10000.000000000000000000          33.333333333333333333 User3:0xa33a
                                                                                           333.333333333333333333        3333.333333333333333333
-         4 0x1647B1461251A0c6D3E14a227dE0F16E36ba80B1        0.000000000000000001           0.000000000000000000           0.000000000000000001 OGDToken:0x1647
+         4 0xa44a08d3F6933c69212114bb66E2Df1813651844        0.000000000000000000           0.000000000000000000           0.000000000000000000 User4:0xa44a
+                                                                                            0.000000000000000000           0.000000000000000000
+         5 0x1647B1461251A0c6D3E14a227dE0F16E36ba80B1        0.000000000000000001           0.000000000000000000           0.000000000000000001 OGDToken:0x1647
                                                                                             0.000000000000000001           0.000000000000000001
-         5 0x0f4eA6f2be49d822b7cAEf4175450A4D83A32e72        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee0Token:0x0f4e
+         6 0x0f4eA6f2be49d822b7cAEf4175450A4D83A32e72        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee0Token:0x0f4e
                                                                                             0.000000000000000000           0.000000000000000000
-         6 0x6eaC8DFBdEB9588C9FEEe24783B4137b082f9708        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee1Token:0x6eaC
+         7 0x6eaC8DFBdEB9588C9FEEe24783B4137b082f9708        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee1Token:0x6eaC
                                                                                             0.000000000000000000           0.000000000000000000
-         7 0xBa1FCDaE835E77cAB2a76a7C3884AdC630f7a5B0        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee2Token:0xBa1F
+         8 0xBa1FCDaE835E77cAB2a76a7C3884AdC630f7a5B0        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee2Token:0xBa1F
                                                                                             0.000000000000000000           0.000000000000000000
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-                                                                                        30000.000000000000000000       10000.000000000000000000 Total Token Balances
-                                                                                        10000.000000000000000000       10000.000000000000000000
+                                                                                        30000.000000000000000000         100.000000000000000000 Total Token Balances
+                                                                                         1000.000000000000000000       10000.000000000000000000
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
         
         Token 0 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 30000, owner: Owner:0xa00A, address: OGDToken:0x1647
@@ -266,8 +319,9 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         - dividendsOwing,new   : 1 User1:0xa11A       0, 0 ETH|null:0x0000; 0, 0 Fee0Token:0x0f4e; 0, 0 Fee1Token:0x6eaC; 0, 0 Fee2Token:0xBa1F
         - dividendsOwing,new   : 2 User2:0xa22A       0, 0 ETH|null:0x0000; 0, 0 Fee0Token:0x0f4e; 0, 0 Fee1Token:0x6eaC; 0, 0 Fee2Token:0xBa1F
         - dividendsOwing,new   : 3 User3:0xa33a       0, 0 ETH|null:0x0000; 0, 0 Fee0Token:0x0f4e; 0, 0 Fee1Token:0x6eaC; 0, 0 Fee2Token:0xBa1F
-        Token 1 symbol: 'FEE0', name: 'Fee0', decimals: 18, totalSupply: 10000, owner: Owner:0xa00A, address: Fee0Token:0x0f4e
-        Token 2 symbol: 'FEE1', name: 'Fee1', decimals: 18, totalSupply: 10000, owner: Owner:0xa00A, address: Fee1Token:0x6eaC
+        - dividendsOwing,new   : 4 User4:0xa44a       0, 0 ETH|null:0x0000; 0, 0 Fee0Token:0x0f4e; 0, 0 Fee1Token:0x6eaC; 0, 0 Fee2Token:0xBa1F
+        Token 1 symbol: 'FEE0', name: 'Fee0', decimals: 18, totalSupply: 100, owner: Owner:0xa00A, address: Fee0Token:0x0f4e
+        Token 2 symbol: 'FEE1', name: 'Fee1', decimals: 18, totalSupply: 1000, owner: Owner:0xa00A, address: Fee1Token:0x6eaC
         Token 3 symbol: 'FEE2', name: 'Fee2', decimals: 18, totalSupply: 10000, owner: Owner:0xa00A, address: Fee2Token:0xBa1F
         
         --- Test 9 - User2 transfer 1 OGD to User3 ---
@@ -277,25 +331,27 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
          # Account                                             EtherBalanceChange                            OGD                           FEE0 Blocks 0 to 27
                                                                                                             FEE1                           FEE2
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E      -10.493262880000000000           0.000000000000000000        9900.000000000000000000 Owner:0xa00A
-                                                                                         9000.000000000000000000           0.000000000000000000
+         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E      -10.490860960000000000           0.000000000000000000           0.000000000000000000 Owner:0xa00A
+                                                                                            0.000000000000000000           0.000000000000000000
          1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433        3.303407173333333333       10000.000000000000000000          33.333333333333333333 User1:0xa11A
                                                                                           333.333333333333333333        3333.333333333333333333
          2 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976        3.286729173333333333        9999.876543210876543211          33.333333333333333333 User2:0xa22A
                                                                                           333.333333333333333333        3333.333333333333333333
          3 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0        3.303407173333333333       10000.123456789123456789          33.333333333333333333 User3:0xa33a
                                                                                           333.333333333333333333        3333.333333333333333333
-         4 0x1647B1461251A0c6D3E14a227dE0F16E36ba80B1        0.000000000000000001           0.000000000000000000           0.000000000000000001 OGDToken:0x1647
+         4 0xa44a08d3F6933c69212114bb66E2Df1813651844        0.000000000000000000           0.000000000000000000           0.000000000000000000 User4:0xa44a
+                                                                                            0.000000000000000000           0.000000000000000000
+         5 0x1647B1461251A0c6D3E14a227dE0F16E36ba80B1        0.000000000000000001           0.000000000000000000           0.000000000000000001 OGDToken:0x1647
                                                                                             0.000000000000000001           0.000000000000000001
-         5 0x0f4eA6f2be49d822b7cAEf4175450A4D83A32e72        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee0Token:0x0f4e
+         6 0x0f4eA6f2be49d822b7cAEf4175450A4D83A32e72        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee0Token:0x0f4e
                                                                                             0.000000000000000000           0.000000000000000000
-         6 0x6eaC8DFBdEB9588C9FEEe24783B4137b082f9708        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee1Token:0x6eaC
+         7 0x6eaC8DFBdEB9588C9FEEe24783B4137b082f9708        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee1Token:0x6eaC
                                                                                             0.000000000000000000           0.000000000000000000
-         7 0xBa1FCDaE835E77cAB2a76a7C3884AdC630f7a5B0        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee2Token:0xBa1F
+         8 0xBa1FCDaE835E77cAB2a76a7C3884AdC630f7a5B0        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee2Token:0xBa1F
                                                                                             0.000000000000000000           0.000000000000000000
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-                                                                                        30000.000000000000000000       10000.000000000000000000 Total Token Balances
-                                                                                        10000.000000000000000000       10000.000000000000000000
+                                                                                        30000.000000000000000000         100.000000000000000000 Total Token Balances
+                                                                                         1000.000000000000000000       10000.000000000000000000
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
         
         Token 0 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 30000, owner: Owner:0xa00A, address: OGDToken:0x1647
@@ -307,46 +363,49 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         - dividendsOwing,new   : 1 User1:0xa11A       0, 0 ETH|null:0x0000; 0, 0 Fee0Token:0x0f4e; 0, 0 Fee1Token:0x6eaC; 0, 0 Fee2Token:0xBa1F
         - dividendsOwing,new   : 2 User2:0xa22A       0, 0 ETH|null:0x0000; 0, 0 Fee0Token:0x0f4e; 0, 0 Fee1Token:0x6eaC; 0, 0 Fee2Token:0xBa1F
         - dividendsOwing,new   : 3 User3:0xa33a       0, 0 ETH|null:0x0000; 0, 0 Fee0Token:0x0f4e; 0, 0 Fee1Token:0x6eaC; 0, 0 Fee2Token:0xBa1F
-        Token 1 symbol: 'FEE0', name: 'Fee0', decimals: 18, totalSupply: 10000, owner: Owner:0xa00A, address: Fee0Token:0x0f4e
-        Token 2 symbol: 'FEE1', name: 'Fee1', decimals: 18, totalSupply: 10000, owner: Owner:0xa00A, address: Fee1Token:0x6eaC
+        - dividendsOwing,new   : 4 User4:0xa44a       0, 0 ETH|null:0x0000; 0, 0 Fee0Token:0x0f4e; 0, 0 Fee1Token:0x6eaC; 0, 0 Fee2Token:0xBa1F
+        Token 1 symbol: 'FEE0', name: 'Fee0', decimals: 18, totalSupply: 100, owner: Owner:0xa00A, address: Fee0Token:0x0f4e
+        Token 2 symbol: 'FEE1', name: 'Fee1', decimals: 18, totalSupply: 1000, owner: Owner:0xa00A, address: Fee1Token:0x6eaC
         Token 3 symbol: 'FEE2', name: 'Fee2', decimals: 18, totalSupply: 10000, owner: Owner:0xa00A, address: Fee2Token:0xBa1F
         
         --- Test Completed ---
 
-      ✓ Workflow #0 (2905ms)
+      ✓ Workflow #0 (3857ms)
     TestOGDToken - Workflow #1 - Transfer Test
         --- Setup 1 - Deploy OGDToken, FEE{0..2} ---
         ogdTokenTx - gasUsed: 2445424, fee: 0.19563392, feeUsd: 75.4501339264, @ 80 gwei & 385.67 ETH/USD, 0x96d8466f87d4808c7548777ec1e9d325d2b77eea9ea2bbc003ecebf083f8c03e
         + OGDToken.Transfer(from: ETH|null:0x0000, to: Owner:0xa00A, tokens: 0)
-        fee0TokenTx - gasUsed: 823466, fee: 0.06587728, feeUsd: 25.4068905776, @ 80 gwei & 385.67 ETH/USD, 0xca3c6e525a5f30539ee1cc18eaf078cd8391bb36b4c2f6be5e381e27fa429e64
-        + Fee0Token.Transfer(from: ETH|null:0x0000, to: Owner:0xa00A, tokens: 10000)
-        fee1TokenTx - gasUsed: 823466, fee: 0.06587728, feeUsd: 25.4068905776, @ 80 gwei & 385.67 ETH/USD, 0xb0863606837126a3d214df9b2c8a33915d35467904b66aea08e28be9a31f0456
-        + Fee1Token.Transfer(from: ETH|null:0x0000, to: Owner:0xa00A, tokens: 10000)
+        fee0TokenTx - gasUsed: 823454, fee: 0.06587632, feeUsd: 25.4065203344, @ 80 gwei & 385.67 ETH/USD, 0xea7a18709a17368b7aaf9cdf910e5134e341595e1bb59d9bf630e70573530440
+        + Fee0Token.Transfer(from: ETH|null:0x0000, to: Owner:0xa00A, tokens: 100)
+        fee1TokenTx - gasUsed: 823454, fee: 0.06587632, feeUsd: 25.4065203344, @ 80 gwei & 385.67 ETH/USD, 0x2acbb6ff35a0eb850f7729063e2e4fe0f3287ca3f67b2faf7464e617219e2b4e
+        + Fee1Token.Transfer(from: ETH|null:0x0000, to: Owner:0xa00A, tokens: 1000)
         fee2TokenTx - gasUsed: 823466, fee: 0.06587728, feeUsd: 25.4068905776, @ 80 gwei & 385.67 ETH/USD, 0xe79358f303d18b4de7e50a40cb6d5d26519da786904dcb4f02cced702843c16b
         + Fee2Token.Transfer(from: ETH|null:0x0000, to: Owner:0xa00A, tokens: 10000)
         
          # Account                                             EtherBalanceChange                            OGD                           FEE0 Blocks 27 to 31
                                                                                                             FEE1                           FEE2
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E       -0.393265760000000000           0.000000000000000000       10000.000000000000000000 Owner:0xa00A
-                                                                                        10000.000000000000000000       10000.000000000000000000
+         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E       -0.393263840000000000           0.000000000000000000         100.000000000000000000 Owner:0xa00A
+                                                                                         1000.000000000000000000       10000.000000000000000000
          1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433        0.000000000000000000           0.000000000000000000           0.000000000000000000 User1:0xa11A
                                                                                             0.000000000000000000           0.000000000000000000
          2 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976        0.000000000000000000           0.000000000000000000           0.000000000000000000 User2:0xa22A
                                                                                             0.000000000000000000           0.000000000000000000
          3 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0        0.000000000000000000           0.000000000000000000           0.000000000000000000 User3:0xa33a
                                                                                             0.000000000000000000           0.000000000000000000
-         4 0x5fe7CD00aA1aA3cCf94F459E3fB5C633C640aBB4        0.000000000000000000           0.000000000000000000           0.000000000000000000 OGDToken:0x5fe7
+         4 0xa44a08d3F6933c69212114bb66E2Df1813651844        0.000000000000000000           0.000000000000000000           0.000000000000000000 User4:0xa44a
                                                                                             0.000000000000000000           0.000000000000000000
-         5 0xA3FD44B84340C71E9D70509F495Ff03CD2fe5632        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee0Token:0xA3FD
+         5 0x5fe7CD00aA1aA3cCf94F459E3fB5C633C640aBB4        0.000000000000000000           0.000000000000000000           0.000000000000000000 OGDToken:0x5fe7
                                                                                             0.000000000000000000           0.000000000000000000
-         6 0xee9a0dAE3e21Fe8b9B9E2E13E693F41E0aB3f42b        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee1Token:0xee9a
+         6 0xA3FD44B84340C71E9D70509F495Ff03CD2fe5632        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee0Token:0xA3FD
                                                                                             0.000000000000000000           0.000000000000000000
-         7 0x0b70A80b0336777A1697A5b505A6F1f3cC1087A0        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee2Token:0x0b70
+         7 0xee9a0dAE3e21Fe8b9B9E2E13E693F41E0aB3f42b        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee1Token:0xee9a
+                                                                                            0.000000000000000000           0.000000000000000000
+         8 0x0b70A80b0336777A1697A5b505A6F1f3cC1087A0        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee2Token:0x0b70
                                                                                             0.000000000000000000           0.000000000000000000
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-                                                                                            0.000000000000000000       10000.000000000000000000 Total Token Balances
-                                                                                        10000.000000000000000000       10000.000000000000000000
+                                                                                            0.000000000000000000         100.000000000000000000 Total Token Balances
+                                                                                         1000.000000000000000000       10000.000000000000000000
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
         
         Token 0 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 0, owner: Owner:0xa00A, address: OGDToken:0x5fe7
@@ -354,8 +413,9 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         - dividendsOwing,new   : 1 User1:0xa11A       
         - dividendsOwing,new   : 2 User2:0xa22A       
         - dividendsOwing,new   : 3 User3:0xa33a       
-        Token 1 symbol: 'FEE0', name: 'Fee0', decimals: 18, totalSupply: 10000, owner: Owner:0xa00A, address: Fee0Token:0xA3FD
-        Token 2 symbol: 'FEE1', name: 'Fee1', decimals: 18, totalSupply: 10000, owner: Owner:0xa00A, address: Fee1Token:0xee9a
+        - dividendsOwing,new   : 4 User4:0xa44a       
+        Token 1 symbol: 'FEE0', name: 'Fee0', decimals: 18, totalSupply: 100, owner: Owner:0xa00A, address: Fee0Token:0xA3FD
+        Token 2 symbol: 'FEE1', name: 'Fee1', decimals: 18, totalSupply: 1000, owner: Owner:0xa00A, address: Fee1Token:0xee9a
         Token 3 symbol: 'FEE2', name: 'Fee2', decimals: 18, totalSupply: 10000, owner: Owner:0xa00A, address: Fee2Token:0x0b70
         
         --- Setup Completed ---
@@ -382,25 +442,27 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
          # Account                                             EtherBalanceChange                            OGD                           FEE0 Blocks 27 to 39
                                                                                                             FEE1                           FEE2
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E       -0.441773200000000000           0.000000000000000000       10000.000000000000000000 Owner:0xa00A
-                                                                                        10000.000000000000000000       10000.000000000000000000
+         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E       -0.441771280000000000           0.000000000000000000         100.000000000000000000 Owner:0xa00A
+                                                                                         1000.000000000000000000       10000.000000000000000000
          1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433        0.000000000000000000       10000.000000000000000000           0.000000000000000000 User1:0xa11A
                                                                                             0.000000000000000000           0.000000000000000000
          2 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976        0.000000000000000000       10000.000000000000000000           0.000000000000000000 User2:0xa22A
                                                                                             0.000000000000000000           0.000000000000000000
          3 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0        0.000000000000000000           0.000000000000000000           0.000000000000000000 User3:0xa33a
                                                                                             0.000000000000000000           0.000000000000000000
-         4 0x5fe7CD00aA1aA3cCf94F459E3fB5C633C640aBB4        0.000000000000000000           0.000000000000000000           0.000000000000000000 OGDToken:0x5fe7
+         4 0xa44a08d3F6933c69212114bb66E2Df1813651844        0.000000000000000000           0.000000000000000000           0.000000000000000000 User4:0xa44a
                                                                                             0.000000000000000000           0.000000000000000000
-         5 0xA3FD44B84340C71E9D70509F495Ff03CD2fe5632        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee0Token:0xA3FD
+         5 0x5fe7CD00aA1aA3cCf94F459E3fB5C633C640aBB4        0.000000000000000000           0.000000000000000000           0.000000000000000000 OGDToken:0x5fe7
                                                                                             0.000000000000000000           0.000000000000000000
-         6 0xee9a0dAE3e21Fe8b9B9E2E13E693F41E0aB3f42b        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee1Token:0xee9a
+         6 0xA3FD44B84340C71E9D70509F495Ff03CD2fe5632        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee0Token:0xA3FD
                                                                                             0.000000000000000000           0.000000000000000000
-         7 0x0b70A80b0336777A1697A5b505A6F1f3cC1087A0        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee2Token:0x0b70
+         7 0xee9a0dAE3e21Fe8b9B9E2E13E693F41E0aB3f42b        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee1Token:0xee9a
+                                                                                            0.000000000000000000           0.000000000000000000
+         8 0x0b70A80b0336777A1697A5b505A6F1f3cC1087A0        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee2Token:0x0b70
                                                                                             0.000000000000000000           0.000000000000000000
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-                                                                                        20000.000000000000000000       10000.000000000000000000 Total Token Balances
-                                                                                        10000.000000000000000000       10000.000000000000000000
+                                                                                        20000.000000000000000000         100.000000000000000000 Total Token Balances
+                                                                                         1000.000000000000000000       10000.000000000000000000
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
         
         Token 0 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 20000, owner: Owner:0xa00A, address: OGDToken:0x5fe7
@@ -410,12 +472,13 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         - dividendsOwing,new   : 1 User1:0xa11A       0, 0 ETH|null:0x0000; 0, 0 Fee0Token:0xA3FD
         - dividendsOwing,new   : 2 User2:0xa22A       0, 0 ETH|null:0x0000; 0, 0 Fee0Token:0xA3FD
         - dividendsOwing,new   : 3 User3:0xa33a       0, 0 ETH|null:0x0000; 0, 0 Fee0Token:0xA3FD
-        Token 1 symbol: 'FEE0', name: 'Fee0', decimals: 18, totalSupply: 10000, owner: Owner:0xa00A, address: Fee0Token:0xA3FD
-        Token 2 symbol: 'FEE1', name: 'Fee1', decimals: 18, totalSupply: 10000, owner: Owner:0xa00A, address: Fee1Token:0xee9a
+        - dividendsOwing,new   : 4 User4:0xa44a       0, 0 ETH|null:0x0000; 0, 0 Fee0Token:0xA3FD
+        Token 1 symbol: 'FEE0', name: 'Fee0', decimals: 18, totalSupply: 100, owner: Owner:0xa00A, address: Fee0Token:0xA3FD
+        Token 2 symbol: 'FEE1', name: 'Fee1', decimals: 18, totalSupply: 1000, owner: Owner:0xa00A, address: Fee1Token:0xee9a
         Token 3 symbol: 'FEE2', name: 'Fee2', decimals: 18, totalSupply: 10000, owner: Owner:0xa00A, address: Fee2Token:0x0b70
         
         --- Test 3 - Owner deposits dividends of 100 FEE0 and 10 ETH ---
-        depositDividendFee0 - gasUsed: 91461, fee: 0.00731688, feeUsd: 2.8219011096, @ 80 gwei & 385.67 ETH/USD, 0x7bed22a7ccf5ff5525a94a601d68f0f12eb6e01b4849560dca1f4f861722dbb9
+        depositDividendFee0 - gasUsed: 76461, fee: 0.00611688, feeUsd: 2.3590971096, @ 80 gwei & 385.67 ETH/USD, 0x7bed22a7ccf5ff5525a94a601d68f0f12eb6e01b4849560dca1f4f861722dbb9
         + Fee0Token.Transfer(from: Owner:0xa00A, to: OGDToken:0x5fe7, tokens: 100)
         + OGDToken.DividendDeposited(token: Fee0Token:0xA3FD, tokens: 100)
         depositDividendETH0 - gasUsed: 69193, fee: 0.00553544, feeUsd: 2.1348531448, @ 80 gwei & 385.67 ETH/USD, 0xab48532bf989a5562018238b7d51395716a170ba760eabaf519f5eeb5d23b333
@@ -424,25 +487,27 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
          # Account                                             EtherBalanceChange                            OGD                           FEE0 Blocks 27 to 41
                                                                                                             FEE1                           FEE2
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E      -10.454625520000000000           0.000000000000000000        9900.000000000000000000 Owner:0xa00A
-                                                                                        10000.000000000000000000       10000.000000000000000000
+         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E      -10.453423600000000000           0.000000000000000000           0.000000000000000000 Owner:0xa00A
+                                                                                         1000.000000000000000000       10000.000000000000000000
          1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433        0.000000000000000000       10000.000000000000000000           0.000000000000000000 User1:0xa11A
                                                                                             0.000000000000000000           0.000000000000000000
          2 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976        0.000000000000000000       10000.000000000000000000           0.000000000000000000 User2:0xa22A
                                                                                             0.000000000000000000           0.000000000000000000
          3 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0        0.000000000000000000           0.000000000000000000           0.000000000000000000 User3:0xa33a
                                                                                             0.000000000000000000           0.000000000000000000
-         4 0x5fe7CD00aA1aA3cCf94F459E3fB5C633C640aBB4       10.000000000000000000           0.000000000000000000         100.000000000000000000 OGDToken:0x5fe7
+         4 0xa44a08d3F6933c69212114bb66E2Df1813651844        0.000000000000000000           0.000000000000000000           0.000000000000000000 User4:0xa44a
                                                                                             0.000000000000000000           0.000000000000000000
-         5 0xA3FD44B84340C71E9D70509F495Ff03CD2fe5632        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee0Token:0xA3FD
+         5 0x5fe7CD00aA1aA3cCf94F459E3fB5C633C640aBB4       10.000000000000000000           0.000000000000000000         100.000000000000000000 OGDToken:0x5fe7
                                                                                             0.000000000000000000           0.000000000000000000
-         6 0xee9a0dAE3e21Fe8b9B9E2E13E693F41E0aB3f42b        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee1Token:0xee9a
+         6 0xA3FD44B84340C71E9D70509F495Ff03CD2fe5632        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee0Token:0xA3FD
                                                                                             0.000000000000000000           0.000000000000000000
-         7 0x0b70A80b0336777A1697A5b505A6F1f3cC1087A0        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee2Token:0x0b70
+         7 0xee9a0dAE3e21Fe8b9B9E2E13E693F41E0aB3f42b        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee1Token:0xee9a
+                                                                                            0.000000000000000000           0.000000000000000000
+         8 0x0b70A80b0336777A1697A5b505A6F1f3cC1087A0        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee2Token:0x0b70
                                                                                             0.000000000000000000           0.000000000000000000
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-                                                                                        20000.000000000000000000       10000.000000000000000000 Total Token Balances
-                                                                                        10000.000000000000000000       10000.000000000000000000
+                                                                                        20000.000000000000000000         100.000000000000000000 Total Token Balances
+                                                                                         1000.000000000000000000       10000.000000000000000000
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
         
         Token 0 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 20000, owner: Owner:0xa00A, address: OGDToken:0x5fe7
@@ -452,8 +517,9 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         - dividendsOwing,new   : 1 User1:0xa11A       0, 5 ETH|null:0x0000; 0, 50 Fee0Token:0xA3FD
         - dividendsOwing,new   : 2 User2:0xa22A       0, 5 ETH|null:0x0000; 0, 50 Fee0Token:0xA3FD
         - dividendsOwing,new   : 3 User3:0xa33a       0, 0 ETH|null:0x0000; 0, 0 Fee0Token:0xA3FD
-        Token 1 symbol: 'FEE0', name: 'Fee0', decimals: 18, totalSupply: 10000, owner: Owner:0xa00A, address: Fee0Token:0xA3FD
-        Token 2 symbol: 'FEE1', name: 'Fee1', decimals: 18, totalSupply: 10000, owner: Owner:0xa00A, address: Fee1Token:0xee9a
+        - dividendsOwing,new   : 4 User4:0xa44a       0, 0 ETH|null:0x0000; 0, 0 Fee0Token:0xA3FD
+        Token 1 symbol: 'FEE0', name: 'Fee0', decimals: 18, totalSupply: 100, owner: Owner:0xa00A, address: Fee0Token:0xA3FD
+        Token 2 symbol: 'FEE1', name: 'Fee1', decimals: 18, totalSupply: 1000, owner: Owner:0xa00A, address: Fee1Token:0xee9a
         Token 3 symbol: 'FEE2', name: 'Fee2', decimals: 18, totalSupply: 10000, owner: Owner:0xa00A, address: Fee2Token:0x0b70
         
         --- Test 4 - User2 transfer all tokens to user3 ---
@@ -463,25 +529,27 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
          # Account                                             EtherBalanceChange                            OGD                           FEE0 Blocks 27 to 42
                                                                                                             FEE1                           FEE2
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E      -10.454625520000000000           0.000000000000000000        9900.000000000000000000 Owner:0xa00A
-                                                                                        10000.000000000000000000       10000.000000000000000000
+         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E      -10.453423600000000000           0.000000000000000000           0.000000000000000000 Owner:0xa00A
+                                                                                         1000.000000000000000000       10000.000000000000000000
          1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433        0.000000000000000000       10000.000000000000000000           0.000000000000000000 User1:0xa11A
                                                                                             0.000000000000000000           0.000000000000000000
          2 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976       -0.016850400000000000           0.000000000000000000           0.000000000000000000 User2:0xa22A
                                                                                             0.000000000000000000           0.000000000000000000
          3 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0        0.000000000000000000       10000.000000000000000000           0.000000000000000000 User3:0xa33a
                                                                                             0.000000000000000000           0.000000000000000000
-         4 0x5fe7CD00aA1aA3cCf94F459E3fB5C633C640aBB4       10.000000000000000000           0.000000000000000000         100.000000000000000000 OGDToken:0x5fe7
+         4 0xa44a08d3F6933c69212114bb66E2Df1813651844        0.000000000000000000           0.000000000000000000           0.000000000000000000 User4:0xa44a
                                                                                             0.000000000000000000           0.000000000000000000
-         5 0xA3FD44B84340C71E9D70509F495Ff03CD2fe5632        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee0Token:0xA3FD
+         5 0x5fe7CD00aA1aA3cCf94F459E3fB5C633C640aBB4       10.000000000000000000           0.000000000000000000         100.000000000000000000 OGDToken:0x5fe7
                                                                                             0.000000000000000000           0.000000000000000000
-         6 0xee9a0dAE3e21Fe8b9B9E2E13E693F41E0aB3f42b        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee1Token:0xee9a
+         6 0xA3FD44B84340C71E9D70509F495Ff03CD2fe5632        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee0Token:0xA3FD
                                                                                             0.000000000000000000           0.000000000000000000
-         7 0x0b70A80b0336777A1697A5b505A6F1f3cC1087A0        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee2Token:0x0b70
+         7 0xee9a0dAE3e21Fe8b9B9E2E13E693F41E0aB3f42b        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee1Token:0xee9a
+                                                                                            0.000000000000000000           0.000000000000000000
+         8 0x0b70A80b0336777A1697A5b505A6F1f3cC1087A0        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee2Token:0x0b70
                                                                                             0.000000000000000000           0.000000000000000000
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-                                                                                        20000.000000000000000000       10000.000000000000000000 Total Token Balances
-                                                                                        10000.000000000000000000       10000.000000000000000000
+                                                                                        20000.000000000000000000         100.000000000000000000 Total Token Balances
+                                                                                         1000.000000000000000000       10000.000000000000000000
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
         
         Token 0 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 20000, owner: Owner:0xa00A, address: OGDToken:0x5fe7
@@ -491,8 +559,9 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         - dividendsOwing,new   : 1 User1:0xa11A       0, 5 ETH|null:0x0000; 0, 50 Fee0Token:0xA3FD
         - dividendsOwing,new   : 2 User2:0xa22A       5, 0 ETH|null:0x0000; 50, 0 Fee0Token:0xA3FD
         - dividendsOwing,new   : 3 User3:0xa33a       0, 0 ETH|null:0x0000; 0, 0 Fee0Token:0xA3FD
-        Token 1 symbol: 'FEE0', name: 'Fee0', decimals: 18, totalSupply: 10000, owner: Owner:0xa00A, address: Fee0Token:0xA3FD
-        Token 2 symbol: 'FEE1', name: 'Fee1', decimals: 18, totalSupply: 10000, owner: Owner:0xa00A, address: Fee1Token:0xee9a
+        - dividendsOwing,new   : 4 User4:0xa44a       0, 0 ETH|null:0x0000; 0, 0 Fee0Token:0xA3FD
+        Token 1 symbol: 'FEE0', name: 'Fee0', decimals: 18, totalSupply: 100, owner: Owner:0xa00A, address: Fee0Token:0xA3FD
+        Token 2 symbol: 'FEE1', name: 'Fee1', decimals: 18, totalSupply: 1000, owner: Owner:0xa00A, address: Fee1Token:0xee9a
         Token 3 symbol: 'FEE2', name: 'Fee2', decimals: 18, totalSupply: 10000, owner: Owner:0xa00A, address: Fee2Token:0x0b70
         
         --- Test 5 - User{1..3} withdraw FEE0 ---
@@ -511,25 +580,27 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
          # Account                                             EtherBalanceChange                            OGD                           FEE0 Blocks 27 to 45
                                                                                                             FEE1                           FEE2
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E      -10.454625520000000000           0.000000000000000000        9900.000000000000000000 Owner:0xa00A
-                                                                                        10000.000000000000000000       10000.000000000000000000
+         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E      -10.453423600000000000           0.000000000000000000           0.000000000000000000 Owner:0xa00A
+                                                                                         1000.000000000000000000       10000.000000000000000000
          1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433        4.989898000000000000       10000.000000000000000000          50.000000000000000000 User1:0xa11A
                                                                                             0.000000000000000000           0.000000000000000000
          2 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976        4.977951760000000000           0.000000000000000000          50.000000000000000000 User2:0xa22A
                                                                                             0.000000000000000000           0.000000000000000000
          3 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0       -0.004893840000000000       10000.000000000000000000           0.000000000000000000 User3:0xa33a
                                                                                             0.000000000000000000           0.000000000000000000
-         4 0x5fe7CD00aA1aA3cCf94F459E3fB5C633C640aBB4        0.000000000000000000           0.000000000000000000           0.000000000000000000 OGDToken:0x5fe7
+         4 0xa44a08d3F6933c69212114bb66E2Df1813651844        0.000000000000000000           0.000000000000000000           0.000000000000000000 User4:0xa44a
                                                                                             0.000000000000000000           0.000000000000000000
-         5 0xA3FD44B84340C71E9D70509F495Ff03CD2fe5632        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee0Token:0xA3FD
+         5 0x5fe7CD00aA1aA3cCf94F459E3fB5C633C640aBB4        0.000000000000000000           0.000000000000000000           0.000000000000000000 OGDToken:0x5fe7
                                                                                             0.000000000000000000           0.000000000000000000
-         6 0xee9a0dAE3e21Fe8b9B9E2E13E693F41E0aB3f42b        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee1Token:0xee9a
+         6 0xA3FD44B84340C71E9D70509F495Ff03CD2fe5632        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee0Token:0xA3FD
                                                                                             0.000000000000000000           0.000000000000000000
-         7 0x0b70A80b0336777A1697A5b505A6F1f3cC1087A0        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee2Token:0x0b70
+         7 0xee9a0dAE3e21Fe8b9B9E2E13E693F41E0aB3f42b        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee1Token:0xee9a
+                                                                                            0.000000000000000000           0.000000000000000000
+         8 0x0b70A80b0336777A1697A5b505A6F1f3cC1087A0        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee2Token:0x0b70
                                                                                             0.000000000000000000           0.000000000000000000
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-                                                                                        20000.000000000000000000       10000.000000000000000000 Total Token Balances
-                                                                                        10000.000000000000000000       10000.000000000000000000
+                                                                                        20000.000000000000000000         100.000000000000000000 Total Token Balances
+                                                                                         1000.000000000000000000       10000.000000000000000000
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
         
         Token 0 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 20000, owner: Owner:0xa00A, address: OGDToken:0x5fe7
@@ -539,12 +610,13 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         - dividendsOwing,new   : 1 User1:0xa11A       0, 0 ETH|null:0x0000; 0, 0 Fee0Token:0xA3FD
         - dividendsOwing,new   : 2 User2:0xa22A       0, 0 ETH|null:0x0000; 0, 0 Fee0Token:0xA3FD
         - dividendsOwing,new   : 3 User3:0xa33a       0, 0 ETH|null:0x0000; 0, 0 Fee0Token:0xA3FD
-        Token 1 symbol: 'FEE0', name: 'Fee0', decimals: 18, totalSupply: 10000, owner: Owner:0xa00A, address: Fee0Token:0xA3FD
-        Token 2 symbol: 'FEE1', name: 'Fee1', decimals: 18, totalSupply: 10000, owner: Owner:0xa00A, address: Fee1Token:0xee9a
+        - dividendsOwing,new   : 4 User4:0xa44a       0, 0 ETH|null:0x0000; 0, 0 Fee0Token:0xA3FD
+        Token 1 symbol: 'FEE0', name: 'Fee0', decimals: 18, totalSupply: 100, owner: Owner:0xa00A, address: Fee0Token:0xA3FD
+        Token 2 symbol: 'FEE1', name: 'Fee1', decimals: 18, totalSupply: 1000, owner: Owner:0xa00A, address: Fee1Token:0xee9a
         Token 3 symbol: 'FEE2', name: 'Fee2', decimals: 18, totalSupply: 10000, owner: Owner:0xa00A, address: Fee2Token:0x0b70
         
-      ✓ Workflow #1 - Transfer Test (1818ms)
+      ✓ Workflow #1 - Transfer Test (2062ms)
 
 
-  2 passing (7s)
+  2 passing (9s)
 
