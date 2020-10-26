@@ -93,9 +93,6 @@ contract Permissioned is Owned {
         permissions[account][role] = Permission({ active: active, maximum: maximum, processed: processed });
         emit PermissionUpdated(account, role, active, maximum, processed);
     }
-    // function processed(uint role, uint tokens) internal {
-    //     permissions[msg.sender][role].processed = permissions[msg.sender][role].processed.add(tokens);
-    // }
 }
 
 // File: contracts/ERC20.sol
