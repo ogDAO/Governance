@@ -22,6 +22,7 @@ class Data {
     this.fee1Token = null;
     this.fee2Token = null;
     this.optinoGov = null;
+    this.stakeFactory = null;
 
     this.ethUsd = new BigNumber("385.67");
   }
@@ -113,6 +114,32 @@ class Data {
     this.addContract(this.fee1Token, "Fee1Token");
     this.addContract(this.fee2Token, "Fee2Token");
     this.tokenContracts = [ogdToken, fee0Token, fee1Token, fee2Token];
+    for (let i = 0; i < this.tokenContracts.length; i++) {
+      let tokenContract = this.tokenContracts[i];
+      if (tokenContract != null) {
+        let _symbol = tokenContract.symbol();
+        let _decimals = tokenContract.decimals();
+        let [symbol, decimals] = await Promise.all([_symbol, _decimals]);
+        this.symbols.push(symbol);
+        this.decimals.push(decimals);
+      } else {
+        this.symbols.push("???");
+        this.decimals.push(18);
+      }
+    }
+  }
+
+  async setStakeFactoryData(ogToken, fee0Token, stakeFactory) {
+    this.ogToken = ogToken;
+    this.fee0Token = fee0Token;
+    this.stakeFactory = stakeFactory;
+    this.addAccount(this.ogToken.address, "OGToken");
+    this.addAccount(this.fee0Token.address, "Fee0Token");
+    this.addAccount(this.stakeFactory.address, "StakeFactory");
+    this.addContract(this.ogToken, "OGToken");
+    this.addContract(this.fee0Token, "Fee0Token");
+    this.addContract(this.stakeFactory, "StakeFactory");
+    this.tokenContracts = [ogToken, fee0Token];
     for (let i = 0; i < this.tokenContracts.length; i++) {
       let tokenContract = this.tokenContracts[i];
       if (tokenContract != null) {
