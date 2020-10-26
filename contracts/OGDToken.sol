@@ -225,7 +225,7 @@ contract OGDToken is OGDTokenInterface, Permissioned {
         _withdrawDividendsFor(account, destination);
         return true;
     }
-    /// @notice Withdraw enabled and disabled dividends tokens. Does not include new dividends since last updateAccount(...) triggered by transfer(...) and transferFrom(...)
+    /// @notice Withdraw enabled and disabled dividends tokens
     function withdrawDividendByToken(address token) public {
         updateAccount(msg.sender);
         uint tokens = accounts[msg.sender].owing[token];
