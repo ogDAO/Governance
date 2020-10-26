@@ -131,13 +131,11 @@ contract OGDToken is OGDTokenInterface, Permissioned {
             newOwingList[i] = newDividendsOwing(dividendToken.token, account);
         }
     }
-
     /// @notice New dividends owing since the last updateAccount(...)
     function newDividendsOwing(address dividendToken, address account) internal view returns (uint) {
         uint newDividendPoints = totalDividendPoints[dividendToken].sub(accounts[account].lastDividendPoints[dividendToken]);
         return accounts[account].balance.mul(newDividendPoints).div(pointMultiplier);
     }
-
     function updateAccount(address account) internal {
         for (uint i = 0; i < dividendTokens.index.length; i++) {
             DividendTokens.DividendToken memory dividendToken = dividendTokens.entries[dividendTokens.index[i]];
@@ -151,7 +149,6 @@ contract OGDToken is OGDTokenInterface, Permissioned {
             }
         }
     }
-
     function updateAccounts(address account1, address account2) internal {
         for (uint i = 0; i < dividendTokens.index.length; i++) {
             DividendTokens.DividendToken memory dividendToken = dividendTokens.entries[dividendTokens.index[i]];
@@ -197,8 +194,6 @@ contract OGDToken is OGDTokenInterface, Permissioned {
     }
 
     function _withdrawDividendsFor(address account, address destination) internal {
-        // console.log("%s called _withdrawDividendsFor(account %s, destination %s)", msg.sender, account, destination);
-        // updateAccounts(account, account);
         updateAccount(account);
         for (uint i = 0; i < dividendTokens.index.length; i++) {
             DividendTokens.DividendToken memory dividendToken = dividendTokens.entries[dividendTokens.index[i]];
@@ -243,17 +238,13 @@ contract OGDToken is OGDTokenInterface, Permissioned {
     /// @notice Mint tokens
     function mint(address tokenOwner, uint tokens) override external permitted(ROLE_MINTER, tokens) returns (bool success) {
         updateAccount(tokenOwner);
-        // updateAccounts(tokenOwner, tokenOwner);
         accounts[tokenOwner].balance = accounts[tokenOwner].balance.add(tokens);
         _totalSupply = _totalSupply.add(tokens);
         emit Transfer(address(0), tokenOwner, tokens);
         return true;
     }
-    /// @notice Withdraw dividends and then burn tokens
-    function burn(uint tokens, address payDividendsTo) override external returns (bool success) {
-        // console.log("%s called burn(tokens %s, payDividendsTo %s)", msg.sender, tokens, payDividendsTo);
-        // console.log("%s -> _withdrawDividendsFor(tokens %s, payDividendsTo %s", msg.sender, tokens, payDividendsTo);
-        // _withdrawDividendsFor(msg.sender, payDividendsTo);
+    /// @notice Burn tokens
+    function burn(uint tokens) override external returns (bool success) {
         updateAccount(msg.sender);
         accounts[msg.sender].balance = accounts[msg.sender].balance.sub(tokens);
         _totalSupply = _totalSupply.sub(tokens);

@@ -228,4 +228,73 @@ describe("TestOGDToken", function() {
       await data.printBalances();
     });
   });
+
+  describe("TestOGDToken - Workflow #2 - address(0) with balance", function() {
+    it("Workflow #1 - Transfer Test", async function() {
+      console.log("        --- Test 1 - OGDToken.addDividendTokens for ETH and FEE0, OGDToken mint(...) permissioning ---");
+      const test1 = [];
+      test1.push(data.ogdToken.addDividendToken(ZERO_ADDRESS));
+      test1.push(data.ogdToken.addDividendToken(data.fee0Token.address));
+      test1.push(data.ogdToken.setPermission(data.owner, 1, true, 0));
+      const [addDividendToken0, addDividendToken1, setPermission1] = await Promise.all(test1);
+      data.printTxData("addDividendToken0", addDividendToken0);
+      data.printTxData("addDividendToken1", addDividendToken1);
+      data.printTxData("setPermission1", setPermission1);
+      if (verbose) {
+        await data.printBalances();
+      }
+
+      console.log("        --- Test 2 - Mint 10,000 OGD tokens for User{1,2,3} and address(0); Owner approve 100 FEE for OGToken to spend ---");
+      const test2 = [];
+      const ogdTokens = new BigNumber("10000").shiftedBy(18);
+      const approveFee0Tokens = new BigNumber("100").shiftedBy(18);
+      const approveFee1Tokens = new BigNumber("1000").shiftedBy(18);
+      const approveFee2Tokens = new BigNumber("10000").shiftedBy(18);
+      test2.push(data.ogdToken.mint(data.user1, ogdTokens.toFixed(0)));
+      test2.push(data.ogdToken.mint(data.user2, ogdTokens.toFixed(0)));
+      test2.push(data.ogdToken.mint(data.user3, ogdTokens.toFixed(0)));
+      test2.push(data.ogdToken.mint(ZERO_ADDRESS, ogdTokens.toFixed(0)));
+      test2.push(data.fee0Token.approve(data.ogdToken.address, approveFee0Tokens.toFixed(0)));
+      test2.push(data.fee1Token.approve(data.ogdToken.address, approveFee1Tokens.toFixed(0)));
+      test2.push(data.fee2Token.approve(data.ogdToken.address, approveFee2Tokens.toFixed(0)));
+      const [mint1, mint2, mint3, mint4, ownerApproveFee0Tokens, ownerApproveFee1Tokens, ownerApproveFee2Tokens] = await Promise.all(test2);
+      await data.printTxData("mint1", mint1);
+      await data.printTxData("mint2", mint2);
+      await data.printTxData("mint3", mint3);
+      await data.printTxData("mint4", mint4);
+      await data.printTxData("ownerApproveFee0Tokens", ownerApproveFee0Tokens);
+      await data.printTxData("ownerApproveFee1Tokens", ownerApproveFee1Tokens);
+      await data.printTxData("ownerApproveFee2Tokens", ownerApproveFee2Tokens);
+      await data.printBalances();
+
+      console.log("        --- Test 3 - Owner deposits dividends of 100 FEE0 and 10 ETH ---");
+      const test3 = [];
+      const depositFee0Tokens = new BigNumber("100").shiftedBy(18);
+      const depositFeeETH = new BigNumber("10").shiftedBy(18);
+      test3.push(data.ogdToken.depositDividend(data.fee0Token.address, depositFee0Tokens.toFixed(0)));
+      test3.push(data.ogdToken.depositDividend(ZERO_ADDRESS, depositFeeETH.toFixed(0), { value: depositFeeETH.toFixed(0) }));
+      const [depositDividendFee0, depositDividendETH0] = await Promise.all(test3);
+      await data.printTxData("depositDividendFee0", depositDividendFee0);
+      await data.printTxData("depositDividendETH0", depositDividendETH0);
+      await data.printBalances();
+
+      console.log("        --- Test 4 - User{1..3} withdraw FEE0 ---");
+      const test4 = [];
+      test4.push(data.ogdToken.connect(data.user1Signer).withdrawDividends());
+      test4.push(data.ogdToken.connect(data.user2Signer).withdrawDividends());
+      test4.push(data.ogdToken.connect(data.user3Signer).withdrawDividends());
+      const [withdrawDividends1, withdrawDividends2, withdrawDividends3] = await Promise.all(test4);
+      await data.printTxData("withdrawDividends1", withdrawDividends1);
+      await data.printTxData("withdrawDividends2", withdrawDividends2);
+      await data.printTxData("withdrawDividends3", withdrawDividends3);
+      await data.printBalances();
+
+      const user1Fee0Balance = await data.fee0Token.balanceOf(data.user1);
+      if (verbose) {
+        console.log("        user1Fee0Balance: " + user1Fee0Balance);
+      }
+      expect(new BigNumber(user1Fee0Balance.toString()).toFixed(0)).to.equal(new BigNumber("33.333333333333333333").shiftedBy(18).toFixed(0));
+
+    });
+  });
 });
