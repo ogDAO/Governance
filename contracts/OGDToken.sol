@@ -211,8 +211,8 @@ contract OGDToken is OGDTokenInterface, Permissioned {
                     } else {
                         require(ERC20(dividendToken.token).transfer(destination, tokens), "ERC20 transfer failure");
                     }
+                    emit DividendWithdrawn(account, destination, dividendToken.token, tokens);
                 }
-                emit DividendWithdrawn(account, destination, dividendToken.token, tokens);
             }
         }
     }
@@ -244,11 +244,11 @@ contract OGDToken is OGDTokenInterface, Permissioned {
     /// @notice Mint tokens
     function mint(address tokenOwner, uint tokens) override external permitted(ROLE_MINTER, tokens) returns (bool success) {
         processed(ROLE_MINTER, tokens);
+        updateAccount(tokenOwner);
+        // updateAccounts(tokenOwner, tokenOwner);
         accounts[tokenOwner].balance = accounts[tokenOwner].balance.add(tokens);
         _totalSupply = _totalSupply.add(tokens);
         emit Transfer(address(0), tokenOwner, tokens);
-        // updateAccounts(tokenOwner, tokenOwner);
-        updateAccount(tokenOwner);
         return true;
     }
     /// @notice Withdraw dividends and then burn tokens
@@ -256,6 +256,7 @@ contract OGDToken is OGDTokenInterface, Permissioned {
         // console.log("%s called burn(tokens %s, payDividendsTo %s)", msg.sender, tokens, payDividendsTo);
         // console.log("%s -> _withdrawDividendsFor(tokens %s, payDividendsTo %s", msg.sender, tokens, payDividendsTo);
         // _withdrawDividendsFor(msg.sender, payDividendsTo);
+        updateAccount(msg.sender);
         accounts[msg.sender].balance = accounts[msg.sender].balance.sub(tokens);
         _totalSupply = _totalSupply.sub(tokens);
         emit Transfer(msg.sender, address(0), tokens);

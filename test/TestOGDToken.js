@@ -109,34 +109,43 @@ describe("TestOGDToken", function() {
         await data.printBalances();
       }
 
-      console.log("        --- Test 7 - Owner deposits dividends of 1,000 FEE1 and 10,000 FEE2 ---");
+      console.log("        --- Test 7 - Mint 10,000 OGD tokens for User4 ---");
       const test7 = [];
+      test7.push(test7.push(data.ogdToken.mint(data.user4, ogdTokens.toFixed(0))));
+      const [mint4] = await Promise.all(test7);
+      await data.printTxData("mint4", mint4);
+      await data.printBalances();
+
+      console.log("        --- Test 8 - Owner deposits dividends of 1,000 FEE1 and 10,000 FEE2 ---");
+      const test8 = [];
       const depositFee1Tokens = new BigNumber("1000").shiftedBy(18);
       const depositFee2Tokens = new BigNumber("10000").shiftedBy(18);
-      test7.push(data.ogdToken.depositDividend(data.fee1Token.address, depositFee1Tokens.toFixed(0)));
-      test7.push(data.ogdToken.depositDividend(data.fee2Token.address, depositFee2Tokens.toFixed(0)));
-      const [depositDividendFee1, depositDividendFee2] = await Promise.all(test7);
+      test8.push(data.ogdToken.depositDividend(data.fee1Token.address, depositFee1Tokens.toFixed(0)));
+      test8.push(data.ogdToken.depositDividend(data.fee2Token.address, depositFee2Tokens.toFixed(0)));
+      const [depositDividendFee1, depositDividendFee2] = await Promise.all(test8);
       await data.printTxData("depositDividendFee1", depositDividendFee1);
       await data.printTxData("depositDividendFee2", depositDividendFee2);
       if (verbose) {
         await data.printBalances();
       }
 
-      console.log("        --- Test 8 - User{1..3} withdraw 333.333333333333333333 FEE1 and 3333.333333333333333333 FEE2 ---");
-      const test8 = [];
-      test8.push(data.ogdToken.connect(data.user1Signer).withdrawDividends());
-      test8.push(data.ogdToken.connect(data.user2Signer).withdrawDividends());
-      test8.push(data.ogdToken.connect(data.user3Signer).withdrawDividends());
-      const [withdrawDividends4, withdrawDividends5, withdrawDividends6] = await Promise.all(test8);
+      console.log("        --- Test 9 - User{1..4} withdraw 250 FEE1 and 2500 FEE2 ---");
+      const test9 = [];
+      test9.push(data.ogdToken.connect(data.user1Signer).withdrawDividends());
+      test9.push(data.ogdToken.connect(data.user2Signer).withdrawDividends());
+      test9.push(data.ogdToken.connect(data.user3Signer).withdrawDividends());
+      test9.push(data.ogdToken.connect(data.user4Signer).withdrawDividends());
+      const [withdrawDividends4, withdrawDividends5, withdrawDividends6, withdrawDividends7] = await Promise.all(test9);
       await data.printTxData("withdrawDividends4", withdrawDividends4);
       await data.printTxData("withdrawDividends5", withdrawDividends5);
       await data.printTxData("withdrawDividends6", withdrawDividends6);
+      await data.printTxData("withdrawDividends7", withdrawDividends7);
       await data.printBalances();
 
-      console.log("        --- Test 9 - User2 transfer 1 OGD to User3 ---");
-      const test9 = [];
-      test9.push(data.ogdToken.connect(data.user2Signer).transfer(data.user3, new BigNumber("0.123456789123456789").shiftedBy(18).toFixed(0)));
-      const [transfer2] = await Promise.all(test9);
+      console.log("        --- Test 10 - User2 transfer 0.123456789123456789 OGD to User3 ---");
+      const test10 = [];
+      test10.push(data.ogdToken.connect(data.user2Signer).transfer(data.user3, new BigNumber("0.123456789123456789").shiftedBy(18).toFixed(0)));
+      const [transfer2] = await Promise.all(test10);
       await data.printTxData("transfer2", transfer2);
       await data.printBalances();
 
@@ -144,7 +153,7 @@ describe("TestOGDToken", function() {
       if (verbose) {
         console.log("        user1Fee1Balance: " + user1Fee1Balance);
       }
-      expect(new BigNumber(user1Fee1Balance.toString()).toFixed(0)).to.equal(new BigNumber("333.333333333333333333").shiftedBy(18).toFixed(0));
+      expect(new BigNumber(user1Fee1Balance.toString()).toFixed(0)).to.equal(new BigNumber("250").shiftedBy(18).toFixed(0));
 
       console.log("        --- Test Completed ---");
       console.log("");

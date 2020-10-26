@@ -6,7 +6,7 @@ $ npx hardhat test test/TestOptinoGov.js > results/TestOptinoGov.txt
         --- Setup 1 - Deploy OGToken, OGDToken, FEE0, then OptinoGov ---
         ogToken.deployTransaction - gasUsed: 1011212, fee: 0.08089696, feeUsd: 31.1995305632, @ 80 gwei & 385.67 ETH/USD, 0xf79edb4056d66a2b91c8445412cc5e6902a182f1e8fb84367a224fce653d3bf3
         + OGToken.Transfer(from: ETH|null:0x0000, to: Owner:0xa00A, tokens: 40000)
-        ogdToken.deployTransaction - gasUsed: 2445424, fee: 0.19563392, feeUsd: 75.4501339264, @ 80 gwei & 385.67 ETH/USD, 0x5029d7678e537d04e6b6b01450fccc5358195e6f50566a6318752e7cd4329b13
+        ogdToken.deployTransaction - gasUsed: 2593586, fee: 0.20748688, feeUsd: 80.0214650096, @ 80 gwei & 385.67 ETH/USD, 0x4eb862f1aad583f0b2034d9c81feb881a35c83421e266a0e4433bc19b82f5745
         + OGDToken.Transfer(from: ETH|null:0x0000, to: Owner:0xa00A, tokens: 0)
         fee0Token.deployTransaction - gasUsed: 823454, fee: 0.06587632, feeUsd: 25.4065203344, @ 80 gwei & 385.67 ETH/USD, 0x794d0c8b7d0e783f65ad436746f4accdff0ff3677c86dc7a6cc6008ca74c6a6e
         + Fee0Token.Transfer(from: ETH|null:0x0000, to: Owner:0xa00A, tokens: 1000)
@@ -18,9 +18,9 @@ $ npx hardhat test test/TestOptinoGov.js > results/TestOptinoGov.txt
         + OGDToken.DividendTokenAdded(token: Fee0Token:0x6eaC, enabled: true)
         setPermission1 - gasUsed: 49100, fee: 0.003928, feeUsd: 1.51491176, @ 80 gwei & 385.67 ETH/USD, 0x1ac650e0366745e0e30e803137ce2abe28914140934131c763f0e3c2b860151c
         + OGToken.PermissionUpdated(account: OptinoGov:0xBa1F, role: 1, active: true, maximum: 0, processed: 0)
-        setPermission2 - gasUsed: 49188, fee: 0.00393504, feeUsd: 1.5176268768, @ 80 gwei & 385.67 ETH/USD, 0x6fa13c6fc10d8085218981ec4e2c68791ea014ec01be3e9d46f4af97df1a23aa
+        setPermission2 - gasUsed: 49123, fee: 0.00392984, feeUsd: 1.5156213928, @ 80 gwei & 385.67 ETH/USD, 0x6fa13c6fc10d8085218981ec4e2c68791ea014ec01be3e9d46f4af97df1a23aa
         + OGDToken.PermissionUpdated(account: OptinoGov:0xBa1F, role: 1, active: true, maximum: 0, processed: 0)
-        setPermission3 - gasUsed: 49188, fee: 0.00393504, feeUsd: 1.5176268768, @ 80 gwei & 385.67 ETH/USD, 0xf83653cd3b3ac2604cd78133dd602c4578f5394cd349b18c2949e9370fedc068
+        setPermission3 - gasUsed: 49123, fee: 0.00392984, feeUsd: 1.5156213928, @ 80 gwei & 385.67 ETH/USD, 0xf83653cd3b3ac2604cd78133dd602c4578f5394cd349b18c2949e9370fedc068
         + OGDToken.PermissionUpdated(account: OptinoGov:0xBa1F, role: 2, active: true, maximum: 0, processed: 0)
         --- Setup 3 - Transfer OGTokens, User{1..3} approve 2,000 OGTokens to OptinoGov, Owner approve 2,000 FEE0 tokens to OGDToken, Transfer OGToken and OGDToken ownership to OptinoGov ---
         transfer1 - gasUsed: 50915, fee: 0.0040732, feeUsd: 1.570911044, @ 80 gwei & 385.67 ETH/USD, 0x655871f6f59cda01fd8c119411d5146f5374b49cfe62415c574134a0d53f7d39
@@ -45,7 +45,7 @@ $ npx hardhat test test/TestOptinoGov.js > results/TestOptinoGov.txt
          # Account                                             EtherBalanceChange                             OG                            OGD Blocks 0 to 18
                                                                                                             FEE0                            ???
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E       -0.814811040000000000       10000.000000000000000000           0.000000000000000000 Owner:0xa00A
+         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E       -0.826653600000000000       10000.000000000000000000           0.000000000000000000 Owner:0xa00A
                                                                                          1000.000000000000000000           0.000000000000000000
          1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433       -0.003519200000000000       10000.000000000000000000           0.000000000000000000 User1:0xa11A
                                                                                             0.000000000000000000           0.000000000000000000
@@ -103,29 +103,29 @@ $ npx hardhat test test/TestOptinoGov.js > results/TestOptinoGov.txt
         --- Setup Completed ---
 
         --- Test 1 - User{1..3} commit OGTokens for {1, 1, 1} seconds duration ---
-        commit1 - gasUsed: 250533, fee: 0.02004264, feeUsd: 7.7298449688, @ 80 gwei & 385.67 ETH/USD, 0xd03c209ec9bb328ffe66941c09b7493511a9a1bc9be80490ef1739a3afcb2e64
+        commit1 - gasUsed: 250473, fee: 0.02003784, feeUsd: 7.7279937528, @ 80 gwei & 385.67 ETH/USD, 0xd03c209ec9bb328ffe66941c09b7493511a9a1bc9be80490ef1739a3afcb2e64
         + OGToken.Transfer(from: User1:0xa11A, to: OptinoGov:0xBa1F, tokens: 1000)
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User1:0xa11A, tokens: 1000)
-        + OptinoGov.Committed(user: User1:0xa11A, tokens: 1000, balance: 1000, duration: 1, end: 1603575659, delegatee: ETH|null:0x0000, votes: 0.1, rewardPool: 1000000, totalVotes: 0.1)
-        commit2 - gasUsed: 190533, fee: 0.01524264, feeUsd: 5.8786289688, @ 80 gwei & 385.67 ETH/USD, 0xbb80f9b5fe4453939a58cafb5e2f364f82236999bcd9a308b4f01281c3c86ab5
+        + OptinoGov.Committed(user: User1:0xa11A, tokens: 1000, balance: 1000, duration: 1, end: 1603598772, delegatee: ETH|null:0x0000, votes: 0.1, rewardPool: 1000000, totalVotes: 0.1)
+        commit2 - gasUsed: 190473, fee: 0.01523784, feeUsd: 5.8767777528, @ 80 gwei & 385.67 ETH/USD, 0xbb80f9b5fe4453939a58cafb5e2f364f82236999bcd9a308b4f01281c3c86ab5
         + OGToken.Transfer(from: User2:0xa22A, to: OptinoGov:0xBa1F, tokens: 1000)
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User2:0xa22A, tokens: 1000)
-        + OptinoGov.Committed(user: User2:0xa22A, tokens: 1000, balance: 1000, duration: 1, end: 1603575660, delegatee: ETH|null:0x0000, votes: 0.1, rewardPool: 1000000, totalVotes: 0.2)
-        commit3 - gasUsed: 190533, fee: 0.01524264, feeUsd: 5.8786289688, @ 80 gwei & 385.67 ETH/USD, 0x8a61778426c14116dcf5d25e6f68fedaf4422d0dea57bf650fd7a02541e2f016
+        + OptinoGov.Committed(user: User2:0xa22A, tokens: 1000, balance: 1000, duration: 1, end: 1603598773, delegatee: ETH|null:0x0000, votes: 0.1, rewardPool: 1000000, totalVotes: 0.2)
+        commit3 - gasUsed: 190473, fee: 0.01523784, feeUsd: 5.8767777528, @ 80 gwei & 385.67 ETH/USD, 0x8a61778426c14116dcf5d25e6f68fedaf4422d0dea57bf650fd7a02541e2f016
         + OGToken.Transfer(from: User3:0xa33a, to: OptinoGov:0xBa1F, tokens: 1000)
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User3:0xa33a, tokens: 1000)
-        + OptinoGov.Committed(user: User3:0xa33a, tokens: 1000, balance: 1000, duration: 1, end: 1603575661, delegatee: ETH|null:0x0000, votes: 0.1, rewardPool: 1000000, totalVotes: 0.3)
+        + OptinoGov.Committed(user: User3:0xa33a, tokens: 1000, balance: 1000, duration: 1, end: 1603598774, delegatee: ETH|null:0x0000, votes: 0.1, rewardPool: 1000000, totalVotes: 0.3)
         
          # Account                                             EtherBalanceChange                             OG                            OGD Blocks 0 to 21
                                                                                                             FEE0                            ???
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E       -0.814811040000000000       10000.000000000000000000           0.000000000000000000 Owner:0xa00A
+         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E       -0.826653600000000000       10000.000000000000000000           0.000000000000000000 Owner:0xa00A
                                                                                          1000.000000000000000000           0.000000000000000000
-         1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433       -0.023561840000000000        9000.000000000000000000        1000.000000000000000000 User1:0xa11A
+         1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433       -0.023557040000000000        9000.000000000000000000        1000.000000000000000000 User1:0xa11A
                                                                                             0.000000000000000000           0.000000000000000000
-         2 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976       -0.018761840000000000        9000.000000000000000000        1000.000000000000000000 User2:0xa22A
+         2 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976       -0.018757040000000000        9000.000000000000000000        1000.000000000000000000 User2:0xa22A
                                                                                             0.000000000000000000           0.000000000000000000
-         3 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0       -0.018761840000000000        9000.000000000000000000        1000.000000000000000000 User3:0xa33a
+         3 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0       -0.018757040000000000        9000.000000000000000000        1000.000000000000000000 User3:0xa33a
                                                                                             0.000000000000000000           0.000000000000000000
          4 0xa44a08d3F6933c69212114bb66E2Df1813651844        0.000000000000000000           0.000000000000000000           0.000000000000000000 User4:0xa44a
                                                                                             0.000000000000000000           0.000000000000000000
@@ -170,9 +170,9 @@ $ npx hardhat test test/TestOptinoGov.js > results/TestOptinoGov.txt
         - totalVotes           : 300000000000000000 = 0.3
         - proposalCount        : 0
         - stakeInfoLength      : 0
-        - commitment           : 1 User1:0xa11A duration: 1, end: 1603575659, tokens: 1000, votes: 0.1, staked: 0, delegatedVotes: 0, delegatee: ETH|null:0x0000
-        - commitment           : 2 User2:0xa22A duration: 1, end: 1603575660, tokens: 1000, votes: 0.1, staked: 0, delegatedVotes: 0, delegatee: ETH|null:0x0000
-        - commitment           : 3 User3:0xa33a duration: 1, end: 1603575661, tokens: 1000, votes: 0.1, staked: 0, delegatedVotes: 0, delegatee: ETH|null:0x0000
+        - commitment           : 1 User1:0xa11A duration: 1, end: 1603598772, tokens: 1000, votes: 0.1, staked: 0, delegatedVotes: 0, delegatee: ETH|null:0x0000
+        - commitment           : 2 User2:0xa22A duration: 1, end: 1603598773, tokens: 1000, votes: 0.1, staked: 0, delegatedVotes: 0, delegatee: ETH|null:0x0000
+        - commitment           : 3 User3:0xa33a duration: 1, end: 1603598774, tokens: 1000, votes: 0.1, staked: 0, delegatedVotes: 0, delegatee: ETH|null:0x0000
         
         --- Test 2 - User{1..3} approve 2,000 OGDTokens to OptinoGov ---
         approve1 - gasUsed: 43990, fee: 0.0035192, feeUsd: 1.357249864, @ 80 gwei & 385.67 ETH/USD, 0x96384fffb21641745c2eacbb3910695a2a67d08a62093879d7798a8d4edbba24
@@ -187,13 +187,13 @@ $ npx hardhat test test/TestOptinoGov.js > results/TestOptinoGov.txt
          # Account                                             EtherBalanceChange                             OG                            OGD Blocks 0 to 25
                                                                                                             FEE0                            ???
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E       -0.816792480000000000       10000.000000000000000000           0.000000000000000000 Owner:0xa00A
+         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E       -0.828635040000000000       10000.000000000000000000           0.000000000000000000 Owner:0xa00A
                                                                                          1000.000000000000000000           0.000000000000000000
-         1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433       -0.027081040000000000        9000.000000000000000000        1000.000000000000000000 User1:0xa11A
+         1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433       -0.027076240000000000        9000.000000000000000000        1000.000000000000000000 User1:0xa11A
                                                                                             0.000000000000000000           0.000000000000000000
-         2 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976       -0.022281040000000000        9000.000000000000000000        1000.000000000000000000 User2:0xa22A
+         2 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976       -0.022276240000000000        9000.000000000000000000        1000.000000000000000000 User2:0xa22A
                                                                                             0.000000000000000000           0.000000000000000000
-         3 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0       -0.022281040000000000        9000.000000000000000000        1000.000000000000000000 User3:0xa33a
+         3 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0       -0.022276240000000000        9000.000000000000000000        1000.000000000000000000 User3:0xa33a
                                                                                             0.000000000000000000           0.000000000000000000
          4 0xa44a08d3F6933c69212114bb66E2Df1813651844        0.000000000000000000           0.000000000000000000           0.000000000000000000 User4:0xa44a
                                                                                             0.000000000000000000           0.000000000000000000
@@ -238,27 +238,27 @@ $ npx hardhat test test/TestOptinoGov.js > results/TestOptinoGov.txt
         - totalVotes           : 300000000000000000 = 0.3
         - proposalCount        : 0
         - stakeInfoLength      : 0
-        - commitment           : 1 User1:0xa11A duration: 1, end: 1603575659, tokens: 1000, votes: 0.1, staked: 0, delegatedVotes: 0, delegatee: ETH|null:0x0000
-        - commitment           : 2 User2:0xa22A duration: 1, end: 1603575660, tokens: 1000, votes: 0.1, staked: 0, delegatedVotes: 0, delegatee: ETH|null:0x0000
-        - commitment           : 3 User3:0xa33a duration: 1, end: 1603575661, tokens: 1000, votes: 0.1, staked: 0, delegatedVotes: 0, delegatee: ETH|null:0x0000
+        - commitment           : 1 User1:0xa11A duration: 1, end: 1603598772, tokens: 1000, votes: 0.1, staked: 0, delegatedVotes: 0, delegatee: ETH|null:0x0000
+        - commitment           : 2 User2:0xa22A duration: 1, end: 1603598773, tokens: 1000, votes: 0.1, staked: 0, delegatedVotes: 0, delegatee: ETH|null:0x0000
+        - commitment           : 3 User3:0xa33a duration: 1, end: 1603598774, tokens: 1000, votes: 0.1, staked: 0, delegatedVotes: 0, delegatee: ETH|null:0x0000
         
         --- Test 3 - Owner deposits dividends of 10 ETH and 100 FEE ---
-        depositDividendFee1 - gasUsed: 69193, fee: 0.00553544, feeUsd: 2.1348531448, @ 80 gwei & 385.67 ETH/USD, 0x18aa746ba320545b23d9f42b286192c0ac71727665d601cce7466194464aa401
+        depositDividendFee1 - gasUsed: 69215, fee: 0.0055372, feeUsd: 2.135531924, @ 80 gwei & 385.67 ETH/USD, 0x18aa746ba320545b23d9f42b286192c0ac71727665d601cce7466194464aa401
         + OGDToken.DividendDeposited(token: ETH|null:0x0000, tokens: 10)
-        depositDividendFee2 - gasUsed: 106461, fee: 0.00851688, feeUsd: 3.2847051096, @ 80 gwei & 385.67 ETH/USD, 0xec142704da767bc3aab79eae5f3c966845883fdecbb4610a12e639bc47a421aa
+        depositDividendFee2 - gasUsed: 106483, fee: 0.00851864, feeUsd: 3.2853838888, @ 80 gwei & 385.67 ETH/USD, 0xec142704da767bc3aab79eae5f3c966845883fdecbb4610a12e639bc47a421aa
         + Fee0Token.Transfer(from: Owner:0xa00A, to: OGDToken:0x0f4e, tokens: 100)
         + OGDToken.DividendDeposited(token: Fee0Token:0x6eaC, tokens: 100)
         
          # Account                                             EtherBalanceChange                             OG                            OGD Blocks 0 to 27
                                                                                                             FEE0                            ???
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E      -10.830844800000000000       10000.000000000000000000           0.000000000000000000 Owner:0xa00A
+         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E      -10.842690880000000000       10000.000000000000000000           0.000000000000000000 Owner:0xa00A
                                                                                           900.000000000000000000           0.000000000000000000
-         1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433       -0.027081040000000000        9000.000000000000000000        1000.000000000000000000 User1:0xa11A
+         1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433       -0.027076240000000000        9000.000000000000000000        1000.000000000000000000 User1:0xa11A
                                                                                             0.000000000000000000           0.000000000000000000
-         2 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976       -0.022281040000000000        9000.000000000000000000        1000.000000000000000000 User2:0xa22A
+         2 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976       -0.022276240000000000        9000.000000000000000000        1000.000000000000000000 User2:0xa22A
                                                                                             0.000000000000000000           0.000000000000000000
-         3 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0       -0.022281040000000000        9000.000000000000000000        1000.000000000000000000 User3:0xa33a
+         3 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0       -0.022276240000000000        9000.000000000000000000        1000.000000000000000000 User3:0xa33a
                                                                                             0.000000000000000000           0.000000000000000000
          4 0xa44a08d3F6933c69212114bb66E2Df1813651844        0.000000000000000000           0.000000000000000000           0.000000000000000000 User4:0xa44a
                                                                                             0.000000000000000000           0.000000000000000000
@@ -303,46 +303,46 @@ $ npx hardhat test test/TestOptinoGov.js > results/TestOptinoGov.txt
         - totalVotes           : 300000000000000000 = 0.3
         - proposalCount        : 0
         - stakeInfoLength      : 0
-        - commitment           : 1 User1:0xa11A duration: 1, end: 1603575659, tokens: 1000, votes: 0.1, staked: 0, delegatedVotes: 0, delegatee: ETH|null:0x0000
-        - commitment           : 2 User2:0xa22A duration: 1, end: 1603575660, tokens: 1000, votes: 0.1, staked: 0, delegatedVotes: 0, delegatee: ETH|null:0x0000
-        - commitment           : 3 User3:0xa33a duration: 1, end: 1603575661, tokens: 1000, votes: 0.1, staked: 0, delegatedVotes: 0, delegatee: ETH|null:0x0000
+        - commitment           : 1 User1:0xa11A duration: 1, end: 1603598772, tokens: 1000, votes: 0.1, staked: 0, delegatedVotes: 0, delegatee: ETH|null:0x0000
+        - commitment           : 2 User2:0xa22A duration: 1, end: 1603598773, tokens: 1000, votes: 0.1, staked: 0, delegatedVotes: 0, delegatee: ETH|null:0x0000
+        - commitment           : 3 User3:0xa33a duration: 1, end: 1603598774, tokens: 1000, votes: 0.1, staked: 0, delegatedVotes: 0, delegatee: ETH|null:0x0000
         
         --- Test 4 - User{1..3} uncommit OGTokens ---
-        uncommit1 - gasUsed: 388402, fee: 0.03107216, feeUsd: 11.9835999472, @ 80 gwei & 385.67 ETH/USD, 0x4dd3c5f36efea28912fd699aa2ee0b57e27e3ed4b07b592e00fac8a74b568460
+        uncommit1 - gasUsed: 376828, fee: 0.03014624, feeUsd: 11.6265003808, @ 80 gwei & 385.67 ETH/USD, 0x4dd3c5f36efea28912fd699aa2ee0b57e27e3ed4b07b592e00fac8a74b568460
         + OGDToken.DividendWithdrawn(account: User1:0xa11A, destination: User1:0xa11A, token: ETH|null:0x0000, tokens: 3.333333333333333333)
         + Fee0Token.Transfer(from: OGDToken:0x0f4e, to: User1:0xa11A, tokens: 33.333333333333333333)
         + OGDToken.DividendWithdrawn(account: User1:0xa11A, destination: User1:0xa11A, token: Fee0Token:0x6eaC, tokens: 33.333333333333333333)
         + OGDToken.Transfer(from: User1:0xa11A, to: ETH|null:0x0000, tokens: 100)
         + OGToken.Transfer(from: OptinoGov:0xBa1F, to: User1:0xa11A, tokens: 100)
         + OGToken.Transfer(from: ETH|null:0x0000, to: User1:0xa11A, tokens: 0.45)
-        + OptinoGov.Uncommitted(user: User1:0xa11A, tokens: 100, balance: 900, duration: 1, end: 1603575668, votes: 0.09, rewardPool: 999999.55, totalVotes: 0.29)
-        uncommit2 - gasUsed: 320074, fee: 0.02560592, feeUsd: 9.8754351664, @ 80 gwei & 385.67 ETH/USD, 0x574947fb276484f75cf786b65a1a873b1458d7e22e1c96e27d7b14965a595c28
+        + OptinoGov.Uncommitted(user: User1:0xa11A, tokens: 100, balance: 900, duration: 1, end: 1603598781, votes: 0.09, rewardPool: 999999.55, totalVotes: 0.29)
+        uncommit2 - gasUsed: 308500, fee: 0.02468, feeUsd: 9.5183356, @ 80 gwei & 385.67 ETH/USD, 0x574947fb276484f75cf786b65a1a873b1458d7e22e1c96e27d7b14965a595c28
         + OGDToken.DividendWithdrawn(account: User2:0xa22A, destination: User2:0xa22A, token: ETH|null:0x0000, tokens: 3.333333333333333333)
         + Fee0Token.Transfer(from: OGDToken:0x0f4e, to: User2:0xa22A, tokens: 33.333333333333333333)
         + OGDToken.DividendWithdrawn(account: User2:0xa22A, destination: User2:0xa22A, token: Fee0Token:0x6eaC, tokens: 33.333333333333333333)
         + OGDToken.Transfer(from: User2:0xa22A, to: ETH|null:0x0000, tokens: 100)
         + OGToken.Transfer(from: OptinoGov:0xBa1F, to: User2:0xa22A, tokens: 100)
         + OGToken.Transfer(from: ETH|null:0x0000, to: User2:0xa22A, tokens: 0.465517241379310344)
-        + OptinoGov.Uncommitted(user: User2:0xa22A, tokens: 100, balance: 900, duration: 1, end: 1603575669, votes: 0.09, rewardPool: 999999.084482758620689656, totalVotes: 0.28)
-        uncommit3 - gasUsed: 320074, fee: 0.02560592, feeUsd: 9.8754351664, @ 80 gwei & 385.67 ETH/USD, 0xff8aba78d545e17c3802fca3411363b788eae07d7e65fc2fe72f197f118fda3c
+        + OptinoGov.Uncommitted(user: User2:0xa22A, tokens: 100, balance: 900, duration: 1, end: 1603598782, votes: 0.09, rewardPool: 999999.084482758620689656, totalVotes: 0.28)
+        uncommit3 - gasUsed: 308500, fee: 0.02468, feeUsd: 9.5183356, @ 80 gwei & 385.67 ETH/USD, 0xff8aba78d545e17c3802fca3411363b788eae07d7e65fc2fe72f197f118fda3c
         + OGDToken.DividendWithdrawn(account: User3:0xa33a, destination: User3:0xa33a, token: ETH|null:0x0000, tokens: 3.333333333333333333)
         + Fee0Token.Transfer(from: OGDToken:0x0f4e, to: User3:0xa33a, tokens: 33.333333333333333333)
         + OGDToken.DividendWithdrawn(account: User3:0xa33a, destination: User3:0xa33a, token: Fee0Token:0x6eaC, tokens: 33.333333333333333333)
         + OGDToken.Transfer(from: User3:0xa33a, to: ETH|null:0x0000, tokens: 100)
         + OGToken.Transfer(from: OptinoGov:0xBa1F, to: User3:0xa33a, tokens: 100)
         + OGToken.Transfer(from: ETH|null:0x0000, to: User3:0xa33a, tokens: 0.482142857142857142)
-        + OptinoGov.Uncommitted(user: User3:0xa33a, tokens: 100, balance: 900, duration: 1, end: 1603575670, votes: 0.09, rewardPool: 999998.602339901477832514, totalVotes: 0.27)
+        + OptinoGov.Uncommitted(user: User3:0xa33a, tokens: 100, balance: 900, duration: 1, end: 1603598783, votes: 0.09, rewardPool: 999998.602339901477832514, totalVotes: 0.27)
         
          # Account                                             EtherBalanceChange                             OG                            OGD Blocks 0 to 30
                                                                                                             FEE0                            ???
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E      -10.830844800000000000       10000.000000000000000000           0.000000000000000000 Owner:0xa00A
+         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E      -10.842690880000000000       10000.000000000000000000           0.000000000000000000 Owner:0xa00A
                                                                                           900.000000000000000000           0.000000000000000000
-         1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433        3.275180133333333333        9100.450000000000000000         900.000000000000000000 User1:0xa11A
+         1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433        3.276110853333333333        9100.450000000000000000         900.000000000000000000 User1:0xa11A
                                                                                            33.333333333333333333           0.000000000000000000
-         2 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976        3.285446373333333333        9100.465517241379310344         900.000000000000000000 User2:0xa22A
+         2 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976        3.286377093333333333        9100.465517241379310344         900.000000000000000000 User2:0xa22A
                                                                                            33.333333333333333333           0.000000000000000000
-         3 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0        3.285446373333333333        9100.482142857142857142         900.000000000000000000 User3:0xa33a
+         3 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0        3.286377093333333333        9100.482142857142857142         900.000000000000000000 User3:0xa33a
                                                                                            33.333333333333333333           0.000000000000000000
          4 0xa44a08d3F6933c69212114bb66E2Df1813651844        0.000000000000000000           0.000000000000000000           0.000000000000000000 User4:0xa44a
                                                                                             0.000000000000000000           0.000000000000000000
@@ -387,13 +387,13 @@ $ npx hardhat test test/TestOptinoGov.js > results/TestOptinoGov.txt
         - totalVotes           : 270000000000000000 = 0.27
         - proposalCount        : 0
         - stakeInfoLength      : 0
-        - commitment           : 1 User1:0xa11A duration: 1, end: 1603575668, tokens: 900, votes: 0.09, staked: 0, delegatedVotes: 0, delegatee: ETH|null:0x0000
-        - commitment           : 2 User2:0xa22A duration: 1, end: 1603575669, tokens: 900, votes: 0.09, staked: 0, delegatedVotes: 0, delegatee: ETH|null:0x0000
-        - commitment           : 3 User3:0xa33a duration: 1, end: 1603575670, tokens: 900, votes: 0.09, staked: 0, delegatedVotes: 0, delegatee: ETH|null:0x0000
+        - commitment           : 1 User1:0xa11A duration: 1, end: 1603598781, tokens: 900, votes: 0.09, staked: 0, delegatedVotes: 0, delegatee: ETH|null:0x0000
+        - commitment           : 2 User2:0xa22A duration: 1, end: 1603598782, tokens: 900, votes: 0.09, staked: 0, delegatedVotes: 0, delegatee: ETH|null:0x0000
+        - commitment           : 3 User3:0xa33a duration: 1, end: 1603598783, tokens: 900, votes: 0.09, staked: 0, delegatedVotes: 0, delegatee: ETH|null:0x0000
         
         --- Test Completed ---
 
-      ✓ Workflow #1 (2596ms)
+      ✓ Workflow #1 (2855ms)
 
 
   1 passing (6s)
