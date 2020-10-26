@@ -42,21 +42,6 @@ cd Governance
 
 <br />
 
-#### Install And Run Go Ethereum
-
-Install [Go-Ethereum](https://github.com/ethereum/go-ethereum) (also known as `geth`) on your local computer to run a development blockchain node for testing. Or install and use [Ganache](https://www.trufflesuite.com/ganache) instead.
-
-If you have installed `geth`, run:
-
-```
-./00_runGeth.sh
-./01_unlockAndFundAccounts.sh
-```
-
-You may need to `chmod 700 00_runGeth.sh 01_unlockAndFundAccounts.sh` before being able to execute it.
-
-<br />
-
 #### Install Hardhat
 
 
@@ -126,18 +111,6 @@ The latest output generated from the script [test/TestOptinoGov.js](test/TestOpt
 You may need to `chmod 700 30_testOGDToken.sh` before being able to execute it.
 
 The latest output generated from the script [test/TestOGDToken.js](test/TestOGDToken.js) can be found in [results/TestOGDToken.txt](results/TestOGDToken.txt).
-
-The tests are roughly:
-
-* Mint 10,000 OGD tokens for User{1..3}
-* Owner approve 100 FEE0 for OGToken to spend
-* Owner deposits dividends of 100 FEE0 and 10 ETH
-* User1 dummy transfer to same account
-* User{1..3} withdraw 33.333333333333333333 FEE0 and 3.333333333333333333 ETH
-* Owner adds FEE1 and FEE2 as dividend tokens
-* Owner approve 1,000 FEE1 and 10,000 FEE2 for OGToken to spend
-* Owner deposits dividends of 1,000 FEE1 and 10,000 FEE2
-* User{1..3} withdraw 333.333333333333333333 FEE1 and 3333.333333333333333333 FEE2
 
 <br />
 

@@ -182,7 +182,6 @@ contract OGToken is OGTokenInterface, Permissioned {
     */
     function mint(address tokenOwner, uint tokens) override external permitted(ROLE_MINTER, tokens) returns (bool success) {
         require(cap == 0 || _totalSupply + tokens <= cap, "Cap exceeded");
-        processed(ROLE_MINTER, tokens);
         accounts[tokenOwner].balance = accounts[tokenOwner].balance.add(tokens);
         _totalSupply = _totalSupply.add(tokens);
         emit Transfer(address(0), tokenOwner, tokens);

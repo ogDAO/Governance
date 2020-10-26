@@ -222,7 +222,6 @@ contract OGDToken is OGDTokenInterface, Permissioned {
     }
     /// @notice Withdraw enabled dividends tokens -
     function withdrawDividendsFor(address account, address destination) override external permitted(ROLE_DIVIDENDWITHDRAWER, 0) returns (bool success) {
-        processed(ROLE_DIVIDENDWITHDRAWER, 0);
         _withdrawDividendsFor(account, destination);
         return true;
     }
@@ -243,7 +242,6 @@ contract OGDToken is OGDTokenInterface, Permissioned {
 
     /// @notice Mint tokens
     function mint(address tokenOwner, uint tokens) override external permitted(ROLE_MINTER, tokens) returns (bool success) {
-        processed(ROLE_MINTER, tokens);
         updateAccount(tokenOwner);
         // updateAccounts(tokenOwner, tokenOwner);
         accounts[tokenOwner].balance = accounts[tokenOwner].balance.add(tokens);

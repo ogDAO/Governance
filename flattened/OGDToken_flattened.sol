@@ -69,6 +69,7 @@ contract Permissioned is Owned {
     }
 
     uint public constant ROLE_MINTER = 1;
+    uint public constant ROLE_DIVIDENDWITHDRAWER = 2;
     // Don't need ROLE_BURNER at the moment
     // uint public constant ROLE_BURNER = 2;
     mapping(address => mapping(uint => Permission)) public permissions;
@@ -92,9 +93,9 @@ contract Permissioned is Owned {
         permissions[account][role] = Permission({ active: active, maximum: maximum, processed: processed });
         emit PermissionUpdated(account, role, active, maximum, processed);
     }
-    function processed(uint role, uint tokens) internal {
-        permissions[msg.sender][role].processed = permissions[msg.sender][role].processed.add(tokens);
-    }
+    // function processed(uint role, uint tokens) internal {
+    //     permissions[msg.sender][role].processed = permissions[msg.sender][role].processed.add(tokens);
+    // }
 }
 
 // File: contracts/ERC20.sol
@@ -128,7 +129,8 @@ pragma solidity ^0.7.0;
 // SPDX-License-Identifier: GPLv2
 interface OGDTokenInterface is ERC20 {
     function mint(address tokenOwner, uint tokens) external returns (bool success);
-    function burn(uint tokens) external returns (bool success);
+    function burn(uint tokens, address payDividendsTo) external returns (bool success);
+    function withdrawDividendsFor(address account, address destination) external returns (bool success);
     // function burnFrom(address tokenOwner, uint tokens) external returns (bool success);
 }
 
@@ -195,6 +197,8 @@ library DividendTokens {
 pragma solidity ^0.7.0;
 // pragma experimental ABIEncoderV2;
 
+// import "hardhat/console.sol";
+
 // Use prefix "./" normally and "https://github.com/ogDAO/Governance/blob/master/contracts/" in Remix
 
 
@@ -229,7 +233,7 @@ contract OGDToken is OGDTokenInterface, Permissioned {
 
     event UpdateAccountInfo(address dividendToken, address account, uint owing, uint totalOwing, uint lastDividendPoints, uint totalDividendPoints, uint unclaimedDividends);
     event DividendDeposited(address indexed token, uint tokens);
-    event DividendWithdrawn(address indexed account, address indexed token, uint tokens);
+    event DividendWithdrawn(address indexed account, address indexed destination, address indexed token, uint tokens);
 
     // Duplicated from the library for ABI generation
     event DividendTokenAdded(address indexed token, bool enabled);
@@ -262,6 +266,8 @@ contract OGDToken is OGDTokenInterface, Permissioned {
     }
     function transfer(address to, uint tokens) override external returns (bool success) {
         updateAccounts(msg.sender, to);
+        // updateAccount(msg.sender);
+        // updateAccount(to);
         accounts[msg.sender].balance = accounts[msg.sender].balance.sub(tokens);
         accounts[to].balance = accounts[to].balance.add(tokens);
         emit Transfer(msg.sender, to, tokens);
@@ -273,7 +279,9 @@ contract OGDToken is OGDTokenInterface, Permissioned {
         return true;
     }
     function transferFrom(address from, address to, uint tokens) override external returns (bool success) {
-        updateAccounts(msg.sender, to);
+        updateAccounts(from, to);
+        // updateAccount(from);
+        // updateAccount(to);
         accounts[from].balance = accounts[from].balance.sub(tokens);
         allowed[from][msg.sender] = allowed[from][msg.sender].sub(tokens);
         accounts[to].balance = accounts[to].balance.add(tokens);
@@ -307,39 +315,56 @@ contract OGDToken is OGDTokenInterface, Permissioned {
         return dividendTokens.length();
     }
 
+    /// @notice Dividends owning since the last updateAccount(...) + new dividends owing since the last updateAccount(...)
+    function dividendsOwing(address account) public view returns (address[] memory tokenList, uint[] memory owingList, uint[] memory newOwingList) {
+        tokenList = new address[](dividendTokens.index.length);
+        owingList = new uint[](dividendTokens.index.length);
+        newOwingList = new uint[](dividendTokens.index.length);
+        for (uint i = 0; i < dividendTokens.index.length; i++) {
+            DividendTokens.DividendToken memory dividendToken = dividendTokens.entries[dividendTokens.index[i]];
+            tokenList[i] = dividendToken.token;
+            owingList[i] = accounts[account].owing[dividendToken.token];
+            newOwingList[i] = newDividendsOwing(dividendToken.token, account);
+        }
+    }
+
     /// @notice New dividends owing since the last updateAccount(...)
     function newDividendsOwing(address dividendToken, address account) internal view returns (uint) {
         uint newDividendPoints = totalDividendPoints[dividendToken].sub(accounts[account].lastDividendPoints[dividendToken]);
         return accounts[account].balance.mul(newDividendPoints).div(pointMultiplier);
     }
-    /// @notice Dividends owning since the last updateAccount(...) + new dividends owing since the last updateAccount(...)
-    function dividendsOwing(address account) public view returns (address[] memory tokenList, uint[] memory owingList) {
-        tokenList = new address[](dividendTokens.index.length);
-        owingList = new uint[](dividendTokens.index.length);
+
+    function updateAccount(address account) internal {
         for (uint i = 0; i < dividendTokens.index.length; i++) {
             DividendTokens.DividendToken memory dividendToken = dividendTokens.entries[dividendTokens.index[i]];
-            uint owing = accounts[account].owing[dividendToken.token].add(newDividendsOwing(dividendToken.token, account));
-            tokenList[i] = dividendToken.token;
-            owingList[i] = owing;
+            if (dividendToken.enabled) {
+                uint newOwing = newDividendsOwing(dividendToken.token, account);
+                if (newOwing > 0) {
+                    unclaimedDividends[dividendToken.token] = unclaimedDividends[dividendToken.token].sub(newOwing);
+                    accounts[account].owing[dividendToken.token] = accounts[account].owing[dividendToken.token].add(newOwing);
+                }
+                accounts[account].lastDividendPoints[dividendToken.token] = totalDividendPoints[dividendToken.token];
+            }
         }
     }
+
     function updateAccounts(address account1, address account2) internal {
         for (uint i = 0; i < dividendTokens.index.length; i++) {
             DividendTokens.DividendToken memory dividendToken = dividendTokens.entries[dividendTokens.index[i]];
             if (dividendToken.enabled) {
-                uint owing = newDividendsOwing(dividendToken.token, account1);
-                if (owing > 0) {
-                    unclaimedDividends[dividendToken.token] = unclaimedDividends[dividendToken.token].sub(owing);
-                    accounts[account1].lastDividendPoints[dividendToken.token] = totalDividendPoints[dividendToken.token];
-                    accounts[account1].owing[dividendToken.token] = accounts[account1].owing[dividendToken.token].add(owing);
+                uint newOwing1 = newDividendsOwing(dividendToken.token, account1);
+                if (newOwing1 > 0) {
+                    unclaimedDividends[dividendToken.token] = unclaimedDividends[dividendToken.token].sub(newOwing1);
+                    accounts[account1].owing[dividendToken.token] = accounts[account1].owing[dividendToken.token].add(newOwing1);
                 }
+                accounts[account1].lastDividendPoints[dividendToken.token] = totalDividendPoints[dividendToken.token];
                 if (account1 != account2) {
-                    owing = newDividendsOwing(dividendToken.token, account2);
-                    if (owing > 0) {
-                        unclaimedDividends[dividendToken.token] = unclaimedDividends[dividendToken.token].sub(owing);
-                        accounts[account2].lastDividendPoints[dividendToken.token] = totalDividendPoints[dividendToken.token];
-                        accounts[account2].owing[dividendToken.token] = accounts[account2].owing[dividendToken.token].add(owing);
+                    uint newOwing2 = newDividendsOwing(dividendToken.token, account2);
+                    if (newOwing2 > 0) {
+                        unclaimedDividends[dividendToken.token] = unclaimedDividends[dividendToken.token].sub(newOwing2);
+                        accounts[account2].owing[dividendToken.token] = accounts[account2].owing[dividendToken.token].add(newOwing2);
                     }
+                    accounts[account2].lastDividendPoints[dividendToken.token] = totalDividendPoints[dividendToken.token];
                 }
             }
         }
@@ -367,8 +392,10 @@ contract OGDToken is OGDTokenInterface, Permissioned {
         depositDividend(address(0), msg.value);
     }
 
-    function withdrawDividendsFor(address account) internal {
-        updateAccounts(account, account);
+    function _withdrawDividendsFor(address account, address destination) internal {
+        // console.log("%s called _withdrawDividendsFor(account %s, destination %s)", msg.sender, account, destination);
+        // updateAccounts(account, account);
+        updateAccount(account);
         for (uint i = 0; i < dividendTokens.index.length; i++) {
             DividendTokens.DividendToken memory dividendToken = dividendTokens.entries[dividendTokens.index[i]];
             if (dividendToken.enabled) {
@@ -376,21 +403,27 @@ contract OGDToken is OGDTokenInterface, Permissioned {
                 if (tokens > 0) {
                     accounts[account].owing[dividendToken.token] = 0;
                     if (dividendToken.token == address(0)) {
-                        require(payable(account).send(tokens), "ETH send failure");
+                        require(payable(destination).send(tokens), "ETH send failure");
                     } else {
-                        require(ERC20(dividendToken.token).transfer(account, tokens), "ERC20 transfer failure");
+                        require(ERC20(dividendToken.token).transfer(destination, tokens), "ERC20 transfer failure");
                     }
+                    emit DividendWithdrawn(account, destination, dividendToken.token, tokens);
                 }
-                emit DividendWithdrawn(account, dividendToken.token, tokens);
             }
         }
     }
     /// @notice Withdraw enabled dividends tokens
     function withdrawDividends() public {
-        withdrawDividendsFor(msg.sender);
+        _withdrawDividendsFor(msg.sender, msg.sender);
+    }
+    /// @notice Withdraw enabled dividends tokens -
+    function withdrawDividendsFor(address account, address destination) override external permitted(ROLE_DIVIDENDWITHDRAWER, 0) returns (bool success) {
+        _withdrawDividendsFor(account, destination);
+        return true;
     }
     /// @notice Withdraw enabled and disabled dividends tokens. Does not include new dividends since last updateAccount(...) triggered by transfer(...) and transferFrom(...)
-    function withdrawDividend(address token) public {
+    function withdrawDividendByToken(address token) public {
+        updateAccount(msg.sender);
         uint tokens = accounts[msg.sender].owing[token];
         if (tokens > 0) {
             accounts[msg.sender].owing[token] = 0;
@@ -400,22 +433,24 @@ contract OGDToken is OGDTokenInterface, Permissioned {
                 require(ERC20(token).transfer(msg.sender, tokens), "ERC20 transfer failure");
             }
         }
-        emit DividendWithdrawn(msg.sender, token, tokens);
+        emit DividendWithdrawn(msg.sender, msg.sender, token, tokens);
     }
 
     /// @notice Mint tokens
     function mint(address tokenOwner, uint tokens) override external permitted(ROLE_MINTER, tokens) returns (bool success) {
-        processed(ROLE_MINTER, tokens);
+        updateAccount(tokenOwner);
+        // updateAccounts(tokenOwner, tokenOwner);
         accounts[tokenOwner].balance = accounts[tokenOwner].balance.add(tokens);
         _totalSupply = _totalSupply.add(tokens);
         emit Transfer(address(0), tokenOwner, tokens);
-        updateAccounts(tokenOwner, tokenOwner);
         return true;
     }
     /// @notice Withdraw dividends and then burn tokens
-    function burn(uint tokens) override external returns (bool success) {
-        updateAccounts(msg.sender, msg.sender);
-        withdrawDividendsFor(msg.sender);
+    function burn(uint tokens, address payDividendsTo) override external returns (bool success) {
+        // console.log("%s called burn(tokens %s, payDividendsTo %s)", msg.sender, tokens, payDividendsTo);
+        // console.log("%s -> _withdrawDividendsFor(tokens %s, payDividendsTo %s", msg.sender, tokens, payDividendsTo);
+        // _withdrawDividendsFor(msg.sender, payDividendsTo);
+        updateAccount(msg.sender);
         accounts[msg.sender].balance = accounts[msg.sender].balance.sub(tokens);
         _totalSupply = _totalSupply.sub(tokens);
         emit Transfer(msg.sender, address(0), tokens);

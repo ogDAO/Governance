@@ -69,6 +69,7 @@ contract Permissioned is Owned {
     }
 
     uint public constant ROLE_MINTER = 1;
+    uint public constant ROLE_DIVIDENDWITHDRAWER = 2;
     // Don't need ROLE_BURNER at the moment
     // uint public constant ROLE_BURNER = 2;
     mapping(address => mapping(uint => Permission)) public permissions;
@@ -92,9 +93,9 @@ contract Permissioned is Owned {
         permissions[account][role] = Permission({ active: active, maximum: maximum, processed: processed });
         emit PermissionUpdated(account, role, active, maximum, processed);
     }
-    function processed(uint role, uint tokens) internal {
-        permissions[msg.sender][role].processed = permissions[msg.sender][role].processed.add(tokens);
-    }
+    // function processed(uint role, uint tokens) internal {
+    //     permissions[msg.sender][role].processed = permissions[msg.sender][role].processed.add(tokens);
+    // }
 }
 
 // File: contracts/ERC20.sol
@@ -318,7 +319,6 @@ contract OGToken is OGTokenInterface, Permissioned {
     */
     function mint(address tokenOwner, uint tokens) override external permitted(ROLE_MINTER, tokens) returns (bool success) {
         require(cap == 0 || _totalSupply + tokens <= cap, "Cap exceeded");
-        processed(ROLE_MINTER, tokens);
         accounts[tokenOwner].balance = accounts[tokenOwner].balance.add(tokens);
         _totalSupply = _totalSupply.add(tokens);
         emit Transfer(address(0), tokenOwner, tokens);

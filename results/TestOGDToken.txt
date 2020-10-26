@@ -1,12 +1,12 @@
 $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
-Compiling 12 files with 0.7.1
+Compiling 14 files with 0.7.1
 Compilation finished successfully
 
 
   TestOGDToken
     TestOGDToken - Workflow #0
         --- Setup 1 - Deploy OGDToken, FEE{0..2} ---
-        ogdTokenTx - gasUsed: 2593802, fee: 0.20750416, feeUsd: 80.0281293872, @ 80 gwei & 385.67 ETH/USD, 0x55ab19dc089332bc6babaf2de7e5a1636374797cbf2bc00fc70e6e85226dd3fa
+        ogdTokenTx - gasUsed: 2571328, fee: 0.20570624, feeUsd: 79.3347255808, @ 80 gwei & 385.67 ETH/USD, 0xf3c9744c40dbb8992c83ab65e341a1f43ac6708322b76d3715f196102496a03d
         + OGDToken.Transfer(from: ETH|null:0x0000, to: Owner:0xa00A, tokens: 0)
         fee0TokenTx - gasUsed: 823454, fee: 0.06587632, feeUsd: 25.4065203344, @ 80 gwei & 385.67 ETH/USD, 0xc4c5bd4723108b18e6d5585ec11217affdcdd044ab0b3dc5679fb4a6da0b23a6
         + Fee0Token.Transfer(from: ETH|null:0x0000, to: Owner:0xa00A, tokens: 100)
@@ -18,7 +18,7 @@ Compilation finished successfully
          # Account                                             EtherBalanceChange                            OGD                           FEE0 Blocks 0 to 4
                                                                                                             FEE1                           FEE2
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E       -0.405134080000000000           0.000000000000000000         100.000000000000000000 Owner:0xa00A
+         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E       -0.403336160000000000           0.000000000000000000         100.000000000000000000 Owner:0xa00A
                                                                                          1000.000000000000000000       10000.000000000000000000
          1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433        0.000000000000000000           0.000000000000000000           0.000000000000000000 User1:0xa11A
                                                                                             0.000000000000000000           0.000000000000000000
@@ -61,11 +61,11 @@ Compilation finished successfully
         + OGDToken.DividendTokenAdded(token: Fee0Token:0x0f4e, enabled: true)
         setPermission1 - gasUsed: 49123, fee: 0.00392984, feeUsd: 1.5156213928, @ 80 gwei & 385.67 ETH/USD, 0xed4de26800303c67fabcf19c7427445e2bbbcc86760ad110c11f410bafeaa94b
         + OGDToken.PermissionUpdated(account: Owner:0xa00A, role: 1, active: true, maximum: 0, processed: 0)
-        mint1 - gasUsed: 112185, fee: 0.0089748, feeUsd: 3.461311116, @ 80 gwei & 385.67 ETH/USD, 0xbe16ba0bdf4da83433ccf9dc0e7c5761145f954dc9265acd8a888c838ec904f0
+        mint1 - gasUsed: 110165, fee: 0.0088132, feeUsd: 3.398986844, @ 80 gwei & 385.67 ETH/USD, 0xbe16ba0bdf4da83433ccf9dc0e7c5761145f954dc9265acd8a888c838ec904f0
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User1:0xa11A, tokens: 10000)
-        mint2 - gasUsed: 82185, fee: 0.0065748, feeUsd: 2.535703116, @ 80 gwei & 385.67 ETH/USD, 0x54dcb337463a9860d73e034968590b80dc6495129606c8a711b0d45f149a3c15
+        mint2 - gasUsed: 80165, fee: 0.0064132, feeUsd: 2.473378844, @ 80 gwei & 385.67 ETH/USD, 0x54dcb337463a9860d73e034968590b80dc6495129606c8a711b0d45f149a3c15
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User2:0xa22A, tokens: 10000)
-        mint3 - gasUsed: 82185, fee: 0.0065748, feeUsd: 2.535703116, @ 80 gwei & 385.67 ETH/USD, 0x9929abf8019260f8b6075c1c49214a43c97274c4bba74906299d0c94243f743f
+        mint3 - gasUsed: 80165, fee: 0.0064132, feeUsd: 2.473378844, @ 80 gwei & 385.67 ETH/USD, 0x9929abf8019260f8b6075c1c49214a43c97274c4bba74906299d0c94243f743f
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User3:0xa33a, tokens: 10000)
         ownerApproveFee0Tokens - gasUsed: 43968, fee: 0.00351744, feeUsd: 1.3565710848, @ 80 gwei & 385.67 ETH/USD, 0x81b3f79f025f2a3851b1f23a002ad0cc38f504f845fd127cb936ad27466e5d83
         + Fee0Token.Approval(tokenOwner: Owner:0xa00A, spender: OGDToken:0x1647, tokens: 100)
@@ -77,7 +77,7 @@ Compilation finished successfully
          # Account                                             EtherBalanceChange                            OGD                           FEE0 Blocks 0 to 13
                                                                                                             FEE1                           FEE2
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E       -0.460204400000000000           0.000000000000000000         100.000000000000000000 Owner:0xa00A
+         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E       -0.457921680000000000           0.000000000000000000         100.000000000000000000 Owner:0xa00A
                                                                                          1000.000000000000000000       10000.000000000000000000
          1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433        0.000000000000000000       10000.000000000000000000           0.000000000000000000 User1:0xa11A
                                                                                             0.000000000000000000           0.000000000000000000
@@ -122,7 +122,7 @@ Compilation finished successfully
          # Account                                             EtherBalanceChange                            OGD                           FEE0 Blocks 0 to 15
                                                                                                             FEE1                           FEE2
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E      -10.471860240000000000           0.000000000000000000           0.000000000000000000 Owner:0xa00A
+         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E      -10.469577520000000000           0.000000000000000000           0.000000000000000000 Owner:0xa00A
                                                                                          1000.000000000000000000       10000.000000000000000000
          1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433        0.000000000000000000       10000.000000000000000000           0.000000000000000000 User1:0xa11A
                                                                                             0.000000000000000000           0.000000000000000000
@@ -164,7 +164,7 @@ Compilation finished successfully
          # Account                                             EtherBalanceChange                            OGD                           FEE0 Blocks 0 to 16
                                                                                                             FEE1                           FEE2
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E      -10.471860240000000000           0.000000000000000000           0.000000000000000000 Owner:0xa00A
+         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E      -10.469577520000000000           0.000000000000000000           0.000000000000000000 Owner:0xa00A
                                                                                          1000.000000000000000000       10000.000000000000000000
          1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433        0.000000000000000000       10000.000000000000000000           0.000000000000000000 User1:0xa11A
                                                                                             0.000000000000000000           0.000000000000000000
@@ -216,7 +216,7 @@ Compilation finished successfully
          # Account                                             EtherBalanceChange                            OGD                           FEE0 Blocks 0 to 19
                                                                                                             FEE1                           FEE2
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E      -10.471860240000000000           0.000000000000000000           0.000000000000000000 Owner:0xa00A
+         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E      -10.469577520000000000           0.000000000000000000           0.000000000000000000 Owner:0xa00A
                                                                                          1000.000000000000000000       10000.000000000000000000
          1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433        3.320837333333333333       10000.000000000000000000          33.333333333333333333 User1:0xa11A
                                                                                             0.000000000000000000           0.000000000000000000
@@ -257,13 +257,13 @@ Compilation finished successfully
         addDividendToken3 - gasUsed: 116376, fee: 0.00931008, feeUsd: 3.5906185536, @ 80 gwei & 385.67 ETH/USD, 0x6636fa7cc209624153b961e0caf4088ae38990c3253af601b95eaba779de883e
         + OGDToken.DividendTokenAdded(token: Fee2Token:0xBa1F, enabled: true)
         --- Test 7 - Mint 10,000 OGD tokens for User4 ---
-        mint4 - gasUsed: 141309, fee: 0.01130472, feeUsd: 4.3598913624, @ 80 gwei & 385.67 ETH/USD, 0x85235a04888cc00baa40096c63f5f259c86583bea883c8a28620f3b964eebdd9
+        mint4 - gasUsed: 139289, fee: 0.01114312, feeUsd: 4.2975670904, @ 80 gwei & 385.67 ETH/USD, 0x85235a04888cc00baa40096c63f5f259c86583bea883c8a28620f3b964eebdd9
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User4:0xa44a, tokens: 10000)
         
          # Account                                             EtherBalanceChange                            OGD                           FEE0 Blocks 0 to 22
                                                                                                             FEE1                           FEE2
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E      -10.501785120000000000           0.000000000000000000           0.000000000000000000 Owner:0xa00A
+         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E      -10.499340800000000000           0.000000000000000000           0.000000000000000000 Owner:0xa00A
                                                                                          1000.000000000000000000       10000.000000000000000000
          1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433        3.320837333333333333       10000.000000000000000000          33.333333333333333333 User1:0xa11A
                                                                                             0.000000000000000000           0.000000000000000000
@@ -332,7 +332,7 @@ Compilation finished successfully
          # Account                                             EtherBalanceChange                            OGD                           FEE0 Blocks 0 to 28
                                                                                                             FEE1                           FEE2
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E      -10.514023360000000000           0.000000000000000000           0.000000000000000000 Owner:0xa00A
+         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E      -10.511579040000000000           0.000000000000000000           0.000000000000000000 Owner:0xa00A
                                                                                             0.000000000000000000           0.000000000000000000
          1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433        3.303781253333333333       10000.000000000000000000          33.333333333333333333 User1:0xa11A
                                                                                           250.000000000000000000        2500.000000000000000000
@@ -376,7 +376,7 @@ Compilation finished successfully
          # Account                                             EtherBalanceChange                            OGD                           FEE0 Blocks 0 to 29
                                                                                                             FEE1                           FEE2
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E      -10.514023360000000000           0.000000000000000000           0.000000000000000000 Owner:0xa00A
+         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E      -10.511579040000000000           0.000000000000000000           0.000000000000000000 Owner:0xa00A
                                                                                             0.000000000000000000           0.000000000000000000
          1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433        3.303781253333333333       10000.000000000000000000          33.333333333333333333 User1:0xa11A
                                                                                           250.000000000000000000        2500.000000000000000000
@@ -415,10 +415,10 @@ Compilation finished successfully
         
         --- Test Completed ---
 
-      ✓ Workflow #0 (6034ms)
+      ✓ Workflow #0 (4657ms)
     TestOGDToken - Workflow #1 - Transfer Test
         --- Setup 1 - Deploy OGDToken, FEE{0..2} ---
-        ogdTokenTx - gasUsed: 2593802, fee: 0.20750416, feeUsd: 80.0281293872, @ 80 gwei & 385.67 ETH/USD, 0x93cd6d56567f925e3946cca6317d94eda186c07895e1daa15811adbe929764e1
+        ogdTokenTx - gasUsed: 2571328, fee: 0.20570624, feeUsd: 79.3347255808, @ 80 gwei & 385.67 ETH/USD, 0xc217495501a797c0e61033496c31a863472109ca1f501964df350d28e87cfd48
         + OGDToken.Transfer(from: ETH|null:0x0000, to: Owner:0xa00A, tokens: 0)
         fee0TokenTx - gasUsed: 823454, fee: 0.06587632, feeUsd: 25.4065203344, @ 80 gwei & 385.67 ETH/USD, 0xdf919bdb9566d4d0a04b8fa1e939db1291cf44950a8c758847d93b3b4288c9f0
         + Fee0Token.Transfer(from: ETH|null:0x0000, to: Owner:0xa00A, tokens: 100)
@@ -430,7 +430,7 @@ Compilation finished successfully
          # Account                                             EtherBalanceChange                            OGD                           FEE0 Blocks 29 to 33
                                                                                                             FEE1                           FEE2
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E       -0.405134080000000000           0.000000000000000000         100.000000000000000000 Owner:0xa00A
+         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E       -0.403336160000000000           0.000000000000000000         100.000000000000000000 Owner:0xa00A
                                                                                          1000.000000000000000000       10000.000000000000000000
          1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433        0.000000000000000000           0.000000000000000000           0.000000000000000000 User1:0xa11A
                                                                                             0.000000000000000000           0.000000000000000000
@@ -473,9 +473,9 @@ Compilation finished successfully
         + OGDToken.DividendTokenAdded(token: Fee0Token:0xee9a, enabled: true)
         setPermission1 - gasUsed: 49123, fee: 0.00392984, feeUsd: 1.5156213928, @ 80 gwei & 385.67 ETH/USD, 0xa383f7effb399c94187f67af14d548c9e6c2efc579adcf6f7cd788f916349bb0
         + OGDToken.PermissionUpdated(account: Owner:0xa00A, role: 1, active: true, maximum: 0, processed: 0)
-        mint1 - gasUsed: 112185, fee: 0.0089748, feeUsd: 3.461311116, @ 80 gwei & 385.67 ETH/USD, 0x772e30634a7f47d9b6b83841c0ba579e1e01c1a5d6714fb056e404e9933061f8
+        mint1 - gasUsed: 110165, fee: 0.0088132, feeUsd: 3.398986844, @ 80 gwei & 385.67 ETH/USD, 0x772e30634a7f47d9b6b83841c0ba579e1e01c1a5d6714fb056e404e9933061f8
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User1:0xa11A, tokens: 10000)
-        mint2 - gasUsed: 82185, fee: 0.0065748, feeUsd: 2.535703116, @ 80 gwei & 385.67 ETH/USD, 0x55686b71a978e22e02392cd7226fa475fa9fc6dd084e3b7dc2b43eee50430a8b
+        mint2 - gasUsed: 80165, fee: 0.0064132, feeUsd: 2.473378844, @ 80 gwei & 385.67 ETH/USD, 0x55686b71a978e22e02392cd7226fa475fa9fc6dd084e3b7dc2b43eee50430a8b
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User2:0xa22A, tokens: 10000)
         ownerApproveFee0Tokens - gasUsed: 43968, fee: 0.00351744, feeUsd: 1.3565710848, @ 80 gwei & 385.67 ETH/USD, 0x0468e63e3cdd1670deac8d6d0211b86a7717630d0fde1e2db7274304b5e783bb
         + Fee0Token.Approval(tokenOwner: Owner:0xa00A, spender: OGDToken:0xA3FD, tokens: 100)
@@ -487,7 +487,7 @@ Compilation finished successfully
          # Account                                             EtherBalanceChange                            OGD                           FEE0 Blocks 29 to 41
                                                                                                             FEE1                           FEE2
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E       -0.453629600000000000           0.000000000000000000         100.000000000000000000 Owner:0xa00A
+         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E       -0.451508480000000000           0.000000000000000000         100.000000000000000000 Owner:0xa00A
                                                                                          1000.000000000000000000       10000.000000000000000000
          1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433        0.000000000000000000       10000.000000000000000000           0.000000000000000000 User1:0xa11A
                                                                                             0.000000000000000000           0.000000000000000000
@@ -532,7 +532,7 @@ Compilation finished successfully
          # Account                                             EtherBalanceChange                            OGD                           FEE0 Blocks 29 to 43
                                                                                                             FEE1                           FEE2
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E      -10.465285440000000000           0.000000000000000000           0.000000000000000000 Owner:0xa00A
+         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E      -10.463164320000000000           0.000000000000000000           0.000000000000000000 Owner:0xa00A
                                                                                          1000.000000000000000000       10000.000000000000000000
          1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433        0.000000000000000000       10000.000000000000000000           0.000000000000000000 User1:0xa11A
                                                                                             0.000000000000000000           0.000000000000000000
@@ -574,7 +574,7 @@ Compilation finished successfully
          # Account                                             EtherBalanceChange                            OGD                           FEE0 Blocks 29 to 44
                                                                                                             FEE1                           FEE2
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E      -10.465285440000000000           0.000000000000000000           0.000000000000000000 Owner:0xa00A
+         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E      -10.463164320000000000           0.000000000000000000           0.000000000000000000 Owner:0xa00A
                                                                                          1000.000000000000000000       10000.000000000000000000
          1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433        0.000000000000000000       10000.000000000000000000           0.000000000000000000 User1:0xa11A
                                                                                             0.000000000000000000           0.000000000000000000
@@ -623,7 +623,7 @@ Compilation finished successfully
          # Account                                             EtherBalanceChange                            OGD                           FEE0 Blocks 29 to 47
                                                                                                             FEE1                           FEE2
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E      -10.465285440000000000           0.000000000000000000           0.000000000000000000 Owner:0xa00A
+         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E      -10.463164320000000000           0.000000000000000000           0.000000000000000000 Owner:0xa00A
                                                                                          1000.000000000000000000       10000.000000000000000000
          1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433        4.989904000000000000       10000.000000000000000000          50.000000000000000000 User1:0xa11A
                                                                                             0.000000000000000000           0.000000000000000000
@@ -658,8 +658,8 @@ Compilation finished successfully
         Token 2 symbol: 'FEE1', name: 'Fee1', decimals: 18, totalSupply: 1000, owner: Owner:0xa00A, address: Fee1Token:0x0b70
         Token 3 symbol: 'FEE2', name: 'Fee2', decimals: 18, totalSupply: 10000, owner: Owner:0xa00A, address: Fee2Token:0xA92f
         
-      ✓ Workflow #1 - Transfer Test (3166ms)
+      ✓ Workflow #1 - Transfer Test (2274ms)
 
 
-  2 passing (13s)
+  2 passing (10s)
 
