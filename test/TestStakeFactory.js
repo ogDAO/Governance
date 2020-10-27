@@ -43,7 +43,7 @@ describe("TestStakeFactory", function() {
 
   describe("TestStakeFactory - Workflow #0", function() {
     it("Workflow #0", async function() {
-      console.log("        --- Test 2 - Mint 10,000 OGD tokens for User{1..3}; Owner approve 100 FEE for OGToken to spend ---");
+      console.log("        --- Test 1 - Mint 10,000 OGD tokens for User{1..3}; Owner approve 100 FEE for OGToken to spend ---");
       const test1 = [];
       const ogTokens = new BigNumber("10000").shiftedBy(18);
       test1.push(data.ogToken.mint(data.user1, ogTokens.toFixed(0)));
@@ -59,6 +59,13 @@ describe("TestStakeFactory", function() {
       await data.printTxData("approve1", approve1);
       await data.printTxData("approve2", approve2);
       await data.printTxData("approve3", approve3);
+      await data.printBalances();
+
+      console.log("        --- Test 2 - StakeFactory.createClone() ---");
+      const test2 = [];
+      test2.push(data.stakeFactory.createClone());
+      const [createClone1] = await Promise.all(test2);
+      await data.printTxData("createClone1", createClone1);
       await data.printBalances();
     });
   });

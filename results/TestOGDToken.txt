@@ -1,12 +1,10 @@
 $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
-Compiling 15 files with 0.7.1
-Compilation finished successfully
 
 
   TestOGDToken
     TestOGDToken - Workflow #0
         --- Setup 1 - Deploy OGDToken, FEE{0..2} ---
-        ogdTokenTx - gasUsed: 2579111, fee: 0.20632888, feeUsd: 79.5748591496, @ 80 gwei & 385.67 ETH/USD, 0xa3970dd3bd8b80c304cc7f626177d8281811d4b3376171f38675cf6af7b26ff4
+        ogdTokenTx - gasUsed: 2579111, fee: 0.20632888, feeUsd: 79.5748591496, @ 80 gwei & 385.67 ETH/USD, 0xb483fcdfaf84792aaae1875523d2bfcf98a86351102d2bad6a4f0a3b23bc5098
         + OGDToken.Transfer(from: ETH|null:0x0000, to: Owner:0xa00A, tokens: 0)
         fee0TokenTx - gasUsed: 823454, fee: 0.06587632, feeUsd: 25.4065203344, @ 80 gwei & 385.67 ETH/USD, 0xc4c5bd4723108b18e6d5585ec11217affdcdd044ab0b3dc5679fb4a6da0b23a6
         + Fee0Token.Transfer(from: ETH|null:0x0000, to: Owner:0xa00A, tokens: 100)
@@ -415,10 +413,10 @@ Compilation finished successfully
         
         --- Test Completed ---
 
-      ✓ Workflow #0 (5089ms)
+      ✓ Workflow #0 (4458ms)
     TestOGDToken - Workflow #1 - Transfer Test
         --- Setup 1 - Deploy OGDToken, FEE{0..2} ---
-        ogdTokenTx - gasUsed: 2579111, fee: 0.20632888, feeUsd: 79.5748591496, @ 80 gwei & 385.67 ETH/USD, 0x5d762ac4e708a6420eb1321d3d9df860a8617e8c9b1bfb317961c91b0b452673
+        ogdTokenTx - gasUsed: 2579111, fee: 0.20632888, feeUsd: 79.5748591496, @ 80 gwei & 385.67 ETH/USD, 0xedf932eecfd5233f91459ff75b4d6a91799d726b0c2cd3555d191227a6cc6c9e
         + OGDToken.Transfer(from: ETH|null:0x0000, to: Owner:0xa00A, tokens: 0)
         fee0TokenTx - gasUsed: 823454, fee: 0.06587632, feeUsd: 25.4065203344, @ 80 gwei & 385.67 ETH/USD, 0xdf919bdb9566d4d0a04b8fa1e939db1291cf44950a8c758847d93b3b4288c9f0
         + Fee0Token.Transfer(from: ETH|null:0x0000, to: Owner:0xa00A, tokens: 100)
@@ -658,10 +656,10 @@ Compilation finished successfully
         Token 2 symbol: 'FEE1', name: 'Fee1', decimals: 18, totalSupply: 1000, owner: Owner:0xa00A, address: Fee1Token:0x0b70
         Token 3 symbol: 'FEE2', name: 'Fee2', decimals: 18, totalSupply: 10000, owner: Owner:0xa00A, address: Fee2Token:0xA92f
         
-      ✓ Workflow #1 - Transfer Test (2180ms)
+      ✓ Workflow #1 - Transfer Test (1949ms)
     TestOGDToken - Workflow #2 - address(0) with balance
         --- Setup 1 - Deploy OGDToken, FEE{0..2} ---
-        ogdTokenTx - gasUsed: 2579111, fee: 0.20632888, feeUsd: 79.5748591496, @ 80 gwei & 385.67 ETH/USD, 0x228ed3c149bb37e5ef9da8334cfa2cb27cfc4478ce7de12a1494c355f7f4ede7
+        ogdTokenTx - gasUsed: 2579111, fee: 0.20632888, feeUsd: 79.5748591496, @ 80 gwei & 385.67 ETH/USD, 0xf9108160d40eef4444690990c84f74f727410284f6abaed3a0d7a84b839d0812
         + OGDToken.Transfer(from: ETH|null:0x0000, to: Owner:0xa00A, tokens: 0)
         fee0TokenTx - gasUsed: 823454, fee: 0.06587632, feeUsd: 25.4065203344, @ 80 gwei & 385.67 ETH/USD, 0x13b9bcd53dee7d26d9dd02fcaf1370907331153c8bbb24c47118a0054d861d75
         + Fee0Token.Transfer(from: ETH|null:0x0000, to: Owner:0xa00A, tokens: 100)
@@ -866,8 +864,8 @@ Compilation finished successfully
         Token 2 symbol: 'FEE1', name: 'Fee1', decimals: 18, totalSupply: 1000, owner: Owner:0xa00A, address: Fee1Token:0xF393
         Token 3 symbol: 'FEE2', name: 'Fee2', decimals: 18, totalSupply: 10000, owner: Owner:0xa00A, address: Fee2Token:0x103f
         
-      ✓ Workflow #1 - Transfer Test (1782ms)
+      ✓ Workflow #1 - Transfer Test (1734ms)
 
 
-  3 passing (13s)
+  3 passing (11s)
 

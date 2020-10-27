@@ -70,8 +70,6 @@ contract OGDToken is OGDTokenInterface, Permissioned {
     }
     function transfer(address to, uint tokens) override external returns (bool success) {
         updateAccounts(msg.sender, to);
-        // updateAccount(msg.sender);
-        // updateAccount(to);
         accounts[msg.sender].balance = accounts[msg.sender].balance.sub(tokens);
         accounts[to].balance = accounts[to].balance.add(tokens);
         emit Transfer(msg.sender, to, tokens);
@@ -84,8 +82,6 @@ contract OGDToken is OGDTokenInterface, Permissioned {
     }
     function transferFrom(address from, address to, uint tokens) override external returns (bool success) {
         updateAccounts(from, to);
-        // updateAccount(from);
-        // updateAccount(to);
         accounts[from].balance = accounts[from].balance.sub(tokens);
         allowed[from][msg.sender] = allowed[from][msg.sender].sub(tokens);
         accounts[to].balance = accounts[to].balance.add(tokens);

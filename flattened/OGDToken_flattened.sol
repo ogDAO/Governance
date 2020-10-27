@@ -126,9 +126,8 @@ pragma solidity ^0.7.0;
 // SPDX-License-Identifier: GPLv2
 interface OGDTokenInterface is ERC20 {
     function mint(address tokenOwner, uint tokens) external returns (bool success);
-    function burn(uint tokens, address payDividendsTo) external returns (bool success);
+    function burn(uint tokens) external returns (bool success);
     function withdrawDividendsFor(address account, address destination) external returns (bool success);
-    // function burnFrom(address tokenOwner, uint tokens) external returns (bool success);
 }
 
 // File: contracts/DividendTokens.sol
@@ -263,8 +262,6 @@ contract OGDToken is OGDTokenInterface, Permissioned {
     }
     function transfer(address to, uint tokens) override external returns (bool success) {
         updateAccounts(msg.sender, to);
-        // updateAccount(msg.sender);
-        // updateAccount(to);
         accounts[msg.sender].balance = accounts[msg.sender].balance.sub(tokens);
         accounts[to].balance = accounts[to].balance.add(tokens);
         emit Transfer(msg.sender, to, tokens);
@@ -277,8 +274,6 @@ contract OGDToken is OGDTokenInterface, Permissioned {
     }
     function transferFrom(address from, address to, uint tokens) override external returns (bool success) {
         updateAccounts(from, to);
-        // updateAccount(from);
-        // updateAccount(to);
         accounts[from].balance = accounts[from].balance.sub(tokens);
         allowed[from][msg.sender] = allowed[from][msg.sender].sub(tokens);
         accounts[to].balance = accounts[to].balance.add(tokens);
@@ -324,13 +319,11 @@ contract OGDToken is OGDTokenInterface, Permissioned {
             newOwingList[i] = newDividendsOwing(dividendToken.token, account);
         }
     }
-
     /// @notice New dividends owing since the last updateAccount(...)
     function newDividendsOwing(address dividendToken, address account) internal view returns (uint) {
         uint newDividendPoints = totalDividendPoints[dividendToken].sub(accounts[account].lastDividendPoints[dividendToken]);
         return accounts[account].balance.mul(newDividendPoints).div(pointMultiplier);
     }
-
     function updateAccount(address account) internal {
         for (uint i = 0; i < dividendTokens.index.length; i++) {
             DividendTokens.DividendToken memory dividendToken = dividendTokens.entries[dividendTokens.index[i]];
@@ -344,7 +337,6 @@ contract OGDToken is OGDTokenInterface, Permissioned {
             }
         }
     }
-
     function updateAccounts(address account1, address account2) internal {
         for (uint i = 0; i < dividendTokens.index.length; i++) {
             DividendTokens.DividendToken memory dividendToken = dividendTokens.entries[dividendTokens.index[i]];
@@ -371,7 +363,7 @@ contract OGDToken is OGDTokenInterface, Permissioned {
     function depositDividend(address token, uint tokens) public payable {
         DividendTokens.DividendToken memory _dividendToken = dividendTokens.entries[token];
         require(_dividendToken.enabled, "Dividend token is not enabled");
-        totalDividendPoints[token] = totalDividendPoints[token].add(tokens.mul(pointMultiplier).div(_totalSupply));
+        totalDividendPoints[token] = totalDividendPoints[token].add(tokens.mul(pointMultiplier).div(_totalSupply.sub(accounts[address(0)].balance)));
         unclaimedDividends[token] = unclaimedDividends[token].add(tokens);
         if (token == address(0)) {
             require(msg.value >= tokens, "Insufficient ETH sent");
@@ -390,8 +382,6 @@ contract OGDToken is OGDTokenInterface, Permissioned {
     }
 
     function _withdrawDividendsFor(address account, address destination) internal {
-        // console.log("%s called _withdrawDividendsFor(account %s, destination %s)", msg.sender, account, destination);
-        // updateAccounts(account, account);
         updateAccount(account);
         for (uint i = 0; i < dividendTokens.index.length; i++) {
             DividendTokens.DividendToken memory dividendToken = dividendTokens.entries[dividendTokens.index[i]];
@@ -418,7 +408,7 @@ contract OGDToken is OGDTokenInterface, Permissioned {
         _withdrawDividendsFor(account, destination);
         return true;
     }
-    /// @notice Withdraw enabled and disabled dividends tokens. Does not include new dividends since last updateAccount(...) triggered by transfer(...) and transferFrom(...)
+    /// @notice Withdraw enabled and disabled dividends tokens
     function withdrawDividendByToken(address token) public {
         updateAccount(msg.sender);
         uint tokens = accounts[msg.sender].owing[token];
@@ -436,17 +426,13 @@ contract OGDToken is OGDTokenInterface, Permissioned {
     /// @notice Mint tokens
     function mint(address tokenOwner, uint tokens) override external permitted(ROLE_MINTER, tokens) returns (bool success) {
         updateAccount(tokenOwner);
-        // updateAccounts(tokenOwner, tokenOwner);
         accounts[tokenOwner].balance = accounts[tokenOwner].balance.add(tokens);
         _totalSupply = _totalSupply.add(tokens);
         emit Transfer(address(0), tokenOwner, tokens);
         return true;
     }
-    /// @notice Withdraw dividends and then burn tokens
-    function burn(uint tokens, address payDividendsTo) override external returns (bool success) {
-        // console.log("%s called burn(tokens %s, payDividendsTo %s)", msg.sender, tokens, payDividendsTo);
-        // console.log("%s -> _withdrawDividendsFor(tokens %s, payDividendsTo %s", msg.sender, tokens, payDividendsTo);
-        // _withdrawDividendsFor(msg.sender, payDividendsTo);
+    /// @notice Burn tokens
+    function burn(uint tokens) override external returns (bool success) {
         updateAccount(msg.sender);
         accounts[msg.sender].balance = accounts[msg.sender].balance.sub(tokens);
         _totalSupply = _totalSupply.sub(tokens);
