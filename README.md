@@ -92,25 +92,36 @@ npx hardhat compile
 #### Run OptinoGov Tests
 
 ```
-20_testOptinoGov.sh
+./20_testOptinoGov.sh
 ```
 
 You may need to `chmod 700 20_testOptinoGov.sh` before being able to execute it.
 
 The latest output generated from the script [test/TestOptinoGov.js](test/TestOptinoGov.js) can be found in [results/TestOptinoGov.txt](results/TestOptinoGov.txt).
 
-
 <br />
 
 #### Run OGDToken Tests
 
 ```
-30_testOGDToken.sh
+./30_testOGDToken.sh
 ```
 
 You may need to `chmod 700 30_testOGDToken.sh` before being able to execute it.
 
 The latest output generated from the script [test/TestOGDToken.js](test/TestOGDToken.js) can be found in [results/TestOGDToken.txt](results/TestOGDToken.txt).
+
+<br />
+
+#### Run StakingFactory Tests
+
+```
+./40_testStakingFactory.sh
+```
+
+You may need to `chmod 700 40_testStakingFactory.sh` before being able to execute it.
+
+The latest output generated from the script [test/TestStakingFactory.js](test/TestStakingFactory.js) can be found in [results/TestStakingFactory.txt](results/TestStakingFactory.txt).
 
 <br />
 
