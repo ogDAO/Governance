@@ -310,7 +310,7 @@ class Data {
         const stakingInfo = await staking.getStakingInfo();
         const owner = await staking.owner();
         const stakesLength = await staking.stakesLength();
-        console.log("        - staking                : " + j + " @ " + this.getShortAccountName(stakingAddress[1]) + ", owner: " + this.getShortAccountName(owner));
+        console.log("        - staking " + j + " @ " + this.getShortAccountName(stakingAddress[1]) + ", owner: " + this.getShortAccountName(owner));
         console.log("          - dataType    : " + stakingInfo.dataType.toString());
         console.log("          - addresses   : " + JSON.stringify(stakingInfo.addresses.map((x) => { return this.getShortAccountName(x); })));
         console.log("          - uints       : " + JSON.stringify(stakingInfo.uints.map((x) => { return x.toString(); })));
@@ -318,7 +318,7 @@ class Data {
         console.log("          - stakesLength: " + stakesLength);
         for (let k = 0; k < stakesLength; k++) {
           const stake = await staking.getStakeByIndex(k);
-          console.log("          - stakes      - owner: " + stake.tokenOwner + ", duration: " + stake.stake_.duration.toString() + ", end: " + stake.stake_.end.toString() + ", index: " + stake.stake_.index.toString() + ", tokens: " + new BigNumber(stake.stake_.tokens.toString()).shiftedBy(-18));
+          console.log("            - stake " + k + " owner: " + stake.tokenOwner + ", duration: " + stake.stake_.duration.toString() + ", end: " + stake.stake_.end.toString() + ", index: " + stake.stake_.index.toString() + ", tokens: " + new BigNumber(stake.stake_.tokens.toString()).shiftedBy(-18));
         }
       }
     }

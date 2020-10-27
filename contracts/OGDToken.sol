@@ -69,7 +69,8 @@ contract OGDToken is OGDTokenInterface, Permissioned {
         return accounts[tokenOwner].balance;
     }
     function transfer(address to, uint tokens) override external returns (bool success) {
-        updateAccounts(msg.sender, to);
+        updateAccount(msg.sender);
+        updateAccount(to);
         accounts[msg.sender].balance = accounts[msg.sender].balance.sub(tokens);
         accounts[to].balance = accounts[to].balance.add(tokens);
         emit Transfer(msg.sender, to, tokens);
@@ -81,7 +82,8 @@ contract OGDToken is OGDTokenInterface, Permissioned {
         return true;
     }
     function transferFrom(address from, address to, uint tokens) override external returns (bool success) {
-        updateAccounts(from, to);
+        updateAccount(from);
+        updateAccount(to);
         accounts[from].balance = accounts[from].balance.sub(tokens);
         allowed[from][msg.sender] = allowed[from][msg.sender].sub(tokens);
         accounts[to].balance = accounts[to].balance.add(tokens);
@@ -145,27 +147,27 @@ contract OGDToken is OGDTokenInterface, Permissioned {
             }
         }
     }
-    function updateAccounts(address account1, address account2) internal {
-        for (uint i = 0; i < dividendTokens.index.length; i++) {
-            DividendTokens.DividendToken memory dividendToken = dividendTokens.entries[dividendTokens.index[i]];
-            if (dividendToken.enabled) {
-                uint newOwing1 = newDividendsOwing(dividendToken.token, account1);
-                if (newOwing1 > 0) {
-                    unclaimedDividends[dividendToken.token] = unclaimedDividends[dividendToken.token].sub(newOwing1);
-                    accounts[account1].owing[dividendToken.token] = accounts[account1].owing[dividendToken.token].add(newOwing1);
-                }
-                accounts[account1].lastDividendPoints[dividendToken.token] = totalDividendPoints[dividendToken.token];
-                if (account1 != account2) {
-                    uint newOwing2 = newDividendsOwing(dividendToken.token, account2);
-                    if (newOwing2 > 0) {
-                        unclaimedDividends[dividendToken.token] = unclaimedDividends[dividendToken.token].sub(newOwing2);
-                        accounts[account2].owing[dividendToken.token] = accounts[account2].owing[dividendToken.token].add(newOwing2);
-                    }
-                    accounts[account2].lastDividendPoints[dividendToken.token] = totalDividendPoints[dividendToken.token];
-                }
-            }
-        }
-    }
+    // function updateAccounts(address account1, address account2) internal {
+    //     for (uint i = 0; i < dividendTokens.index.length; i++) {
+    //         DividendTokens.DividendToken memory dividendToken = dividendTokens.entries[dividendTokens.index[i]];
+    //         if (dividendToken.enabled) {
+    //             uint newOwing1 = newDividendsOwing(dividendToken.token, account1);
+    //             if (newOwing1 > 0) {
+    //                 unclaimedDividends[dividendToken.token] = unclaimedDividends[dividendToken.token].sub(newOwing1);
+    //                 accounts[account1].owing[dividendToken.token] = accounts[account1].owing[dividendToken.token].add(newOwing1);
+    //             }
+    //             accounts[account1].lastDividendPoints[dividendToken.token] = totalDividendPoints[dividendToken.token];
+    //             if (account1 != account2) {
+    //                 uint newOwing2 = newDividendsOwing(dividendToken.token, account2);
+    //                 if (newOwing2 > 0) {
+    //                     unclaimedDividends[dividendToken.token] = unclaimedDividends[dividendToken.token].sub(newOwing2);
+    //                     accounts[account2].owing[dividendToken.token] = accounts[account2].owing[dividendToken.token].add(newOwing2);
+    //                 }
+    //                 accounts[account2].lastDividendPoints[dividendToken.token] = totalDividendPoints[dividendToken.token];
+    //             }
+    //         }
+    //     }
+    // }
 
     /// @notice Deposit enabled dividend token
     function depositDividend(address token, uint tokens) public payable {
