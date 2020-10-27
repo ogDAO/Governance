@@ -65,9 +65,9 @@ describe("TestStakingFactory", function() {
       await data.printTxData("approve3", approve3);
       await data.printBalances();
 
-      console.log("        --- Test 2 - StakingFactory.createClone() ---");
+      console.log("        --- Test 2 - StakingFactory.addStakingForToken() ---");
       const test2 = [];
-      const ogTokensToStake = new BigNumber("0.123456789123456789").shiftedBy(18);
+      const ogTokensToStake = new BigNumber("1000").shiftedBy(18);
       const duration  = 5;
       test2.push(data.stakingFactory.connect(data.user1Signer).addStakingForToken(ogTokensToStake.toFixed(0), duration, data.fee0Token.address, "FEE0Token"));
       test2.push(data.stakingFactory.connect(data.user2Signer).addStakingForToken(ogTokensToStake.toFixed(0), duration, data.fee0Token.address, "FEE0Token"));
