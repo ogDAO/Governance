@@ -67,7 +67,7 @@ describe("TestStakingFactory", function() {
 
       console.log("        --- Test 2 - StakingFactory.addStakingForToken() ---");
       const ogTokensToStake = new BigNumber("1000").shiftedBy(18);
-      const duration  = 5;
+      const duration = 3;
       const test2 = [];
       test2.push(data.stakingFactory.connect(data.user1Signer).addStakingForToken(ogTokensToStake.toFixed(0), duration, data.fee0Token.address, "FEE0Token"));
       test2.push(data.stakingFactory.connect(data.user2Signer).addStakingForToken(ogTokensToStake.toFixed(0), duration, data.fee0Token.address, "FEE0Token"));
@@ -85,6 +85,7 @@ describe("TestStakingFactory", function() {
       await data.printBalances();
 
       console.log("        --- Test 2 - unstake() ---");
+      data.pause("Waiting", duration);
       const staking0Address = await data.stakingFactory.getStakingByIndex(0);
       const staking0 = Staking.attach(staking0Address[1]);
       const staking1Address = await data.stakingFactory.getStakingByIndex(1);
@@ -92,18 +93,12 @@ describe("TestStakingFactory", function() {
       const ogTokensToUnstake = new BigNumber("1000").shiftedBy(18);
       const test3 = [];
       test3.push(staking0.connect(data.user1Signer).unstake(ogTokensToUnstake.toFixed(0)));
-      // test3.push(data.stakingFactory.connect(data.user2Signer).addStakingForToken(ogTokensToStake.toFixed(0), duration, data.fee0Token.address, "FEE0Token"));
-      // test3.push(data.stakingFactory.connect(data.user3Signer).addStakingForToken(ogTokensToStake.toFixed(0), duration, data.ogToken.address, "OGToken"));
-      const [unstake1] = await Promise.all(test3);
-      // const stakingsLength = await data.stakingFactory.stakingsLength();
-      // for (let j = 0; j < stakingsLength; j++) {
-      //   const stakingAddress = await data.stakingFactory.getStakingByIndex(j);
-      //   const staking = Staking.attach(stakingAddress[1]);
-      //   await data.addStakingData(staking);
-      // }
+      test3.push(staking0.connect(data.user2Signer).unstake(ogTokensToUnstake.toFixed(0)));
+      test3.push(staking1.connect(data.user3Signer).unstake(ogTokensToUnstake.toFixed(0)));
+      const [unstake1, unstake2, unstake3] = await Promise.all(test3);
       await data.printTxData("unstake1", unstake1);
-      // await data.printTxData("addStake2", addStake2);
-      // await data.printTxData("addStake3", addStake3);
+      await data.printTxData("unstake2", unstake2);
+      await data.printTxData("unstake3", unstake3);
       await data.printBalances();
     });
   });
