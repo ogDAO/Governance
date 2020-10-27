@@ -5,7 +5,6 @@ const util = require('util');
 class Data {
 
   constructor() {
-    // console.log("        Data.constructor()");
     this.accounts = [];
     this.accountNames = {};
     this.contractsByAddress = {};
@@ -35,10 +34,6 @@ class Data {
     this.addAccount(this.user2, "User2");
     this.addAccount(this.user3, "User3");
     this.addAccount(this.user4, "User4");
-
-    // await ethers.provider.getBlockNumber().then((blockNumber) => {
-    //   console.log("Current block number: " + blockNumber);
-    // });
     this.baseBlock = await ethers.provider.getBlockNumber();
   }
 
@@ -86,11 +81,11 @@ class Data {
 
     this.tokenContracts = [ogToken, ogdToken, fee0Token];
     for (let i = 0; i < this.tokenContracts.length; i++) {
-      let tokenContract = this.tokenContracts[i];
+      const tokenContract = this.tokenContracts[i];
       if (tokenContract != null) {
-        let _symbol = tokenContract.symbol();
-        let _decimals = tokenContract.decimals();
-        let [symbol, decimals] = await Promise.all([_symbol, _decimals]);
+        const _symbol = tokenContract.symbol();
+        const _decimals = tokenContract.decimals();
+        const [symbol, decimals] = await Promise.all([_symbol, _decimals]);
         this.symbols.push(symbol);
         this.decimals.push(decimals);
       } else {
@@ -115,11 +110,11 @@ class Data {
     this.addContract(this.fee2Token, "Fee2Token");
     this.tokenContracts = [ogdToken, fee0Token, fee1Token, fee2Token];
     for (let i = 0; i < this.tokenContracts.length; i++) {
-      let tokenContract = this.tokenContracts[i];
+      const tokenContract = this.tokenContracts[i];
       if (tokenContract != null) {
-        let _symbol = tokenContract.symbol();
-        let _decimals = tokenContract.decimals();
-        let [symbol, decimals] = await Promise.all([_symbol, _decimals]);
+        const _symbol = tokenContract.symbol();
+        const _decimals = tokenContract.decimals();
+        const [symbol, decimals] = await Promise.all([_symbol, _decimals]);
         this.symbols.push(symbol);
         this.decimals.push(decimals);
       } else {
@@ -141,11 +136,11 @@ class Data {
     this.addContract(this.stakingFactory, "StakingFactory");
     this.tokenContracts = [ogToken, fee0Token];
     for (let i = 0; i < this.tokenContracts.length; i++) {
-      let tokenContract = this.tokenContracts[i];
+      const tokenContract = this.tokenContracts[i];
       if (tokenContract != null) {
-        let _symbol = tokenContract.symbol();
-        let _decimals = tokenContract.decimals();
-        let [symbol, decimals] = await Promise.all([_symbol, _decimals]);
+        const _symbol = tokenContract.symbol();
+        const _decimals = tokenContract.decimals();
+        const [symbol, decimals] = await Promise.all([_symbol, _decimals]);
         this.symbols.push(symbol);
         this.decimals.push(decimals);
       } else {
@@ -159,15 +154,6 @@ class Data {
     this.addAccount(staking.address, "Staking");
     this.addContract(staking, "Staking");
   }
-
-  // async addToken(tokenContract) {
-  //   let symbol = await tokenContract.symbol();
-  //   let decimals = await tokenContract.decimals();
-  //   console.log("        - Data.addToken - tokenContract.address: " + tokenContract.address + " " + symbol + " " + decimals);
-  //   this.tokenContracts.push(tokenContract);
-  //   this.symbols.push(symbol);
-  //   this.decimals.push(decimals);
-  // }
 
   padToken(s, decimals) {
     decimals = parseInt(decimals);
@@ -247,9 +233,9 @@ class Data {
   }
 
   async printBalances() {
-    var blockNumber = await ethers.provider.getBlockNumber();
-    var i = 0;
-    var totalTokenBalances = [new BigNumber(0), new BigNumber(0), new BigNumber(0), new BigNumber(0)];
+    const blockNumber = await ethers.provider.getBlockNumber();
+    // let i;
+    const totalTokenBalances = [new BigNumber(0), new BigNumber(0), new BigNumber(0), new BigNumber(0)];
     console.log("        ");
     console.log("         # Account                                             EtherBalanceChange               " + this.padLeft(this.symbols[0] || "???", 16) +  "               " + this.padLeft(this.symbols[1] || "???", 16) + " Blocks " + this.baseBlock.toString() + " to " + blockNumber.toString());
     if (this.tokenContracts.length > 2) {
@@ -309,54 +295,28 @@ class Data {
           }
         }
       }
-      // await ethers.provider.getBlockNumber().then((blockNumber) => {
-      //   console.log("Current block number: " + blockNumber);
-      // });
-
-      // await tokenContract.filters.Transfer(ZERO_ADDRESS, (data) => {
-      //   console.log("Transfer: " + util.inspect(data));
-      // });
-      // const iface = new ethers.utils.Interface(tokenContract.interface.abi);
-      // console.log("tokenContract.interface: " + util.inspect(tokenContract.interface));
-
-      // let x = tokenContract.filters.Transfer(ZERO_ADDRESS);
-      // console.log("        * Transfer: " + JSON.stringify(x));
-
-      // tokenContract.filters.forEach((x) => {
-      //   console.log("x: " + x);
-      // });
-
-
-      // provider.getTransactionReceipt(transactionHash).then(receipt => {
-      //   const logs = receipt.logs.filter(log => topics.some(t => t === log.topics[0]));
-      //   console.log('Printing array of events:');
-      //   const events = logs.map((log) => {
-      //     return iface.parseLog(log);
-      //   });
-      //   console.log(events);
-      // });
     }
 
     if (this.stakingFactory != null) {
       console.log("        StakingFactory " + this.getShortAccountName(this.stakingFactory.address) + " @ " + this.stakingFactory.address);
-      let [stakingTemplate, ogToken, stakingsLength] = await Promise.all([this.stakingFactory.stakingTemplate(), this.stakingFactory.ogToken(), this.stakingFactory.stakingsLength()]);
+      const [stakingTemplate, ogToken, stakingsLength] = await Promise.all([this.stakingFactory.stakingTemplate(), this.stakingFactory.ogToken(), this.stakingFactory.stakingsLength()]);
       console.log("        - stakingTemplate        : " + this.getShortAccountName(stakingTemplate));
       console.log("        - ogToken                : " + this.getShortAccountName(ogToken));
       console.log("        - stakingsLength         : " + stakingsLength);
-      let Staking = await ethers.getContractFactory("Staking");
+      const Staking = await ethers.getContractFactory("Staking");
       for (let j = 0; j < stakingsLength; j++) {
         const stakingAddress = await this.stakingFactory.getStakingByIndex(j);
         const staking = Staking.attach(stakingAddress[1]);
-        let stakingInfo = await staking.getStakingInfo();
+        const stakingInfo = await staking.getStakingInfo();
+        const owner = await staking.owner();
         const dataType = stakingInfo.dataType.toString();
-        console.log("        + Staking @ " + this.getShortAccountName(stakingAddress[1]) + " - datatype: " + dataType + ", addresses: " + JSON.stringify(stakingInfo.addresses.map((x) => { return this.getShortAccountName(x); })) + ", uints: " + JSON.stringify(stakingInfo.uints.map((x) => { return x.toString(); })) + ", strings " + JSON.stringify([stakingInfo.string0, stakingInfo.string1, stakingInfo.string2, stakingInfo.string3]));
-        // console.log("        Staking " + this.getShortAccountName(this.stakingFactory.address) + " @ " + this.stakingFactory.address);
+        console.log("        - staking                : " + j + " @ " + this.getShortAccountName(stakingAddress[1]) + ", owner: " + this.getShortAccountName(owner));
+        console.log("          " + dataType + ", " + JSON.stringify(stakingInfo.addresses.map((x) => { return this.getShortAccountName(x); })) + ", " + JSON.stringify(stakingInfo.uints.map((x) => { return x.toString(); })) + ", " + JSON.stringify([stakingInfo.string0, stakingInfo.string1, stakingInfo.string2, stakingInfo.string3]));
       }
     }
 
     if (this.optinoGov != null) {
       console.log("        OptinoGov " + this.getShortAccountName(this.optinoGov.address) + " @ " + this.optinoGov.address);
-
       let [ogToken, ogdToken, maxDuration, rewardsPerSecond, collectRewardForFee, collectRewardForDelay, proposalCost, proposalThreshold] = await Promise.all([this.optinoGov.ogToken(), this.optinoGov.ogdToken(), this.optinoGov.maxDuration(), this.optinoGov.rewardsPerSecond(), this.optinoGov.collectRewardForFee(), this.optinoGov.collectRewardForDelay(), this.optinoGov.proposalCost(), this.optinoGov.proposalThreshold()]);
       let [quorum, quorumDecayPerSecond, votingDuration, executeDelay, rewardPool, totalVotes] = await Promise.all([this.optinoGov.quorum(), this.optinoGov.quorumDecayPerSecond(), this.optinoGov.votingDuration(), this.optinoGov.executeDelay(), this.optinoGov.rewardPool(), this.optinoGov.totalVotes()]);
       let [proposalCount, stakeInfoLength] = await Promise.all([this.optinoGov.proposalCount(), this.optinoGov.stakeInfoLength()]);
@@ -419,3 +379,32 @@ module.exports = {
     ZERO_ADDRESS,
     Data
 }
+
+/*
+// await ethers.provider.getBlockNumber().then((blockNumber) => {
+//   console.log("Current block number: " + blockNumber);
+// });
+
+// await tokenContract.filters.Transfer(ZERO_ADDRESS, (data) => {
+//   console.log("Transfer: " + util.inspect(data));
+// });
+// const iface = new ethers.utils.Interface(tokenContract.interface.abi);
+// console.log("tokenContract.interface: " + util.inspect(tokenContract.interface));
+
+// let x = tokenContract.filters.Transfer(ZERO_ADDRESS);
+// console.log("        * Transfer: " + JSON.stringify(x));
+
+// tokenContract.filters.forEach((x) => {
+//   console.log("x: " + x);
+// });
+
+
+// provider.getTransactionReceipt(transactionHash).then(receipt => {
+//   const logs = receipt.logs.filter(log => topics.some(t => t === log.topics[0]));
+//   console.log('Printing array of events:');
+//   const events = logs.map((log) => {
+//     return iface.parseLog(log);
+//   });
+//   console.log(events);
+// });
+*/

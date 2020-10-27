@@ -4,8 +4,8 @@
 #
 # Enjoy. (c) The Optino Project. GPLv2
 # ----------------------------------------------------------------------------------------------
-TESTINPUT=test/TestStakeFactory.js
-TESTOUTPUT=results/TestStakeFactory.txt
+TESTINPUT=test/TestStakingFactory.js
+TESTOUTPUT=results/TestStakingFactory.txt
 
 echo "\$ npx hardhat test $TESTINPUT > $TESTOUTPUT" | tee $TESTOUTPUT
 
