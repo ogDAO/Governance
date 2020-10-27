@@ -1,3 +1,25 @@
+// File: contracts/ERC20.sol
+
+pragma solidity ^0.7.0;
+
+/// @notice ERC20 https://eips.ethereum.org/EIPS/eip-20 with optional symbol, name and decimals
+// SPDX-License-Identifier: GPLv2
+interface ERC20 {
+    function totalSupply() external view returns (uint);
+    function balanceOf(address tokenOwner) external view returns (uint balance);
+    function allowance(address tokenOwner, address spender) external view returns (uint remaining);
+    function transfer(address to, uint tokens) external returns (bool success);
+    function approve(address spender, uint tokens) external returns (bool success);
+    function transferFrom(address from, address to, uint tokens) external returns (bool success);
+
+    function symbol() external view returns (string memory);
+    function name() external view returns (string memory);
+    function decimals() external view returns (uint8);
+
+    event Transfer(address indexed from, address indexed to, uint tokens);
+    event Approval(address indexed tokenOwner, address indexed spender, uint tokens);
+}
+
 // File: contracts/CloneFactory.sol
 
 pragma solidity ^0.7.0;
@@ -60,28 +82,6 @@ contract CloneFactory {
       )
     }
   }
-}
-
-// File: contracts/ERC20.sol
-
-pragma solidity ^0.7.0;
-
-/// @notice ERC20 https://eips.ethereum.org/EIPS/eip-20 with optional symbol, name and decimals
-// SPDX-License-Identifier: GPLv2
-interface ERC20 {
-    function totalSupply() external view returns (uint);
-    function balanceOf(address tokenOwner) external view returns (uint balance);
-    function allowance(address tokenOwner, address spender) external view returns (uint remaining);
-    function transfer(address to, uint tokens) external returns (bool success);
-    function approve(address spender, uint tokens) external returns (bool success);
-    function transferFrom(address from, address to, uint tokens) external returns (bool success);
-
-    function symbol() external view returns (string memory);
-    function name() external view returns (string memory);
-    function decimals() external view returns (uint8);
-
-    event Transfer(address indexed from, address indexed to, uint tokens);
-    event Approval(address indexed tokenOwner, address indexed spender, uint tokens);
 }
 
 // File: contracts/OGTokenInterface.sol
@@ -1699,6 +1699,7 @@ pragma experimental ABIEncoderV2;
 
 
 
+
 // SPDX-License-Identifier: GPLv2
 contract Staking is Owned {
     using SafeMath for uint;
@@ -1717,22 +1718,24 @@ contract Staking is Owned {
         string string3;
     }
 
-    StakingInfo public stakingInfo;
-
     struct Stake {
         uint64 duration;
         uint64 end;
         uint tokens;
     }
 
+    ERC20 public ogToken;
+    StakingInfo public stakingInfo;
     mapping(address => Stake) public stakes;
     address[] public stakesIndex;
 
+    event Staked(address indexed tokenOwner, uint tokens, uint duration, uint end);
+
     constructor() {
     }
-    function initStaking(uint dataType, address[4] memory addresses, uint[6] memory uints, string[4] memory strings) public {
-        // console.log("        s> %s -> Staking.initStaking()", msg.sender);
+    function initStaking(ERC20 _ogToken, uint dataType, address[4] memory addresses, uint[6] memory uints, string[4] memory strings) public {
         initOwned(msg.sender);
+        ogToken = _ogToken;
         stakingInfo = StakingInfo(dataType, addresses, uints, strings[0], strings[1], strings[2], strings[3]);
     }
     function getStakingInfo() public view returns (uint dataType, address[4] memory addresses, uint[6] memory uints, string memory string0, string memory string1, string memory string2, string memory string3) {
@@ -1751,9 +1754,8 @@ contract Staking is Owned {
         return stakesIndex.length;
     }
 
-    event Staked(address indexed tokenOwner, uint tokens, uint duration, uint end);
     function stakeThroughFactory(address tokenOwner, uint tokens, uint duration) public onlyOwner {
-        console.log("        > StakingFactory -> Staking.stakeThroughFactory(%s, %s, %s)", tokenOwner, tokens, duration);
+        // console.log("        > StakingFactory -> Staking.stakeThroughFactory(%s, %s, %s)", tokenOwner, tokens, duration);
         require(duration > 0, "Invalid duration");
         Stake storage stake = stakes[tokenOwner];
         if (stake.duration == 0) {
@@ -1761,6 +1763,20 @@ contract Staking is Owned {
             stake = stakes[tokenOwner];
             stakesIndex.push(tokenOwner);
             emit Staked(tokenOwner, tokens, duration, stake.end);
+        }
+    }
+
+    event Unstaked(address indexed tokenOwner, uint tokens);
+    function unstake(uint tokens) public {
+        Stake storage stake = stakes[msg.sender];
+        require(uint(stake.end) > block.timestamp, "Staking period still active");
+        require(tokens >= stake.tokens, "Unsufficient staked tokens");
+        if (tokens > 0) {
+            stake.tokens = stake.tokens.sub(tokens);
+            stake.duration = 0;
+            stake.end = uint64(block.timestamp - 1);
+            emit Unstaked(msg.sender, tokens);
+            require(ogToken.transfer(msg.sender, tokens), "OG transfer failed");
         }
     }
 }
@@ -1777,6 +1793,7 @@ pragma experimental ABIEncoderV2;
 
 
 
+
 // SPDX-License-Identifier: GPLv2
 contract StakingFactory is CloneFactory {
     Staking public stakingTemplate;
@@ -1785,7 +1802,7 @@ contract StakingFactory is CloneFactory {
     mapping(bytes32 => Staking) public stakings;
     bytes32[] public stakingsIndex;
 
-    event StakingCreated(bytes32 indexed key, Staking indexed staking, uint tokens);
+    event StakingCreated(bytes32 indexed key, Staking indexed staking);
 
     constructor(OGTokenInterface _ogToken) {
         ogToken = _ogToken;
@@ -1818,12 +1835,12 @@ contract StakingFactory is CloneFactory {
         staking = stakings[key];
         if (address(staking) == address(0)) {
             staking = Staking(createClone(address(stakingTemplate)));
-            staking.initStaking(dataType, addresses, uints, strings);
+            staking.initStaking(ogToken, dataType, addresses, uints, strings);
             stakings[key] = staking;
             stakingsIndex.push(key);
+            emit StakingCreated(key, staking);
         }
         require(ogToken.transferFrom(msg.sender, address(staking), tokens), "OG transferFrom failed");
-        emit StakingCreated(key, staking, tokens);
         staking.stakeThroughFactory(msg.sender, tokens, duration);
     }
 

@@ -187,11 +187,11 @@ contract OGToken is OGTokenInterface, Permissioned {
     event LogInfo(string topic, uint number, bytes32 data, string note, address addr);
     // event UpdateAccountInfo(address dividendToken, address account, uint owing, uint totalOwing, uint lastDividendPoints, uint totalDividendPoints, uint unclaimedDividends);
 
-    constructor(string memory symbol, string memory name, uint8 decimals, address tokenOwner, uint initialSupply) {
+    constructor(string memory symbol_, string memory name_, uint8 decimals_, address tokenOwner, uint initialSupply) {
         initPermissioned(msg.sender);
-        _symbol = symbol;
-        _name = name;
-        _decimals = decimals;
+        _symbol = symbol_;
+        _name = name_;
+        _decimals = decimals_;
         accounts[tokenOwner].balance = initialSupply;
         _totalSupply = initialSupply;
         emit Transfer(address(0), tokenOwner, _totalSupply);

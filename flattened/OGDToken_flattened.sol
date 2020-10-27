@@ -236,11 +236,11 @@ contract OGDToken is OGDTokenInterface, Permissioned {
     event DividendTokenRemoved(address indexed token);
     event DividendTokenUpdated(address indexed token, bool enabled);
 
-    constructor(string memory symbol, string memory name, uint8 decimals, address tokenOwner, uint initialSupply) {
+    constructor(string memory symbol_, string memory name_, uint8 decimals_, address tokenOwner, uint initialSupply) {
         initPermissioned(msg.sender);
-        _symbol = symbol;
-        _name = name;
-        _decimals = decimals;
+        _symbol = symbol_;
+        _name = name_;
+        _decimals = decimals_;
         accounts[tokenOwner].balance = initialSupply;
         _totalSupply = initialSupply;
         emit Transfer(address(0), tokenOwner, _totalSupply);

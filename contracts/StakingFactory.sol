@@ -4,6 +4,7 @@ pragma experimental ABIEncoderV2;
 // import "hardhat/console.sol";
 
 // Use prefix "./" normally and "https://github.com/ogDAO/Governance/blob/master/contracts/" in Remix
+import "./ERC20.sol";
 import "./CloneFactory.sol";
 import "./OGTokenInterface.sol";
 import "./Staking.sol";
@@ -49,7 +50,7 @@ contract StakingFactory is CloneFactory {
         staking = stakings[key];
         if (address(staking) == address(0)) {
             staking = Staking(createClone(address(stakingTemplate)));
-            staking.initStaking(dataType, addresses, uints, strings);
+            staking.initStaking(ogToken, dataType, addresses, uints, strings);
             stakings[key] = staking;
             stakingsIndex.push(key);
             emit StakingCreated(key, staking);

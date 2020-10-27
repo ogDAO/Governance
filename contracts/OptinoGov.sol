@@ -191,6 +191,7 @@ contract OptinoGov is OptinoGovConfig {
     constructor(OGTokenInterface ogToken, OGDTokenInterface ogdToken) OptinoGovConfig(ogToken, ogdToken) {
     }
 
+    /*
     function addStakeForToken(uint tokens, address tokenAddress, string memory name) external {
         bytes32 stakingKey = keccak256(abi.encodePacked(tokenAddress, name));
         StakeInfo memory stakeInfo = stakeInfoData[stakingKey];
@@ -294,6 +295,7 @@ contract OptinoGov is OptinoGovConfig {
             // }
         }
     }
+    */
 
     function delegate(address delegatee) public {
         Commitment storage user = commitments[msg.sender];

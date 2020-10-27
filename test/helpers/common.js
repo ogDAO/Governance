@@ -327,7 +327,7 @@ class Data {
       console.log("        OptinoGov " + this.getShortAccountName(this.optinoGov.address) + " @ " + this.optinoGov.address);
       let [ogToken, ogdToken, maxDuration, rewardsPerSecond, collectRewardForFee, collectRewardForDelay, proposalCost, proposalThreshold] = await Promise.all([this.optinoGov.ogToken(), this.optinoGov.ogdToken(), this.optinoGov.maxDuration(), this.optinoGov.rewardsPerSecond(), this.optinoGov.collectRewardForFee(), this.optinoGov.collectRewardForDelay(), this.optinoGov.proposalCost(), this.optinoGov.proposalThreshold()]);
       let [quorum, quorumDecayPerSecond, votingDuration, executeDelay, rewardPool, totalVotes] = await Promise.all([this.optinoGov.quorum(), this.optinoGov.quorumDecayPerSecond(), this.optinoGov.votingDuration(), this.optinoGov.executeDelay(), this.optinoGov.rewardPool(), this.optinoGov.totalVotes()]);
-      let [proposalCount, stakeInfoLength] = await Promise.all([this.optinoGov.proposalCount(), this.optinoGov.stakeInfoLength()]);
+      let [proposalCount /*, stakeInfoLength*/] = await Promise.all([this.optinoGov.proposalCount()/*, this.optinoGov.stakeInfoLength()*/]);
       console.log("        - ogToken              : " + this.getShortAccountName(ogToken));
       console.log("        - ogdToken             : " + this.getShortAccountName(ogdToken));
       let decimals = 18;
@@ -344,7 +344,7 @@ class Data {
       console.log("        - rewardPool           : " + rewardPool + " = " + new BigNumber(rewardPool.toString()).shiftedBy(-decimals));
       console.log("        - totalVotes           : " + totalVotes + " = " + new BigNumber(totalVotes.toString()).shiftedBy(-decimals));
       console.log("        - proposalCount        : " + proposalCount);
-      console.log("        - stakeInfoLength      : " + stakeInfoLength);
+      // console.log("        - stakeInfoLength      : " + stakeInfoLength);
 
       for (let j = 1; j < this.accounts.length && j < 4; j++) {
         let account = this.accounts[j];

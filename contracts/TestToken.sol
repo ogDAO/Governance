@@ -30,11 +30,11 @@ contract TestToken is ERC20, Owned {
     mapping(address => uint) balances;
     mapping(address => mapping(address => uint)) allowed;
 
-    constructor(string memory symbol, string memory name, uint8 decimals, address tokenOwner, uint initialSupply) {
+    constructor(string memory symbol_, string memory name_, uint8 decimals_, address tokenOwner, uint initialSupply) {
         initOwned(msg.sender);
-        _symbol = symbol;
-        _name = name;
-        _decimals = decimals;
+        _symbol = symbol_;
+        _name = name_;
+        _decimals = decimals_;
         balances[tokenOwner] = initialSupply;
         _totalSupply = initialSupply;
         emit Transfer(address(0), tokenOwner, _totalSupply);

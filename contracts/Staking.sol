@@ -5,6 +5,7 @@ import "hardhat/console.sol";
 
 // Use prefix "./" normally and "https://github.com/ogDAO/Governance/blob/master/contracts/" in Remix
 import "./SafeMath.sol";
+import "./ERC20.sol";
 import "./Owned.sol";
 
 // SPDX-License-Identifier: GPLv2
@@ -25,22 +26,24 @@ contract Staking is Owned {
         string string3;
     }
 
-    StakingInfo public stakingInfo;
-
     struct Stake {
         uint64 duration;
         uint64 end;
         uint tokens;
     }
 
+    ERC20 public ogToken;
+    StakingInfo public stakingInfo;
     mapping(address => Stake) public stakes;
     address[] public stakesIndex;
 
+    event Staked(address indexed tokenOwner, uint tokens, uint duration, uint end);
+
     constructor() {
     }
-    function initStaking(uint dataType, address[4] memory addresses, uint[6] memory uints, string[4] memory strings) public {
-        // console.log("        s> %s -> Staking.initStaking()", msg.sender);
+    function initStaking(ERC20 _ogToken, uint dataType, address[4] memory addresses, uint[6] memory uints, string[4] memory strings) public {
         initOwned(msg.sender);
+        ogToken = _ogToken;
         stakingInfo = StakingInfo(dataType, addresses, uints, strings[0], strings[1], strings[2], strings[3]);
     }
     function getStakingInfo() public view returns (uint dataType, address[4] memory addresses, uint[6] memory uints, string memory string0, string memory string1, string memory string2, string memory string3) {
@@ -59,7 +62,6 @@ contract Staking is Owned {
         return stakesIndex.length;
     }
 
-    event Staked(address indexed tokenOwner, uint tokens, uint duration, uint end);
     function stakeThroughFactory(address tokenOwner, uint tokens, uint duration) public onlyOwner {
         // console.log("        > StakingFactory -> Staking.stakeThroughFactory(%s, %s, %s)", tokenOwner, tokens, duration);
         require(duration > 0, "Invalid duration");
@@ -69,6 +71,20 @@ contract Staking is Owned {
             stake = stakes[tokenOwner];
             stakesIndex.push(tokenOwner);
             emit Staked(tokenOwner, tokens, duration, stake.end);
+        }
+    }
+
+    event Unstaked(address indexed tokenOwner, uint tokens);
+    function unstake(uint tokens) public {
+        Stake storage stake = stakes[msg.sender];
+        require(uint(stake.end) > block.timestamp, "Staking period still active");
+        require(tokens >= stake.tokens, "Unsufficient staked tokens");
+        if (tokens > 0) {
+            stake.tokens = stake.tokens.sub(tokens);
+            stake.duration = 0;
+            stake.end = uint64(block.timestamp - 1);
+            emit Unstaked(msg.sender, tokens);
+            require(ogToken.transfer(msg.sender, tokens), "OG transfer failed");
         }
     }
 }
