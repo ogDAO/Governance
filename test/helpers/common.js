@@ -22,7 +22,7 @@ class Data {
     this.fee1Token = null;
     this.fee2Token = null;
     this.optinoGov = null;
-    this.stakeFactory = null;
+    this.stakingFactory = null;
 
     this.ethUsd = new BigNumber("385.67");
   }
@@ -129,16 +129,16 @@ class Data {
     }
   }
 
-  async setStakeFactoryData(ogToken, fee0Token, stakeFactory) {
+  async setStakingFactoryData(ogToken, fee0Token, stakingFactory) {
     this.ogToken = ogToken;
     this.fee0Token = fee0Token;
-    this.stakeFactory = stakeFactory;
+    this.stakingFactory = stakingFactory;
     this.addAccount(this.ogToken.address, "OGToken");
     this.addAccount(this.fee0Token.address, "Fee0Token");
-    this.addAccount(this.stakeFactory.address, "StakeFactory");
+    this.addAccount(this.stakingFactory.address, "StakingFactory");
     this.addContract(this.ogToken, "OGToken");
     this.addContract(this.fee0Token, "Fee0Token");
-    this.addContract(this.stakeFactory, "StakeFactory");
+    this.addContract(this.stakingFactory, "StakingFactory");
     this.tokenContracts = [ogToken, fee0Token];
     for (let i = 0; i < this.tokenContracts.length; i++) {
       let tokenContract = this.tokenContracts[i];
@@ -153,6 +153,11 @@ class Data {
         this.decimals.push(18);
       }
     }
+  }
+
+  async addStakingData(staking) {
+    this.addAccount(staking.address, "Staking");
+    this.addContract(staking, "Staking");
   }
 
   // async addToken(tokenContract) {
@@ -330,6 +335,23 @@ class Data {
       //   });
       //   console.log(events);
       // });
+    }
+
+    if (this.stakingFactory != null) {
+      console.log("        StakingFactory " + this.getShortAccountName(this.stakingFactory.address) + " @ " + this.stakingFactory.address);
+      let [stakingTemplate, ogToken, stakingsLength] = await Promise.all([this.stakingFactory.stakingTemplate(), this.stakingFactory.ogToken(), this.stakingFactory.stakingsLength()]);
+      console.log("        - stakingTemplate        : " + this.getShortAccountName(stakingTemplate));
+      console.log("        - ogToken                : " + this.getShortAccountName(ogToken));
+      console.log("        - stakingsLength         : " + stakingsLength);
+      let Staking = await ethers.getContractFactory("Staking");
+      for (let j = 0; j < stakingsLength; j++) {
+        const stakingAddress = await this.stakingFactory.getStakingByIndex(j);
+        const staking = Staking.attach(stakingAddress[1]);
+        let stakingInfo = await staking.getStakingInfo();
+        const dataType = stakingInfo.dataType.toString();
+        console.log("        + Staking @ " + this.getShortAccountName(stakingAddress[1]) + " - datatype: " + dataType + ", addresses: " + JSON.stringify(stakingInfo.addresses.map((x) => { return this.getShortAccountName(x); })) + ", uints: " + JSON.stringify(stakingInfo.uints.map((x) => { return x.toString(); })) + ", strings " + JSON.stringify([stakingInfo.string0, stakingInfo.string1, stakingInfo.string2, stakingInfo.string3]));
+        // console.log("        Staking " + this.getShortAccountName(this.stakingFactory.address) + " @ " + this.stakingFactory.address);
+      }
     }
 
     if (this.optinoGov != null) {

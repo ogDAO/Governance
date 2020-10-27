@@ -1,7 +1,7 @@
 pragma solidity ^0.7.0;
 
-import "./Owned.sol";
 import "./SafeMath.sol";
+import "./Owned.sol";
 
 /// @notice Permissioned
 // SPDX-License-Identifier: GPLv2

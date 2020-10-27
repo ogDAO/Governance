@@ -4,19 +4,19 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
   TestOGDToken
     TestOGDToken - Workflow #0
         --- Setup 1 - Deploy OGDToken, FEE{0..2} ---
-        ogdTokenTx - gasUsed: 2579111, fee: 0.20632888, feeUsd: 79.5748591496, @ 80 gwei & 385.67 ETH/USD, 0xb483fcdfaf84792aaae1875523d2bfcf98a86351102d2bad6a4f0a3b23bc5098
+        ogdTokenTx - gasUsed: 2579353, fee: 0.20634824, feeUsd: 79.5823257208, @ 80 gwei & 385.67 ETH/USD, 0xd52577f4661684bdff6a58ebc3295660679a7798d9f442bded93659e0279210e
         + OGDToken.Transfer(from: ETH|null:0x0000, to: Owner:0xa00A, tokens: 0)
-        fee0TokenTx - gasUsed: 823454, fee: 0.06587632, feeUsd: 25.4065203344, @ 80 gwei & 385.67 ETH/USD, 0xc4c5bd4723108b18e6d5585ec11217affdcdd044ab0b3dc5679fb4a6da0b23a6
+        fee0TokenTx - gasUsed: 823708, fee: 0.06589664, feeUsd: 25.4143571488, @ 80 gwei & 385.67 ETH/USD, 0x5f19f3b1961236fe17cd38a7a3f049628f906c6d7d348ed678bdb6e1ff99f17c
         + Fee0Token.Transfer(from: ETH|null:0x0000, to: Owner:0xa00A, tokens: 100)
-        fee1TokenTx - gasUsed: 823454, fee: 0.06587632, feeUsd: 25.4065203344, @ 80 gwei & 385.67 ETH/USD, 0x73b60b4bb5c21d897f4a0e52028cfa74e44e313dbd3419e711a9057b75ab0fd7
+        fee1TokenTx - gasUsed: 823708, fee: 0.06589664, feeUsd: 25.4143571488, @ 80 gwei & 385.67 ETH/USD, 0x684e8af80eb5b6ef005300afc36a75b7a1a53afeedd7e8424f5da23f068b6ced
         + Fee1Token.Transfer(from: ETH|null:0x0000, to: Owner:0xa00A, tokens: 1000)
-        fee2TokenTx - gasUsed: 823466, fee: 0.06587728, feeUsd: 25.4068905776, @ 80 gwei & 385.67 ETH/USD, 0xd3e376832727e48ac0f3d54a61006da7df7d196c7fa53c893549befbb058a8ca
+        fee2TokenTx - gasUsed: 823720, fee: 0.0658976, feeUsd: 25.414727392, @ 80 gwei & 385.67 ETH/USD, 0xbe64fd63142a27037db96edd630990a05caea37d0c647a06c4f603a34cb7e9f2
         + Fee2Token.Transfer(from: ETH|null:0x0000, to: Owner:0xa00A, tokens: 10000)
         
          # Account                                             EtherBalanceChange                            OGD                           FEE0 Blocks 0 to 4
                                                                                                             FEE1                           FEE2
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E       -0.403958800000000000           0.000000000000000000         100.000000000000000000 Owner:0xa00A
+         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E       -0.404039120000000000           0.000000000000000000         100.000000000000000000 Owner:0xa00A
                                                                                          1000.000000000000000000       10000.000000000000000000
          1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433        0.000000000000000000           0.000000000000000000           0.000000000000000000 User1:0xa11A
                                                                                             0.000000000000000000           0.000000000000000000
@@ -75,7 +75,7 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
          # Account                                             EtherBalanceChange                            OGD                           FEE0 Blocks 0 to 13
                                                                                                             FEE1                           FEE2
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E       -0.458549600000000000           0.000000000000000000         100.000000000000000000 Owner:0xa00A
+         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E       -0.458629920000000000           0.000000000000000000         100.000000000000000000 Owner:0xa00A
                                                                                          1000.000000000000000000       10000.000000000000000000
          1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433        0.000000000000000000       10000.000000000000000000           0.000000000000000000 User1:0xa11A
                                                                                             0.000000000000000000           0.000000000000000000
@@ -120,7 +120,7 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
          # Account                                             EtherBalanceChange                            OGD                           FEE0 Blocks 0 to 15
                                                                                                             FEE1                           FEE2
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E      -10.470351040000000000           0.000000000000000000           0.000000000000000000 Owner:0xa00A
+         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E      -10.470431360000000000           0.000000000000000000           0.000000000000000000 Owner:0xa00A
                                                                                          1000.000000000000000000       10000.000000000000000000
          1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433        0.000000000000000000       10000.000000000000000000           0.000000000000000000 User1:0xa11A
                                                                                             0.000000000000000000           0.000000000000000000
@@ -162,7 +162,7 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
          # Account                                             EtherBalanceChange                            OGD                           FEE0 Blocks 0 to 16
                                                                                                             FEE1                           FEE2
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E      -10.470351040000000000           0.000000000000000000           0.000000000000000000 Owner:0xa00A
+         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E      -10.470431360000000000           0.000000000000000000           0.000000000000000000 Owner:0xa00A
                                                                                          1000.000000000000000000       10000.000000000000000000
          1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433        0.000000000000000000       10000.000000000000000000           0.000000000000000000 User1:0xa11A
                                                                                             0.000000000000000000           0.000000000000000000
@@ -214,7 +214,7 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
          # Account                                             EtherBalanceChange                            OGD                           FEE0 Blocks 0 to 19
                                                                                                             FEE1                           FEE2
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E      -10.470351040000000000           0.000000000000000000           0.000000000000000000 Owner:0xa00A
+         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E      -10.470431360000000000           0.000000000000000000           0.000000000000000000 Owner:0xa00A
                                                                                          1000.000000000000000000       10000.000000000000000000
          1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433        3.320837333333333333       10000.000000000000000000          33.333333333333333333 User1:0xa11A
                                                                                             0.000000000000000000           0.000000000000000000
@@ -261,7 +261,7 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
          # Account                                             EtherBalanceChange                            OGD                           FEE0 Blocks 0 to 22
                                                                                                             FEE1                           FEE2
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E      -10.500117840000000000           0.000000000000000000           0.000000000000000000 Owner:0xa00A
+         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E      -10.500198160000000000           0.000000000000000000           0.000000000000000000 Owner:0xa00A
                                                                                          1000.000000000000000000       10000.000000000000000000
          1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433        3.320837333333333333       10000.000000000000000000          33.333333333333333333 User1:0xa11A
                                                                                             0.000000000000000000           0.000000000000000000
@@ -330,7 +330,7 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
          # Account                                             EtherBalanceChange                            OGD                           FEE0 Blocks 0 to 28
                                                                                                             FEE1                           FEE2
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E      -10.512501680000000000           0.000000000000000000           0.000000000000000000 Owner:0xa00A
+         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E      -10.512582000000000000           0.000000000000000000           0.000000000000000000 Owner:0xa00A
                                                                                             0.000000000000000000           0.000000000000000000
          1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433        3.303781253333333333       10000.000000000000000000          33.333333333333333333 User1:0xa11A
                                                                                           250.000000000000000000        2500.000000000000000000
@@ -374,7 +374,7 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
          # Account                                             EtherBalanceChange                            OGD                           FEE0 Blocks 0 to 29
                                                                                                             FEE1                           FEE2
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E      -10.512501680000000000           0.000000000000000000           0.000000000000000000 Owner:0xa00A
+         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E      -10.512582000000000000           0.000000000000000000           0.000000000000000000 Owner:0xa00A
                                                                                             0.000000000000000000           0.000000000000000000
          1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433        3.303781253333333333       10000.000000000000000000          33.333333333333333333 User1:0xa11A
                                                                                           250.000000000000000000        2500.000000000000000000
@@ -413,22 +413,22 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         
         --- Test Completed ---
 
-      ✓ Workflow #0 (4458ms)
+      ✓ Workflow #0 (4431ms)
     TestOGDToken - Workflow #1 - Transfer Test
         --- Setup 1 - Deploy OGDToken, FEE{0..2} ---
-        ogdTokenTx - gasUsed: 2579111, fee: 0.20632888, feeUsd: 79.5748591496, @ 80 gwei & 385.67 ETH/USD, 0xedf932eecfd5233f91459ff75b4d6a91799d726b0c2cd3555d191227a6cc6c9e
+        ogdTokenTx - gasUsed: 2579353, fee: 0.20634824, feeUsd: 79.5823257208, @ 80 gwei & 385.67 ETH/USD, 0xe907ead6d0be361edadb91b727c5f4a3ade7b086cfa0bbfe28c2c8cc893ff23b
         + OGDToken.Transfer(from: ETH|null:0x0000, to: Owner:0xa00A, tokens: 0)
-        fee0TokenTx - gasUsed: 823454, fee: 0.06587632, feeUsd: 25.4065203344, @ 80 gwei & 385.67 ETH/USD, 0xdf919bdb9566d4d0a04b8fa1e939db1291cf44950a8c758847d93b3b4288c9f0
+        fee0TokenTx - gasUsed: 823708, fee: 0.06589664, feeUsd: 25.4143571488, @ 80 gwei & 385.67 ETH/USD, 0x556f418addb7f8358f84fa36d184cf4b1afdd9d711a7777ebc08212c55bd2504
         + Fee0Token.Transfer(from: ETH|null:0x0000, to: Owner:0xa00A, tokens: 100)
-        fee1TokenTx - gasUsed: 823454, fee: 0.06587632, feeUsd: 25.4065203344, @ 80 gwei & 385.67 ETH/USD, 0xc3653083916478b93761164a399732360c88b94deb5b33c088614895ec9d5a1a
+        fee1TokenTx - gasUsed: 823708, fee: 0.06589664, feeUsd: 25.4143571488, @ 80 gwei & 385.67 ETH/USD, 0x3d1604279e635bce21e6ac7a221c3c8499abb5e3c093236d9ce7223698683dda
         + Fee1Token.Transfer(from: ETH|null:0x0000, to: Owner:0xa00A, tokens: 1000)
-        fee2TokenTx - gasUsed: 823466, fee: 0.06587728, feeUsd: 25.4068905776, @ 80 gwei & 385.67 ETH/USD, 0x37a83adb05897cf3bc4e67fcd3fce872a43d81b2d7e20fe712d102582e391a7e
+        fee2TokenTx - gasUsed: 823720, fee: 0.0658976, feeUsd: 25.414727392, @ 80 gwei & 385.67 ETH/USD, 0x769d385abc604c268271fc32874f736db6d229d22ef6d3e13806287e81a73013
         + Fee2Token.Transfer(from: ETH|null:0x0000, to: Owner:0xa00A, tokens: 10000)
         
          # Account                                             EtherBalanceChange                            OGD                           FEE0 Blocks 29 to 33
                                                                                                             FEE1                           FEE2
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E       -0.403958800000000000           0.000000000000000000         100.000000000000000000 Owner:0xa00A
+         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E       -0.404039120000000000           0.000000000000000000         100.000000000000000000 Owner:0xa00A
                                                                                          1000.000000000000000000       10000.000000000000000000
          1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433        0.000000000000000000           0.000000000000000000           0.000000000000000000 User1:0xa11A
                                                                                             0.000000000000000000           0.000000000000000000
@@ -485,7 +485,7 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
          # Account                                             EtherBalanceChange                            OGD                           FEE0 Blocks 29 to 41
                                                                                                             FEE1                           FEE2
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E       -0.452136400000000000           0.000000000000000000         100.000000000000000000 Owner:0xa00A
+         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E       -0.452216720000000000           0.000000000000000000         100.000000000000000000 Owner:0xa00A
                                                                                          1000.000000000000000000       10000.000000000000000000
          1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433        0.000000000000000000       10000.000000000000000000           0.000000000000000000 User1:0xa11A
                                                                                             0.000000000000000000           0.000000000000000000
@@ -530,7 +530,7 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
          # Account                                             EtherBalanceChange                            OGD                           FEE0 Blocks 29 to 43
                                                                                                             FEE1                           FEE2
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E      -10.463937840000000000           0.000000000000000000           0.000000000000000000 Owner:0xa00A
+         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E      -10.464018160000000000           0.000000000000000000           0.000000000000000000 Owner:0xa00A
                                                                                          1000.000000000000000000       10000.000000000000000000
          1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433        0.000000000000000000       10000.000000000000000000           0.000000000000000000 User1:0xa11A
                                                                                             0.000000000000000000           0.000000000000000000
@@ -572,7 +572,7 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
          # Account                                             EtherBalanceChange                            OGD                           FEE0 Blocks 29 to 44
                                                                                                             FEE1                           FEE2
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E      -10.463937840000000000           0.000000000000000000           0.000000000000000000 Owner:0xa00A
+         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E      -10.464018160000000000           0.000000000000000000           0.000000000000000000 Owner:0xa00A
                                                                                          1000.000000000000000000       10000.000000000000000000
          1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433        0.000000000000000000       10000.000000000000000000           0.000000000000000000 User1:0xa11A
                                                                                             0.000000000000000000           0.000000000000000000
@@ -621,7 +621,7 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
          # Account                                             EtherBalanceChange                            OGD                           FEE0 Blocks 29 to 47
                                                                                                             FEE1                           FEE2
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E      -10.463937840000000000           0.000000000000000000           0.000000000000000000 Owner:0xa00A
+         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E      -10.464018160000000000           0.000000000000000000           0.000000000000000000 Owner:0xa00A
                                                                                          1000.000000000000000000       10000.000000000000000000
          1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433        4.989904000000000000       10000.000000000000000000          50.000000000000000000 User1:0xa11A
                                                                                             0.000000000000000000           0.000000000000000000
@@ -656,22 +656,22 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         Token 2 symbol: 'FEE1', name: 'Fee1', decimals: 18, totalSupply: 1000, owner: Owner:0xa00A, address: Fee1Token:0x0b70
         Token 3 symbol: 'FEE2', name: 'Fee2', decimals: 18, totalSupply: 10000, owner: Owner:0xa00A, address: Fee2Token:0xA92f
         
-      ✓ Workflow #1 - Transfer Test (1949ms)
+      ✓ Workflow #1 - Transfer Test (2028ms)
     TestOGDToken - Workflow #2 - address(0) with balance
         --- Setup 1 - Deploy OGDToken, FEE{0..2} ---
-        ogdTokenTx - gasUsed: 2579111, fee: 0.20632888, feeUsd: 79.5748591496, @ 80 gwei & 385.67 ETH/USD, 0xf9108160d40eef4444690990c84f74f727410284f6abaed3a0d7a84b839d0812
+        ogdTokenTx - gasUsed: 2579353, fee: 0.20634824, feeUsd: 79.5823257208, @ 80 gwei & 385.67 ETH/USD, 0x8fea0e63b43e29936d8c3361ea684b8a88a6be873e0ff860ea3e5dae0f246458
         + OGDToken.Transfer(from: ETH|null:0x0000, to: Owner:0xa00A, tokens: 0)
-        fee0TokenTx - gasUsed: 823454, fee: 0.06587632, feeUsd: 25.4065203344, @ 80 gwei & 385.67 ETH/USD, 0x13b9bcd53dee7d26d9dd02fcaf1370907331153c8bbb24c47118a0054d861d75
+        fee0TokenTx - gasUsed: 823708, fee: 0.06589664, feeUsd: 25.4143571488, @ 80 gwei & 385.67 ETH/USD, 0x946db7cabc44dac4b8601fca4f9f46a4939d6ec02fea24f8709abe7bed266aca
         + Fee0Token.Transfer(from: ETH|null:0x0000, to: Owner:0xa00A, tokens: 100)
-        fee1TokenTx - gasUsed: 823454, fee: 0.06587632, feeUsd: 25.4065203344, @ 80 gwei & 385.67 ETH/USD, 0x224a207935ed4f67e4e113fbd57b284be85cc3b316d9ccea8bd46550cf8637b2
+        fee1TokenTx - gasUsed: 823708, fee: 0.06589664, feeUsd: 25.4143571488, @ 80 gwei & 385.67 ETH/USD, 0x420ae76fece2506c0eb74102279ca708cb0cf3ed96f0769cb0b37ee797b77be3
         + Fee1Token.Transfer(from: ETH|null:0x0000, to: Owner:0xa00A, tokens: 1000)
-        fee2TokenTx - gasUsed: 823466, fee: 0.06587728, feeUsd: 25.4068905776, @ 80 gwei & 385.67 ETH/USD, 0x0d132f791155e8d14f9b2da118c52d2080b558bacd7e65fe33fed39818e602b2
+        fee2TokenTx - gasUsed: 823720, fee: 0.0658976, feeUsd: 25.414727392, @ 80 gwei & 385.67 ETH/USD, 0x01b6624aa1d57b01963a28339941596199af1f583ec5ee6f75926665c5914a04
         + Fee2Token.Transfer(from: ETH|null:0x0000, to: Owner:0xa00A, tokens: 10000)
         
          # Account                                             EtherBalanceChange                            OGD                           FEE0 Blocks 47 to 51
                                                                                                             FEE1                           FEE2
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E       -0.403958800000000000           0.000000000000000000         100.000000000000000000 Owner:0xa00A
+         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E       -0.404039120000000000           0.000000000000000000         100.000000000000000000 Owner:0xa00A
                                                                                          1000.000000000000000000       10000.000000000000000000
          1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433        0.000000000000000000           0.000000000000000000           0.000000000000000000 User1:0xa11A
                                                                                             0.000000000000000000           0.000000000000000000
@@ -732,7 +732,7 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
          # Account                                             EtherBalanceChange                            OGD                           FEE0 Blocks 47 to 61
                                                                                                             FEE1                           FEE2
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E       -0.464943600000000000           0.000000000000000000         100.000000000000000000 Owner:0xa00A
+         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E       -0.465023920000000000           0.000000000000000000         100.000000000000000000 Owner:0xa00A
                                                                                          1000.000000000000000000       10000.000000000000000000
          1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433        0.000000000000000000       10000.000000000000000000           0.000000000000000000 User1:0xa11A
                                                                                             0.000000000000000000           0.000000000000000000
@@ -777,7 +777,7 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
          # Account                                             EtherBalanceChange                            OGD                           FEE0 Blocks 47 to 63
                                                                                                             FEE1                           FEE2
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E      -10.476745040000000000           0.000000000000000000           0.000000000000000000 Owner:0xa00A
+         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E      -10.476825360000000000           0.000000000000000000           0.000000000000000000 Owner:0xa00A
                                                                                          1000.000000000000000000       10000.000000000000000000
          1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433        0.000000000000000000       10000.000000000000000000           0.000000000000000000 User1:0xa11A
                                                                                             0.000000000000000000           0.000000000000000000
@@ -829,7 +829,7 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
          # Account                                             EtherBalanceChange                            OGD                           FEE0 Blocks 47 to 66
                                                                                                             FEE1                           FEE2
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E      -10.476745040000000000           0.000000000000000000           0.000000000000000000 Owner:0xa00A
+         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E      -10.476825360000000000           0.000000000000000000           0.000000000000000000 Owner:0xa00A
                                                                                          1000.000000000000000000       10000.000000000000000000
          1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433        3.320837333333333333       10000.000000000000000000          33.333333333333333333 User1:0xa11A
                                                                                             0.000000000000000000           0.000000000000000000
@@ -864,8 +864,8 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         Token 2 symbol: 'FEE1', name: 'Fee1', decimals: 18, totalSupply: 1000, owner: Owner:0xa00A, address: Fee1Token:0xF393
         Token 3 symbol: 'FEE2', name: 'Fee2', decimals: 18, totalSupply: 10000, owner: Owner:0xa00A, address: Fee2Token:0x103f
         
-      ✓ Workflow #1 - Transfer Test (1734ms)
+      ✓ Workflow #1 - Transfer Test (1603ms)
 
 
-  3 passing (11s)
+  3 passing (12s)
 

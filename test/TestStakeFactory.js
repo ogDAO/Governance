@@ -3,31 +3,35 @@ const { expect } = require("chai");
 const BigNumber = require('bignumber.js');
 const util = require('util');
 
-let StakeFactory;
+let Staking;
+let StakingFactory;
 let OGToken;
 let TestToken;
 let data;
 const verbose = false;
 
-describe("TestStakeFactory", function() {
+describe("TestStakingFactory", function() {
   beforeEach("Setup", async function() {
-    StakeFactory = await ethers.getContractFactory("StakeFactory");
+    Staking = await ethers.getContractFactory("Staking");
+    StakingFactory = await ethers.getContractFactory("StakingFactory");
     OGToken = await ethers.getContractFactory("OGToken");
     TestToken = await ethers.getContractFactory("TestToken");
     data = new Data();
     await data.init();
 
-    console.log("        --- Setup 1 - Deploy OGToken, FEE0, StakeFactory ---");
-    const setup1 = [];
-    setup1.push(OGToken.deploy("OG", "Optino Governance", 18, data.owner, new BigNumber("0").shiftedBy(18).toFixed(0)));
-    setup1.push(TestToken.deploy("FEE0", "Fee0", 18, data.owner, new BigNumber("100").shiftedBy(18).toFixed(0)));
-    setup1.push(StakeFactory.deploy());
-    const [ogToken, fee0Token, stakeFactory] = await Promise.all(setup1);
-    await data.setStakeFactoryData(ogToken, fee0Token, stakeFactory);
+    console.log("        --- Setup 1 - Deploy OGToken, FEE0, StakingFactory ---");
+    const setup1a = [];
+    setup1a.push(OGToken.deploy("OG", "Optino Governance", 18, data.owner, new BigNumber("0").shiftedBy(18).toFixed(0)));
+    setup1a.push(TestToken.deploy("FEE0", "Fee0", 18, data.owner, new BigNumber("100").shiftedBy(18).toFixed(0)));
+    const [ogToken, fee0Token] = await Promise.all(setup1a);
+    const setup1b = [];
+    setup1b.push(StakingFactory.deploy(ogToken.address));
+    const [stakingFactory] = await Promise.all(setup1b);
+    await data.setStakingFactoryData(ogToken, fee0Token, stakingFactory);
 
     await data.printTxData("ogTokenTx", ogToken.deployTransaction);
     await data.printTxData("fee0TokenTx", fee0Token.deployTransaction);
-    await data.printTxData("stakeFactoryTx", stakeFactory.deployTransaction);
+    await data.printTxData("stakingFactoryTx", stakingFactory.deployTransaction);
     // await data.printBalances();
 
     await console.log("        --- Setup 2 - OGToken mint(...) permissioning ---");
@@ -41,7 +45,7 @@ describe("TestStakeFactory", function() {
     console.log("");
   });
 
-  describe("TestStakeFactory - Workflow #0", function() {
+  describe("TestStakingFactory - Workflow #0", function() {
     it("Workflow #0", async function() {
       console.log("        --- Test 1 - Mint 10,000 OGD tokens for User{1..3}; Owner approve 100 FEE for OGToken to spend ---");
       const test1 = [];
@@ -49,9 +53,9 @@ describe("TestStakeFactory", function() {
       test1.push(data.ogToken.mint(data.user1, ogTokens.toFixed(0)));
       test1.push(data.ogToken.mint(data.user2, ogTokens.toFixed(0)));
       test1.push(data.ogToken.mint(data.user3, ogTokens.toFixed(0)));
-      test1.push(data.ogToken.approve(data.stakeFactory.address, ogTokens.toFixed(0)));
-      test1.push(data.ogToken.approve(data.stakeFactory.address, ogTokens.toFixed(0)));
-      test1.push(data.ogToken.approve(data.stakeFactory.address, ogTokens.toFixed(0)));
+      test1.push(data.ogToken.connect(data.user1Signer).approve(data.stakingFactory.address, ogTokens.toFixed(0)));
+      test1.push(data.ogToken.connect(data.user2Signer).approve(data.stakingFactory.address, ogTokens.toFixed(0)));
+      test1.push(data.ogToken.connect(data.user3Signer).approve(data.stakingFactory.address, ogTokens.toFixed(0)));
       const [mint1, mint2, mint3, approve1, approve2, approve3] = await Promise.all(test1);
       await data.printTxData("mint1", mint1);
       await data.printTxData("mint2", mint2);
@@ -61,16 +65,22 @@ describe("TestStakeFactory", function() {
       await data.printTxData("approve3", approve3);
       await data.printBalances();
 
-      console.log("        --- Test 2 - StakeFactory.createClone() ---");
+      console.log("        --- Test 2 - StakingFactory.createClone() ---");
       const test2 = [];
-      test2.push(data.stakeFactory.createClone());
-      const [createClone1] = await Promise.all(test2);
-      await data.printTxData("createClone1", createClone1);
+      const ogTokensToStake = new BigNumber("0.123456789123456789").shiftedBy(18);
+      test2.push(data.stakingFactory.connect(data.user1Signer).addStakingForToken(ogTokensToStake.toFixed(0), data.fee0Token.address, "TEST"));
+      const [addStake1] = await Promise.all(test2);
+      const stakingAddress = await data.stakingFactory.getStakingByIndex(0);
+      // console.log("        stakingAddress: " + stakingAddress[1]);
+      const staking = Staking.attach(stakingAddress[1]);
+      await data.addStakingData(staking);
+
+      await data.printTxData("addStake1", addStake1);
       await data.printBalances();
     });
   });
 
-  // describe("TestStakeFactory - Workflow #0", function() {
+  // describe("TestStakingFactory - Workflow #0", function() {
   //   it("Workflow #0", async function() {
   //     console.log("        --- Test 1 - OGDToken.addDividendTokens for ETH and FEE0, OGDToken mint(...) permissioning ---");
   //     const test1 = [];
@@ -197,7 +207,7 @@ describe("TestStakeFactory", function() {
   //   });
   // });
 
-  // describe("TestStakeFactory - Workflow #1 - Transfer Test", function() {
+  // describe("TestStakingFactory - Workflow #1 - Transfer Test", function() {
   //   it("Workflow #1 - Transfer Test", async function() {
   //     console.log("        --- Test 1 - OGDToken.addDividendTokens for ETH and FEE0, OGDToken mint(...) permissioning ---");
   //     const test1 = [];
@@ -266,7 +276,7 @@ describe("TestStakeFactory", function() {
   //   });
   // });
 
-  // describe("TestStakeFactory - Workflow #2 - address(0) with balance", function() {
+  // describe("TestStakingFactory - Workflow #2 - address(0) with balance", function() {
   //   it("Workflow #1 - Transfer Test", async function() {
   //     console.log("        --- Test 1 - OGDToken.addDividendTokens for ETH and FEE0, OGDToken mint(...) permissioning ---");
   //     const test1 = [];
