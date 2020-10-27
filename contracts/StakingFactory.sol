@@ -16,6 +16,8 @@ contract StakingFactory is CloneFactory {
     mapping(bytes32 => Staking) public stakings;
     bytes32[] public stakingsIndex;
 
+    event StakingCreated(bytes32 indexed key, Staking indexed staking, uint tokens);
+
     constructor(OGTokenInterface _ogToken) {
         ogToken = _ogToken;
         stakingTemplate = new Staking();
@@ -30,8 +32,8 @@ contract StakingFactory is CloneFactory {
         return stakingsIndex.length;
     }
 
-    function addStakingForToken(uint tokens, address tokenAddress, string memory name) external returns (Staking staking) {
-        return _staking(tokens, 1, [tokenAddress, address(0), address(0), address(0)], [uint(0), uint(0), uint(0), uint(0), uint(0), uint(0)], [name, "", "", ""]);
+    function addStakingForToken(uint tokens, uint duration, address tokenAddress, string memory name) external returns (Staking staking) {
+        return _staking(tokens, duration, 1, [tokenAddress, address(0), address(0), address(0)], [uint(0), uint(0), uint(0), uint(0), uint(0), uint(0)], [name, "", "", ""]);
         // bytes32 stakingKey = keccak256(abi.encodePacked(tokenAddress, name));
         // StakeInfo memory stakeInfo = stakeInfoData[stakingKey];
         // if (stakeInfo.dataType == 0) {
@@ -42,8 +44,7 @@ contract StakingFactory is CloneFactory {
         // _addStake(tokens, stakingKey);
     }
 
-    event StakingCreated(bytes32 indexed key, Staking indexed staking, uint tokens);
-    function _staking(uint tokens, uint dataType, address[4] memory addresses, uint[6] memory uints, string[4] memory strings) internal returns (Staking staking) {
+    function _staking(uint tokens, uint duration, uint dataType, address[4] memory addresses, uint[6] memory uints, string[4] memory strings) internal returns (Staking staking) {
         bytes32 key = keccak256(abi.encodePacked(dataType, addresses, uints, strings[0], strings[1], strings[2], strings[3]));
         staking = stakings[key];
         if (address(staking) == address(0)) {
@@ -54,6 +55,7 @@ contract StakingFactory is CloneFactory {
         }
         require(ogToken.transferFrom(msg.sender, address(staking), tokens), "OG transferFrom failed");
         emit StakingCreated(key, staking, tokens);
+        staking.stakeThroughFactory(msg.sender, tokens, duration);
     }
 
 

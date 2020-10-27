@@ -68,14 +68,21 @@ describe("TestStakingFactory", function() {
       console.log("        --- Test 2 - StakingFactory.createClone() ---");
       const test2 = [];
       const ogTokensToStake = new BigNumber("0.123456789123456789").shiftedBy(18);
-      test2.push(data.stakingFactory.connect(data.user1Signer).addStakingForToken(ogTokensToStake.toFixed(0), data.fee0Token.address, "TEST"));
-      const [addStake1] = await Promise.all(test2);
-      const stakingAddress = await data.stakingFactory.getStakingByIndex(0);
-      // console.log("        stakingAddress: " + stakingAddress[1]);
-      const staking = Staking.attach(stakingAddress[1]);
-      await data.addStakingData(staking);
-
+      const duration  = 5;
+      test2.push(data.stakingFactory.connect(data.user1Signer).addStakingForToken(ogTokensToStake.toFixed(0), duration, data.fee0Token.address, "FEE0Token"));
+      test2.push(data.stakingFactory.connect(data.user2Signer).addStakingForToken(ogTokensToStake.toFixed(0), duration, data.fee0Token.address, "FEE0Token"));
+      test2.push(data.stakingFactory.connect(data.user3Signer).addStakingForToken(ogTokensToStake.toFixed(0), duration, data.ogToken.address, "OGToken"));
+      const [addStake1, addStake2, addStake3] = await Promise.all(test2);
+      const stakingsLength = await data.stakingFactory.stakingsLength();
+      console.log("        - stakingsLength         : " + stakingsLength);
+      for (let j = 0; j < stakingsLength; j++) {
+        const stakingAddress = await data.stakingFactory.getStakingByIndex(j);
+        const staking = Staking.attach(stakingAddress[1]);
+        await data.addStakingData(staking);
+      }
       await data.printTxData("addStake1", addStake1);
+      await data.printTxData("addStake2", addStake2);
+      await data.printTxData("addStake3", addStake3);
       await data.printBalances();
     });
   });
