@@ -49,11 +49,11 @@ describe("TestOGDToken", function() {
       }
 
       console.log("        --- Test 2 - Mint 10,000 OGD tokens for User{1..3}; Owner approve 100 FEE for OGToken to spend ---");
-      const test2 = [];
       const ogdTokens = new BigNumber("10000").shiftedBy(18);
       const approveFee0Tokens = new BigNumber("100").shiftedBy(18);
       const approveFee1Tokens = new BigNumber("1000").shiftedBy(18);
       const approveFee2Tokens = new BigNumber("10000").shiftedBy(18);
+      const test2 = [];
       test2.push(data.ogdToken.mint(data.user1, ogdTokens.toFixed(0)));
       test2.push(data.ogdToken.mint(data.user2, ogdTokens.toFixed(0)));
       test2.push(data.ogdToken.mint(data.user3, ogdTokens.toFixed(0)));
@@ -70,9 +70,9 @@ describe("TestOGDToken", function() {
       await data.printBalances();
 
       console.log("        --- Test 3 - Owner deposits dividends of 100 FEE0 and 10 ETH ---");
-      const test3 = [];
       const depositFee0Tokens = new BigNumber("100").shiftedBy(18);
       const depositFeeETH = new BigNumber("10").shiftedBy(18);
+      const test3 = [];
       test3.push(data.ogdToken.depositDividend(data.fee0Token.address, depositFee0Tokens.toFixed(0)));
       test3.push(data.ogdToken.depositDividend(ZERO_ADDRESS, depositFeeETH.toFixed(0), { value: depositFeeETH.toFixed(0) }));
       const [depositDividendFee0, depositDividendETH0] = await Promise.all(test3);
@@ -117,9 +117,9 @@ describe("TestOGDToken", function() {
       await data.printBalances();
 
       console.log("        --- Test 8 - Owner deposits dividends of 1,000 FEE1 and 10,000 FEE2 ---");
-      const test8 = [];
       const depositFee1Tokens = new BigNumber("1000").shiftedBy(18);
       const depositFee2Tokens = new BigNumber("10000").shiftedBy(18);
+      const test8 = [];
       test8.push(data.ogdToken.depositDividend(data.fee1Token.address, depositFee1Tokens.toFixed(0)));
       test8.push(data.ogdToken.depositDividend(data.fee2Token.address, depositFee2Tokens.toFixed(0)));
       const [depositDividendFee1, depositDividendFee2] = await Promise.all(test8);
@@ -177,11 +177,11 @@ describe("TestOGDToken", function() {
 
       // console.log("        --- Setup 3 - Mint 10,000 OGD tokens for User{1..3}; Owner approve 100 FEE for OGToken to spend ---");
       console.log("        --- Test 2 - Mint 10,000 OGD tokens for User{1,2}; Owner approve 100 FEE for OGToken to spend ---");
-      const test2 = [];
       const ogdTokens = new BigNumber("10000").shiftedBy(18);
       const approveFee0Tokens = new BigNumber("100").shiftedBy(18);
       const approveFee1Tokens = new BigNumber("1000").shiftedBy(18);
       const approveFee2Tokens = new BigNumber("10000").shiftedBy(18);
+      const test2 = [];
       test2.push(data.ogdToken.mint(data.user1, ogdTokens.toFixed(0)));
       test2.push(data.ogdToken.mint(data.user2, ogdTokens.toFixed(0)));
       // test2.push(data.ogdToken.mint(data.user3, new BigNumber("0").shiftedBy(18).toFixed(0)));
@@ -198,9 +198,9 @@ describe("TestOGDToken", function() {
       await data.printBalances();
 
       console.log("        --- Test 3 - Owner deposits dividends of 100 FEE0 and 10 ETH ---");
-      const test3 = [];
       const depositFee0Tokens = new BigNumber("100").shiftedBy(18);
       const depositFeeETH = new BigNumber("10").shiftedBy(18);
+      const test3 = [];
       test3.push(data.ogdToken.depositDividend(data.fee0Token.address, depositFee0Tokens.toFixed(0)));
       test3.push(data.ogdToken.depositDividend(ZERO_ADDRESS, depositFeeETH.toFixed(0), { value: depositFeeETH.toFixed(0) }));
       const [depositDividendFee0, depositDividendETH0] = await Promise.all(test3);
@@ -245,11 +245,11 @@ describe("TestOGDToken", function() {
       }
 
       console.log("        --- Test 2 - Mint 10,000 OGD tokens for User{1,2,3} and address(0); Owner approve 100 FEE for OGToken to spend ---");
-      const test2 = [];
       const ogdTokens = new BigNumber("10000").shiftedBy(18);
       const approveFee0Tokens = new BigNumber("100").shiftedBy(18);
       const approveFee1Tokens = new BigNumber("1000").shiftedBy(18);
       const approveFee2Tokens = new BigNumber("10000").shiftedBy(18);
+      const test2 = [];
       test2.push(data.ogdToken.mint(data.user1, ogdTokens.toFixed(0)));
       test2.push(data.ogdToken.mint(data.user2, ogdTokens.toFixed(0)));
       test2.push(data.ogdToken.mint(data.user3, ogdTokens.toFixed(0)));
@@ -268,9 +268,9 @@ describe("TestOGDToken", function() {
       await data.printBalances();
 
       console.log("        --- Test 3 - Owner deposits dividends of 100 FEE0 and 10 ETH ---");
-      const test3 = [];
       const depositFee0Tokens = new BigNumber("100").shiftedBy(18);
       const depositFeeETH = new BigNumber("10").shiftedBy(18);
+      const test3 = [];
       test3.push(data.ogdToken.depositDividend(data.fee0Token.address, depositFee0Tokens.toFixed(0)));
       test3.push(data.ogdToken.depositDividend(ZERO_ADDRESS, depositFeeETH.toFixed(0), { value: depositFeeETH.toFixed(0) }));
       const [depositDividendFee0, depositDividendETH0] = await Promise.all(test3);

@@ -48,8 +48,8 @@ describe("TestStakingFactory", function() {
   describe("TestStakingFactory - Workflow #0", function() {
     it("Workflow #0", async function() {
       console.log("        --- Test 1 - Mint 10,000 OGD tokens for User{1..3}; Owner approve 100 FEE for OGToken to spend ---");
-      const test1 = [];
       const ogTokens = new BigNumber("10000").shiftedBy(18);
+      const test1 = [];
       test1.push(data.ogToken.mint(data.user1, ogTokens.toFixed(0)));
       test1.push(data.ogToken.mint(data.user2, ogTokens.toFixed(0)));
       test1.push(data.ogToken.mint(data.user3, ogTokens.toFixed(0)));
@@ -66,9 +66,9 @@ describe("TestStakingFactory", function() {
       await data.printBalances();
 
       console.log("        --- Test 2 - StakingFactory.addStakingForToken() ---");
-      const test2 = [];
       const ogTokensToStake = new BigNumber("1000").shiftedBy(18);
       const duration  = 5;
+      const test2 = [];
       test2.push(data.stakingFactory.connect(data.user1Signer).addStakingForToken(ogTokensToStake.toFixed(0), duration, data.fee0Token.address, "FEE0Token"));
       test2.push(data.stakingFactory.connect(data.user2Signer).addStakingForToken(ogTokensToStake.toFixed(0), duration, data.fee0Token.address, "FEE0Token"));
       test2.push(data.stakingFactory.connect(data.user3Signer).addStakingForToken(ogTokensToStake.toFixed(0), duration, data.ogToken.address, "OGToken"));
@@ -83,6 +83,28 @@ describe("TestStakingFactory", function() {
       await data.printTxData("addStake2", addStake2);
       await data.printTxData("addStake3", addStake3);
       await data.printBalances();
+
+      console.log("        --- Test 2 - unstake() ---");
+      const stakingAddress = await data.stakingFactory.getStakingByIndex(0);
+      const staking = Staking.attach(stakingAddress[1]);
+
+      // const ogTokensToStake = new BigNumber("1000").shiftedBy(18);
+      // const duration  = 5;
+      // const test2 = [];
+      // test2.push(data.stakingFactory.connect(data.user1Signer).addStakingForToken(ogTokensToStake.toFixed(0), duration, data.fee0Token.address, "FEE0Token"));
+      // test2.push(data.stakingFactory.connect(data.user2Signer).addStakingForToken(ogTokensToStake.toFixed(0), duration, data.fee0Token.address, "FEE0Token"));
+      // test2.push(data.stakingFactory.connect(data.user3Signer).addStakingForToken(ogTokensToStake.toFixed(0), duration, data.ogToken.address, "OGToken"));
+      // const [addStake1, addStake2, addStake3] = await Promise.all(test2);
+      // const stakingsLength = await data.stakingFactory.stakingsLength();
+      // for (let j = 0; j < stakingsLength; j++) {
+      //   const stakingAddress = await data.stakingFactory.getStakingByIndex(j);
+      //   const staking = Staking.attach(stakingAddress[1]);
+      //   await data.addStakingData(staking);
+      // }
+      // await data.printTxData("addStake1", addStake1);
+      // await data.printTxData("addStake2", addStake2);
+      // await data.printTxData("addStake3", addStake3);
+      // await data.printBalances();
     });
   });
 

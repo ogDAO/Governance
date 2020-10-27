@@ -318,7 +318,7 @@ class Data {
         console.log("          - stakesLength: " + stakesLength);
         for (let k = 0; k < stakesLength; k++) {
           const stake = await staking.getStakeByIndex(k);
-          console.log("          - stakes      - owner: " + stake.tokenOwner + ", duration: " + stake.stake.duration.toString() + ", end: " + stake.stake.end.toString() + ", tokens: " + new BigNumber(stake.stake.tokens.toString()).shiftedBy(-18));
+          console.log("          - stakes      - owner: " + stake.tokenOwner + ", duration: " + stake.stake_.duration.toString() + ", end: " + stake.stake_.end.toString() + ", index: " + stake.stake_.index.toString() + ", tokens: " + new BigNumber(stake.stake_.tokens.toString()).shiftedBy(-18));
         }
       }
     }

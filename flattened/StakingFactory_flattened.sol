@@ -1721,6 +1721,7 @@ contract Staking is Owned {
     struct Stake {
         uint64 duration;
         uint64 end;
+        uint64 index;
         uint tokens;
     }
 
@@ -1745,36 +1746,41 @@ contract Staking is Owned {
         string2 = stakingInfo.string2;
         string3 = stakingInfo.string3;
     }
-    function getStakeByIndex(uint i) public view returns (address tokenOwner, Stake memory stake) {
+    function getStakeByIndex(uint i) public view returns (address tokenOwner, Stake memory stake_) {
         require(i < stakesIndex.length, "Invalid stakings index");
         tokenOwner = stakesIndex[i];
-        stake = stakes[tokenOwner];
+        stake_ = stakes[tokenOwner];
     }
     function stakesLength() public view returns (uint) {
         return stakesIndex.length;
     }
 
-    function stakeThroughFactory(address tokenOwner, uint tokens, uint duration) public onlyOwner {
-        // console.log("        > StakingFactory -> Staking.stakeThroughFactory(%s, %s, %s)", tokenOwner, tokens, duration);
+    function _stake(address tokenOwner, uint tokens, uint duration) internal {
         require(duration > 0, "Invalid duration");
-        Stake storage stake = stakes[tokenOwner];
-        if (stake.duration == 0) {
-            stakes[tokenOwner] = Stake(uint64(duration), uint64(block.timestamp.add(duration)), tokens);
-            stake = stakes[tokenOwner];
+        Stake storage stake_ = stakes[tokenOwner];
+        if (stake_.duration == 0) {
+            stakes[tokenOwner] = Stake(uint64(duration), uint64(block.timestamp.add(duration)), uint64(stakesIndex.length), tokens);
+            stake_ = stakes[tokenOwner];
             stakesIndex.push(tokenOwner);
-            emit Staked(tokenOwner, tokens, duration, stake.end);
+            emit Staked(tokenOwner, tokens, duration, stake_.end);
         }
+    }
+    function stakeThroughFactory(address tokenOwner, uint tokens, uint duration) public onlyOwner {
+        _stake(tokenOwner, tokens, duration);
+    }
+    function stake(uint tokens, uint duration) public {
+        _stake(msg.sender, tokens, duration);
     }
 
     event Unstaked(address indexed tokenOwner, uint tokens);
     function unstake(uint tokens) public {
-        Stake storage stake = stakes[msg.sender];
-        require(uint(stake.end) > block.timestamp, "Staking period still active");
-        require(tokens >= stake.tokens, "Unsufficient staked tokens");
+        Stake storage stake_ = stakes[msg.sender];
+        require(uint(stake_.end) > block.timestamp, "Staking period still active");
+        require(tokens >= stake_.tokens, "Unsufficient staked tokens");
         if (tokens > 0) {
-            stake.tokens = stake.tokens.sub(tokens);
-            stake.duration = 0;
-            stake.end = uint64(block.timestamp - 1);
+            stake_.tokens = stake_.tokens.sub(tokens);
+            stake_.duration = 0;
+            stake_.end = uint64(block.timestamp - 1);
             emit Unstaked(msg.sender, tokens);
             require(ogToken.transfer(msg.sender, tokens), "OG transfer failed");
         }
