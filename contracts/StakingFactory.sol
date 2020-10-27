@@ -16,7 +16,7 @@ contract StakingFactory is CloneFactory {
     mapping(bytes32 => Staking) public stakings;
     bytes32[] public stakingsIndex;
 
-    event StakingCreated(bytes32 indexed key, Staking indexed staking, uint tokens);
+    event StakingCreated(bytes32 indexed key, Staking indexed staking);
 
     constructor(OGTokenInterface _ogToken) {
         ogToken = _ogToken;
@@ -52,9 +52,9 @@ contract StakingFactory is CloneFactory {
             staking.initStaking(dataType, addresses, uints, strings);
             stakings[key] = staking;
             stakingsIndex.push(key);
+            emit StakingCreated(key, staking);
         }
         require(ogToken.transferFrom(msg.sender, address(staking), tokens), "OG transferFrom failed");
-        emit StakingCreated(key, staking, tokens);
         staking.stakeThroughFactory(msg.sender, tokens, duration);
     }
 

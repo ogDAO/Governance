@@ -61,7 +61,7 @@ contract Staking is Owned {
 
     event Staked(address indexed tokenOwner, uint tokens, uint duration, uint end);
     function stakeThroughFactory(address tokenOwner, uint tokens, uint duration) public onlyOwner {
-        console.log("        > StakingFactory -> Staking.stakeThroughFactory(%s, %s, %s)", tokenOwner, tokens, duration);
+        // console.log("        > StakingFactory -> Staking.stakeThroughFactory(%s, %s, %s)", tokenOwner, tokens, duration);
         require(duration > 0, "Invalid duration");
         Stake storage stake = stakes[tokenOwner];
         if (stake.duration == 0) {
