@@ -183,7 +183,7 @@ describe("TestOptinoGov", function() {
     });
   });
 
-  describe.only("TestOptinoGov - Workflow #1", function() {
+  describe("TestOptinoGov - Workflow #1", function() {
     it("Workflow #1", async function() {
       console.log("        --- Test 1 - User{1..3} commit OGTokens for {1, 1, 1} seconds duration ---");
       const tokensToCommit = new BigNumber("1000").shiftedBy(18);
@@ -258,7 +258,7 @@ describe("TestOptinoGov", function() {
     });
   });
 
-  describe.skip("TestOptinoGov - Workflow #2", function() {
+  describe("TestOptinoGov - Workflow #2", function() {
     it("Workflow #2", async function() {
       console.log("Workflow #2");
     });
