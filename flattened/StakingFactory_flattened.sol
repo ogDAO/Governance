@@ -1731,6 +1731,7 @@ contract Staking is Owned {
     address[] public stakesIndex;
 
     event Staked(address indexed tokenOwner, uint tokens, uint duration, uint end);
+    event Unstaked(address indexed tokenOwner, uint tokens);
 
     constructor() {
     }
@@ -1772,17 +1773,27 @@ contract Staking is Owned {
         _stake(msg.sender, tokens, duration);
     }
 
-    event Unstaked(address indexed tokenOwner, uint tokens);
     function unstake(uint tokens) public {
         Stake storage stake_ = stakes[msg.sender];
-        require(uint(stake_.end) > block.timestamp, "Staking period still active");
+        require(uint(stake_.end) < block.timestamp, "Staking period still active");
         require(tokens >= stake_.tokens, "Unsufficient staked tokens");
         if (tokens > 0) {
             stake_.tokens = stake_.tokens.sub(tokens);
-            stake_.duration = 0;
+            stake_.duration = 1000;
             stake_.end = uint64(block.timestamp - 1);
-            emit Unstaked(msg.sender, tokens);
+            if (stake_.tokens == 0) {
+                uint removedIndex = uint(stake_.index);
+                uint lastIndex = stakesIndex.length - 1;
+                address lastStakeAddress = stakesIndex[lastIndex];
+                stakesIndex[removedIndex] = lastStakeAddress;
+                stakes[lastStakeAddress].index = uint64(removedIndex);
+                delete stakesIndex[lastIndex];
+                if (stakesIndex.length > 0) {
+                    stakesIndex.pop();
+                }
+            }
             require(ogToken.transfer(msg.sender, tokens), "OG transfer failed");
+            emit Unstaked(msg.sender, tokens);
         }
     }
 }

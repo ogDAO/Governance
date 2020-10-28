@@ -29,7 +29,7 @@ contract Staking is Owned {
     struct Stake {
         uint64 duration;
         uint64 end;
-        uint index;
+        uint64 index;
         uint tokens;
     }
 
@@ -68,7 +68,7 @@ contract Staking is Owned {
         require(duration > 0, "Invalid duration");
         Stake storage stake_ = stakes[tokenOwner];
         if (stake_.duration == 0) {
-            stakes[tokenOwner] = Stake(uint64(duration), uint64(block.timestamp.add(duration)), stakesIndex.length, tokens);
+            stakes[tokenOwner] = Stake(uint64(duration), uint64(block.timestamp.add(duration)), uint64(stakesIndex.length), tokens);
             stake_ = stakes[tokenOwner];
             stakesIndex.push(tokenOwner);
             emit Staked(tokenOwner, tokens, duration, stake_.end);
@@ -81,46 +81,25 @@ contract Staking is Owned {
         _stake(msg.sender, tokens, duration);
     }
 
-/*
-    function deactiveBallot(uint256 _id) private {
-        VotingData storage ballot = votingState[_id];
-        uint256 removedIndex = ballot.index;
-        uint256 lastIndex = activeBallots.length - 1;
-        uint256 lastBallotId = activeBallots[lastIndex];
-        // Override the removed ballot with the last one.
-        activeBallots[removedIndex] = lastBallotId;
-        // Update the index of the last validator.
-        votingState[lastBallotId].index = removedIndex;
-        delete activeBallots[lastIndex];
-        if (activeBallots.length > 0) {
-            activeBallots.length--;
-        }
-        activeBallotsLength = activeBallots.length;
-    }
-*/
-
     function unstake(uint tokens) public {
         Stake storage stake_ = stakes[msg.sender];
-        console.log("stake_.end %s, block.timestamp %s", stake_.end, block.timestamp);
         require(uint(stake_.end) < block.timestamp, "Staking period still active");
         require(tokens >= stake_.tokens, "Unsufficient staked tokens");
         if (tokens > 0) {
             stake_.tokens = stake_.tokens.sub(tokens);
-            stake_.duration = 0;
+            stake_.duration = 1000;
             stake_.end = uint64(block.timestamp - 1);
-            // if (stake_.tokens == 0) {
-            //     uint removedIndex = uint(stake_.index);
-            //     uint lastIndex = stakesIndex.length - 1;
-            //     address lastStakeAddress = stakesIndex[lastIndex];
-            //     console.log("removedIndex %s, lastIndex %s, lastStakeAddress %s", removedIndex, lastIndex, lastStakeAddress);
-            //     stakesIndex[removedIndex] = lastStakeAddress;
-            //     stake_.index = uint64(removedIndex);
-            //     console.log("stake_.index %s", stake_.index);
-            //     delete stakesIndex[lastIndex];
-            //     if (stakesIndex.length > 0) {
-            //         stakesIndex.pop();
-            //     }
-            // }
+            if (stake_.tokens == 0) {
+                uint removedIndex = uint(stake_.index);
+                uint lastIndex = stakesIndex.length - 1;
+                address lastStakeAddress = stakesIndex[lastIndex];
+                stakesIndex[removedIndex] = lastStakeAddress;
+                stakes[lastStakeAddress].index = uint64(removedIndex);
+                delete stakesIndex[lastIndex];
+                if (stakesIndex.length > 0) {
+                    stakesIndex.pop();
+                }
+            }
             require(ogToken.transfer(msg.sender, tokens), "OG transfer failed");
             emit Unstaked(msg.sender, tokens);
         }

@@ -105,15 +105,15 @@ $ npx hardhat test test/TestOptinoGov.js > results/TestOptinoGov.txt
         commit1 - gasUsed: 248409, fee: 0.01987272, feeUsd: 7.6643119224, @ 80 gwei & 385.67 ETH/USD, 0xd03c209ec9bb328ffe66941c09b7493511a9a1bc9be80490ef1739a3afcb2e64
         + OGToken.Transfer(from: User1:0xa11A, to: OptinoGov:0xBa1F, tokens: 1000)
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User1:0xa11A, tokens: 1000)
-        + OptinoGov.Committed(user: User1:0xa11A, tokens: 1000, balance: 1000, duration: 1, end: 1603834196, delegatee: ETH|null:0x0000, votes: 0.1, rewardPool: 1000000, totalVotes: 0.1)
+        + OptinoGov.Committed(user: User1:0xa11A, tokens: 1000, balance: 1000, duration: 1, end: 1603843337, delegatee: ETH|null:0x0000, votes: 0.1, rewardPool: 1000000, totalVotes: 0.1)
         commit2 - gasUsed: 188409, fee: 0.01507272, feeUsd: 5.8130959224, @ 80 gwei & 385.67 ETH/USD, 0xbb80f9b5fe4453939a58cafb5e2f364f82236999bcd9a308b4f01281c3c86ab5
         + OGToken.Transfer(from: User2:0xa22A, to: OptinoGov:0xBa1F, tokens: 1000)
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User2:0xa22A, tokens: 1000)
-        + OptinoGov.Committed(user: User2:0xa22A, tokens: 1000, balance: 1000, duration: 1, end: 1603834197, delegatee: ETH|null:0x0000, votes: 0.1, rewardPool: 1000000, totalVotes: 0.2)
+        + OptinoGov.Committed(user: User2:0xa22A, tokens: 1000, balance: 1000, duration: 1, end: 1603843338, delegatee: ETH|null:0x0000, votes: 0.1, rewardPool: 1000000, totalVotes: 0.2)
         commit3 - gasUsed: 188409, fee: 0.01507272, feeUsd: 5.8130959224, @ 80 gwei & 385.67 ETH/USD, 0x8a61778426c14116dcf5d25e6f68fedaf4422d0dea57bf650fd7a02541e2f016
         + OGToken.Transfer(from: User3:0xa33a, to: OptinoGov:0xBa1F, tokens: 1000)
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User3:0xa33a, tokens: 1000)
-        + OptinoGov.Committed(user: User3:0xa33a, tokens: 1000, balance: 1000, duration: 1, end: 1603834198, delegatee: ETH|null:0x0000, votes: 0.1, rewardPool: 1000000, totalVotes: 0.3)
+        + OptinoGov.Committed(user: User3:0xa33a, tokens: 1000, balance: 1000, duration: 1, end: 1603843339, delegatee: ETH|null:0x0000, votes: 0.1, rewardPool: 1000000, totalVotes: 0.3)
         
          # Account                                             EtherBalanceChange                             OG                            OGD Blocks 0 to 21
                                                                                                             FEE0                            ???
@@ -168,9 +168,9 @@ $ npx hardhat test test/TestOptinoGov.js > results/TestOptinoGov.txt
         - rewardPool           : 1000000000000000000000000 = 1000000
         - totalVotes           : 300000000000000000 = 0.3
         - proposalCount        : 0
-        - commitment           : 1 User1:0xa11A duration: 1, end: 1603834196, tokens: 1000, votes: 0.1, staked: 0, delegatedVotes: 0, delegatee: ETH|null:0x0000
-        - commitment           : 2 User2:0xa22A duration: 1, end: 1603834197, tokens: 1000, votes: 0.1, staked: 0, delegatedVotes: 0, delegatee: ETH|null:0x0000
-        - commitment           : 3 User3:0xa33a duration: 1, end: 1603834198, tokens: 1000, votes: 0.1, staked: 0, delegatedVotes: 0, delegatee: ETH|null:0x0000
+        - commitment           : 1 User1:0xa11A duration: 1, end: 1603843337, tokens: 1000, votes: 0.1, staked: 0, delegatedVotes: 0, delegatee: ETH|null:0x0000
+        - commitment           : 2 User2:0xa22A duration: 1, end: 1603843338, tokens: 1000, votes: 0.1, staked: 0, delegatedVotes: 0, delegatee: ETH|null:0x0000
+        - commitment           : 3 User3:0xa33a duration: 1, end: 1603843339, tokens: 1000, votes: 0.1, staked: 0, delegatedVotes: 0, delegatee: ETH|null:0x0000
         
         --- Test 2 - User{1..3} approve 2,000 OGDTokens to OptinoGov ---
         approve1 - gasUsed: 43990, fee: 0.0035192, feeUsd: 1.357249864, @ 80 gwei & 385.67 ETH/USD, 0x96384fffb21641745c2eacbb3910695a2a67d08a62093879d7798a8d4edbba24
@@ -235,9 +235,9 @@ $ npx hardhat test test/TestOptinoGov.js > results/TestOptinoGov.txt
         - rewardPool           : 1000000000000000000000000 = 1000000
         - totalVotes           : 300000000000000000 = 0.3
         - proposalCount        : 0
-        - commitment           : 1 User1:0xa11A duration: 1, end: 1603834196, tokens: 1000, votes: 0.1, staked: 0, delegatedVotes: 0, delegatee: ETH|null:0x0000
-        - commitment           : 2 User2:0xa22A duration: 1, end: 1603834197, tokens: 1000, votes: 0.1, staked: 0, delegatedVotes: 0, delegatee: ETH|null:0x0000
-        - commitment           : 3 User3:0xa33a duration: 1, end: 1603834198, tokens: 1000, votes: 0.1, staked: 0, delegatedVotes: 0, delegatee: ETH|null:0x0000
+        - commitment           : 1 User1:0xa11A duration: 1, end: 1603843337, tokens: 1000, votes: 0.1, staked: 0, delegatedVotes: 0, delegatee: ETH|null:0x0000
+        - commitment           : 2 User2:0xa22A duration: 1, end: 1603843338, tokens: 1000, votes: 0.1, staked: 0, delegatedVotes: 0, delegatee: ETH|null:0x0000
+        - commitment           : 3 User3:0xa33a duration: 1, end: 1603843339, tokens: 1000, votes: 0.1, staked: 0, delegatedVotes: 0, delegatee: ETH|null:0x0000
         
         --- Test 3 - Owner deposits dividends of 10 ETH and 100 FEE ---
         depositDividendFee1 - gasUsed: 70125, fee: 0.00561, feeUsd: 2.1636087, @ 80 gwei & 385.67 ETH/USD, 0x18aa746ba320545b23d9f42b286192c0ac71727665d601cce7466194464aa401
@@ -299,9 +299,9 @@ $ npx hardhat test test/TestOptinoGov.js > results/TestOptinoGov.txt
         - rewardPool           : 1000000000000000000000000 = 1000000
         - totalVotes           : 300000000000000000 = 0.3
         - proposalCount        : 0
-        - commitment           : 1 User1:0xa11A duration: 1, end: 1603834196, tokens: 1000, votes: 0.1, staked: 0, delegatedVotes: 0, delegatee: ETH|null:0x0000
-        - commitment           : 2 User2:0xa22A duration: 1, end: 1603834197, tokens: 1000, votes: 0.1, staked: 0, delegatedVotes: 0, delegatee: ETH|null:0x0000
-        - commitment           : 3 User3:0xa33a duration: 1, end: 1603834198, tokens: 1000, votes: 0.1, staked: 0, delegatedVotes: 0, delegatee: ETH|null:0x0000
+        - commitment           : 1 User1:0xa11A duration: 1, end: 1603843337, tokens: 1000, votes: 0.1, staked: 0, delegatedVotes: 0, delegatee: ETH|null:0x0000
+        - commitment           : 2 User2:0xa22A duration: 1, end: 1603843338, tokens: 1000, votes: 0.1, staked: 0, delegatedVotes: 0, delegatee: ETH|null:0x0000
+        - commitment           : 3 User3:0xa33a duration: 1, end: 1603843339, tokens: 1000, votes: 0.1, staked: 0, delegatedVotes: 0, delegatee: ETH|null:0x0000
         
         --- Test 4 - User{1..3} uncommit OGTokens ---
         uncommit1 - gasUsed: 384370, fee: 0.0307496, feeUsd: 11.859198232, @ 80 gwei & 385.67 ETH/USD, 0x4dd3c5f36efea28912fd699aa2ee0b57e27e3ed4b07b592e00fac8a74b568460
@@ -311,7 +311,7 @@ $ npx hardhat test test/TestOptinoGov.js > results/TestOptinoGov.txt
         + OGDToken.Transfer(from: User1:0xa11A, to: ETH|null:0x0000, tokens: 100)
         + OGToken.Transfer(from: OptinoGov:0xBa1F, to: User1:0xa11A, tokens: 100)
         + OGToken.Transfer(from: ETH|null:0x0000, to: User1:0xa11A, tokens: 0.45)
-        + OptinoGov.Uncommitted(user: User1:0xa11A, tokens: 100, balance: 900, duration: 1, end: 1603834205, votes: 0.09, rewardPool: 999999.55, totalVotes: 0.29)
+        + OptinoGov.Uncommitted(user: User1:0xa11A, tokens: 100, balance: 900, duration: 1, end: 1603843346, votes: 0.09, rewardPool: 999999.55, totalVotes: 0.29)
         uncommit2 - gasUsed: 316042, fee: 0.02528336, feeUsd: 9.7510334512, @ 80 gwei & 385.67 ETH/USD, 0x574947fb276484f75cf786b65a1a873b1458d7e22e1c96e27d7b14965a595c28
         + OGDToken.DividendWithdrawn(account: User2:0xa22A, destination: User2:0xa22A, token: ETH|null:0x0000, tokens: 3.333333333333333333)
         + Fee0Token.Transfer(from: OGDToken:0x0f4e, to: User2:0xa22A, tokens: 33.333333333333333333)
@@ -319,7 +319,7 @@ $ npx hardhat test test/TestOptinoGov.js > results/TestOptinoGov.txt
         + OGDToken.Transfer(from: User2:0xa22A, to: ETH|null:0x0000, tokens: 100)
         + OGToken.Transfer(from: OptinoGov:0xBa1F, to: User2:0xa22A, tokens: 100)
         + OGToken.Transfer(from: ETH|null:0x0000, to: User2:0xa22A, tokens: 0.465517241379310344)
-        + OptinoGov.Uncommitted(user: User2:0xa22A, tokens: 100, balance: 900, duration: 1, end: 1603834206, votes: 0.09, rewardPool: 999999.084482758620689656, totalVotes: 0.28)
+        + OptinoGov.Uncommitted(user: User2:0xa22A, tokens: 100, balance: 900, duration: 1, end: 1603843347, votes: 0.09, rewardPool: 999999.084482758620689656, totalVotes: 0.28)
         uncommit3 - gasUsed: 316042, fee: 0.02528336, feeUsd: 9.7510334512, @ 80 gwei & 385.67 ETH/USD, 0xff8aba78d545e17c3802fca3411363b788eae07d7e65fc2fe72f197f118fda3c
         + OGDToken.DividendWithdrawn(account: User3:0xa33a, destination: User3:0xa33a, token: ETH|null:0x0000, tokens: 3.333333333333333333)
         + Fee0Token.Transfer(from: OGDToken:0x0f4e, to: User3:0xa33a, tokens: 33.333333333333333333)
@@ -327,7 +327,7 @@ $ npx hardhat test test/TestOptinoGov.js > results/TestOptinoGov.txt
         + OGDToken.Transfer(from: User3:0xa33a, to: ETH|null:0x0000, tokens: 100)
         + OGToken.Transfer(from: OptinoGov:0xBa1F, to: User3:0xa33a, tokens: 100)
         + OGToken.Transfer(from: ETH|null:0x0000, to: User3:0xa33a, tokens: 0.482142857142857142)
-        + OptinoGov.Uncommitted(user: User3:0xa33a, tokens: 100, balance: 900, duration: 1, end: 1603834207, votes: 0.09, rewardPool: 999998.602339901477832514, totalVotes: 0.27)
+        + OptinoGov.Uncommitted(user: User3:0xa33a, tokens: 100, balance: 900, duration: 1, end: 1603843348, votes: 0.09, rewardPool: 999998.602339901477832514, totalVotes: 0.27)
         
          # Account                                             EtherBalanceChange                             OG                            OGD Blocks 0 to 30
                                                                                                             FEE0                            ???
@@ -382,14 +382,14 @@ $ npx hardhat test test/TestOptinoGov.js > results/TestOptinoGov.txt
         - rewardPool           : 999998602339901477832514 = 999998.602339901477832514
         - totalVotes           : 270000000000000000 = 0.27
         - proposalCount        : 0
-        - commitment           : 1 User1:0xa11A duration: 1, end: 1603834205, tokens: 900, votes: 0.09, staked: 0, delegatedVotes: 0, delegatee: ETH|null:0x0000
-        - commitment           : 2 User2:0xa22A duration: 1, end: 1603834206, tokens: 900, votes: 0.09, staked: 0, delegatedVotes: 0, delegatee: ETH|null:0x0000
-        - commitment           : 3 User3:0xa33a duration: 1, end: 1603834207, tokens: 900, votes: 0.09, staked: 0, delegatedVotes: 0, delegatee: ETH|null:0x0000
+        - commitment           : 1 User1:0xa11A duration: 1, end: 1603843346, tokens: 900, votes: 0.09, staked: 0, delegatedVotes: 0, delegatee: ETH|null:0x0000
+        - commitment           : 2 User2:0xa22A duration: 1, end: 1603843347, tokens: 900, votes: 0.09, staked: 0, delegatedVotes: 0, delegatee: ETH|null:0x0000
+        - commitment           : 3 User3:0xa33a duration: 1, end: 1603843348, tokens: 900, votes: 0.09, staked: 0, delegatedVotes: 0, delegatee: ETH|null:0x0000
         
         --- Test Completed ---
 
-      ✓ Workflow #1 (2620ms)
+      ✓ Workflow #1 (2362ms)
 
 
-  1 passing (6s)
+  1 passing (5s)
 
