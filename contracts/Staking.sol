@@ -9,7 +9,7 @@ import "./OGTokenInterface.sol";
 import "./Owned.sol";
 
 // SPDX-License-Identifier: GPLv2
-contract Staking is Owned {
+contract Staking is ERC20, Owned {
     using SafeMath for uint;
 
     // Token { dataType 1, address tokenAddress }
@@ -30,7 +30,7 @@ contract Staking is Owned {
         uint64 duration;
         uint64 end;
         uint64 index;
-        uint tokens;
+        uint balance;
     }
 
     OGTokenInterface public ogToken;
@@ -38,8 +38,9 @@ contract Staking is Owned {
     mapping(address => Stake) public stakes;
     address[] public stakesIndex;
     uint public weightedEndNumerator;
-    uint public totalSupply;
     uint public slashingFactor;
+    uint public _totalSupply;
+    mapping(address => mapping(address => uint)) allowed;
 
     event Staked(address indexed tokenOwner, uint tokens, uint duration, uint end);
     event Unstaked(address indexed tokenOwner, uint tokens, uint tokensWithSlashingFactor);
@@ -52,6 +53,48 @@ contract Staking is Owned {
         ogToken = _ogToken;
         stakingInfo = StakingInfo(dataType, addresses, uints, strings[0], strings[1], strings[2], strings[3]);
     }
+
+    function symbol() override external view returns (string memory) {
+        return stakingInfo.string0;
+    }
+    function name() override external view returns (string memory) {
+        return stakingInfo.string1;
+    }
+    function decimals() override external view returns (uint8) {
+        return 18;
+    }
+    function totalSupply() override external view returns (uint) {
+        return _totalSupply.sub(stakes[address(0)].balance);
+    }
+    function balanceOf(address tokenOwner) override external view returns (uint balance) {
+        return stakes[tokenOwner].balance;
+    }
+    function transfer(address to, uint tokens) override external returns (bool success) {
+        // require()
+        stakes[msg.sender].balance = stakes[msg.sender].balance.sub(tokens);
+        stakes[to].balance = stakes[to].balance.add(tokens);
+        emit Transfer(msg.sender, to, tokens);
+        return true;
+    }
+    function approve(address spender, uint tokens) override external returns (bool success) {
+        allowed[msg.sender][spender] = tokens;
+        emit Approval(msg.sender, spender, tokens);
+        return true;
+    }
+    function transferFrom(address from, address to, uint tokens) override external returns (bool success) {
+        // require()
+        stakes[from].balance = stakes[from].balance.sub(tokens);
+        allowed[from][msg.sender] = allowed[from][msg.sender].sub(tokens);
+        stakes[to].balance = stakes[to].balance.add(tokens);
+        emit Transfer(from, to, tokens);
+        return true;
+    }
+    function allowance(address tokenOwner, address spender) override external view returns (uint remaining) {
+        return allowed[tokenOwner][spender];
+    }
+
+
+
     function getStakingInfo() public view returns (uint dataType, address[4] memory addresses, uint[6] memory uints, string memory string0, string memory string1, string memory string2, string memory string3) {
         (dataType, addresses, uints) = (stakingInfo.dataType, stakingInfo.addresses, stakingInfo.uints);
         string0 = stakingInfo.string0;
@@ -68,8 +111,8 @@ contract Staking is Owned {
         return stakesIndex.length;
     }
     function weightedEnd() public view returns (uint) {
-        if (totalSupply > 0) {
-            return weightedEndNumerator.div(totalSupply);
+        if (_totalSupply > 0) {
+            return weightedEndNumerator.div(_totalSupply);
         }
         return 0;
     }
@@ -85,14 +128,14 @@ contract Staking is Owned {
             emit Staked(tokenOwner, tokens, duration, stake_.end);
         } else {
             require(block.timestamp + duration >= stake_.end, "Cannot shorten duration");
-            weightedEndNumerator = weightedEndNumerator.sub(uint(stake_.end).mul(stake_.tokens));
-            totalSupply = totalSupply.sub(stake_.tokens);
+            weightedEndNumerator = weightedEndNumerator.sub(uint(stake_.end).mul(stake_.balance));
+            _totalSupply = _totalSupply.sub(stake_.balance);
             stake_.duration = uint64(duration);
             stake_.end = uint64(block.timestamp.add(duration));
-            stake_.tokens = stake_.tokens.add(tokens);
+            stake_.balance = stake_.balance.add(tokens);
         }
-        weightedEndNumerator = weightedEndNumerator.add(uint(stake_.end).mul(stake_.tokens));
-        totalSupply = totalSupply.add(stake_.tokens);
+        weightedEndNumerator = weightedEndNumerator.add(uint(stake_.end).mul(stake_.balance));
+        _totalSupply = _totalSupply.add(stake_.balance);
     }
     function stakeThroughFactory(address tokenOwner, uint tokens, uint duration) public onlyOwner {
         _stake(tokenOwner, tokens, duration);
@@ -105,12 +148,12 @@ contract Staking is Owned {
     function unstake(uint tokens) public {
         Stake storage stake_ = stakes[msg.sender];
         require(uint(stake_.end) < block.timestamp, "Staking period still active");
-        require(tokens <= stake_.tokens, "Unsufficient staked tokens");
+        require(tokens <= stake_.balance, "Unsufficient staked balance");
         if (tokens > 0) {
-            weightedEndNumerator = weightedEndNumerator.sub(uint(stake_.end).mul(stake_.tokens));
-            totalSupply = totalSupply.sub(stake_.tokens);
-            stake_.tokens = stake_.tokens.sub(tokens);
-            if (stake_.tokens == 0) {
+            weightedEndNumerator = weightedEndNumerator.sub(uint(stake_.end).mul(stake_.balance));
+            _totalSupply = _totalSupply.sub(stake_.balance);
+            stake_.balance = stake_.balance.sub(tokens);
+            if (stake_.balance == 0) {
                 uint removedIndex = uint(stake_.index);
                 uint lastIndex = stakesIndex.length - 1;
                 address lastStakeAddress = stakesIndex[lastIndex];
@@ -121,8 +164,8 @@ contract Staking is Owned {
                     stakesIndex.pop();
                 }
             } else {
-                weightedEndNumerator = weightedEndNumerator.add(uint(stake_.end).mul(stake_.tokens));
-                totalSupply = totalSupply.add(stake_.tokens);
+                weightedEndNumerator = weightedEndNumerator.add(uint(stake_.end).mul(stake_.balance));
+                _totalSupply = _totalSupply.add(stake_.balance);
             }
             uint tokensWithSlashingFactor = tokens.sub(tokens.mul(slashingFactor).div(10**18));
             require(ogToken.transfer(msg.sender, tokensWithSlashingFactor), "OG transfer failed");
@@ -134,7 +177,7 @@ contract Staking is Owned {
         require(_slashingFactor <= 10 ** 18, "Cannot slash more than 100%");
         require(slashingFactor == 0, "Cannot slash more than once");
         slashingFactor = _slashingFactor;
-        uint tokensToBurn = totalSupply.mul(slashingFactor).div(10**18);
+        uint tokensToBurn = _totalSupply.mul(slashingFactor).div(10**18);
         require(ogToken.burn(tokensToBurn), "OG burn failed");
         emit Slashed(_slashingFactor, tokensToBurn);
     }
