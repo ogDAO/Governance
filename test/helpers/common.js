@@ -1,6 +1,7 @@
 const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
 const BigNumber = require('bignumber.js');
 const util = require('util');
+const { expect, assert } = require("chai");
 
 class Data {
 
@@ -220,6 +221,17 @@ class Data {
     }
     console.log("        Paused '" + message + "' for " + addSeconds + "s=" + time + " now=" + new Date());
     console.log("        ");
+  }
+
+  async expectException(message, searchString, promise) {
+    try {
+      await promise;
+    } catch (e) {
+      assert(e.toString().indexOf(searchString) >= 0, message + " - '" + searchString + "' not found in error message '" + e.toString() + "'");
+      console.log("        " + message + " - Exception '" + searchString + "' thrown as expected");
+      return;
+    }
+    assert.fail(message + " - Exception '" + searchString + "' was not thrown as expected");
   }
 
   async printTxData(message, tx) {

@@ -214,20 +214,20 @@ describe("TestStakingFactory", function() {
       test1.push(data.ogToken.mint(data.user3, ogTokens.toFixed(0)));
       test1.push(data.ogToken.connect(data.user1Signer).approve(data.stakingFactory.address, ogTokens.toFixed(0)));
       test1.push(data.ogToken.connect(data.user2Signer).approve(data.stakingFactory.address, ogTokens.toFixed(0)));
-      // test1.push(data.ogToken.connect(data.user3Signer).approve(data.stakingFactory.address, ogTokens.toFixed(0)));
-      const [mint1, mint2, mint3, approve1, approve2/*, approve3*/] = await Promise.all(test1);
+      test1.push(data.ogToken.connect(data.user3Signer).approve(data.stakingFactory.address, ogTokens.toFixed(0)));
+      const [mint1, mint2, mint3, approve1, approve2, approve3] = await Promise.all(test1);
       await data.printTxData("mint1", mint1);
       await data.printTxData("mint2", mint2);
       await data.printTxData("mint3", mint3);
       await data.printTxData("approve1", approve1);
       await data.printTxData("approve2", approve2);
-      // await data.printTxData("approve3", approve3);
+      await data.printTxData("approve3", approve3);
       await data.printBalances();
 
       console.log("        --- Test 2 - Stake #1 - StakingFactory.addStakingForToken() ---");
       let ogTokensToStake1 = new BigNumber("1000").shiftedBy(18);
       let ogTokensToStake2 = new BigNumber("2000").shiftedBy(18);
-      let ogTokensToStake3 = new BigNumber("3000").shiftedBy(18);
+      let ogTokensToStake3 = ogTokens.plus(new BigNumber("1").shiftedBy(18));
       let duration1 = 1000;
       let duration2 = 10000;
       let duration3 = 100000;
@@ -236,12 +236,8 @@ describe("TestStakingFactory", function() {
       test2.push(data.stakingFactory.connect(data.user2Signer).addStakingForToken(ogTokensToStake2.toFixed(0), duration2, data.fee0Token.address, "FEE0Token"));
       // test2.push(data.stakingFactory.connect(data.user3Signer).addStakingForToken(ogTokensToStake3.toFixed(0), duration3, data.fee0Token.address, "FEE0Token"));
       const [addStake1, addStake2/*, addStake3*/] = await Promise.all(test2);
-      try {
-        const addStake3 = await data.stakingFactory.connect(data.user3Signer).addStakingForToken(ogTokensToStake3.toFixed(0), duration3, data.fee0Token.address, "FEE0Token");
-      } catch (e) {
-        console.log("        addStake3 - Transaction reverted as expected");
-        assert(e.toString().indexOf("Sub underflow") >= 0, "Sub underflow expected");
-      }
+      await data.expectException("Insufficient approved OG tokens to stake with", "Sub underflow", data.stakingFactory.connect(data.user3Signer).addStakingForToken(ogTokensToStake3.toFixed(0), duration3, data.fee0Token.address, "FEE0Token"));
+
       const stakingsLength = await data.stakingFactory.stakingsLength();
       const stakings = [];
       for (let j = 0; j < stakingsLength; j++) {
@@ -254,15 +250,6 @@ describe("TestStakingFactory", function() {
       await data.printTxData("addStake2", addStake2);
       // await data.printTxData("addStake3", addStake3);
       await data.printBalances();
-
-      // const expectedDuration = ogTokensToStake1.multipliedBy(duration1).plus(ogTokensToStake2.multipliedBy(duration2)).plus(ogTokensToStake3.multipliedBy(duration3)).dividedBy(ogTokensToStake1.plus(ogTokensToStake2).plus(ogTokensToStake3));
-      // const expectedWeightedEnd = expectedDuration.plus(new Date()/1000);
-      // console.log("        expectedWeightedEnd: " + expectedWeightedEnd);
-      //
-      // const weightedEnd = await stakings[0].weightedEnd();
-      // console.log("        weightedEnd        : " + weightedEnd);
-      //
-      // expect(parseFloat(weightedEnd.toString())).to.be.closeTo(parseFloat(expectedWeightedEnd.toString()), 150, "weightedEnd seems off");
     });
   });
 });
