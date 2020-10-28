@@ -5,7 +5,7 @@ import "hardhat/console.sol";
 
 // Use prefix "./" normally and "https://github.com/ogDAO/Governance/blob/master/contracts/" in Remix
 import "./SafeMath.sol";
-import "./ERC20.sol";
+import "./OGTokenInterface.sol";
 import "./Owned.sol";
 
 // SPDX-License-Identifier: GPLv2
@@ -33,19 +33,21 @@ contract Staking is Owned {
         uint tokens;
     }
 
-    ERC20 public ogToken;
+    OGTokenInterface public ogToken;
     StakingInfo public stakingInfo;
     mapping(address => Stake) public stakes;
     address[] public stakesIndex;
     uint public weightedEndNumerator;
     uint public totalSupply;
+    uint public slashingFactor;
 
     event Staked(address indexed tokenOwner, uint tokens, uint duration, uint end);
-    event Unstaked(address indexed tokenOwner, uint tokens);
+    event Unstaked(address indexed tokenOwner, uint tokens, uint tokensWithSlashingFactor);
+    event Slashed(uint slashingFactor, uint tokensBurnt);
 
     constructor() {
     }
-    function initStaking(ERC20 _ogToken, uint dataType, address[4] memory addresses, uint[6] memory uints, string[4] memory strings) public {
+    function initStaking(OGTokenInterface _ogToken, uint dataType, address[4] memory addresses, uint[6] memory uints, string[4] memory strings) public {
         initOwned(msg.sender);
         ogToken = _ogToken;
         stakingInfo = StakingInfo(dataType, addresses, uints, strings[0], strings[1], strings[2], strings[3]);
@@ -73,6 +75,7 @@ contract Staking is Owned {
     }
 
     function _stake(address tokenOwner, uint tokens, uint duration) internal {
+        require(slashingFactor == 0, "Cannot stake if already slashed");
         require(duration > 0, "Invalid duration");
         Stake storage stake_ = stakes[tokenOwner];
         if (stake_.duration == 0) {
@@ -121,8 +124,18 @@ contract Staking is Owned {
                 weightedEndNumerator = weightedEndNumerator.add(uint(stake_.end).mul(stake_.tokens));
                 totalSupply = totalSupply.add(stake_.tokens);
             }
-            require(ogToken.transfer(msg.sender, tokens), "OG transfer failed");
-            emit Unstaked(msg.sender, tokens);
+            uint tokensWithSlashingFactor = tokens.sub(tokens.mul(slashingFactor).div(10**18));
+            require(ogToken.transfer(msg.sender, tokensWithSlashingFactor), "OG transfer failed");
+            emit Unstaked(msg.sender, tokens, tokensWithSlashingFactor);
         }
+    }
+
+    function slash(uint _slashingFactor) public onlyOwner {
+        require(_slashingFactor <= 10 ** 18, "Cannot slash more than 100%");
+        require(slashingFactor == 0, "Cannot slash more than once");
+        slashingFactor = _slashingFactor;
+        uint tokensToBurn = totalSupply.mul(slashingFactor).div(10**18);
+        require(ogToken.burn(tokensToBurn), "OG burn failed");
+        emit Slashed(_slashingFactor, tokensToBurn);
     }
 }

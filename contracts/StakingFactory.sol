@@ -7,10 +7,11 @@ pragma experimental ABIEncoderV2;
 import "./ERC20.sol";
 import "./CloneFactory.sol";
 import "./OGTokenInterface.sol";
+import "./Owned.sol";
 import "./Staking.sol";
 
 // SPDX-License-Identifier: GPLv2
-contract StakingFactory is CloneFactory {
+contract StakingFactory is CloneFactory, Owned {
     Staking public stakingTemplate;
     OGTokenInterface public ogToken;
 
@@ -20,6 +21,7 @@ contract StakingFactory is CloneFactory {
     event StakingCreated(bytes32 indexed key, Staking indexed staking);
 
     constructor(OGTokenInterface _ogToken) {
+        initOwned(msg.sender);
         ogToken = _ogToken;
         stakingTemplate = new Staking();
     }
@@ -59,6 +61,9 @@ contract StakingFactory is CloneFactory {
         staking.stakeThroughFactory(msg.sender, tokens, duration);
     }
 
+    function slash(Staking staking, uint slashingFactor) public onlyOwner {
+        staking.slash(slashingFactor);
+    }
 
     // function addStakeForGeneral(uint tokens, uint dataType, address[4] memory addresses, uint[6] memory uints, string[4] memory strings) external {
     //     bytes32 stakingKey = keccak256(abi.encodePacked(addresses, dataType, uints, strings[0], strings[1], strings[2], strings[3]));
