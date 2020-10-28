@@ -204,8 +204,8 @@ describe("TestStakingFactory", function() {
     });
   });
 
-  describe("TestStakingFactory - Workflow #1 - Stake And Check weightedEnd", function() {
-    it("Workflow #1 - Stake And Check weightedEnd", async function() {
+  describe("TestStakingFactory - Workflow #2 - Stake with expected exception", function() {
+    it("Workflow #2 - Stake with expected exception", async function() {
       console.log("        --- Test 1 - Mint 10,000 OGD tokens for User{1..3}; Owner approve 100 FEE for OGToken to spend ---");
       const ogTokens = new BigNumber("10000").shiftedBy(18);
       const test1 = [];
