@@ -253,7 +253,7 @@ describe("TestStakingFactory", function() {
     });
   });
 
-  describe.only("TestStakingFactory - Workflow #3 - Stake, slash and unstake", function() {
+  describe("TestStakingFactory - Workflow #3 - Stake, slash and unstake", function() {
     it("Workflow #3 - Stake, slash and unstake", async function() {
       console.log("        --- Test 1 - Mint 10,000 OGD tokens for User{1..3}; User{1..3} approve 10,000 FEE for StakingFactory to spend ---");
       const ogTokens = new BigNumber("10000").shiftedBy(18);
