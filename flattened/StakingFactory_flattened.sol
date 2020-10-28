@@ -1776,11 +1776,11 @@ contract Staking is Owned {
     function unstake(uint tokens) public {
         Stake storage stake_ = stakes[msg.sender];
         require(uint(stake_.end) < block.timestamp, "Staking period still active");
-        require(tokens >= stake_.tokens, "Unsufficient staked tokens");
+        require(tokens <= stake_.tokens, "Unsufficient staked tokens");
         if (tokens > 0) {
             stake_.tokens = stake_.tokens.sub(tokens);
-            stake_.duration = 1000;
-            stake_.end = uint64(block.timestamp - 1);
+            // stake_.duration = 0;
+            // stake_.end = uint64(block.timestamp - 1);
             if (stake_.tokens == 0) {
                 uint removedIndex = uint(stake_.index);
                 uint lastIndex = stakesIndex.length - 1;

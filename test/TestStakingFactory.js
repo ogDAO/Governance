@@ -90,7 +90,7 @@ describe("TestStakingFactory", function() {
       const staking0 = Staking.attach(staking0Address[1]);
       const staking1Address = await data.stakingFactory.getStakingByIndex(1);
       const staking1 = Staking.attach(staking1Address[1]);
-      const ogTokensToUnstake = new BigNumber("1000").shiftedBy(18);
+      const ogTokensToUnstake = new BigNumber("100").shiftedBy(18);
       const test3 = [];
       test3.push(staking0.connect(data.user1Signer).unstake(ogTokensToUnstake.toFixed(0)));
       test3.push(staking0.connect(data.user2Signer).unstake(ogTokensToUnstake.toFixed(0)));
