@@ -154,6 +154,12 @@ class Data {
   async addStakingData(staking) {
     this.addAccount(staking.address, "Staking");
     this.addContract(staking, "Staking");
+    const _symbol = staking.symbol();
+    const _decimals = staking.decimals();
+    const [symbol, decimals] = await Promise.all([_symbol, _decimals]);
+    this.tokenContracts.push(staking);
+    this.symbols.push(symbol);
+    this.decimals.push(decimals);
   }
 
   padToken(s, decimals) {

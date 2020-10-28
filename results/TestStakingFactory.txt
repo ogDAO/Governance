@@ -2,7 +2,7 @@ $ npx hardhat test test/TestStakingFactory.js > results/TestStakingFactory.txt
 
 
   TestStakingFactory
-    TestStakingFactory - Workflow #0 - Stake, stake, stake, unstake, unstake
+    TestStakingFactory - Workflow #3 - Stake, slash and unstake
         --- Setup 1 - Deploy OGToken, FEE0, StakingFactory ---
         ogTokenTx - gasUsed: 954393, fee: 0.07635144, feeUsd: 29.4464598648, @ 80 gwei & 385.67 ETH/USD, 0x7491d98f2c63809f4d9450252d5dff3e5a60f9a7b3edc26c27e2d4ffea17bf71
         + OGToken.Transfer(from: ETH|null:0x0000, to: Owner:0xa00A, tokens: 0)
@@ -36,7 +36,7 @@ $ npx hardhat test test/TestStakingFactory.js > results/TestStakingFactory.txt
         
         --- Setup Completed ---
 
-        --- Test 1 - Mint 10,000 OGD tokens for User{1..3}; Owner approve 100 FEE for OGToken to spend ---
+        --- Test 1 - Mint 10,000 OGD tokens for User{1..3}; User{1..3} approve 10,000 FEE for StakingFactory to spend ---
         mint1 - gasUsed: 89419, fee: 0.00715352, feeUsd: 2.7588980584, @ 80 gwei & 385.67 ETH/USD, 0xfd5d6ce756941d12ff28b4cdaa20f90bd0683d0aa151860b53e10bc87a377555
         + OGToken.Transfer(from: ETH|null:0x0000, to: User1:0xa11A, tokens: 10000)
         mint2 - gasUsed: 59419, fee: 0.00475352, feeUsd: 1.8332900584, @ 80 gwei & 385.67 ETH/USD, 0x926799cab870d1b167f07832038adf3e7f5e013684796aba7e1d67554b4af3ea
@@ -71,704 +71,162 @@ $ npx hardhat test test/TestStakingFactory.js > results/TestStakingFactory.txt
         - ogToken                : OGToken:0x1647
         - stakingsLength         : 0
         
-        --- Test 2 - Stake #1 - StakingFactory.addStakingForToken() ---
-        addStake1 - gasUsed: 437742, fee: 0.03501936, feeUsd: 13.5059165712, @ 80 gwei & 385.67 ETH/USD, 0x17073d93a1df8049dcd91ae34a0bff2cb70478669efe67cb3a4dbe18f871c4c4
+        --- Test 2 - User{1..3} -> StakingFactory.addStakingForToken(1,000, duration) ---
+        addStake1 - gasUsed: 437742, fee: 0.03501936, feeUsd: 13.5059165712, @ 80 gwei & 385.67 ETH/USD, 0xb621a761157e55581acdf93a4e5cc3c6b62ffaf6aaceb0036c03ba01d64e50c1
         + StakingFactory.StakingCreated(key: 0x9bd74b0e952c14659bb1d89ffade11c6dfd8c077ba3376bd80e2a74a9219ef7b, staking: Staking:0x810A)
         + OGToken.Transfer(from: User1:0xa11A, to: Staking:0x810A, tokens: 1000)
-        + Staking.Staked(tokenOwner: User1:0xa11A, tokens: 1000, duration: 6, end: 1603873740)
-        addStake2 - gasUsed: 141329, fee: 0.01130632, feeUsd: 4.3605084344, @ 80 gwei & 385.67 ETH/USD, 0xb45fa268328c47491aff26961801a43ec763ead7e99d2d0c893d5955cd27d3d1
+        + Staking.Staked(tokenOwner: User1:0xa11A, tokens: 1000, duration: 3, end: 1603877371)
+        addStake2 - gasUsed: 141329, fee: 0.01130632, feeUsd: 4.3605084344, @ 80 gwei & 385.67 ETH/USD, 0x571a1e9fe3d4ab0b3f02f6c9d5eb6f0c9ab40a33ff4aad86e1eb2b6f2c1c186d
         + OGToken.Transfer(from: User2:0xa22A, to: Staking:0x810A, tokens: 1000)
-        + Staking.Staked(tokenOwner: User2:0xa22A, tokens: 1000, duration: 6, end: 1603873741)
-        addStake3 - gasUsed: 422718, fee: 0.03381744, feeUsd: 13.0423720848, @ 80 gwei & 385.67 ETH/USD, 0x0f06a4ef7b70bb885d6199c11150f09d9b927e99ba6e09828b9146ddf6172d78
-        + StakingFactory.StakingCreated(key: 0x7d8d54967263de610de5be310aeac6c0f3b10aef74ce989301d6f0386e349f84, staking: Staking:0xDab4)
-        + OGToken.Transfer(from: User3:0xa33a, to: Staking:0xDab4, tokens: 1000)
-        + Staking.Staked(tokenOwner: User3:0xa33a, tokens: 1000, duration: 6, end: 1603873742)
+        + Staking.Staked(tokenOwner: User2:0xa22A, tokens: 1000, duration: 3, end: 1603877372)
+        addStake3 - gasUsed: 141329, fee: 0.01130632, feeUsd: 4.3605084344, @ 80 gwei & 385.67 ETH/USD, 0x7abaffa6ba43df11eeeb946f11cefb1172609da1f6d9f6eeafe88290ba169f87
+        + OGToken.Transfer(from: User3:0xa33a, to: Staking:0x810A, tokens: 1000)
+        + Staking.Staked(tokenOwner: User3:0xa33a, tokens: 1000, duration: 3, end: 1603877373)
         
          # Account                                             EtherBalanceChange                             OG                           FEE0 Blocks 0 to 13
+                                                                                                       FEE0Token                            ???
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
          0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E       -0.385164160000000000           0.000000000000000000         100.000000000000000000 Owner:0xa00A
+                                                                                            0.000000000000000000           0.000000000000000000
          1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433       -0.038539520000000000        9000.000000000000000000           0.000000000000000000 User1:0xa11A
+                                                                                         1000.000000000000000000           0.000000000000000000
          2 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976       -0.014826480000000000        9000.000000000000000000           0.000000000000000000 User2:0xa22A
-         3 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0       -0.037337600000000000        9000.000000000000000000           0.000000000000000000 User3:0xa33a
-         4 0xa44a08d3F6933c69212114bb66E2Df1813651844        0.000000000000000000           0.000000000000000000           0.000000000000000000 User4:0xa44a
-         5 0x1647B1461251A0c6D3E14a227dE0F16E36ba80B1        0.000000000000000000           0.000000000000000000           0.000000000000000000 OGToken:0x1647
-         6 0x0f4eA6f2be49d822b7cAEf4175450A4D83A32e72        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee0Token:0x0f4e
-         7 0x6eaC8DFBdEB9588C9FEEe24783B4137b082f9708        0.000000000000000000           0.000000000000000000           0.000000000000000000 StakingFactory:0x6eaC
-         8 0x810A42E257Cb2Ec2c01f56F477d305F5e5c5EBE3        0.000000000000000000        2000.000000000000000000           0.000000000000000000 Staking:0x810A
-         9 0xDab4c7ec738d2AA546361377294956bd7fB04ab6        0.000000000000000000        1000.000000000000000000           0.000000000000000000 Staking:0xDab4
-        -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-                                                                                        30000.000000000000000000         100.000000000000000000 Total Token Balances
-        -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-        
-        Token 0 symbol: 'OG', name: 'Optino Governance', decimals: 18, totalSupply: 30000, owner: Owner:0xa00A, address: OGToken:0x1647
-        Token 1 symbol: 'FEE0', name: 'Fee0', decimals: 18, totalSupply: 100, owner: Owner:0xa00A, address: Fee0Token:0x0f4e
-        StakingFactory StakingFactory:0x6eaC @ 0x6eaC8DFBdEB9588C9FEEe24783B4137b082f9708
-        - stakingTemplate        : 0xC4D8Dc1A8c1982C73ea4A40E0CC2Ea5805e3dc4F
-        - ogToken                : OGToken:0x1647
-        - stakingsLength         : 2
-        - staking 0 @ Staking:0x810A, owner: StakingFactory:0x6eaC
-          - dataType      : 1
-          - addresses     : ["Fee0Token:0x0f4e","ETH|null:0x0000","ETH|null:0x0000","ETH|null:0x0000"]
-          - uints         : ["0","0","0","0","0","0"]
-          - strings       : ["FEE0Token","","",""]
-          - stakesLength  : 2
-          - totalSupply   : 2000
-          - weightedEnd   : 1603873740
-          - slashingFactor: 0%
-            - stake 0 owner: 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433, duration: 6, end: 1603873740, index: 0, tokens: 1000
-            - stake 1 owner: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, duration: 6, end: 1603873741, index: 1, tokens: 1000
-        - staking 1 @ Staking:0xDab4, owner: StakingFactory:0x6eaC
-          - dataType      : 1
-          - addresses     : ["OGToken:0x1647","ETH|null:0x0000","ETH|null:0x0000","ETH|null:0x0000"]
-          - uints         : ["0","0","0","0","0","0"]
-          - strings       : ["OGToken","","",""]
-          - stakesLength  : 1
-          - totalSupply   : 1000
-          - weightedEnd   : 1603873742
-          - slashingFactor: 0%
-            - stake 0 owner: 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0, duration: 6, end: 1603873742, index: 0, tokens: 1000
-        
-        --- Test 3 - Stake #2 - StakingFactory.addStakingForToken() ---
-        Pausing 'Waiting' for 6s=Wed Oct 28 2020 19:28:51 GMT+1100 (Australian Eastern Daylight Time) now=Wed Oct 28 2020 19:28:45 GMT+1100 (Australian Eastern Daylight Time)
-        Paused 'Waiting' for 6s=Wed Oct 28 2020 19:28:51 GMT+1100 (Australian Eastern Daylight Time) now=Wed Oct 28 2020 19:28:51 GMT+1100 (Australian Eastern Daylight Time)
-        
-        addStake4 - gasUsed: 89911, fee: 0.00719288, feeUsd: 2.7740780296, @ 80 gwei & 385.67 ETH/USD, 0x569e32b251dfe3e191cf1fec84989cfa96a8dc887f75912d18ab5ce31c918cf4
-        + OGToken.Transfer(from: User1:0xa11A, to: Staking:0x810A, tokens: 1000)
-        addStake5 - gasUsed: 89911, fee: 0.00719288, feeUsd: 2.7740780296, @ 80 gwei & 385.67 ETH/USD, 0x579765c4d163354dc4528424e8ecdb3f88484eb521fb40441a82f4fffd2d2ea2
-        + OGToken.Transfer(from: User2:0xa22A, to: Staking:0x810A, tokens: 1000)
-        addStake6 - gasUsed: 89887, fee: 0.00719096, feeUsd: 2.7733375432, @ 80 gwei & 385.67 ETH/USD, 0x3fab09cd5683586b5d6f97002be9d34388898e550126d7b712e7dee8c9271391
-        + OGToken.Transfer(from: User3:0xa33a, to: Staking:0xDab4, tokens: 1000)
-        
-         # Account                                             EtherBalanceChange                             OG                           FEE0 Blocks 0 to 16
-        -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E       -0.385164160000000000           0.000000000000000000         100.000000000000000000 Owner:0xa00A
-         1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433       -0.045732400000000000        8000.000000000000000000           0.000000000000000000 User1:0xa11A
-         2 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976       -0.022019360000000000        8000.000000000000000000           0.000000000000000000 User2:0xa22A
-         3 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0       -0.044528560000000000        8000.000000000000000000           0.000000000000000000 User3:0xa33a
-         4 0xa44a08d3F6933c69212114bb66E2Df1813651844        0.000000000000000000           0.000000000000000000           0.000000000000000000 User4:0xa44a
-         5 0x1647B1461251A0c6D3E14a227dE0F16E36ba80B1        0.000000000000000000           0.000000000000000000           0.000000000000000000 OGToken:0x1647
-         6 0x0f4eA6f2be49d822b7cAEf4175450A4D83A32e72        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee0Token:0x0f4e
-         7 0x6eaC8DFBdEB9588C9FEEe24783B4137b082f9708        0.000000000000000000           0.000000000000000000           0.000000000000000000 StakingFactory:0x6eaC
-         8 0x810A42E257Cb2Ec2c01f56F477d305F5e5c5EBE3        0.000000000000000000        4000.000000000000000000           0.000000000000000000 Staking:0x810A
-         9 0xDab4c7ec738d2AA546361377294956bd7fB04ab6        0.000000000000000000        2000.000000000000000000           0.000000000000000000 Staking:0xDab4
-        -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-                                                                                        30000.000000000000000000         100.000000000000000000 Total Token Balances
-        -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-        
-        Token 0 symbol: 'OG', name: 'Optino Governance', decimals: 18, totalSupply: 30000, owner: Owner:0xa00A, address: OGToken:0x1647
-        Token 1 symbol: 'FEE0', name: 'Fee0', decimals: 18, totalSupply: 100, owner: Owner:0xa00A, address: Fee0Token:0x0f4e
-        StakingFactory StakingFactory:0x6eaC @ 0x6eaC8DFBdEB9588C9FEEe24783B4137b082f9708
-        - stakingTemplate        : 0xC4D8Dc1A8c1982C73ea4A40E0CC2Ea5805e3dc4F
-        - ogToken                : OGToken:0x1647
-        - stakingsLength         : 2
-        - staking 0 @ Staking:0x810A, owner: StakingFactory:0x6eaC
-          - dataType      : 1
-          - addresses     : ["Fee0Token:0x0f4e","ETH|null:0x0000","ETH|null:0x0000","ETH|null:0x0000"]
-          - uints         : ["0","0","0","0","0","0"]
-          - strings       : ["FEE0Token","","",""]
-          - stakesLength  : 2
-          - totalSupply   : 4000
-          - weightedEnd   : 1603873746
-          - slashingFactor: 0%
-            - stake 0 owner: 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433, duration: 3, end: 1603873746, index: 0, tokens: 2000
-            - stake 1 owner: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, duration: 3, end: 1603873747, index: 1, tokens: 2000
-        - staking 1 @ Staking:0xDab4, owner: StakingFactory:0x6eaC
-          - dataType      : 1
-          - addresses     : ["OGToken:0x1647","ETH|null:0x0000","ETH|null:0x0000","ETH|null:0x0000"]
-          - uints         : ["0","0","0","0","0","0"]
-          - strings       : ["OGToken","","",""]
-          - stakesLength  : 1
-          - totalSupply   : 2000
-          - weightedEnd   : 1603873748
-          - slashingFactor: 0%
-            - stake 0 owner: 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0, duration: 3, end: 1603873748, index: 0, tokens: 2000
-        
-        --- Test 4 - Stake #3 - Staking.stake() ---
-        approve4 - gasUsed: 43990, fee: 0.0035192, feeUsd: 1.357249864, @ 80 gwei & 385.67 ETH/USD, 0x77f8d19ec1c8e2cd596adcd50335b3fecb3402dcbf8dce4c9af84017c47b06a5
-        + OGToken.Approval(tokenOwner: User1:0xa11A, spender: Staking:0x810A, tokens: 1000)
-        approve5 - gasUsed: 43990, fee: 0.0035192, feeUsd: 1.357249864, @ 80 gwei & 385.67 ETH/USD, 0x84c22db56bbaff67159920c82254ffff9746b79c55fd9d91ed9444555a09bc80
-        + OGToken.Approval(tokenOwner: User2:0xa22A, spender: Staking:0x810A, tokens: 1000)
-        approve6 - gasUsed: 43990, fee: 0.0035192, feeUsd: 1.357249864, @ 80 gwei & 385.67 ETH/USD, 0xe4a82ea721f8b8af888c1820b9cb18805bff8a259b5d801f09b3af046fd00cea
-        + OGToken.Approval(tokenOwner: User3:0xa33a, spender: Staking:0xDab4, tokens: 1000)
-        addStake7 - gasUsed: 67071, fee: 0.00536568, feeUsd: 2.0693818056, @ 80 gwei & 385.67 ETH/USD, 0x511be90926e8d0a5be9af0e23e017bdc50ff04543f98330ce11e0aae85583cc5
-        + OGToken.Transfer(from: User1:0xa11A, to: Staking:0x810A, tokens: 1000)
-        addStake8 - gasUsed: 67071, fee: 0.00536568, feeUsd: 2.0693818056, @ 80 gwei & 385.67 ETH/USD, 0x7b64f9a1b168bd81774ed9e7c4a5aa082e48b4c8d850c082a19a388df8a667b2
-        + OGToken.Transfer(from: User2:0xa22A, to: Staking:0x810A, tokens: 1000)
-        addStake9 - gasUsed: 67071, fee: 0.00536568, feeUsd: 2.0693818056, @ 80 gwei & 385.67 ETH/USD, 0x23911a13c8a3097331aec80b08167d0815f79124f105c7e1a843f3ef396863ec
-        + OGToken.Transfer(from: User3:0xa33a, to: Staking:0xDab4, tokens: 1000)
-        
-         # Account                                             EtherBalanceChange                             OG                           FEE0 Blocks 0 to 22
-        -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E       -0.385164160000000000           0.000000000000000000         100.000000000000000000 Owner:0xa00A
-         1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433       -0.054617280000000000        7000.000000000000000000           0.000000000000000000 User1:0xa11A
-         2 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976       -0.030904240000000000        7000.000000000000000000           0.000000000000000000 User2:0xa22A
-         3 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0       -0.053413440000000000        7000.000000000000000000           0.000000000000000000 User3:0xa33a
-         4 0xa44a08d3F6933c69212114bb66E2Df1813651844        0.000000000000000000           0.000000000000000000           0.000000000000000000 User4:0xa44a
-         5 0x1647B1461251A0c6D3E14a227dE0F16E36ba80B1        0.000000000000000000           0.000000000000000000           0.000000000000000000 OGToken:0x1647
-         6 0x0f4eA6f2be49d822b7cAEf4175450A4D83A32e72        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee0Token:0x0f4e
-         7 0x6eaC8DFBdEB9588C9FEEe24783B4137b082f9708        0.000000000000000000           0.000000000000000000           0.000000000000000000 StakingFactory:0x6eaC
-         8 0x810A42E257Cb2Ec2c01f56F477d305F5e5c5EBE3        0.000000000000000000        6000.000000000000000000           0.000000000000000000 Staking:0x810A
-         9 0xDab4c7ec738d2AA546361377294956bd7fB04ab6        0.000000000000000000        3000.000000000000000000           0.000000000000000000 Staking:0xDab4
-        -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-                                                                                        30000.000000000000000000         100.000000000000000000 Total Token Balances
-        -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-        
-        Token 0 symbol: 'OG', name: 'Optino Governance', decimals: 18, totalSupply: 30000, owner: Owner:0xa00A, address: OGToken:0x1647
-        Token 1 symbol: 'FEE0', name: 'Fee0', decimals: 18, totalSupply: 100, owner: Owner:0xa00A, address: Fee0Token:0x0f4e
-        StakingFactory StakingFactory:0x6eaC @ 0x6eaC8DFBdEB9588C9FEEe24783B4137b082f9708
-        - stakingTemplate        : 0xC4D8Dc1A8c1982C73ea4A40E0CC2Ea5805e3dc4F
-        - ogToken                : OGToken:0x1647
-        - stakingsLength         : 2
-        - staking 0 @ Staking:0x810A, owner: StakingFactory:0x6eaC
-          - dataType      : 1
-          - addresses     : ["Fee0Token:0x0f4e","ETH|null:0x0000","ETH|null:0x0000","ETH|null:0x0000"]
-          - uints         : ["0","0","0","0","0","0"]
-          - strings       : ["FEE0Token","","",""]
-          - stakesLength  : 2
-          - totalSupply   : 6000
-          - weightedEnd   : 1603873752
-          - slashingFactor: 0%
-            - stake 0 owner: 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433, duration: 3, end: 1603873752, index: 0, tokens: 3000
-            - stake 1 owner: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, duration: 3, end: 1603873753, index: 1, tokens: 3000
-        - staking 1 @ Staking:0xDab4, owner: StakingFactory:0x6eaC
-          - dataType      : 1
-          - addresses     : ["OGToken:0x1647","ETH|null:0x0000","ETH|null:0x0000","ETH|null:0x0000"]
-          - uints         : ["0","0","0","0","0","0"]
-          - strings       : ["OGToken","","",""]
-          - stakesLength  : 1
-          - totalSupply   : 3000
-          - weightedEnd   : 1603873754
-          - slashingFactor: 0%
-            - stake 0 owner: 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0, duration: 3, end: 1603873754, index: 0, tokens: 3000
-        
-        --- Test 5 - Unstake #1 - unstake(some) ---
-        Pausing 'Waiting' for 3s=Wed Oct 28 2020 19:28:54 GMT+1100 (Australian Eastern Daylight Time) now=Wed Oct 28 2020 19:28:51 GMT+1100 (Australian Eastern Daylight Time)
-        Paused 'Waiting' for 3s=Wed Oct 28 2020 19:28:54 GMT+1100 (Australian Eastern Daylight Time) now=Wed Oct 28 2020 19:28:54 GMT+1100 (Australian Eastern Daylight Time)
-        
-        unstake1 - gasUsed: 70055, fee: 0.0056044, feeUsd: 2.161448948, @ 80 gwei & 385.67 ETH/USD, 0xc8d8407dfc87c74b78a36312b011dd75026a50b78a2cece0dbd6c310ebaf8037
-        + OGToken.Transfer(from: Staking:0x810A, to: User1:0xa11A, tokens: 2000)
-        + Staking.Unstaked(tokenOwner: User1:0xa11A, tokens: 2000, tokensWithSlashingFactor: 2000)
-        unstake2 - gasUsed: 70055, fee: 0.0056044, feeUsd: 2.161448948, @ 80 gwei & 385.67 ETH/USD, 0x87ff8a199290688386441552e0468282196e8dc1cde7c763b70f18683d7cdcca
-        + OGToken.Transfer(from: Staking:0x810A, to: User2:0xa22A, tokens: 2000)
-        + Staking.Unstaked(tokenOwner: User2:0xa22A, tokens: 2000, tokensWithSlashingFactor: 2000)
-        unstake3 - gasUsed: 70055, fee: 0.0056044, feeUsd: 2.161448948, @ 80 gwei & 385.67 ETH/USD, 0x1f570844cbcb6af9191fe8b79f9635b746292b3f3c545ec8b8065fdbda1d2e34
-        + OGToken.Transfer(from: Staking:0xDab4, to: User3:0xa33a, tokens: 2000)
-        + Staking.Unstaked(tokenOwner: User3:0xa33a, tokens: 2000, tokensWithSlashingFactor: 2000)
-        
-         # Account                                             EtherBalanceChange                             OG                           FEE0 Blocks 0 to 25
-        -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E       -0.385164160000000000           0.000000000000000000         100.000000000000000000 Owner:0xa00A
-         1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433       -0.060221680000000000        9000.000000000000000000           0.000000000000000000 User1:0xa11A
-         2 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976       -0.036508640000000000        9000.000000000000000000           0.000000000000000000 User2:0xa22A
-         3 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0       -0.059017840000000000        9000.000000000000000000           0.000000000000000000 User3:0xa33a
-         4 0xa44a08d3F6933c69212114bb66E2Df1813651844        0.000000000000000000           0.000000000000000000           0.000000000000000000 User4:0xa44a
-         5 0x1647B1461251A0c6D3E14a227dE0F16E36ba80B1        0.000000000000000000           0.000000000000000000           0.000000000000000000 OGToken:0x1647
-         6 0x0f4eA6f2be49d822b7cAEf4175450A4D83A32e72        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee0Token:0x0f4e
-         7 0x6eaC8DFBdEB9588C9FEEe24783B4137b082f9708        0.000000000000000000           0.000000000000000000           0.000000000000000000 StakingFactory:0x6eaC
-         8 0x810A42E257Cb2Ec2c01f56F477d305F5e5c5EBE3        0.000000000000000000        2000.000000000000000000           0.000000000000000000 Staking:0x810A
-         9 0xDab4c7ec738d2AA546361377294956bd7fB04ab6        0.000000000000000000        1000.000000000000000000           0.000000000000000000 Staking:0xDab4
-        -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-                                                                                        30000.000000000000000000         100.000000000000000000 Total Token Balances
-        -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-        
-        Token 0 symbol: 'OG', name: 'Optino Governance', decimals: 18, totalSupply: 30000, owner: Owner:0xa00A, address: OGToken:0x1647
-        Token 1 symbol: 'FEE0', name: 'Fee0', decimals: 18, totalSupply: 100, owner: Owner:0xa00A, address: Fee0Token:0x0f4e
-        StakingFactory StakingFactory:0x6eaC @ 0x6eaC8DFBdEB9588C9FEEe24783B4137b082f9708
-        - stakingTemplate        : 0xC4D8Dc1A8c1982C73ea4A40E0CC2Ea5805e3dc4F
-        - ogToken                : OGToken:0x1647
-        - stakingsLength         : 2
-        - staking 0 @ Staking:0x810A, owner: StakingFactory:0x6eaC
-          - dataType      : 1
-          - addresses     : ["Fee0Token:0x0f4e","ETH|null:0x0000","ETH|null:0x0000","ETH|null:0x0000"]
-          - uints         : ["0","0","0","0","0","0"]
-          - strings       : ["FEE0Token","","",""]
-          - stakesLength  : 2
-          - totalSupply   : 2000
-          - weightedEnd   : 1603873752
-          - slashingFactor: 0%
-            - stake 0 owner: 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433, duration: 3, end: 1603873752, index: 0, tokens: 1000
-            - stake 1 owner: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, duration: 3, end: 1603873753, index: 1, tokens: 1000
-        - staking 1 @ Staking:0xDab4, owner: StakingFactory:0x6eaC
-          - dataType      : 1
-          - addresses     : ["OGToken:0x1647","ETH|null:0x0000","ETH|null:0x0000","ETH|null:0x0000"]
-          - uints         : ["0","0","0","0","0","0"]
-          - strings       : ["OGToken","","",""]
-          - stakesLength  : 1
-          - totalSupply   : 1000
-          - weightedEnd   : 1603873754
-          - slashingFactor: 0%
-            - stake 0 owner: 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0, duration: 3, end: 1603873754, index: 0, tokens: 1000
-        
-        --- Test 6 - Unstake #2 - unstake(remaining) ---
-        unstake4 - gasUsed: 64483, fee: 0.00515864, feeUsd: 1.9895326888, @ 80 gwei & 385.67 ETH/USD, 0xbb5ba61b311f255498f93bc35ad7e6cf0781759d633be6958fbfa4bd84ee63fb
-        + OGToken.Transfer(from: Staking:0x810A, to: User1:0xa11A, tokens: 1000)
-        + Staking.Unstaked(tokenOwner: User1:0xa11A, tokens: 1000, tokensWithSlashingFactor: 1000)
-        unstake5 - gasUsed: 43042, fee: 0.00344336, feeUsd: 1.3280006512, @ 80 gwei & 385.67 ETH/USD, 0x2f750b8669e743c7aff3b32ed91c173a66391e8e0879ba8ddfcefbe4faacc209
-        + OGToken.Transfer(from: Staking:0x810A, to: User2:0xa22A, tokens: 1000)
-        + Staking.Unstaked(tokenOwner: User2:0xa22A, tokens: 1000, tokensWithSlashingFactor: 1000)
-        unstake6 - gasUsed: 43042, fee: 0.00344336, feeUsd: 1.3280006512, @ 80 gwei & 385.67 ETH/USD, 0xdfdeac0af9e2bb4133cee4b7b83ffa3688ac5e290cd92f0c79425000db05bed6
-        + OGToken.Transfer(from: Staking:0xDab4, to: User3:0xa33a, tokens: 1000)
-        + Staking.Unstaked(tokenOwner: User3:0xa33a, tokens: 1000, tokensWithSlashingFactor: 1000)
-        
-         # Account                                             EtherBalanceChange                             OG                           FEE0 Blocks 0 to 28
-        -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E       -0.385164160000000000           0.000000000000000000         100.000000000000000000 Owner:0xa00A
-         1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433       -0.065380320000000000       10000.000000000000000000           0.000000000000000000 User1:0xa11A
-         2 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976       -0.039952000000000000       10000.000000000000000000           0.000000000000000000 User2:0xa22A
-         3 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0       -0.062461200000000000       10000.000000000000000000           0.000000000000000000 User3:0xa33a
-         4 0xa44a08d3F6933c69212114bb66E2Df1813651844        0.000000000000000000           0.000000000000000000           0.000000000000000000 User4:0xa44a
-         5 0x1647B1461251A0c6D3E14a227dE0F16E36ba80B1        0.000000000000000000           0.000000000000000000           0.000000000000000000 OGToken:0x1647
-         6 0x0f4eA6f2be49d822b7cAEf4175450A4D83A32e72        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee0Token:0x0f4e
-         7 0x6eaC8DFBdEB9588C9FEEe24783B4137b082f9708        0.000000000000000000           0.000000000000000000           0.000000000000000000 StakingFactory:0x6eaC
-         8 0x810A42E257Cb2Ec2c01f56F477d305F5e5c5EBE3        0.000000000000000000           0.000000000000000000           0.000000000000000000 Staking:0x810A
-         9 0xDab4c7ec738d2AA546361377294956bd7fB04ab6        0.000000000000000000           0.000000000000000000           0.000000000000000000 Staking:0xDab4
-        -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-                                                                                        30000.000000000000000000         100.000000000000000000 Total Token Balances
-        -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-        
-        Token 0 symbol: 'OG', name: 'Optino Governance', decimals: 18, totalSupply: 30000, owner: Owner:0xa00A, address: OGToken:0x1647
-        Token 1 symbol: 'FEE0', name: 'Fee0', decimals: 18, totalSupply: 100, owner: Owner:0xa00A, address: Fee0Token:0x0f4e
-        StakingFactory StakingFactory:0x6eaC @ 0x6eaC8DFBdEB9588C9FEEe24783B4137b082f9708
-        - stakingTemplate        : 0xC4D8Dc1A8c1982C73ea4A40E0CC2Ea5805e3dc4F
-        - ogToken                : OGToken:0x1647
-        - stakingsLength         : 2
-        - staking 0 @ Staking:0x810A, owner: StakingFactory:0x6eaC
-          - dataType      : 1
-          - addresses     : ["Fee0Token:0x0f4e","ETH|null:0x0000","ETH|null:0x0000","ETH|null:0x0000"]
-          - uints         : ["0","0","0","0","0","0"]
-          - strings       : ["FEE0Token","","",""]
-          - stakesLength  : 0
-          - totalSupply   : 0
-          - weightedEnd   : 0
-          - slashingFactor: 0%
-        - staking 1 @ Staking:0xDab4, owner: StakingFactory:0x6eaC
-          - dataType      : 1
-          - addresses     : ["OGToken:0x1647","ETH|null:0x0000","ETH|null:0x0000","ETH|null:0x0000"]
-          - uints         : ["0","0","0","0","0","0"]
-          - strings       : ["OGToken","","",""]
-          - stakesLength  : 0
-          - totalSupply   : 0
-          - weightedEnd   : 0
-          - slashingFactor: 0%
-        
-      ✓ Workflow #0 - Stake, stake, stake, unstake, unstake (10769ms)
-    TestStakingFactory - Workflow #1 - Stake And Check weightedEnd
-        --- Setup 1 - Deploy OGToken, FEE0, StakingFactory ---
-        ogTokenTx - gasUsed: 954393, fee: 0.07635144, feeUsd: 29.4464598648, @ 80 gwei & 385.67 ETH/USD, 0x6d5bcc8b0702f0abcfdf51acff9c0a5d558eedfd7b5e2d5330629af4bf9689ed
-        + OGToken.Transfer(from: ETH|null:0x0000, to: Owner:0xa00A, tokens: 0)
-        fee0TokenTx - gasUsed: 823708, fee: 0.06589664, feeUsd: 25.4143571488, @ 80 gwei & 385.67 ETH/USD, 0x14267dbe63313dc9603ebeeb49871e7052e6a60f1abd5f6b9bf90d797137aeb0
-        + Fee0Token.Transfer(from: ETH|null:0x0000, to: Owner:0xa00A, tokens: 100)
-        stakingFactoryTx - gasUsed: 2779094, fee: 0.22232752, feeUsd: 85.7450546384, @ 80 gwei & 385.67 ETH/USD, 0xde54a2ce816408810cae639aff09cd59da77879128c5ffa841a14420e972d7e2
-        --- Setup 2 - OGToken mint(...) permissioning ---
-        setPermission1 - gasUsed: 49100, fee: 0.003928, feeUsd: 1.51491176, @ 80 gwei & 385.67 ETH/USD, 0x356e9a20eed7caebf20675c271c4c307b07351403a89fea9edeb0976a46c0099
-        + OGToken.PermissionUpdated(account: Owner:0xa00A, role: 1, active: true, maximum: 0, processed: 0)
-        
-         # Account                                             EtherBalanceChange                             OG                           FEE0 Blocks 28 to 32
-        -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E       -0.368503600000000000           0.000000000000000000         100.000000000000000000 Owner:0xa00A
-         1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433        0.000000000000000000           0.000000000000000000           0.000000000000000000 User1:0xa11A
-         2 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976        0.000000000000000000           0.000000000000000000           0.000000000000000000 User2:0xa22A
-         3 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0        0.000000000000000000           0.000000000000000000           0.000000000000000000 User3:0xa33a
-         4 0xa44a08d3F6933c69212114bb66E2Df1813651844        0.000000000000000000           0.000000000000000000           0.000000000000000000 User4:0xa44a
-         5 0xaD4b95A8873D8C8C5067E16173A15F99d5A27cf4        0.000000000000000000           0.000000000000000000           0.000000000000000000 OGToken:0xaD4b
-         6 0x5733d59f3792A3416Ac2c03FEae832894eC08059        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee0Token:0x5733
-         7 0xF77Ae5B1bBb133ba2aF7c12f10aa43D5b76Bc4ea        0.000000000000000000           0.000000000000000000           0.000000000000000000 StakingFactory:0xF77A
-        -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-                                                                                            0.000000000000000000         100.000000000000000000 Total Token Balances
-        -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-        
-        Token 0 symbol: 'OG', name: 'Optino Governance', decimals: 18, totalSupply: 0, owner: Owner:0xa00A, address: OGToken:0xaD4b
-        Token 1 symbol: 'FEE0', name: 'Fee0', decimals: 18, totalSupply: 100, owner: Owner:0xa00A, address: Fee0Token:0x5733
-        StakingFactory StakingFactory:0xF77A @ 0xF77Ae5B1bBb133ba2aF7c12f10aa43D5b76Bc4ea
-        - stakingTemplate        : 0x5Ad52417C7C5B4e7092FD61EF48Bb8aF22261236
-        - ogToken                : OGToken:0xaD4b
-        - stakingsLength         : 0
-        
-        --- Setup Completed ---
-
-        --- Test 1 - Mint 10,000 OGD tokens for User{1..3}; Owner approve 100 FEE for OGToken to spend ---
-        mint1 - gasUsed: 89419, fee: 0.00715352, feeUsd: 2.7588980584, @ 80 gwei & 385.67 ETH/USD, 0x1367177029813b74fe8994f205a645db70e42e9ede8bc65a1dc7b8a84f07532a
-        + OGToken.Transfer(from: ETH|null:0x0000, to: User1:0xa11A, tokens: 10000)
-        mint2 - gasUsed: 59419, fee: 0.00475352, feeUsd: 1.8332900584, @ 80 gwei & 385.67 ETH/USD, 0x5f88ed7b7bd71b777ac20c095ae15d339336725c9a5e2ab6790a0b6dc4f2ebc6
-        + OGToken.Transfer(from: ETH|null:0x0000, to: User2:0xa22A, tokens: 10000)
-        mint3 - gasUsed: 59419, fee: 0.00475352, feeUsd: 1.8332900584, @ 80 gwei & 385.67 ETH/USD, 0x6776c0bc874c0d80fde355e3e8224064c2921ba534fe023699b20b44dc15dd51
-        + OGToken.Transfer(from: ETH|null:0x0000, to: User3:0xa33a, tokens: 10000)
-        approve1 - gasUsed: 44002, fee: 0.00352016, feeUsd: 1.3576201072, @ 80 gwei & 385.67 ETH/USD, 0x7bfeae0cf5115e0256930b5b10c9c9dcb9e448620bf14b9453ca7709bd3889d9
-        + OGToken.Approval(tokenOwner: User1:0xa11A, spender: StakingFactory:0xF77A, tokens: 10000)
-        approve2 - gasUsed: 44002, fee: 0.00352016, feeUsd: 1.3576201072, @ 80 gwei & 385.67 ETH/USD, 0xe99f5fd1e000ec12498d79af53d1c30c957c10899f678c17bf6a3df2d0673c86
-        + OGToken.Approval(tokenOwner: User2:0xa22A, spender: StakingFactory:0xF77A, tokens: 10000)
-        approve3 - gasUsed: 44002, fee: 0.00352016, feeUsd: 1.3576201072, @ 80 gwei & 385.67 ETH/USD, 0x51b17d6edcd9051531f17fc64fc885eab390ad85fd4fdef992e8fd84a2b204b2
-        + OGToken.Approval(tokenOwner: User3:0xa33a, spender: StakingFactory:0xF77A, tokens: 10000)
-        
-         # Account                                             EtherBalanceChange                             OG                           FEE0 Blocks 28 to 38
-        -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E       -0.385164160000000000           0.000000000000000000         100.000000000000000000 Owner:0xa00A
-         1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433       -0.003520160000000000       10000.000000000000000000           0.000000000000000000 User1:0xa11A
-         2 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976       -0.003520160000000000       10000.000000000000000000           0.000000000000000000 User2:0xa22A
-         3 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0       -0.003520160000000000       10000.000000000000000000           0.000000000000000000 User3:0xa33a
-         4 0xa44a08d3F6933c69212114bb66E2Df1813651844        0.000000000000000000           0.000000000000000000           0.000000000000000000 User4:0xa44a
-         5 0xaD4b95A8873D8C8C5067E16173A15F99d5A27cf4        0.000000000000000000           0.000000000000000000           0.000000000000000000 OGToken:0xaD4b
-         6 0x5733d59f3792A3416Ac2c03FEae832894eC08059        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee0Token:0x5733
-         7 0xF77Ae5B1bBb133ba2aF7c12f10aa43D5b76Bc4ea        0.000000000000000000           0.000000000000000000           0.000000000000000000 StakingFactory:0xF77A
-        -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-                                                                                        30000.000000000000000000         100.000000000000000000 Total Token Balances
-        -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-        
-        Token 0 symbol: 'OG', name: 'Optino Governance', decimals: 18, totalSupply: 30000, owner: Owner:0xa00A, address: OGToken:0xaD4b
-        Token 1 symbol: 'FEE0', name: 'Fee0', decimals: 18, totalSupply: 100, owner: Owner:0xa00A, address: Fee0Token:0x5733
-        StakingFactory StakingFactory:0xF77A @ 0xF77Ae5B1bBb133ba2aF7c12f10aa43D5b76Bc4ea
-        - stakingTemplate        : 0x5Ad52417C7C5B4e7092FD61EF48Bb8aF22261236
-        - ogToken                : OGToken:0xaD4b
-        - stakingsLength         : 0
-        
-        --- Test 2 - Stake #1 - StakingFactory.addStakingForToken() ---
-        addStake1 - gasUsed: 437754, fee: 0.03502032, feeUsd: 13.5062868144, @ 80 gwei & 385.67 ETH/USD, 0x977b8ceb8044ebdd57f1e5661e625837fa217f9524e0b815a7ab058ad722576a
-        + StakingFactory.StakingCreated(key: 0xe5074e062ec9565cbd2eb3bcccdb42d385f54988887fe616725997b8346d0228, staking: Staking:0x65aE)
-        + OGToken.Transfer(from: User1:0xa11A, to: Staking:0x65aE, tokens: 1000)
-        + Staking.Staked(tokenOwner: User1:0xa11A, tokens: 1000, duration: 1000, end: 1603874770)
-        addStake2 - gasUsed: 141341, fee: 0.01130728, feeUsd: 4.3608786776, @ 80 gwei & 385.67 ETH/USD, 0x95cec47172b99a987ed15b7527a973721cd947d6e77daa414ce92f4faf206b87
-        + OGToken.Transfer(from: User2:0xa22A, to: Staking:0x65aE, tokens: 2000)
-        + Staking.Staked(tokenOwner: User2:0xa22A, tokens: 2000, duration: 10000, end: 1603883771)
-        
-         # Account                                             EtherBalanceChange                             OG                           FEE0 Blocks 28 to 41
-        -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E       -0.385164160000000000           0.000000000000000000         100.000000000000000000 Owner:0xa00A
-         1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433       -0.038540480000000000        9000.000000000000000000           0.000000000000000000 User1:0xa11A
-         2 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976       -0.014827440000000000        8000.000000000000000000           0.000000000000000000 User2:0xa22A
-         3 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0       -0.014828400000000000        7000.000000000000000000           0.000000000000000000 User3:0xa33a
-         4 0xa44a08d3F6933c69212114bb66E2Df1813651844        0.000000000000000000           0.000000000000000000           0.000000000000000000 User4:0xa44a
-         5 0xaD4b95A8873D8C8C5067E16173A15F99d5A27cf4        0.000000000000000000           0.000000000000000000           0.000000000000000000 OGToken:0xaD4b
-         6 0x5733d59f3792A3416Ac2c03FEae832894eC08059        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee0Token:0x5733
-         7 0xF77Ae5B1bBb133ba2aF7c12f10aa43D5b76Bc4ea        0.000000000000000000           0.000000000000000000           0.000000000000000000 StakingFactory:0xF77A
-         8 0x65aE125166b5D16248520bbAfe6Ce75cC92f72e9        0.000000000000000000        6000.000000000000000000           0.000000000000000000 Staking:0x65aE
-        -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-                                                                                        30000.000000000000000000         100.000000000000000000 Total Token Balances
-        -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-        
-        Token 0 symbol: 'OG', name: 'Optino Governance', decimals: 18, totalSupply: 30000, owner: Owner:0xa00A, address: OGToken:0xaD4b
-        Token 1 symbol: 'FEE0', name: 'Fee0', decimals: 18, totalSupply: 100, owner: Owner:0xa00A, address: Fee0Token:0x5733
-        StakingFactory StakingFactory:0xF77A @ 0xF77Ae5B1bBb133ba2aF7c12f10aa43D5b76Bc4ea
-        - stakingTemplate        : 0x5Ad52417C7C5B4e7092FD61EF48Bb8aF22261236
-        - ogToken                : OGToken:0xaD4b
-        - stakingsLength         : 1
-        - staking 0 @ Staking:0x65aE, owner: StakingFactory:0xF77A
-          - dataType      : 1
-          - addresses     : ["Fee0Token:0x5733","ETH|null:0x0000","ETH|null:0x0000","ETH|null:0x0000"]
-          - uints         : ["0","0","0","0","0","0"]
-          - strings       : ["FEE0Token","","",""]
-          - stakesLength  : 3
-          - totalSupply   : 6000
-          - weightedEnd   : 1603927271
-          - slashingFactor: 0%
-            - stake 0 owner: 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433, duration: 1000, end: 1603874770, index: 0, tokens: 1000
-            - stake 1 owner: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, duration: 10000, end: 1603883771, index: 1, tokens: 2000
-            - stake 2 owner: 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0, duration: 100000, end: 1603973772, index: 2, tokens: 3000
-        
-        expectedWeightedEnd: 1603927235.951
-        weightedEnd        : 1603927271
-      ✓ Workflow #1 - Stake And Check weightedEnd (708ms)
-    TestStakingFactory - Workflow #2 - Stake with expected exception
-        --- Setup 1 - Deploy OGToken, FEE0, StakingFactory ---
-        ogTokenTx - gasUsed: 954393, fee: 0.07635144, feeUsd: 29.4464598648, @ 80 gwei & 385.67 ETH/USD, 0x8e092f0d6c4dd560cf2527d4af950d37d8dc7994530723274f7884cfc08bb518
-        + OGToken.Transfer(from: ETH|null:0x0000, to: Owner:0xa00A, tokens: 0)
-        fee0TokenTx - gasUsed: 823708, fee: 0.06589664, feeUsd: 25.4143571488, @ 80 gwei & 385.67 ETH/USD, 0x47f9f7756cdd3072d197c52c50ae5adc15e6b8f7467dc37f6b391a321873028f
-        + Fee0Token.Transfer(from: ETH|null:0x0000, to: Owner:0xa00A, tokens: 100)
-        stakingFactoryTx - gasUsed: 2779082, fee: 0.22232656, feeUsd: 85.7446843952, @ 80 gwei & 385.67 ETH/USD, 0xfa29597444f4795480377db4f460577a6a501227f50ce12530581c1304c9d0a6
-        --- Setup 2 - OGToken mint(...) permissioning ---
-        setPermission1 - gasUsed: 49100, fee: 0.003928, feeUsd: 1.51491176, @ 80 gwei & 385.67 ETH/USD, 0xe5fa3c7b701ab92bb29df078089ac5711807997bdd5824ad3c6a038ec80b48cd
-        + OGToken.PermissionUpdated(account: Owner:0xa00A, role: 1, active: true, maximum: 0, processed: 0)
-        
-         # Account                                             EtherBalanceChange                             OG                           FEE0 Blocks 41 to 45
-        -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E       -0.368502640000000000           0.000000000000000000         100.000000000000000000 Owner:0xa00A
-         1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433        0.000000000000000000           0.000000000000000000           0.000000000000000000 User1:0xa11A
-         2 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976        0.000000000000000000           0.000000000000000000           0.000000000000000000 User2:0xa22A
-         3 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0        0.000000000000000000           0.000000000000000000           0.000000000000000000 User3:0xa33a
-         4 0xa44a08d3F6933c69212114bb66E2Df1813651844        0.000000000000000000           0.000000000000000000           0.000000000000000000 User4:0xa44a
-         5 0xB938100093d107E4998A9Cc61066A86a21aA509D        0.000000000000000000           0.000000000000000000           0.000000000000000000 OGToken:0xB938
-         6 0x759c3c04e2876f79f58ab7dC8B7C1Dead97b479A        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee0Token:0x759c
-         7 0x967C635e5b7C32B215b7255Ea5355D39F68fCDcc        0.000000000000000000           0.000000000000000000           0.000000000000000000 StakingFactory:0x967C
-        -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-                                                                                            0.000000000000000000         100.000000000000000000 Total Token Balances
-        -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-        
-        Token 0 symbol: 'OG', name: 'Optino Governance', decimals: 18, totalSupply: 0, owner: Owner:0xa00A, address: OGToken:0xB938
-        Token 1 symbol: 'FEE0', name: 'Fee0', decimals: 18, totalSupply: 100, owner: Owner:0xa00A, address: Fee0Token:0x759c
-        StakingFactory StakingFactory:0x967C @ 0x967C635e5b7C32B215b7255Ea5355D39F68fCDcc
-        - stakingTemplate        : 0x8CE03d601384F2c7E097fCCF115927Dd2621271C
-        - ogToken                : OGToken:0xB938
-        - stakingsLength         : 0
-        
-        --- Setup Completed ---
-
-        --- Test 1 - Mint 10,000 OGD tokens for User{1..3}; Owner approve 100 FEE for OGToken to spend ---
-        mint1 - gasUsed: 89419, fee: 0.00715352, feeUsd: 2.7588980584, @ 80 gwei & 385.67 ETH/USD, 0x55248c2123c52e9bf8f5bc285f5fcff79a682b4b430b949695338d6a11420207
-        + OGToken.Transfer(from: ETH|null:0x0000, to: User1:0xa11A, tokens: 10000)
-        mint2 - gasUsed: 59419, fee: 0.00475352, feeUsd: 1.8332900584, @ 80 gwei & 385.67 ETH/USD, 0x5600384a4b92dbe9b2e1cbee813aaf40f802770893995bcad1f211fba3650e67
-        + OGToken.Transfer(from: ETH|null:0x0000, to: User2:0xa22A, tokens: 10000)
-        mint3 - gasUsed: 59419, fee: 0.00475352, feeUsd: 1.8332900584, @ 80 gwei & 385.67 ETH/USD, 0x2dcd29f0f25ec845be5ea74a54f4e27ca6a31990e03a4fa235d6625f6c389ef3
-        + OGToken.Transfer(from: ETH|null:0x0000, to: User3:0xa33a, tokens: 10000)
-        approve1 - gasUsed: 44002, fee: 0.00352016, feeUsd: 1.3576201072, @ 80 gwei & 385.67 ETH/USD, 0x93570108f57b0c5ac08a944ee0872713905810568d4c0f67284afb85b17c1b29
-        + OGToken.Approval(tokenOwner: User1:0xa11A, spender: StakingFactory:0x967C, tokens: 10000)
-        approve2 - gasUsed: 44002, fee: 0.00352016, feeUsd: 1.3576201072, @ 80 gwei & 385.67 ETH/USD, 0x74a1de251eb399e3191e21d1c765ed1a04ba6367c5243c19cc2cd997d59f4781
-        + OGToken.Approval(tokenOwner: User2:0xa22A, spender: StakingFactory:0x967C, tokens: 10000)
-        approve3 - gasUsed: 44002, fee: 0.00352016, feeUsd: 1.3576201072, @ 80 gwei & 385.67 ETH/USD, 0x494f5946debfa8ed65d0aa42079739d75c3daf78a6df4a2fbd835ae7983a532d
-        + OGToken.Approval(tokenOwner: User3:0xa33a, spender: StakingFactory:0x967C, tokens: 10000)
-        
-         # Account                                             EtherBalanceChange                             OG                           FEE0 Blocks 41 to 51
-        -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E       -0.385163200000000000           0.000000000000000000         100.000000000000000000 Owner:0xa00A
-         1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433       -0.003520160000000000       10000.000000000000000000           0.000000000000000000 User1:0xa11A
-         2 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976       -0.003520160000000000       10000.000000000000000000           0.000000000000000000 User2:0xa22A
-         3 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0       -0.003520160000000000       10000.000000000000000000           0.000000000000000000 User3:0xa33a
-         4 0xa44a08d3F6933c69212114bb66E2Df1813651844        0.000000000000000000           0.000000000000000000           0.000000000000000000 User4:0xa44a
-         5 0xB938100093d107E4998A9Cc61066A86a21aA509D        0.000000000000000000           0.000000000000000000           0.000000000000000000 OGToken:0xB938
-         6 0x759c3c04e2876f79f58ab7dC8B7C1Dead97b479A        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee0Token:0x759c
-         7 0x967C635e5b7C32B215b7255Ea5355D39F68fCDcc        0.000000000000000000           0.000000000000000000           0.000000000000000000 StakingFactory:0x967C
-        -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-                                                                                        30000.000000000000000000         100.000000000000000000 Total Token Balances
-        -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-        
-        Token 0 symbol: 'OG', name: 'Optino Governance', decimals: 18, totalSupply: 30000, owner: Owner:0xa00A, address: OGToken:0xB938
-        Token 1 symbol: 'FEE0', name: 'Fee0', decimals: 18, totalSupply: 100, owner: Owner:0xa00A, address: Fee0Token:0x759c
-        StakingFactory StakingFactory:0x967C @ 0x967C635e5b7C32B215b7255Ea5355D39F68fCDcc
-        - stakingTemplate        : 0x8CE03d601384F2c7E097fCCF115927Dd2621271C
-        - ogToken                : OGToken:0xB938
-        - stakingsLength         : 0
-        
-        --- Test 2 - Stake #1 - StakingFactory.addStakingForToken() ---
-        Insufficient approved OG tokens to stake with - Exception 'Sub underflow' thrown as expected
-        addStake1 - gasUsed: 437754, fee: 0.03502032, feeUsd: 13.5062868144, @ 80 gwei & 385.67 ETH/USD, 0x4e111f93eb029dfc25f9012c03696851486d57f66aa2c7c68c31e344cc2009e0
-        + StakingFactory.StakingCreated(key: 0xd2e9beab5f713a540436879aa436f2553910d259832416fe4b9e8547b3e29117, staking: Staking:0x845c)
-        + OGToken.Transfer(from: User1:0xa11A, to: Staking:0x845c, tokens: 1000)
-        + Staking.Staked(tokenOwner: User1:0xa11A, tokens: 1000, duration: 1000, end: 1603874783)
-        addStake2 - gasUsed: 141341, fee: 0.01130728, feeUsd: 4.3608786776, @ 80 gwei & 385.67 ETH/USD, 0x4d197c7f567a53fc7b1c428465a34484c44114db0544bae0fecb1e32ec1be60d
-        + OGToken.Transfer(from: User2:0xa22A, to: Staking:0x845c, tokens: 2000)
-        + Staking.Staked(tokenOwner: User2:0xa22A, tokens: 2000, duration: 10000, end: 1603883784)
-        
-         # Account                                             EtherBalanceChange                             OG                           FEE0 Blocks 41 to 54
-        -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E       -0.385163200000000000           0.000000000000000000         100.000000000000000000 Owner:0xa00A
-         1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433       -0.038540480000000000        9000.000000000000000000           0.000000000000000000 User1:0xa11A
-         2 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976       -0.014827440000000000        8000.000000000000000000           0.000000000000000000 User2:0xa22A
-         3 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0       -0.005946320000000000       10000.000000000000000000           0.000000000000000000 User3:0xa33a
-         4 0xa44a08d3F6933c69212114bb66E2Df1813651844        0.000000000000000000           0.000000000000000000           0.000000000000000000 User4:0xa44a
-         5 0xB938100093d107E4998A9Cc61066A86a21aA509D        0.000000000000000000           0.000000000000000000           0.000000000000000000 OGToken:0xB938
-         6 0x759c3c04e2876f79f58ab7dC8B7C1Dead97b479A        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee0Token:0x759c
-         7 0x967C635e5b7C32B215b7255Ea5355D39F68fCDcc        0.000000000000000000           0.000000000000000000           0.000000000000000000 StakingFactory:0x967C
-         8 0x845c64dfCC6fc66bdf1eA3c3839A8D9Cf1d2140D        0.000000000000000000        3000.000000000000000000           0.000000000000000000 Staking:0x845c
-        -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-                                                                                        30000.000000000000000000         100.000000000000000000 Total Token Balances
-        -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-        
-        Token 0 symbol: 'OG', name: 'Optino Governance', decimals: 18, totalSupply: 30000, owner: Owner:0xa00A, address: OGToken:0xB938
-        Token 1 symbol: 'FEE0', name: 'Fee0', decimals: 18, totalSupply: 100, owner: Owner:0xa00A, address: Fee0Token:0x759c
-        StakingFactory StakingFactory:0x967C @ 0x967C635e5b7C32B215b7255Ea5355D39F68fCDcc
-        - stakingTemplate        : 0x8CE03d601384F2c7E097fCCF115927Dd2621271C
-        - ogToken                : OGToken:0xB938
-        - stakingsLength         : 1
-        - staking 0 @ Staking:0x845c, owner: StakingFactory:0x967C
-          - dataType      : 1
-          - addresses     : ["Fee0Token:0x759c","ETH|null:0x0000","ETH|null:0x0000","ETH|null:0x0000"]
-          - uints         : ["0","0","0","0","0","0"]
-          - strings       : ["FEE0Token","","",""]
-          - stakesLength  : 2
-          - totalSupply   : 3000
-          - weightedEnd   : 1603880783
-          - slashingFactor: 0%
-            - stake 0 owner: 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433, duration: 1000, end: 1603874783, index: 0, tokens: 1000
-            - stake 1 owner: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, duration: 10000, end: 1603883784, index: 1, tokens: 2000
-        
-      ✓ Workflow #2 - Stake with expected exception (661ms)
-    TestStakingFactory - Workflow #3 - Stake, slash and unstake
-        --- Setup 1 - Deploy OGToken, FEE0, StakingFactory ---
-        ogTokenTx - gasUsed: 954393, fee: 0.07635144, feeUsd: 29.4464598648, @ 80 gwei & 385.67 ETH/USD, 0x557f70e659e16fe5a999f79fbdf0f7c916b8b88efeaff1aef3b7c1c11a28c191
-        + OGToken.Transfer(from: ETH|null:0x0000, to: Owner:0xa00A, tokens: 0)
-        fee0TokenTx - gasUsed: 823708, fee: 0.06589664, feeUsd: 25.4143571488, @ 80 gwei & 385.67 ETH/USD, 0x30b8c2b5b4933b8b8d1aa9f984a85cf641e1c213af4b16c5dec0e97b190d9a5c
-        + Fee0Token.Transfer(from: ETH|null:0x0000, to: Owner:0xa00A, tokens: 100)
-        stakingFactoryTx - gasUsed: 2779094, fee: 0.22232752, feeUsd: 85.7450546384, @ 80 gwei & 385.67 ETH/USD, 0xa513fa623d7e7e8ea3b0ba8695210ad101f0096970480bfaea07e8564be237f1
-        --- Setup 2 - OGToken mint(...) permissioning ---
-        setPermission1 - gasUsed: 49100, fee: 0.003928, feeUsd: 1.51491176, @ 80 gwei & 385.67 ETH/USD, 0xaeeaebd7efa816141574e719a1d6f0718b0ad0f4ec68db52fa1b5a3aec98b364
-        + OGToken.PermissionUpdated(account: Owner:0xa00A, role: 1, active: true, maximum: 0, processed: 0)
-        
-         # Account                                             EtherBalanceChange                             OG                           FEE0 Blocks 54 to 58
-        -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E       -0.368503600000000000           0.000000000000000000         100.000000000000000000 Owner:0xa00A
-         1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433        0.000000000000000000           0.000000000000000000           0.000000000000000000 User1:0xa11A
-         2 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976        0.000000000000000000           0.000000000000000000           0.000000000000000000 User2:0xa22A
-         3 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0        0.000000000000000000           0.000000000000000000           0.000000000000000000 User3:0xa33a
-         4 0xa44a08d3F6933c69212114bb66E2Df1813651844        0.000000000000000000           0.000000000000000000           0.000000000000000000 User4:0xa44a
-         5 0xee9a0dAE3e21Fe8b9B9E2E13E693F41E0aB3f42b        0.000000000000000000           0.000000000000000000           0.000000000000000000 OGToken:0xee9a
-         6 0x0b70A80b0336777A1697A5b505A6F1f3cC1087A0        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee0Token:0x0b70
-         7 0xA92f39B1123B4051a6Ef6736879F85249AB45845        0.000000000000000000           0.000000000000000000           0.000000000000000000 StakingFactory:0xA92f
-        -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-                                                                                            0.000000000000000000         100.000000000000000000 Total Token Balances
-        -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-        
-        Token 0 symbol: 'OG', name: 'Optino Governance', decimals: 18, totalSupply: 0, owner: Owner:0xa00A, address: OGToken:0xee9a
-        Token 1 symbol: 'FEE0', name: 'Fee0', decimals: 18, totalSupply: 100, owner: Owner:0xa00A, address: Fee0Token:0x0b70
-        StakingFactory StakingFactory:0xA92f @ 0xA92f39B1123B4051a6Ef6736879F85249AB45845
-        - stakingTemplate        : 0xcea63167aabeB0E0dFA7864f41535AcF691afE42
-        - ogToken                : OGToken:0xee9a
-        - stakingsLength         : 0
-        
-        --- Setup Completed ---
-
-        --- Test 1 - Mint 10,000 OGD tokens for User{1..3}; User{1..3} approve 10,000 FEE for StakingFactory to spend ---
-        mint1 - gasUsed: 89419, fee: 0.00715352, feeUsd: 2.7588980584, @ 80 gwei & 385.67 ETH/USD, 0xc4073dd52df1b75a75a533525b52e407f6596c8e73a60ab46c307ad6b8fa2fd5
-        + OGToken.Transfer(from: ETH|null:0x0000, to: User1:0xa11A, tokens: 10000)
-        mint2 - gasUsed: 59419, fee: 0.00475352, feeUsd: 1.8332900584, @ 80 gwei & 385.67 ETH/USD, 0x75a3d4d7be45af89cc38e549a3e7f7a0d2839be04a78e130949cb3be77f671b7
-        + OGToken.Transfer(from: ETH|null:0x0000, to: User2:0xa22A, tokens: 10000)
-        mint3 - gasUsed: 59419, fee: 0.00475352, feeUsd: 1.8332900584, @ 80 gwei & 385.67 ETH/USD, 0x4a495641af35f99135a53a2045feb16869037a7541eb078511b95eda42d6812d
-        + OGToken.Transfer(from: ETH|null:0x0000, to: User3:0xa33a, tokens: 10000)
-        approve1 - gasUsed: 44002, fee: 0.00352016, feeUsd: 1.3576201072, @ 80 gwei & 385.67 ETH/USD, 0xecd921579a6de08547ede3416c225df905fdccffd0e66848359982f2151295b9
-        + OGToken.Approval(tokenOwner: User1:0xa11A, spender: StakingFactory:0xA92f, tokens: 10000)
-        approve2 - gasUsed: 44002, fee: 0.00352016, feeUsd: 1.3576201072, @ 80 gwei & 385.67 ETH/USD, 0x4d5e890528cd7271646b4b81a167a6cba6cc51409d0c1cf8063cf58b3d1aede6
-        + OGToken.Approval(tokenOwner: User2:0xa22A, spender: StakingFactory:0xA92f, tokens: 10000)
-        approve3 - gasUsed: 44002, fee: 0.00352016, feeUsd: 1.3576201072, @ 80 gwei & 385.67 ETH/USD, 0x91cd74028b341ecc9bb19abab1a2ffd5caa34599d93d4abfd8768a03f65f55dd
-        + OGToken.Approval(tokenOwner: User3:0xa33a, spender: StakingFactory:0xA92f, tokens: 10000)
-        
-         # Account                                             EtherBalanceChange                             OG                           FEE0 Blocks 54 to 64
-        -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E       -0.385164160000000000           0.000000000000000000         100.000000000000000000 Owner:0xa00A
-         1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433       -0.003520160000000000       10000.000000000000000000           0.000000000000000000 User1:0xa11A
-         2 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976       -0.003520160000000000       10000.000000000000000000           0.000000000000000000 User2:0xa22A
-         3 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0       -0.003520160000000000       10000.000000000000000000           0.000000000000000000 User3:0xa33a
-         4 0xa44a08d3F6933c69212114bb66E2Df1813651844        0.000000000000000000           0.000000000000000000           0.000000000000000000 User4:0xa44a
-         5 0xee9a0dAE3e21Fe8b9B9E2E13E693F41E0aB3f42b        0.000000000000000000           0.000000000000000000           0.000000000000000000 OGToken:0xee9a
-         6 0x0b70A80b0336777A1697A5b505A6F1f3cC1087A0        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee0Token:0x0b70
-         7 0xA92f39B1123B4051a6Ef6736879F85249AB45845        0.000000000000000000           0.000000000000000000           0.000000000000000000 StakingFactory:0xA92f
-        -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-                                                                                        30000.000000000000000000         100.000000000000000000 Total Token Balances
-        -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-        
-        Token 0 symbol: 'OG', name: 'Optino Governance', decimals: 18, totalSupply: 30000, owner: Owner:0xa00A, address: OGToken:0xee9a
-        Token 1 symbol: 'FEE0', name: 'Fee0', decimals: 18, totalSupply: 100, owner: Owner:0xa00A, address: Fee0Token:0x0b70
-        StakingFactory StakingFactory:0xA92f @ 0xA92f39B1123B4051a6Ef6736879F85249AB45845
-        - stakingTemplate        : 0xcea63167aabeB0E0dFA7864f41535AcF691afE42
-        - ogToken                : OGToken:0xee9a
-        - stakingsLength         : 0
-        
-        --- Test 2 - User{1..3} -> StakingFactory.addStakingForToken(1,000, duration) ---
-        addStake1 - gasUsed: 437742, fee: 0.03501936, feeUsd: 13.5059165712, @ 80 gwei & 385.67 ETH/USD, 0xb98d9a56393a78a2c24825dfc7427ec04949603876ab97c8435b5d499c5fbf10
-        + StakingFactory.StakingCreated(key: 0xa66138443416e4950d64e7b267fa161e5df2d42f49f662d6e1a54464246b797e, staking: Staking:0xcD8e)
-        + OGToken.Transfer(from: User1:0xa11A, to: Staking:0xcD8e, tokens: 1000)
-        + Staking.Staked(tokenOwner: User1:0xa11A, tokens: 1000, duration: 3, end: 1603873799)
-        addStake2 - gasUsed: 141329, fee: 0.01130632, feeUsd: 4.3605084344, @ 80 gwei & 385.67 ETH/USD, 0xe4a108769490785e8b2553ba07bb22b45ce315ba4bb52810f2ba2e1fe2964f22
-        + OGToken.Transfer(from: User2:0xa22A, to: Staking:0xcD8e, tokens: 1000)
-        + Staking.Staked(tokenOwner: User2:0xa22A, tokens: 1000, duration: 3, end: 1603873800)
-        addStake3 - gasUsed: 141329, fee: 0.01130632, feeUsd: 4.3605084344, @ 80 gwei & 385.67 ETH/USD, 0x1aa43c7d7028d577ca271bb2580c862638bb25a7a69cbcec9321ecdd5ecf4138
-        + OGToken.Transfer(from: User3:0xa33a, to: Staking:0xcD8e, tokens: 1000)
-        + Staking.Staked(tokenOwner: User3:0xa33a, tokens: 1000, duration: 3, end: 1603873801)
-        
-         # Account                                             EtherBalanceChange                             OG                           FEE0 Blocks 54 to 67
-        -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E       -0.385164160000000000           0.000000000000000000         100.000000000000000000 Owner:0xa00A
-         1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433       -0.038539520000000000        9000.000000000000000000           0.000000000000000000 User1:0xa11A
-         2 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976       -0.014826480000000000        9000.000000000000000000           0.000000000000000000 User2:0xa22A
+                                                                                         1000.000000000000000000           0.000000000000000000
          3 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0       -0.014826480000000000        9000.000000000000000000           0.000000000000000000 User3:0xa33a
+                                                                                         1000.000000000000000000           0.000000000000000000
          4 0xa44a08d3F6933c69212114bb66E2Df1813651844        0.000000000000000000           0.000000000000000000           0.000000000000000000 User4:0xa44a
-         5 0xee9a0dAE3e21Fe8b9B9E2E13E693F41E0aB3f42b        0.000000000000000000           0.000000000000000000           0.000000000000000000 OGToken:0xee9a
-         6 0x0b70A80b0336777A1697A5b505A6F1f3cC1087A0        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee0Token:0x0b70
-         7 0xA92f39B1123B4051a6Ef6736879F85249AB45845        0.000000000000000000           0.000000000000000000           0.000000000000000000 StakingFactory:0xA92f
-         8 0xcD8e61Ef9a3fBeB04201CfDd409E4a79dd6C450f        0.000000000000000000        3000.000000000000000000           0.000000000000000000 Staking:0xcD8e
+                                                                                            0.000000000000000000           0.000000000000000000
+         5 0x1647B1461251A0c6D3E14a227dE0F16E36ba80B1        0.000000000000000000           0.000000000000000000           0.000000000000000000 OGToken:0x1647
+                                                                                            0.000000000000000000           0.000000000000000000
+         6 0x0f4eA6f2be49d822b7cAEf4175450A4D83A32e72        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee0Token:0x0f4e
+                                                                                            0.000000000000000000           0.000000000000000000
+         7 0x6eaC8DFBdEB9588C9FEEe24783B4137b082f9708        0.000000000000000000           0.000000000000000000           0.000000000000000000 StakingFactory:0x6eaC
+                                                                                            0.000000000000000000           0.000000000000000000
+         8 0x810A42E257Cb2Ec2c01f56F477d305F5e5c5EBE3        0.000000000000000000        3000.000000000000000000           0.000000000000000000 Staking:0x810A
+                                                                                            0.000000000000000000           0.000000000000000000
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
                                                                                         30000.000000000000000000         100.000000000000000000 Total Token Balances
+                                                                                         3000.000000000000000000           0.000000000000000000
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
         
-        Token 0 symbol: 'OG', name: 'Optino Governance', decimals: 18, totalSupply: 30000, owner: Owner:0xa00A, address: OGToken:0xee9a
-        Token 1 symbol: 'FEE0', name: 'Fee0', decimals: 18, totalSupply: 100, owner: Owner:0xa00A, address: Fee0Token:0x0b70
-        StakingFactory StakingFactory:0xA92f @ 0xA92f39B1123B4051a6Ef6736879F85249AB45845
-        - stakingTemplate        : 0xcea63167aabeB0E0dFA7864f41535AcF691afE42
-        - ogToken                : OGToken:0xee9a
+        Token 0 symbol: 'OG', name: 'Optino Governance', decimals: 18, totalSupply: 30000, owner: Owner:0xa00A, address: OGToken:0x1647
+        Token 1 symbol: 'FEE0', name: 'Fee0', decimals: 18, totalSupply: 100, owner: Owner:0xa00A, address: Fee0Token:0x0f4e
+        Token 2 symbol: 'FEE0Token', name: '', decimals: 18, totalSupply: 3000, owner: StakingFactory:0x6eaC, address: Staking:0x810A
+        StakingFactory StakingFactory:0x6eaC @ 0x6eaC8DFBdEB9588C9FEEe24783B4137b082f9708
+        - stakingTemplate        : 0xC4D8Dc1A8c1982C73ea4A40E0CC2Ea5805e3dc4F
+        - ogToken                : OGToken:0x1647
         - stakingsLength         : 1
-        - staking 0 @ Staking:0xcD8e, owner: StakingFactory:0xA92f
+        - staking 0 @ Staking:0x810A, owner: StakingFactory:0x6eaC
           - dataType      : 1
-          - addresses     : ["Fee0Token:0x0b70","ETH|null:0x0000","ETH|null:0x0000","ETH|null:0x0000"]
+          - addresses     : ["Fee0Token:0x0f4e","ETH|null:0x0000","ETH|null:0x0000","ETH|null:0x0000"]
           - uints         : ["0","0","0","0","0","0"]
           - strings       : ["FEE0Token","","",""]
           - stakesLength  : 3
           - totalSupply   : 3000
-          - weightedEnd   : 1603873800
+          - weightedEnd   : 1603877372
           - slashingFactor: 0%
-            - stake 0 owner: 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433, duration: 3, end: 1603873799, index: 0, tokens: 1000
-            - stake 1 owner: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, duration: 3, end: 1603873800, index: 1, tokens: 1000
-            - stake 2 owner: 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0, duration: 3, end: 1603873801, index: 2, tokens: 1000
+            - stake 0 owner: 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433, duration: 3, end: 1603877371, index: 0, tokens: 1000
+            - stake 1 owner: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, duration: 3, end: 1603877372, index: 1, tokens: 1000
+            - stake 2 owner: 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0, duration: 3, end: 1603877373, index: 2, tokens: 1000
         
         --- Test 3 - owner -> StakingFactory.slash(staking, 30%) ---
-        slash1 - gasUsed: 66286, fee: 0.00530288, feeUsd: 2.0451617296, @ 80 gwei & 385.67 ETH/USD, 0x6504c838192544a8caa6514a6bc51c1d4196c2cbaf8c84a6bd9fb6421759d574
-        + OGToken.Transfer(from: Staking:0xcD8e, to: ETH|null:0x0000, tokens: 900)
+        slash1 - gasUsed: 66286, fee: 0.00530288, feeUsd: 2.0451617296, @ 80 gwei & 385.67 ETH/USD, 0xaf2ca01e3900211d4803cb3c17dfe8500b1f206d016fdcdd6f9b35ce96e1d800
+        + OGToken.Transfer(from: Staking:0x810A, to: ETH|null:0x0000, tokens: 900)
         + Staking.Slashed(slashingFactor: 30%, tokensBurnt: 900)
         
-         # Account                                             EtherBalanceChange                             OG                           FEE0 Blocks 54 to 68
+         # Account                                             EtherBalanceChange                             OG                           FEE0 Blocks 0 to 14
+                                                                                                       FEE0Token                            ???
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
          0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E       -0.390467040000000000           0.000000000000000000         100.000000000000000000 Owner:0xa00A
+                                                                                            0.000000000000000000           0.000000000000000000
          1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433       -0.038539520000000000        9000.000000000000000000           0.000000000000000000 User1:0xa11A
+                                                                                         1000.000000000000000000           0.000000000000000000
          2 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976       -0.014826480000000000        9000.000000000000000000           0.000000000000000000 User2:0xa22A
+                                                                                         1000.000000000000000000           0.000000000000000000
          3 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0       -0.014826480000000000        9000.000000000000000000           0.000000000000000000 User3:0xa33a
+                                                                                         1000.000000000000000000           0.000000000000000000
          4 0xa44a08d3F6933c69212114bb66E2Df1813651844        0.000000000000000000           0.000000000000000000           0.000000000000000000 User4:0xa44a
-         5 0xee9a0dAE3e21Fe8b9B9E2E13E693F41E0aB3f42b        0.000000000000000000           0.000000000000000000           0.000000000000000000 OGToken:0xee9a
-         6 0x0b70A80b0336777A1697A5b505A6F1f3cC1087A0        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee0Token:0x0b70
-         7 0xA92f39B1123B4051a6Ef6736879F85249AB45845        0.000000000000000000           0.000000000000000000           0.000000000000000000 StakingFactory:0xA92f
-         8 0xcD8e61Ef9a3fBeB04201CfDd409E4a79dd6C450f        0.000000000000000000        2100.000000000000000000           0.000000000000000000 Staking:0xcD8e
+                                                                                            0.000000000000000000           0.000000000000000000
+         5 0x1647B1461251A0c6D3E14a227dE0F16E36ba80B1        0.000000000000000000           0.000000000000000000           0.000000000000000000 OGToken:0x1647
+                                                                                            0.000000000000000000           0.000000000000000000
+         6 0x0f4eA6f2be49d822b7cAEf4175450A4D83A32e72        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee0Token:0x0f4e
+                                                                                            0.000000000000000000           0.000000000000000000
+         7 0x6eaC8DFBdEB9588C9FEEe24783B4137b082f9708        0.000000000000000000           0.000000000000000000           0.000000000000000000 StakingFactory:0x6eaC
+                                                                                            0.000000000000000000           0.000000000000000000
+         8 0x810A42E257Cb2Ec2c01f56F477d305F5e5c5EBE3        0.000000000000000000        2100.000000000000000000           0.000000000000000000 Staking:0x810A
+                                                                                            0.000000000000000000           0.000000000000000000
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
                                                                                         29100.000000000000000000         100.000000000000000000 Total Token Balances
+                                                                                         3000.000000000000000000           0.000000000000000000
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
         
-        Token 0 symbol: 'OG', name: 'Optino Governance', decimals: 18, totalSupply: 29100, owner: Owner:0xa00A, address: OGToken:0xee9a
-        Token 1 symbol: 'FEE0', name: 'Fee0', decimals: 18, totalSupply: 100, owner: Owner:0xa00A, address: Fee0Token:0x0b70
-        StakingFactory StakingFactory:0xA92f @ 0xA92f39B1123B4051a6Ef6736879F85249AB45845
-        - stakingTemplate        : 0xcea63167aabeB0E0dFA7864f41535AcF691afE42
-        - ogToken                : OGToken:0xee9a
+        Token 0 symbol: 'OG', name: 'Optino Governance', decimals: 18, totalSupply: 29100, owner: Owner:0xa00A, address: OGToken:0x1647
+        Token 1 symbol: 'FEE0', name: 'Fee0', decimals: 18, totalSupply: 100, owner: Owner:0xa00A, address: Fee0Token:0x0f4e
+        Token 2 symbol: 'FEE0Token', name: '', decimals: 18, totalSupply: 3000, owner: StakingFactory:0x6eaC, address: Staking:0x810A
+        StakingFactory StakingFactory:0x6eaC @ 0x6eaC8DFBdEB9588C9FEEe24783B4137b082f9708
+        - stakingTemplate        : 0xC4D8Dc1A8c1982C73ea4A40E0CC2Ea5805e3dc4F
+        - ogToken                : OGToken:0x1647
         - stakingsLength         : 1
-        - staking 0 @ Staking:0xcD8e, owner: StakingFactory:0xA92f
+        - staking 0 @ Staking:0x810A, owner: StakingFactory:0x6eaC
           - dataType      : 1
-          - addresses     : ["Fee0Token:0x0b70","ETH|null:0x0000","ETH|null:0x0000","ETH|null:0x0000"]
+          - addresses     : ["Fee0Token:0x0f4e","ETH|null:0x0000","ETH|null:0x0000","ETH|null:0x0000"]
           - uints         : ["0","0","0","0","0","0"]
           - strings       : ["FEE0Token","","",""]
           - stakesLength  : 3
           - totalSupply   : 3000
-          - weightedEnd   : 1603873800
+          - weightedEnd   : 1603877372
           - slashingFactor: 30%
-            - stake 0 owner: 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433, duration: 3, end: 1603873799, index: 0, tokens: 1000
-            - stake 1 owner: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, duration: 3, end: 1603873800, index: 1, tokens: 1000
-            - stake 2 owner: 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0, duration: 3, end: 1603873801, index: 2, tokens: 1000
+            - stake 0 owner: 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433, duration: 3, end: 1603877371, index: 0, tokens: 1000
+            - stake 1 owner: 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976, duration: 3, end: 1603877372, index: 1, tokens: 1000
+            - stake 2 owner: 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0, duration: 3, end: 1603877373, index: 2, tokens: 1000
         
         --- Test 4 - User{1..3} -> unstake(1,000) ---
-        unstake1 - gasUsed: 64483, fee: 0.00515864, feeUsd: 1.9895326888, @ 80 gwei & 385.67 ETH/USD, 0xcfac2fb6988ff9c85ee34624b7a981da7d7eccfdd7568b7851c02b8e9ce9bbff
-        + OGToken.Transfer(from: Staking:0xcD8e, to: User1:0xa11A, tokens: 700)
+        unstake1 - gasUsed: 64483, fee: 0.00515864, feeUsd: 1.9895326888, @ 80 gwei & 385.67 ETH/USD, 0xd378a10118270e67bba9c47953da280ff1d511ed8f652f4399d066d3ae45373c
+        + OGToken.Transfer(from: Staking:0x810A, to: User1:0xa11A, tokens: 700)
         + Staking.Unstaked(tokenOwner: User1:0xa11A, tokens: 1000, tokensWithSlashingFactor: 700)
-        unstake2 - gasUsed: 56083, fee: 0.00448664, feeUsd: 1.7303624488, @ 80 gwei & 385.67 ETH/USD, 0xffa5a57ea095cf32e893e208b19afb15098f07825d57c075885d33c43f07651b
-        + OGToken.Transfer(from: Staking:0xcD8e, to: User2:0xa22A, tokens: 700)
+        unstake2 - gasUsed: 56083, fee: 0.00448664, feeUsd: 1.7303624488, @ 80 gwei & 385.67 ETH/USD, 0xdd07f7cef19a7aebc83bb464d21196383fa8669edab37bcdc3ddf02f0fafdcc1
+        + OGToken.Transfer(from: Staking:0x810A, to: User2:0xa22A, tokens: 700)
         + Staking.Unstaked(tokenOwner: User2:0xa22A, tokens: 1000, tokensWithSlashingFactor: 700)
-        unstake3 - gasUsed: 43042, fee: 0.00344336, feeUsd: 1.3280006512, @ 80 gwei & 385.67 ETH/USD, 0x284793a57684f0b11f1ef70c08cd4e5a8d4507f0d263d0eab538bccdee77eb31
-        + OGToken.Transfer(from: Staking:0xcD8e, to: User3:0xa33a, tokens: 700)
+        unstake3 - gasUsed: 43042, fee: 0.00344336, feeUsd: 1.3280006512, @ 80 gwei & 385.67 ETH/USD, 0xcf88df2edc025e9738174cb7884d290c685192b2a4bdc5630a175535de1c3c09
+        + OGToken.Transfer(from: Staking:0x810A, to: User3:0xa33a, tokens: 700)
         + Staking.Unstaked(tokenOwner: User3:0xa33a, tokens: 1000, tokensWithSlashingFactor: 700)
         
-         # Account                                             EtherBalanceChange                             OG                           FEE0 Blocks 54 to 71
+         # Account                                             EtherBalanceChange                             OG                           FEE0 Blocks 0 to 17
+                                                                                                       FEE0Token                            ???
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
          0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E       -0.390467040000000000           0.000000000000000000         100.000000000000000000 Owner:0xa00A
+                                                                                            0.000000000000000000           0.000000000000000000
          1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433       -0.043698160000000000        9700.000000000000000000           0.000000000000000000 User1:0xa11A
+                                                                                            0.000000000000000000           0.000000000000000000
          2 0xa22AB8A9D641CE77e06D98b7D7065d324D3d6976       -0.019313120000000000        9700.000000000000000000           0.000000000000000000 User2:0xa22A
+                                                                                            0.000000000000000000           0.000000000000000000
          3 0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0       -0.018269840000000000        9700.000000000000000000           0.000000000000000000 User3:0xa33a
+                                                                                            0.000000000000000000           0.000000000000000000
          4 0xa44a08d3F6933c69212114bb66E2Df1813651844        0.000000000000000000           0.000000000000000000           0.000000000000000000 User4:0xa44a
-         5 0xee9a0dAE3e21Fe8b9B9E2E13E693F41E0aB3f42b        0.000000000000000000           0.000000000000000000           0.000000000000000000 OGToken:0xee9a
-         6 0x0b70A80b0336777A1697A5b505A6F1f3cC1087A0        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee0Token:0x0b70
-         7 0xA92f39B1123B4051a6Ef6736879F85249AB45845        0.000000000000000000           0.000000000000000000           0.000000000000000000 StakingFactory:0xA92f
-         8 0xcD8e61Ef9a3fBeB04201CfDd409E4a79dd6C450f        0.000000000000000000           0.000000000000000000           0.000000000000000000 Staking:0xcD8e
+                                                                                            0.000000000000000000           0.000000000000000000
+         5 0x1647B1461251A0c6D3E14a227dE0F16E36ba80B1        0.000000000000000000           0.000000000000000000           0.000000000000000000 OGToken:0x1647
+                                                                                            0.000000000000000000           0.000000000000000000
+         6 0x0f4eA6f2be49d822b7cAEf4175450A4D83A32e72        0.000000000000000000           0.000000000000000000           0.000000000000000000 Fee0Token:0x0f4e
+                                                                                            0.000000000000000000           0.000000000000000000
+         7 0x6eaC8DFBdEB9588C9FEEe24783B4137b082f9708        0.000000000000000000           0.000000000000000000           0.000000000000000000 StakingFactory:0x6eaC
+                                                                                            0.000000000000000000           0.000000000000000000
+         8 0x810A42E257Cb2Ec2c01f56F477d305F5e5c5EBE3        0.000000000000000000           0.000000000000000000           0.000000000000000000 Staking:0x810A
+                                                                                            0.000000000000000000           0.000000000000000000
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
                                                                                         29100.000000000000000000         100.000000000000000000 Total Token Balances
+                                                                                            0.000000000000000000           0.000000000000000000
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
         
-        Token 0 symbol: 'OG', name: 'Optino Governance', decimals: 18, totalSupply: 29100, owner: Owner:0xa00A, address: OGToken:0xee9a
-        Token 1 symbol: 'FEE0', name: 'Fee0', decimals: 18, totalSupply: 100, owner: Owner:0xa00A, address: Fee0Token:0x0b70
-        StakingFactory StakingFactory:0xA92f @ 0xA92f39B1123B4051a6Ef6736879F85249AB45845
-        - stakingTemplate        : 0xcea63167aabeB0E0dFA7864f41535AcF691afE42
-        - ogToken                : OGToken:0xee9a
+        Token 0 symbol: 'OG', name: 'Optino Governance', decimals: 18, totalSupply: 29100, owner: Owner:0xa00A, address: OGToken:0x1647
+        Token 1 symbol: 'FEE0', name: 'Fee0', decimals: 18, totalSupply: 100, owner: Owner:0xa00A, address: Fee0Token:0x0f4e
+        Token 2 symbol: 'FEE0Token', name: '', decimals: 18, totalSupply: 0, owner: StakingFactory:0x6eaC, address: Staking:0x810A
+        StakingFactory StakingFactory:0x6eaC @ 0x6eaC8DFBdEB9588C9FEEe24783B4137b082f9708
+        - stakingTemplate        : 0xC4D8Dc1A8c1982C73ea4A40E0CC2Ea5805e3dc4F
+        - ogToken                : OGToken:0x1647
         - stakingsLength         : 1
-        - staking 0 @ Staking:0xcD8e, owner: StakingFactory:0xA92f
+        - staking 0 @ Staking:0x810A, owner: StakingFactory:0x6eaC
           - dataType      : 1
-          - addresses     : ["Fee0Token:0x0b70","ETH|null:0x0000","ETH|null:0x0000","ETH|null:0x0000"]
+          - addresses     : ["Fee0Token:0x0f4e","ETH|null:0x0000","ETH|null:0x0000","ETH|null:0x0000"]
           - uints         : ["0","0","0","0","0","0"]
           - strings       : ["FEE0Token","","",""]
           - stakesLength  : 0
@@ -776,8 +234,8 @@ $ npx hardhat test test/TestStakingFactory.js > results/TestStakingFactory.txt
           - weightedEnd   : 0
           - slashingFactor: 30%
         
-      ✓ Workflow #3 - Stake, slash and unstake (1359ms)
+      ✓ Workflow #3 - Stake, slash and unstake (2290ms)
 
 
-  4 passing (17s)
+  1 passing (4s)
 
