@@ -253,9 +253,9 @@ describe("TestStakingFactory", function() {
     });
   });
 
-  describe.only("TestStakingFactory - Workflow #3 - Stake, slash and unstake", function() {
+  describe("TestStakingFactory - Workflow #3 - Stake, slash and unstake", function() {
     it("Workflow #3 - Stake, slash and unstake", async function() {
-      console.log("        --- Test 1 - Mint 10,000 OGD tokens for User{1..3}; Owner approve 100 FEE for OGToken to spend ---");
+      console.log("        --- Test 1 - Mint 10,000 OGD tokens for User{1..3}; User{1..3} approve 10,000 FEE for StakingFactory to spend ---");
       const ogTokens = new BigNumber("10000").shiftedBy(18);
       const test1 = [];
       test1.push(data.ogToken.mint(data.user1, ogTokens.toFixed(0)));
@@ -273,7 +273,7 @@ describe("TestStakingFactory", function() {
       await data.printTxData("approve3", approve3);
       await data.printBalances();
 
-      console.log("        --- Test 2 - Stake #1 - StakingFactory.addStakingForToken() ---");
+      console.log("        --- Test 2 - User{1..3} -> StakingFactory.addStakingForToken(1,000, duration) ---");
       let ogTokensToStake = new BigNumber("1000").shiftedBy(18);
       let duration = 3;
       const test2 = [];
@@ -294,7 +294,7 @@ describe("TestStakingFactory", function() {
       await data.printTxData("addStake3", addStake3);
       await data.printBalances();
 
-      console.log("        --- Test 3 - Stake #1 - Slash ---");
+      console.log("        --- Test 3 - owner -> StakingFactory.slash(staking, 30%) ---");
       let slashingFactor = new BigNumber("3").shiftedBy(17); // 30%
       const test3 = [];
       test3.push(data.stakingFactory.slash(stakings[0].address, slashingFactor.toFixed(0)));
@@ -302,7 +302,7 @@ describe("TestStakingFactory", function() {
       await data.printTxData("slash1", slash1);
       await data.printBalances();
 
-      console.log("        --- Test 4 - Unstake #2 - unstake() ---");
+      console.log("        --- Test 4 - User{1..3} -> unstake(1,000) ---");
       ogTokensToUnstake = new BigNumber("1000").shiftedBy(18);
       const test4 = [];
       test4.push(stakings[0].connect(data.user1Signer).unstake(ogTokensToUnstake.toFixed(0)));
