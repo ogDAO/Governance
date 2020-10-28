@@ -193,7 +193,7 @@ class Data {
         if (a.type == 'address') {
           result = result + this.getShortAccountName(data.args[a.name].toString());
         } else if (a.type == 'uint256') {
-          if (a.name == 'tokens' || a.name == 'amount' || a.name == 'balance' || a.name == 'votes' || a.name == 'reward' || a.name == 'rewardPool' || a.name == 'totalVotes' || a.name == 'tokensBurnt') {
+          if (a.name == 'tokens' || a.name == 'amount' || a.name == 'balance' || a.name == 'votes' || a.name == 'reward' || a.name == 'rewardPool' || a.name == 'totalVotes' || a.name == 'tokensBurnt' || a.name == 'tokensWithSlashingFactor') {
             // TODO Get decimals from token contracts, and only convert for token contract values
             result = result + new BigNumber(data.args[a.name].toString()).shiftedBy(-18);
           } else if (a.name == 'slashingFactor') {
