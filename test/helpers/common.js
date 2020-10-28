@@ -307,15 +307,15 @@ class Data {
       for (let j = 0; j < stakingsLength; j++) {
         const stakingAddress = await this.stakingFactory.getStakingByIndex(j);
         const staking = Staking.attach(stakingAddress[1]);
-        const stakingInfo = await staking.getStakingInfo();
-        const owner = await staking.owner();
-        const stakesLength = await staking.stakesLength();
+        const [stakingInfo, owner, stakesLength, totalSupply, weightedEnd] = await Promise.all([staking.getStakingInfo(), staking.owner(), staking.stakesLength(), staking.totalSupply(), staking.weightedEnd()]);
         console.log("        - staking " + j + " @ " + this.getShortAccountName(stakingAddress[1]) + ", owner: " + this.getShortAccountName(owner));
         console.log("          - dataType    : " + stakingInfo.dataType.toString());
         console.log("          - addresses   : " + JSON.stringify(stakingInfo.addresses.map((x) => { return this.getShortAccountName(x); })));
         console.log("          - uints       : " + JSON.stringify(stakingInfo.uints.map((x) => { return x.toString(); })));
         console.log("          - strings     : " + JSON.stringify([stakingInfo.string0, stakingInfo.string1, stakingInfo.string2, stakingInfo.string3]));
         console.log("          - stakesLength: " + stakesLength);
+        console.log("          - totalSupply : " + new BigNumber(totalSupply.toString()).shiftedBy(-18));
+        console.log("          - weightedEnd : " + weightedEnd);
         for (let k = 0; k < stakesLength; k++) {
           const stake = await staking.getStakeByIndex(k);
           console.log("            - stake " + k + " owner: " + stake.tokenOwner + ", duration: " + stake.stake_.duration.toString() + ", end: " + stake.stake_.end.toString() + ", index: " + stake.stake_.index.toString() + ", tokens: " + new BigNumber(stake.stake_.tokens.toString()).shiftedBy(-18));

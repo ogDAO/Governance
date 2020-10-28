@@ -1729,6 +1729,8 @@ contract Staking is Owned {
     StakingInfo public stakingInfo;
     mapping(address => Stake) public stakes;
     address[] public stakesIndex;
+    uint public weightedEndNumerator;
+    uint public totalSupply;
 
     event Staked(address indexed tokenOwner, uint tokens, uint duration, uint end);
     event Unstaked(address indexed tokenOwner, uint tokens);
@@ -1755,6 +1757,12 @@ contract Staking is Owned {
     function stakesLength() public view returns (uint) {
         return stakesIndex.length;
     }
+    function weightedEnd() public view returns (uint) {
+        if (totalSupply > 0) {
+            return weightedEndNumerator.div(totalSupply);
+        }
+        return 0;
+    }
 
     function _stake(address tokenOwner, uint tokens, uint duration) internal {
         require(duration > 0, "Invalid duration");
@@ -1764,12 +1772,22 @@ contract Staking is Owned {
             stake_ = stakes[tokenOwner];
             stakesIndex.push(tokenOwner);
             emit Staked(tokenOwner, tokens, duration, stake_.end);
+        } else {
+            require(block.timestamp + duration >= stake_.end, "Cannot shorten duration");
+            weightedEndNumerator = weightedEndNumerator.sub(uint(stake_.end).mul(stake_.tokens));
+            totalSupply = totalSupply.sub(stake_.tokens);
+            stake_.duration = uint64(duration);
+            stake_.end = uint64(block.timestamp.add(duration));
+            stake_.tokens = stake_.tokens.add(tokens);
         }
+        weightedEndNumerator = weightedEndNumerator.add(uint(stake_.end).mul(stake_.tokens));
+        totalSupply = totalSupply.add(stake_.tokens);
     }
     function stakeThroughFactory(address tokenOwner, uint tokens, uint duration) public onlyOwner {
         _stake(tokenOwner, tokens, duration);
     }
     function stake(uint tokens, uint duration) public {
+        require(ogToken.transferFrom(msg.sender, address(this), tokens), "OG transferFrom failed");
         _stake(msg.sender, tokens, duration);
     }
 
@@ -1778,9 +1796,9 @@ contract Staking is Owned {
         require(uint(stake_.end) < block.timestamp, "Staking period still active");
         require(tokens <= stake_.tokens, "Unsufficient staked tokens");
         if (tokens > 0) {
+            weightedEndNumerator = weightedEndNumerator.sub(uint(stake_.end).mul(stake_.tokens));
+            totalSupply = totalSupply.sub(stake_.tokens);
             stake_.tokens = stake_.tokens.sub(tokens);
-            // stake_.duration = 0;
-            // stake_.end = uint64(block.timestamp - 1);
             if (stake_.tokens == 0) {
                 uint removedIndex = uint(stake_.index);
                 uint lastIndex = stakesIndex.length - 1;
@@ -1791,6 +1809,9 @@ contract Staking is Owned {
                 if (stakesIndex.length > 0) {
                     stakesIndex.pop();
                 }
+            } else {
+                weightedEndNumerator = weightedEndNumerator.add(uint(stake_.end).mul(stake_.tokens));
+                totalSupply = totalSupply.add(stake_.tokens);
             }
             require(ogToken.transfer(msg.sender, tokens), "OG transfer failed");
             emit Unstaked(msg.sender, tokens);
