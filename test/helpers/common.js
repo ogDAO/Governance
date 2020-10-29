@@ -314,20 +314,19 @@ class Data {
             console.log("        - dividendsOwing,new   : " + j + " " + this.padRight(this.getShortAccountName(account), 18) + " " + result);
           }
         }
-      } else if (symbol.startsWith("FEE0Token") || symbol.startsWith("OGToken")) {
-        const [stakingInfo, owner, stakesLength, totalSupply, weightedEnd, slashingFactor] = await Promise.all([tokenContract.getStakingInfo(), tokenContract.owner(), tokenContract.stakesLength(), tokenContract.totalSupply(), tokenContract.weightedEnd(), tokenContract.slashingFactor()]);
+      } else if (symbol.startsWith("OGS")) {
+        const [stakingInfo, owner, accountsLength, weightedEnd, weightedEndNumerator, slashingFactor] = await Promise.all([tokenContract.getStakingInfo(), tokenContract.owner(), tokenContract.accountsLength(), tokenContract.weightedEnd(), tokenContract.weightedEndNumerator(), tokenContract.slashingFactor()]);
         console.log("        - staking @ " + this.getShortAccountName(tokenContract.address) + ", owner: " + this.getShortAccountName(owner));
         console.log("          - dataType      : " + stakingInfo.dataType  .toString());
         console.log("          - addresses     : " + JSON.stringify(stakingInfo.addresses.map((x) => { return this.getShortAccountName(x); })));
         console.log("          - uints         : " + JSON.stringify(stakingInfo.uints.map((x) => { return x.toString(); })));
         console.log("          - strings       : " + JSON.stringify([stakingInfo.string0, stakingInfo.string1, stakingInfo.string2, stakingInfo.string3]));
-        console.log("          - stakesLength  : " + stakesLength);
-        console.log("          - totalSupply   : " + new BigNumber(totalSupply.toString()).shiftedBy(-18));
-        console.log("          - weightedEnd   : " + weightedEnd);
+        console.log("          - weightedEnd   : " + weightedEnd + " = " + weightedEndNumerator + "/" + new BigNumber(totalSupply.toString()).shiftedBy(-decimals));
         console.log("          - slashingFactor: " + new BigNumber(slashingFactor.toString()).shiftedBy(-16) + "%");
-        for (let k = 0; k < stakesLength; k++) {
-          const stake = await tokenContract.getStakeByIndex(k);
-          console.log("            - stake " + k + " owner: " + stake.tokenOwner + ", duration: " + stake.stake_.duration.toString() + ", end: " + stake.stake_.end.toString() + ", index: " + stake.stake_.index.toString() + ", tokens: " + new BigNumber(stake.stake_.balance.toString()).shiftedBy(-18));
+        console.log("          - accountsLength: " + accountsLength);
+        for (let k = 0; k < accountsLength; k++) {
+          const account = await tokenContract.getAccountByIndex(k);
+          console.log("            - account " + k + " owner: " + this.getShortAccountName(account.tokenOwner) + ", duration: " + account.account.duration.toString() + ", end: " + account.account.end.toString() + ", index: " + account.account.index.toString() + ", tokens: " + new BigNumber(account.account.balance.toString()).shiftedBy(-18));
         }
       }
     }
@@ -342,17 +341,17 @@ class Data {
       for (let j = 0; j < stakingsLength; j++) {
         const stakingAddress = await this.stakingFactory.getStakingByIndex(j);
         const staking = Staking.attach(stakingAddress[1]);
-        const [stakingInfo, owner, stakesLength, totalSupply, weightedEnd, slashingFactor] = await Promise.all([staking.getStakingInfo(), staking.owner(), staking.stakesLength(), staking.totalSupply(), staking.weightedEnd(), staking.slashingFactor()]);
+        const [stakingInfo, owner, accountsLength, totalSupply, weightedEnd, slashingFactor] = await Promise.all([staking.getStakingInfo(), staking.owner(), staking.accountsLength(), staking.totalSupply(), staking.weightedEnd(), staking.slashingFactor()]);
         console.log("          - staking " + j + " @ " + this.getShortAccountName(stakingAddress[1]) + ", owner: " + this.getShortAccountName(owner));
         // console.log("          - dataType      : " + stakingInfo.dataType  .toString());
         // console.log("          - addresses     : " + JSON.stringify(stakingInfo.addresses.map((x) => { return this.getShortAccountName(x); })));
         // console.log("          - uints         : " + JSON.stringify(stakingInfo.uints.map((x) => { return x.toString(); })));
         // console.log("          - strings       : " + JSON.stringify([stakingInfo.string0, stakingInfo.string1, stakingInfo.string2, stakingInfo.string3]));
-        // console.log("          - stakesLength  : " + stakesLength);
+        // console.log("          - accountsLength  : " + accountsLength);
         // console.log("          - totalSupply   : " + new BigNumber(totalSupply.toString()).shiftedBy(-18));
         // console.log("          - weightedEnd   : " + weightedEnd);
         // console.log("          - slashingFactor: " + new BigNumber(slashingFactor.toString()).shiftedBy(-16) + "%");
-        // for (let k = 0; k < stakesLength; k++) {
+        // for (let k = 0; k < accountsLength; k++) {
         //   const stake = await staking.getStakeByIndex(k);
         //   console.log("            - stake " + k + " owner: " + stake.tokenOwner + ", duration: " + stake.stake_.duration.toString() + ", end: " + stake.stake_.end.toString() + ", index: " + stake.stake_.index.toString() + ", tokens: " + new BigNumber(stake.stake_.balance.toString()).shiftedBy(-18));
         // }

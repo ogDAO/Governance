@@ -26,7 +26,7 @@ contract Staking is ERC20, Owned {
         string string3;
     }
 
-    struct Stake {
+    struct Account {
         uint64 duration;
         uint64 end;
         uint64 index;
@@ -36,8 +36,8 @@ contract Staking is ERC20, Owned {
     uint public id;
     OGTokenInterface public ogToken;
     StakingInfo public stakingInfo;
-    mapping(address => Stake) public stakes;
-    address[] public stakesIndex;
+    mapping(address => Account) public accounts;
+    address[] public accountsIndex;
     uint public weightedEndNumerator;
     uint public slashingFactor;
     uint public _totalSupply;
@@ -95,15 +95,25 @@ contract Staking is ERC20, Owned {
         return 18;
     }
     function totalSupply() override external view returns (uint) {
-        return _totalSupply.sub(stakes[address(0)].balance);
+        return _totalSupply.sub(accounts[address(0)].balance);
     }
     function balanceOf(address tokenOwner) override external view returns (uint balance) {
-        return stakes[tokenOwner].balance;
+        return accounts[tokenOwner].balance;
     }
     function transfer(address to, uint tokens) override external returns (bool success) {
-        require(block.timestamp > stakes[msg.sender].end, "Stake period not ended");
-        stakes[msg.sender].balance = stakes[msg.sender].balance.sub(tokens);
-        stakes[to].balance = stakes[to].balance.add(tokens);
+        require(block.timestamp > accounts[msg.sender].end, "Stake period not ended");
+        weightedEndNumerator = weightedEndNumerator.sub(uint(accounts[msg.sender].end).mul(accounts[msg.sender].balance));
+        accounts[msg.sender].end = uint64(block.timestamp);
+        accounts[msg.sender].balance = accounts[msg.sender].balance.sub(tokens);
+        weightedEndNumerator = weightedEndNumerator.add(uint(accounts[msg.sender].end).mul(accounts[msg.sender].balance));
+        if (accounts[to].end == 0) {
+            accounts[to] = Account(uint64(0), uint64(block.timestamp), uint64(accountsIndex.length), tokens);
+            accountsIndex.push(to);
+        } else {
+            weightedEndNumerator = weightedEndNumerator.sub(uint(accounts[to].end).mul(accounts[to].balance));
+            accounts[to].balance = accounts[to].balance.add(tokens);
+            weightedEndNumerator = weightedEndNumerator.add(uint(accounts[to].end).mul(accounts[to].balance));
+        }
         emit Transfer(msg.sender, to, tokens);
         return true;
     }
@@ -113,10 +123,20 @@ contract Staking is ERC20, Owned {
         return true;
     }
     function transferFrom(address from, address to, uint tokens) override external returns (bool success) {
-        require(block.timestamp > stakes[from].end, "Stake period not ended");
-        stakes[from].balance = stakes[from].balance.sub(tokens);
+        require(block.timestamp > accounts[from].end, "Stake period not ended");
+        weightedEndNumerator = weightedEndNumerator.sub(uint(accounts[from].end).mul(accounts[from].balance));
+        accounts[from].end = uint64(block.timestamp);
+        accounts[from].balance = accounts[from].balance.sub(tokens);
         allowed[from][msg.sender] = allowed[from][msg.sender].sub(tokens);
-        stakes[to].balance = stakes[to].balance.add(tokens);
+        // accounts[to].balance = accounts[to].balance.add(tokens);
+        if (accounts[to].end == 0) {
+            accounts[to] = Account(uint64(0), uint64(block.timestamp), uint64(accountsIndex.length), tokens);
+            accountsIndex.push(to);
+        } else {
+            weightedEndNumerator = weightedEndNumerator.sub(uint(accounts[to].end).mul(accounts[to].balance));
+            accounts[to].balance = accounts[to].balance.add(tokens);
+            weightedEndNumerator = weightedEndNumerator.add(uint(accounts[to].end).mul(accounts[to].balance));
+        }
         emit Transfer(from, to, tokens);
         return true;
     }
@@ -131,13 +151,13 @@ contract Staking is ERC20, Owned {
         string2 = stakingInfo.string2;
         string3 = stakingInfo.string3;
     }
-    function getStakeByIndex(uint i) public view returns (address tokenOwner, Stake memory stake_) {
-        require(i < stakesIndex.length, "Invalid index");
-        tokenOwner = stakesIndex[i];
-        stake_ = stakes[tokenOwner];
+    function getAccountByIndex(uint i) public view returns (address tokenOwner, Account memory account) {
+        require(i < accountsIndex.length, "Invalid index");
+        tokenOwner = accountsIndex[i];
+        account = accounts[tokenOwner];
     }
-    function stakesLength() public view returns (uint) {
-        return stakesIndex.length;
+    function accountsLength() public view returns (uint) {
+        return accountsIndex.length;
     }
     function weightedEnd() public view returns (uint _weightedEnd) {
         if (_totalSupply > 0) {
@@ -151,22 +171,22 @@ contract Staking is ERC20, Owned {
     function _stake(address tokenOwner, uint tokens, uint duration) internal {
         require(slashingFactor == 0, "Cannot stake if already slashed");
         require(duration > 0, "Invalid duration");
-        Stake storage stake_ = stakes[tokenOwner];
-        if (stake_.duration == 0) {
-            stakes[tokenOwner] = Stake(uint64(duration), uint64(block.timestamp.add(duration)), uint64(stakesIndex.length), tokens);
-            stake_ = stakes[tokenOwner];
-            stakesIndex.push(tokenOwner);
-            emit Staked(tokenOwner, tokens, duration, stake_.end);
+        Account storage account = accounts[tokenOwner];
+        if (account.end == 0) {
+            accounts[tokenOwner] = Account(uint64(duration), uint64(block.timestamp.add(duration)), uint64(accountsIndex.length), tokens);
+            account = accounts[tokenOwner];
+            accountsIndex.push(tokenOwner);
+            emit Staked(tokenOwner, tokens, duration, account.end);
         } else {
-            require(block.timestamp + duration >= stake_.end, "Cannot shorten duration");
-            weightedEndNumerator = weightedEndNumerator.sub(uint(stake_.end).mul(stake_.balance));
-            _totalSupply = _totalSupply.sub(stake_.balance);
-            stake_.duration = uint64(duration);
-            stake_.end = uint64(block.timestamp.add(duration));
-            stake_.balance = stake_.balance.add(tokens);
+            require(block.timestamp + duration >= account.end, "Cannot shorten duration");
+            weightedEndNumerator = weightedEndNumerator.sub(uint(account.end).mul(account.balance));
+            _totalSupply = _totalSupply.sub(account.balance);
+            account.duration = uint64(duration);
+            account.end = uint64(block.timestamp.add(duration));
+            account.balance = account.balance.add(tokens);
         }
-        weightedEndNumerator = weightedEndNumerator.add(uint(stake_.end).mul(stake_.balance));
-        _totalSupply = _totalSupply.add(stake_.balance);
+        weightedEndNumerator = weightedEndNumerator.add(uint(account.end).mul(account.balance));
+        _totalSupply = _totalSupply.add(account.balance);
         emit Transfer(address(0), tokenOwner, tokens);
     }
     function stakeThroughFactory(address tokenOwner, uint tokens, uint duration) public onlyOwner {
@@ -178,26 +198,26 @@ contract Staking is ERC20, Owned {
     }
 
     function _unstake(address tokenOwner, uint tokens) internal {
-        Stake storage stake_ = stakes[tokenOwner];
-        require(uint(stake_.end) < block.timestamp, "Staking period still active");
-        require(tokens <= stake_.balance, "Unsufficient staked balance");
+        Account storage account = accounts[tokenOwner];
+        require(uint(account.end) < block.timestamp, "Staking period still active");
+        require(tokens <= account.balance, "Unsufficient staked balance");
         if (tokens > 0) {
-            weightedEndNumerator = weightedEndNumerator.sub(uint(stake_.end).mul(stake_.balance));
-            _totalSupply = _totalSupply.sub(stake_.balance);
-            stake_.balance = stake_.balance.sub(tokens);
-            if (stake_.balance == 0) {
-                uint removedIndex = uint(stake_.index);
-                uint lastIndex = stakesIndex.length - 1;
-                address lastStakeAddress = stakesIndex[lastIndex];
-                stakesIndex[removedIndex] = lastStakeAddress;
-                stakes[lastStakeAddress].index = uint64(removedIndex);
-                delete stakesIndex[lastIndex];
-                if (stakesIndex.length > 0) {
-                    stakesIndex.pop();
+            weightedEndNumerator = weightedEndNumerator.sub(uint(account.end).mul(account.balance));
+            _totalSupply = _totalSupply.sub(account.balance);
+            account.balance = account.balance.sub(tokens);
+            if (account.balance == 0) {
+                uint removedIndex = uint(account.index);
+                uint lastIndex = accountsIndex.length - 1;
+                address lastStakeAddress = accountsIndex[lastIndex];
+                accountsIndex[removedIndex] = lastStakeAddress;
+                accounts[lastStakeAddress].index = uint64(removedIndex);
+                delete accountsIndex[lastIndex];
+                if (accountsIndex.length > 0) {
+                    accountsIndex.pop();
                 }
             } else {
-                weightedEndNumerator = weightedEndNumerator.add(uint(stake_.end).mul(stake_.balance));
-                _totalSupply = _totalSupply.add(stake_.balance);
+                weightedEndNumerator = weightedEndNumerator.add(uint(account.end).mul(account.balance));
+                _totalSupply = _totalSupply.add(account.balance);
             }
             uint tokensWithSlashingFactor = tokens.sub(tokens.mul(slashingFactor).div(10**18));
             require(ogToken.transfer(tokenOwner, tokensWithSlashingFactor), "OG transfer failed");

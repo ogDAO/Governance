@@ -337,7 +337,7 @@ describe("TestStakingFactory", function() {
 
       console.log("        --- Test 2 - User{1..3} -> StakingFactory.addStakingForToken(1,000, duration) ---");
       let ogTokensToStake = new BigNumber("1000").shiftedBy(18);
-      let duration = 1;
+      let duration = 2;
       const test2 = [];
       test2.push(data.stakingFactory.connect(data.user1Signer).addStakingForToken(ogTokensToStake.toFixed(0), duration, data.fee0Token.address, "FEE0Token"));
       // test2.push(data.stakingFactory.connect(data.user2Signer).addStakingForToken(ogTokensToStake.toFixed(0), duration, data.fee0Token.address, "FEE0Token"));
@@ -365,7 +365,7 @@ describe("TestStakingFactory", function() {
       // await data.expectException("OGS transferFrom locked", "Stake period not ended", stakings[0].connect(data.user3Signer).transferFrom(data.user2, data.user4, new BigNumber("2.222222222222222222").shiftedBy(18).toFixed(0)));
 
       console.log("        --- Test 4 - OGS transferX unlocked after staking period ---");
-      data.pause("Waiting", duration);
+      data.pause("Waiting", duration + 1);
       const test4 = [];
 
       test4.push(stakings[0].connect(data.user1Signer).transfer(data.user4, ogTokensToStake.dividedBy(2).toFixed(0)));
@@ -389,12 +389,13 @@ describe("TestStakingFactory", function() {
       await data.printBalances();
 
       console.log("        --- Test 6 - User{1..4} -> unstake(1,000) ---");
-      ogTokensToUnstake = new BigNumber("1000").shiftedBy(18);
+      ogTokensToUnstake = new BigNumber("500").shiftedBy(18);
       // const user1Staking0Balance = await stakings[0].balanceOf(data.user1);
       // const user2Staking0Balance = await stakings[0].balanceOf(data.user2);
       // const user3Staking0Balance = await stakings[0].balanceOf(data.user3);
       // const user4Staking0Balance = await stakings[0].balanceOf(data.user4);
       const test6 = [];
+      // test6.push(stakings[0].connect(data.user1Signer).unstake(ogTokensToUnstake.toFixed(0)));
       // test6.push(stakings[0].connect(data.user1Signer).unstake(await stakings[0].balanceOf(data.user1)));
       // test6.push(stakings[0].connect(data.user2Signer).unstake(await stakings[0].balanceOf(data.user2)));
       // test6.push(stakings[0].connect(data.user3Signer).unstake(await stakings[0].balanceOf(data.user3)));
