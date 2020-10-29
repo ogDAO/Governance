@@ -1725,6 +1725,7 @@ contract Staking is ERC20, Owned {
         uint balance;
     }
 
+    uint public id;
     OGTokenInterface public ogToken;
     StakingInfo public stakingInfo;
     mapping(address => Stake) public stakes;
@@ -1740,19 +1741,49 @@ contract Staking is ERC20, Owned {
 
     constructor() {
     }
-    function initStaking(OGTokenInterface _ogToken, uint dataType, address[4] memory addresses, uint[6] memory uints, string[4] memory strings) public {
+    function initStaking(uint _id, OGTokenInterface _ogToken, uint dataType, address[4] memory addresses, uint[6] memory uints, string[4] memory strings) public {
         initOwned(msg.sender);
+        id = _id;
         ogToken = _ogToken;
         stakingInfo = StakingInfo(dataType, addresses, uints, strings[0], strings[1], strings[2], strings[3]);
     }
 
-    function symbol() override external view returns (string memory) {
-        return stakingInfo.string0;
+    bytes constant SYMBOLPREFIX = "OGS";
+    uint8 constant DASH = 45;
+    uint8 constant ZERO = 48;
+    uint constant MAXSTAKINGINFOSTRINGLENGTH = 8;
+
+    function symbol() override external view returns (string memory _symbol) {
+        bytes memory b = new bytes(20);
+        uint i;
+        uint j;
+        uint num;
+        for (i = 0; i < SYMBOLPREFIX.length; i++) {
+            b[j++] = SYMBOLPREFIX[i];
+        }
+        i = 7;
+        do {
+            i--;
+            num = id / 10 ** i;
+            b[j++] = byte(uint8(num % 10 + ZERO));
+        } while (i > 0);
+        _symbol = string(b);
     }
     function name() override external view returns (string memory) {
-        return stakingInfo.string1;
+        uint i;
+        uint j;
+        bytes memory b = new bytes(4 + MAXSTAKINGINFOSTRINGLENGTH);
+        for (i = 0; i < SYMBOLPREFIX.length; i++) {
+            b[j++] = SYMBOLPREFIX[i];
+        }
+        b[j++] = byte(DASH);
+        bytes memory b1 = bytes(stakingInfo.string0);
+        for (i = 0; i < b1.length && i < MAXSTAKINGINFOSTRINGLENGTH; i++) {
+            b[j++] = b1[i];
+        }
+        return string(b);
     }
-    function decimals() override external view returns (uint8) {
+    function decimals() override external pure returns (uint8) {
         return 18;
     }
     function totalSupply() override external view returns (uint) {
@@ -1762,7 +1793,7 @@ contract Staking is ERC20, Owned {
         return stakes[tokenOwner].balance;
     }
     function transfer(address to, uint tokens) override external returns (bool success) {
-        // require()
+        require(block.timestamp > stakes[msg.sender].end, "Stake period not ended");
         stakes[msg.sender].balance = stakes[msg.sender].balance.sub(tokens);
         stakes[to].balance = stakes[to].balance.add(tokens);
         emit Transfer(msg.sender, to, tokens);
@@ -1774,7 +1805,7 @@ contract Staking is ERC20, Owned {
         return true;
     }
     function transferFrom(address from, address to, uint tokens) override external returns (bool success) {
-        // require()
+        require(block.timestamp > stakes[from].end, "Stake period not ended");
         stakes[from].balance = stakes[from].balance.sub(tokens);
         allowed[from][msg.sender] = allowed[from][msg.sender].sub(tokens);
         stakes[to].balance = stakes[to].balance.add(tokens);
@@ -1785,8 +1816,6 @@ contract Staking is ERC20, Owned {
         return allowed[tokenOwner][spender];
     }
 
-
-
     function getStakingInfo() public view returns (uint dataType, address[4] memory addresses, uint[6] memory uints, string memory string0, string memory string1, string memory string2, string memory string3) {
         (dataType, addresses, uints) = (stakingInfo.dataType, stakingInfo.addresses, stakingInfo.uints);
         string0 = stakingInfo.string0;
@@ -1795,18 +1824,20 @@ contract Staking is ERC20, Owned {
         string3 = stakingInfo.string3;
     }
     function getStakeByIndex(uint i) public view returns (address tokenOwner, Stake memory stake_) {
-        require(i < stakesIndex.length, "Invalid stakings index");
+        require(i < stakesIndex.length, "Invalid index");
         tokenOwner = stakesIndex[i];
         stake_ = stakes[tokenOwner];
     }
     function stakesLength() public view returns (uint) {
         return stakesIndex.length;
     }
-    function weightedEnd() public view returns (uint) {
+    function weightedEnd() public view returns (uint _weightedEnd) {
         if (_totalSupply > 0) {
-            return weightedEndNumerator.div(_totalSupply);
+            _weightedEnd = weightedEndNumerator.div(_totalSupply);
         }
-        return 0;
+        if (_weightedEnd < block.timestamp) {
+            _weightedEnd = block.timestamp;
+        }
     }
 
     function _stake(address tokenOwner, uint tokens, uint duration) internal {
@@ -1916,14 +1947,6 @@ contract StakingFactory is CloneFactory, Owned {
 
     function addStakingForToken(uint tokens, uint duration, address tokenAddress, string memory name) external returns (Staking staking) {
         return _staking(tokens, duration, 1, [tokenAddress, address(0), address(0), address(0)], [uint(0), uint(0), uint(0), uint(0), uint(0), uint(0)], [name, "", "", ""]);
-        // bytes32 stakingKey = keccak256(abi.encodePacked(tokenAddress, name));
-        // StakeInfo memory stakeInfo = stakeInfoData[stakingKey];
-        // if (stakeInfo.dataType == 0) {
-        //     stakeInfoData[stakingKey] = StakeInfo(1, [tokenAddress, address(0), address(0), address(0)], [uint(0), uint(0), uint(0), uint(0), uint(0), uint(0)], name, "", "", "");
-        //     stakeInfoIndex.push(stakingKey);
-        //     emit StakeInfoAdded(stakingKey, 1, [tokenAddress, address(0), address(0), address(0)], [uint(0), uint(0), uint(0), uint(0), uint(0), uint(0)], name, "", "", "");
-        // }
-        // _addStake(tokens, stakingKey);
     }
 
     function _staking(uint tokens, uint duration, uint dataType, address[4] memory addresses, uint[6] memory uints, string[4] memory strings) internal returns (Staking staking) {
@@ -1931,7 +1954,7 @@ contract StakingFactory is CloneFactory, Owned {
         staking = stakings[key];
         if (address(staking) == address(0)) {
             staking = Staking(createClone(address(stakingTemplate)));
-            staking.initStaking(ogToken, dataType, addresses, uints, strings);
+            staking.initStaking(stakingsIndex.length, ogToken, dataType, addresses, uints, strings);
             stakings[key] = staking;
             stakingsIndex.push(key);
             emit StakingCreated(key, staking);

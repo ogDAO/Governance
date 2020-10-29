@@ -47,7 +47,7 @@ describe("TestStakingFactory", function() {
 
   describe("TestStakingFactory - Workflow #0 - Stake, stake, stake, unstake, unstake", function() {
     it("Workflow #0 - Stake, stake, stake, unstake, unstake", async function() {
-      console.log("        --- Test 1 - Mint 10,000 OGD tokens for User{1..3}; Owner approve 100 FEE for OGToken to spend ---");
+      console.log("        --- Test 1 - Mint 10,000 OG tokens for User{1..3}; Owner approve 100 FEE for OGToken to spend ---");
       const ogTokens = new BigNumber("10000").shiftedBy(18);
       const test1 = [];
       test1.push(data.ogToken.mint(data.user1, ogTokens.toFixed(0)));
@@ -151,7 +151,7 @@ describe("TestStakingFactory", function() {
 
   describe("TestStakingFactory - Workflow #1 - Stake And Check weightedEnd", function() {
     it("Workflow #1 - Stake And Check weightedEnd", async function() {
-      console.log("        --- Test 1 - Mint 10,000 OGD tokens for User{1..3}; Owner approve 100 FEE for OGToken to spend ---");
+      console.log("        --- Test 1 - Mint 10,000 OG tokens for User{1..3}; Owner approve 100 FEE for OGToken to spend ---");
       const ogTokens = new BigNumber("10000").shiftedBy(18);
       const test1 = [];
       test1.push(data.ogToken.mint(data.user1, ogTokens.toFixed(0)));
@@ -200,13 +200,12 @@ describe("TestStakingFactory", function() {
       const weightedEnd = await stakings[0].weightedEnd();
       console.log("        weightedEnd        : " + weightedEnd);
       expect(parseFloat(weightedEnd.toString())).to.be.closeTo(parseFloat(expectedWeightedEnd.toString()), 150, "weightedEnd seems off");
-
     });
   });
 
   describe("TestStakingFactory - Workflow #2 - Stake with expected exception", function() {
     it("Workflow #2 - Stake with expected exception", async function() {
-      console.log("        --- Test 1 - Mint 10,000 OGD tokens for User{1..3}; Owner approve 100 FEE for OGToken to spend ---");
+      console.log("        --- Test 1 - Mint 10,000 OG tokens for User{1..3}; Owner approve 100 FEE for OGToken to spend ---");
       const ogTokens = new BigNumber("10000").shiftedBy(18);
       const test1 = [];
       test1.push(data.ogToken.mint(data.user1, ogTokens.toFixed(0)));
@@ -255,7 +254,7 @@ describe("TestStakingFactory", function() {
 
   describe("TestStakingFactory - Workflow #3 - Stake, slash and unstake", function() {
     it("Workflow #3 - Stake, slash and unstake", async function() {
-      console.log("        --- Test 1 - Mint 10,000 OGD tokens for User{1..3}; User{1..3} approve 10,000 FEE for StakingFactory to spend ---");
+      console.log("        --- Test 1 - Mint 10,000 OG tokens for User{1..3}; User{1..3} approve 10,000 FEE for StakingFactory to spend ---");
       const ogTokens = new BigNumber("10000").shiftedBy(18);
       const test1 = [];
       test1.push(data.ogToken.mint(data.user1, ogTokens.toFixed(0)));
@@ -312,6 +311,99 @@ describe("TestStakingFactory", function() {
       await data.printTxData("unstake1", unstake1);
       await data.printTxData("unstake2", unstake2);
       await data.printTxData("unstake3", unstake3);
+      await data.printBalances();
+    });
+  });
+
+  describe.only("TestStakingFactory - Workflow #3 - Stake, and test transfers", function() {
+    it("Workflow #3 - Stake, slash and unstake", async function() {
+      console.log("        --- Test 1 - Mint 10,000 OG tokens for User{1..3}; User{1..3} approve 10,000 FEE for StakingFactory to spend ---");
+      const ogTokens = new BigNumber("10000").shiftedBy(18);
+      const test1 = [];
+      test1.push(data.ogToken.mint(data.user1, ogTokens.toFixed(0)));
+      test1.push(data.ogToken.mint(data.user2, ogTokens.toFixed(0)));
+      test1.push(data.ogToken.mint(data.user3, ogTokens.toFixed(0)));
+      test1.push(data.ogToken.connect(data.user1Signer).approve(data.stakingFactory.address, ogTokens.toFixed(0)));
+      test1.push(data.ogToken.connect(data.user2Signer).approve(data.stakingFactory.address, ogTokens.toFixed(0)));
+      test1.push(data.ogToken.connect(data.user3Signer).approve(data.stakingFactory.address, ogTokens.toFixed(0)));
+      const [mint1, mint2, mint3, approve1, approve2, approve3] = await Promise.all(test1);
+      await data.printTxData("mint1", mint1);
+      await data.printTxData("mint2", mint2);
+      await data.printTxData("mint3", mint3);
+      await data.printTxData("approve1", approve1);
+      await data.printTxData("approve2", approve2);
+      await data.printTxData("approve3", approve3);
+      await data.printBalances();
+
+      console.log("        --- Test 2 - User{1..3} -> StakingFactory.addStakingForToken(1,000, duration) ---");
+      let ogTokensToStake = new BigNumber("1000").shiftedBy(18);
+      let duration = 1;
+      const test2 = [];
+      test2.push(data.stakingFactory.connect(data.user1Signer).addStakingForToken(ogTokensToStake.toFixed(0), duration, data.fee0Token.address, "FEE0Token"));
+      // test2.push(data.stakingFactory.connect(data.user2Signer).addStakingForToken(ogTokensToStake.toFixed(0), duration, data.fee0Token.address, "FEE0Token"));
+      // test2.push(data.stakingFactory.connect(data.user3Signer).addStakingForToken(ogTokensToStake.toFixed(0), duration, data.fee0Token.address, "FEE0Token"));
+      const [addStake1/*, addStake2, addStake3*/] = await Promise.all(test2);
+      const stakingsLength = await data.stakingFactory.stakingsLength();
+      const stakings = [];
+      for (let j = 0; j < stakingsLength; j++) {
+        const stakingAddress = await data.stakingFactory.getStakingByIndex(j);
+        const staking = Staking.attach(stakingAddress[1]);
+        stakings.push(staking);
+        await data.addStakingData(staking);
+      }
+      await data.printTxData("addStake1", addStake1);
+      // await data.printTxData("addStake2", addStake2);
+      // await data.printTxData("addStake3", addStake3);
+      await data.printBalances();
+
+      // console.log("        --- Test 3 - OGS transferX locked during staking period ---");
+      // const test3a = [];
+      // test3a.push(stakings[0].connect(data.user2Signer).approve(data.user3, new BigNumber("1000").shiftedBy(18).toFixed(0)));
+      // const [approve4] = await Promise.all(test3a);
+      // await data.printTxData("approve4", approve4);
+      // await data.expectException("OGS transfer locked", "Stake period not ended", stakings[0].connect(data.user1Signer).transfer(data.user4, new BigNumber("1.111111111111111111").shiftedBy(18).toFixed(0)));
+      // await data.expectException("OGS transferFrom locked", "Stake period not ended", stakings[0].connect(data.user3Signer).transferFrom(data.user2, data.user4, new BigNumber("2.222222222222222222").shiftedBy(18).toFixed(0)));
+
+      console.log("        --- Test 4 - OGS transferX unlocked after staking period ---");
+      data.pause("Waiting", duration);
+      const test4 = [];
+
+      test4.push(stakings[0].connect(data.user1Signer).transfer(data.user4, ogTokensToStake.dividedBy(2).toFixed(0)));
+      // test4.push(stakings[0].connect(data.user1Signer).transfer(data.user4, new BigNumber("1.111111111111111111").shiftedBy(18).toFixed(0)));
+      // test4.push(stakings[0].connect(data.user3Signer).transferFrom(data.user2, data.user4, new BigNumber("2.222222222222222222").shiftedBy(18).toFixed(0)));
+      const [transfer1/*, transferFrom1*/] = await Promise.all(test4);
+      await data.printTxData("transfer1", transfer1);
+      // await data.printTxData("transferFrom1", transferFrom1);
+      await data.printBalances();
+
+      // const user4Staking0Balance = await stakings[0].balanceOf(data.user4);
+      // console.log("        user4Staking0Balance: " + new BigNumber(user4Staking0Balance.toString()).shiftedBy(-18));
+      // expect(new BigNumber(user4Staking0Balance.toString()).toFixed(0)).to.equal(new BigNumber("3.333333333333333333").shiftedBy(18).toFixed(0));
+
+      console.log("        --- Test 5 - owner -> StakingFactory.slash(staking, 10%) ---");
+      let slashingFactor = new BigNumber("1").shiftedBy(17); // 30%
+      const test5 = [];
+      test5.push(data.stakingFactory.slash(stakings[0].address, slashingFactor.toFixed(0)));
+      const [slash1] = await Promise.all(test5);
+      await data.printTxData("slash1", slash1);
+      await data.printBalances();
+
+      console.log("        --- Test 6 - User{1..4} -> unstake(1,000) ---");
+      ogTokensToUnstake = new BigNumber("1000").shiftedBy(18);
+      // const user1Staking0Balance = await stakings[0].balanceOf(data.user1);
+      // const user2Staking0Balance = await stakings[0].balanceOf(data.user2);
+      // const user3Staking0Balance = await stakings[0].balanceOf(data.user3);
+      // const user4Staking0Balance = await stakings[0].balanceOf(data.user4);
+      const test6 = [];
+      // test6.push(stakings[0].connect(data.user1Signer).unstake(await stakings[0].balanceOf(data.user1)));
+      // test6.push(stakings[0].connect(data.user2Signer).unstake(await stakings[0].balanceOf(data.user2)));
+      // test6.push(stakings[0].connect(data.user3Signer).unstake(await stakings[0].balanceOf(data.user3)));
+      test6.push(stakings[0].connect(data.user4Signer).unstake(await stakings[0].balanceOf(data.user4)));
+      const [/*unstake1, unstake2, unstake3,*/ unstake4] = await Promise.all(test6);
+      // await data.printTxData("unstake1", unstake1);
+      // await data.printTxData("unstake2", unstake2);
+      // await data.printTxData("unstake3", unstake3);
+      await data.printTxData("unstake4", unstake4);
       await data.printBalances();
     });
   });

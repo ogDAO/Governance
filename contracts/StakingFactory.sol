@@ -37,14 +37,6 @@ contract StakingFactory is CloneFactory, Owned {
 
     function addStakingForToken(uint tokens, uint duration, address tokenAddress, string memory name) external returns (Staking staking) {
         return _staking(tokens, duration, 1, [tokenAddress, address(0), address(0), address(0)], [uint(0), uint(0), uint(0), uint(0), uint(0), uint(0)], [name, "", "", ""]);
-        // bytes32 stakingKey = keccak256(abi.encodePacked(tokenAddress, name));
-        // StakeInfo memory stakeInfo = stakeInfoData[stakingKey];
-        // if (stakeInfo.dataType == 0) {
-        //     stakeInfoData[stakingKey] = StakeInfo(1, [tokenAddress, address(0), address(0), address(0)], [uint(0), uint(0), uint(0), uint(0), uint(0), uint(0)], name, "", "", "");
-        //     stakeInfoIndex.push(stakingKey);
-        //     emit StakeInfoAdded(stakingKey, 1, [tokenAddress, address(0), address(0), address(0)], [uint(0), uint(0), uint(0), uint(0), uint(0), uint(0)], name, "", "", "");
-        // }
-        // _addStake(tokens, stakingKey);
     }
 
     function _staking(uint tokens, uint duration, uint dataType, address[4] memory addresses, uint[6] memory uints, string[4] memory strings) internal returns (Staking staking) {
@@ -52,7 +44,7 @@ contract StakingFactory is CloneFactory, Owned {
         staking = stakings[key];
         if (address(staking) == address(0)) {
             staking = Staking(createClone(address(stakingTemplate)));
-            staking.initStaking(ogToken, dataType, addresses, uints, strings);
+            staking.initStaking(stakingsIndex.length, ogToken, dataType, addresses, uints, strings);
             stakings[key] = staking;
             stakingsIndex.push(key);
             emit StakingCreated(key, staking);
