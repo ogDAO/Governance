@@ -17,6 +17,7 @@ contract StakingFactory is CloneFactory, Owned {
 
     mapping(bytes32 => Staking) public stakings;
     bytes32[] public stakingsIndex;
+    mapping(Staking => bool) public contracts;
 
     event StakingCreated(bytes32 indexed key, Staking indexed staking);
 
@@ -47,6 +48,7 @@ contract StakingFactory is CloneFactory, Owned {
             staking.initStaking(stakingsIndex.length, ogToken, dataType, addresses, uints, strings);
             stakings[key] = staking;
             stakingsIndex.push(key);
+            contracts[staking] = true;
             emit StakingCreated(key, staking);
         }
         require(ogToken.transferFrom(msg.sender, address(staking), tokens), "OG transferFrom failed");
@@ -55,6 +57,12 @@ contract StakingFactory is CloneFactory, Owned {
 
     function slash(Staking staking, uint slashingFactor) public onlyOwner {
         staking.slash(slashingFactor);
+    }
+
+    function mintOGTokens(address tokenOwner, uint tokens) public {
+        require(contracts[Staking(msg.sender)], "Caller not child");
+        console.log("        > %s -> StakingFactory.mintOGTokens(%s, %s)", msg.sender, tokenOwner, tokens);
+        require(ogToken.mint(tokenOwner, tokens), "OG mint failed");
     }
 
     // function addStakeForGeneral(uint tokens, uint dataType, address[4] memory addresses, uint[6] memory uints, string[4] memory strings) external {

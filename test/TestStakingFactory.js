@@ -37,8 +37,10 @@ describe("TestStakingFactory", function() {
     await console.log("        --- Setup 2 - OGToken mint(...) permissioning ---");
     const setup2 = [];
     setup2.push(data.ogToken.setPermission(data.owner, 1, true, 0));
-    const [setPermission1] = await Promise.all(setup2);
+    setup2.push(data.ogToken.setPermission(stakingFactory.address, 1, true, 0));
+    const [setPermission1, setPermission2] = await Promise.all(setup2);
     await data.printTxData("setPermission1", setPermission1);
+    await data.printTxData("setPermission2", setPermission2);
     await data.printBalances();
 
     console.log("        --- Setup Completed ---");

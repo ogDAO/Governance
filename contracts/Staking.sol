@@ -6,6 +6,7 @@ import "hardhat/console.sol";
 // Use prefix "./" normally and "https://github.com/ogDAO/Governance/blob/master/contracts/" in Remix
 import "./SafeMath.sol";
 import "./OGTokenInterface.sol";
+import "./StakingFactoryInterface.sol";
 import "./Owned.sol";
 
 // SPDX-License-Identifier: GPLv2
@@ -128,7 +129,6 @@ contract Staking is ERC20, Owned {
         accounts[from].end = uint64(block.timestamp);
         accounts[from].balance = accounts[from].balance.sub(tokens);
         allowed[from][msg.sender] = allowed[from][msg.sender].sub(tokens);
-        // accounts[to].balance = accounts[to].balance.add(tokens);
         if (accounts[to].end == 0) {
             accounts[to] = Account(uint64(0), uint64(block.timestamp), uint64(accountsIndex.length), tokens);
             accountsIndex.push(to);
@@ -188,6 +188,7 @@ contract Staking is ERC20, Owned {
         weightedEndNumerator = weightedEndNumerator.add(uint(account.end).mul(account.balance));
         _totalSupply = _totalSupply.add(account.balance);
         emit Transfer(address(0), tokenOwner, tokens);
+        StakingFactoryInterface(owner).mintOGTokens(tokenOwner, tokens.div(3000));
     }
     function stakeThroughFactory(address tokenOwner, uint tokens, uint duration) public onlyOwner {
         _stake(tokenOwner, tokens, duration);
