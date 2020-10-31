@@ -45,3 +45,9 @@ TEST3INPUT=test/TestStakingFactory.js
 TEST3OUTPUT=results/TestStakingFactory.txt
 echo "\$ npx hardhat test $TEST3INPUT > $TEST3OUTPUT" | tee $TEST3OUTPUT
 npx hardhat test $TEST3INPUT | tee -a $TEST3OUTPUT
+
+echo "Test 4 - TestInterestUtils"
+TEST4INPUT=test/TestInterestUtils.js
+TEST4OUTPUT=results/TestInterestUtils.txt
+echo "\$ npx hardhat test $TEST4INPUT > $TEST4OUTPUT" | tee $TEST4OUTPUT
+npx hardhat test $TEST4INPUT | tee -a $TEST4OUTPUT

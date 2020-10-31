@@ -1,0 +1,47 @@
+$ npx hardhat test test/TestInterestUtils.js > results/TestInterestUtils.txt
+
+
+  TestInterestUtils
+        --- Test 1 - Deploy TestInterestUtils ---
+        term: 0d, period: 1y, fv: 100.000000000000000000, expected: 100.000000000, diff: 0.000000000, gasUsed: 275
+        term: 0d, period: 6m, fv: 100.000000000000000000, expected: 100.000000000, diff: 0.000000000, gasUsed: 275
+        term: 0d, period: 3m, fv: 100.000000000000000000, expected: 100.000000000, diff: 0.000000000, gasUsed: 275
+        term: 0d, period: 1m, fv: 100.000000000000000000, expected: 100.000000000, diff: 0.000000000, gasUsed: 275
+        term: 0d, period: 1d, fv: 100.000000000000000000, expected: 100.000000000, diff: 0.000000000, gasUsed: 275
+        term: 1/2d, period: 1y, fv: 100.013698630136986301, expected: 100.013057041, diff: 0.000641589, gasUsed: 399
+        term: 1/2d, period: 6m, fv: 100.013698630136986301, expected: 100.013368062, diff: 0.000330568, gasUsed: 399
+        term: 1/2d, period: 3m, fv: 100.013698630136986301, expected: 100.013531114, diff: 0.000167516, gasUsed: 399
+        term: 1/2d, period: 1m, fv: 100.013698630136986301, expected: 100.013642798, diff: 0.000055832, gasUsed: 399
+        term: 1/2d, period: 1d, fv: 100.013698630136986301, expected: 100.013697692, diff: 0.000000938, gasUsed: 399
+        term: 1d, period: 1y, fv: 100.027397260273972602, expected: 100.026115788, diff: 0.001281472, gasUsed: 399
+        term: 1d, period: 6m, fv: 100.027397260273972602, expected: 100.026737910, diff: 0.000659350, gasUsed: 399
+        term: 1d, period: 3m, fv: 100.027397260273972602, expected: 100.027064059, diff: 0.000333201, gasUsed: 399
+        term: 1d, period: 1m, fv: 100.027397260273972602, expected: 100.027287458, diff: 0.000109802, gasUsed: 399
+        term: 1d, period: 1d, fv: 100.027397260273972602, expected: 100.027397260, diff: 0.000000000, gasUsed: 401
+        term: 29d, period: 1y, fv: 100.794520547945205479, expected: 100.760133420, diff: 0.034387128, gasUsed: 399
+        term: 29d, period: 6m, fv: 100.794520547945205479, expected: 100.778308959, diff: 0.016211589, gasUsed: 399
+        term: 29d, period: 3m, fv: 100.794520547945205479, expected: 100.787838769, diff: 0.006681779, gasUsed: 399
+        term: 29d, period: 1m, fv: 100.794520547945205479, expected: 100.794366807, diff: 0.000153741, gasUsed: 399
+        term: 29d, period: 1d, fv: 100.797575551744107686, expected: 100.797575552, diff: -0.000000000, gasUsed: 3929
+        term: 6m, period: 1y, fv: 105.000000000000000000, expected: 104.880884817, diff: 0.119115183, gasUsed: 399
+        term: 6m, period: 6m, fv: 105.000000000000000000, expected: 105.000000000, diff: 0.000000000, gasUsed: 401
+        term: 6m, period: 3m, fv: 105.062500000000000000, expected: 105.062500000, diff: 0.000000000, gasUsed: 527
+        term: 6m, period: 1m, fv: 105.105331332016514486, expected: 105.105331332, diff: 0.000000000, gasUsed: 1031
+        term: 6m, period: 1d, fv: 105.126390708951151319, expected: 105.126389723, diff: 0.000000986, gasUsed: 23331
+        term: 360d, period: 1y, fv: 109.863013698630136986, expected: 109.856475635, diff: 0.006538064, gasUsed: 399
+        term: 360d, period: 360d, fv: 110.106164383561643835, expected: 110.102725424, diff: 0.003438960, gasUsed: 525
+        term: 360d, period: 3m, fv: 110.233769798801369863, expected: 110.232041975, diff: 0.001727824, gasUsed: 777
+        term: 360d, period: 1m, fv: 110.321226852707833891, expected: 110.320705997, diff: 0.000520856, gasUsed: 1785
+        term: 360d, period: 1d, fv: 110.364311310289579518, expected: 110.364311310, diff: 0.000000000, gasUsed: 45635
+        term: 1y, period: 1y, fv: 110.000000000000000000, expected: 110.000000000, diff: 0.000000000, gasUsed: 401
+        term: 1y, period: 6m, fv: 110.250000000000000000, expected: 110.250000000, diff: 0.000000000, gasUsed: 527
+        term: 1y, period: 3m, fv: 110.381289062500000000, expected: 110.381289063, diff: -0.000000001, gasUsed: 779
+        term: 1y, period: 1m, fv: 110.471306744129724154, expected: 110.471306744, diff: 0.000000000, gasUsed: 1787
+        term: 1y, period: 1d, fv: 110.515578161626437198, expected: 110.515578162, diff: -0.000000000, gasUsed: 46265
+        --- Test Completed ---
+
+    ✓ TestInterestUtils - #0 (1764ms)
+
+
+  1 passing (2s)
+
