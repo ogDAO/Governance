@@ -11,5 +11,17 @@ echo "\$ npx hardhat test $TESTINPUT > $TESTOUTPUT" | tee $TESTOUTPUT
 
 npx hardhat test $TESTINPUT | tee -a $TESTOUTPUT
 
-# Strip out unnamed event parameters
-# sed -i '' 's/(0:.*length__: [0-9]*, /(/g' $TESTOUTPUT
+echo "        --- 1y period ---"
+grep "period: 1y" results/TestInterestUtils.txt
+echo ""
+echo "        --- 6m period ---"
+grep "period: 6m" results/TestInterestUtils.txt
+echo ""
+echo "        --- 3m period ---"
+grep "period: 3m" results/TestInterestUtils.txt
+echo ""
+echo "        --- 1m period ---"
+grep "period: 1m" results/TestInterestUtils.txt
+echo ""
+echo "        --- 1d period ---"
+grep "period: 1d" results/TestInterestUtils.txt
