@@ -3,60 +3,64 @@ $ npx hardhat test test/TestInterestUtils.js > results/TestInterestUtils.txt
 
   TestInterestUtils
         --- Test 1 - Deploy TestInterestUtils ---
-        term: 0d, period: 1y, fv: 100.000000000000000000, compoundingResult: 100.000000000, diff: 0.000000000 = 0.000000000%, gasUsed: 301
-        term: 0d, period: 6m, fv: 100.000000000000000000, compoundingResult: 100.000000000, diff: 0.000000000 = 0.000000000%, gasUsed: 301
-        term: 0d, period: 3m, fv: 100.000000000000000000, compoundingResult: 100.000000000, diff: 0.000000000 = 0.000000000%, gasUsed: 301
-        term: 0d, period: 1m, fv: 100.000000000000000000, compoundingResult: 100.000000000, diff: 0.000000000 = 0.000000000%, gasUsed: 301
-        term: 0d, period: 1d, fv: 100.000000000000000000, compoundingResult: 100.000000000, diff: 0.000000000 = 0.000000000%, gasUsed: 301
-        term: 1/2d, period: 1y, fv: 100.013698630136986301, compoundingResult: 100.013057041, diff: 0.000641589 = 0.000641501%, gasUsed: 425
-        term: 1/2d, period: 6m, fv: 100.013698630136986301, compoundingResult: 100.013368062, diff: 0.000330568 = 0.000330523%, gasUsed: 425
-        term: 1/2d, period: 3m, fv: 100.013698630136986301, compoundingResult: 100.013531114, diff: 0.000167516 = 0.000167493%, gasUsed: 425
-        term: 1/2d, period: 1m, fv: 100.013698630136986301, compoundingResult: 100.013642798, diff: 0.000055832 = 0.000055824%, gasUsed: 425
-        term: 1/2d, period: 1d, fv: 100.013698630136986301, compoundingResult: 100.013697692, diff: 0.000000938 = 0.000000938%, gasUsed: 425
-        term: 1d, period: 1y, fv: 100.027397260273972602, compoundingResult: 100.026115788, diff: 0.001281472 = 0.001281121%, gasUsed: 425
-        term: 1d, period: 6m, fv: 100.027397260273972602, compoundingResult: 100.026737910, diff: 0.000659350 = 0.000659170%, gasUsed: 425
-        term: 1d, period: 3m, fv: 100.027397260273972602, compoundingResult: 100.027064059, diff: 0.000333201 = 0.000333110%, gasUsed: 425
-        term: 1d, period: 1m, fv: 100.027397260273972602, compoundingResult: 100.027287458, diff: 0.000109802 = 0.000109772%, gasUsed: 425
-        term: 1d, period: 1d, fv: 100.027397260273972602, compoundingResult: 100.027397260, diff: 0.000000000 = 0.000000000%, gasUsed: 427
-        term: 29d, period: 1y, fv: 100.794520547945205479, compoundingResult: 100.760133420, diff: 0.034387128 = 0.034116069%, gasUsed: 425
-        term: 29d, period: 6m, fv: 100.794520547945205479, compoundingResult: 100.778308959, diff: 0.016211589 = 0.016083800%, gasUsed: 425
-        term: 29d, period: 3m, fv: 100.794520547945205479, compoundingResult: 100.787838769, diff: 0.006681779 = 0.006629109%, gasUsed: 425
-        term: 29d, period: 1m, fv: 100.794520547945205479, compoundingResult: 100.794366807, diff: 0.000153741 = 0.000152529%, gasUsed: 425
-        term: 29d, period: 1d, fv: 100.797575551744107686, compoundingResult: 100.797575552, diff: -0.000000000 = -0.000000000%, gasUsed: 3955
-        term: 6m, period: 1y, fv: 105.000000000000000000, compoundingResult: 104.880884817, diff: 0.119115183 = 0.113443031%, gasUsed: 425
-        term: 6m, period: 6m, fv: 105.000000000000000000, compoundingResult: 105.000000000, diff: 0.000000000 = 0.000000000%, gasUsed: 427
-        term: 6m, period: 3m, fv: 105.062500000000000000, compoundingResult: 105.062500000, diff: 0.000000000 = 0.000000000%, gasUsed: 553
-        term: 6m, period: 1m, fv: 105.105331332016514486, compoundingResult: 105.105331332, diff: 0.000000000 = 0.000000000%, gasUsed: 1057
-        term: 6m, period: 1d, fv: 105.126390708951151319, compoundingResult: 105.126389723, diff: 0.000000986 = 0.000000938%, gasUsed: 23357
-        term: 360d, period: 1y, fv: 109.863013698630136986, compoundingResult: 109.856475635, diff: 0.006538064 = 0.005951105%, gasUsed: 425
-        term: 360d, period: 360d, fv: 110.106164383561643835, compoundingResult: 110.102725424, diff: 0.003438960 = 0.003123312%, gasUsed: 551
-        term: 360d, period: 3m, fv: 110.233769798801369863, compoundingResult: 110.232041975, diff: 0.001727824 = 0.001567418%, gasUsed: 803
-        term: 360d, period: 1m, fv: 110.321226852707833891, compoundingResult: 110.320705997, diff: 0.000520856 = 0.000472126%, gasUsed: 1811
-        term: 360d, period: 1d, fv: 110.364311310289579518, compoundingResult: 110.364311310, diff: 0.000000000 = 0.000000000%, gasUsed: 45661
-        term: 1y, period: 1y, fv: 110.000000000000000000, compoundingResult: 110.000000000, diff: 0.000000000 = 0.000000000%, gasUsed: 427
-        term: 1y, period: 6m, fv: 110.250000000000000000, compoundingResult: 110.250000000, diff: 0.000000000 = 0.000000000%, gasUsed: 553
-        term: 1y, period: 3m, fv: 110.381289062500000000, compoundingResult: 110.381289063, diff: -0.000000001 = -0.000000000%, gasUsed: 805
-        term: 1y, period: 1m, fv: 110.471306744129724154, compoundingResult: 110.471306744, diff: 0.000000000 = 0.000000000%, gasUsed: 1813
-        term: 1y, period: 1d, fv: 110.515578161626437198, compoundingResult: 110.515578162, diff: -0.000000000 = -0.000000000%, gasUsed: 46291
-        term: 10y, period: 1y, fv: 259.374246010000000000, compoundingResult: 259.374246010, diff: 0.000000000 = 0.000000000%, gasUsed: 1561
-        term: 10y, period: 6m, fv: 265.329770514442013387, compoundingResult: 265.329770514, diff: 0.000000000 = 0.000000000%, gasUsed: 2821
-        term: 10y, period: 3m, fv: 268.506383838997273126, compoundingResult: 268.506383839, diff: -0.000000000 = -0.000000000%, gasUsed: 5341
-        term: 10y, period: 1m, fv: 270.704149086225312445, compoundingResult: 270.704149086, diff: 0.000000000 = 0.000000000%, gasUsed: 15421
-        term: 10y, period: 1d, fv: 271.790955457775406689, compoundingResult: 271.790955458, diff: -0.000000000 = -0.000000000%, gasUsed: 460201
-        term: 100y, period: 1y, fv: 1378061.233982227018405007, compoundingResult: 1378061.233982240, diff: -0.000000013 = -0.000000000%, gasUsed: 12901
-        term: 100y, period: 6m, fv: 1729258.081515998599372675, compoundingResult: 1729258.081516000, diff: -0.000000001 = -0.000000000%, gasUsed: 25501
-        term: 100y, period: 3m, fv: 1947808.051496199439595696, compoundingResult: 1947808.051496160, diff: 0.000000039 = 0.000000000%, gasUsed: 50701
-        term: 100y, period: 1m, fv: 2113241.460016929743428199, compoundingResult: 2113241.460016830, diff: 0.000000100 = 0.000000000%, gasUsed: 151501
-        term: 100y, period: 1d, fv: 2199631.871358164265829816, compoundingResult: 2199631.871350710, diff: 0.000007454 = 0.000000000%, gasUsed: 4599301
-        term: 1000y, period: 1y, fv: 2095915.563781366005533379, compoundingResult: 2095915.563781390, diff: -0.000000024 = -0.000000000%, gasUsed: 126301
-        term: 1000y, period: 6m, fv: 2148441.402328761575983082, compoundingResult: 2148441.402328110, diff: 0.000000652 = 0.000000000%, gasUsed: 252301
-        term: 1000y, period: 3m, fv: 2175330.098331395571937277, compoundingResult: 2175330.098331000, diff: 0.000000396 = 0.000000000%, gasUsed: 504301
-        term: 1000y, period: 1m, fv: 2193493.053420320720362473, compoundingResult: 2193493.053417370, diff: 0.000002951 = 0.000000000%, gasUsed: 1512301
-        term: 1000y, period: 1d, Out of gas
+        term: 0d, period: 1y, fv: 100.000000000000000000, compoundingResult: 100.000000000, diff: 0.000000000 = 0.000000000%, gasUsed: 337
+        term: 0d, period: 6m, fv: 100.000000000000000000, compoundingResult: 100.000000000, diff: 0.000000000 = 0.000000000%, gasUsed: 337
+        term: 0d, period: 3m, fv: 100.000000000000000000, compoundingResult: 100.000000000, diff: 0.000000000 = 0.000000000%, gasUsed: 337
+        term: 0d, period: 1m, fv: 100.000000000000000000, compoundingResult: 100.000000000, diff: 0.000000000 = 0.000000000%, gasUsed: 337
+        term: 0d, period: 7d, fv: 100.000000000000000000, compoundingResult: 100.000000000, diff: 0.000000000 = 0.000000000%, gasUsed: 337
+        term: 0d, period: 1d, fv: 100.000000000000000000, compoundingResult: 100.000000000, diff: 0.000000000 = 0.000000000%, gasUsed: 337
+        term: 1/2d, period: 1y, fv: 100.013698630136986301, compoundingResult: 100.013057041, diff: 0.000641589 = 0.000641501%, gasUsed: 1061
+        term: 1/2d, period: 6m, fv: 100.013698630136986301, compoundingResult: 100.013368062, diff: 0.000330568 = 0.000330523%, gasUsed: 1061
+        term: 1/2d, period: 3m, fv: 100.013698630136986301, compoundingResult: 100.013531114, diff: 0.000167516 = 0.000167493%, gasUsed: 1061
+        term: 1/2d, period: 1m, fv: 100.013698630136986301, compoundingResult: 100.013642798, diff: 0.000055832 = 0.000055824%, gasUsed: 1061
+        term: 1/2d, period: 7d, fv: 100.013698630136986301, compoundingResult: 100.013686448, diff: 0.000012182 = 0.000012180%, gasUsed: 1061
+        term: 1/2d, period: 1d, fv: 100.013698630136986301, compoundingResult: 100.013697692, diff: 0.000000938 = 0.000000938%, gasUsed: 1061
+        term: 1d, period: 1y, fv: 100.027397260273972602, compoundingResult: 100.026115788, diff: 0.001281472 = 0.001281121%, gasUsed: 1061
+        term: 1d, period: 6m, fv: 100.027397260273972602, compoundingResult: 100.026737910, diff: 0.000659350 = 0.000659170%, gasUsed: 1061
+        term: 1d, period: 3m, fv: 100.027397260273972602, compoundingResult: 100.027064059, diff: 0.000333201 = 0.000333110%, gasUsed: 1061
+        term: 1d, period: 1m, fv: 100.027397260273972602, compoundingResult: 100.027287458, diff: 0.000109802 = 0.000109772%, gasUsed: 1061
+        term: 1d, period: 7d, fv: 100.027397260273972602, compoundingResult: 100.027374769, diff: 0.000022491 = 0.000022485%, gasUsed: 1061
+        term: 1d, period: 1d, fv: 100.027397260273972602, compoundingResult: 100.027397260, diff: 0.000000000 = 0.000000000%, gasUsed: 981
+        term: 29d, period: 1y, fv: 100.794520547945205479, compoundingResult: 100.760133420, diff: 0.034387128 = 0.034116069%, gasUsed: 1061
+        term: 29d, period: 6m, fv: 100.794520547945205479, compoundingResult: 100.778308959, diff: 0.016211589 = 0.016083800%, gasUsed: 1061
+        term: 29d, period: 3m, fv: 100.794520547945205479, compoundingResult: 100.787838769, diff: 0.006681779 = 0.006629109%, gasUsed: 1061
+        term: 29d, period: 1m, fv: 100.794520547945205479, compoundingResult: 100.794366807, diff: 0.000153741 = 0.000152529%, gasUsed: 1061
+        term: 29d, period: 7d, fv: 100.796940939925769518, compoundingResult: 100.796918275, diff: 0.000022665 = 0.000022486%, gasUsed: 3637
+        term: 29d, period: 1d, fv: 100.797575551744107686, compoundingResult: 100.797575552, diff: -0.000000000 = -0.000000000%, gasUsed: 19013
+        term: 6m, period: 1y, fv: 105.000000000000000000, compoundingResult: 104.880884817, diff: 0.119115183 = 0.113443031%, gasUsed: 1061
+        term: 6m, period: 6m, fv: 105.000000000000000000, compoundingResult: 105.000000000, diff: 0.000000000 = 0.000000000%, gasUsed: 981
+        term: 6m, period: 3m, fv: 105.062500000000000000, compoundingResult: 105.062500000, diff: 0.000000000 = 0.000000000%, gasUsed: 1625
+        term: 6m, period: 1m, fv: 105.105331332016514486, compoundingResult: 105.105331332, diff: 0.000000000 = 0.000000000%, gasUsed: 4201
+        term: 6m, period: 7d, fv: 105.122088656898195580, compoundingResult: 105.122075852, diff: 0.000012805 = 0.000012181%, gasUsed: 17805
+        term: 6m, period: 1d, fv: 105.126390708951151319, compoundingResult: 105.126389723, diff: 0.000000986 = 0.000000938%, gasUsed: 118269
+        term: 360d, period: 1y, fv: 109.863013698630136986, compoundingResult: 109.856475635, diff: 0.006538064 = 0.005951105%, gasUsed: 1061
+        term: 360d, period: 360d, fv: 110.106164383561643835, compoundingResult: 110.102725424, diff: 0.003438960 = 0.003123312%, gasUsed: 1705
+        term: 360d, period: 3m, fv: 110.233769798801369863, compoundingResult: 110.232041975, diff: 0.001727824 = 0.001567418%, gasUsed: 2993
+        term: 360d, period: 1m, fv: 110.321226852707833891, compoundingResult: 110.320705997, diff: 0.000520856 = 0.000472126%, gasUsed: 8145
+        term: 360d, period: 7d, fv: 110.355427556879361180, compoundingResult: 110.355377947, diff: 0.000049610 = 0.000044955%, gasUsed: 33905
+        term: 360d, period: 1d, fv: 110.364311310289579518, compoundingResult: 110.364311310, diff: 0.000000000 = 0.000000000%, gasUsed: 232177
+        term: 1y, period: 1y, fv: 110.000000000000000000, compoundingResult: 110.000000000, diff: 0.000000000 = 0.000000000%, gasUsed: 981
+        term: 1y, period: 6m, fv: 110.250000000000000000, compoundingResult: 110.250000000, diff: 0.000000000 = 0.000000000%, gasUsed: 1625
+        term: 1y, period: 3m, fv: 110.381289062500000000, compoundingResult: 110.381289063, diff: -0.000000001 = -0.000000000%, gasUsed: 2913
+        term: 1y, period: 1m, fv: 110.471306744129724154, compoundingResult: 110.471306744, diff: 0.000000000 = 0.000000000%, gasUsed: 8065
+        term: 1y, period: 7d, fv: 110.506533162773255595, compoundingResult: 110.506508315, diff: 0.000024848 = 0.000022485%, gasUsed: 34549
+        term: 1y, period: 1d, fv: 110.515578161626437198, compoundingResult: 110.515578162, diff: -0.000000000 = -0.000000000%, gasUsed: 235397
+        term: 10y, period: 1y, fv: 259.374246010000000000, compoundingResult: 259.374246010, diff: 0.000000000 = 0.000000000%, gasUsed: 6777
+        term: 10y, period: 6m, fv: 265.329770514442013387, compoundingResult: 265.329770514, diff: 0.000000000 = 0.000000000%, gasUsed: 13217
+        term: 10y, period: 3m, fv: 268.506383838997273126, compoundingResult: 268.506383839, diff: -0.000000000 = -0.000000000%, gasUsed: 26097
+        term: 10y, period: 1m, fv: 270.704149086225312445, compoundingResult: 270.704149086, diff: 0.000000000 = 0.000000000%, gasUsed: 77617
+        term: 10y, period: 7d, fv: 271.568105161849748730, compoundingResult: 271.567983080, diff: 0.000122082 = 0.000044954%, gasUsed: 336585
+        term: 10y, period: 1d, fv: 271.790955457775406689, compoundingResult: 271.790955458, diff: -0.000000000 = -0.000000000%, gasUsed: 2350937
+        term: 100y, period: 1y, fv: 1378061.233982227018405007, compoundingResult: 1378061.233982240, diff: -0.000000013 = -0.000000000%, gasUsed: 64737
+        term: 100y, period: 6m, fv: 1729258.081515998599372675, compoundingResult: 1729258.081516000, diff: -0.000000001 = -0.000000000%, gasUsed: 129137
+        term: 100y, period: 3m, fv: 1947808.051496199439595696, compoundingResult: 1947808.051496160, diff: 0.000000039 = 0.000000000%, gasUsed: 257937
+        term: 100y, period: 1m, fv: 2113241.460016929743428199, compoundingResult: 2113241.460016830, diff: 0.000000100 = 0.000000000%, gasUsed: 773137
+        term: 100y, period: 7d, fv: 2181653.780204375976953345, compoundingResult: 2181652.962761770, diff: 0.817442606 = 0.000037469%, gasUsed: 3358877
+        term: 100y, period: 1d, Out of gas
         --- Test Completed ---
 
-    ✓ TestInterestUtils - #0 (9621ms)
+    ✓ TestInterestUtils - #0 (11388ms)
 
 
-  1 passing (10s)
+  1 passing (11s)
 

@@ -36,6 +36,13 @@ contract Staking is ERC20, Owned {
         uint balance;
     }
 
+    bytes constant SYMBOLPREFIX = "OGS";
+    uint8 constant DASH = 45;
+    uint8 constant ZERO = 48;
+    uint constant MAXSTAKINGINFOSTRINGLENGTH = 8;
+    uint constant SECONDS_PER_YEAR = 10000; // Testing 24 * 60 * 60 * 365;
+    uint constant SECONDS_PER_DAY = 24 * 60 * 60;
+
     uint public id;
     OGTokenInterface public ogToken;
     StakingInfo public stakingInfo;
@@ -47,12 +54,11 @@ contract Staking is ERC20, Owned {
     uint public _totalSupply;
     mapping(address => mapping(address => uint)) allowed;
 
-    uint constant SECONDS_PER_YEAR = 10000; // Testing 24 * 60 * 60 * 365;
     uint public rewardsPerSecond = 150_000_000_000_000_000; // 0.15
-    uint public rewardsPerYear; // = 15 * (10 ** 18); // 15%
+    uint public rewardsPerYear;
 
     event Staked(address indexed tokenOwner, uint tokens, uint duration, uint end);
-    event Unstaked(address indexed tokenOwner, uint tokens, uint tokensWithSlashingFactor);
+    event Unstaked(address indexed tokenOwner, uint tokens, uint reward, uint tokensWithSlashingFactor, uint rewardWithSlashingFactor);
     event Slashed(uint slashingFactor, uint tokensBurnt);
 
     constructor() {
@@ -64,11 +70,6 @@ contract Staking is ERC20, Owned {
         stakingInfo = StakingInfo(dataType, addresses, uints, strings[0], strings[1], strings[2], strings[3]);
         rewardsPerYear = 15 * 10**16; // 15%
     }
-
-    bytes constant SYMBOLPREFIX = "OGS";
-    uint8 constant DASH = 45;
-    uint8 constant ZERO = 48;
-    uint constant MAXSTAKINGINFOSTRINGLENGTH = 8;
 
     function symbol() override external view returns (string memory _symbol) {
         bytes memory b = new bytes(20);
@@ -229,25 +230,41 @@ contract Staking is ERC20, Owned {
         _stake(msg.sender, tokens, duration);
     }
 
-    function computeReward(Account memory account, address tokenOwner) internal view {
-        // elapsed = now - account.start = now - (account.end - account.duration)
-        uint elapsed = account.end == 0 ? 0 : block.timestamp.sub(uint(account.end).sub(uint(account.duration)));
-        console.log("        > computeReward(%s) - elapsed: ", tokenOwner, elapsed);
-        console.log("          > = now %s - (end %s - duration %s)", block.timestamp, account.end, account.duration);
-        console.log("          > = rate %s, balance %s, weightedDurationDenominator %s", account.rate, account.balance, weightedDurationDenominator);
-        // account.votes = account.balance.mul(duration).div(SECONDS_PER_YEAR);
+    function computeReward(Account memory account, address tokenOwner, uint tokens) internal view returns (uint _reward) {
 
-        // reward = [elapsed * rewardsPerSecond] * [account.balance * / (_totalSupply - account[0x0].balance)] * [account.duration / SECONDS_PER_YEAR]
-        uint _reward = elapsed.mul(account.rate).mul(account.balance).mul(account.duration).div(weightedDurationDenominator).div(SECONDS_PER_YEAR);
-        console.log("        > computeReward(%s) - _reward: ", tokenOwner, _reward);
+        // uint from = block.timestamp - 10;
+        // uint to = block.timestamp;
+        // uint secondsPerPeriod = 365 days / 12;
+        // uint rate = 10 ** 17; // 10% per annum
+        // uint amount = 100 * 10 ** 18;
+        // uint gasStart = gasleft();
+        // uint result = InterestUtils.futureValue(amount, from, to, rate, secondsPerPeriod);
+        // uint gasUsed = gasStart - gasleft();
+        // console.log("        > unstake - _calculateResult - result %s gasUsed %s", result, gasUsed);
+        uint from = account.end == 0 ? block.timestamp : uint(account.end).sub(uint(account.duration));
+        uint futureValue = InterestUtils.futureValue(tokens, from, block.timestamp, rewardsPerYear, SECONDS_PER_DAY);
+        console.log("        > computeReward(%s) - tokens %s, rate %s", tokenOwner, tokens, rewardsPerYear);
+        console.log("          from %s, to %s, futureValue %s", from, block.timestamp, futureValue);
+        _reward = futureValue.sub(tokens);
+        console.log("          _reward %s", _reward);
+
+        // // elapsed = now - account.start = now - (account.end - account.duration)
+        // uint elapsed = account.end == 0 ? 0 : block.timestamp.sub(uint(account.end).sub(uint(account.duration)));
+        // console.log("        > computeReward(%s) - elapsed: ", tokenOwner, elapsed);
+        // console.log("          > = now %s - (end %s - duration %s)", block.timestamp, account.end, account.duration);
+        // console.log("          > = rate %s, balance %s, weightedDurationDenominator %s", account.rate, account.balance, weightedDurationDenominator);
+        // // account.votes = account.balance.mul(duration).div(SECONDS_PER_YEAR);
+        //
+        // // reward = [elapsed * rewardsPerSecond] * [account.balance * / (_totalSupply - account[0x0].balance)] * [account.duration / SECONDS_PER_YEAR]
+        // uint _reward = elapsed.mul(account.rate).mul(account.balance).mul(account.duration).div(weightedDurationDenominator).div(SECONDS_PER_YEAR);
+        // console.log("        > computeReward(%s) - _reward: ", tokenOwner, _reward);
     }
 
     function _unstake(address tokenOwner, uint tokens) internal {
-
         Account storage account = accounts[tokenOwner];
         require(uint(account.end) < block.timestamp, "Staking period still active");
         require(tokens <= account.balance, "Unsufficient staked balance");
-        computeReward(account, tokenOwner);
+        uint reward = computeReward(account, tokenOwner, tokens);
         updateStatsBefore(account, tokenOwner);
         if (tokens > 0) {
             // weightedEndNumerator = weightedEndNumerator.sub(uint(account.end).mul(account.balance));
@@ -270,35 +287,17 @@ contract Staking is ERC20, Owned {
             updateStatsAfter(account, tokenOwner);
             uint tokensWithSlashingFactor = tokens.sub(tokens.mul(slashingFactor).div(10**18));
             require(ogToken.transfer(tokenOwner, tokensWithSlashingFactor), "OG transfer failed");
-            emit Unstaked(msg.sender, tokens, tokensWithSlashingFactor);
+            uint rewardWithSlashingFactor;
+            if (reward > 0) {
+                rewardWithSlashingFactor = reward.sub(reward.mul(slashingFactor).div(10**18));
+                // require(ogToken.mint(tokenOwner, rewardWithSlashingFactor), "OG mint failed");
+                StakingFactoryInterface(owner).mintOGTokens(tokenOwner, rewardWithSlashingFactor);
+            }
+            emit Unstaked(msg.sender, tokens, reward, tokensWithSlashingFactor, rewardWithSlashingFactor);
         }
     }
 
-    // uint immutable ONE = 10 ** 18;
-    // uint immutable SECONDS_PER_DAY = 24 * 60 * 60;
-
-    // // For testing
-    // function calculateResult(uint amount, uint from, uint to, uint rate, uint secondsPerPeriod) public view returns (uint) {
-    //     return _calculateResult(amount, from, to, rate, secondsPerPeriod);
-    // }
-    //
-    // function _calculateResult(uint amount, uint from, uint to, uint rate, uint secondsPerPeriod) public view returns (uint) {
-    //     require(from <= to);
-    //     uint date = from;
-    //     while (date <= to) {
-    //         if (date + secondsPerPeriod <= to) {
-    //             amount = amount + amount * rate * secondsPerPeriod / 365 days / ONE;
-    //         } else if (date < to) {
-    //             uint period = (to - date);
-    //             amount = amount + amount * rate * secondsPerPeriod * period / secondsPerPeriod / 365 days / ONE;
-    //         }
-    //         date = date + secondsPerPeriod;
-    //     }
-    //     return amount;
-    // }
-
     function unstake(uint tokens) public {
-
         // Test calculateResult
         uint from = block.timestamp - 10;
         uint to = block.timestamp;
