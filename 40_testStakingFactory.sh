@@ -7,6 +7,9 @@
 TESTINPUT=test/TestStakingFactory.js
 TESTOUTPUT=results/TestStakingFactory.txt
 
+# Clear scollback buffer and screen
+printf "\033[2J\033[3J\033[1;1H"
+
 echo "\$ npx hardhat test $TESTINPUT > $TESTOUTPUT" | tee $TESTOUTPUT
 
 npx hardhat test $TESTINPUT | tee -a $TESTOUTPUT

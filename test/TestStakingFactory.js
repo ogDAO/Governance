@@ -196,12 +196,13 @@ describe("TestStakingFactory", function() {
       // await data.printTxData("addStake3", addStake3);
       await data.printBalances();
 
-      const expectedDuration = ogTokensToStake1.multipliedBy(duration1).plus(ogTokensToStake2.multipliedBy(duration2)).plus(ogTokensToStake3.multipliedBy(duration3)).dividedBy(ogTokensToStake1.plus(ogTokensToStake2).plus(ogTokensToStake3));
-      const expectedWeightedEnd = expectedDuration.plus(new Date()/1000);
-      console.log("        expectedWeightedEnd: " + expectedWeightedEnd);
-      const weightedEnd = await stakings[0].weightedEnd();
-      console.log("        weightedEnd        : " + weightedEnd);
-      expect(parseFloat(weightedEnd.toString())).to.be.closeTo(parseFloat(expectedWeightedEnd.toString()), 150, "weightedEnd seems off");
+      // TODO
+      // const expectedDuration = ogTokensToStake1.multipliedBy(duration1).plus(ogTokensToStake2.multipliedBy(duration2)).plus(ogTokensToStake3.multipliedBy(duration3)).dividedBy(ogTokensToStake1.plus(ogTokensToStake2).plus(ogTokensToStake3));
+      // const expectedWeightedEnd = expectedDuration.plus(new Date()/1000);
+      // console.log("        expectedWeightedEnd: " + expectedWeightedEnd);
+      // const weightedEnd = await stakings[0].weightedEnd();
+      // console.log("        weightedEnd        : " + weightedEnd);
+      // expect(parseFloat(weightedEnd.toString())).to.be.closeTo(parseFloat(expectedWeightedEnd.toString()), 150, "weightedEnd seems off");
     });
   });
 
@@ -317,7 +318,7 @@ describe("TestStakingFactory", function() {
     });
   });
 
-  describe.only("TestStakingFactory - Workflow #3 - Stake, and test transfers", function() {
+  describe("TestStakingFactory - Workflow #3 - Stake, and test transfers", function() {
     it("Workflow #3 - Stake, slash and unstake", async function() {
       console.log("        --- Test 1 - Mint 10,000 OG tokens for User{1..3}; User{1..3} approve 10,000 FEE for StakingFactory to spend ---");
       const ogTokens = new BigNumber("10000").shiftedBy(18);
@@ -337,7 +338,7 @@ describe("TestStakingFactory", function() {
       await data.printTxData("approve3", approve3);
       await data.printBalances();
 
-      console.log("        --- Test 2 - User{1..3} -> StakingFactory.addStakingForToken(1,000, duration) ---");
+      console.log("        --- Test 2 - User1 -> StakingFactory.addStakingForToken(1,000, duration) ---");
       let ogTokensToStake = new BigNumber("1000").shiftedBy(18);
       let duration = 2;
       const test2 = [];
@@ -356,6 +357,82 @@ describe("TestStakingFactory", function() {
       await data.printTxData("addStake1", addStake1);
       // await data.printTxData("addStake2", addStake2);
       // await data.printTxData("addStake3", addStake3);
+      await data.printBalances();
+
+      // console.log("        ---  Test 3a - User1 -> OGToken.approve(stakeAddress, 1,000) ---");
+      // const test3a = [];
+      // test3a.push(data.ogToken.connect(data.user1Signer).approve(stakings[0].address, ogTokensToStake.toFixed(0)));
+      // const [approve4] = await Promise.all(test3a);
+      // console.log("        ---  Test 3b - User1 -> Staking.stake(1,000, duration) ---");
+      // const test3b = [];
+      // test3b.push(stakings[0].connect(data.user1Signer).stake(ogTokensToStake.toFixed(0), duration));
+      // const [addStake4] = await Promise.all(test3b);
+      // await data.printTxData("approve4", approve4);
+      // await data.printTxData("addStake4", addStake4);
+      // await data.printBalances();
+
+      // console.log("        --- Test 4 - User1 -> unstake(1,000) ---");
+      // data.pause("Waiting", duration + 1);
+      // let ogTokensToUnstake = new BigNumber("1000").shiftedBy(18);
+      // // const user1Staking0Balance = await stakings[0].balanceOf(data.user1);
+      // // const user2Staking0Balance = await stakings[0].balanceOf(data.user2);
+      // // const user3Staking0Balance = await stakings[0].balanceOf(data.user3);
+      // // const user4Staking0Balance = await stakings[0].balanceOf(data.user4);
+      // const test4 = [];
+      // test4.push(stakings[0].connect(data.user1Signer).unstake(ogTokensToUnstake.toFixed(0)));
+      // // test4.push(stakings[0].connect(data.user1Signer).unstake(await stakings[0].balanceOf(data.user1)));
+      // // test4.push(stakings[0].connect(data.user1Signer).unstakeAll());
+      // // test.push(stakings[0].connect(data.user2Signer).unstake(await stakings[0].balanceOf(data.user2)));
+      // // test.push(stakings[0].connect(data.user3Signer).unstake(await stakings[0].balanceOf(data.user3)));
+      // // test.push(stakings[0].connect(data.user4Signer).unstake(await stakings[0].balanceOf(data.user4)));
+      // const [unstake1/*, unstake2, unstake3, unstake4*/] = await Promise.all(test4);
+      // await data.printTxData("unstake1", unstake1);
+      // // await data.printTxData("unstake2", unstake2);
+      // // await data.printTxData("unstake3", unstake3);
+      // // await data.printTxData("unstake4", unstake4);
+      // await data.printBalances();
+
+      // console.log("        --- Test 5 - User1 -> unstakeAll() ---");
+      // data.pause("Waiting", duration + 1);
+      // // let ogTokensToUnstake = new BigNumber("1000").shiftedBy(18);
+      // // const user1Staking0Balance = await stakings[0].balanceOf(data.user1);
+      // // const user2Staking0Balance = await stakings[0].balanceOf(data.user2);
+      // // const user3Staking0Balance = await stakings[0].balanceOf(data.user3);
+      // // const user4Staking0Balance = await stakings[0].balanceOf(data.user4);
+      // const test5 = [];
+      // // test5.push(stakings[0].connect(data.user1Signer).unstake(ogTokensToUnstake.toFixed(0)));
+      // // test5.push(stakings[0].connect(data.user1Signer).unstake(await stakings[0].balanceOf(data.user1)));
+      // test5.push(stakings[0].connect(data.user1Signer).unstakeAll());
+      // // test.push(stakings[0].connect(data.user2Signer).unstake(await stakings[0].balanceOf(data.user2)));
+      // // test.push(stakings[0].connect(data.user3Signer).unstake(await stakings[0].balanceOf(data.user3)));
+      // // test.push(stakings[0].connect(data.user4Signer).unstake(await stakings[0].balanceOf(data.user4)));
+      // const [unstake5/*, unstake2, unstake3, unstake4*/] = await Promise.all(test5);
+      // await data.printTxData("unstake5", unstake5);
+      // // await data.printTxData("unstake2", unstake2);
+      // // await data.printTxData("unstake3", unstake3);
+      // // await data.printTxData("unstake4", unstake4);
+      // await data.printBalances();
+
+      console.log("        --- Test 6 - User1 -> restake(4) ---");
+      duration = 4;
+      data.pause("Waiting", duration + 1);
+      // let ogTokensToUnstake = new BigNumber("1000").shiftedBy(18);
+      // const user1Staking0Balance = await stakings[0].balanceOf(data.user1);
+      // const user2Staking0Balance = await stakings[0].balanceOf(data.user2);
+      // const user3Staking0Balance = await stakings[0].balanceOf(data.user3);
+      // const user4Staking0Balance = await stakings[0].balanceOf(data.user4);
+      const test6 = [];
+      // test6.push(stakings[0].connect(data.user1Signer).unstake(ogTokensToUnstake.toFixed(0)));
+      // test6.push(stakings[0].connect(data.user1Signer).unstake(await stakings[0].balanceOf(data.user1)));
+      test6.push(stakings[0].connect(data.user1Signer).restake(duration));
+      // test.push(stakings[0].connect(data.user2Signer).unstake(await stakings[0].balanceOf(data.user2)));
+      // test.push(stakings[0].connect(data.user3Signer).unstake(await stakings[0].balanceOf(data.user3)));
+      // test.push(stakings[0].connect(data.user4Signer).unstake(await stakings[0].balanceOf(data.user4)));
+      const [restake1/*, unstake2, unstake3, unstake4*/] = await Promise.all(test6);
+      await data.printTxData("restake1", restake1);
+      // await data.printTxData("unstake2", unstake2);
+      // await data.printTxData("unstake3", unstake3);
+      // await data.printTxData("unstake4", unstake4);
       await data.printBalances();
 
       // console.log("        --- Test 3 - OGS transferX locked during staking period ---");
@@ -390,46 +467,26 @@ describe("TestStakingFactory", function() {
       // await data.printTxData("slash1", slash1);
       // await data.printBalances();
 
-      console.log("        --- Test 6 - User{1..4} -> unstake(1,000) ---");
-      data.pause("Waiting", duration + 1);
-      ogTokensToUnstake = new BigNumber("100").shiftedBy(18);
-      // const user1Staking0Balance = await stakings[0].balanceOf(data.user1);
-      // const user2Staking0Balance = await stakings[0].balanceOf(data.user2);
-      // const user3Staking0Balance = await stakings[0].balanceOf(data.user3);
-      // const user4Staking0Balance = await stakings[0].balanceOf(data.user4);
-      const test6 = [];
-      test6.push(stakings[0].connect(data.user1Signer).unstake(ogTokensToUnstake.toFixed(0)));
-      // test6.push(stakings[0].connect(data.user1Signer).unstake(await stakings[0].balanceOf(data.user1)));
-      // test6.push(stakings[0].connect(data.user2Signer).unstake(await stakings[0].balanceOf(data.user2)));
-      // test6.push(stakings[0].connect(data.user3Signer).unstake(await stakings[0].balanceOf(data.user3)));
-      // test6.push(stakings[0].connect(data.user4Signer).unstake(await stakings[0].balanceOf(data.user4)));
-      const [unstake1/*, unstake2, unstake3, unstake4*/] = await Promise.all(test6);
-      await data.printTxData("unstake1", unstake1);
-      // await data.printTxData("unstake2", unstake2);
-      // await data.printTxData("unstake3", unstake3);
-      // await data.printTxData("unstake4", unstake4);
-      await data.printBalances();
+      // console.log("        --- Test 6 - User{1..4} -> unstake(1,000) ---");
+      // data.pause("Waiting", duration + 1);
+      // ogTokensToUnstake = new BigNumber("100").shiftedBy(18);
+      // // const user1Staking0Balance = await stakings[0].balanceOf(data.user1);
+      // // const user2Staking0Balance = await stakings[0].balanceOf(data.user2);
+      // // const user3Staking0Balance = await stakings[0].balanceOf(data.user3);
+      // // const user4Staking0Balance = await stakings[0].balanceOf(data.user4);
+      // const test6 = [];
+      // test6.push(stakings[0].connect(data.user1Signer).unstake(ogTokensToUnstake.toFixed(0)));
+      // // test6.push(stakings[0].connect(data.user1Signer).unstake(await stakings[0].balanceOf(data.user1)));
+      // // test6.push(stakings[0].connect(data.user2Signer).unstake(await stakings[0].balanceOf(data.user2)));
+      // // test6.push(stakings[0].connect(data.user3Signer).unstake(await stakings[0].balanceOf(data.user3)));
+      // // test6.push(stakings[0].connect(data.user4Signer).unstake(await stakings[0].balanceOf(data.user4)));
+      // const [unstake1/*, unstake2, unstake3, unstake4*/] = await Promise.all(test6);
+      // await data.printTxData("unstake1", unstake1);
+      // // await data.printTxData("unstake2", unstake2);
+      // // await data.printTxData("unstake3", unstake3);
+      // // await data.printTxData("unstake4", unstake4);
+      // await data.printBalances();
 
-      console.log("        --- Test 7 - User{1..4} -> unstake(1,000) ---");
-      duration = 9;
-      data.pause("Waiting", duration + 1);
-      ogTokensToUnstake = new BigNumber("100").shiftedBy(18);
-      // const user1Staking0Balance = await stakings[0].balanceOf(data.user1);
-      // const user2Staking0Balance = await stakings[0].balanceOf(data.user2);
-      // const user3Staking0Balance = await stakings[0].balanceOf(data.user3);
-      // const user4Staking0Balance = await stakings[0].balanceOf(data.user4);
-      const test7 = [];
-      // test7.push(stakings[0].connect(data.user1Signer).unstake(ogTokensToUnstake.toFixed(0)));
-      test7.push(stakings[0].connect(data.user1Signer).unstake(await stakings[0].balanceOf(data.user1)));
-      // test7.push(stakings[0].connect(data.user2Signer).unstake(await stakings[0].balanceOf(data.user2)));
-      // test7.push(stakings[0].connect(data.user3Signer).unstake(await stakings[0].balanceOf(data.user3)));
-      // test7.push(stakings[0].connect(data.user4Signer).unstake(await stakings[0].balanceOf(data.user4)));
-      const [unstake5/*, unstake2, unstake3, unstake4*/] = await Promise.all(test7);
-      await data.printTxData("unstake5", unstake5);
-      // await data.printTxData("unstake2", unstake2);
-      // await data.printTxData("unstake3", unstake3);
-      // await data.printTxData("unstake4", unstake4);
-      await data.printBalances();
     });
   });
 });

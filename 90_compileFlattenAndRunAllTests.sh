@@ -5,6 +5,9 @@
 # Enjoy. (c) The Optino Project. GPLv2
 # ----------------------------------------------------------------------------------------------
 
+# Clear scollback buffer and screen
+printf "\033[2J\033[3J\033[1;1H"
+
 # Exit if any command fails, including commands in a pipe
 set -e
 set -o pipefail

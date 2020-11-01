@@ -61,7 +61,7 @@ contract StakingFactory is CloneFactory, Owned {
 
     function mintOGTokens(address tokenOwner, uint tokens) public {
         require(contracts[Staking(msg.sender)], "Caller not child");
-        console.log("        > %s -> StakingFactory.mintOGTokens(%s, %s)", msg.sender, tokenOwner, tokens);
+        console.log("        >   %s -> StakingFactory.mintOGTokens(%s, %s)", msg.sender, tokenOwner, tokens);
         require(ogToken.mint(tokenOwner, tokens), "OG mint failed");
     }
 
