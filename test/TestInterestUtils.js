@@ -53,15 +53,38 @@ describe("TestInterestUtils", function() {
     tests.push({ t: "1y", term: SECONDS_PER_YEAR, ratePercent: "10", amount: "100", p: "1m", secondsPerPeriod: SECONDS_PER_YEAR / 12, compoundingResult: "110.471306744" });
     tests.push({ t: "1y", term: SECONDS_PER_YEAR, ratePercent: "10", amount: "100", p: "1d", secondsPerPeriod: SECONDS_PER_DAY, compoundingResult: "110.515578162" });
 
+    tests.push({ t: "10y", term: SECONDS_PER_YEAR * 10, ratePercent: "10", amount: "100", p: "1y", secondsPerPeriod: SECONDS_PER_YEAR, compoundingResult: "259.374246010" });
+    tests.push({ t: "10y", term: SECONDS_PER_YEAR * 10, ratePercent: "10", amount: "100", p: "6m", secondsPerPeriod: SECONDS_PER_YEAR / 2, compoundingResult: "265.329770514" });
+    tests.push({ t: "10y", term: SECONDS_PER_YEAR * 10, ratePercent: "10", amount: "100", p: "3m", secondsPerPeriod: SECONDS_PER_YEAR / 4, compoundingResult: "268.506383839" });
+    tests.push({ t: "10y", term: SECONDS_PER_YEAR * 10, ratePercent: "10", amount: "100", p: "1m", secondsPerPeriod: SECONDS_PER_YEAR / 12, compoundingResult: "270.704149086" });
+    tests.push({ t: "10y", term: SECONDS_PER_YEAR * 10, ratePercent: "10", amount: "100", p: "1d", secondsPerPeriod: SECONDS_PER_DAY, compoundingResult: "271.790955458" });
+
+    tests.push({ t: "100y", term: SECONDS_PER_YEAR * 100, ratePercent: "10", amount: "100", p: "1y", secondsPerPeriod: SECONDS_PER_YEAR, compoundingResult: "1378061.233982240" });
+    tests.push({ t: "100y", term: SECONDS_PER_YEAR * 100, ratePercent: "10", amount: "100", p: "6m", secondsPerPeriod: SECONDS_PER_YEAR / 2, compoundingResult: "1729258.081516000" });
+    tests.push({ t: "100y", term: SECONDS_PER_YEAR * 100, ratePercent: "10", amount: "100", p: "3m", secondsPerPeriod: SECONDS_PER_YEAR / 4, compoundingResult: "1947808.051496160" });
+    tests.push({ t: "100y", term: SECONDS_PER_YEAR * 100, ratePercent: "10", amount: "100", p: "1m", secondsPerPeriod: SECONDS_PER_YEAR / 12, compoundingResult: "2113241.460016830" });
+    tests.push({ t: "100y", term: SECONDS_PER_YEAR * 100, ratePercent: "10", amount: "100", p: "1d", secondsPerPeriod: SECONDS_PER_DAY, compoundingResult: "2199631.871350710" });
+
+    tests.push({ t: "1000y", term: SECONDS_PER_YEAR * 1000, ratePercent: "1", amount: "100", p: "1y", secondsPerPeriod: SECONDS_PER_YEAR, compoundingResult: "2095915.563781390" });
+    tests.push({ t: "1000y", term: SECONDS_PER_YEAR * 1000, ratePercent: "1", amount: "100", p: "6m", secondsPerPeriod: SECONDS_PER_YEAR / 2, compoundingResult: "2148441.402328110" });
+    tests.push({ t: "1000y", term: SECONDS_PER_YEAR * 1000, ratePercent: "1", amount: "100", p: "3m", secondsPerPeriod: SECONDS_PER_YEAR / 4, compoundingResult: "2175330.098331000" });
+    tests.push({ t: "1000y", term: SECONDS_PER_YEAR * 1000, ratePercent: "1", amount: "100", p: "1m", secondsPerPeriod: SECONDS_PER_YEAR / 12, compoundingResult: "2193493.053417370" });
+    tests.push({ t: "1000y", term: SECONDS_PER_YEAR * 1000, ratePercent: "1", amount: "100", p: "1d", secondsPerPeriod: SECONDS_PER_DAY, compoundingResult: "2202344.873257070" });
+
     const _from = parseInt(new Date().getTime()/1000);
     for (let i = 0; i < tests.length; i++) {
       const test = tests[i];
       const _amount = new BigNumber(test.amount).shiftedBy(18);
       const _to = parseInt(_from) + test.term;
       const _rate = new BigNumber(test.ratePercent).shiftedBy(16);
-      const [fv, gasUsed] = await testInterestUtils.futureValue(_amount.toFixed(0), _from, _to, _rate.toFixed(0), test.secondsPerPeriod);
-      const diff = new BigNumber(fv.toString()).shiftedBy(-18).minus(new BigNumber(test.compoundingResult));
-      console.log("        term: " + test.t + ", period: " + test.p + ", fv: " + new BigNumber(fv.toString()).shiftedBy(-18).toFixed(18) + ", compoundingResult: " + new BigNumber(test.compoundingResult).toFixed(9)  + ", diff: " + diff.toFixed(9) + ", gasUsed: " + gasUsed);
+      try {
+        const [fv, gasUsed] = await testInterestUtils.futureValue(_amount.toFixed(0), _from, _to, _rate.toFixed(0), test.secondsPerPeriod);
+        const diff = new BigNumber(fv.toString()).shiftedBy(-18).minus(new BigNumber(test.compoundingResult));
+        const diffPerHundred = diff.dividedBy(new BigNumber(fv.toString()).shiftedBy(-18)).multipliedBy(100);
+        console.log("        term: " + test.t + ", period: " + test.p + ", fv: " + new BigNumber(fv.toString()).shiftedBy(-18).toFixed(18) + ", compoundingResult: " + new BigNumber(test.compoundingResult).toFixed(9)  + ", diff: " + diff.toFixed(9) + " = " + diffPerHundred.toFixed(9) + "%, gasUsed: " + gasUsed);
+      } catch (e) {
+        console.log("        term: " + test.t + ", period: " + test.p + ", Out of gas");
+      }
     }
 
     console.log("        --- Test Completed ---");
