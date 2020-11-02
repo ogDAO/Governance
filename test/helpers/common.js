@@ -321,9 +321,9 @@ class Data {
         console.log("          - addresses                  : " + JSON.stringify(stakingInfo.addresses.map((x) => { return this.getShortAccountName(x); })));
         console.log("          - uints                      : " + JSON.stringify(stakingInfo.uints.map((x) => { return x.toString(); })));
         console.log("          - strings                    : " + JSON.stringify([stakingInfo.string0, stakingInfo.string1, stakingInfo.string2, stakingInfo.string3]));
-        console.log("          - rewardsPerYear             : " + new BigNumber(rewardsPerYear.toString()).shiftedBy(-16) + "%, rewardsPerSecond: " + new BigNumber(rewardsPerYear.toString()).dividedBy(60*60*24*365).shiftedBy(-16).toFixed(16) + "%");
+        console.log("          - rewardsPerYear             : " + new BigNumber(rewardsPerYear.toString()).shiftedBy(-16) + "% compounding daily/simple partial end, rewardsPerSecond: " + new BigNumber(rewardsPerYear.toString()).dividedBy(60*60*24*365).shiftedBy(-16).toFixed(16) + "%");
         // console.log("          - weightedDurationDenominator: " + new BigNumber(weightedDurationDenominator.toString()).shiftedBy(-18));
-        console.log("          - weightedEnd                : " + weightedEnd + " = " + weightedEndNumerator + "/" + new BigNumber(totalSupply.toString()).shiftedBy(-decimals));
+        console.log("          - weightedEnd                : " + weightedEnd + " = " + new BigNumber(weightedEndNumerator.toString()).shiftedBy(-decimals) + "/" + new BigNumber(totalSupply.toString()).shiftedBy(-decimals));
         console.log("          - slashingFactor             : " + new BigNumber(slashingFactor.toString()).shiftedBy(-16) + "%");
         console.log("          - accountsLength             : " + accountsLength);
         for (let k = 0; k < accountsLength; k++) {
