@@ -40,8 +40,8 @@ contract Staking is ERC20, Owned {
     uint8 constant DASH = 45;
     uint8 constant ZERO = 48;
     uint constant MAXSTAKINGINFOSTRINGLENGTH = 8;
-    uint constant SECONDS_PER_DAY = 24 * 60 * 60;
-    uint constant SECONDS_PER_YEAR = SECONDS_PER_DAY * 365;
+    uint constant SECONDS_PER_DAY = 1 days;
+    uint constant SECONDS_PER_YEAR = 365 days;
 
     uint public id;
     OGTokenInterface public ogToken;
@@ -321,26 +321,26 @@ contract Staking is ERC20, Owned {
     }
 
     function stakeThroughFactory(address tokenOwner, uint tokens, uint duration) public onlyOwner {
-        console.log("        > StakingFactory.stakeThroughFactory(tokenOwner %s, tokens %s, duration %s)", tokenOwner, tokens, duration);
+        // console.log("        > StakingFactory.stakeThroughFactory(tokenOwner %s, tokens %s, duration %s)", tokenOwner, tokens, duration);
         require(tokens > 0, "tokens must be > 0");
         require(duration > 0, "duration must be > 0");
         _changeStake(tokenOwner, tokens, 0, false, duration);
     }
     function stake(uint tokens, uint duration) public {
-        console.log("        > %s -> stake(tokens %s, duration %s)", msg.sender, tokens, duration);
+        // console.log("        > %s -> stake(tokens %s, duration %s)", msg.sender, tokens, duration);
         require(tokens > 0, "tokens must be > 0");
         require(duration > 0, "duration must be > 0");
         require(ogToken.transferFrom(msg.sender, address(this), tokens), "OG transferFrom failed");
         _changeStake(msg.sender, tokens, 0, false, duration);
     }
     function restake(uint duration) public {
-        console.log("        > %s -> restake(duration %s)", msg.sender, duration);
+        // console.log("        > %s -> restake(duration %s)", msg.sender, duration);
         require(duration > 0, "duration must be > 0");
         require(accounts[msg.sender].balance > 0, "To balance to restake");
         _changeStake(msg.sender, 0, 0, false, duration);
     }
     function unstake(uint tokens) public {
-        console.log("        > %s -> unstake(tokens %s)", msg.sender, tokens);
+        // console.log("        > %s -> unstake(tokens %s)", msg.sender, tokens);
         require(tokens > 0, "tokens must be > 0");
         require(accounts[msg.sender].balance > 0, "To balance to unstake");
         _changeStake(msg.sender, 0, tokens, tokens == ogToken.balanceOf(msg.sender), 0);
@@ -348,7 +348,7 @@ contract Staking is ERC20, Owned {
     }
     function unstakeAll() public {
         uint tokens = accounts[msg.sender].balance;
-        console.log("        > %s -> unstakeAll(tokens %s)", msg.sender, tokens);
+        // console.log("        > %s -> unstakeAll(tokens %s)", msg.sender, tokens);
         require(tokens > 0, "To balance to unstake");
         _changeStake(msg.sender, 0, tokens, true, 0);
         emit Transfer(msg.sender, address(0), tokens);

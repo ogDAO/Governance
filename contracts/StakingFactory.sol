@@ -39,6 +39,9 @@ contract StakingFactory is CloneFactory, Owned {
     function addStakingForToken(uint tokens, uint duration, address tokenAddress, string memory name) external returns (Staking staking) {
         return _staking(tokens, duration, 1, [tokenAddress, address(0), address(0), address(0)], [uint(0), uint(0), uint(0), uint(0), uint(0), uint(0)], [name, "", "", ""]);
     }
+    function addStakeForFeed(uint tokens, uint duration, address feedAddress, uint feedType, uint feedDecimals, string memory name) external returns (Staking staking) {
+        return _staking(tokens, duration, 1, [feedAddress, address(0), address(0), address(0)], [uint(feedType), uint(feedDecimals), uint(0), uint(0), uint(0), uint(0)], [name, "", "", ""]);
+    }
 
     function _staking(uint tokens, uint duration, uint dataType, address[4] memory addresses, uint[6] memory uints, string[4] memory strings) internal returns (Staking staking) {
         bytes32 key = keccak256(abi.encodePacked(dataType, addresses, uints, strings[0], strings[1], strings[2], strings[3]));
