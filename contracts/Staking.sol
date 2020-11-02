@@ -199,14 +199,14 @@ contract Staking is ERC20, Owned {
     // }
 
     function accruedReward(address tokenOwner) public view returns (uint _reward, uint _term) {
-        return computeReward(accounts[tokenOwner], tokenOwner, accounts[tokenOwner].balance);
+        return _calculateReward(accounts[tokenOwner], tokenOwner, accounts[tokenOwner].balance);
     }
 
-    function computeReward(Account memory account, address /*tokenOwner*/, uint tokens) internal view returns (uint _reward, uint _term) {
-        // console.log("        >     computeReward(tokenOwner %s, tokens %s)", tokenOwner, tokens);
+    function _calculateReward(Account memory account, address /*tokenOwner*/, uint tokens) internal view returns (uint _reward, uint _term) {
+        // console.log("        >     _calculateReward(tokenOwner %s, tokens %s)", tokenOwner, tokens);
         uint from = account.end == 0 ? block.timestamp : uint(account.end).sub(uint(account.duration));
         uint futureValue = InterestUtils.futureValue(tokens, from, block.timestamp, rewardsPerYear, SECONDS_PER_DAY);
-        // console.log("        > computeReward(%s) - tokens %s, rate %s", tokenOwner, tokens, rewardsPerYear);
+        // console.log("        > _calculateReward(%s) - tokens %s, rate %s", tokenOwner, tokens, rewardsPerYear);
         // console.log("          from %s, to %s, futureValue %s", from, block.timestamp, futureValue);
         _reward = futureValue.sub(tokens);
         _term = block.timestamp.sub(from);
@@ -228,7 +228,7 @@ contract Staking is ERC20, Owned {
             require(withdrawTokens <= account.balance, "Unsufficient staked balance");
         }
         updateStatsBefore(account, tokenOwner);
-        (uint reward, /*uint term*/) = computeReward(account, tokenOwner, account.balance);
+        (uint reward, /*uint term*/) = _calculateReward(account, tokenOwner, account.balance);
         uint rewardWithSlashingFactor;
         // console.log("        >     reward %s", reward);
         if (withdrawRewards) {
