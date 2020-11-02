@@ -315,20 +315,21 @@ class Data {
           }
         }
       } else if (symbol.startsWith("OGS")) {
-        const [stakingInfo, owner, accountsLength, rewardsPerYear, weightedEnd, weightedEndNumerator, weightedDurationDenominator, slashingFactor] = await Promise.all([tokenContract.getStakingInfo(), tokenContract.owner(), tokenContract.accountsLength(), tokenContract.rewardsPerYear(), tokenContract.weightedEnd(), tokenContract.weightedEndNumerator(), tokenContract.weightedDurationDenominator(), tokenContract.slashingFactor()]);
+        const [stakingInfo, owner, accountsLength, rewardsPerYear, weightedEnd, weightedEndNumerator, /*weightedDurationDenominator,*/ slashingFactor] = await Promise.all([tokenContract.getStakingInfo(), tokenContract.owner(), tokenContract.accountsLength(), tokenContract.rewardsPerYear(), tokenContract.weightedEnd(), tokenContract.weightedEndNumerator(), /*tokenContract.weightedDurationDenominator(),*/ tokenContract.slashingFactor()]);
         console.log("        - staking @ " + this.getShortAccountName(tokenContract.address) + ", owner: " + this.getShortAccountName(owner));
         console.log("          - dataType                   : " + stakingInfo.dataType  .toString());
         console.log("          - addresses                  : " + JSON.stringify(stakingInfo.addresses.map((x) => { return this.getShortAccountName(x); })));
         console.log("          - uints                      : " + JSON.stringify(stakingInfo.uints.map((x) => { return x.toString(); })));
         console.log("          - strings                    : " + JSON.stringify([stakingInfo.string0, stakingInfo.string1, stakingInfo.string2, stakingInfo.string3]));
         console.log("          - rewardsPerYear             : " + new BigNumber(rewardsPerYear.toString()).shiftedBy(-16) + "%, rewardsPerSecond: " + new BigNumber(rewardsPerYear.toString()).dividedBy(60*60*24*365).shiftedBy(-16).toFixed(16) + "%");
-        console.log("          - weightedDurationDenominator: " + new BigNumber(weightedDurationDenominator.toString()).shiftedBy(-18));
+        // console.log("          - weightedDurationDenominator: " + new BigNumber(weightedDurationDenominator.toString()).shiftedBy(-18));
         console.log("          - weightedEnd                : " + weightedEnd + " = " + weightedEndNumerator + "/" + new BigNumber(totalSupply.toString()).shiftedBy(-decimals));
         console.log("          - slashingFactor             : " + new BigNumber(slashingFactor.toString()).shiftedBy(-16) + "%");
         console.log("          - accountsLength             : " + accountsLength);
         for (let k = 0; k < accountsLength; k++) {
           const account = await tokenContract.getAccountByIndex(k);
-          console.log("            - account " + k + " owner: " + this.getShortAccountName(account.tokenOwner) + ", duration: " + account.account.duration.toString() + ", end: " + account.account.end.toString() + ", index: " + account.account.index.toString() + ", tokens: " + new BigNumber(account.account.balance.toString()).shiftedBy(-18));
+          const accruedReward = await tokenContract.accruedReward(account.tokenOwner);
+          console.log("            - account " + k + " owner: " + this.getShortAccountName(account.tokenOwner) + ", duration: " + account.account.duration.toString() + ", end: " + account.account.end.toString() + ", index: " + account.account.index.toString() + ", tokens: " + new BigNumber(account.account.balance.toString()).shiftedBy(-18) + ", accrued: " + new BigNumber(accruedReward[0].toString()).shiftedBy(-18) + ", term: " + accruedReward[1].toString());
         }
       }
     }

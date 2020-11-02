@@ -49,7 +49,7 @@ contract Staking is ERC20, Owned {
     mapping(address => Account) public accounts;
     address[] public accountsIndex;
     uint public weightedEndNumerator;
-    uint public weightedDurationDenominator;
+    // uint public weightedDurationDenominator;
     uint public slashingFactor;
     uint public _totalSupply;
     mapping(address => mapping(address => uint)) allowed;
@@ -175,7 +175,7 @@ contract Staking is ERC20, Owned {
     }
     function weightedEnd() public view returns (uint _weightedEnd) {
         if (_totalSupply > 0) {
-            _weightedEnd = weightedEndNumerator.div(_totalSupply);
+            _weightedEnd = weightedEndNumerator.div(_totalSupply.sub(accounts[address(0)].balance));
         }
         if (_weightedEnd < block.timestamp) {
             _weightedEnd = block.timestamp;
@@ -186,16 +186,16 @@ contract Staking is ERC20, Owned {
         _weight = account.balance.mul(account.duration).div(SECONDS_PER_YEAR);
     }
     function updateStatsBefore(Account memory account, address tokenOwner) internal {
-        weightedEndNumerator = weightedEndNumerator.sub(uint(account.end).mul(account.balance));
-        uint weightedDuration = computeWeight(account);
-        console.log("        > updateStatsBefore(%s).weightedDuration: ", tokenOwner, weightedDuration);
-        weightedDurationDenominator = weightedDurationDenominator.sub(weightedDuration);
+        weightedEndNumerator = weightedEndNumerator.sub(uint(account.end).mul(tokenOwner == address(0) ? 0 : account.balance));
+        // uint weightedDuration = computeWeight(account);
+        // console.log("        > updateStatsBefore(%s).weightedDuration: ", tokenOwner, weightedDuration);
+        // weightedDurationDenominator = weightedDurationDenominator.sub(weightedDuration);
     }
     function updateStatsAfter(Account memory account, address tokenOwner) internal {
-        weightedEndNumerator = weightedEndNumerator.add(uint(account.end).mul(account.balance));
-        uint weightedDuration = computeWeight(account);
-        console.log("        > updateStatsAfter(%s).weightedDuration: ", tokenOwner, weightedDuration);
-        weightedDurationDenominator = weightedDurationDenominator.add(weightedDuration);
+        weightedEndNumerator = weightedEndNumerator.add(uint(account.end).mul(tokenOwner == address(0) ? 0 : account.balance));
+        // uint weightedDuration = computeWeight(account);
+        // console.log("        > updateStatsAfter(%s).weightedDuration: ", tokenOwner, weightedDuration);
+        // weightedDurationDenominator = weightedDurationDenominator.add(weightedDuration);
     }
 
     // function _stake(address tokenOwner, uint tokens, uint duration) internal {
@@ -221,34 +221,39 @@ contract Staking is ERC20, Owned {
     //     emit Transfer(address(0), tokenOwner, tokens);
     // }
 
-    function computeReward(Account memory account, address tokenOwner, uint tokens) internal view returns (uint _reward) {
+    function accruedReward(address tokenOwner) public view returns (uint _reward, uint _term) {
+        return computeReward(accounts[tokenOwner], tokenOwner, accounts[tokenOwner].balance);
+    }
+
+    function computeReward(Account memory account, address /*tokenOwner*/, uint tokens) internal view returns (uint _reward, uint _term) {
         // console.log("        >     computeReward(tokenOwner %s, tokens %s)", tokenOwner, tokens);
         uint from = account.end == 0 ? block.timestamp : uint(account.end).sub(uint(account.duration));
         uint futureValue = InterestUtils.futureValue(tokens, from, block.timestamp, rewardsPerYear, SECONDS_PER_DAY);
         // console.log("        > computeReward(%s) - tokens %s, rate %s", tokenOwner, tokens, rewardsPerYear);
         // console.log("          from %s, to %s, futureValue %s", from, block.timestamp, futureValue);
         _reward = futureValue.sub(tokens);
+        _term = block.timestamp.sub(from);
         // console.log("          _reward %s", _reward);
     }
 
     function _changeStake(address tokenOwner, uint depositTokens, uint withdrawTokens, bool withdrawRewards, uint duration) internal {
-        console.log("        >   _changeStake(tokenOwner %s, depositTokens %s, withdrawTokens %s,", tokenOwner, depositTokens, withdrawTokens);
-        console.log("              withdrawRewards %s, duration %s)", withdrawRewards, duration);
+        // console.log("        >   _changeStake(tokenOwner %s, depositTokens %s, withdrawTokens %s,", tokenOwner, depositTokens, withdrawTokens);
+        // console.log("              withdrawRewards %s, duration %s)", withdrawRewards, duration);
         Account storage account = accounts[tokenOwner];
 
-        // restake(duration) or stake(tokens, duration)
+        // stakeThroughFactory(...), stake(tokens, duration) or restake(duration)
         if (depositTokens == 0 && withdrawTokens == 0 || depositTokens > 0) {
             require(slashingFactor == 0, "Cannot stake if already slashed");
-            require(duration > 0, "Invalid duration");
         }
+        // unstake(tokens) or unstakeAll()
         if (withdrawTokens > 0) {
             require(uint(account.end) < block.timestamp, "Staking period still active");
             require(withdrawTokens <= account.balance, "Unsufficient staked balance");
         }
-        // updateStatsBefore(account, tokenOwner);
-        uint reward = computeReward(account, tokenOwner, account.balance);
+        updateStatsBefore(account, tokenOwner);
+        (uint reward, /*uint term*/) = computeReward(account, tokenOwner, account.balance);
         uint rewardWithSlashingFactor;
-        console.log("        >     reward %s", reward);
+        // console.log("        >     reward %s", reward);
         if (withdrawRewards) {
             if (reward > 0) {
                 rewardWithSlashingFactor = reward.sub(reward.mul(slashingFactor).div(10**18));
@@ -262,7 +267,7 @@ contract Staking is ERC20, Owned {
                 emit Transfer(address(0), tokenOwner, reward);
             }
         }
-        if (depositTokens > 0) {
+        if (depositTokens == 0 && withdrawTokens == 0 || depositTokens > 0) {
             if (account.end == 0) {
                 accounts[tokenOwner] = Account(uint64(duration), uint64(block.timestamp.add(duration)), uint64(accountsIndex.length), uint64(rewardsPerYear), depositTokens);
                 account = accounts[tokenOwner];
@@ -274,8 +279,10 @@ contract Staking is ERC20, Owned {
                 account.end = uint64(block.timestamp.add(duration));
                 account.balance = account.balance.add(depositTokens);
             }
-            _totalSupply = _totalSupply.add(depositTokens);
-            emit Transfer(address(0), tokenOwner, depositTokens);
+            if (depositTokens > 0) {
+                _totalSupply = _totalSupply.add(depositTokens);
+                emit Transfer(address(0), tokenOwner, depositTokens);
+            }
         }
         if (withdrawTokens > 0) {
             _totalSupply = _totalSupply.sub(withdrawTokens);
@@ -303,7 +310,7 @@ contract Staking is ERC20, Owned {
             // }
             emit Unstaked(msg.sender, withdrawTokens, reward, tokensWithSlashingFactor, rewardWithSlashingFactor);
         }
-        // updateStatsAfter(account, tokenOwner);
+        updateStatsAfter(account, tokenOwner);
         // if (depositTokens > 0) {
         //     _totalSupply = _totalSupply.add(account.balance);
         //     emit Transfer(address(0), tokenOwner, depositTokens);
@@ -313,25 +320,34 @@ contract Staking is ERC20, Owned {
 
     function stakeThroughFactory(address tokenOwner, uint tokens, uint duration) public onlyOwner {
         console.log("        > StakingFactory.stakeThroughFactory(tokenOwner %s, tokens %s, duration %s)", tokenOwner, tokens, duration);
+        require(tokens > 0, "tokens must be > 0");
+        require(duration > 0, "duration must be > 0");
         _changeStake(tokenOwner, tokens, 0, false, duration);
     }
     function stake(uint tokens, uint duration) public {
         console.log("        > %s -> stake(tokens %s, duration %s)", msg.sender, tokens, duration);
+        require(tokens > 0, "tokens must be > 0");
+        require(duration > 0, "duration must be > 0");
         require(ogToken.transferFrom(msg.sender, address(this), tokens), "OG transferFrom failed");
         _changeStake(msg.sender, tokens, 0, false, duration);
     }
     function restake(uint duration) public {
         console.log("        > %s -> restake(duration %s)", msg.sender, duration);
+        require(duration > 0, "duration must be > 0");
+        require(accounts[msg.sender].balance > 0, "To balance to restake");
         _changeStake(msg.sender, 0, 0, false, duration);
     }
     function unstake(uint tokens) public {
         console.log("        > %s -> unstake(tokens %s)", msg.sender, tokens);
+        require(tokens > 0, "tokens must be > 0");
+        require(accounts[msg.sender].balance > 0, "To balance to unstake");
         _changeStake(msg.sender, 0, tokens, tokens == ogToken.balanceOf(msg.sender), 0);
         emit Transfer(msg.sender, address(0), tokens);
     }
     function unstakeAll() public {
         uint tokens = accounts[msg.sender].balance;
         console.log("        > %s -> unstakeAll(tokens %s)", msg.sender, tokens);
+        require(tokens > 0, "To balance to unstake");
         _changeStake(msg.sender, 0, tokens, true, 0);
         emit Transfer(msg.sender, address(0), tokens);
     }
