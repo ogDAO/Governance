@@ -1712,15 +1712,14 @@ library InterestUtils {
 
     /// @notice Future value of amount with full periods using compound interest and the final partial period using simple interest
     function futureValue(uint amount, uint from, uint to, uint rate, uint secondsPerPeriod) internal pure returns (uint) {
-        uint date = from;
-        while (date <= to) {
-            if (date.add(secondsPerPeriod) <= to) {
+        while (from <= to) {
+            if (from.add(secondsPerPeriod) <= to) {
                 amount = amount.add(amount.mul(rate).mul(secondsPerPeriod).div(365 days * 10**18));
-            } else if (date < to) {
-                uint period = to.sub(date);
+            } else if (from < to) {
+                uint period = to.sub(from);
                 amount = amount.add(amount.mul(rate.mul(secondsPerPeriod).mul(period)).div(secondsPerPeriod).div(365 days * 10**18));
             }
-            date = date.add(secondsPerPeriod);
+            from = from.add(secondsPerPeriod);
         }
         return amount;
     }
@@ -1769,8 +1768,8 @@ contract Staking is ERC20, Owned {
     uint8 constant DASH = 45;
     uint8 constant ZERO = 48;
     uint constant MAXSTAKINGINFOSTRINGLENGTH = 8;
-    uint constant SECONDS_PER_DAY = 24 * 60 * 60;
-    uint constant SECONDS_PER_YEAR = SECONDS_PER_DAY * 365;
+    uint constant SECONDS_PER_DAY = 1 days;
+    uint constant SECONDS_PER_YEAR = 365 days;
 
     uint public id;
     OGTokenInterface public ogToken;
@@ -1841,25 +1840,10 @@ contract Staking is ERC20, Owned {
         return accounts[tokenOwner].balance;
     }
     function transfer(address to, uint tokens) override external returns (bool success) {
-        revert("not implemented");
-        // require(block.timestamp > accounts[msg.sender].end, "Stake period not ended");
-        // // weightedEndNumerator = weightedEndNumerator.sub(uint(accounts[msg.sender].end).mul(accounts[msg.sender].balance));
-        // accounts[msg.sender].end = uint64(block.timestamp);
-        // accounts[msg.sender].balance = accounts[msg.sender].balance.sub(tokens);
-        // updateStatsBefore(accounts[msg.sender], msg.sender);
-        // updateStatsBefore(accounts[to], to);
-        // // weightedEndNumerator = weightedEndNumerator.add(uint(accounts[msg.sender].end).mul(accounts[msg.sender].balance));
-        // if (accounts[to].end == 0) {
-        //     accounts[to] = Account(uint64(0), uint64(block.timestamp), uint64(accountsIndex.length), uint64(0), tokens);
-        //     accountsIndex.push(to);
-        // } else {
-        //     // weightedEndNumerator = weightedEndNumerator.sub(uint(accounts[to].end).mul(accounts[to].balance));
-        //     accounts[to].balance = accounts[to].balance.add(tokens);
-        //     // weightedEndNumerator = weightedEndNumerator.add(uint(accounts[to].end).mul(accounts[to].balance));
-        // }
-        // updateStatsAfter(accounts[msg.sender], msg.sender);
-        // updateStatsAfter(accounts[to], to);
-        // emit Transfer(msg.sender, to, tokens);
+        require(tokens == 0, "Not implemented");
+        accounts[msg.sender].balance = accounts[msg.sender].balance.sub(tokens);
+        accounts[to].balance = accounts[to].balance.add(tokens);
+        emit Transfer(msg.sender, to, tokens);
         return true;
     }
     function approve(address spender, uint tokens) override external returns (bool success) {
@@ -1868,21 +1852,11 @@ contract Staking is ERC20, Owned {
         return true;
     }
     function transferFrom(address from, address to, uint tokens) override external returns (bool success) {
-        revert("not implemented");
-        // require(block.timestamp > accounts[from].end, "Stake period not ended");
-        // weightedEndNumerator = weightedEndNumerator.sub(uint(accounts[from].end).mul(accounts[from].balance));
-        // accounts[from].end = uint64(block.timestamp);
-        // accounts[from].balance = accounts[from].balance.sub(tokens);
-        // allowed[from][msg.sender] = allowed[from][msg.sender].sub(tokens);
-        // if (accounts[to].end == 0) {
-        //     accounts[to] = Account(uint64(0), uint64(block.timestamp), uint64(accountsIndex.length), uint64(0), tokens);
-        //     accountsIndex.push(to);
-        // } else {
-        //     weightedEndNumerator = weightedEndNumerator.sub(uint(accounts[to].end).mul(accounts[to].balance));
-        //     accounts[to].balance = accounts[to].balance.add(tokens);
-        //     weightedEndNumerator = weightedEndNumerator.add(uint(accounts[to].end).mul(accounts[to].balance));
-        // }
-        // emit Transfer(from, to, tokens);
+        require(tokens == 0, "Not implemented");
+        accounts[from].balance = accounts[from].balance.sub(tokens);
+        allowed[from][msg.sender] = allowed[from][msg.sender].sub(tokens);
+        accounts[to].balance = accounts[to].balance.add(tokens);
+        emit Transfer(from, to, tokens);
         return true;
     }
     function allowance(address tokenOwner, address spender) override external view returns (uint remaining) {
@@ -2050,26 +2024,26 @@ contract Staking is ERC20, Owned {
     }
 
     function stakeThroughFactory(address tokenOwner, uint tokens, uint duration) public onlyOwner {
-        console.log("        > StakingFactory.stakeThroughFactory(tokenOwner %s, tokens %s, duration %s)", tokenOwner, tokens, duration);
+        // console.log("        > StakingFactory.stakeThroughFactory(tokenOwner %s, tokens %s, duration %s)", tokenOwner, tokens, duration);
         require(tokens > 0, "tokens must be > 0");
         require(duration > 0, "duration must be > 0");
         _changeStake(tokenOwner, tokens, 0, false, duration);
     }
     function stake(uint tokens, uint duration) public {
-        console.log("        > %s -> stake(tokens %s, duration %s)", msg.sender, tokens, duration);
+        // console.log("        > %s -> stake(tokens %s, duration %s)", msg.sender, tokens, duration);
         require(tokens > 0, "tokens must be > 0");
         require(duration > 0, "duration must be > 0");
         require(ogToken.transferFrom(msg.sender, address(this), tokens), "OG transferFrom failed");
         _changeStake(msg.sender, tokens, 0, false, duration);
     }
     function restake(uint duration) public {
-        console.log("        > %s -> restake(duration %s)", msg.sender, duration);
+        // console.log("        > %s -> restake(duration %s)", msg.sender, duration);
         require(duration > 0, "duration must be > 0");
         require(accounts[msg.sender].balance > 0, "To balance to restake");
         _changeStake(msg.sender, 0, 0, false, duration);
     }
     function unstake(uint tokens) public {
-        console.log("        > %s -> unstake(tokens %s)", msg.sender, tokens);
+        // console.log("        > %s -> unstake(tokens %s)", msg.sender, tokens);
         require(tokens > 0, "tokens must be > 0");
         require(accounts[msg.sender].balance > 0, "To balance to unstake");
         _changeStake(msg.sender, 0, tokens, tokens == ogToken.balanceOf(msg.sender), 0);
@@ -2077,7 +2051,7 @@ contract Staking is ERC20, Owned {
     }
     function unstakeAll() public {
         uint tokens = accounts[msg.sender].balance;
-        console.log("        > %s -> unstakeAll(tokens %s)", msg.sender, tokens);
+        // console.log("        > %s -> unstakeAll(tokens %s)", msg.sender, tokens);
         require(tokens > 0, "To balance to unstake");
         _changeStake(msg.sender, 0, tokens, true, 0);
         emit Transfer(msg.sender, address(0), tokens);
@@ -2134,6 +2108,9 @@ contract StakingFactory is CloneFactory, Owned {
 
     function addStakingForToken(uint tokens, uint duration, address tokenAddress, string memory name) external returns (Staking staking) {
         return _staking(tokens, duration, 1, [tokenAddress, address(0), address(0), address(0)], [uint(0), uint(0), uint(0), uint(0), uint(0), uint(0)], [name, "", "", ""]);
+    }
+    function addStakeForFeed(uint tokens, uint duration, address feedAddress, uint feedType, uint feedDecimals, string memory name) external returns (Staking staking) {
+        return _staking(tokens, duration, 1, [feedAddress, address(0), address(0), address(0)], [uint(feedType), uint(feedDecimals), uint(0), uint(0), uint(0), uint(0)], [name, "", "", ""]);
     }
 
     function _staking(uint tokens, uint duration, uint dataType, address[4] memory addresses, uint[6] memory uints, string[4] memory strings) internal returns (Staking staking) {

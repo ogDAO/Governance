@@ -112,25 +112,10 @@ contract Staking is ERC20, Owned {
         return accounts[tokenOwner].balance;
     }
     function transfer(address to, uint tokens) override external returns (bool success) {
-        revert("not implemented");
-        // require(block.timestamp > accounts[msg.sender].end, "Stake period not ended");
-        // // weightedEndNumerator = weightedEndNumerator.sub(uint(accounts[msg.sender].end).mul(accounts[msg.sender].balance));
-        // accounts[msg.sender].end = uint64(block.timestamp);
-        // accounts[msg.sender].balance = accounts[msg.sender].balance.sub(tokens);
-        // updateStatsBefore(accounts[msg.sender], msg.sender);
-        // updateStatsBefore(accounts[to], to);
-        // // weightedEndNumerator = weightedEndNumerator.add(uint(accounts[msg.sender].end).mul(accounts[msg.sender].balance));
-        // if (accounts[to].end == 0) {
-        //     accounts[to] = Account(uint64(0), uint64(block.timestamp), uint64(accountsIndex.length), uint64(0), tokens);
-        //     accountsIndex.push(to);
-        // } else {
-        //     // weightedEndNumerator = weightedEndNumerator.sub(uint(accounts[to].end).mul(accounts[to].balance));
-        //     accounts[to].balance = accounts[to].balance.add(tokens);
-        //     // weightedEndNumerator = weightedEndNumerator.add(uint(accounts[to].end).mul(accounts[to].balance));
-        // }
-        // updateStatsAfter(accounts[msg.sender], msg.sender);
-        // updateStatsAfter(accounts[to], to);
-        // emit Transfer(msg.sender, to, tokens);
+        require(tokens == 0, "Not implemented");
+        accounts[msg.sender].balance = accounts[msg.sender].balance.sub(tokens);
+        accounts[to].balance = accounts[to].balance.add(tokens);
+        emit Transfer(msg.sender, to, tokens);
         return true;
     }
     function approve(address spender, uint tokens) override external returns (bool success) {
@@ -139,21 +124,11 @@ contract Staking is ERC20, Owned {
         return true;
     }
     function transferFrom(address from, address to, uint tokens) override external returns (bool success) {
-        revert("not implemented");
-        // require(block.timestamp > accounts[from].end, "Stake period not ended");
-        // weightedEndNumerator = weightedEndNumerator.sub(uint(accounts[from].end).mul(accounts[from].balance));
-        // accounts[from].end = uint64(block.timestamp);
-        // accounts[from].balance = accounts[from].balance.sub(tokens);
-        // allowed[from][msg.sender] = allowed[from][msg.sender].sub(tokens);
-        // if (accounts[to].end == 0) {
-        //     accounts[to] = Account(uint64(0), uint64(block.timestamp), uint64(accountsIndex.length), uint64(0), tokens);
-        //     accountsIndex.push(to);
-        // } else {
-        //     weightedEndNumerator = weightedEndNumerator.sub(uint(accounts[to].end).mul(accounts[to].balance));
-        //     accounts[to].balance = accounts[to].balance.add(tokens);
-        //     weightedEndNumerator = weightedEndNumerator.add(uint(accounts[to].end).mul(accounts[to].balance));
-        // }
-        // emit Transfer(from, to, tokens);
+        require(tokens == 0, "Not implemented");
+        accounts[from].balance = accounts[from].balance.sub(tokens);
+        allowed[from][msg.sender] = allowed[from][msg.sender].sub(tokens);
+        accounts[to].balance = accounts[to].balance.add(tokens);
+        emit Transfer(from, to, tokens);
         return true;
     }
     function allowance(address tokenOwner, address spender) override external view returns (uint remaining) {

@@ -385,17 +385,17 @@ class Data {
       // console.log("        - stakeInfoLength      : " + stakeInfoLength);
 
       for (let j = 1; j < this.accounts.length && j < 4; j++) {
-        let account = this.accounts[j];
-        const commitment = await this.optinoGov.commitments(account);
-        if (commitment != null) {
-          console.log("        - commitment           : " + j + " " + this.getShortAccountName(account) +
-            " duration: " + commitment.duration +
-            ", end: " + commitment.end +
-            ", tokens: " + new BigNumber(commitment.tokens.toString()).shiftedBy(-18) +
-            ", votes: " + new BigNumber(commitment.votes.toString()).shiftedBy(-18) +
-            ", staked: " + new BigNumber(commitment.staked.toString()).shiftedBy(-18) +
-            ", delegatedVotes: " + new BigNumber(commitment.delegatedVotes.toString()).shiftedBy(-18) +
-            ", delegatee: " + this.getShortAccountName(commitment.delegatee));
+        let accountAddress = this.accounts[j];
+        const _account = await this.optinoGov.accounts(accountAddress);
+        if (_account != null) {
+          console.log("        - _account           : " + j + " " + this.getShortAccountName(accountAddress) +
+            " duration: " + _account.duration +
+            ", end: " + _account.end +
+            ", tokens: " + new BigNumber(_account.balance.toString()).shiftedBy(-18) +
+            ", votes: " + new BigNumber(_account.votes.toString()).shiftedBy(-18) +
+            ", staked: " + new BigNumber(_account.staked.toString()).shiftedBy(-18) +
+            ", delegatedVotes: " + new BigNumber(_account.delegatedVotes.toString()).shiftedBy(-18) +
+            ", delegatee: " + this.getShortAccountName(_account.delegatee));
         }
       }
 
