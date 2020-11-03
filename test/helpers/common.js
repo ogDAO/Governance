@@ -393,7 +393,7 @@ class Data {
             ", end: " + _account.end +
             ", tokens: " + new BigNumber(_account.balance.toString()).shiftedBy(-18) +
             ", votes: " + new BigNumber(_account.votes.toString()).shiftedBy(-18) +
-            ", staked: " + new BigNumber(_account.staked.toString()).shiftedBy(-18) +
+            // ", staked: " + new BigNumber(_account.staked.toString()).shiftedBy(-18) +
             ", delegatedVotes: " + new BigNumber(_account.delegatedVotes.toString()).shiftedBy(-18) +
             ", delegatee: " + this.getShortAccountName(_account.delegatee));
         }

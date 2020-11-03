@@ -29,18 +29,6 @@ contract OptinoGovConfig {
     uint public rewardPool = 1_000_000 * 10**18;
     uint public totalVotes;
 
-    /*
-    event MaxDurationUpdated(uint maxDuration);
-    event RewardsPerSecondUpdated(uint rewardsPerSecond);
-    event CollectRewardForFeeUpdated(uint collectRewardForFee);
-    event CollectRewardForDelayUpdated(uint collectRewardForDelay);
-    event ProposalCostUpdated(uint proposalCost);
-    event ProposalThresholdUpdated(uint proposalThreshold);
-    event QuorumUpdated(uint quorum);
-    event QuorumDecayPerSecondUpdated(uint quorumDecayPerSecond);
-    event VotingDurationUpdated(uint votingDuration);
-    event ExecuteDelayUpdated(uint executeDelay);
-    */
     event ConfigUpdated(string key, uint value);
 
     modifier onlySelf {
@@ -82,48 +70,6 @@ contract OptinoGovConfig {
         }
         emit ConfigUpdated(key, value);
     }
-    /*
-    function setMaxDuration(uint _maxDuration) external onlySelf {
-        maxDuration = _maxDuration;
-        emit MaxDurationUpdated(maxDuration);
-    }
-    function setCollectRewardForFee(uint _collectRewardForFee) external onlySelf {
-        collectRewardForFee = _collectRewardForFee;
-        emit CollectRewardForFeeUpdated(collectRewardForFee);
-    }
-    function setCollectRewardForDelay(uint _collectRewardForDelay) external onlySelf {
-        collectRewardForDelay = _collectRewardForDelay;
-        emit CollectRewardForDelayUpdated(collectRewardForDelay);
-    }
-    function setRewardsPerSecond(uint _rewardsPerSecond) external onlySelf {
-        rewardsPerSecond = _rewardsPerSecond;
-        emit RewardsPerSecondUpdated(rewardsPerSecond);
-    }
-    function setProposalCost(uint _proposalCost) external onlySelf {
-        proposalCost = _proposalCost;
-        emit ProposalCostUpdated(proposalCost);
-    }
-    function setProposalThreshold(uint _proposalThreshold) external onlySelf {
-        proposalThreshold = _proposalThreshold;
-        emit ProposalThresholdUpdated(proposalThreshold);
-    }
-    function setQuorum(uint _quorum) external onlySelf {
-        quorum = _quorum;
-        emit QuorumUpdated(quorum);
-    }
-    function setQuorumDecayPerSecond(uint _quorumDecayPerSecond) external onlySelf {
-        quorumDecayPerSecond = _quorumDecayPerSecond;
-        emit QuorumDecayPerSecondUpdated(quorumDecayPerSecond);
-    }
-    function setVotingDuration(uint _votingDuration) external onlySelf {
-        votingDuration = _votingDuration;
-        emit VotingDurationUpdated(votingDuration);
-    }
-    function setExecuteDelay(uint _executeDelay) external onlySelf {
-        executeDelay = _executeDelay;
-        emit ExecuteDelayUpdated(executeDelay);
-    }
-    */
 }
 
 /// @notice Optino Governance. (c) The Optino Project 2020
@@ -137,23 +83,9 @@ contract OptinoGov is ERC20, OptinoGovConfig {
         uint64 lastDelegated;
         uint64 lastVoted;
         uint balance;
-        uint staked;
         uint votes;
         uint delegatedVotes;
         address delegatee;
-    }
-    // Token { dataType 1, address tokenAddress }
-    // Feed { dataType 2, address feedAddress, uint feedType, uint feedDecimals, string name }
-    // Conventions { dataType 3, address [token0, token1], address [feed0, feed1], uint[6] [type0, type1, decimals0, decimals1, inverse0, inverse1], string [feed0Name, feedName2, Market, Convention] }
-    // General { dataType 4, address[4] addresses, address [feed0, feed1], uint[6] uints, string[4] strings }
-    struct StakeInfo {
-        uint dataType;
-        address[4] addresses;
-        uint[6] uints;
-        string string0; // TODO: Check issues using string[4] strings
-        string string1;
-        string string2;
-        string string3;
     }
     struct Proposal {
         uint start;
@@ -171,22 +103,15 @@ contract OptinoGov is ERC20, OptinoGovConfig {
 
     string _symbol = "OG";
     string _name = "Optino Governance";
+    uint _totalSupply;
+    mapping(address => Account) public accounts;
+    mapping(address => mapping(address => uint)) allowed;
 
-    mapping(address => Account) public accounts; // Committed tokens per address
-    mapping(address => mapping(bytes32 => uint)) stakes;
-    mapping(bytes32 => StakeInfo) public stakeInfoData;
-    bytes32[] public stakeInfoIndex;
     uint public proposalCount;
     mapping(uint => Proposal) public proposals;
-    uint public _totalSupply;
-    mapping(address => mapping(address => uint)) allowed;
 
     event DelegateUpdated(address indexed oldDelegatee, address indexed delegatee, uint votes);
     event Committed(address indexed user, uint tokens, uint balance, uint duration, uint end, address delegatee, uint votes, uint rewardPool, uint totalVotes);
-    event StakeInfoAdded(bytes32 stakingKey, uint dataType, address[4] addresses, uint[6] uints, string string0, string string1, string string2, string string3);
-    event Staked(address tokenOwner, uint tokens, uint balance, bytes32 stakingKey);
-    event Unstaked(address tokenOwner, uint tokens, uint balance, bytes32 stakingKey);
-    event StakeBurnt(address tokenOwner, uint tokens, uint balance, bytes32 stakingKey);
     event Collected(address indexed user, uint elapsed, uint reward, uint callerReward, uint rewardPool, uint end, uint duration);
     event Uncommitted(address indexed user, uint tokens, uint balance, uint duration, uint end, uint votes, uint rewardPool, uint totalVotes);
     event Proposed(address indexed proposer, uint oip, string description, address[] targets, uint[] value, bytes[] data, uint start);
@@ -234,113 +159,6 @@ contract OptinoGov is ERC20, OptinoGovConfig {
     function allowance(address tokenOwner, address spender) override external view returns (uint remaining) {
         return allowed[tokenOwner][spender];
     }
-
-
-    /*
-    function addStakeForToken(uint tokens, address tokenAddress, string memory name) external {
-        bytes32 stakingKey = keccak256(abi.encodePacked(tokenAddress, name));
-        StakeInfo memory stakeInfo = stakeInfoData[stakingKey];
-        if (stakeInfo.dataType == 0) {
-            stakeInfoData[stakingKey] = StakeInfo(1, [tokenAddress, address(0), address(0), address(0)], [uint(0), uint(0), uint(0), uint(0), uint(0), uint(0)], name, "", "", "");
-            stakeInfoIndex.push(stakingKey);
-            emit StakeInfoAdded(stakingKey, 1, [tokenAddress, address(0), address(0), address(0)], [uint(0), uint(0), uint(0), uint(0), uint(0), uint(0)], name, "", "", "");
-        }
-        _addStake(tokens, stakingKey);
-    }
-    function subStakeForToken(uint tokens, address tokenAddress, string calldata name) external {
-        bytes32 stakingKey = keccak256(abi.encodePacked(tokenAddress, name));
-        _subStake(tokens, stakingKey);
-    }
-    function addStakeForFeed(uint tokens, address feedAddress, uint feedType, uint feedDecimals, string calldata name) external {
-        bytes32 stakingKey = keccak256(abi.encodePacked(feedAddress, feedType, feedDecimals, name));
-        StakeInfo memory stakeInfo = stakeInfoData[stakingKey];
-        if (stakeInfo.dataType == 0) {
-            stakeInfoData[stakingKey] = StakeInfo(2, [feedAddress, address(0), address(0), address(0)], [uint(feedType), uint(feedDecimals), uint(0), uint(0), uint(0), uint(0)], name, "", "", "");
-            stakeInfoIndex.push(stakingKey);
-            emit StakeInfoAdded(stakingKey, 2, [feedAddress, address(0), address(0), address(0)], [uint(feedType), uint(feedDecimals), uint(0), uint(0), uint(0), uint(0)], name, "", "", "");
-        }
-        _addStake(tokens, stakingKey);
-    }
-    function subStakeForFeed(uint tokens, address feedAddress, uint feedType, uint feedDecimals, string calldata name) external {
-        bytes32 stakingKey = keccak256(abi.encodePacked(feedAddress, feedType, feedDecimals, name));
-        _subStake(tokens, stakingKey);
-    }
-    function addStakeForConvention(uint tokens, address[4] memory addresses, uint[6] memory uints, string[4] memory strings) external {
-        bytes32 stakingKey = keccak256(abi.encodePacked(addresses, uints, strings[0], strings[1], strings[2], strings[3]));
-        StakeInfo memory stakeInfo = stakeInfoData[stakingKey];
-        if (stakeInfo.dataType == 0) {
-            stakeInfoData[stakingKey] = StakeInfo(3, addresses, uints, strings[0], strings[1], strings[2], strings[3]);
-            stakeInfoIndex.push(stakingKey);
-            emit StakeInfoAdded(stakingKey, 3, addresses, uints, strings[0], strings[1], strings[2], strings[3]);
-        }
-        _addStake(tokens, stakingKey);
-    }
-    function subStakeForConvention(uint tokens, address[4] memory addresses, uint[6] memory uints, string[4] memory strings) external {
-        bytes32 stakingKey = keccak256(abi.encodePacked(addresses, uints, strings[0], strings[1], strings[2], strings[3]));
-        _subStake(tokens, stakingKey);
-    }
-    function addStakeForGeneral(uint tokens, uint dataType, address[4] memory addresses, uint[6] memory uints, string[4] memory strings) external {
-        bytes32 stakingKey = keccak256(abi.encodePacked(addresses, dataType, uints, strings[0], strings[1], strings[2], strings[3]));
-        StakeInfo memory stakeInfo = stakeInfoData[stakingKey];
-        if (stakeInfo.dataType == 0) {
-            stakeInfoData[stakingKey] = StakeInfo(dataType, addresses, uints, strings[0], strings[1], strings[2], strings[3]);
-            stakeInfoIndex.push(stakingKey);
-            emit StakeInfoAdded(stakingKey, dataType, addresses, uints, strings[0], strings[1], strings[2], strings[3]);
-        }
-        _addStake(tokens, stakingKey);
-    }
-    function subStakeForGeneral(uint tokens, uint dataType, address[4] memory addresses, uint[6] memory uints, string[4] memory strings) external {
-        bytes32 stakingKey = keccak256(abi.encodePacked(addresses, dataType, uints, strings[0], strings[1], strings[2], strings[3]));
-        _subStake(tokens, stakingKey);
-    }
-    function _addStake(uint tokens, bytes32 stakingKey) internal {
-        Account storage committment = accounts[msg.sender];
-        require(committment.tokens > 0, "OptinoGov: Commit before staking");
-        require(committment.tokens >= committment.staked + tokens, "OptinoGov: Insufficient tokens to stake");
-        committment.staked = committment.staked.add(tokens);
-        // TODO committment.stakes[stakingKey] = committment.stakes[stakingKey].add(tokens);
-        // TODO emit Staked(msg.sender, tokens, committment.stakes[stakingKey], stakingKey);
-    }
-    function _subStake(uint tokens, bytes32 stakingKey) internal {
-        Account storage committment = accounts[msg.sender];
-        require(committment.tokens > 0, "OptinoGov: Commit and stake tokens before unstaking");
-        // TODO require(committment.stakes[stakingKey] >= tokens, "OptinoGov: Insufficient staked tokens");
-        committment.staked = committment.staked.sub(tokens);
-        // TODO committment.stakes[stakingKey] = committment.stakes[stakingKey].sub(tokens);
-        // TODO emit Unstaked(msg.sender, tokens, committment.stakes[stakingKey], stakingKey);
-    }
-    function stakeInfoLength() public view returns (uint _stakeInfoLength) {
-        _stakeInfoLength = stakeInfoIndex.length;
-    }
-    function getStakeInfoByKey(bytes32 stakingKey) public view returns (uint dataType, address[4] memory addresses, uint[6] memory uints, string memory string0, string memory string1, string memory string2, string memory string3) {
-        StakeInfo memory stakeInfo = stakeInfoData[stakingKey];
-        (dataType, addresses, uints) = (stakeInfo.dataType, stakeInfo.addresses, stakeInfo.uints);
-        string0 = stakeInfo.string0;
-        string1 = stakeInfo.string1;
-        string2 = stakeInfo.string2;
-        string3 = stakeInfo.string3;
-    }
-    function getStaked(address tokenOwner, bytes32 stakingKey) public view returns (uint _staked) {
-        Account storage committment = accounts[tokenOwner];
-        // TODO _staked = committment.stakes[stakingKey];
-    }
-
-    function burnStake(address[] calldata tokenOwners, bytes32 stakingKey, uint percent) external onlySelf {
-        for (uint i = 0; i < tokenOwners.length; i++) {
-            address tokenOwner = tokenOwners[i];
-            Account storage committment = accounts[tokenOwner];
-            // TODO uint staked = committment.stakes[stakingKey];
-            // if (staked > 0) {
-            //     uint tokensToBurn = staked * percent / uint(100);
-            //     committment.staked = committment.staked.sub(tokensToBurn);
-            //     committment.stakes[stakingKey] = committment.stakes[stakingKey].sub(tokensToBurn);
-            //     committment.tokens = committment.tokens.sub(tokensToBurn);
-            //     require(ogToken.burn(tokensToBurn), "OptinoGov: burn failed");
-            //     emit StakeBurnt(tokenOwner, tokensToBurn, committment.stakes[stakingKey], stakingKey);
-            // }
-        }
-    }
-    */
 
     function delegate(address delegatee) public {
         Account storage user = accounts[msg.sender];
