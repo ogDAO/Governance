@@ -403,16 +403,16 @@ class Data {
       let decimals = 18;
       console.log("        - maxDuration          : " + maxDuration + " seconds = " + maxDuration.div(60 * 60 * 24) + " days");
       console.log("        - rewardsPerSecond     : " + rewardsPerSecond + " = " + ethers.utils.formatUnits(rewardsPerSecond, 18) + " = " + ethers.utils.formatUnits(rewardsPerSecond.mul(60 * 60 * 24), decimals) + " per day");
-      console.log("        - collectRewardForFee  : " + collectRewardForFee + " = " + new BigNumber(collectRewardForFee.toString()).shiftedBy(-16) + "%");
-      console.log("        - collectRewardForDelay: " + collectRewardForDelay + " seconds = " + new BigNumber(collectRewardForDelay.toString()).dividedBy(60 * 60 * 24) + " days");
-      console.log("        - proposalCost         : " + proposalCost + " = " + new BigNumber(proposalCost.toString()).shiftedBy(-decimals));
-      console.log("        - proposalThreshold    : " + proposalThreshold + " = " + new BigNumber(proposalThreshold.toString()).shiftedBy(-16) + "%");
-      console.log("        - quorum               : " + quorum + " = " + new BigNumber(quorum.toString()).shiftedBy(-16) + "%");
-      console.log("        - quorumDecayPerSecond : " + quorumDecayPerSecond + " = " + new BigNumber(quorumDecayPerSecond.toString()).multipliedBy(60 * 60 * 24 * 365).shiftedBy(-16) + "% per year");
-      console.log("        - votingDuration       : " + votingDuration + " seconds = " + new BigNumber(votingDuration.toString()).dividedBy(60 * 60 * 24) + " days");
-      console.log("        - executeDelay         : " + executeDelay + " seconds = " + new BigNumber(executeDelay.toString()).dividedBy(60 * 60 * 24) + " days");
-      console.log("        - rewardPool           : " + rewardPool + " = " + new BigNumber(rewardPool.toString()).shiftedBy(-decimals));
-      console.log("        - totalVotes           : " + totalVotes + " = " + new BigNumber(totalVotes.toString()).shiftedBy(-decimals));
+      console.log("        - collectRewardForFee  : " + collectRewardForFee + " = " + ethers.utils.formatUnits(collectRewardForFee, 16) + "%");
+      console.log("        - collectRewardForDelay: " + collectRewardForDelay + " seconds = " + collectRewardForDelay.div(60 * 60 * 24) + " days");
+      console.log("        - proposalCost         : " + proposalCost + " = " + ethers.utils.formatUnits(proposalCost, decimals));
+      console.log("        - proposalThreshold    : " + proposalThreshold + " = " + ethers.utils.formatUnits(proposalThreshold, 16) + "%");
+      console.log("        - quorum               : " + quorum + " = " + ethers.utils.formatUnits(quorum, 16) + "%");
+      console.log("        - quorumDecayPerSecond : " + quorumDecayPerSecond + " = " + ethers.utils.formatUnits(quorumDecayPerSecond.mul(60 * 60 * 24 * 365), 16) + "% per year");
+      console.log("        - votingDuration       : " + votingDuration + " seconds = " + votingDuration.div(60 * 60 * 24) + " days");
+      console.log("        - executeDelay         : " + executeDelay + " seconds = " + executeDelay.div(60 * 60 * 24) + " days");
+      console.log("        - rewardPool           : " + rewardPool + " = " + ethers.utils.formatUnits(rewardPool, decimals));
+      console.log("        - totalVotes           : " + totalVotes + " = " + ethers.utils.formatUnits(totalVotes, decimals));
       console.log("        - proposalCount        : " + proposalCount);
       // console.log("        - stakeInfoLength      : " + stakeInfoLength);
 
@@ -423,10 +423,10 @@ class Data {
           console.log("        - _account           : " + j + " " + this.getShortAccountName(accountAddress) +
             " duration: " + _account.duration +
             ", end: " + _account.end +
-            ", tokens: " + new BigNumber(_account.balance.toString()).shiftedBy(-18) +
-            ", votes: " + new BigNumber(_account.votes.toString()).shiftedBy(-18) +
+            ", tokens: " + ethers.utils.formatUnits(_account.balance, 18) +
+            ", votes: " + ethers.utils.formatUnits(_account.votes, 18) +
             // ", staked: " + new BigNumber(_account.staked.toString()).shiftedBy(-18) +
-            ", delegatedVotes: " + new BigNumber(_account.delegatedVotes.toString()).shiftedBy(-18) +
+            ", delegatedVotes: " + ethers.utils.formatUnits(_account.delegatedVotes, 18) +
             ", delegatee: " + this.getShortAccountName(_account.delegatee));
         }
       }
