@@ -223,6 +223,7 @@ contract Staking is ERC20, Owned {
         // stakeThroughFactory(...), stake(tokens, duration) or restake(duration)
         if (depositTokens == 0 && withdrawTokens == 0 || depositTokens > 0) {
             require(slashingFactor == 0, "Cannot stake if already slashed");
+            require(duration > 0, "Duration must be > 0");
         }
         // unstake(tokens) or unstakeAll()
         if (withdrawTokens > 0) {
@@ -276,43 +277,27 @@ contract Staking is ERC20, Owned {
                 if (accountsIndex.length > 0) {
                     accountsIndex.pop();
                 }
-            // } else {
-                // _totalSupply = _totalSupply.add(account.balance);
             }
-            // updateStatsAfter(account, tokenOwner);
             uint tokensWithSlashingFactor = withdrawTokens.sub(withdrawTokens.mul(slashingFactor).div(10**18));
             require(ogToken.transfer(tokenOwner, tokensWithSlashingFactor), "OG transfer failed");
-            // uint rewardWithSlashingFactor;
-            // if (reward > 0) {
-            //     rewardWithSlashingFactor = reward.sub(reward.mul(slashingFactor).div(10**18));
-            //     StakingFactoryInterface(owner).mintOGTokens(tokenOwner, rewardWithSlashingFactor);
-            // }
             emit Unstaked(msg.sender, withdrawTokens, reward, tokensWithSlashingFactor, rewardWithSlashingFactor);
         }
         updateStatsAfter(account, tokenOwner);
-        // if (depositTokens > 0) {
-        //     _totalSupply = _totalSupply.add(account.balance);
-        //     emit Transfer(address(0), tokenOwner, depositTokens);
-        // } else {
-        // }
     }
 
     function stakeThroughFactory(address tokenOwner, uint tokens, uint duration) public onlyOwner {
         // console.log("        > StakingFactory.stakeThroughFactory(tokenOwner %s, tokens %s, duration %s)", tokenOwner, tokens, duration);
         require(tokens > 0, "tokens must be > 0");
-        require(duration > 0, "duration must be > 0");
         _changeStake(tokenOwner, tokens, 0, false, duration);
     }
     function stake(uint tokens, uint duration) public {
         // console.log("        > %s -> stake(tokens %s, duration %s)", msg.sender, tokens, duration);
         require(tokens > 0, "tokens must be > 0");
-        require(duration > 0, "duration must be > 0");
         require(ogToken.transferFrom(msg.sender, address(this), tokens), "OG transferFrom failed");
         _changeStake(msg.sender, tokens, 0, false, duration);
     }
     function restake(uint duration) public {
         // console.log("        > %s -> restake(duration %s)", msg.sender, duration);
-        require(duration > 0, "duration must be > 0");
         require(accounts[msg.sender].balance > 0, "To balance to restake");
         _changeStake(msg.sender, 0, 0, false, duration);
     }

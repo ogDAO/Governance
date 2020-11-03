@@ -258,9 +258,78 @@ describe("TestOptinoGov", function() {
     });
   });
 
-  describe("TestOptinoGov - Workflow #2", function() {
-    it("Workflow #2", async function() {
-      console.log("Workflow #2");
+  describe.only("TestOptinoGov - Workflow #2 - Developing", function() {
+    it("Workflow #2 - Developing", async function() {
+      console.log("        --- Test 1 - User{1..3} commit OGTokens for {1, 1, 1} seconds duration ---");
+      const tokensToCommit = new BigNumber("1000").shiftedBy(18);
+      const test1 = [];
+      test1.push(data.optinoGov.connect(data.user1Signer).commit(tokensToCommit.toFixed(0), 1));
+      // test1.push(data.optinoGov.connect(data.user2Signer).commit(tokensToCommit.toFixed(0), 1));
+      // test1.push(data.optinoGov.connect(data.user3Signer).commit(tokensToCommit.toFixed(0), 1));
+      const [commit1/*, commit2, commit3*/] = await Promise.all(test1);
+      await data.printTxData("commit1", commit1);
+      // await data.printTxData("commit2", commit2);
+      // await data.printTxData("commit3", commit3);
+      await data.printBalances();
+
+      // console.log("        --- Test 2 - User{1..3} approve 2,000 OGDTokens to OptinoGov ---");
+      // const approveTokens = new BigNumber("2000").shiftedBy(18);
+      // const test2 = [];
+      // test2.push(data.ogdToken.connect(data.user1Signer).approve(data.optinoGov.address, approveTokens.toFixed(0)));
+      // test2.push(data.ogdToken.connect(data.user2Signer).approve(data.optinoGov.address, approveTokens.toFixed(0)));
+      // test2.push(data.ogdToken.connect(data.user3Signer).approve(data.optinoGov.address, approveTokens.toFixed(0)));
+      // test2.push(data.fee0Token.approve(data.ogdToken.address, approveTokens.toFixed(0)));
+      // const [approve1, approve2, approve3, approve4] = await Promise.all(test2);
+      // await data.printTxData("approve1", approve1);
+      // await data.printTxData("approve2", approve2);
+      // await data.printTxData("approve3", approve3);
+      // await data.printTxData("approve3", approve4);
+      // await data.printBalances();
+
+      // console.log("        --- Test 3 - Owner deposits dividends of 10 ETH and 100 FEE ---");
+      // const depositFee1Tokens = new BigNumber("10").shiftedBy(18);
+      // const depositFee2Tokens = new BigNumber("100").shiftedBy(18);
+      // const test3 = [];
+      // test3.push(data.ogdToken.depositDividend(ZERO_ADDRESS, depositFee1Tokens.toFixed(0), { value: depositFee1Tokens.toFixed(0) }));
+      // test3.push(data.ogdToken.depositDividend(data.fee0Token.address, depositFee2Tokens.toFixed(0)));
+      // const [depositDividendFee1, depositDividendFee2] = await Promise.all(test3);
+      // await data.printTxData("depositDividendFee1", depositDividendFee1);
+      // await data.printTxData("depositDividendFee2", depositDividendFee2);
+      // await data.printBalances();
+
+      // console.log("        --- Test 4 - User2 transfer all to user3 ---");
+      // const test4 = [];
+      // test4.push(data.ogdToken.connect(data.user2Signer).transfer(data.user3, tokensToCommit.toFixed(0)));
+      // const [transfer1] = await Promise.all(test4);
+      // await data.printTxData("transfer1", transfer1);
+      // await data.printBalances();
+      //
+      // console.log("        --- Test 5 - User{1..3} withdraw ETH and FEE dividends ---");
+      // const test5 = [];
+      // test5.push(data.ogdToken.connect(data.user1Signer).withdrawDividends());
+      // test5.push(data.ogdToken.connect(data.user2Signer).withdrawDividends());
+      // test5.push(data.ogdToken.connect(data.user3Signer).withdrawDividends());
+      // const [withdrawDividends1, withdrawDividends2, withdrawDividends3] = await Promise.all(test5);
+      // await data.printTxData("withdrawDividends1", withdrawDividends1);
+      // await data.printTxData("withdrawDividends2", withdrawDividends2);
+      // await data.printTxData("withdrawDividends3", withdrawDividends3);
+      // await data.printBalances();
+
+      // console.log("        --- Test 4 - User{1..3} uncommit OGTokens ---");
+      // const tokensToUncommit = new BigNumber("100").shiftedBy(18);
+      // const test4 = [];
+      // // data.pause("Waiting", 5);
+      // test4.push(data.optinoGov.connect(data.user1Signer).uncommit(tokensToUncommit.toFixed(0)));
+      // test4.push(data.optinoGov.connect(data.user2Signer).uncommit(tokensToUncommit.toFixed(0)));
+      // test4.push(data.optinoGov.connect(data.user3Signer).uncommit(tokensToUncommit.toFixed(0)));
+      // const [uncommit1, uncommit2, uncommit3] = await Promise.all(test4);
+      // await data.printTxData("uncommit1", uncommit1);
+      // await data.printTxData("uncommit2", uncommit2);
+      // await data.printTxData("uncommit3", uncommit3);
+      // await data.printBalances();
+
+      console.log("        --- Test Completed ---");
+      console.log("");
     });
   });
 });

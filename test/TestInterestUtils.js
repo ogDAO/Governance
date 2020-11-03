@@ -1,5 +1,5 @@
 const { expect, assert } = require("chai");
-const BigNumber = require('bignumber.js');
+const { BigNumber } = require("ethers");
 const util = require('util');
 
 let InterestUtils;
@@ -84,14 +84,15 @@ describe("TestInterestUtils", function() {
     const _from = parseInt(new Date().getTime()/1000);
     for (let i = 0; i < tests.length; i++) {
       const test = tests[i];
-      const _amount = new BigNumber(test.amount).shiftedBy(18);
+      const _amount = ethers.utils.parseUnits(test.amount, 18);
       const _to = parseInt(_from) + test.term;
-      const _rate = new BigNumber(test.ratePercent).shiftedBy(16);
+      const _rate = ethers.utils.parseUnits(test.ratePercent, 16);
       try {
-        const [fv, gasUsed] = await testInterestUtils.futureValue(_amount.toFixed(0), _from, _to, _rate.toFixed(0), test.secondsPerPeriod);
-        const diff = new BigNumber(fv.toString()).shiftedBy(-18).minus(new BigNumber(test.compoundingResult));
-        const diffPerHundred = diff.dividedBy(new BigNumber(fv.toString()).shiftedBy(-18)).multipliedBy(100);
-        console.log("        term: " + test.t + ", period: " + test.p + ", fv: " + new BigNumber(fv.toString()).shiftedBy(-18).toFixed(18) + ", compoundingResult: " + new BigNumber(test.compoundingResult).toFixed(9)  + ", diff: " + diff.toFixed(9) + " = " + diffPerHundred.toFixed(9) + "%, gasUsed: " + gasUsed);
+        const [fv, gasUsed] = await testInterestUtils.futureValue(_amount, _from, _to, _rate, test.secondsPerPeriod);
+        const compoundingResult = ethers.utils.parseUnits(test.compoundingResult, 18);
+        const diff = fv.sub(compoundingResult);
+        const diffPerHundred = diff.mul(100).mul(ethers.utils.parseUnits("1", 18)).div(fv);
+        console.log("        term: " + test.t + ", period: " + test.p + ", fv: " + ethers.utils.formatUnits(fv, 18) + ", compoundingResult: " + ethers.utils.formatUnits(compoundingResult, 18) + ", diff: " + ethers.utils.formatUnits(diff, 18) + " = " + ethers.utils.formatUnits(diffPerHundred, 18) + "%, gasUsed: " + gasUsed);
       } catch (e) {
         console.log("        term: " + test.t + ", period: " + test.p + ", Out of gas");
       }
