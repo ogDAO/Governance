@@ -1,5 +1,5 @@
 const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
-const BigNumber = require('bignumber.js');
+const { BigNumber } = require("ethers");
 const util = require('util');
 const { expect, assert } = require("chai");
 
@@ -24,7 +24,8 @@ class Data {
     this.optinoGov = null;
     this.stakingFactory = null;
 
-    this.ethUsd = new BigNumber("385.67");
+    // this.ethUsd = BigNumber.from("385.67");
+    this.ethUsd = ethers.utils.parseUnits("385.67", 18);
   }
 
   async init() {
@@ -164,7 +165,7 @@ class Data {
 
   padToken(s, decimals) {
     decimals = parseInt(decimals);
-    var o = new BigNumber(s).shiftedBy(-decimals).toFixed(decimals);
+    var o = ethers.utils.formatUnits(s, decimals);
     while (o.length < 27) {
       o = " " + o;
     }
@@ -201,11 +202,11 @@ class Data {
         } else if (a.type == 'uint256') {
           if (a.name == 'tokens' || a.name == 'amount' || a.name == 'balance' || a.name == 'votes' || a.name == 'reward' || a.name == 'rewardPool' || a.name == 'totalVotes' || a.name == 'tokensBurnt' || a.name == 'tokensWithSlashingFactor' || a.name == 'rewardWithSlashingFactor') {
             // TODO Get decimals from token contracts, and only convert for token contract values
-            result = result + new BigNumber(data.args[a.name].toString()).shiftedBy(-18);
+            result = result + ethers.utils.formatUnits(data.args[a.name], 18);
           } else if (a.name == 'slashingFactor') {
-            result = result + new BigNumber(data.args[a.name].toString()).shiftedBy(-16) + "%";
+            result = result + ethers.utils.formatUnits(data.args[a.name], 16) + "%";
           } else {
-            result = result + new BigNumber(data.args[a.name].toString()).toFixed(0); //.shiftedBy(-18);
+            result = result + ethers.utils.formatUnits(data.args[a.name], 0);
           }
         } else {
           result = result + data.args[a.name].toString();
@@ -244,9 +245,9 @@ class Data {
 
   async printTxData(message, tx) {
     const receipt = await tx.wait();
-    var fee = new BigNumber(receipt.gasUsed.toString()).multipliedBy(tx.gasPrice.toString()).shiftedBy(-18);
-    var feeUsd = fee.multipliedBy(this.ethUsd);
-    console.log("        " + message + " - gasUsed: " + receipt.gasUsed.toString() + ", fee: " + fee + ", feeUsd: " + feeUsd + ", @ " + new BigNumber(tx.gasPrice.toString()).shiftedBy(-9).toString() + " gwei & " + this.ethUsd + " ETH/USD, " + tx.hash);
+    var fee = receipt.gasUsed.mul(tx.gasPrice);
+    var feeUsd = fee.mul(this.ethUsd).div(ethers.utils.parseUnits("1", 18));
+    console.log("        " + message + " - gasUsed: " + receipt.gasUsed.toString() + ", fee: " + ethers.utils.formatUnits(fee, 18) + ", feeUsd: " + ethers.utils.formatUnits(feeUsd, 18) + ", @ " + ethers.utils.formatUnits(tx.gasPrice, 9) + " gwei & " + ethers.utils.formatUnits(this.ethUsd,18) + " ETH/USD, " + tx.hash);
     receipt.logs.forEach((log) => {
       this.printEvent(log);
     });
@@ -255,7 +256,7 @@ class Data {
   async printBalances() {
     const blockNumber = await ethers.provider.getBlockNumber();
     // let i;
-    const totalTokenBalances = [new BigNumber(0), new BigNumber(0), new BigNumber(0), new BigNumber(0)];
+    const totalTokenBalances = [BigNumber.from(0), BigNumber.from(0), BigNumber.from(0), BigNumber.from(0)];
     console.log("        ");
     console.log("         # Account                                             EtherBalanceChange               " + this.padLeft(this.symbols[0] || "???", 16) +  "               " + this.padLeft(this.symbols[1] || "???", 16) + " Blocks " + this.baseBlock.toString() + " to " + blockNumber.toString());
     if (this.tokenContracts.length > 2) {
@@ -265,16 +266,16 @@ class Data {
     for (let i = 0; i < this.accounts.length; i++) {
       let account = this.accounts[i];
       let etherBalanceBaseBlock = (await ethers.provider.getBalance(account, this.baseBlock)).toString();
-      let etherBalance = (await ethers.provider.getBalance(account, blockNumber)).toString();
-      let etherBalanceDiff = new BigNumber(etherBalance).minus(new BigNumber(etherBalanceBaseBlock));
-      let tokenBalances = [new BigNumber(0), new BigNumber(0)];
+      let etherBalance = await ethers.provider.getBalance(account, blockNumber);
+      let etherBalanceDiff = etherBalance.sub(etherBalanceBaseBlock);
+      let tokenBalances = [BigNumber.from(0), BigNumber.from(0)];
       for (let j = 0; j < this.tokenContracts.length; j++) {
-        tokenBalances[j] = new BigNumber((await this.tokenContracts[j].balanceOf(account)).toString());
-        totalTokenBalances[j] = totalTokenBalances[j].plus(tokenBalances[j]);
+        tokenBalances[j] = await this.tokenContracts[j].balanceOf(account);
+        totalTokenBalances[j] = totalTokenBalances[j].add(tokenBalances[j]);
       }
-      console.log("         " + this.padLeft(i, 2) + " " + account + " " + this.padToken(etherBalanceDiff, 18) + "    " + this.padToken(tokenBalances[0] || new BigNumber(0), this.decimals[0] || 18) + "    " + this.padToken(tokenBalances[1] || new BigNumber(0), this.decimals[1] || 18) + " " + this.getShortAccountName(account));
+      console.log("         " + this.padLeft(i, 2) + " " + account + " " + this.padToken(etherBalanceDiff, 18) + "    " + this.padToken(tokenBalances[0] || BigNumber.from(0), this.decimals[0] || 18) + "    " + this.padToken(tokenBalances[1] || BigNumber.from(0), this.decimals[1] || 18) + " " + this.getShortAccountName(account));
       if (this.tokenContracts.length > 2) {
-        console.log("                                                                                     " + this.padToken(tokenBalances[2] || new BigNumber(0), this.decimals[2] || 18) + "    " + this.padToken(tokenBalances[3] || new BigNumber(0), this.decimals[3] || 18));
+        console.log("                                                                                     " + this.padToken(tokenBalances[2] || BigNumber.from(0), this.decimals[2] || 18) + "    " + this.padToken(tokenBalances[3] || BigNumber.from(0), this.decimals[3] || 18));
       }
     }
     console.log("        -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------");
@@ -294,7 +295,7 @@ class Data {
       } catch (e) {
         owner = "n/a";
       }
-      console.log("        Token " + i + " symbol: '" + symbol + "', name: '" + name + "', decimals: " + decimals + ", totalSupply: " + new BigNumber(totalSupply.toString()).shiftedBy(-decimals) + ", owner: " + this.getShortAccountName(owner) + ", address: " + this.getShortAccountName(tokenContract.address));
+      console.log("        Token " + i + " symbol: '" + symbol + "', name: '" + name + "', decimals: " + decimals + ", totalSupply: " + ethers.utils.formatUnits(totalSupply, decimals) + ", owner: " + this.getShortAccountName(owner) + ", address: " + this.getShortAccountName(tokenContract.address));
       if (symbol == "OptinoGov" && this.stakingFactory != null) {
         console.log("        StakingFactory " + this.getShortAccountName(this.stakingFactory.address) + " @ " + this.stakingFactory.address);
         const [stakingTemplate, ogToken, stakingsLength] = await Promise.all([this.stakingFactory.stakingTemplate(), this.stakingFactory.ogToken(), this.stakingFactory.stakingsLength()]);
@@ -326,7 +327,7 @@ class Data {
         for (let j = 0; j < dividendTokensLength; j++) {
           const dividendToken = await tokenContract.getDividendTokenByIndex(j);
           const unclaimedDividends = await tokenContract.unclaimedDividends(dividendToken[0]);
-          console.log("        - dividendToken        : " + j + " " + this.getShortAccountName(dividendToken[0]) + ", enabled: " + dividendToken[1].toString() + ", unclaimedDividends: " + new BigNumber(unclaimedDividends.toString()).shiftedBy(-18));
+          console.log("        - dividendToken        : " + j + " " + this.getShortAccountName(dividendToken[0]) + ", enabled: " + dividendToken[1].toString() + ", unclaimedDividends: " + ethers.utils.formatUnits(unclaimedDividends, 18));
         }
         for (let j = 1; j < this.accounts.length; j++) {
           let account = this.accounts[j];
@@ -339,7 +340,7 @@ class Data {
             let newOwingList = dividendsOwing[2];
             let separator = "";
             for (let k = 0; k < dividendTokensLength; k++) {
-              result = result + separator + new BigNumber(owingList[k].toString()).shiftedBy(-18) + ", " + new BigNumber(newOwingList[k].toString()).shiftedBy(-18) + " " + this.getShortAccountName(tokenList[k]);
+              result = result + separator + ethers.utils.formatUnits(owingList[k], 18) + ", " + ethers.utils.formatUnits(newOwingList[k], 18) + " " + this.getShortAccountName(tokenList[k]);
               separator = "; ";
             }
             console.log("        - dividendsOwing,new   : " + j + " " + this.padRight(this.getShortAccountName(account), 18) + " " + result);
@@ -352,15 +353,15 @@ class Data {
         console.log("          - addresses                  : " + JSON.stringify(stakingInfo.addresses.map((x) => { return this.getShortAccountName(x); })));
         console.log("          - uints                      : " + JSON.stringify(stakingInfo.uints.map((x) => { return x.toString(); })));
         console.log("          - strings                    : " + JSON.stringify([stakingInfo.string0, stakingInfo.string1, stakingInfo.string2, stakingInfo.string3]));
-        console.log("          - rewardsPerYear             : " + new BigNumber(rewardsPerYear.toString()).shiftedBy(-16) + "% compounding daily/simple partial end, rewardsPerSecond: " + new BigNumber(rewardsPerYear.toString()).dividedBy(60*60*24*365).shiftedBy(-16).toFixed(16) + "%");
+        console.log("          - rewardsPerYear             : " + ethers.utils.formatUnits(rewardsPerYear, 16) + "% compounding daily/simple partial end, rewardsPerSecond: " + ethers.utils.formatUnits(rewardsPerYear.div(60*60*24*365), 16) + "%");
         // console.log("          - weightedDurationDenominator: " + new BigNumber(weightedDurationDenominator.toString()).shiftedBy(-18));
-        console.log("          - weightedEnd                : " + weightedEnd + " = " + new BigNumber(weightedEndNumerator.toString()).shiftedBy(-decimals) + "/" + new BigNumber(totalSupply.toString()).shiftedBy(-decimals));
-        console.log("          - slashingFactor             : " + new BigNumber(slashingFactor.toString()).shiftedBy(-16) + "%");
+        console.log("          - weightedEnd                : " + weightedEnd + " = " + ethers.utils.formatUnits(weightedEndNumerator, decimals) + "/" + ethers.utils.formatUnits(totalSupply, decimals));
+        console.log("          - slashingFactor             : " + ethers.utils.formatUnits(slashingFactor, 16) + "%");
         console.log("          - accountsLength             : " + accountsLength);
         for (let k = 0; k < accountsLength; k++) {
           const account = await tokenContract.getAccountByIndex(k);
           const accruedReward = await tokenContract.accruedReward(account.tokenOwner);
-          console.log("            - account " + k + " owner: " + this.getShortAccountName(account.tokenOwner) + ", duration: " + account.account.duration.toString() + ", end: " + account.account.end.toString() + ", index: " + account.account.index.toString() + ", tokens: " + new BigNumber(account.account.balance.toString()).shiftedBy(-18) + ", accrued: " + new BigNumber(accruedReward[0].toString()).shiftedBy(-18) + ", term: " + accruedReward[1].toString());
+          console.log("            - account " + k + " owner: " + this.getShortAccountName(account.tokenOwner) + ", duration: " + account.account.duration.toString() + ", end: " + account.account.end.toString() + ", index: " + account.account.index.toString() + ", tokens: " + ethers.utils.formatUnits(account.account.balance, 18) + ", accrued: " + ethers.utils.formatUnits(accruedReward[0], 18) + ", term: " + accruedReward[1].toString());
         }
       }
     }
@@ -400,8 +401,8 @@ class Data {
       console.log("        - ogToken              : " + this.getShortAccountName(ogToken));
       console.log("        - ogdToken             : " + this.getShortAccountName(ogdToken));
       let decimals = 18;
-      console.log("        - maxDuration          : " + maxDuration + " seconds = " + new BigNumber(maxDuration.toString()).dividedBy(60 * 60 * 24) + " days");
-      console.log("        - rewardsPerSecond     : " + rewardsPerSecond + " = " + new BigNumber(rewardsPerSecond.toString()).shiftedBy(-18) + " = " + new BigNumber(rewardsPerSecond.toString()).multipliedBy(60 * 60 * 24).shiftedBy(-decimals) + " per day");
+      console.log("        - maxDuration          : " + maxDuration + " seconds = " + maxDuration.div(60 * 60 * 24) + " days");
+      console.log("        - rewardsPerSecond     : " + rewardsPerSecond + " = " + ethers.utils.formatUnits(rewardsPerSecond, 18) + " = " + ethers.utils.formatUnits(rewardsPerSecond.mul(60 * 60 * 24), decimals) + " per day");
       console.log("        - collectRewardForFee  : " + collectRewardForFee + " = " + new BigNumber(collectRewardForFee.toString()).shiftedBy(-16) + "%");
       console.log("        - collectRewardForDelay: " + collectRewardForDelay + " seconds = " + new BigNumber(collectRewardForDelay.toString()).dividedBy(60 * 60 * 24) + " days");
       console.log("        - proposalCost         : " + proposalCost + " = " + new BigNumber(proposalCost.toString()).shiftedBy(-decimals));
