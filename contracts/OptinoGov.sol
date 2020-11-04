@@ -165,6 +165,15 @@ contract OptinoGov is ERC20, OptinoGovConfig {
         return allowed[tokenOwner][spender];
     }
 
+    function getAccountByIndex(uint i) public view returns (address tokenOwner, Account memory account) {
+        require(i < accountsIndex.length, "Invalid index");
+        tokenOwner = accountsIndex[i];
+        account = accounts[tokenOwner];
+    }
+    function accountsLength() public view returns (uint) {
+        return accountsIndex.length;
+    }
+
     function delegate(address delegatee) public {
         Account storage user = accounts[msg.sender];
         require(uint(user.lastVoted) + votingDuration < block.timestamp, "Cannot delegate after recent vote");
@@ -194,17 +203,15 @@ contract OptinoGov is ERC20, OptinoGovConfig {
     }
 
     function accruedReward(address tokenOwner) public view returns (uint _reward, uint _term) {
-        return _calculateReward(accounts[tokenOwner], tokenOwner, accounts[tokenOwner].balance);
+        return _calculateReward(accounts[tokenOwner]);
     }
-    function _calculateReward(Account memory account, address /*tokenOwner*/, uint tokens) internal view returns (uint _reward, uint _term) {
-        // console.log("        >     _calculateReward(tokenOwner %s, tokens %s)", tokenOwner, tokens);
+    function _calculateReward(Account memory account) internal view returns (uint _reward, uint _term) {
         uint from = account.end == 0 ? block.timestamp : uint(account.end).sub(uint(account.duration));
-        uint futureValue = InterestUtils.futureValue(tokens, from, block.timestamp, rewardsPerYear, 1 days);
-        // console.log("        > _calculateReward(%s) - tokens %s, rate %s", tokenOwner, tokens, rewardsPerYear);
+        uint futureValue = InterestUtils.futureValue(account.balance, from, block.timestamp, rewardsPerYear, 1 days);
+        // console.log("        > _calculateReward() - account.balance %s, rate %s", account.balance, rewardsPerYear);
         // console.log("          from %s, to %s, futureValue %s", from, block.timestamp, futureValue);
-        _reward = futureValue.sub(tokens);
+        _reward = futureValue.sub(account.balance);
         _term = block.timestamp.sub(from);
-        // console.log("          _reward %s", _reward);
     }
 
     function _changeCommitment(address tokenOwner, uint depositTokens, uint withdrawTokens, bool withdrawRewards, uint duration) internal {
@@ -216,14 +223,13 @@ contract OptinoGov is ERC20, OptinoGovConfig {
         if (depositTokens == 0 && withdrawTokens == 0 || depositTokens > 0) {
             require(duration > 0, "Duration must be > 0");
         }
-        // unstake(tokens) or unstakeAll()
+        // uncommit(tokens) or uncommitAll()
         if (withdrawTokens > 0) {
             require(uint(account.end) < block.timestamp, "Staking period still active");
             require(withdrawTokens <= account.balance, "Unsufficient staked balance");
         }
         updateStatsBefore(account, tokenOwner);
-        (uint reward, /*uint term*/) = _calculateReward(account, tokenOwner, account.balance);
-        // uint rewardWithSlashingFactor;
+        (uint reward, /*uint term*/) = _calculateReward(account);
         console.log("        >     reward %s", reward);
         if (withdrawRewards) {
             if (reward > 0) {
@@ -269,6 +275,9 @@ contract OptinoGov is ERC20, OptinoGovConfig {
                     accountsIndex.pop();
                 }
             }
+            // TODO: Check
+            account.duration = uint64(0);
+            account.end = uint64(block.timestamp);
             require(ogToken.transfer(tokenOwner, withdrawTokens), "OG transfer failed");
         //     emit Unstaked(msg.sender, withdrawTokens, reward, tokensWithSlashingFactor, rewardWithSlashingFactor);
         }

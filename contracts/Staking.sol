@@ -279,6 +279,9 @@ contract Staking is ERC20, Owned {
                     accountsIndex.pop();
                 }
             }
+            // TODO: Check
+            account.duration = uint64(0);
+            account.end = uint64(block.timestamp);
             uint tokensWithSlashingFactor = withdrawTokens.sub(withdrawTokens.mul(slashingFactor).div(10**18));
             require(ogToken.transfer(tokenOwner, tokensWithSlashingFactor), "OG transfer failed");
             emit Unstaked(msg.sender, withdrawTokens, reward, tokensWithSlashingFactor, rewardWithSlashingFactor);

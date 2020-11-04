@@ -298,7 +298,7 @@ class Data {
       console.log("        Token " + i + " symbol: '" + symbol + "', name: '" + name + "', decimals: " + decimals + ", totalSupply: " + ethers.utils.formatUnits(totalSupply, decimals) + ", owner: " + this.getShortAccountName(owner) + ", address: " + this.getShortAccountName(tokenContract.address));
       if (symbol == "OptinoGov" && this.optinoGov != null) {
         // console.log("        OptinoGov " + this.getShortAccountName(this.optinoGov.address) + " @ " + this.optinoGov.address);
-        let [ogToken, ogdToken, maxDuration, rewardsPerSecond, rewardsPerYear, collectRewardForFee, collectRewardForDelay, proposalCost, proposalThreshold] = await Promise.all([this.optinoGov.ogToken(), this.optinoGov.ogdToken(), this.optinoGov.maxDuration(), this.optinoGov.rewardsPerSecond(), this.optinoGov.rewardsPerYear(), this.optinoGov.collectRewardForFee(), this.optinoGov.collectRewardForDelay(), this.optinoGov.proposalCost(), this.optinoGov.proposalThreshold()]);
+        let [ogToken, ogdToken, accountsLength, maxDuration, rewardsPerSecond, rewardsPerYear, collectRewardForFee, collectRewardForDelay, proposalCost, proposalThreshold] = await Promise.all([this.optinoGov.ogToken(), this.optinoGov.ogdToken(), this.optinoGov.accountsLength(), this.optinoGov.maxDuration(), this.optinoGov.rewardsPerSecond(), this.optinoGov.rewardsPerYear(), this.optinoGov.collectRewardForFee(), this.optinoGov.collectRewardForDelay(), this.optinoGov.proposalCost(), this.optinoGov.proposalThreshold()]);
         let [quorum, quorumDecayPerSecond, votingDuration, executeDelay, rewardPool, totalVotes] = await Promise.all([this.optinoGov.quorum(), this.optinoGov.quorumDecayPerSecond(), this.optinoGov.votingDuration(), this.optinoGov.executeDelay(), this.optinoGov.rewardPool(), this.optinoGov.totalVotes()]);
         let [proposalCount /*, stakeInfoLength*/] = await Promise.all([this.optinoGov.proposalCount()/*, this.optinoGov.stakeInfoLength()*/]);
         console.log("        - ogToken              : " + this.getShortAccountName(ogToken));
@@ -319,20 +319,21 @@ class Data {
         console.log("        - rewardsPerYear       : " + ethers.utils.formatUnits(rewardsPerYear, 16) + "% compounding daily/simple partial end, rewardsPerSecond: " + ethers.utils.formatUnits(rewardsPerYear.div(60*60*24*365), 16) + "%");
         console.log("        - proposalCount        : " + proposalCount);
         // console.log("        - stakeInfoLength      : " + stakeInfoLength);
-
-        for (let j = 1; j < this.accounts.length && j < 4; j++) {
-          let accountAddress = this.accounts[j];
-          const _account = await this.optinoGov.accounts(accountAddress);
-          if (_account != null) {
-            console.log("        - _account           : " + j + " " + this.getShortAccountName(accountAddress) +
-              " duration: " + _account.duration +
-              ", end: " + _account.end +
-              ", tokens: " + ethers.utils.formatUnits(_account.balance, 18) +
-              ", votes: " + ethers.utils.formatUnits(_account.votes, 18) +
-              // ", staked: " + new BigNumber(_account.staked.toString()).shiftedBy(-18) +
-              ", delegatedVotes: " + ethers.utils.formatUnits(_account.delegatedVotes, 18) +
-              ", delegatee: " + this.getShortAccountName(_account.delegatee));
-          }
+        console.log("        - accountsLength       : " + accountsLength);
+        console.log("        - ## Account       Duration        End                  Balance                    Votes Delegatee                     Delegated Votes                  Accrued    Term");
+        for (let j = 0; j < accountsLength; j++) {
+          const _a = await this.optinoGov.getAccountByIndex(j);
+          const accruedReward = await tokenContract.accruedReward(_a.tokenOwner);
+          console.log("           " + this.padLeft(j, 2) + " " +
+            this.padRight(this.getShortAccountName(_a.tokenOwner), 20) + " " +
+            this.padLeft(_a.account.duration, 10) + " " +
+            this.padLeft(_a.account.end, 10) + " " +
+            this.padLeft(ethers.utils.formatUnits(_a.account.balance, 18), 24) + " " +
+            this.padLeft(ethers.utils.formatUnits(_a.account.votes, 18), 24) + " " +
+            this.padRight(this.getShortAccountName(_a.account.delegatee), 20) + " " +
+            this.padLeft(ethers.utils.formatUnits(_a.account.delegatedVotes, 18), 24) + " " +
+            this.padLeft(ethers.utils.formatUnits(accruedReward[0], 18), 24) + " " +
+            this.padLeft(accruedReward[1].toString(), 7));
         }
       } else if (symbol == "OGD") {
         const dividendTokensLength = parseInt(await tokenContract.dividendTokensLength());
