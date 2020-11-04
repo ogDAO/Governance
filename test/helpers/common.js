@@ -81,7 +81,7 @@ class Data {
     this.addContract(this.fee0Token, "Fee0Token");
     this.addContract(this.optinoGov, "OptinoGov");
 
-    this.tokenContracts = [ogToken, ogdToken, fee0Token, optinoGov];
+    this.tokenContracts = [optinoGov, ogdToken, ogToken, fee0Token];
     for (let i = 0; i < this.tokenContracts.length; i++) {
       const tokenContract = this.tokenContracts[i];
       if (tokenContract != null) {
@@ -296,30 +296,43 @@ class Data {
         owner = "n/a";
       }
       console.log("        Token " + i + " symbol: '" + symbol + "', name: '" + name + "', decimals: " + decimals + ", totalSupply: " + ethers.utils.formatUnits(totalSupply, decimals) + ", owner: " + this.getShortAccountName(owner) + ", address: " + this.getShortAccountName(tokenContract.address));
-      if (symbol == "OptinoGov" && this.stakingFactory != null) {
-        console.log("        StakingFactory " + this.getShortAccountName(this.stakingFactory.address) + " @ " + this.stakingFactory.address);
-        const [stakingTemplate, ogToken, stakingsLength] = await Promise.all([this.stakingFactory.stakingTemplate(), this.stakingFactory.ogToken(), this.stakingFactory.stakingsLength()]);
-        console.log("        - stakingTemplate        : " + this.getShortAccountName(stakingTemplate));
-        console.log("        - ogToken                : " + this.getShortAccountName(ogToken));
-        console.log("        - stakingsLength         : " + stakingsLength);
-        const Staking = await ethers.getContractFactory("Staking");
-        for (let j = 0; j < stakingsLength; j++) {
-          const stakingAddress = await this.stakingFactory.getStakingByIndex(j);
-          const staking = Staking.attach(stakingAddress[1]);
-          const [stakingInfo, owner, accountsLength, totalSupply, weightedEnd, slashingFactor] = await Promise.all([staking.getStakingInfo(), staking.owner(), staking.accountsLength(), staking.totalSupply(), staking.weightedEnd(), staking.slashingFactor()]);
-          console.log("          - staking " + j + " @ " + this.getShortAccountName(stakingAddress[1]) + ", owner: " + this.getShortAccountName(owner));
-          // console.log("          - dataType      : " + stakingInfo.dataType  .toString());
-          // console.log("          - addresses     : " + JSON.stringify(stakingInfo.addresses.map((x) => { return this.getShortAccountName(x); })));
-          // console.log("          - uints         : " + JSON.stringify(stakingInfo.uints.map((x) => { return x.toString(); })));
-          // console.log("          - strings       : " + JSON.stringify([stakingInfo.string0, stakingInfo.string1, stakingInfo.string2, stakingInfo.string3]));
-          // console.log("          - accountsLength  : " + accountsLength);
-          // console.log("          - totalSupply   : " + new BigNumber(totalSupply.toString()).shiftedBy(-18));
-          // console.log("          - weightedEnd   : " + weightedEnd);
-          // console.log("          - slashingFactor: " + new BigNumber(slashingFactor.toString()).shiftedBy(-16) + "%");
-          // for (let k = 0; k < accountsLength; k++) {
-          //   const stake = await staking.getStakeByIndex(k);
-          //   console.log("            - stake " + k + " owner: " + stake.tokenOwner + ", duration: " + stake.stake_.duration.toString() + ", end: " + stake.stake_.end.toString() + ", index: " + stake.stake_.index.toString() + ", tokens: " + new BigNumber(stake.stake_.balance.toString()).shiftedBy(-18));
-          // }
+      if (symbol == "OptinoGov" && this.optinoGov != null) {
+        // console.log("        OptinoGov " + this.getShortAccountName(this.optinoGov.address) + " @ " + this.optinoGov.address);
+        let [ogToken, ogdToken, maxDuration, rewardsPerSecond, rewardsPerYear, collectRewardForFee, collectRewardForDelay, proposalCost, proposalThreshold] = await Promise.all([this.optinoGov.ogToken(), this.optinoGov.ogdToken(), this.optinoGov.maxDuration(), this.optinoGov.rewardsPerSecond(), this.optinoGov.rewardsPerYear(), this.optinoGov.collectRewardForFee(), this.optinoGov.collectRewardForDelay(), this.optinoGov.proposalCost(), this.optinoGov.proposalThreshold()]);
+        let [quorum, quorumDecayPerSecond, votingDuration, executeDelay, rewardPool, totalVotes] = await Promise.all([this.optinoGov.quorum(), this.optinoGov.quorumDecayPerSecond(), this.optinoGov.votingDuration(), this.optinoGov.executeDelay(), this.optinoGov.rewardPool(), this.optinoGov.totalVotes()]);
+        let [proposalCount /*, stakeInfoLength*/] = await Promise.all([this.optinoGov.proposalCount()/*, this.optinoGov.stakeInfoLength()*/]);
+        console.log("        - ogToken              : " + this.getShortAccountName(ogToken));
+        console.log("        - ogdToken             : " + this.getShortAccountName(ogdToken));
+        let decimals = 18;
+        console.log("        - maxDuration          : " + maxDuration + " seconds = " + maxDuration.div(60 * 60 * 24) + " days");
+        console.log("        - rewardsPerSecond     : " + rewardsPerSecond + " = " + ethers.utils.formatUnits(rewardsPerSecond, 18) + " = " + ethers.utils.formatUnits(rewardsPerSecond.mul(60 * 60 * 24), decimals) + " per day");
+        console.log("        - collectRewardForFee  : " + collectRewardForFee + " = " + ethers.utils.formatUnits(collectRewardForFee, 16) + "%");
+        console.log("        - collectRewardForDelay: " + collectRewardForDelay + " seconds = " + collectRewardForDelay.div(60 * 60 * 24) + " days");
+        console.log("        - proposalCost         : " + proposalCost + " = " + ethers.utils.formatUnits(proposalCost, decimals));
+        console.log("        - proposalThreshold    : " + proposalThreshold + " = " + ethers.utils.formatUnits(proposalThreshold, 16) + "%");
+        console.log("        - quorum               : " + quorum + " = " + ethers.utils.formatUnits(quorum, 16) + "%");
+        console.log("        - quorumDecayPerSecond : " + quorumDecayPerSecond + " = " + ethers.utils.formatUnits(quorumDecayPerSecond.mul(60 * 60 * 24 * 365), 16) + "% per year");
+        console.log("        - votingDuration       : " + votingDuration + " seconds = " + votingDuration.div(60 * 60 * 24) + " days");
+        console.log("        - executeDelay         : " + executeDelay + " seconds = " + executeDelay.div(60 * 60 * 24) + " days");
+        console.log("        - rewardPool           : " + rewardPool + " = " + ethers.utils.formatUnits(rewardPool, decimals));
+        console.log("        - totalVotes           : " + totalVotes + " = " + ethers.utils.formatUnits(totalVotes, decimals));
+        console.log("        - rewardsPerYear       : " + ethers.utils.formatUnits(rewardsPerYear, 16) + "% compounding daily/simple partial end, rewardsPerSecond: " + ethers.utils.formatUnits(rewardsPerYear.div(60*60*24*365), 16) + "%");
+        console.log("        - proposalCount        : " + proposalCount);
+        // console.log("        - stakeInfoLength      : " + stakeInfoLength);
+
+        for (let j = 1; j < this.accounts.length && j < 4; j++) {
+          let accountAddress = this.accounts[j];
+          const _account = await this.optinoGov.accounts(accountAddress);
+          if (_account != null) {
+            console.log("        - _account           : " + j + " " + this.getShortAccountName(accountAddress) +
+              " duration: " + _account.duration +
+              ", end: " + _account.end +
+              ", tokens: " + ethers.utils.formatUnits(_account.balance, 18) +
+              ", votes: " + ethers.utils.formatUnits(_account.votes, 18) +
+              // ", staked: " + new BigNumber(_account.staked.toString()).shiftedBy(-18) +
+              ", delegatedVotes: " + ethers.utils.formatUnits(_account.delegatedVotes, 18) +
+              ", delegatee: " + this.getShortAccountName(_account.delegatee));
+          }
         }
       } else if (symbol == "OGD") {
         const dividendTokensLength = parseInt(await tokenContract.dividendTokensLength());
@@ -366,6 +379,32 @@ class Data {
       }
     }
 
+    if (this.stakingFactory != null) {
+      console.log("        StakingFactory " + this.getShortAccountName(this.stakingFactory.address) + " @ " + this.stakingFactory.address);
+      const [stakingTemplate, ogToken, stakingsLength] = await Promise.all([this.stakingFactory.stakingTemplate(), this.stakingFactory.ogToken(), this.stakingFactory.stakingsLength()]);
+      console.log("        - stakingTemplate        : " + this.getShortAccountName(stakingTemplate));
+      console.log("        - ogToken                : " + this.getShortAccountName(ogToken));
+      console.log("        - stakingsLength         : " + stakingsLength);
+      const Staking = await ethers.getContractFactory("Staking");
+      for (let j = 0; j < stakingsLength; j++) {
+        const stakingAddress = await this.stakingFactory.getStakingByIndex(j);
+        const staking = Staking.attach(stakingAddress[1]);
+        const [stakingInfo, owner, accountsLength, totalSupply, weightedEnd, slashingFactor] = await Promise.all([staking.getStakingInfo(), staking.owner(), staking.accountsLength(), staking.totalSupply(), staking.weightedEnd(), staking.slashingFactor()]);
+        console.log("          - staking " + j + " @ " + this.getShortAccountName(stakingAddress[1]) + ", owner: " + this.getShortAccountName(owner));
+        // console.log("          - dataType      : " + stakingInfo.dataType  .toString());
+        // console.log("          - addresses     : " + JSON.stringify(stakingInfo.addresses.map((x) => { return this.getShortAccountName(x); })));
+        // console.log("          - uints         : " + JSON.stringify(stakingInfo.uints.map((x) => { return x.toString(); })));
+        // console.log("          - strings       : " + JSON.stringify([stakingInfo.string0, stakingInfo.string1, stakingInfo.string2, stakingInfo.string3]));
+        // console.log("          - accountsLength  : " + accountsLength);
+        // console.log("          - totalSupply   : " + new BigNumber(totalSupply.toString()).shiftedBy(-18));
+        // console.log("          - weightedEnd   : " + weightedEnd);
+        // console.log("          - slashingFactor: " + new BigNumber(slashingFactor.toString()).shiftedBy(-16) + "%");
+        // for (let k = 0; k < accountsLength; k++) {
+        //   const stake = await staking.getStakeByIndex(k);
+        //   console.log("            - stake " + k + " owner: " + stake.tokenOwner + ", duration: " + stake.stake_.duration.toString() + ", end: " + stake.stake_.end.toString() + ", index: " + stake.stake_.index.toString() + ", tokens: " + new BigNumber(stake.stake_.balance.toString()).shiftedBy(-18));
+        // }
+      }
+    }
     // if (this.stakingFactory != null) {
     //   console.log("        StakingFactory " + this.getShortAccountName(this.stakingFactory.address) + " @ " + this.stakingFactory.address);
     //   const [stakingTemplate, ogToken, stakingsLength] = await Promise.all([this.stakingFactory.stakingTemplate(), this.stakingFactory.ogToken(), this.stakingFactory.stakingsLength()]);
@@ -393,60 +432,61 @@ class Data {
     //   }
     // }
 
-    if (this.optinoGov != null) {
-      console.log("        OptinoGov " + this.getShortAccountName(this.optinoGov.address) + " @ " + this.optinoGov.address);
-      let [ogToken, ogdToken, maxDuration, rewardsPerSecond, collectRewardForFee, collectRewardForDelay, proposalCost, proposalThreshold] = await Promise.all([this.optinoGov.ogToken(), this.optinoGov.ogdToken(), this.optinoGov.maxDuration(), this.optinoGov.rewardsPerSecond(), this.optinoGov.collectRewardForFee(), this.optinoGov.collectRewardForDelay(), this.optinoGov.proposalCost(), this.optinoGov.proposalThreshold()]);
-      let [quorum, quorumDecayPerSecond, votingDuration, executeDelay, rewardPool, totalVotes] = await Promise.all([this.optinoGov.quorum(), this.optinoGov.quorumDecayPerSecond(), this.optinoGov.votingDuration(), this.optinoGov.executeDelay(), this.optinoGov.rewardPool(), this.optinoGov.totalVotes()]);
-      let [proposalCount /*, stakeInfoLength*/] = await Promise.all([this.optinoGov.proposalCount()/*, this.optinoGov.stakeInfoLength()*/]);
-      console.log("        - ogToken              : " + this.getShortAccountName(ogToken));
-      console.log("        - ogdToken             : " + this.getShortAccountName(ogdToken));
-      let decimals = 18;
-      console.log("        - maxDuration          : " + maxDuration + " seconds = " + maxDuration.div(60 * 60 * 24) + " days");
-      console.log("        - rewardsPerSecond     : " + rewardsPerSecond + " = " + ethers.utils.formatUnits(rewardsPerSecond, 18) + " = " + ethers.utils.formatUnits(rewardsPerSecond.mul(60 * 60 * 24), decimals) + " per day");
-      console.log("        - collectRewardForFee  : " + collectRewardForFee + " = " + ethers.utils.formatUnits(collectRewardForFee, 16) + "%");
-      console.log("        - collectRewardForDelay: " + collectRewardForDelay + " seconds = " + collectRewardForDelay.div(60 * 60 * 24) + " days");
-      console.log("        - proposalCost         : " + proposalCost + " = " + ethers.utils.formatUnits(proposalCost, decimals));
-      console.log("        - proposalThreshold    : " + proposalThreshold + " = " + ethers.utils.formatUnits(proposalThreshold, 16) + "%");
-      console.log("        - quorum               : " + quorum + " = " + ethers.utils.formatUnits(quorum, 16) + "%");
-      console.log("        - quorumDecayPerSecond : " + quorumDecayPerSecond + " = " + ethers.utils.formatUnits(quorumDecayPerSecond.mul(60 * 60 * 24 * 365), 16) + "% per year");
-      console.log("        - votingDuration       : " + votingDuration + " seconds = " + votingDuration.div(60 * 60 * 24) + " days");
-      console.log("        - executeDelay         : " + executeDelay + " seconds = " + executeDelay.div(60 * 60 * 24) + " days");
-      console.log("        - rewardPool           : " + rewardPool + " = " + ethers.utils.formatUnits(rewardPool, decimals));
-      console.log("        - totalVotes           : " + totalVotes + " = " + ethers.utils.formatUnits(totalVotes, decimals));
-      console.log("        - proposalCount        : " + proposalCount);
-      // console.log("        - stakeInfoLength      : " + stakeInfoLength);
-
-      for (let j = 1; j < this.accounts.length && j < 4; j++) {
-        let accountAddress = this.accounts[j];
-        const _account = await this.optinoGov.accounts(accountAddress);
-        if (_account != null) {
-          console.log("        - _account           : " + j + " " + this.getShortAccountName(accountAddress) +
-            " duration: " + _account.duration +
-            ", end: " + _account.end +
-            ", tokens: " + ethers.utils.formatUnits(_account.balance, 18) +
-            ", votes: " + ethers.utils.formatUnits(_account.votes, 18) +
-            // ", staked: " + new BigNumber(_account.staked.toString()).shiftedBy(-18) +
-            ", delegatedVotes: " + ethers.utils.formatUnits(_account.delegatedVotes, 18) +
-            ", delegatee: " + this.getShortAccountName(_account.delegatee));
-        }
-      }
-
-
-      // console.log("        gov.totalVotes=" + contract.totalVotes.call().shift(-18));
-      // var proposalCount = contract.proposalCount.call();
-      // console.log("        gov.proposalCount=" + proposalCount);
-      // for (var proposalId = 1; proposalId <= proposalCount; proposalId++) {
-      //   var proposal = contract.proposals.call(proposalId);
-      //   console.log("        gov.proposals[" + proposalId + "] =" + JSON.stringify(proposal));
-      // }
-      //
-      // var stakeInfoLength = contract.stakeInfoLength.call();
-      // for (var stakeInfo_i = 0; stakeInfo_i < stakeInfoLength; stakeInfo_i++) {
-      //   var stakeInfoKey = contract.stakeInfoIndex.call(stakeInfo_i);
-      //   var stakeInfo = contract.getStakeInfoByKey.call(stakeInfoKey);
-      //   console.log("        gov.getStakeInfoByKey[" + stakeInfoKey + "] =" + JSON.stringify(stakeInfo));
-      // }
-    }
+    // if (this.optinoGov != null) {
+    //   console.log("        OptinoGov " + this.getShortAccountName(this.optinoGov.address) + " @ " + this.optinoGov.address);
+    //   let [ogToken, ogdToken, maxDuration, rewardsPerSecond, rewardsPerYear, collectRewardForFee, collectRewardForDelay, proposalCost, proposalThreshold] = await Promise.all([this.optinoGov.ogToken(), this.optinoGov.ogdToken(), this.optinoGov.maxDuration(), this.optinoGov.rewardsPerSecond(), this.optinoGov.rewardsPerYear(), this.optinoGov.collectRewardForFee(), this.optinoGov.collectRewardForDelay(), this.optinoGov.proposalCost(), this.optinoGov.proposalThreshold()]);
+    //   let [quorum, quorumDecayPerSecond, votingDuration, executeDelay, rewardPool, totalVotes] = await Promise.all([this.optinoGov.quorum(), this.optinoGov.quorumDecayPerSecond(), this.optinoGov.votingDuration(), this.optinoGov.executeDelay(), this.optinoGov.rewardPool(), this.optinoGov.totalVotes()]);
+    //   let [proposalCount /*, stakeInfoLength*/] = await Promise.all([this.optinoGov.proposalCount()/*, this.optinoGov.stakeInfoLength()*/]);
+    //   console.log("        - ogToken              : " + this.getShortAccountName(ogToken));
+    //   console.log("        - ogdToken             : " + this.getShortAccountName(ogdToken));
+    //   let decimals = 18;
+    //   console.log("        - maxDuration          : " + maxDuration + " seconds = " + maxDuration.div(60 * 60 * 24) + " days");
+    //   console.log("        - rewardsPerSecond     : " + rewardsPerSecond + " = " + ethers.utils.formatUnits(rewardsPerSecond, 18) + " = " + ethers.utils.formatUnits(rewardsPerSecond.mul(60 * 60 * 24), decimals) + " per day");
+    //   console.log("        - collectRewardForFee  : " + collectRewardForFee + " = " + ethers.utils.formatUnits(collectRewardForFee, 16) + "%");
+    //   console.log("        - collectRewardForDelay: " + collectRewardForDelay + " seconds = " + collectRewardForDelay.div(60 * 60 * 24) + " days");
+    //   console.log("        - proposalCost         : " + proposalCost + " = " + ethers.utils.formatUnits(proposalCost, decimals));
+    //   console.log("        - proposalThreshold    : " + proposalThreshold + " = " + ethers.utils.formatUnits(proposalThreshold, 16) + "%");
+    //   console.log("        - quorum               : " + quorum + " = " + ethers.utils.formatUnits(quorum, 16) + "%");
+    //   console.log("        - quorumDecayPerSecond : " + quorumDecayPerSecond + " = " + ethers.utils.formatUnits(quorumDecayPerSecond.mul(60 * 60 * 24 * 365), 16) + "% per year");
+    //   console.log("        - votingDuration       : " + votingDuration + " seconds = " + votingDuration.div(60 * 60 * 24) + " days");
+    //   console.log("        - executeDelay         : " + executeDelay + " seconds = " + executeDelay.div(60 * 60 * 24) + " days");
+    //   console.log("        - rewardPool           : " + rewardPool + " = " + ethers.utils.formatUnits(rewardPool, decimals));
+    //   console.log("        - totalVotes           : " + totalVotes + " = " + ethers.utils.formatUnits(totalVotes, decimals));
+    //   console.log("        - rewardsPerYear       : " + ethers.utils.formatUnits(rewardsPerYear, 16) + "% compounding daily/simple partial end, rewardsPerSecond: " + ethers.utils.formatUnits(rewardsPerYear.div(60*60*24*365), 16) + "%");
+    //   console.log("        - proposalCount        : " + proposalCount);
+    //   // console.log("        - stakeInfoLength      : " + stakeInfoLength);
+    //
+    //   for (let j = 1; j < this.accounts.length && j < 4; j++) {
+    //     let accountAddress = this.accounts[j];
+    //     const _account = await this.optinoGov.accounts(accountAddress);
+    //     if (_account != null) {
+    //       console.log("        - _account           : " + j + " " + this.getShortAccountName(accountAddress) +
+    //         " duration: " + _account.duration +
+    //         ", end: " + _account.end +
+    //         ", tokens: " + ethers.utils.formatUnits(_account.balance, 18) +
+    //         ", votes: " + ethers.utils.formatUnits(_account.votes, 18) +
+    //         // ", staked: " + new BigNumber(_account.staked.toString()).shiftedBy(-18) +
+    //         ", delegatedVotes: " + ethers.utils.formatUnits(_account.delegatedVotes, 18) +
+    //         ", delegatee: " + this.getShortAccountName(_account.delegatee));
+    //     }
+    //   }
+    //
+    //
+    //   // console.log("        gov.totalVotes=" + contract.totalVotes.call().shift(-18));
+    //   // var proposalCount = contract.proposalCount.call();
+    //   // console.log("        gov.proposalCount=" + proposalCount);
+    //   // for (var proposalId = 1; proposalId <= proposalCount; proposalId++) {
+    //   //   var proposal = contract.proposals.call(proposalId);
+    //   //   console.log("        gov.proposals[" + proposalId + "] =" + JSON.stringify(proposal));
+    //   // }
+    //   //
+    //   // var stakeInfoLength = contract.stakeInfoLength.call();
+    //   // for (var stakeInfo_i = 0; stakeInfo_i < stakeInfoLength; stakeInfo_i++) {
+    //   //   var stakeInfoKey = contract.stakeInfoIndex.call(stakeInfo_i);
+    //   //   var stakeInfo = contract.getStakeInfoByKey.call(stakeInfoKey);
+    //   //   console.log("        gov.getStakeInfoByKey[" + stakeInfoKey + "] =" + JSON.stringify(stakeInfo));
+    //   // }
+    // }
 
     console.log("        ");
   }

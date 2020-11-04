@@ -7,6 +7,7 @@ import "hardhat/console.sol";
 import "./OGTokenInterface.sol";
 import "./OGDTokenInterface.sol";
 import "./SafeMath.sol";
+import "./InterestUtils.sol";
 
 /// @notice Optino Governance config
 contract OptinoGovConfig {
@@ -28,6 +29,7 @@ contract OptinoGovConfig {
     uint public executeDelay = 10 seconds; // 2 days;
     uint public rewardPool = 1_000_000 * 10**18;
     uint public totalVotes;
+    uint public rewardsPerYear = 365 days * 10**10; // 31.536% compounding daily/simple partial end, or rewardsPerSecond: 0.000001%
 
     event ConfigUpdated(string key, uint value);
 
@@ -78,14 +80,16 @@ contract OptinoGov is ERC20, OptinoGovConfig {
     using SafeMath for uint;
 
     struct Account {
-        uint32 duration;
-        uint32 end;
-        uint32 lastDelegated;
-        uint32 lastVoted;
+        uint64 duration;
+        uint64 end;
+        uint64 lastDelegated;
+        uint64 lastVoted;
+        uint64 index;
+        uint64 rate; // max 18_446744073_709551615 = 1800%
+        address delegatee;
         uint balance;
         uint votes;
         uint delegatedVotes;
-        address delegatee;
     }
     struct Proposal {
         uint start;
@@ -105,6 +109,7 @@ contract OptinoGov is ERC20, OptinoGovConfig {
     string _name = "Optino Governance";
     uint _totalSupply;
     mapping(address => Account) public accounts;
+    address[] public accountsIndex;
     mapping(address => mapping(address => uint)) allowed;
 
     uint public proposalCount;
@@ -168,13 +173,12 @@ contract OptinoGov is ERC20, OptinoGovConfig {
             accounts[user.delegatee].delegatedVotes = accounts[user.delegatee].delegatedVotes.sub(user.votes);
         }
         user.delegatee = delegatee;
-        user.lastDelegated = uint32(block.timestamp);
+        user.lastDelegated = uint64(block.timestamp);
         if (user.delegatee != address(0)) {
             accounts[user.delegatee].delegatedVotes = accounts[user.delegatee].delegatedVotes.add(user.votes);
         }
         emit DelegateUpdated(oldDelegatee, delegatee, user.votes);
     }
-
 
     function updateStatsBefore(Account memory account, address tokenOwner) internal {
         // weightedEndNumerator = weightedEndNumerator.sub(uint(account.end).mul(tokenOwner == address(0) ? 0 : account.balance));
@@ -187,6 +191,20 @@ contract OptinoGov is ERC20, OptinoGovConfig {
         // uint weightedDuration = computeWeight(account);
         // console.log("        > updateStatsAfter(%s).weightedDuration: ", tokenOwner, weightedDuration);
         // weightedDurationDenominator = weightedDurationDenominator.add(weightedDuration);
+    }
+
+    function accruedReward(address tokenOwner) public view returns (uint _reward, uint _term) {
+        return _calculateReward(accounts[tokenOwner], tokenOwner, accounts[tokenOwner].balance);
+    }
+    function _calculateReward(Account memory account, address /*tokenOwner*/, uint tokens) internal view returns (uint _reward, uint _term) {
+        // console.log("        >     _calculateReward(tokenOwner %s, tokens %s)", tokenOwner, tokens);
+        uint from = account.end == 0 ? block.timestamp : uint(account.end).sub(uint(account.duration));
+        uint futureValue = InterestUtils.futureValue(tokens, from, block.timestamp, rewardsPerYear, 1 days);
+        // console.log("        > _calculateReward(%s) - tokens %s, rate %s", tokenOwner, tokens, rewardsPerYear);
+        // console.log("          from %s, to %s, futureValue %s", from, block.timestamp, futureValue);
+        _reward = futureValue.sub(tokens);
+        _term = block.timestamp.sub(from);
+        // console.log("          _reward %s", _reward);
     }
 
     function _changeCommitment(address tokenOwner, uint depositTokens, uint withdrawTokens, bool withdrawRewards, uint duration) internal {
@@ -204,91 +222,82 @@ contract OptinoGov is ERC20, OptinoGovConfig {
             require(withdrawTokens <= account.balance, "Unsufficient staked balance");
         }
         updateStatsBefore(account, tokenOwner);
-        // (uint reward, /*uint term*/) = _calculateReward(account, tokenOwner, account.balance);
+        (uint reward, /*uint term*/) = _calculateReward(account, tokenOwner, account.balance);
         // uint rewardWithSlashingFactor;
-        // // console.log("        >     reward %s", reward);
-        // if (withdrawRewards) {
-        //     if (reward > 0) {
-        //         rewardWithSlashingFactor = reward.sub(reward.mul(slashingFactor).div(10**18));
-        //         StakingFactoryInterface(owner).mintOGTokens(tokenOwner, rewardWithSlashingFactor);
-        //     }
-        // } else {
-        //     if (reward > 0) {
-        //         StakingFactoryInterface(owner).mintOGTokens(address(this), reward);
-        //         account.balance = account.balance.add(reward);
-        //         _totalSupply = _totalSupply.add(reward);
-        //         emit Transfer(address(0), tokenOwner, reward);
-        //     }
-        // }
-        // if (depositTokens == 0 && withdrawTokens == 0 || depositTokens > 0) {
-        //     if (account.end == 0) {
-        //         accounts[tokenOwner] = Account(uint32(duration), uint32(block.timestamp.add(duration)), uint32(accountsIndex.length), uint32(rewardsPerYear), depositTokens);
-        //         account = accounts[tokenOwner];
-        //         accountsIndex.push(tokenOwner);
-        //         emit Staked(tokenOwner, depositTokens, duration, account.end);
-        //     } else {
-        //         require(block.timestamp + duration >= account.end, "Cannot shorten duration");
-        //         account.duration = uint32(duration);
-        //         account.end = uint32(block.timestamp.add(duration));
-        //         account.balance = account.balance.add(depositTokens);
-        //     }
-        //     if (depositTokens > 0) {
-        //         _totalSupply = _totalSupply.add(depositTokens);
-        //         emit Transfer(address(0), tokenOwner, depositTokens);
-        //     }
-        // }
-        // if (withdrawTokens > 0) {
-        //     _totalSupply = _totalSupply.sub(withdrawTokens);
-        //     account.balance = account.balance.sub(withdrawTokens);
-        //     if (account.balance == 0) {
-        //         uint removedIndex = uint(account.index);
-        //         uint lastIndex = accountsIndex.length - 1;
-        //         address lastStakeAddress = accountsIndex[lastIndex];
-        //         accountsIndex[removedIndex] = lastStakeAddress;
-        //         accounts[lastStakeAddress].index = uint32(removedIndex);
-        //         delete accountsIndex[lastIndex];
-        //         if (accountsIndex.length > 0) {
-        //             accountsIndex.pop();
-        //         }
-        //     // } else {
-        //         // _totalSupply = _totalSupply.add(account.balance);
-        //     }
-        //     // updateStatsAfter(account, tokenOwner);
-        //     uint tokensWithSlashingFactor = withdrawTokens.sub(withdrawTokens.mul(slashingFactor).div(10**18));
-        //     require(ogToken.transfer(tokenOwner, tokensWithSlashingFactor), "OG transfer failed");
-        //     // uint rewardWithSlashingFactor;
-        //     // if (reward > 0) {
-        //     //     rewardWithSlashingFactor = reward.sub(reward.mul(slashingFactor).div(10**18));
-        //     //     StakingFactoryInterface(owner).mintOGTokens(tokenOwner, rewardWithSlashingFactor);
-        //     // }
+        console.log("        >     reward %s", reward);
+        if (withdrawRewards) {
+            if (reward > 0) {
+                require(ogToken.mint(tokenOwner, reward), "reward OG mint failed");
+            }
+        } else {
+            if (reward > 0) {
+                require(ogToken.mint(address(this), reward), "reward OG mint failed");
+                account.balance = account.balance.add(reward);
+                _totalSupply = _totalSupply.add(reward);
+                emit Transfer(address(0), tokenOwner, reward);
+            }
+        }
+        if (depositTokens == 0 && withdrawTokens == 0 || depositTokens > 0) {
+            if (account.end == 0) {
+                accounts[tokenOwner] = Account(uint64(duration), uint64(block.timestamp.add(duration)), uint64(0), uint64(0), uint64(accountsIndex.length), uint64(rewardsPerYear), address(0), depositTokens, 0, 0);
+                account = accounts[tokenOwner];
+                accountsIndex.push(tokenOwner);
+                emit Committed(tokenOwner, depositTokens, account.balance, account.duration, account.end, account.delegatee, account.votes, rewardPool, totalVotes);
+            } else {
+                require(block.timestamp + duration >= account.end, "Cannot shorten duration");
+                account.duration = uint64(duration);
+                account.end = uint64(block.timestamp.add(duration));
+                account.balance = account.balance.add(depositTokens);
+            }
+            if (depositTokens > 0) {
+                _totalSupply = _totalSupply.add(depositTokens);
+                emit Transfer(address(0), tokenOwner, depositTokens);
+            }
+        }
+        if (withdrawTokens > 0) {
+            _totalSupply = _totalSupply.sub(withdrawTokens);
+            account.balance = account.balance.sub(withdrawTokens);
+            if (account.balance == 0) {
+                uint removedIndex = uint(account.index);
+                uint lastIndex = accountsIndex.length - 1;
+                address lastAccountAddress = accountsIndex[lastIndex];
+                accountsIndex[removedIndex] = lastAccountAddress;
+                accounts[lastAccountAddress].index = uint64(removedIndex);
+                delete accountsIndex[lastIndex];
+                delete accounts[tokenOwner];
+                if (accountsIndex.length > 0) {
+                    accountsIndex.pop();
+                }
+            }
+            require(ogToken.transfer(tokenOwner, withdrawTokens), "OG transfer failed");
         //     emit Unstaked(msg.sender, withdrawTokens, reward, tokensWithSlashingFactor, rewardWithSlashingFactor);
-        // }
+        }
         updateStatsAfter(account, tokenOwner);
     }
     function commit(uint tokens, uint duration) public {
-        // console.log("        > %s -> stake(tokens %s, duration %s)", msg.sender, tokens, duration);
+        console.log("        > %s -> commit(tokens %s, duration %s)", msg.sender, tokens, duration);
         require(tokens > 0, "tokens must be > 0");
         require(duration > 0, "duration must be > 0");
         require(ogToken.transferFrom(msg.sender, address(this), tokens), "OG transferFrom failed");
         _changeCommitment(msg.sender, tokens, 0, false, duration);
     }
     function recommit(uint duration) public {
-        // console.log("        > %s -> restake(duration %s)", msg.sender, duration);
+        console.log("        > %s -> recommit(duration %s)", msg.sender, duration);
         require(duration > 0, "duration must be > 0");
-        require(accounts[msg.sender].balance > 0, "To balance to recommit");
+        require(accounts[msg.sender].balance > 0, "No balance to recommit");
         _changeCommitment(msg.sender, 0, 0, false, duration);
     }
     function uncommit(uint tokens) public {
-        // console.log("        > %s -> unstake(tokens %s)", msg.sender, tokens);
+        console.log("        > %s -> uncommit(tokens %s)", msg.sender, tokens);
         require(tokens > 0, "tokens must be > 0");
-        require(accounts[msg.sender].balance > 0, "To balance to uncommit");
-        _changeCommitment(msg.sender, 0, tokens, tokens == ogToken.balanceOf(msg.sender), 0);
+        require(accounts[msg.sender].balance > 0, "No balance to uncommit");
+        _changeCommitment(msg.sender, 0, tokens, tokens == accounts[msg.sender].balance, 0);
         emit Transfer(msg.sender, address(0), tokens);
     }
     function uncommitAll() public {
         uint tokens = accounts[msg.sender].balance;
-        // console.log("        > %s -> unstakeAll(tokens %s)", msg.sender, tokens);
-        require(tokens > 0, "To balance to uncommit");
+        console.log("        > %s -> uncommitAll(tokens %s)", msg.sender, tokens);
+        require(tokens > 0, "No balance to uncommit");
         _changeCommitment(msg.sender, 0, tokens, true, 0);
         emit Transfer(msg.sender, address(0), tokens);
     }
@@ -314,8 +323,8 @@ contract OptinoGov is ERC20, OptinoGovConfig {
         }
         require(ogToken.transferFrom(msg.sender, address(this), tokens), "OG transferFrom failed");
         user.balance = user.balance.add(tokens);
-        user.duration = uint32(duration);
-        user.end = uint32(block.timestamp.add(duration));
+        user.duration = uint64(duration);
+        user.end = uint64(block.timestamp.add(duration));
         user.votes = user.balance.mul(duration).div(SECONDS_PER_YEAR);
         totalVotes = totalVotes.sub(oldUserVotes).add(user.votes);
         if (user.delegatee != address(0)) {
@@ -356,20 +365,20 @@ contract OptinoGov is ERC20, OptinoGovConfig {
             if (commitRewards) {
                 user.balance = user.balance.add(reward);
                 if (user.end < block.timestamp) {
-                    user.end = uint32(block.timestamp);
+                    user.end = uint64(block.timestamp);
                 }
                 if (duration > 0) {
                     require(duration <= maxDuration, "duration too long");
-                    user.duration = uint32(duration);
-                    user.end = uint32(block.timestamp.add(duration));
+                    user.duration = uint64(duration);
+                    user.end = uint64(block.timestamp.add(duration));
                 } else {
-                    user.duration = uint32(uint(user.end).sub(block.timestamp));
+                    user.duration = uint64(uint(user.end).sub(block.timestamp));
                 }
                 user.votes = user.balance.mul(uint(user.duration)).div(SECONDS_PER_YEAR);
                 require(ogToken.mint(address(this), reward), "OG mint failed");
                 require(ogdToken.mint(msg.sender, reward), "OGD mint failed");
             } else {
-                user.duration = uint(user.end) <= block.timestamp ? 0 : uint32(uint(user.end).sub(block.timestamp));
+                user.duration = uint(user.end) <= block.timestamp ? 0 : uint64(uint(user.end).sub(block.timestamp));
                 user.votes = user.balance.mul(uint(user.duration)).div(SECONDS_PER_YEAR);
                 require(ogToken.mint(tokenOwner, reward), "OG mint failed");
             }
@@ -407,7 +416,7 @@ contract OptinoGov is ERC20, OptinoGovConfig {
             user.votes = 0;
         } else {
             // NOTE Rolling over remaining balance for previous duration
-            user.end = uint32(block.timestamp.add(uint(user.duration)));
+            user.end = uint64(block.timestamp.add(uint(user.duration)));
             user.votes = user.balance.mul(uint(user.duration)).div(SECONDS_PER_YEAR);
             totalVotes = totalVotes.add(user.votes);
             if (user.delegatee != address(0)) {
@@ -468,7 +477,7 @@ contract OptinoGov is ERC20, OptinoGovConfig {
         }
         proposals[oip].voted[msg.sender] = true;
 
-        accounts[msg.sender].lastVoted = uint32(block.timestamp);
+        accounts[msg.sender].lastVoted = uint64(block.timestamp);
         emit Voted(msg.sender, oip, voteFor, proposals[oip].forVotes, proposals[oip].againstVotes);
     }
 

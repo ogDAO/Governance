@@ -40,8 +40,8 @@ contract Staking is ERC20, Owned {
     uint8 constant DASH = 45;
     uint8 constant ZERO = 48;
     uint constant MAXSTAKINGINFOSTRINGLENGTH = 8;
-    uint constant SECONDS_PER_DAY = 1 days;
-    uint constant SECONDS_PER_YEAR = 365 days;
+    // uint constant SECONDS_PER_DAY = 1 days;
+    // uint constant SECONDS_PER_YEAR = 365 days;
 
     uint public id;
     OGTokenInterface public ogToken;
@@ -71,7 +71,7 @@ contract Staking is ERC20, Owned {
         ogToken = _ogToken;
         stakingInfo = StakingInfo(dataType, addresses, uints, strings[0], strings[1], strings[2], strings[3]);
         // rewardsPerYear = 15 * 10**16; // 15%
-        rewardsPerYear = SECONDS_PER_YEAR * 10**10; // 15%
+        rewardsPerYear = 365 days * 10**10; // 31.536% compounding daily/simple partial end, or rewardsPerSecond: 0.000001%
     }
 
     function symbol() override external view returns (string memory _symbol) {
@@ -162,7 +162,7 @@ contract Staking is ERC20, Owned {
     }
 
     function computeWeight(Account memory account) internal pure returns (uint _weight) {
-        _weight = account.balance.mul(account.duration).div(SECONDS_PER_YEAR);
+        _weight = account.balance.mul(account.duration).div(365 days);
     }
     function updateStatsBefore(Account memory account, address tokenOwner) internal {
         weightedEndNumerator = weightedEndNumerator.sub(uint(account.end).mul(tokenOwner == address(0) ? 0 : account.balance));
@@ -207,7 +207,7 @@ contract Staking is ERC20, Owned {
     function _calculateReward(Account memory account, address /*tokenOwner*/, uint tokens) internal view returns (uint _reward, uint _term) {
         // console.log("        >     _calculateReward(tokenOwner %s, tokens %s)", tokenOwner, tokens);
         uint from = account.end == 0 ? block.timestamp : uint(account.end).sub(uint(account.duration));
-        uint futureValue = InterestUtils.futureValue(tokens, from, block.timestamp, rewardsPerYear, SECONDS_PER_DAY);
+        uint futureValue = InterestUtils.futureValue(tokens, from, block.timestamp, rewardsPerYear, 1 days);
         // console.log("        > _calculateReward(%s) - tokens %s, rate %s", tokenOwner, tokens, rewardsPerYear);
         // console.log("          from %s, to %s, futureValue %s", from, block.timestamp, futureValue);
         _reward = futureValue.sub(tokens);
@@ -270,10 +270,11 @@ contract Staking is ERC20, Owned {
             if (account.balance == 0) {
                 uint removedIndex = uint(account.index);
                 uint lastIndex = accountsIndex.length - 1;
-                address lastStakeAddress = accountsIndex[lastIndex];
-                accountsIndex[removedIndex] = lastStakeAddress;
-                accounts[lastStakeAddress].index = uint64(removedIndex);
+                address lastAccountAddress = accountsIndex[lastIndex];
+                accountsIndex[removedIndex] = lastAccountAddress;
+                accounts[lastAccountAddress].index = uint64(removedIndex);
                 delete accountsIndex[lastIndex];
+                delete accounts[tokenOwner];
                 if (accountsIndex.length > 0) {
                     accountsIndex.pop();
                 }
@@ -298,20 +299,20 @@ contract Staking is ERC20, Owned {
     }
     function restake(uint duration) public {
         // console.log("        > %s -> restake(duration %s)", msg.sender, duration);
-        require(accounts[msg.sender].balance > 0, "To balance to restake");
+        require(accounts[msg.sender].balance > 0, "No balance to restake");
         _changeStake(msg.sender, 0, 0, false, duration);
     }
     function unstake(uint tokens) public {
         // console.log("        > %s -> unstake(tokens %s)", msg.sender, tokens);
         require(tokens > 0, "tokens must be > 0");
-        require(accounts[msg.sender].balance > 0, "To balance to unstake");
-        _changeStake(msg.sender, 0, tokens, tokens == ogToken.balanceOf(msg.sender), 0);
+        require(accounts[msg.sender].balance > 0, "No balance to unstake");
+        _changeStake(msg.sender, 0, tokens, tokens == accounts[msg.sender].balance, 0);
         emit Transfer(msg.sender, address(0), tokens);
     }
     function unstakeAll() public {
         uint tokens = accounts[msg.sender].balance;
         // console.log("        > %s -> unstakeAll(tokens %s)", msg.sender, tokens);
-        require(tokens > 0, "To balance to unstake");
+        require(tokens > 0, "No balance to unstake");
         _changeStake(msg.sender, 0, tokens, true, 0);
         emit Transfer(msg.sender, address(0), tokens);
     }

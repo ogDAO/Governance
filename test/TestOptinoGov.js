@@ -23,7 +23,7 @@ describe("TestOptinoGov", function() {
     const setup1a = [];
     setup1a.push(OGToken.deploy("OG", "Optino Governance", 18, data.owner, ethers.utils.parseUnits("40000", 18)));
     setup1a.push(OGDToken.deploy("OGD", "Optino Governance Dividend", 18, data.owner, ethers.utils.parseUnits("0", 18)));
-    setup1a.push(TestToken.deploy("FEE0", "Fee0", 18, data.owner, ethers.utils.parseUnits("1000", 18)));
+    setup1a.push(TestToken.deploy("FEE0", "Fee0", 18, data.owner, ethers.utils.parseUnits("100", 18)));
     const [ogToken, ogdToken, fee0Token] = await Promise.all(setup1a);
     const setup1b = [];
     setup1b.push(OptinoGov.deploy(ogToken.address, ogdToken.address));
@@ -260,14 +260,28 @@ describe("TestOptinoGov", function() {
 
   describe.only("TestOptinoGov - Workflow #2 - Developing", function() {
     it("Workflow #2 - Developing", async function() {
-      console.log("        --- Test 1 - User{1..3} commit OGTokens for {1, 1, 1} seconds duration ---");
-      const tokensToCommit = ethers.utils.parseUnits("1000", 18);
+      console.log("        --- Test 1 - User{1..3} commit 1,000 OGTokens for {1, 1, 1} seconds duration ---");
+      let duration = 2;
+      let tokensToCommit = ethers.utils.parseUnits("1000", 18);
       const test1 = [];
-      test1.push(data.optinoGov.connect(data.user1Signer).commit(tokensToCommit, 1));
+      test1.push(data.optinoGov.connect(data.user1Signer).commit(tokensToCommit, duration));
       // test1.push(data.optinoGov.connect(data.user2Signer).commit(tokensToCommit, 1));
       // test1.push(data.optinoGov.connect(data.user3Signer).commit(tokensToCommit, 1));
       const [commit1/*, commit2, commit3*/] = await Promise.all(test1);
       await data.printTxData("commit1", commit1);
+      // await data.printTxData("commit2", commit2);
+      // await data.printTxData("commit3", commit3);
+      await data.printBalances();
+
+      console.log("        --- Test 2 - User{1..3} commit OGTokens for {1, 1, 1} seconds duration ---");
+      duration = 3;
+      tokensToCommit = ethers.utils.parseUnits("1000", 18);
+      const test2 = [];
+      test2.push(data.optinoGov.connect(data.user1Signer).commit(tokensToCommit, duration));
+      // test2.push(data.optinoGov.connect(data.user2Signer).commit(tokensToCommit, 1));
+      // test2.push(data.optinoGov.connect(data.user3Signer).commit(tokensToCommit, 1));
+      const [commit4/*, commit2, commit3*/] = await Promise.all(test2);
+      await data.printTxData("commit4", commit4);
       // await data.printTxData("commit2", commit2);
       // await data.printTxData("commit3", commit3);
       await data.printBalances();
@@ -315,18 +329,19 @@ describe("TestOptinoGov", function() {
       // await data.printTxData("withdrawDividends3", withdrawDividends3);
       // await data.printBalances();
 
-      // console.log("        --- Test 4 - User{1..3} uncommit OGTokens ---");
-      // const tokensToUncommit = ethers.utils.parseUnits("100", 18);
-      // const test4 = [];
-      // // data.pause("Waiting", 5);
-      // test4.push(data.optinoGov.connect(data.user1Signer).uncommit(tokensToUncommit));
+      console.log("        --- Test 4 - User{1..3} uncommit OGTokens ---");
+      // const tokensToUncommit = ethers.utils.parseUnits("2000", 18);
+      const tokensToUncommit = await data.optinoGov.balanceOf(data.user1);
+      const test4 = [];
+      data.pause("Waiting", duration + 1);
+      test4.push(data.optinoGov.connect(data.user1Signer).uncommit(tokensToUncommit));
       // test4.push(data.optinoGov.connect(data.user2Signer).uncommit(tokensToUncommit));
       // test4.push(data.optinoGov.connect(data.user3Signer).uncommit(tokensToUncommit));
-      // const [uncommit1, uncommit2, uncommit3] = await Promise.all(test4);
-      // await data.printTxData("uncommit1", uncommit1);
+      const [uncommit1/*, uncommit2, uncommit3*/] = await Promise.all(test4);
+      await data.printTxData("uncommit1", uncommit1);
       // await data.printTxData("uncommit2", uncommit2);
       // await data.printTxData("uncommit3", uncommit3);
-      // await data.printBalances();
+      await data.printBalances();
 
       console.log("        --- Test Completed ---");
       console.log("");
