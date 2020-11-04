@@ -319,7 +319,7 @@ class Data {
         console.log("        - rewardsPerYear       : " + ethers.utils.formatUnits(rewardsPerYear, 16) + "% compounding daily/simple partial end, rewardsPerSecond: " + ethers.utils.formatUnits(rewardsPerYear.div(60*60*24*365), 16) + "%");
         console.log("        - proposalCount        : " + proposalCount);
         // console.log("        - stakeInfoLength      : " + stakeInfoLength);
-        console.log("        - accountsLength       : " + accountsLength);
+        // console.log("        - accountsLength       : " + accountsLength);
         console.log("        - ## Account              Duration        End                  Balance                    Votes Delegatee                     Delegated Votes                  Accrued    Term");
         for (let j = 0; j < accountsLength; j++) {
           const _a = await this.optinoGov.getAccountByIndex(j);
@@ -337,16 +337,17 @@ class Data {
         }
       } else if (symbol == "OGD") {
         const dividendTokensLength = parseInt(await tokenContract.dividendTokensLength());
-        console.log("        - dividendTokensLength : " + dividendTokensLength);
+        // console.log("        - dividendTokensLength : " + dividendTokensLength);
+        console.log("        - # Token            Enabled              Unclaimed");
         let dividendHeader = "";
         for (let j = 0; j < dividendTokensLength; j++) {
           const dividendToken = await tokenContract.getDividendTokenByIndex(j);
           const unclaimedDividends = await tokenContract.unclaimedDividends(dividendToken[0]);
-          dividendHeader = dividendHeader + "                 existing + new " + this.padLeft(this.getShortAccountName(dividendToken[0]), 18);
-          console.log("        - dividendToken        : " + j + " " + this.getShortAccountName(dividendToken[0]) + ", enabled: " + dividendToken[1].toString() + ", unclaimedDividends: " + ethers.utils.formatUnits(unclaimedDividends, 18));
+          dividendHeader = dividendHeader + this.padLeft("Owing " + this.getShortAccountName(dividendToken[0]), 24) + " " + this.padLeft("New " + this.getShortAccountName(dividendToken[0]), 24) + " ";
+          console.log("          " + this.padLeft(j, 2) + " " + this.padRight(this.getShortAccountName(dividendToken[0]), 18) + "  " + this.padRight(dividendToken[1].toString(), 6) + " " + ethers.utils.formatUnits(unclaimedDividends, 18));
         }
         if (dividendTokensLength > 0) {
-          console.log("        - ## Account          " + dividendHeader);
+          console.log("        - # Account            " + dividendHeader);
           for (let j = 1; j < this.accounts.length; j++) {
             let account = this.accounts[j];
             let accountName = this.getShortAccountName(account);

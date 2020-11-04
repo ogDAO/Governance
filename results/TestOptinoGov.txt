@@ -10,7 +10,7 @@ $ npx hardhat test test/TestOptinoGov.js > results/TestOptinoGov.txt
         + OGDToken.Transfer(from: ETH|null:0x0000, to: Owner:0xa00A, tokens: 0.0)
         fee0Token.deployTransaction - gasUsed: 823708, fee: 0.06589664, feeUsd: 25.4143571488, @ 80.0 gwei & 385.67 ETH/USD, 0x7aca68e5f8e3940ffad4aba0bbc1364bfc432c33ba379082ad31658eb2662342
         + Fee0Token.Transfer(from: ETH|null:0x0000, to: Owner:0xa00A, tokens: 100.0)
-        optinoGov.deployTransaction - gasUsed: 4894210, fee: 0.3915368, feeUsd: 151.003997656, @ 80.0 gwei & 385.67 ETH/USD, 0x0795a3bbbe1646ed3e2a1dcb2a3b2f172c43993b92c2b235c69298f6bd213cc2
+        optinoGov.deployTransaction - gasUsed: 4941098, fee: 0.39528784, feeUsd: 152.4506612528, @ 80.0 gwei & 385.67 ETH/USD, 0xe0183be97f8747a9ef75a67241669c1d1e6a9ddb928d234c4a8be50543ad3405
         --- Setup 2 - OGDToken.addDividendToken([ETH, FEE0]), OGDToken mint(...) permissioning ---
         addDividendToken0 - gasUsed: 114431, fee: 0.00915448, feeUsd: 3.5306083016, @ 80.0 gwei & 385.67 ETH/USD, 0xa7f10ca590c58a04f90a0196f061498f8bb4b9a23b5112ff600d8a8b47808c87
         + OGDToken.DividendTokenAdded(token: ETH|null:0x0000, enabled: true)
@@ -45,7 +45,7 @@ $ npx hardhat test test/TestOptinoGov.js > results/TestOptinoGov.txt
          # Account                                             EtherBalanceChange                      OptinoGov                            OGD Blocks 0 to 18
                                                                                                               OG                           FEE0
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E                 -0.78553768                            0.0                            0.0 Owner:0xa00A
+         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E                 -0.78928872                            0.0                            0.0 Owner:0xa00A
                                                                                                          10000.0                          100.0
          1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433                  -0.0035192                            0.0                            0.0 User1:0xa11A
                                                                                                          10000.0                            0.0
@@ -85,13 +85,12 @@ $ npx hardhat test test/TestOptinoGov.js > results/TestOptinoGov.txt
         - totalVotes           : 0 = 0.0
         - rewardsPerYear       : 31.536% compounding daily/simple partial end, rewardsPerSecond: 0.000001%
         - proposalCount        : 0
-        - accountsLength       : 0
         - ## Account              Duration        End                  Balance                    Votes Delegatee                     Delegated Votes                  Accrued    Term
         Token 1 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 0.0, owner: OptinoGov:0xBa1F, address: OGDToken:0x0f4e
-        - dividendTokensLength : 2
-        - dividendToken        : 0 ETH|null:0x0000, enabled: true, unclaimedDividends: 0.0
-        - dividendToken        : 1 Fee0Token:0x6eaC, enabled: true, unclaimedDividends: 0.0
-        - ## Account                           existing + new    ETH|null:0x0000                 existing + new   Fee0Token:0x6eaC
+        - # Token            Enabled              Unclaimed
+          0 ETH|null:0x0000     true   0.0
+          1 Fee0Token:0x6eaC    true   0.0
+        - # Account               Owing ETH|null:0x0000      New ETH|null:0x0000   Owing Fee0Token:0x6eaC     New Fee0Token:0x6eaC 
           1 User1:0xa11A                            0.0                      0.0                      0.0                      0.0 
           2 User2:0xa22A                            0.0                      0.0                      0.0                      0.0 
           3 User3:0xa33a                            0.0                      0.0                      0.0                      0.0 
@@ -115,23 +114,23 @@ $ npx hardhat test test/TestOptinoGov.js > results/TestOptinoGov.txt
         commit1 - gasUsed: 358837, fee: 0.02870696, feeUsd: 11.0714132632, @ 80.0 gwei & 385.67 ETH/USD, 0xbf518777538a96faa1f75d641e3a58df7eca632e8d1dd59acb27c37f6d8e5c60
         + OGToken.Transfer(from: User1:0xa11A, to: OptinoGov:0xBa1F, tokens: 1000.0)
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User1:0xa11A, tokens: 1000.0)
-        + OptinoGov.Committed(user: User1:0xa11A, tokens: 1000.0, balance: 1000.0, duration: 5, end: 1604471814, delegatee: ETH|null:0x0000, votes: 0.0, rewardPool: 1000000.0, totalVotes: 0.0)
+        + OptinoGov.Committed(user: User1:0xa11A, tokens: 1000.0, balance: 1000.0, duration: 5, end: 1604474856, delegatee: ETH|null:0x0000, votes: 0.0, rewardPool: 1000000.0, totalVotes: 0.0)
         + OptinoGov.Transfer(from: ETH|null:0x0000, to: User1:0xa11A, tokens: 1000.0)
         commit2 - gasUsed: 268837, fee: 0.02150696, feeUsd: 8.2945892632, @ 80.0 gwei & 385.67 ETH/USD, 0x0a98d88946194d3ebc502894252c8ecd2434591555d57d12e311667a3a2229bd
         + OGToken.Transfer(from: User2:0xa22A, to: OptinoGov:0xBa1F, tokens: 1000.0)
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User2:0xa22A, tokens: 1000.0)
-        + OptinoGov.Committed(user: User2:0xa22A, tokens: 1000.0, balance: 1000.0, duration: 50, end: 1604471860, delegatee: ETH|null:0x0000, votes: 0.0, rewardPool: 1000000.0, totalVotes: 50.0)
+        + OptinoGov.Committed(user: User2:0xa22A, tokens: 1000.0, balance: 1000.0, duration: 50, end: 1604474902, delegatee: ETH|null:0x0000, votes: 0.0, rewardPool: 1000000.0, totalVotes: 50.0)
         + OptinoGov.Transfer(from: ETH|null:0x0000, to: User2:0xa22A, tokens: 1000.0)
         commit3 - gasUsed: 268849, fee: 0.02150792, feeUsd: 8.2949595064, @ 80.0 gwei & 385.67 ETH/USD, 0x9e1c8a84129d039fc161a7f3f06dcf113ab72cb26d071a4c5098e3b86cfa5046
         + OGToken.Transfer(from: User3:0xa33a, to: OptinoGov:0xBa1F, tokens: 1000.0)
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User3:0xa33a, tokens: 1000.0)
-        + OptinoGov.Committed(user: User3:0xa33a, tokens: 1000.0, balance: 1000.0, duration: 500, end: 1604472311, delegatee: ETH|null:0x0000, votes: 0.0, rewardPool: 1000000.0, totalVotes: 550.0)
+        + OptinoGov.Committed(user: User3:0xa33a, tokens: 1000.0, balance: 1000.0, duration: 500, end: 1604475353, delegatee: ETH|null:0x0000, votes: 0.0, rewardPool: 1000000.0, totalVotes: 550.0)
         + OptinoGov.Transfer(from: ETH|null:0x0000, to: User3:0xa33a, tokens: 1000.0)
         
          # Account                                             EtherBalanceChange                      OptinoGov                            OGD Blocks 0 to 21
                                                                                                               OG                           FEE0
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E                 -0.78553768                            0.0                            0.0 Owner:0xa00A
+         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E                 -0.78928872                            0.0                            0.0 Owner:0xa00A
                                                                                                          10000.0                          100.0
          1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433                 -0.03222616                         1000.0                         1000.0 User1:0xa11A
                                                                                                           9000.0                            0.0
@@ -171,16 +170,15 @@ $ npx hardhat test test/TestOptinoGov.js > results/TestOptinoGov.txt
         - totalVotes           : 5550000000000000000000 = 5550.0
         - rewardsPerYear       : 31.536% compounding daily/simple partial end, rewardsPerSecond: 0.000001%
         - proposalCount        : 0
-        - accountsLength       : 3
         - ## Account              Duration        End                  Balance                    Votes Delegatee                     Delegated Votes                  Accrued    Term
-           0 User1:0xa11A                5 1604471814                   1000.0                     50.0 ETH|null:0x0000                           0.0                  0.00002       2
-           1 User2:0xa22A               50 1604471860                   1000.0                    500.0 ETH|null:0x0000                           0.0                  0.00001       1
-           2 User3:0xa33a              500 1604472311                   1000.0                   5000.0 ETH|null:0x0000                           0.0                      0.0       0
+           0 User1:0xa11A                5 1604474856                   1000.0                     50.0 ETH|null:0x0000                           0.0                  0.00002       2
+           1 User2:0xa22A               50 1604474902                   1000.0                    500.0 ETH|null:0x0000                           0.0                  0.00001       1
+           2 User3:0xa33a              500 1604475353                   1000.0                   5000.0 ETH|null:0x0000                           0.0                      0.0       0
         Token 1 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 3000.0, owner: OptinoGov:0xBa1F, address: OGDToken:0x0f4e
-        - dividendTokensLength : 2
-        - dividendToken        : 0 ETH|null:0x0000, enabled: true, unclaimedDividends: 0.0
-        - dividendToken        : 1 Fee0Token:0x6eaC, enabled: true, unclaimedDividends: 0.0
-        - ## Account                           existing + new    ETH|null:0x0000                 existing + new   Fee0Token:0x6eaC
+        - # Token            Enabled              Unclaimed
+          0 ETH|null:0x0000     true   0.0
+          1 Fee0Token:0x6eaC    true   0.0
+        - # Account               Owing ETH|null:0x0000      New ETH|null:0x0000   Owing Fee0Token:0x6eaC     New Fee0Token:0x6eaC 
           1 User1:0xa11A                            0.0                      0.0                      0.0                      0.0 
           2 User2:0xa22A                            0.0                      0.0                      0.0                      0.0 
           3 User3:0xa33a                            0.0                      0.0                      0.0                      0.0 
@@ -198,7 +196,7 @@ $ npx hardhat test test/TestOptinoGov.js > results/TestOptinoGov.txt
          # Account                                             EtherBalanceChange                      OptinoGov                            OGD Blocks 0 to 23
                                                                                                               OG                           FEE0
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E                 -0.78553768                            0.0                            0.0 Owner:0xa00A
+         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E                 -0.78928872                            0.0                            0.0 Owner:0xa00A
                                                                                                          10000.0                          100.0
          1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433                 -0.03861936                         1000.0                         1000.0 User1:0xa11A
                                                                                                           9000.0                            0.0
@@ -238,16 +236,15 @@ $ npx hardhat test test/TestOptinoGov.js > results/TestOptinoGov.txt
         - totalVotes           : 5550000000000000000000 = 5550.0
         - rewardsPerYear       : 31.536% compounding daily/simple partial end, rewardsPerSecond: 0.000001%
         - proposalCount        : 0
-        - accountsLength       : 3
         - ## Account              Duration        End                  Balance                    Votes Delegatee                     Delegated Votes                  Accrued    Term
-           0 User1:0xa11A                5 1604471814                   1000.0                     50.0 User3:0xa33a                              0.0                  0.00004       4
-           1 User2:0xa22A               50 1604471860                   1000.0                    500.0 User3:0xa33a                              0.0                  0.00003       3
-           2 User3:0xa33a              500 1604472311                   1000.0                   5000.0 ETH|null:0x0000                         550.0                  0.00002       2
+           0 User1:0xa11A                5 1604474856                   1000.0                     50.0 User3:0xa33a                              0.0                  0.00004       4
+           1 User2:0xa22A               50 1604474902                   1000.0                    500.0 User3:0xa33a                              0.0                  0.00003       3
+           2 User3:0xa33a              500 1604475353                   1000.0                   5000.0 ETH|null:0x0000                         550.0                  0.00002       2
         Token 1 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 3000.0, owner: OptinoGov:0xBa1F, address: OGDToken:0x0f4e
-        - dividendTokensLength : 2
-        - dividendToken        : 0 ETH|null:0x0000, enabled: true, unclaimedDividends: 0.0
-        - dividendToken        : 1 Fee0Token:0x6eaC, enabled: true, unclaimedDividends: 0.0
-        - ## Account                           existing + new    ETH|null:0x0000                 existing + new   Fee0Token:0x6eaC
+        - # Token            Enabled              Unclaimed
+          0 ETH|null:0x0000     true   0.0
+          1 Fee0Token:0x6eaC    true   0.0
+        - # Account               Owing ETH|null:0x0000      New ETH|null:0x0000   Owing Fee0Token:0x6eaC     New Fee0Token:0x6eaC 
           1 User1:0xa11A                            0.0                      0.0                      0.0                      0.0 
           2 User2:0xa22A                            0.0                      0.0                      0.0                      0.0 
           3 User3:0xa33a                            0.0                      0.0                      0.0                      0.0 
@@ -266,13 +263,13 @@ $ npx hardhat test test/TestOptinoGov.js > results/TestOptinoGov.txt
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User2:0xa22A, tokens: 0.00004)
         + OptinoGov.Transfer(from: ETH|null:0x0000, to: User2:0xa22A, tokens: 0.00004)
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User2:0xa22A, tokens: 1000.0)
-        + OptinoGov.Committed(user: User2:0xa22A, tokens: 1000.0, balance: 2000.00004, duration: 55, end: 1604471869, delegatee: User3:0xa33a, votes: 500.0, rewardPool: 1000000.0, totalVotes: 5050.0)
+        + OptinoGov.Committed(user: User2:0xa22A, tokens: 1000.0, balance: 2000.00004, duration: 55, end: 1604474911, delegatee: User3:0xa33a, votes: 500.0, rewardPool: 1000000.0, totalVotes: 5050.0)
         + OptinoGov.Transfer(from: ETH|null:0x0000, to: User2:0xa22A, tokens: 1000.0)
         
          # Account                                             EtherBalanceChange                      OptinoGov                            OGD Blocks 0 to 24
                                                                                                               OG                           FEE0
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E                 -0.78553768                            0.0                            0.0 Owner:0xa00A
+         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E                 -0.78928872                            0.0                            0.0 Owner:0xa00A
                                                                                                          10000.0                          100.0
          1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433                 -0.03861936                         1000.0                         1000.0 User1:0xa11A
                                                                                                           9000.0                            0.0
@@ -312,16 +309,15 @@ $ npx hardhat test test/TestOptinoGov.js > results/TestOptinoGov.txt
         - totalVotes           : 6150000022000000000000 = 6150.000022
         - rewardsPerYear       : 31.536% compounding daily/simple partial end, rewardsPerSecond: 0.000001%
         - proposalCount        : 0
-        - accountsLength       : 3
         - ## Account              Duration        End                  Balance                    Votes Delegatee                     Delegated Votes                  Accrued    Term
-           0 User1:0xa11A                5 1604471814                   1000.0                     50.0 User3:0xa33a                              0.0                  0.00005       5
-           1 User2:0xa22A               55 1604471869               2000.00004              1100.000022 User3:0xa33a                              0.0                      0.0       0
-           2 User3:0xa33a              500 1604472311                   1000.0                   5000.0 ETH|null:0x0000                   1150.000022                  0.00003       3
+           0 User1:0xa11A                5 1604474856                   1000.0                     50.0 User3:0xa33a                              0.0                  0.00005       5
+           1 User2:0xa22A               55 1604474911               2000.00004              1100.000022 User3:0xa33a                              0.0                      0.0       0
+           2 User3:0xa33a              500 1604475353                   1000.0                   5000.0 ETH|null:0x0000                   1150.000022                  0.00003       3
         Token 1 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 4000.00004, owner: OptinoGov:0xBa1F, address: OGDToken:0x0f4e
-        - dividendTokensLength : 2
-        - dividendToken        : 0 ETH|null:0x0000, enabled: true, unclaimedDividends: 0.0
-        - dividendToken        : 1 Fee0Token:0x6eaC, enabled: true, unclaimedDividends: 0.0
-        - ## Account                           existing + new    ETH|null:0x0000                 existing + new   Fee0Token:0x6eaC
+        - # Token            Enabled              Unclaimed
+          0 ETH|null:0x0000     true   0.0
+          1 Fee0Token:0x6eaC    true   0.0
+        - # Account               Owing ETH|null:0x0000      New ETH|null:0x0000   Owing Fee0Token:0x6eaC     New Fee0Token:0x6eaC 
           1 User1:0xa11A                            0.0                      0.0                      0.0                      0.0 
           2 User2:0xa22A                            0.0                      0.0                      0.0                      0.0 
           3 User3:0xa33a                            0.0                      0.0                      0.0                      0.0 
@@ -333,25 +329,25 @@ $ npx hardhat test test/TestOptinoGov.js > results/TestOptinoGov.txt
         --- Test 4 - User1 collecting rewards, user2 collecting and committing rewards leaving duration unchanged, user3 collecting and committing rewards and extending duration ---
         collectReward1 - gasUsed: 77917, fee: 0.00623336, feeUsd: 2.4040199512, @ 80.0 gwei & 385.67 ETH/USD, 0x530d493d3f3605e1418a6d972ff87460fcd529f86b7ccd4a72b39ddfeecbe45a
         + OGToken.Transfer(from: ETH|null:0x0000, to: User1:0xa11A, tokens: 0.007317073144556811)
-        + OptinoGov.Collected(user: User1:0xa11A, elapsed: 6, reward: 0.007317073144556811, callerReward: 0, rewardPool: 999999.992682926855443189, end: 1604471814, duration: 0)
+        + OptinoGov.Collected(user: User1:0xa11A, elapsed: 6, reward: 0.007317073144556811, callerReward: 0, rewardPool: 999999.992682926855443189, end: 1604474856, duration: 0)
         collectReward2 - gasUsed: 146805, fee: 0.0117444, feeUsd: 4.529462748, @ 80.0 gwei & 385.67 ETH/USD, 0x524070599eb36f0adc99ef1b21121ea94ac3bcbe8ce3c085d4417a29e32058e3
         + OGToken.Transfer(from: ETH|null:0x0000, to: OptinoGov:0xBa1F, tokens: 0.054098361542596073)
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User2:0xa22A, tokens: 0.054098361542596073)
-        + OptinoGov.Collected(user: User2:0xa22A, elapsed: 2, reward: 0.054098361542596073, callerReward: 0, rewardPool: 999999.938584565312847116, end: 1604471869, duration: 53)
+        + OptinoGov.Collected(user: User2:0xa22A, elapsed: 2, reward: 0.054098361542596073, callerReward: 0, rewardPool: 999999.938584565312847116, end: 1604474911, duration: 53)
         collectReward3 - gasUsed: 139936, fee: 0.01119488, feeUsd: 4.3175293696, @ 80.0 gwei & 385.67 ETH/USD, 0x6e6a8a375e854261a59ece07624b0f5ef1beb991e0c4b006f301efe806aff9cd
         + OGToken.Transfer(from: ETH|null:0x0000, to: OptinoGov:0xBa1F, tokens: 0.742570741447436656)
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User3:0xa33a, tokens: 0.742570741447436656)
-        + OptinoGov.Collected(user: User3:0xa33a, elapsed: 6, reward: 0.742570741447436656, callerReward: 0, rewardPool: 999999.19601382386541046, end: 1604476817, duration: 5000)
+        + OptinoGov.Collected(user: User3:0xa33a, elapsed: 6, reward: 0.742570741447436656, callerReward: 0, rewardPool: 999999.19601382386541046, end: 1604479859, duration: 5000)
         --- Test 5 - Owner collecting rewards on behalf of user1 for a % fee ---
-        Pausing 'Waiting' for 5s=Wed Nov 04 2020 17:36:38 GMT+1100 (Australian Eastern Daylight Time) now=Wed Nov 04 2020 17:36:33 GMT+1100 (Australian Eastern Daylight Time)
-        Paused 'Waiting' for 5s=Wed Nov 04 2020 17:36:38 GMT+1100 (Australian Eastern Daylight Time) now=Wed Nov 04 2020 17:36:38 GMT+1100 (Australian Eastern Daylight Time)
+        Pausing 'Waiting' for 5s=Wed Nov 04 2020 18:27:20 GMT+1100 (Australian Eastern Daylight Time) now=Wed Nov 04 2020 18:27:15 GMT+1100 (Australian Eastern Daylight Time)
+        Paused 'Waiting' for 5s=Wed Nov 04 2020 18:27:20 GMT+1100 (Australian Eastern Daylight Time) now=Wed Nov 04 2020 18:27:20 GMT+1100 (Australian Eastern Daylight Time)
         
         collectRewardFor1 - gasUsed: 22690, fee: 0.0018152, feeUsd: 0.700068184, @ 80.0 gwei & 385.67 ETH/USD, 0x2db2fd42ca72b2c2a075e717f0361f7abc19deea5916dc3007f50f32b9f062cb
         
          # Account                                             EtherBalanceChange                      OptinoGov                            OGD Blocks 0 to 28
                                                                                                               OG                           FEE0
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E                 -0.78735288                            0.0                            0.0 Owner:0xa00A
+         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E                 -0.79110392                            0.0                            0.0 Owner:0xa00A
                                                                                                          10000.0                          100.0
          1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433                 -0.04485272                         1000.0                         1000.0 User1:0xa11A
                                                                                          9000.007317073144556811                            0.0
@@ -391,16 +387,15 @@ $ npx hardhat test test/TestOptinoGov.js > results/TestOptinoGov.txt
         - totalVotes           : 51097157230403989408718 = 51097.157230403989408718
         - rewardsPerYear       : 31.536% compounding daily/simple partial end, rewardsPerSecond: 0.000001%
         - proposalCount        : 0
-        - accountsLength       : 3
         - ## Account              Duration        End                  Balance                    Votes Delegatee                     Delegated Votes                  Accrued    Term
-           0 User1:0xa11A                0 1604471814                   1000.0                      0.0 User3:0xa33a                              0.0                  0.00008       8
-           1 User2:0xa22A               53 1604471869  2000.054138361542596073  1060.028693331617575918 User3:0xa33a                              0.0     0.000120003248301692       6
-           2 User3:0xa33a             5000 1604476817  1000.742570741447436656   50037.1285370723718328 ETH|null:0x0000       1060.028693331617575918     0.000050037128537072       5
+           0 User1:0xa11A                0 1604474856                   1000.0                      0.0 User3:0xa33a                              0.0                  0.00008       8
+           1 User2:0xa22A               53 1604474911  2000.054138361542596073  1060.028693331617575918 User3:0xa33a                              0.0     0.000120003248301692       6
+           2 User3:0xa33a             5000 1604479859  1000.742570741447436656   50037.1285370723718328 ETH|null:0x0000       1060.028693331617575918     0.000050037128537072       5
         Token 1 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 4000.796709102990032729, owner: OptinoGov:0xBa1F, address: OGDToken:0x0f4e
-        - dividendTokensLength : 2
-        - dividendToken        : 0 ETH|null:0x0000, enabled: true, unclaimedDividends: 0.0
-        - dividendToken        : 1 Fee0Token:0x6eaC, enabled: true, unclaimedDividends: 0.0
-        - ## Account                           existing + new    ETH|null:0x0000                 existing + new   Fee0Token:0x6eaC
+        - # Token            Enabled              Unclaimed
+          0 ETH|null:0x0000     true   0.0
+          1 Fee0Token:0x6eaC    true   0.0
+        - # Account               Owing ETH|null:0x0000      New ETH|null:0x0000   Owing Fee0Token:0x6eaC     New Fee0Token:0x6eaC 
           1 User1:0xa11A                            0.0                      0.0                      0.0                      0.0 
           2 User2:0xa22A                            0.0                      0.0                      0.0                      0.0 
           3 User3:0xa33a                            0.0                      0.0                      0.0                      0.0 
@@ -432,7 +427,7 @@ $ npx hardhat test test/TestOptinoGov.js > results/TestOptinoGov.txt
          # Account                                             EtherBalanceChange                      OptinoGov                            OGD Blocks 0 to 33
                                                                                                               OG                           FEE0
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
-         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E                -10.80061688                            0.0                            0.0 Owner:0xa00A
+         0 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E                -10.80436792                            0.0                            0.0 Owner:0xa00A
                                                                                                          10000.0                            0.0
          1 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433        2.442153435969848902                         1000.0                         1000.0 User1:0xa11A
                                                                                          9000.007317073144556811          24.995021559698489022
@@ -472,16 +467,15 @@ $ npx hardhat test test/TestOptinoGov.js > results/TestOptinoGov.txt
         - totalVotes           : 51097157230403989408718 = 51097.157230403989408718
         - rewardsPerYear       : 31.536% compounding daily/simple partial end, rewardsPerSecond: 0.000001%
         - proposalCount        : 0
-        - accountsLength       : 3
         - ## Account              Duration        End                  Balance                    Votes Delegatee                     Delegated Votes                  Accrued    Term
-           0 User1:0xa11A                0 1604471814                   1000.0                      0.0 User3:0xa33a                              0.0                  0.00013      13
-           1 User2:0xa22A               53 1604471869  2000.054138361542596073  1060.028693331617575918 User3:0xa33a                              0.0     0.000220005955219769      11
-           2 User3:0xa33a             5000 1604476817  1000.742570741447436656   50037.1285370723718328 ETH|null:0x0000       1060.028693331617575918     0.000100074257074144      10
+           0 User1:0xa11A                0 1604474856                   1000.0                      0.0 User3:0xa33a                              0.0                  0.00013      13
+           1 User2:0xa22A               53 1604474911  2000.054138361542596073  1060.028693331617575918 User3:0xa33a                              0.0     0.000220005955219769      11
+           2 User3:0xa33a             5000 1604479859  1000.742570741447436656   50037.1285370723718328 ETH|null:0x0000       1060.028693331617575918     0.000100074257074144      10
         Token 1 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 4000.796709102990032729, owner: OptinoGov:0xBa1F, address: OGDToken:0x0f4e
-        - dividendTokensLength : 2
-        - dividendToken        : 0 ETH|null:0x0000, enabled: true, unclaimedDividends: 0.000000000000000001
-        - dividendToken        : 1 Fee0Token:0x6eaC, enabled: true, unclaimedDividends: 0.000000000000000001
-        - ## Account                           existing + new    ETH|null:0x0000                 existing + new   Fee0Token:0x6eaC
+        - # Token            Enabled              Unclaimed
+          0 ETH|null:0x0000     true   0.000000000000000001
+          1 Fee0Token:0x6eaC    true   0.000000000000000001
+        - # Account               Owing ETH|null:0x0000      New ETH|null:0x0000   Owing Fee0Token:0x6eaC     New Fee0Token:0x6eaC 
           1 User1:0xa11A                            0.0                      0.0                      0.0                      0.0 
           2 User2:0xa22A                            0.0                      0.0                      0.0                      0.0 
           3 User3:0xa33a                            0.0                      0.0                      0.0                      0.0 
@@ -492,7 +486,7 @@ $ npx hardhat test test/TestOptinoGov.js > results/TestOptinoGov.txt
         
         --- Test Completed ---
 
-      ✓ Workflow #0 (8038ms)
+      ✓ Workflow #0 (7734ms)
 
 
   1 passing (10s)

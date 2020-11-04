@@ -313,6 +313,10 @@ contract OptinoGov is ERC20, OptinoGovConfig {
     }
     function uncommitAll() public {
         uint tokens = accounts[msg.sender].balance;
+        uint ogdTokens = ogdToken.balanceOf(msg.sender);
+        if (ogdTokens < tokens) {
+            tokens = ogdTokens;
+        }
         // console.log("        > %s -> uncommitAll(tokens %s)", msg.sender, tokens);
         require(tokens > 0, "No balance to uncommit");
         _changeCommitment(msg.sender, 0, tokens, true, 0);
