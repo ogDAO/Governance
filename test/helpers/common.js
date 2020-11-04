@@ -320,13 +320,13 @@ class Data {
         console.log("        - proposalCount        : " + proposalCount);
         // console.log("        - stakeInfoLength      : " + stakeInfoLength);
         console.log("        - accountsLength       : " + accountsLength);
-        console.log("        - ## Account       Duration        End                  Balance                    Votes Delegatee                     Delegated Votes                  Accrued    Term");
+        console.log("        - ## Account              Duration        End                  Balance                    Votes Delegatee                     Delegated Votes                  Accrued    Term");
         for (let j = 0; j < accountsLength; j++) {
           const _a = await this.optinoGov.getAccountByIndex(j);
           const accruedReward = await tokenContract.accruedReward(_a.tokenOwner);
           console.log("           " + this.padLeft(j, 2) + " " +
-            this.padRight(this.getShortAccountName(_a.tokenOwner), 20) + " " +
-            this.padLeft(_a.account.duration, 10) + " " +
+            this.padRight(this.getShortAccountName(_a.tokenOwner), 20) + "|" +
+            this.padLeft(_a.account.duration.toString(), 8) + "|" +
             this.padLeft(_a.account.end, 10) + " " +
             this.padLeft(ethers.utils.formatUnits(_a.account.balance, 18), 24) + " " +
             this.padLeft(ethers.utils.formatUnits(_a.account.votes, 18), 24) + " " +

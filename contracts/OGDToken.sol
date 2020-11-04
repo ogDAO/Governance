@@ -85,7 +85,9 @@ contract OGDToken is OGDTokenInterface, Permissioned {
         updateAccount(from);
         updateAccount(to);
         accounts[from].balance = accounts[from].balance.sub(tokens);
-        allowed[from][msg.sender] = allowed[from][msg.sender].sub(tokens);
+        if (msg.sender != owner) {
+            allowed[from][msg.sender] = allowed[from][msg.sender].sub(tokens);            
+        }
         accounts[to].balance = accounts[to].balance.add(tokens);
         emit Transfer(from, to, tokens);
         return true;
