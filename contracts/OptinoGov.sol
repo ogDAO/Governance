@@ -292,20 +292,20 @@ contract OptinoGov is ERC20, OptinoGovConfig {
         updateStatsAfter(account);
     }
     function commit(uint tokens, uint duration) public {
-        console.log("        > %s -> commit(tokens %s, duration %s)", msg.sender, tokens, duration);
+        // console.log("        > %s -> commit(tokens %s, duration %s)", msg.sender, tokens, duration);
         require(tokens > 0, "tokens must be > 0");
         require(duration > 0, "duration must be > 0");
         require(ogToken.transferFrom(msg.sender, address(this), tokens), "OG transferFrom failed");
         _changeCommitment(msg.sender, tokens, 0, false, duration);
     }
     function recommit(uint duration) public {
-        console.log("        > %s -> recommit(duration %s)", msg.sender, duration);
+        // console.log("        > %s -> recommit(duration %s)", msg.sender, duration);
         require(duration > 0, "duration must be > 0");
         require(accounts[msg.sender].balance > 0, "No balance to recommit");
         _changeCommitment(msg.sender, 0, 0, false, duration);
     }
     function uncommit(uint tokens) public {
-        console.log("        > %s -> uncommit(tokens %s)", msg.sender, tokens);
+        // console.log("        > %s -> uncommit(tokens %s)", msg.sender, tokens);
         require(tokens > 0, "tokens must be > 0");
         require(accounts[msg.sender].balance > 0, "No balance to uncommit");
         _changeCommitment(msg.sender, 0, tokens, tokens == accounts[msg.sender].balance, 0);
@@ -313,10 +313,17 @@ contract OptinoGov is ERC20, OptinoGovConfig {
     }
     function uncommitAll() public {
         uint tokens = accounts[msg.sender].balance;
-        console.log("        > %s -> uncommitAll(tokens %s)", msg.sender, tokens);
+        // console.log("        > %s -> uncommitAll(tokens %s)", msg.sender, tokens);
         require(tokens > 0, "No balance to uncommit");
         _changeCommitment(msg.sender, 0, tokens, true, 0);
         emit Transfer(msg.sender, address(0), tokens);
+    }
+    // TODO
+    function collectRewardFor(address tokenOwner) public {
+        // console.log("        > %s -> recommit(duration %s)", msg.sender, duration);
+        // require(duration > 0, "duration must be > 0");
+        require(accounts[tokenOwner].balance > 0, "tokenOwner has no balance to tidy");
+        // _changeCommitment(tokenOwner, 0, 0, false, duration);
     }
 
     // Commit OGTokens for specified duration. Cannot shorten duration if there is an existing unexpired commitment
@@ -354,7 +361,7 @@ contract OptinoGov is ERC20, OptinoGovConfig {
         emit Committed(msg.sender, tokens, user.balance, user.duration, user.end, user.delegatee, user.votes, rewardPool, totalVotes);
     }
 
-    function collectRewardFor(address tokenOwner) public {
+    function collectRewardFor_old(address tokenOwner) public {
         _collectReward(tokenOwner, false, 0);
     }
     function collectReward(bool commitRewards, uint duration) public {
