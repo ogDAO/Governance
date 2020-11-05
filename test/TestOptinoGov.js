@@ -295,6 +295,13 @@ describe("TestOptinoGov", function() {
       await data.printTxData("dummy1", dummy1);
       await data.printBalances();
 
+      console.log("        --- Test 4 - User2 uncommitFor(user1) ---");
+      duration = 4;
+      data.pause("Waiting", duration + 1);
+      const uncommitFor1 = await data.optinoGov.connect(data.user2Signer).uncommitFor(data.user1);
+      await data.printTxData("uncommitFor1", uncommitFor1);
+      await data.printBalances();
+
       // console.log("        --- Test 4 - User1 uncommit(10) ---");
       // const tokensToUncommit = ethers.utils.parseUnits("10", 18);
       // // const tokensToUncommit = await data.optinoGov.balanceOf(data.user1);

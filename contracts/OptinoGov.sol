@@ -223,7 +223,7 @@ contract OptinoGov is ERC20, OptinoGovConfig {
         Account storage account = accounts[tokenOwner];
 
         // commit(tokens, duration) or recommit(duration)
-        if (depositTokens == 0 && withdrawTokens == 0 || depositTokens > 0) {
+        if (depositTokens > 0) {
             require(duration > 0, "Duration must be > 0");
         }
         // uncommit(tokens) or uncommitAll()
@@ -234,12 +234,17 @@ contract OptinoGov is ERC20, OptinoGovConfig {
         updateStatsBefore(account);
         (uint reward, uint term) = _calculateReward(account);
         console.log("        >     reward %s for %s seconds", reward, term);
-        if (withdrawRewards) {
-            if (reward > 0) {
+        if (reward > 0) {
+            if (withdrawRewards) {
                 require(ogToken.mint(tokenOwner, reward), "reward OG mint failed");
-            }
-        } else {
-            if (reward > 0) {
+            } else {
+                if (msg.sender != tokenOwner) {
+                    uint callerReward = reward.mul(collectRewardForFee).div(10 ** 18);
+                    if (callerReward > 0) {
+                        reward = reward.sub(callerReward);
+                        require(ogToken.mint(msg.sender, callerReward), "reward OG mint failed");
+                    }
+                }
                 require(ogToken.mint(address(this), reward), "reward OG mint failed");
                 account.balance = account.balance.add(reward);
                 _totalSupply = _totalSupply.add(reward);
@@ -327,11 +332,11 @@ contract OptinoGov is ERC20, OptinoGovConfig {
         emit Transfer(msg.sender, address(0), tokens);
     }
     // TODO
-    function collectRewardFor(address tokenOwner) public {
-        // console.log("        > %s -> recommit(duration %s)", msg.sender, duration);
+    function uncommitFor(address tokenOwner) public {
+        console.log("        > %s -> uncommitFor(%s)", msg.sender, tokenOwner);
         // require(duration > 0, "duration must be > 0");
         require(accounts[tokenOwner].balance > 0, "tokenOwner has no balance to tidy");
-        // _changeCommitment(tokenOwner, 0, 0, false, duration);
+        _changeCommitment(tokenOwner, 0, 0, false, 0);
     }
 
     // Commit OGTokens for specified duration. Cannot shorten duration if there is an existing unexpired commitment
