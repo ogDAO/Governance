@@ -105,7 +105,7 @@ contract OptinoGov is ERC20, OptinoGovConfig {
     }
 
     string _symbol = "OptinoGov";
-    string _name = "Optino Governance";
+    string _name = "OptinoGov";
     uint _totalSupply;
     mapping(address => Account) public accounts;
     address[] public accountsIndex;
@@ -232,8 +232,8 @@ contract OptinoGov is ERC20, OptinoGovConfig {
             require(withdrawTokens <= account.balance, "Unsufficient staked balance");
         }
         updateStatsBefore(account);
-        (uint reward, /*uint term*/) = _calculateReward(account);
-        console.log("        >     reward %s", reward);
+        (uint reward, uint term) = _calculateReward(account);
+        console.log("        >     reward %s for %s seconds", reward, term);
         if (withdrawRewards) {
             if (reward > 0) {
                 require(ogToken.mint(tokenOwner, reward), "reward OG mint failed");
@@ -247,7 +247,13 @@ contract OptinoGov is ERC20, OptinoGovConfig {
                 emit Transfer(address(0), tokenOwner, reward);
             }
         }
-        if (depositTokens == 0 && withdrawTokens == 0 || depositTokens > 0) {
+        if (depositTokens == 0 && withdrawTokens == 0) {
+            // require(block.timestamp + duration >= account.end, "Cannot shorten duration");
+            // TODO
+            account.duration = uint64(duration);
+            account.end = uint64(block.timestamp.add(duration));
+        }
+        if (depositTokens > 0) {
             if (account.end == 0) {
                 accounts[tokenOwner] = Account(uint64(duration), uint64(block.timestamp.add(duration)), uint64(0), uint64(0), uint64(accountsIndex.length), uint64(rewardsPerYear), address(0), depositTokens, 0, 0);
                 account = accounts[tokenOwner];
@@ -258,13 +264,11 @@ contract OptinoGov is ERC20, OptinoGovConfig {
                 account.end = uint64(block.timestamp.add(duration));
                 account.balance = account.balance.add(depositTokens);
             }
-            if (depositTokens > 0) {
-                require(ogdToken.mint(tokenOwner, depositTokens), "OGD mint failed");
-                // TODO account.votes not updated. remove remaining variables
-                emit Committed(tokenOwner, depositTokens, account.balance, account.duration, account.end, account.delegatee, account.votes, rewardPool, totalVotes);
-                _totalSupply = _totalSupply.add(depositTokens);
-                emit Transfer(address(0), tokenOwner, depositTokens);
-            }
+            require(ogdToken.mint(tokenOwner, depositTokens), "OGD mint failed");
+            // TODO account.votes not updated. remove remaining variables
+            emit Committed(tokenOwner, depositTokens, account.balance, account.duration, account.end, account.delegatee, account.votes, rewardPool, totalVotes);
+            _totalSupply = _totalSupply.add(depositTokens);
+            emit Transfer(address(0), tokenOwner, depositTokens);
         }
         if (withdrawTokens > 0) {
             _totalSupply = _totalSupply.sub(withdrawTokens);

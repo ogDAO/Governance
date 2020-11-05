@@ -81,7 +81,7 @@ class Data {
     this.addContract(this.fee0Token, "Fee0Token");
     this.addContract(this.optinoGov, "OptinoGov");
 
-    this.tokenContracts = [optinoGov, ogdToken, ogToken, fee0Token];
+    this.tokenContracts = [optinoGov, ogToken, ogdToken, fee0Token];
     for (let i = 0; i < this.tokenContracts.length; i++) {
       const tokenContract = this.tokenContracts[i];
       if (tokenContract != null) {
@@ -338,13 +338,13 @@ class Data {
       } else if (symbol == "OGD") {
         const dividendTokensLength = parseInt(await tokenContract.dividendTokensLength());
         // console.log("        - dividendTokensLength : " + dividendTokensLength);
-        console.log("        - # Token            Enabled              Unclaimed");
+        console.log("        - # Dividend         Enabled                  Unclaimed");
         let dividendHeader = "";
         for (let j = 0; j < dividendTokensLength; j++) {
           const dividendToken = await tokenContract.getDividendTokenByIndex(j);
           const unclaimedDividends = await tokenContract.unclaimedDividends(dividendToken[0]);
           dividendHeader = dividendHeader + this.padLeft("Owing " + this.getShortAccountName(dividendToken[0]), 24) + " " + this.padLeft("New " + this.getShortAccountName(dividendToken[0]), 24) + " ";
-          console.log("          " + this.padLeft(j, 2) + " " + this.padRight(this.getShortAccountName(dividendToken[0]), 18) + "  " + this.padRight(dividendToken[1].toString(), 6) + " " + ethers.utils.formatUnits(unclaimedDividends, 18));
+          console.log("          " + this.padLeft(j, 2) + " " + this.padRight(this.getShortAccountName(dividendToken[0]), 18) + "  " + this.padRight(dividendToken[1].toString(), 6) + " " + this.padLeft(ethers.utils.formatUnits(unclaimedDividends, 18), 24));
         }
         if (dividendTokensLength > 0) {
           console.log("        - # Account            " + dividendHeader);
