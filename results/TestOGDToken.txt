@@ -1,16 +1,18 @@
 $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
+Compiling 19 files with 0.7.4
+Compilation finished successfully
 
 
   TestOGDToken
     TestOGDToken - Workflow #0
         --- Setup 1 - Deploy OGDToken, FEE{0..2} ---
-        ogdTokenTx - gasUsed: 2471788, fee: 0.19774304, feeUsd: 76.2635582368, @ 80.0 gwei & 385.67 ETH/USD, 0x838d198e1fcab7304543555608afbb53128f45014f9c573e834edfa2f94e2800
+        ogdTokenTx - gasUsed: 2471788, fee: 0.19774304, feeUsd: 76.2635582368, @ 80.0 gwei & 385.67 ETH/USD, 0x1a7d184e8839d8701d138244b30de93f2f0b37e5ff72ad6e72e6c7619f49bb83
         + OGDToken.Transfer(from: ETH|null:0x0000, to: Owner:0xa00A, tokens: 0.0)
-        fee0TokenTx - gasUsed: 823708, fee: 0.06589664, feeUsd: 25.4143571488, @ 80.0 gwei & 385.67 ETH/USD, 0xd3b18e43f1f1aec682780d9481e0695caeb4d6e94452e8d09d56d9b2a11ed8e8
+        fee0TokenTx - gasUsed: 823708, fee: 0.06589664, feeUsd: 25.4143571488, @ 80.0 gwei & 385.67 ETH/USD, 0x21413e18644a2fcbd95b6a17089ce8f306d6e768199c51d17fa9fb7e21f149dd
         + Fee0Token.Transfer(from: ETH|null:0x0000, to: Owner:0xa00A, tokens: 100.0)
-        fee1TokenTx - gasUsed: 823708, fee: 0.06589664, feeUsd: 25.4143571488, @ 80.0 gwei & 385.67 ETH/USD, 0x8a044ee356c614559bc70d534b6469a248cc19b2a7fb374d4bee7e8dfbabfb4f
+        fee1TokenTx - gasUsed: 823708, fee: 0.06589664, feeUsd: 25.4143571488, @ 80.0 gwei & 385.67 ETH/USD, 0x395b6b9039928f8f9da3e2b3d5f446b03f4d7cd1817543daf1111ac8ce3bd09c
         + Fee1Token.Transfer(from: ETH|null:0x0000, to: Owner:0xa00A, tokens: 1000.0)
-        fee2TokenTx - gasUsed: 823720, fee: 0.0658976, feeUsd: 25.414727392, @ 80.0 gwei & 385.67 ETH/USD, 0x757398193a85200b59d94a7905a91d1d29cc2381edcc767f67046a28b9a6b79e
+        fee2TokenTx - gasUsed: 823720, fee: 0.0658976, feeUsd: 25.414727392, @ 80.0 gwei & 385.67 ETH/USD, 0xf92616959030c150469735f7c1e6f3b17d067e4cafff20a5e7b6a55c49acf2aa
         + Fee2Token.Transfer(from: ETH|null:0x0000, to: Owner:0xa00A, tokens: 10000.0)
         
          # Account                                             EtherBalanceChange                            OGD                           FEE0 Blocks 0 to 4
@@ -40,8 +42,7 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
         
         Token 0 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 0.0, owner: Owner:0xa00A, address: OGDToken:0x1647
-        - dividendTokensLength : 0
-        - # Token            Enabled              Unclaimed
+          # Dividend         Enabled                  Unclaimed
         Token 1 symbol: 'FEE0', name: 'Fee0', decimals: 18, totalSupply: 100.0, owner: Owner:0xa00A, address: Fee0Token:0x0f4e
         Token 2 symbol: 'FEE1', name: 'Fee1', decimals: 18, totalSupply: 1000.0, owner: Owner:0xa00A, address: Fee1Token:0x6eaC
         Token 3 symbol: 'FEE2', name: 'Fee2', decimals: 18, totalSupply: 10000.0, owner: Owner:0xa00A, address: Fee2Token:0xBa1F
@@ -96,11 +97,10 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
         
         Token 0 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 30000.0, owner: Owner:0xa00A, address: OGDToken:0x1647
-        - dividendTokensLength : 2
-        - # Token            Enabled              Unclaimed
-          0 ETH|null:0x0000     true   0.0
-          1 Fee0Token:0x0f4e    true   0.0
-        - # Account               Owing ETH|null:0x0000      New ETH|null:0x0000   Owing Fee0Token:0x0f4e     New Fee0Token:0x0f4e 
+          # Dividend         Enabled                  Unclaimed
+          0 ETH|null:0x0000     true                        0.0
+          1 Fee0Token:0x0f4e    true                        0.0
+          # Account               Owing ETH|null:0x0000      New ETH|null:0x0000   Owing Fee0Token:0x0f4e     New Fee0Token:0x0f4e 
           1 User1:0xa11A                            0.0                      0.0                      0.0                      0.0 
           2 User2:0xa22A                            0.0                      0.0                      0.0                      0.0 
           3 User3:0xa33a                            0.0                      0.0                      0.0                      0.0 
@@ -143,11 +143,10 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
         
         Token 0 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 30000.0, owner: Owner:0xa00A, address: OGDToken:0x1647
-        - dividendTokensLength : 2
-        - # Token            Enabled              Unclaimed
-          0 ETH|null:0x0000     true   10.0
-          1 Fee0Token:0x0f4e    true   100.0
-        - # Account               Owing ETH|null:0x0000      New ETH|null:0x0000   Owing Fee0Token:0x0f4e     New Fee0Token:0x0f4e 
+          # Dividend         Enabled                  Unclaimed
+          0 ETH|null:0x0000     true                       10.0
+          1 Fee0Token:0x0f4e    true                      100.0
+          # Account               Owing ETH|null:0x0000      New ETH|null:0x0000   Owing Fee0Token:0x0f4e     New Fee0Token:0x0f4e 
           1 User1:0xa11A                            0.0     3.333333333333333333                      0.0    33.333333333333333333 
           2 User2:0xa22A                            0.0     3.333333333333333333                      0.0    33.333333333333333333 
           3 User3:0xa33a                            0.0     3.333333333333333333                      0.0    33.333333333333333333 
@@ -187,11 +186,10 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
         
         Token 0 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 30000.0, owner: Owner:0xa00A, address: OGDToken:0x1647
-        - dividendTokensLength : 2
-        - # Token            Enabled              Unclaimed
-          0 ETH|null:0x0000     true   6.666666666666666667
-          1 Fee0Token:0x0f4e    true   66.666666666666666667
-        - # Account               Owing ETH|null:0x0000      New ETH|null:0x0000   Owing Fee0Token:0x0f4e     New Fee0Token:0x0f4e 
+          # Dividend         Enabled                  Unclaimed
+          0 ETH|null:0x0000     true       6.666666666666666667
+          1 Fee0Token:0x0f4e    true      66.666666666666666667
+          # Account               Owing ETH|null:0x0000      New ETH|null:0x0000   Owing Fee0Token:0x0f4e     New Fee0Token:0x0f4e 
           1 User1:0xa11A                            0.0     3.333333333333333333                      0.0    33.333333333333333333 
           2 User2:0xa22A           3.333333333333333333                      0.0    33.333333333333333333                      0.0 
           3 User3:0xa33a                            0.0     3.333333333333333333                      0.0    33.333333333333333333 
@@ -241,11 +239,10 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
         
         Token 0 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 30000.0, owner: Owner:0xa00A, address: OGDToken:0x1647
-        - dividendTokensLength : 2
-        - # Token            Enabled              Unclaimed
-          0 ETH|null:0x0000     true   0.000000000000000001
-          1 Fee0Token:0x0f4e    true   0.000000000000000001
-        - # Account               Owing ETH|null:0x0000      New ETH|null:0x0000   Owing Fee0Token:0x0f4e     New Fee0Token:0x0f4e 
+          # Dividend         Enabled                  Unclaimed
+          0 ETH|null:0x0000     true       0.000000000000000001
+          1 Fee0Token:0x0f4e    true       0.000000000000000001
+          # Account               Owing ETH|null:0x0000      New ETH|null:0x0000   Owing Fee0Token:0x0f4e     New Fee0Token:0x0f4e 
           1 User1:0xa11A                            0.0                      0.0                      0.0                      0.0 
           2 User2:0xa22A                            0.0                      0.0                      0.0                      0.0 
           3 User3:0xa33a                            0.0                      0.0                      0.0                      0.0 
@@ -290,13 +287,12 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
         
         Token 0 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 40000.0, owner: Owner:0xa00A, address: OGDToken:0x1647
-        - dividendTokensLength : 4
-        - # Token            Enabled              Unclaimed
-          0 ETH|null:0x0000     true   0.000000000000000001
-          1 Fee0Token:0x0f4e    true   0.000000000000000001
-          2 Fee1Token:0x6eaC    true   0.0
-          3 Fee2Token:0xBa1F    true   0.0
-        - # Account               Owing ETH|null:0x0000      New ETH|null:0x0000   Owing Fee0Token:0x0f4e     New Fee0Token:0x0f4e   Owing Fee1Token:0x6eaC     New Fee1Token:0x6eaC   Owing Fee2Token:0xBa1F     New Fee2Token:0xBa1F 
+          # Dividend         Enabled                  Unclaimed
+          0 ETH|null:0x0000     true       0.000000000000000001
+          1 Fee0Token:0x0f4e    true       0.000000000000000001
+          2 Fee1Token:0x6eaC    true                        0.0
+          3 Fee2Token:0xBa1F    true                        0.0
+          # Account               Owing ETH|null:0x0000      New ETH|null:0x0000   Owing Fee0Token:0x0f4e     New Fee0Token:0x0f4e   Owing Fee1Token:0x6eaC     New Fee1Token:0x6eaC   Owing Fee2Token:0xBa1F     New Fee2Token:0xBa1F 
           1 User1:0xa11A                            0.0                      0.0                      0.0                      0.0                      0.0                      0.0                      0.0                      0.0 
           2 User2:0xa22A                            0.0                      0.0                      0.0                      0.0                      0.0                      0.0                      0.0                      0.0 
           3 User3:0xa33a                            0.0                      0.0                      0.0                      0.0                      0.0                      0.0                      0.0                      0.0 
@@ -361,13 +357,12 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
         
         Token 0 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 40000.0, owner: Owner:0xa00A, address: OGDToken:0x1647
-        - dividendTokensLength : 4
-        - # Token            Enabled              Unclaimed
-          0 ETH|null:0x0000     true   0.000000000000000001
-          1 Fee0Token:0x0f4e    true   0.000000000000000001
-          2 Fee1Token:0x6eaC    true   0.0
-          3 Fee2Token:0xBa1F    true   0.0
-        - # Account               Owing ETH|null:0x0000      New ETH|null:0x0000   Owing Fee0Token:0x0f4e     New Fee0Token:0x0f4e   Owing Fee1Token:0x6eaC     New Fee1Token:0x6eaC   Owing Fee2Token:0xBa1F     New Fee2Token:0xBa1F 
+          # Dividend         Enabled                  Unclaimed
+          0 ETH|null:0x0000     true       0.000000000000000001
+          1 Fee0Token:0x0f4e    true       0.000000000000000001
+          2 Fee1Token:0x6eaC    true                        0.0
+          3 Fee2Token:0xBa1F    true                        0.0
+          # Account               Owing ETH|null:0x0000      New ETH|null:0x0000   Owing Fee0Token:0x0f4e     New Fee0Token:0x0f4e   Owing Fee1Token:0x6eaC     New Fee1Token:0x6eaC   Owing Fee2Token:0xBa1F     New Fee2Token:0xBa1F 
           1 User1:0xa11A                            0.0                      0.0                      0.0                      0.0                      0.0                      0.0                      0.0                      0.0 
           2 User2:0xa22A                            0.0                      0.0                      0.0                      0.0                      0.0                      0.0                      0.0                      0.0 
           3 User3:0xa33a                            0.0                      0.0                      0.0                      0.0                      0.0                      0.0                      0.0                      0.0 
@@ -407,13 +402,12 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
         
         Token 0 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 40000.0, owner: Owner:0xa00A, address: OGDToken:0x1647
-        - dividendTokensLength : 4
-        - # Token            Enabled              Unclaimed
-          0 ETH|null:0x0000     true   0.000000000000000001
-          1 Fee0Token:0x0f4e    true   0.000000000000000001
-          2 Fee1Token:0x6eaC    true   0.0
-          3 Fee2Token:0xBa1F    true   0.0
-        - # Account               Owing ETH|null:0x0000      New ETH|null:0x0000   Owing Fee0Token:0x0f4e     New Fee0Token:0x0f4e   Owing Fee1Token:0x6eaC     New Fee1Token:0x6eaC   Owing Fee2Token:0xBa1F     New Fee2Token:0xBa1F 
+          # Dividend         Enabled                  Unclaimed
+          0 ETH|null:0x0000     true       0.000000000000000001
+          1 Fee0Token:0x0f4e    true       0.000000000000000001
+          2 Fee1Token:0x6eaC    true                        0.0
+          3 Fee2Token:0xBa1F    true                        0.0
+          # Account               Owing ETH|null:0x0000      New ETH|null:0x0000   Owing Fee0Token:0x0f4e     New Fee0Token:0x0f4e   Owing Fee1Token:0x6eaC     New Fee1Token:0x6eaC   Owing Fee2Token:0xBa1F     New Fee2Token:0xBa1F 
           1 User1:0xa11A                            0.0                      0.0                      0.0                      0.0                      0.0                      0.0                      0.0                      0.0 
           2 User2:0xa22A                            0.0                      0.0                      0.0                      0.0                      0.0                      0.0                      0.0                      0.0 
           3 User3:0xa33a                            0.0                      0.0                      0.0                      0.0                      0.0                      0.0                      0.0                      0.0 
@@ -424,16 +418,16 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         
         --- Test Completed ---
 
-      ✓ Workflow #0 (4243ms)
+      ✓ Workflow #0 (3937ms)
     TestOGDToken - Workflow #1 - Transfer Test
         --- Setup 1 - Deploy OGDToken, FEE{0..2} ---
-        ogdTokenTx - gasUsed: 2471788, fee: 0.19774304, feeUsd: 76.2635582368, @ 80.0 gwei & 385.67 ETH/USD, 0xbf7d32e1a03f7fe05b661a27678040d982676bf83342d82ca23345c0d2688e59
+        ogdTokenTx - gasUsed: 2471788, fee: 0.19774304, feeUsd: 76.2635582368, @ 80.0 gwei & 385.67 ETH/USD, 0xd8d3549797daa92579d8653c49e47351d6f00c8dcdd04d37fb4b6ac24514ea55
         + OGDToken.Transfer(from: ETH|null:0x0000, to: Owner:0xa00A, tokens: 0.0)
-        fee0TokenTx - gasUsed: 823708, fee: 0.06589664, feeUsd: 25.4143571488, @ 80.0 gwei & 385.67 ETH/USD, 0xa7de98ff72c61d01a54f7746513a54eeea26a7b614ef6c32800f6fe9851cce26
+        fee0TokenTx - gasUsed: 823708, fee: 0.06589664, feeUsd: 25.4143571488, @ 80.0 gwei & 385.67 ETH/USD, 0xc7b3ddfb88bd326abb25ac71011dc528648054629aeff0c7711dc95db7591cde
         + Fee0Token.Transfer(from: ETH|null:0x0000, to: Owner:0xa00A, tokens: 100.0)
-        fee1TokenTx - gasUsed: 823708, fee: 0.06589664, feeUsd: 25.4143571488, @ 80.0 gwei & 385.67 ETH/USD, 0x9a467cd091b6151890a4c7634f857ca088088e13079144f139a418cc71ddad83
+        fee1TokenTx - gasUsed: 823708, fee: 0.06589664, feeUsd: 25.4143571488, @ 80.0 gwei & 385.67 ETH/USD, 0x38e43d19237cbea64f756d475097248f10b6d9bda3cb80c5340ab5e0a3e19b0b
         + Fee1Token.Transfer(from: ETH|null:0x0000, to: Owner:0xa00A, tokens: 1000.0)
-        fee2TokenTx - gasUsed: 823720, fee: 0.0658976, feeUsd: 25.414727392, @ 80.0 gwei & 385.67 ETH/USD, 0x4d73ddaba8a2a5ff3d30f8f98278adc61c0fe6b9e7dd07c57c9dbf1d7b454da7
+        fee2TokenTx - gasUsed: 823720, fee: 0.0658976, feeUsd: 25.414727392, @ 80.0 gwei & 385.67 ETH/USD, 0xac922268194efd7d6888fb6141c6c8c4e0fd318af248d1110610af4a18e896ae
         + Fee2Token.Transfer(from: ETH|null:0x0000, to: Owner:0xa00A, tokens: 10000.0)
         
          # Account                                             EtherBalanceChange                            OGD                           FEE0 Blocks 29 to 33
@@ -463,8 +457,7 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
         
         Token 0 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 0.0, owner: Owner:0xa00A, address: OGDToken:0xA3FD
-        - dividendTokensLength : 0
-        - # Token            Enabled              Unclaimed
+          # Dividend         Enabled                  Unclaimed
         Token 1 symbol: 'FEE0', name: 'Fee0', decimals: 18, totalSupply: 100.0, owner: Owner:0xa00A, address: Fee0Token:0xee9a
         Token 2 symbol: 'FEE1', name: 'Fee1', decimals: 18, totalSupply: 1000.0, owner: Owner:0xa00A, address: Fee1Token:0x0b70
         Token 3 symbol: 'FEE2', name: 'Fee2', decimals: 18, totalSupply: 10000.0, owner: Owner:0xa00A, address: Fee2Token:0xA92f
@@ -517,11 +510,10 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
         
         Token 0 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 20000.0, owner: Owner:0xa00A, address: OGDToken:0xA3FD
-        - dividendTokensLength : 2
-        - # Token            Enabled              Unclaimed
-          0 ETH|null:0x0000     true   0.0
-          1 Fee0Token:0xee9a    true   0.0
-        - # Account               Owing ETH|null:0x0000      New ETH|null:0x0000   Owing Fee0Token:0xee9a     New Fee0Token:0xee9a 
+          # Dividend         Enabled                  Unclaimed
+          0 ETH|null:0x0000     true                        0.0
+          1 Fee0Token:0xee9a    true                        0.0
+          # Account               Owing ETH|null:0x0000      New ETH|null:0x0000   Owing Fee0Token:0xee9a     New Fee0Token:0xee9a 
           1 User1:0xa11A                            0.0                      0.0                      0.0                      0.0 
           2 User2:0xa22A                            0.0                      0.0                      0.0                      0.0 
           3 User3:0xa33a                            0.0                      0.0                      0.0                      0.0 
@@ -564,11 +556,10 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
         
         Token 0 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 20000.0, owner: Owner:0xa00A, address: OGDToken:0xA3FD
-        - dividendTokensLength : 2
-        - # Token            Enabled              Unclaimed
-          0 ETH|null:0x0000     true   10.0
-          1 Fee0Token:0xee9a    true   100.0
-        - # Account               Owing ETH|null:0x0000      New ETH|null:0x0000   Owing Fee0Token:0xee9a     New Fee0Token:0xee9a 
+          # Dividend         Enabled                  Unclaimed
+          0 ETH|null:0x0000     true                       10.0
+          1 Fee0Token:0xee9a    true                      100.0
+          # Account               Owing ETH|null:0x0000      New ETH|null:0x0000   Owing Fee0Token:0xee9a     New Fee0Token:0xee9a 
           1 User1:0xa11A                            0.0                      5.0                      0.0                     50.0 
           2 User2:0xa22A                            0.0                      5.0                      0.0                     50.0 
           3 User3:0xa33a                            0.0                      0.0                      0.0                      0.0 
@@ -608,11 +599,10 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
         
         Token 0 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 20000.0, owner: Owner:0xa00A, address: OGDToken:0xA3FD
-        - dividendTokensLength : 2
-        - # Token            Enabled              Unclaimed
-          0 ETH|null:0x0000     true   5.0
-          1 Fee0Token:0xee9a    true   50.0
-        - # Account               Owing ETH|null:0x0000      New ETH|null:0x0000   Owing Fee0Token:0xee9a     New Fee0Token:0xee9a 
+          # Dividend         Enabled                  Unclaimed
+          0 ETH|null:0x0000     true                        5.0
+          1 Fee0Token:0xee9a    true                       50.0
+          # Account               Owing ETH|null:0x0000      New ETH|null:0x0000   Owing Fee0Token:0xee9a     New Fee0Token:0xee9a 
           1 User1:0xa11A                            0.0                      5.0                      0.0                     50.0 
           2 User2:0xa22A                            5.0                      0.0                     50.0                      0.0 
           3 User3:0xa33a                            0.0                      0.0                      0.0                      0.0 
@@ -659,11 +649,10 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
         
         Token 0 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 20000.0, owner: Owner:0xa00A, address: OGDToken:0xA3FD
-        - dividendTokensLength : 2
-        - # Token            Enabled              Unclaimed
-          0 ETH|null:0x0000     true   0.0
-          1 Fee0Token:0xee9a    true   0.0
-        - # Account               Owing ETH|null:0x0000      New ETH|null:0x0000   Owing Fee0Token:0xee9a     New Fee0Token:0xee9a 
+          # Dividend         Enabled                  Unclaimed
+          0 ETH|null:0x0000     true                        0.0
+          1 Fee0Token:0xee9a    true                        0.0
+          # Account               Owing ETH|null:0x0000      New ETH|null:0x0000   Owing Fee0Token:0xee9a     New Fee0Token:0xee9a 
           1 User1:0xa11A                            0.0                      0.0                      0.0                      0.0 
           2 User2:0xa22A                            0.0                      0.0                      0.0                      0.0 
           3 User3:0xa33a                            0.0                      0.0                      0.0                      0.0 
@@ -672,16 +661,16 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         Token 2 symbol: 'FEE1', name: 'Fee1', decimals: 18, totalSupply: 1000.0, owner: Owner:0xa00A, address: Fee1Token:0x0b70
         Token 3 symbol: 'FEE2', name: 'Fee2', decimals: 18, totalSupply: 10000.0, owner: Owner:0xa00A, address: Fee2Token:0xA92f
         
-      ✓ Workflow #1 - Transfer Test (1947ms)
+      ✓ Workflow #1 - Transfer Test (1926ms)
     TestOGDToken - Workflow #2 - address(0) with balance
         --- Setup 1 - Deploy OGDToken, FEE{0..2} ---
-        ogdTokenTx - gasUsed: 2471788, fee: 0.19774304, feeUsd: 76.2635582368, @ 80.0 gwei & 385.67 ETH/USD, 0xaccc0936de88c4b13b64416e52f76815a00640cfaeecd5bbc59812a081b5e3cf
+        ogdTokenTx - gasUsed: 2471788, fee: 0.19774304, feeUsd: 76.2635582368, @ 80.0 gwei & 385.67 ETH/USD, 0xcc0d32bbdc87d160466564e20941dd56219ee94dfa2996b6ad6f8cd2886f9e8d
         + OGDToken.Transfer(from: ETH|null:0x0000, to: Owner:0xa00A, tokens: 0.0)
-        fee0TokenTx - gasUsed: 823708, fee: 0.06589664, feeUsd: 25.4143571488, @ 80.0 gwei & 385.67 ETH/USD, 0x94e406425eb28ce7850769293e7c339ffa1cc4d84d2941e17621eab0931aa9ef
+        fee0TokenTx - gasUsed: 823708, fee: 0.06589664, feeUsd: 25.4143571488, @ 80.0 gwei & 385.67 ETH/USD, 0xf1ba2e0e5d0cdfc65ec58ecfcb0774a20bc1ad9a18d436425007add3e850152e
         + Fee0Token.Transfer(from: ETH|null:0x0000, to: Owner:0xa00A, tokens: 100.0)
-        fee1TokenTx - gasUsed: 823708, fee: 0.06589664, feeUsd: 25.4143571488, @ 80.0 gwei & 385.67 ETH/USD, 0xd5ca46753535ad13c068a03c53c142964a7c7cf324d456dc7d6679e27cfed5ea
+        fee1TokenTx - gasUsed: 823708, fee: 0.06589664, feeUsd: 25.4143571488, @ 80.0 gwei & 385.67 ETH/USD, 0x26e5110ea8f5da6ace2035b7cfacb768e202782f53c7e295d195d17f43178ac4
         + Fee1Token.Transfer(from: ETH|null:0x0000, to: Owner:0xa00A, tokens: 1000.0)
-        fee2TokenTx - gasUsed: 823720, fee: 0.0658976, feeUsd: 25.414727392, @ 80.0 gwei & 385.67 ETH/USD, 0x1c65f4f770769a7c4bcc5d347957d579e923bf731ad81e67133692f0295b0050
+        fee2TokenTx - gasUsed: 823720, fee: 0.0658976, feeUsd: 25.414727392, @ 80.0 gwei & 385.67 ETH/USD, 0xcbe1df98f7b15daa1d1db84765b42aa609540462d4674d609c0949c85715b860
         + Fee2Token.Transfer(from: ETH|null:0x0000, to: Owner:0xa00A, tokens: 10000.0)
         
          # Account                                             EtherBalanceChange                            OGD                           FEE0 Blocks 47 to 51
@@ -711,8 +700,7 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
         
         Token 0 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 0.0, owner: Owner:0xa00A, address: OGDToken:0xe669
-        - dividendTokensLength : 0
-        - # Token            Enabled              Unclaimed
+          # Dividend         Enabled                  Unclaimed
         Token 1 symbol: 'FEE0', name: 'Fee0', decimals: 18, totalSupply: 100.0, owner: Owner:0xa00A, address: Fee0Token:0x70cd
         Token 2 symbol: 'FEE1', name: 'Fee1', decimals: 18, totalSupply: 1000.0, owner: Owner:0xa00A, address: Fee1Token:0xF393
         Token 3 symbol: 'FEE2', name: 'Fee2', decimals: 18, totalSupply: 10000.0, owner: Owner:0xa00A, address: Fee2Token:0x103f
@@ -769,11 +757,10 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
         
         Token 0 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 30000.0, owner: Owner:0xa00A, address: OGDToken:0xe669
-        - dividendTokensLength : 2
-        - # Token            Enabled              Unclaimed
-          0 ETH|null:0x0000     true   0.0
-          1 Fee0Token:0x70cd    true   0.0
-        - # Account               Owing ETH|null:0x0000      New ETH|null:0x0000   Owing Fee0Token:0x70cd     New Fee0Token:0x70cd 
+          # Dividend         Enabled                  Unclaimed
+          0 ETH|null:0x0000     true                        0.0
+          1 Fee0Token:0x70cd    true                        0.0
+          # Account               Owing ETH|null:0x0000      New ETH|null:0x0000   Owing Fee0Token:0x70cd     New Fee0Token:0x70cd 
           1 User1:0xa11A                            0.0                      0.0                      0.0                      0.0 
           2 User2:0xa22A                            0.0                      0.0                      0.0                      0.0 
           3 User3:0xa33a                            0.0                      0.0                      0.0                      0.0 
@@ -816,11 +803,10 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
         
         Token 0 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 30000.0, owner: Owner:0xa00A, address: OGDToken:0xe669
-        - dividendTokensLength : 2
-        - # Token            Enabled              Unclaimed
-          0 ETH|null:0x0000     true   10.0
-          1 Fee0Token:0x70cd    true   100.0
-        - # Account               Owing ETH|null:0x0000      New ETH|null:0x0000   Owing Fee0Token:0x70cd     New Fee0Token:0x70cd 
+          # Dividend         Enabled                  Unclaimed
+          0 ETH|null:0x0000     true                       10.0
+          1 Fee0Token:0x70cd    true                      100.0
+          # Account               Owing ETH|null:0x0000      New ETH|null:0x0000   Owing Fee0Token:0x70cd     New Fee0Token:0x70cd 
           1 User1:0xa11A                            0.0     3.333333333333333333                      0.0    33.333333333333333333 
           2 User2:0xa22A                            0.0     3.333333333333333333                      0.0    33.333333333333333333 
           3 User3:0xa33a                            0.0     3.333333333333333333                      0.0    33.333333333333333333 
@@ -870,11 +856,10 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------
         
         Token 0 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 30000.0, owner: Owner:0xa00A, address: OGDToken:0xe669
-        - dividendTokensLength : 2
-        - # Token            Enabled              Unclaimed
-          0 ETH|null:0x0000     true   0.000000000000000001
-          1 Fee0Token:0x70cd    true   0.000000000000000001
-        - # Account               Owing ETH|null:0x0000      New ETH|null:0x0000   Owing Fee0Token:0x70cd     New Fee0Token:0x70cd 
+          # Dividend         Enabled                  Unclaimed
+          0 ETH|null:0x0000     true       0.000000000000000001
+          1 Fee0Token:0x70cd    true       0.000000000000000001
+          # Account               Owing ETH|null:0x0000      New ETH|null:0x0000   Owing Fee0Token:0x70cd     New Fee0Token:0x70cd 
           1 User1:0xa11A                            0.0                      0.0                      0.0                      0.0 
           2 User2:0xa22A                            0.0                      0.0                      0.0                      0.0 
           3 User3:0xa33a                            0.0                      0.0                      0.0                      0.0 
@@ -883,8 +868,8 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         Token 2 symbol: 'FEE1', name: 'Fee1', decimals: 18, totalSupply: 1000.0, owner: Owner:0xa00A, address: Fee1Token:0xF393
         Token 3 symbol: 'FEE2', name: 'Fee2', decimals: 18, totalSupply: 10000.0, owner: Owner:0xa00A, address: Fee2Token:0x103f
         
-      ✓ Workflow #1 - Transfer Test (1508ms)
+      ✓ Workflow #1 - Transfer Test (1575ms)
 
 
-  3 passing (11s)
+  3 passing (10s)
 

@@ -21,9 +21,13 @@ describe("TestOptinoGov", function() {
 
     console.log("        --- Setup 1 - Deploy OGToken, OGDToken, FEE0, then OptinoGov ---");
     const setup1a = [];
-    setup1a.push(OGToken.deploy("OG", "Optino Governance", 18, data.owner, ethers.utils.parseUnits("40000", 18)));
+    // const ogTokens = ethers.utils.parseUnits("40000", 18);
+    const mintOGTokens = ethers.utils.parseUnits("10000", 18);
+    // const mintFee0Tokens = ethers.utils.parseUnits("100", 18);
+    const mintFee0Tokens = ethers.utils.parseUnits("0", 18);
+    setup1a.push(OGToken.deploy("OG", "Optino Governance", 18, data.owner, mintOGTokens));
     setup1a.push(OGDToken.deploy("OGD", "Optino Governance Dividend", 18, data.owner, ethers.utils.parseUnits("0", 18)));
-    setup1a.push(TestToken.deploy("FEE0", "Fee0", 18, data.owner, ethers.utils.parseUnits("100", 18)));
+    setup1a.push(TestToken.deploy("FEE0", "Fee0", 18, data.owner, mintFee0Tokens));
     const [ogToken, ogdToken, fee0Token] = await Promise.all(setup1a);
     const setup1b = [];
     setup1b.push(OptinoGov.deploy(ogToken.address, ogdToken.address));
@@ -59,18 +63,18 @@ describe("TestOptinoGov", function() {
     const approveTokens = ethers.utils.parseUnits("2000", 18);
     const setup3 = [];
     setup3.push(ogToken.transfer(data.user1, ogTokens));
-    setup3.push(ogToken.transfer(data.user2, ogTokens));
-    setup3.push(ogToken.transfer(data.user3, ogTokens));
+    // setup3.push(ogToken.transfer(data.user2, ogTokens));
+    // setup3.push(ogToken.transfer(data.user3, ogTokens));
     setup3.push(ogToken.connect(data.user1Signer).approve(data.optinoGov.address, approveTokens));
     setup3.push(ogToken.connect(data.user2Signer).approve(data.optinoGov.address, approveTokens));
     setup3.push(ogToken.connect(data.user3Signer).approve(data.optinoGov.address, approveTokens));
     setup3.push(fee0Token.approve(data.ogdToken.address, approveTokens));
     setup3.push(ogToken.transferOwnership(data.optinoGov.address));
     setup3.push(data.ogdToken.transferOwnership(data.optinoGov.address));
-    const [transfer1, transfer2, transfer3, approve1, approve2, approve3, approve4, transferOwnership1, transferOwnership2] = await Promise.all(setup3);
+    const [transfer1, /*transfer2, transfer3,*/ approve1, approve2, approve3, approve4, transferOwnership1, transferOwnership2] = await Promise.all(setup3);
     await data.printTxData("transfer1", transfer1);
-    await data.printTxData("transfer2", transfer2);
-    await data.printTxData("transfer3", transfer3);
+    // await data.printTxData("transfer2", transfer2);
+    // await data.printTxData("transfer3", transfer3);
     await data.printTxData("approve1", approve1);
     await data.printTxData("approve2", approve2);
     await data.printTxData("approve3", approve3);
@@ -284,12 +288,12 @@ describe("TestOptinoGov", function() {
       // await data.printTxData("commit6", commit6);
       // await data.printBalances();
 
-      // console.log("        --- Test 3 - Dummy tx to mine a new block and get the latest block.timestamp ---");
-      // duration = 4;
-      // data.pause("Waiting", duration + 1);
-      // const dummy1 = await data.ownerSigner.sendTransaction({ to: data.owner, value: 0 });
-      // await data.printTxData("dummy1", dummy1);
-      // await data.printBalances();
+      console.log("        --- Test 3 - Dummy tx to mine a new block and get the latest block.timestamp ---");
+      duration = 4;
+      data.pause("Waiting", duration + 1);
+      const dummy1 = await data.ownerSigner.sendTransaction({ to: data.owner, value: 0 });
+      await data.printTxData("dummy1", dummy1);
+      await data.printBalances();
 
       // console.log("        --- Test 4 - User1 uncommit(10) ---");
       // const tokensToUncommit = ethers.utils.parseUnits("10", 18);

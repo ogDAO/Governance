@@ -24,11 +24,11 @@ contract OGToken is OGTokenInterface, Permissioned {
     event CapUpdated(uint256 cap, bool freezeCap);
     event LogInfo(string topic, uint number, bytes32 data, string note, address addr);
 
-    constructor(string memory symbol_, string memory name_, uint8 decimals_, address tokenOwner, uint initialSupply) {
+    constructor(string memory __symbol, string memory __name, uint8 __decimals, address tokenOwner, uint initialSupply) {
         initPermissioned(msg.sender);
-        _symbol = symbol_;
-        _name = name_;
-        _decimals = decimals_;
+        _symbol = __symbol;
+        _name = __name;
+        _decimals = __decimals;
         balances[tokenOwner] = initialSupply;
         _totalSupply = initialSupply;
         emit Transfer(address(0), tokenOwner, _totalSupply);
