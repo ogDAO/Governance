@@ -42,6 +42,7 @@ class Data {
   addAccount(account, accountName) {
     this.accounts.push(account);
     this.accountNames[account.toLowerCase()] = accountName;
+    console.log("        Address " + account + " => " + this.getShortAccountName(account));
   }
 
   addContract(contract, contractName) {
@@ -166,7 +167,7 @@ class Data {
   padToken(s, decimals) {
     decimals = parseInt(decimals);
     var o = ethers.utils.formatUnits(s, decimals);
-    while (o.length < 27) {
+    while (o.length < 25) {
       o = " " + o;
     }
     return o;
@@ -255,14 +256,17 @@ class Data {
 
   async printBalances() {
     const blockNumber = await ethers.provider.getBlockNumber();
-    // let i;
-    const totalTokenBalances = [BigNumber.from(0), BigNumber.from(0), BigNumber.from(0), BigNumber.from(0)];
+    const totalTokenBalances = [];
     console.log("        ");
-    console.log("         # Account                                             EtherBalanceChange               " + this.padLeft(this.symbols[0] || "???", 16) +  "               " + this.padLeft(this.symbols[1] || "???", 16) + " Blocks " + this.baseBlock.toString() + " to " + blockNumber.toString());
-    if (this.tokenContracts.length > 2) {
-      console.log("                                                                                                " + this.padLeft(this.symbols[2] || "???", 16) +  "               " + this.padLeft(this.symbols[3] || "???", 16));
+    let line = "         # Account                                     ΔETH";
+    let separator = "        -- ------------------------ -----------------------";
+    for (let t = 0; t < this.tokenContracts.length; t++) {
+      line = line + "         " + this.padLeft(this.symbols[t] || "???", 16);
+      separator = separator + " ------------------------";
+      totalTokenBalances.push(BigNumber.from(0));
     }
-    console.log("        -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------");
+    console.log(line);
+    console.log(separator);
     for (let i = 0; i < this.accounts.length; i++) {
       let account = this.accounts[i];
       let etherBalanceBaseBlock = (await ethers.provider.getBalance(account, this.baseBlock)).toString();
@@ -273,17 +277,19 @@ class Data {
         tokenBalances[j] = await this.tokenContracts[j].balanceOf(account);
         totalTokenBalances[j] = totalTokenBalances[j].add(tokenBalances[j]);
       }
-      console.log("         " + this.padLeft(i, 2) + " " + account + " " + this.padToken(etherBalanceDiff, 18) + "    " + this.padToken(tokenBalances[0] || BigNumber.from(0), this.decimals[0] || 18) + "    " + this.padToken(tokenBalances[1] || BigNumber.from(0), this.decimals[1] || 18) + " " + this.getShortAccountName(account));
-      if (this.tokenContracts.length > 2) {
-        console.log("                                                                                     " + this.padToken(tokenBalances[2] || BigNumber.from(0), this.decimals[2] || 18) + "    " + this.padToken(tokenBalances[3] || BigNumber.from(0), this.decimals[3] || 18));
+      line = "         " + this.padLeft(i, 2) + " " + this.padRight(this.getShortAccountName(account), 22) + " " + this.padToken(etherBalanceDiff, 18);
+      for (let t = 0; t < this.tokenContracts.length; t++) {
+        line = line + this.padToken(tokenBalances[t] || BigNumber.from(0), this.decimals[t] || 18);
       }
+      console.log(line);
     }
-    console.log("        -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------");
-    console.log("                                                                                     " + this.padToken(totalTokenBalances[0], this.decimals[0] || 18) + "    " + this.padToken(totalTokenBalances[1], this.decimals[1] || 18) + " Total Token Balances");
-    if (this.tokenContracts.length > 2) {
-      console.log("                                                                                     " + this.padToken(totalTokenBalances[2], this.decimals[2] || 18) + "    " + this.padToken(totalTokenBalances[3], this.decimals[3] || 18));
+    console.log(separator);
+    line = "           Totals                                          ";
+    for (let t = 0; t < this.tokenContracts.length; t++) {
+      line = line + this.padToken(totalTokenBalances[t] || BigNumber.from(0), this.decimals[t] || 18);
     }
-    console.log("        -- ------------------------------------------ --------------------------- ------------------------------ ------------------------------ ---------------------------");
+    console.log(line);
+    console.log(separator);
     console.log("        ");
 
     for (let i = 0; i < this.tokenContracts.length; i++) {
@@ -321,6 +327,7 @@ class Data {
         // console.log("        - stakeInfoLength      : " + stakeInfoLength);
         // console.log("        - accountsLength       : " + accountsLength);
         console.log("          # Account              Duration        End                  Balance                    Votes Delegatee                     Delegated Votes                  Accrued    Term");
+        console.log("         -- -------------------- -------- ---------- ------------------------ ------------------------ -------------------- ------------------------ ------------------------ -------");
         for (let j = 0; j < accountsLength; j++) {
           const _a = await this.optinoGov.getAccountByIndex(j);
           const accruedReward = await tokenContract.accruedReward(_a.tokenOwner);
@@ -335,19 +342,25 @@ class Data {
             this.padLeft(ethers.utils.formatUnits(accruedReward[0], 18), 24) + " " +
             this.padLeft(accruedReward[1].toString(), 7));
         }
+        console.log("         -- -------------------- -------- ---------- ------------------------ ------------------------ -------------------- ------------------------ ------------------------ -------");
       } else if (symbol == "OGD") {
         const dividendTokensLength = parseInt(await tokenContract.dividendTokensLength());
         // console.log("        - dividendTokensLength : " + dividendTokensLength);
         console.log("          # Dividend         Enabled                  Unclaimed");
+        console.log("         -- ---------------- ------- --------------------------");
         let dividendHeader = "";
+        let dividendSeparator = "         -- ------------------";
         for (let j = 0; j < dividendTokensLength; j++) {
           const dividendToken = await tokenContract.getDividendTokenByIndex(j);
           const unclaimedDividends = await tokenContract.unclaimedDividends(dividendToken[0]);
           dividendHeader = dividendHeader + this.padLeft("Owing " + this.getShortAccountName(dividendToken[0]), 24) + " " + this.padLeft("New " + this.getShortAccountName(dividendToken[0]), 24) + " ";
+          dividendSeparator = dividendSeparator + " ------------------------ ------------------------";
           console.log("          " + this.padLeft(j, 2) + " " + this.padRight(this.getShortAccountName(dividendToken[0]), 18) + "  " + this.padRight(dividendToken[1].toString(), 6) + " " + this.padLeft(ethers.utils.formatUnits(unclaimedDividends, 18), 24));
         }
+        console.log("         -- ---------------- ------- --------------------------");
         if (dividendTokensLength > 0) {
           console.log("          # Account            " + dividendHeader);
+          console.log(dividendSeparator);
           for (let j = 1; j < this.accounts.length; j++) {
             let account = this.accounts[j];
             let accountName = this.getShortAccountName(account);
@@ -363,6 +376,7 @@ class Data {
               console.log("          " + this.padLeft(j, 2) + " " + this.padRight(this.getShortAccountName(account), 18) + " " + result);
             }
           }
+          console.log(dividendSeparator);
         }
       } else if (symbol.startsWith("OGS")) {
         const [stakingInfo, owner, accountsLength, rewardsPerYear, weightedEnd, weightedEndNumerator, /*weightedDurationDenominator,*/ slashingFactor] = await Promise.all([tokenContract.getStakingInfo(), tokenContract.owner(), tokenContract.accountsLength(), tokenContract.rewardsPerYear(), tokenContract.weightedEnd(), tokenContract.weightedEndNumerator(), /*tokenContract.weightedDurationDenominator(),*/ tokenContract.slashingFactor()]);
@@ -375,12 +389,22 @@ class Data {
         // console.log("          - weightedDurationDenominator: " + new BigNumber(weightedDurationDenominator.toString()).shiftedBy(-18));
         console.log("          - weightedEnd                : " + weightedEnd + " = " + ethers.utils.formatUnits(weightedEndNumerator, decimals) + "/" + ethers.utils.formatUnits(totalSupply, decimals));
         console.log("          - slashingFactor             : " + ethers.utils.formatUnits(slashingFactor, 16) + "%");
-        console.log("          - accountsLength             : " + accountsLength);
+        // console.log("          - accountsLength             : " + accountsLength);
+        console.log("          # Account              Duration        End      Index                  Balance           Accrued Reward    Term");
+        console.log("         -- -------------------- -------- ---------- ---------- ------------------------ ------------------------ -------");
         for (let k = 0; k < accountsLength; k++) {
           const account = await tokenContract.getAccountByIndex(k);
           const accruedReward = await tokenContract.accruedReward(account.tokenOwner);
-          console.log("            - account " + k + " owner: " + this.getShortAccountName(account.tokenOwner) + ", duration: " + account.account.duration.toString() + ", end: " + account.account.end.toString() + ", index: " + account.account.index.toString() + ", tokens: " + ethers.utils.formatUnits(account.account.balance, 18) + ", accrued: " + ethers.utils.formatUnits(accruedReward[0], 18) + ", term: " + accruedReward[1].toString());
+          console.log("          " + this.padLeft(k, 2) + " " +
+            this.padRight(this.getShortAccountName(account.tokenOwner), 20) + " " +
+            this.padLeft(account.account.duration.toString(), 8) + " " +
+            this.padLeft(account.account.end.toString(), 10) + " " +
+            this.padLeft(account.account.index.toString(), 10) + " " +
+            this.padLeft(ethers.utils.formatUnits(account.account.balance, 18), 24) + " " +
+            this.padLeft(ethers.utils.formatUnits(accruedReward[0], 18), 24) + " " +
+            this.padLeft(accruedReward[1].toString(), 7));
         }
+        console.log("         -- -------------------- -------- ---------- ---------- ------------------------ ------------------------ -------");
       }
     }
 

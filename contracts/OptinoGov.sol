@@ -47,8 +47,10 @@ contract OptinoGovConfig {
     }
     function setConfig(string memory key, uint value) external onlySelf {
         if (equalString(key, "maxDuration")) {
+            require(maxDuration < 5 * 365 days, "Cannot exceed 5 years");
             maxDuration = value;
         } else if (equalString(key, "collectRewardForFee")) {
+            require(collectRewardForFee < 10 ** 18, "Cannot exceed 100%");
             collectRewardForFee = value;
         } else if (equalString(key, "collectRewardForDelay")) {
             collectRewardForDelay = value;
@@ -372,99 +374,6 @@ contract OptinoGov is ERC20, OptinoGovConfig {
         }
         require(ogdToken.mint(msg.sender, tokens.add(reward)), "commitment + reward OGD mint failed");
         emit Committed(msg.sender, tokens, user.balance, user.duration, user.end, user.delegatee, user.votes, rewardPool, totalVotes);
-    }
-
-    function collectRewardFor_old(address tokenOwner) public {
-        _collectReward(tokenOwner, false, 0);
-    }
-    function collectReward(bool commitRewards, uint duration) public {
-        _collectReward(msg.sender, commitRewards, duration);
-    }
-    function _collectReward(address tokenOwner, bool commitRewards, uint duration) internal {
-        Account storage user = accounts[tokenOwner];
-        require(user.balance > 0);
-
-        // Pay rewards for period = now - beginning = now - (end - duration)
-        uint elapsed = block.timestamp.sub(uint(user.end).sub(uint(user.duration)));
-        uint reward = elapsed.mul(rewardsPerSecond).mul(user.votes).div(totalVotes);
-        uint callerReward = 0;
-        if (reward > rewardPool) {
-            reward = rewardPool;
-        }
-        if (reward > 0) {
-            rewardPool = rewardPool.sub(reward);
-            if (msg.sender != tokenOwner) {
-                require(user.end + collectRewardForDelay < block.timestamp, "Account with delay not ended");
-                callerReward = reward.mul(collectRewardForFee).div(10 ** 18);
-                reward = reward.sub(callerReward);
-            }
-            uint oldUserVotes = user.votes;
-            if (commitRewards) {
-                user.balance = user.balance.add(reward);
-                if (user.end < block.timestamp) {
-                    user.end = uint64(block.timestamp);
-                }
-                if (duration > 0) {
-                    require(duration <= maxDuration, "duration too long");
-                    user.duration = uint64(duration);
-                    user.end = uint64(block.timestamp.add(duration));
-                } else {
-                    user.duration = uint64(uint(user.end).sub(block.timestamp));
-                }
-                user.votes = user.balance.mul(uint(user.duration)).div(SECONDS_PER_YEAR);
-                require(ogToken.mint(address(this), reward), "OG mint failed");
-                require(ogdToken.mint(msg.sender, reward), "OGD mint failed");
-            } else {
-                user.duration = uint(user.end) <= block.timestamp ? 0 : uint64(uint(user.end).sub(block.timestamp));
-                user.votes = user.balance.mul(uint(user.duration)).div(SECONDS_PER_YEAR);
-                require(ogToken.mint(tokenOwner, reward), "OG mint failed");
-            }
-            totalVotes = totalVotes.sub(oldUserVotes).add(user.votes);
-            if (user.delegatee != address(0)) {
-                accounts[user.delegatee].delegatedVotes = accounts[user.delegatee].delegatedVotes.sub(oldUserVotes).add(user.votes);
-            }
-            if (callerReward > 0) {
-                require(ogToken.mint(msg.sender, callerReward), "callerReward OG mint failed");
-            }
-        }
-        emit Collected(msg.sender, elapsed, reward, callerReward, rewardPool, user.end, user.duration);
-    }
-
-    function uncommit_old(uint tokens) public {
-        Account storage user = accounts[msg.sender];
-        require(tokens <= user.balance, "Insufficient tokens");
-        require(block.timestamp > user.end, "Account not ended");
-        uint elapsed = block.timestamp.sub(uint(user.end).sub(uint(user.duration)));
-        uint reward = elapsed.mul(rewardsPerSecond).mul(user.votes).div(totalVotes);
-        if (reward > rewardPool) {
-            reward = rewardPool;
-        }
-        if (reward > 0) {
-            rewardPool = rewardPool.sub(reward);
-        }
-        totalVotes = totalVotes.sub(user.votes);
-        if (user.delegatee != address(0)) {
-            accounts[user.delegatee].delegatedVotes = accounts[user.delegatee].delegatedVotes.sub(user.votes);
-        }
-        user.balance = user.balance.sub(tokens);
-        if (user.balance == 0) {
-            user.duration = 0;
-            user.end = 0;
-            user.votes = 0;
-        } else {
-            // NOTE Rolling over remaining balance for previous duration
-            user.end = uint64(block.timestamp.add(uint(user.duration)));
-            user.votes = user.balance.mul(uint(user.duration)).div(SECONDS_PER_YEAR);
-            totalVotes = totalVotes.add(user.votes);
-            if (user.delegatee != address(0)) {
-                accounts[user.delegatee].delegatedVotes = accounts[user.delegatee].delegatedVotes.add(user.votes);
-            }
-        }
-        require(ogdToken.withdrawDividendsFor(msg.sender, msg.sender), "OGD withdrawDividendsFor failed");
-        require(ogdToken.transferFrom(msg.sender, address(0), tokens), "OGD transfer failed");
-        require(ogToken.transfer(msg.sender, tokens), "OG transfer failed");
-        require(ogToken.mint(msg.sender, reward), "OG mint failed");
-        emit Uncommitted(msg.sender, tokens, user.balance, user.duration, user.end, user.votes, rewardPool, totalVotes);
     }
 
     function propose(string memory description, address[] memory targets, uint[] memory values, bytes[] memory data) public returns(uint) {
