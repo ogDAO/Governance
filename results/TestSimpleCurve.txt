@@ -1,2 +1,58 @@
 $ npx hardhat test test/TestSimpleCurve.js > results/TestSimpleCurve.txt
 
+
+  TestSimpleCurve
+        owner: 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E
+        --- Test 1 - Increasing rates ---
+        pointsLength: 4
+        point(0): term: 2 => rate: 20
+        point(1): term: 5 => rate: 50
+        point(2): term: 10 => rate: 100
+        point(3): term: 100 => rate: 1000
+        getRate(term: 1): 20, expected: 20
+        getRate(term: 2): 20, expected: 20
+        getRate(term: 3): 30, expected: 30
+        getRate(term: 5): 50, expected: 50
+        getRate(term: 7): 70, expected: 70
+        getRate(term: 10): 100, expected: 100
+        getRate(term: 100): 1000, expected: 1000
+        getRate(term: 101): 1000, expected: 1000
+        getRate(term: 10000): 1000, expected: 1000
+        --- Test 2 - Decreasing rates ---
+        pointsLength: 5
+        point(0): term: 2 => rate: 10
+        point(1): term: 4 => rate: 8
+        point(2): term: 6 => rate: 6
+        point(3): term: 8 => rate: 4
+        point(4): term: 10 => rate: 2
+        getRate(term: 1): 10, expected: 10
+        getRate(term: 2): 10, expected: 10
+        getRate(term: 3): 9, expected: 9
+        getRate(term: 4): 8, expected: 8
+        getRate(term: 5): 7, expected: 7
+        getRate(term: 6): 6, expected: 6
+        getRate(term: 7): 5, expected: 5
+        getRate(term: 8): 4, expected: 4
+        getRate(term: 9): 3, expected: 3
+        getRate(term: 10): 2, expected: 2
+        getRate(term: 11): 2, expected: 2
+        --- Test 3 - Unixtime and BigNumber ---
+        pointsLength: 2
+        point(0): term: 1604716674 => rate: 1000000000000000000000000
+        point(1): term: 1604736674 => rate: 2000000000000000000000000
+        getRate(term: 1604716674): 1000000000000000000000000, expected: 1000000000000000000000000
+        getRate(term: 1604726674): 1500000000000000000000000, expected: 1500000000000000000000000
+        getRate(term: 1604726675): 1500050000000000000000000, expected: 1500050000000000000000000
+        getRate(term: 1604726684): 1500500000000000000000000, expected: 1500500000000000000000000
+        getRate(term: 1604726774): 1505000000000000000000000, expected: 1505000000000000000000000
+        getRate(term: 1604727674): 1550000000000000000000000, expected: 1550000000000000000000000
+        --- Test 4 - Replace Point ---
+        replacePoint: [object Object]
+        rate: 3000000000000000000000000
+        --- Test Completed ---
+
+    ✓ TestSimpleCurve - #0 (1710ms)
+
+
+  1 passing (2s)
+
