@@ -337,8 +337,8 @@ class Data {
         console.log("        - proposalCount        : " + proposalCount);
         // console.log("        - stakeInfoLength      : " + stakeInfoLength);
         // console.log("        - accountsLength       : " + accountsLength);
-        console.log("          # Account              Duration        End                  Balance                    Votes Delegatee                     Delegated Votes                  Accrued    Term");
-        console.log("         -- -------------------- -------- ---------- ------------------------ ------------------------ -------------------- ------------------------ ------------------------ -------");
+        console.log("          # Account              Duration        End                    Rate%                  Balance                    Votes Delegatee                     Delegated Votes                  Accrued    Term");
+        console.log("         -- -------------------- -------- ---------- ------------------------ ------------------------ ------------------------ -------------------- ------------------------ ------------------------ -------");
         for (let j = 0; j < accountsLength; j++) {
           const _a = await this.optinoGov.getAccountByIndex(j);
           const accruedReward = await tokenContract.accruedReward(_a.tokenOwner);
@@ -346,6 +346,7 @@ class Data {
             this.padRight(this.getShortAccountName(_a.tokenOwner), 20) + " " +
             this.padLeft(_a.account.duration.toString(), 8) + " " +
             this.padLeft(_a.account.end, 10) + " " +
+            this.padLeft(ethers.utils.formatUnits(_a.account.rate, 16), 24) + " " +
             this.padLeft(ethers.utils.formatUnits(_a.account.balance, 18), 24) + " " +
             this.padLeft(ethers.utils.formatUnits(_a.account.votes, 18), 24) + " " +
             this.padRight(this.getShortAccountName(_a.account.delegatee), 20) + " " +
@@ -353,7 +354,7 @@ class Data {
             this.padLeft(ethers.utils.formatUnits(accruedReward[0], 18), 24) + " " +
             this.padLeft(accruedReward[1].toString(), 7));
         }
-        console.log("         -- -------------------- -------- ---------- ------------------------ ------------------------ -------------------- ------------------------ ------------------------ -------");
+        console.log("         -- -------------------- -------- ---------- ------------------------ ------------------------ ------------------------ -------------------- ------------------------ ------------------------ -------");
       } else if (symbol == "OGD") {
         const dividendTokensLength = parseInt(await tokenContract.dividendTokensLength());
         // console.log("        - dividendTokensLength : " + dividendTokensLength);
@@ -375,7 +376,7 @@ class Data {
           for (let j = 1; j < this.accounts.length; j++) {
             let account = this.accounts[j];
             let accountName = this.getShortAccountName(account);
-            if (!accountName.startsWith("Fee") && !accountName.startsWith("OG")) {
+            if (!accountName.startsWith("Fee") && !accountName.startsWith("OG") && !accountName.startsWith("SimpleCurve")) {
               const dividendsOwing = await tokenContract.dividendsOwing(account);
               let result = "";
               let tokenList = dividendsOwing[0];
@@ -419,18 +420,34 @@ class Data {
       }
     }
 
+    function termString(t) {
+      const SECONDS_PER_DAY = 24 * 60 * 60;
+      const SECONDS_PER_YEAR = 365 * 24 * 60 * 60;
+      let s = "";
+      if (t >= SECONDS_PER_YEAR) {
+        s = " " + parseInt(t / SECONDS_PER_YEAR) + "y";
+        t = t - parseInt(t / SECONDS_PER_YEAR) * SECONDS_PER_YEAR;
+      }
+      if (t >= SECONDS_PER_DAY) {
+        s = parseInt(t / SECONDS_PER_DAY) + "d" + s;
+        t = t - parseInt(t / SECONDS_PER_DAY) * SECONDS_PER_DAY;
+      }
+      return s;
+    }
+
     if (this.simpleCurve != null) {
       const [owner, pointsLength] = await Promise.all([this.simpleCurve.owner(), this.simpleCurve.pointsLength()]);
       console.log("        SimpleCurve " + this.getShortAccountName(this.simpleCurve.address) + " @ " + this.simpleCurve.address + ", owner: " + this.getShortAccountName(owner) + ", pointsLength: " + pointsLength);
-        console.log("          #       Term                    Rate%");
-        console.log("         -- ---------- ------------------------");
+        console.log("          #       Term                Rate APY%                  Rate/s%");
+        console.log("         -- ---------- ------------------------ ------------------------");
         for (let j = 0; j < pointsLength; j++) {
           const point = await this.simpleCurve.points(j);
           console.log("          " + this.padLeft(j, 2) + " " +
-            this.padLeft(point.term.toString(), 10) + " " +
-            this.padLeft(ethers.utils.formatUnits(point.rate, 16), 24));
+            this.padLeft(termString(point.term.toString()), 10) + " " +
+            this.padLeft(ethers.utils.formatUnits(point.rate, 16), 24) + " " +
+            this.padLeft(ethers.utils.formatUnits(point.rate.div(365 * 24 * 60 * 60), 16), 24));
         }
-        console.log("         -- ---------- ------------------------");
+        console.log("         -- ---------- ------------------------ ------------------------");
     }
 
     if (this.stakingFactory != null) {

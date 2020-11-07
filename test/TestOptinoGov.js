@@ -10,6 +10,8 @@ let TestToken;
 let OptinoGov;
 let data;
 const verbose = false;
+const SECONDS_PER_DAY = 24 * 60 * 60;
+const SECONDS_PER_YEAR = 365 * 24 * 60 * 60;
 
 describe("TestOptinoGov", function() {
   beforeEach("Setup", async function() {
@@ -23,12 +25,14 @@ describe("TestOptinoGov", function() {
 
     console.log("        --- Setup 1 - Deploy OGToken, OGDToken, FEE0, then OptinoGov ---");
     const setup1a = [];
-    // const ogTokens = ethers.utils.parseUnits("40000", 18);
-    const mintOGTokens = ethers.utils.parseUnits("10000", 18);
+    const mintOGTokens = ethers.utils.parseUnits("40000", 18);
+    // const mintOGTokens = ethers.utils.parseUnits("10000", 18);
     // const mintFee0Tokens = ethers.utils.parseUnits("100", 18);
     const mintFee0Tokens = ethers.utils.parseUnits("0", 18);
-    let terms = [2, 5, 10, 100];
-    let rates = [ethers.utils.parseUnits("20", 16), ethers.utils.parseUnits("50", 16), ethers.utils.parseUnits("100", 16), ethers.utils.parseUnits("1000", 16)];
+    // let terms = [2, 5, 10, 100];
+    // let rates = [ethers.utils.parseUnits("20", 16), ethers.utils.parseUnits("50", 16), ethers.utils.parseUnits("100", 16), ethers.utils.parseUnits("1000", 16)];
+    let terms = [SECONDS_PER_DAY, SECONDS_PER_YEAR, 2 * SECONDS_PER_YEAR];
+    let rates = [BigNumber.from(SECONDS_PER_YEAR).mul(BigNumber.from(10).pow(10)), BigNumber.from(2 * SECONDS_PER_YEAR).mul(BigNumber.from(10).pow(10)), BigNumber.from(3 * SECONDS_PER_YEAR).mul(BigNumber.from(10).pow(10))];
     setup1a.push(OGToken.deploy("OG", "Optino Governance", 18, data.owner, mintOGTokens));
     setup1a.push(OGDToken.deploy("OGD", "Optino Governance Dividend", 18, data.owner, ethers.utils.parseUnits("0", 18)));
     setup1a.push(SimpleCurve.deploy(terms, rates));
@@ -68,18 +72,18 @@ describe("TestOptinoGov", function() {
     const approveTokens = ethers.utils.parseUnits("2000", 18);
     const setup3 = [];
     setup3.push(ogToken.transfer(data.user1, ogTokens));
-    // setup3.push(ogToken.transfer(data.user2, ogTokens));
-    // setup3.push(ogToken.transfer(data.user3, ogTokens));
+    setup3.push(ogToken.transfer(data.user2, ogTokens));
+    setup3.push(ogToken.transfer(data.user3, ogTokens));
     setup3.push(ogToken.connect(data.user1Signer).approve(data.optinoGov.address, approveTokens));
     setup3.push(ogToken.connect(data.user2Signer).approve(data.optinoGov.address, approveTokens));
     setup3.push(ogToken.connect(data.user3Signer).approve(data.optinoGov.address, approveTokens));
     setup3.push(fee0Token.approve(data.ogdToken.address, approveTokens));
     setup3.push(ogToken.transferOwnership(data.optinoGov.address));
     setup3.push(data.ogdToken.transferOwnership(data.optinoGov.address));
-    const [transfer1, /*transfer2, transfer3,*/ approve1, approve2, approve3, approve4, transferOwnership1, transferOwnership2] = await Promise.all(setup3);
+    const [transfer1, transfer2, transfer3, approve1, approve2, approve3, approve4, transferOwnership1, transferOwnership2] = await Promise.all(setup3);
     await data.printTxData("transfer1", transfer1);
-    // await data.printTxData("transfer2", transfer2);
-    // await data.printTxData("transfer3", transfer3);
+    await data.printTxData("transfer2", transfer2);
+    await data.printTxData("transfer3", transfer3);
     await data.printTxData("approve1", approve1);
     await data.printTxData("approve2", approve2);
     await data.printTxData("approve3", approve3);
@@ -267,17 +271,17 @@ describe("TestOptinoGov", function() {
 
   describe.only("TestOptinoGov - Workflow #2 - Developing", function() {
     it("Workflow #2 - Developing", async function() {
-      console.log("        --- Test 1 - User{1..3} commit 1,000 OGTokens for {1, 1, 1} seconds duration ---");
-      let duration = 2;
+      console.log("        --- Test 1 - User{1..3} commit 1,000 OGTokens for {3m, 1y, 15m} seconds duration ---");
+      let duration1 = 2;
       let tokensToCommit = ethers.utils.parseUnits("1000", 18);
       const test1 = [];
-      test1.push(data.optinoGov.connect(data.user1Signer).commit(tokensToCommit, duration));
-      // test1.push(data.optinoGov.connect(data.user2Signer).commit(tokensToCommit, duration));
-      // test1.push(data.optinoGov.connect(data.user3Signer).commit(tokensToCommit, duration));
-      const [commit1/*, commit2, commit3*/] = await Promise.all(test1);
+      test1.push(data.optinoGov.connect(data.user1Signer).commit(tokensToCommit, SECONDS_PER_DAY * 30));
+      test1.push(data.optinoGov.connect(data.user2Signer).commit(tokensToCommit, SECONDS_PER_YEAR));
+      test1.push(data.optinoGov.connect(data.user3Signer).commit(tokensToCommit, SECONDS_PER_YEAR * 3 / 2));
+      const [commit1, commit2, commit3] = await Promise.all(test1);
       await data.printTxData("commit1", commit1);
-      // await data.printTxData("commit2", commit2);
-      // await data.printTxData("commit3", commit3);
+      await data.printTxData("commit2", commit2);
+      await data.printTxData("commit3", commit3);
       await data.printBalances();
 
       // console.log("        --- Test 2 - User{1..3} commit OGTokens for {1, 1, 1} seconds duration ---");

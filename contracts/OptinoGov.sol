@@ -91,7 +91,7 @@ contract OptinoGov is ERC20, OptinoGovConfig {
         uint64 lastDelegated;
         uint64 lastVoted;
         uint64 index;
-        uint64 rate; // max 18_446744073_709551615 = 1800%
+        uint rate; // max 18_446744073_709551615 = 1800%
         address delegatee;
         uint balance;
         uint votes;
@@ -267,13 +267,15 @@ contract OptinoGov is ERC20, OptinoGovConfig {
         }
         if (depositTokens > 0) {
             if (account.end == 0) {
-                accounts[tokenOwner] = Account(uint64(duration), uint64(block.timestamp.add(duration)), uint64(0), uint64(0), uint64(accountsIndex.length), uint64(rewardsPerYear), address(0), depositTokens, 0, 0);
+                uint rate = curve.getRate(uint(duration));
+                accounts[tokenOwner] = Account(uint64(duration), uint64(block.timestamp.add(duration)), uint64(0), uint64(0), uint64(accountsIndex.length), rate, address(0), depositTokens, 0, 0);
                 account = accounts[tokenOwner];
                 accountsIndex.push(tokenOwner);
             } else {
                 require(block.timestamp + duration >= account.end, "Cannot shorten duration");
                 account.duration = uint64(duration);
                 account.end = uint64(block.timestamp.add(duration));
+                account.rate = curve.getRate(uint(duration));
                 account.balance = account.balance.add(depositTokens);
             }
             require(ogdToken.mint(tokenOwner, depositTokens), "OGD mint failed");
