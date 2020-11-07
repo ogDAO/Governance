@@ -10,7 +10,7 @@ TESTOUTPUT=results/TestOptinoGov.txt
 # Clear scollback buffer and screen
 printf "\033[2J\033[3J\033[1;1H"
 
-echo "\$ npx hardhat test $TESTINPUT > $TESTOUTPUT" | tee $TESTOUTPUT
+echo "\$ npx hardhat --verbose --show-stack-traces test $TESTINPUT > $TESTOUTPUT" | tee $TESTOUTPUT
 
 npx hardhat test $TESTINPUT | tee -a $TESTOUTPUT
 

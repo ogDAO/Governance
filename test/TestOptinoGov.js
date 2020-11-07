@@ -3,6 +3,7 @@ const { expect } = require("chai");
 const { BigNumber } = require("ethers");
 const util = require('util');
 
+let SimpleCurve;
 let OGToken;
 let OGDToken;
 let TestToken;
@@ -12,6 +13,7 @@ const verbose = false;
 
 describe("TestOptinoGov", function() {
   beforeEach("Setup", async function() {
+    SimpleCurve = await ethers.getContractFactory("SimpleCurve");
     OGToken = await ethers.getContractFactory("OGToken");
     OGDToken = await ethers.getContractFactory("OGDToken");
     TestToken = await ethers.getContractFactory("TestToken");
@@ -25,16 +27,19 @@ describe("TestOptinoGov", function() {
     const mintOGTokens = ethers.utils.parseUnits("10000", 18);
     // const mintFee0Tokens = ethers.utils.parseUnits("100", 18);
     const mintFee0Tokens = ethers.utils.parseUnits("0", 18);
+    let terms = [2, 5, 10, 100];
+    let rates = [ethers.utils.parseUnits("20", 16), ethers.utils.parseUnits("50", 16), ethers.utils.parseUnits("100", 16), ethers.utils.parseUnits("1000", 16)];
     setup1a.push(OGToken.deploy("OG", "Optino Governance", 18, data.owner, mintOGTokens));
     setup1a.push(OGDToken.deploy("OGD", "Optino Governance Dividend", 18, data.owner, ethers.utils.parseUnits("0", 18)));
+    setup1a.push(SimpleCurve.deploy(terms, rates));
     setup1a.push(TestToken.deploy("FEE0", "Fee0", 18, data.owner, mintFee0Tokens));
-    const [ogToken, ogdToken, fee0Token] = await Promise.all(setup1a);
+    const [ogToken, ogdToken, simpleCurve, fee0Token] = await Promise.all(setup1a);
     const setup1b = [];
-    setup1b.push(OptinoGov.deploy(ogToken.address, ogdToken.address));
-    const [optinoGov] = await Promise.all(setup1b);
-    await data.setOptinoGovData(ogToken, ogdToken, fee0Token, optinoGov);
+    const optinoGov = await OptinoGov.deploy(ogToken.address, ogdToken.address, simpleCurve.address);
+    await data.setOptinoGovData(ogToken, ogdToken, simpleCurve, optinoGov, fee0Token);
     await data.printTxData("ogToken.deployTransaction", ogToken.deployTransaction);
     await data.printTxData("ogdToken.deployTransaction", ogdToken.deployTransaction);
+    await data.printTxData("simpleCurve.deployTransaction", simpleCurve.deployTransaction);
     await data.printTxData("fee0Token.deployTransaction", fee0Token.deployTransaction);
     await data.printTxData("optinoGov.deployTransaction", optinoGov.deployTransaction);
     if (verbose) {

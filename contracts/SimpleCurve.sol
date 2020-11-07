@@ -11,7 +11,7 @@ import "./CurveInterface.sol";
 
 /// @notice Simple interpolated curve by term
 // SPDX-License-Identifier: GPLv2
-contract SimpleCurve is Owned, Curve {
+contract SimpleCurve is Owned, CurveInterface {
     using SafeMath for uint;
 
     struct Point {
@@ -19,6 +19,7 @@ contract SimpleCurve is Owned, Curve {
         uint rate;
     }
     Point[] public points;
+    event PointUpdated(uint index, uint term, uint rate);
 
     constructor(uint[] memory terms, uint[] memory rates) {
         initOwned(msg.sender);
@@ -38,6 +39,7 @@ contract SimpleCurve is Owned, Curve {
         // Check gas
         // delete points[i[];
         points[i] = Point(term, rate);
+        emit PointUpdated(i, term, rate);
     }
 
     function _addPoints(uint[] memory terms, uint[] memory rates) internal {
@@ -48,6 +50,7 @@ contract SimpleCurve is Owned, Curve {
                 require(terms[i-1] < terms[i], "Invalid terms");
             }
             points.push(Point(terms[i], rates[i]));
+            emit PointUpdated(i, terms[i], rates[i]);
         }
     }
 

@@ -1,6 +1,6 @@
 pragma solidity ^0.7.0;
 
 // SPDX-License-Identifier: GPLv2
-interface Curve {
+interface CurveInterface {
     function getRate(uint term) external view returns (uint rate);
 }

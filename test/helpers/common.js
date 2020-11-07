@@ -16,13 +16,13 @@ class Data {
     this.decimals = [];
 
     // OptinoGov testing
-    // this.simpleCurve = null;
     this.ogToken = null;
     this.ogdToken = null;
+    this.simpleCurve = null;
+    this.optinoGov = null;
     this.fee0Token = null;
     this.fee1Token = null;
     this.fee2Token = null;
-    this.optinoGov = null;
     this.stakingFactory = null;
 
     // this.ethUsd = BigNumber.from("385.67");
@@ -74,20 +74,23 @@ class Data {
   //   this.addContract(this.simpleCurve, "SimpleCurve");
   // }
 
-  async setOptinoGovData(ogToken, ogdToken, fee0Token, optinoGov) {
+  async setOptinoGovData(ogToken, ogdToken, simpleCurve, optinoGov, fee0Token) {
     this.ogToken = ogToken;
     this.ogdToken = ogdToken;
-    this.fee0Token = fee0Token;
+    this.simpleCurve = simpleCurve;
     this.optinoGov = optinoGov;
+    this.fee0Token = fee0Token;
     this.addAccount(this.ogToken.address, "OGToken");
     this.addAccount(this.ogdToken.address, "OGDToken");
-    this.addAccount(this.fee0Token.address, "Fee0Token");
+    this.addAccount(this.simpleCurve.address, "SimpleCurve");
     this.addAccount(this.optinoGov.address, "OptinoGov");
+    this.addAccount(this.fee0Token.address, "Fee0Token");
 
     this.addContract(this.ogToken, "OGToken");
     this.addContract(this.ogdToken, "OGDToken");
-    this.addContract(this.fee0Token, "Fee0Token");
+    this.addContract(this.simpleCurve, "SimpleCurve");
     this.addContract(this.optinoGov, "OptinoGov");
+    this.addContract(this.fee0Token, "Fee0Token");
 
     this.tokenContracts = [optinoGov, ogToken, ogdToken, fee0Token];
     for (let i = 0; i < this.tokenContracts.length; i++) {
@@ -311,11 +314,12 @@ class Data {
       console.log("        Token " + i + " symbol: '" + symbol + "', name: '" + name + "', decimals: " + decimals + ", totalSupply: " + ethers.utils.formatUnits(totalSupply, decimals) + ", owner: " + this.getShortAccountName(owner) + ", address: " + this.getShortAccountName(tokenContract.address));
       if (symbol == "OptinoGov" && this.optinoGov != null) {
         // console.log("        OptinoGov " + this.getShortAccountName(this.optinoGov.address) + " @ " + this.optinoGov.address);
-        let [ogToken, ogdToken, accountsLength, maxDuration, rewardsPerSecond, rewardsPerYear, collectRewardForFee, collectRewardForDelay, proposalCost, proposalThreshold] = await Promise.all([this.optinoGov.ogToken(), this.optinoGov.ogdToken(), this.optinoGov.accountsLength(), this.optinoGov.maxDuration(), this.optinoGov.rewardsPerSecond(), this.optinoGov.rewardsPerYear(), this.optinoGov.collectRewardForFee(), this.optinoGov.collectRewardForDelay(), this.optinoGov.proposalCost(), this.optinoGov.proposalThreshold()]);
+        let [ogToken, ogdToken, curve, accountsLength, maxDuration, rewardsPerSecond, rewardsPerYear, collectRewardForFee, collectRewardForDelay, proposalCost, proposalThreshold] = await Promise.all([this.optinoGov.ogToken(), this.optinoGov.ogdToken(), this.optinoGov.curve(), this.optinoGov.accountsLength(), this.optinoGov.maxDuration(), this.optinoGov.rewardsPerSecond(), this.optinoGov.rewardsPerYear(), this.optinoGov.collectRewardForFee(), this.optinoGov.collectRewardForDelay(), this.optinoGov.proposalCost(), this.optinoGov.proposalThreshold()]);
         let [quorum, quorumDecayPerSecond, votingDuration, executeDelay, rewardPool, totalVotes] = await Promise.all([this.optinoGov.quorum(), this.optinoGov.quorumDecayPerSecond(), this.optinoGov.votingDuration(), this.optinoGov.executeDelay(), this.optinoGov.rewardPool(), this.optinoGov.totalVotes()]);
         let [proposalCount /*, stakeInfoLength*/] = await Promise.all([this.optinoGov.proposalCount()/*, this.optinoGov.stakeInfoLength()*/]);
         console.log("        - ogToken              : " + this.getShortAccountName(ogToken));
         console.log("        - ogdToken             : " + this.getShortAccountName(ogdToken));
+        console.log("        - curve                : " + this.getShortAccountName(curve));
         let decimals = 18;
         console.log("        - maxDuration          : " + maxDuration + " seconds = " + maxDuration.div(60 * 60 * 24) + " days");
         console.log("        - rewardsPerSecond     : " + rewardsPerSecond + " = " + ethers.utils.formatUnits(rewardsPerSecond, 18) + " = " + ethers.utils.formatUnits(rewardsPerSecond.mul(60 * 60 * 24), decimals) + " per day");
@@ -413,6 +417,20 @@ class Data {
         }
         console.log("         -- -------------------- -------- ---------- ---------- ------------------------ ------------------------ -------");
       }
+    }
+
+    if (this.simpleCurve != null) {
+      const [owner, pointsLength] = await Promise.all([this.simpleCurve.owner(), this.simpleCurve.pointsLength()]);
+      console.log("        SimpleCurve " + this.getShortAccountName(this.simpleCurve.address) + " @ " + this.simpleCurve.address + ", owner: " + this.getShortAccountName(owner) + ", pointsLength: " + pointsLength);
+        console.log("          #       Term                    Rate%");
+        console.log("         -- ---------- ------------------------");
+        for (let j = 0; j < pointsLength; j++) {
+          const point = await this.simpleCurve.points(j);
+          console.log("          " + this.padLeft(j, 2) + " " +
+            this.padLeft(point.term.toString(), 10) + " " +
+            this.padLeft(ethers.utils.formatUnits(point.rate, 16), 24));
+        }
+        console.log("         -- ---------- ------------------------");
     }
 
     if (this.stakingFactory != null) {

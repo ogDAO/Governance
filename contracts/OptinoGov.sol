@@ -8,6 +8,7 @@ import "./OGTokenInterface.sol";
 import "./OGDTokenInterface.sol";
 import "./SafeMath.sol";
 import "./InterestUtils.sol";
+import "./CurveInterface.sol";
 
 /// @notice Optino Governance config
 contract OptinoGovConfig {
@@ -17,6 +18,7 @@ contract OptinoGovConfig {
 
     OGTokenInterface public ogToken;
     OGDTokenInterface public ogdToken;
+    CurveInterface public curve;
     uint public maxDuration = 10000 seconds; // Testing 365 days;
     uint public rewardsPerSecond = 150_000_000_000_000_000; // 0.15
     uint public collectRewardForFee = 5 * 10**16; // 5%, 18 decimals
@@ -37,16 +39,19 @@ contract OptinoGovConfig {
         _;
     }
 
-    constructor(OGTokenInterface _ogToken, OGDTokenInterface _ogdToken) {
+    constructor(OGTokenInterface _ogToken, OGDTokenInterface _ogdToken, CurveInterface _curve) {
         ogToken = _ogToken;
         ogdToken = _ogdToken;
+        curve = _curve;
     }
 
     function equalString(string memory s1, string memory s2) internal pure returns(bool) {
         return keccak256(abi.encodePacked(s1)) == keccak256(abi.encodePacked(s2));
     }
     function setConfig(string memory key, uint value) external onlySelf {
-        if (equalString(key, "maxDuration")) {
+        /*if (equalString(key, "curve")) {
+            curve = CurveInterface(value);
+        } else */if (equalString(key, "maxDuration")) {
             require(maxDuration < 5 * 365 days, "Cannot exceed 5 years");
             maxDuration = value;
         } else if (equalString(key, "collectRewardForFee")) {
@@ -125,7 +130,7 @@ contract OptinoGov is ERC20, OptinoGovConfig {
     event Voted(address indexed user, uint oip, bool voteFor, uint forVotes, uint againstVotes);
     event Executed(address indexed user, uint oip);
 
-    constructor(OGTokenInterface ogToken, OGDTokenInterface ogdToken) OptinoGovConfig(ogToken, ogdToken) {
+    constructor(OGTokenInterface ogToken, OGDTokenInterface ogdToken, CurveInterface curve) OptinoGovConfig(ogToken, ogdToken, curve) {
     }
 
     function symbol() override external view returns (string memory) {

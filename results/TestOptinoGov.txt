@@ -1,6 +1,4 @@
-$ npx hardhat test test/TestOptinoGov.js > results/TestOptinoGov.txt
-Compiling 21 files with 0.7.4
-Compilation finished successfully
+$ npx hardhat --verbose --show-stack-traces test test/TestOptinoGov.js > results/TestOptinoGov.txt
 
 
   TestOptinoGov
@@ -13,60 +11,68 @@ Compilation finished successfully
         --- Setup 1 - Deploy OGToken, OGDToken, FEE0, then OptinoGov ---
         Address 0x1647B1461251A0c6D3E14a227dE0F16E36ba80B1 => OGToken:0x1647
         Address 0x0f4eA6f2be49d822b7cAEf4175450A4D83A32e72 => OGDToken:0x0f4e
-        Address 0x6eaC8DFBdEB9588C9FEEe24783B4137b082f9708 => Fee0Token:0x6eaC
-        Address 0xBa1FCDaE835E77cAB2a76a7C3884AdC630f7a5B0 => OptinoGov:0xBa1F
+        Address 0x6eaC8DFBdEB9588C9FEEe24783B4137b082f9708 => SimpleCurve:0x6eaC
+        Address 0x5Fec6C68520cdf0Cd43ca00dDAAcd4b2e7c568D0 => OptinoGov:0x5Fec
+        Address 0xBa1FCDaE835E77cAB2a76a7C3884AdC630f7a5B0 => Fee0Token:0xBa1F
         ogToken.deployTransaction - gasUsed: 964627, fee: 0.07717016, feeUsd: 29.7622156072, @ 80.0 gwei & 385.67 ETH/USD, 0x0a2eff674eb143c20124ee7dff9e4b4f0c2b3b33ad5ba5a304ce823838146815
         + OGToken.Transfer(from: ETH|null:0x0000, to: Owner:0xa00A, tokens: 10000.0)
         ogdToken.deployTransaction - gasUsed: 2471788, fee: 0.19774304, feeUsd: 76.2635582368, @ 80.0 gwei & 385.67 ETH/USD, 0xf58fbd18f7596b9625b7158dd252163921d68744dcacbd278c05ef3320bcf239
         + OGDToken.Transfer(from: ETH|null:0x0000, to: Owner:0xa00A, tokens: 0.0)
-        fee0Token.deployTransaction - gasUsed: 785224, fee: 0.06281792, feeUsd: 24.2269872064, @ 80.0 gwei & 385.67 ETH/USD, 0xfc5c250d9fe33f452a681101b4de3a27279270cd75a28c79a49ebc5183ff12f7
+        simpleCurve.deployTransaction - gasUsed: 877978, fee: 0.07023824, feeUsd: 27.0887820208, @ 80.0 gwei & 385.67 ETH/USD, 0x6d6502fab378705960035737fac868dbe896fe6ab3270247d041e7436ed3bde9
+        + SimpleCurve.PointUpdated(index: 0, term: 2, rate: 200000000000000000)
+        + SimpleCurve.PointUpdated(index: 1, term: 5, rate: 500000000000000000)
+        + SimpleCurve.PointUpdated(index: 2, term: 10, rate: 1000000000000000000)
+        + SimpleCurve.PointUpdated(index: 3, term: 100, rate: 10000000000000000000)
+        fee0Token.deployTransaction - gasUsed: 785224, fee: 0.06281792, feeUsd: 24.2269872064, @ 80.0 gwei & 385.67 ETH/USD, 0x2903866d9eba5c9e80a3154373c2ebe22792f9d43862a61726b72a3c14c4cd93
         + Fee0Token.Transfer(from: ETH|null:0x0000, to: Owner:0xa00A, tokens: 0.0)
-        optinoGov.deployTransaction - gasUsed: 3807572, fee: 0.30460576, feeUsd: 117.4773034592, @ 80.0 gwei & 385.67 ETH/USD, 0xcb4753f949cf2eff3cd07ec5ee0272130126bd91220fa74a61ff1864a6fb0984
+        optinoGov.deployTransaction - gasUsed: 3840340, fee: 0.3072272, feeUsd: 118.488314224, @ 80.0 gwei & 385.67 ETH/USD, 0xfd0be314ae96bb6ce8f44f368acb7bfd4a82e3403264347647268b3bc5f4b5a2
         --- Setup 2 - OGDToken.addDividendToken([ETH, FEE0]), OGDToken mint(...) permissioning ---
-        addDividendToken0 - gasUsed: 114431, fee: 0.00915448, feeUsd: 3.5306083016, @ 80.0 gwei & 385.67 ETH/USD, 0xa7f10ca590c58a04f90a0196f061498f8bb4b9a23b5112ff600d8a8b47808c87
+        addDividendToken0 - gasUsed: 114431, fee: 0.00915448, feeUsd: 3.5306083016, @ 80.0 gwei & 385.67 ETH/USD, 0x3065e32b8a76f6890497b00f3e1a884cd2a6f6abd3d185df9eb2fb6460112df9
         + OGDToken.DividendTokenAdded(token: ETH|null:0x0000, enabled: true)
-        addDividendToken1 - gasUsed: 116398, fee: 0.00931184, feeUsd: 3.5912973328, @ 80.0 gwei & 385.67 ETH/USD, 0x8b24c8db5174656123681f9b346158300fb54df2940d6e794ed8b54de8f0ecba
-        + OGDToken.DividendTokenAdded(token: Fee0Token:0x6eaC, enabled: true)
-        setPermission1 - gasUsed: 49100, fee: 0.003928, feeUsd: 1.51491176, @ 80.0 gwei & 385.67 ETH/USD, 0x1ac650e0366745e0e30e803137ce2abe28914140934131c763f0e3c2b860151c
-        + OGToken.PermissionUpdated(account: OptinoGov:0xBa1F, role: 1, active: true, maximum: 0, processed: 0)
-        setPermission2 - gasUsed: 49145, fee: 0.0039316, feeUsd: 1.516300172, @ 80.0 gwei & 385.67 ETH/USD, 0x6fa13c6fc10d8085218981ec4e2c68791ea014ec01be3e9d46f4af97df1a23aa
-        + OGDToken.PermissionUpdated(account: OptinoGov:0xBa1F, role: 1, active: true, maximum: 0, processed: 0)
-        setPermission3 - gasUsed: 49145, fee: 0.0039316, feeUsd: 1.516300172, @ 80.0 gwei & 385.67 ETH/USD, 0xf83653cd3b3ac2604cd78133dd602c4578f5394cd349b18c2949e9370fedc068
-        + OGDToken.PermissionUpdated(account: OptinoGov:0xBa1F, role: 2, active: true, maximum: 0, processed: 0)
+        addDividendToken1 - gasUsed: 116398, fee: 0.00931184, feeUsd: 3.5912973328, @ 80.0 gwei & 385.67 ETH/USD, 0xcaf4e973dab165f20479875f3b62719eaff054364a2fe09395f761d550a10efb
+        + OGDToken.DividendTokenAdded(token: Fee0Token:0xBa1F, enabled: true)
+        setPermission1 - gasUsed: 49100, fee: 0.003928, feeUsd: 1.51491176, @ 80.0 gwei & 385.67 ETH/USD, 0xd665269c03ae873b38f7be7929210f358a09f247bff7881b2f4cd3053d9074f5
+        + OGToken.PermissionUpdated(account: OptinoGov:0x5Fec, role: 1, active: true, maximum: 0, processed: 0)
+        setPermission2 - gasUsed: 49145, fee: 0.0039316, feeUsd: 1.516300172, @ 80.0 gwei & 385.67 ETH/USD, 0xda223d118c077355713b7b8201c26f4dcf30ed1afe749c170f3a471e6e48491d
+        + OGDToken.PermissionUpdated(account: OptinoGov:0x5Fec, role: 1, active: true, maximum: 0, processed: 0)
+        setPermission3 - gasUsed: 49145, fee: 0.0039316, feeUsd: 1.516300172, @ 80.0 gwei & 385.67 ETH/USD, 0x1ba965d572b8eff7e1d2f73a52369355460fd4c38b0fa3a9e054c308f9c1f9ec
+        + OGDToken.PermissionUpdated(account: OptinoGov:0x5Fec, role: 2, active: true, maximum: 0, processed: 0)
         --- Setup 3 - Transfer OGTokens, User{1..3} approve 2,000 OGTokens to OptinoGov, Owner approve 2,000 FEE0 tokens to OGDToken, Transfer OGToken and OGDToken ownership to OptinoGov ---
-        transfer1 - gasUsed: 35915, fee: 0.0028732, feeUsd: 1.108107044, @ 80.0 gwei & 385.67 ETH/USD, 0x655871f6f59cda01fd8c119411d5146f5374b49cfe62415c574134a0d53f7d39
+        transfer1 - gasUsed: 35915, fee: 0.0028732, feeUsd: 1.108107044, @ 80.0 gwei & 385.67 ETH/USD, 0xb52897207a63ff81f9d73721d0ccb3a92dd8befb6e2d0c7b8437e5af06ae9a90
         + OGToken.Transfer(from: Owner:0xa00A, to: User1:0xa11A, tokens: 10000.0)
-        approve1 - gasUsed: 43990, fee: 0.0035192, feeUsd: 1.357249864, @ 80.0 gwei & 385.67 ETH/USD, 0x675a5c2cfdcaa15a3ac2a4e38c1bf26aa4bd372709205a38aece9be4075c52c1
-        + OGToken.Approval(tokenOwner: User1:0xa11A, spender: OptinoGov:0xBa1F, tokens: 2000.0)
-        approve2 - gasUsed: 43990, fee: 0.0035192, feeUsd: 1.357249864, @ 80.0 gwei & 385.67 ETH/USD, 0x0ba92cd187eee1d4e46c10699e4fde15f6beaf594f62505db03ed5c3c9c30f42
-        + OGToken.Approval(tokenOwner: User2:0xa22A, spender: OptinoGov:0xBa1F, tokens: 2000.0)
-        approve3 - gasUsed: 43990, fee: 0.0035192, feeUsd: 1.357249864, @ 80.0 gwei & 385.67 ETH/USD, 0xa2480168ae927d93263c38b7952d0f9cfbfa0f99e529bc594b3d54e2923b09c5
-        + OGToken.Approval(tokenOwner: User3:0xa33a, spender: OptinoGov:0xBa1F, tokens: 2000.0)
-        approve4 - gasUsed: 43968, fee: 0.00351744, feeUsd: 1.3565710848, @ 80.0 gwei & 385.67 ETH/USD, 0x8534266ca41873bc5b7679be8760853e7e08bffe91c2ed5e528f3c5d82458ead
+        approve1 - gasUsed: 43990, fee: 0.0035192, feeUsd: 1.357249864, @ 80.0 gwei & 385.67 ETH/USD, 0x2a3e1e0bf5c72d07965d540492726f05ed7b94ac2e5874be1ffe50e02f8966bd
+        + OGToken.Approval(tokenOwner: User1:0xa11A, spender: OptinoGov:0x5Fec, tokens: 2000.0)
+        approve2 - gasUsed: 43990, fee: 0.0035192, feeUsd: 1.357249864, @ 80.0 gwei & 385.67 ETH/USD, 0x76e8ebace162882d33bc02d890fc381114756cd5794413baab352a2ae7c5efb6
+        + OGToken.Approval(tokenOwner: User2:0xa22A, spender: OptinoGov:0x5Fec, tokens: 2000.0)
+        approve3 - gasUsed: 43990, fee: 0.0035192, feeUsd: 1.357249864, @ 80.0 gwei & 385.67 ETH/USD, 0x71e37df01e983fc09636ec00540a0fdb899aaad7767bee36cc3ef600bb078bc4
+        + OGToken.Approval(tokenOwner: User3:0xa33a, spender: OptinoGov:0x5Fec, tokens: 2000.0)
+        approve4 - gasUsed: 43968, fee: 0.00351744, feeUsd: 1.3565710848, @ 80.0 gwei & 385.67 ETH/USD, 0x79d676b4ce19bc2505d6a8d45cef10dce586b2ec9f11f0faa3cf9d3f78ecab1a
         + Fee0Token.Approval(tokenOwner: Owner:0xa00A, spender: OGDToken:0x0f4e, tokens: 2000.0)
-        transferOwnership1 - gasUsed: 30842, fee: 0.00246736, feeUsd: 0.9515867312, @ 80.0 gwei & 385.67 ETH/USD, 0xee6ecf1294fc157718e2da0005a453af98b3968ddbed6417fbd6bec5e3c5a546
-        + OGToken.OwnershipTransferred(from: Owner:0xa00A, to: OptinoGov:0xBa1F)
-        transferOwnership2 - gasUsed: 30842, fee: 0.00246736, feeUsd: 0.9515867312, @ 80.0 gwei & 385.67 ETH/USD, 0x0999abbe3105b993fa46813985da6471d4d2d5c3452d72f526cd3f81e87c8d4b
-        + OGDToken.OwnershipTransferred(from: Owner:0xa00A, to: OptinoGov:0xBa1F)
+        transferOwnership1 - gasUsed: 30842, fee: 0.00246736, feeUsd: 0.9515867312, @ 80.0 gwei & 385.67 ETH/USD, 0xbbb30c55ab6d6f8c778c67b721a25b915fa89dc364a91336db720c78306370bf
+        + OGToken.OwnershipTransferred(from: Owner:0xa00A, to: OptinoGov:0x5Fec)
+        transferOwnership2 - gasUsed: 30842, fee: 0.00246736, feeUsd: 0.9515867312, @ 80.0 gwei & 385.67 ETH/USD, 0x92fed20dc33a42d84a61a0e895e64583ef866b6c425da10611443aeb552b8053
+        + OGDToken.OwnershipTransferred(from: Owner:0xa00A, to: OptinoGov:0x5Fec)
         
          # Account                                     ΔETH                OptinoGov                       OG                      OGD                     FEE0
         -- ------------------------ ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
-         0 Owner:0xa00A                         -0.68391976                      0.0                      0.0                      0.0                      0.0
+         0 Owner:0xa00A                         -0.75677944                      0.0                      0.0                      0.0                      0.0
          1 User1:0xa11A                          -0.0035192                      0.0                  10000.0                      0.0                      0.0
          2 User2:0xa22A                          -0.0035192                      0.0                      0.0                      0.0                      0.0
          3 User3:0xa33a                          -0.0035192                      0.0                      0.0                      0.0                      0.0
          4 User4:0xa44a                                 0.0                      0.0                      0.0                      0.0                      0.0
          5 OGToken:0x1647                               0.0                      0.0                      0.0                      0.0                      0.0
          6 OGDToken:0x0f4e                              0.0                      0.0                      0.0                      0.0                      0.0
-         7 Fee0Token:0x6eaC                             0.0                      0.0                      0.0                      0.0                      0.0
-         8 OptinoGov:0xBa1F                             0.0                      0.0                      0.0                      0.0                      0.0
+         7 SimpleCurve:0x6eaC                           0.0                      0.0                      0.0                      0.0                      0.0
+         8 OptinoGov:0x5Fec                             0.0                      0.0                      0.0                      0.0                      0.0
+         9 Fee0Token:0xBa1F                             0.0                      0.0                      0.0                      0.0                      0.0
         -- ------------------------ ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
            Totals                                                                0.0                  10000.0                      0.0                      0.0
         -- ------------------------ ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
         
-        Token 0 symbol: 'OptinoGov', name: 'OptinoGov', decimals: 18, totalSupply: 0.0, owner: n/a, address: OptinoGov:0xBa1F
+        Token 0 symbol: 'OptinoGov', name: 'OptinoGov', decimals: 18, totalSupply: 0.0, owner: n/a, address: OptinoGov:0x5Fec
         - ogToken              : OGToken:0x1647
         - ogdToken             : OGDToken:0x0f4e
+        - curve                : SimpleCurve:0x6eaC
         - maxDuration          : 10000 seconds = 0 days
         - rewardsPerSecond     : 150000000000000000 = 0.15 = 12960.0 per day
         - collectRewardForFee  : 50000000000000000 = 5.0%
@@ -84,50 +90,61 @@ Compilation finished successfully
           # Account              Duration        End                  Balance                    Votes Delegatee                     Delegated Votes                  Accrued    Term
          -- -------------------- -------- ---------- ------------------------ ------------------------ -------------------- ------------------------ ------------------------ -------
          -- -------------------- -------- ---------- ------------------------ ------------------------ -------------------- ------------------------ ------------------------ -------
-        Token 1 symbol: 'OG', name: 'Optino Governance', decimals: 18, totalSupply: 10000.0, owner: OptinoGov:0xBa1F, address: OGToken:0x1647
-        Token 2 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 0.0, owner: OptinoGov:0xBa1F, address: OGDToken:0x0f4e
+        Token 1 symbol: 'OG', name: 'Optino Governance', decimals: 18, totalSupply: 10000.0, owner: OptinoGov:0x5Fec, address: OGToken:0x1647
+        Token 2 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 0.0, owner: OptinoGov:0x5Fec, address: OGDToken:0x0f4e
           # Dividend         Enabled                  Unclaimed
          -- ---------------- ------- --------------------------
           0 ETH|null:0x0000     true                        0.0
-          1 Fee0Token:0x6eaC    true                        0.0
+          1 Fee0Token:0xBa1F    true                        0.0
          -- ---------------- ------- --------------------------
-          # Account               Owing ETH|null:0x0000      New ETH|null:0x0000   Owing Fee0Token:0x6eaC     New Fee0Token:0x6eaC 
+          # Account               Owing ETH|null:0x0000      New ETH|null:0x0000   Owing Fee0Token:0xBa1F     New Fee0Token:0xBa1F 
          -- ------------------ ------------------------ ------------------------ ------------------------ ------------------------
           1 User1:0xa11A                            0.0                      0.0                      0.0                      0.0 
           2 User2:0xa22A                            0.0                      0.0                      0.0                      0.0 
           3 User3:0xa33a                            0.0                      0.0                      0.0                      0.0 
           4 User4:0xa44a                            0.0                      0.0                      0.0                      0.0 
-          8 OptinoGov:0xBa1F                        0.0                      0.0                      0.0                      0.0 
+          7 SimpleCurve:0x6eaC                      0.0                      0.0                      0.0                      0.0 
+          8 OptinoGov:0x5Fec                        0.0                      0.0                      0.0                      0.0 
          -- ------------------ ------------------------ ------------------------ ------------------------ ------------------------
-        Token 3 symbol: 'FEE0', name: 'Fee0', decimals: 18, totalSupply: 0.0, owner: Owner:0xa00A, address: Fee0Token:0x6eaC
+        Token 3 symbol: 'FEE0', name: 'Fee0', decimals: 18, totalSupply: 0.0, owner: Owner:0xa00A, address: Fee0Token:0xBa1F
+        SimpleCurve SimpleCurve:0x6eaC @ 0x6eaC8DFBdEB9588C9FEEe24783B4137b082f9708, owner: Owner:0xa00A, pointsLength: 4
+          #       Term                    Rate%
+         -- ---------- ------------------------
+          0          2                     20.0
+          1          5                     50.0
+          2         10                    100.0
+          3        100                   1000.0
+         -- ---------- ------------------------
         
         --- Setup Completed ---
 
         --- Test 1 - User{1..3} commit 1,000 OGTokens for {1, 1, 1} seconds duration ---
-        commit1 - gasUsed: 354284, fee: 0.02834272, feeUsd: 10.9309368224, @ 80.0 gwei & 385.67 ETH/USD, 0x0d45419632ceb6c0d4a3499e1cf397838a515f87c8632151b4e08b207602eb14
-        + OGToken.Transfer(from: User1:0xa11A, to: OptinoGov:0xBa1F, tokens: 1000.0)
+        commit1 - gasUsed: 354284, fee: 0.02834272, feeUsd: 10.9309368224, @ 80.0 gwei & 385.67 ETH/USD, 0x7d8f4e9eebedfa13942e0126a64c4795adc8ae83d593bbd888513e4ce143c18b
+        + OGToken.Transfer(from: User1:0xa11A, to: OptinoGov:0x5Fec, tokens: 1000.0)
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User1:0xa11A, tokens: 1000.0)
-        + OptinoGov.Committed(user: User1:0xa11A, tokens: 1000.0, balance: 1000.0, duration: 2, end: 1604740146, delegatee: ETH|null:0x0000, votes: 0.0, rewardPool: 1000000.0, totalVotes: 0.0)
+        + OptinoGov.Committed(user: User1:0xa11A, tokens: 1000.0, balance: 1000.0, duration: 2, end: 1604743218, delegatee: ETH|null:0x0000, votes: 0.0, rewardPool: 1000000.0, totalVotes: 0.0)
         + OptinoGov.Transfer(from: ETH|null:0x0000, to: User1:0xa11A, tokens: 1000.0)
         
          # Account                                     ΔETH                OptinoGov                       OG                      OGD                     FEE0
         -- ------------------------ ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
-         0 Owner:0xa00A                         -0.68391976                      0.0                      0.0                      0.0                      0.0
+         0 Owner:0xa00A                         -0.75677944                      0.0                      0.0                      0.0                      0.0
          1 User1:0xa11A                         -0.03186192                   1000.0                   9000.0                   1000.0                      0.0
          2 User2:0xa22A                          -0.0035192                      0.0                      0.0                      0.0                      0.0
          3 User3:0xa33a                          -0.0035192                      0.0                      0.0                      0.0                      0.0
          4 User4:0xa44a                                 0.0                      0.0                      0.0                      0.0                      0.0
          5 OGToken:0x1647                               0.0                      0.0                      0.0                      0.0                      0.0
          6 OGDToken:0x0f4e                              0.0                      0.0                      0.0                      0.0                      0.0
-         7 Fee0Token:0x6eaC                             0.0                      0.0                      0.0                      0.0                      0.0
-         8 OptinoGov:0xBa1F                             0.0                      0.0                   1000.0                      0.0                      0.0
+         7 SimpleCurve:0x6eaC                           0.0                      0.0                      0.0                      0.0                      0.0
+         8 OptinoGov:0x5Fec                             0.0                      0.0                   1000.0                      0.0                      0.0
+         9 Fee0Token:0xBa1F                             0.0                      0.0                      0.0                      0.0                      0.0
         -- ------------------------ ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
            Totals                                                             1000.0                  10000.0                   1000.0                      0.0
         -- ------------------------ ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
         
-        Token 0 symbol: 'OptinoGov', name: 'OptinoGov', decimals: 18, totalSupply: 1000.0, owner: n/a, address: OptinoGov:0xBa1F
+        Token 0 symbol: 'OptinoGov', name: 'OptinoGov', decimals: 18, totalSupply: 1000.0, owner: n/a, address: OptinoGov:0x5Fec
         - ogToken              : OGToken:0x1647
         - ogdToken             : OGDToken:0x0f4e
+        - curve                : SimpleCurve:0x6eaC
         - maxDuration          : 10000 seconds = 0 days
         - rewardsPerSecond     : 150000000000000000 = 0.15 = 12960.0 per day
         - collectRewardForFee  : 50000000000000000 = 5.0%
@@ -144,49 +161,60 @@ Compilation finished successfully
         - proposalCount        : 0
           # Account              Duration        End                  Balance                    Votes Delegatee                     Delegated Votes                  Accrued    Term
          -- -------------------- -------- ---------- ------------------------ ------------------------ -------------------- ------------------------ ------------------------ -------
-          0 User1:0xa11A                2 1604740146                   1000.0                     20.0 ETH|null:0x0000                           0.0                      0.0       0
+          0 User1:0xa11A                2 1604743218                   1000.0                     20.0 ETH|null:0x0000                           0.0                      0.0       0
          -- -------------------- -------- ---------- ------------------------ ------------------------ -------------------- ------------------------ ------------------------ -------
-        Token 1 symbol: 'OG', name: 'Optino Governance', decimals: 18, totalSupply: 10000.0, owner: OptinoGov:0xBa1F, address: OGToken:0x1647
-        Token 2 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 1000.0, owner: OptinoGov:0xBa1F, address: OGDToken:0x0f4e
+        Token 1 symbol: 'OG', name: 'Optino Governance', decimals: 18, totalSupply: 10000.0, owner: OptinoGov:0x5Fec, address: OGToken:0x1647
+        Token 2 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 1000.0, owner: OptinoGov:0x5Fec, address: OGDToken:0x0f4e
           # Dividend         Enabled                  Unclaimed
          -- ---------------- ------- --------------------------
           0 ETH|null:0x0000     true                        0.0
-          1 Fee0Token:0x6eaC    true                        0.0
+          1 Fee0Token:0xBa1F    true                        0.0
          -- ---------------- ------- --------------------------
-          # Account               Owing ETH|null:0x0000      New ETH|null:0x0000   Owing Fee0Token:0x6eaC     New Fee0Token:0x6eaC 
+          # Account               Owing ETH|null:0x0000      New ETH|null:0x0000   Owing Fee0Token:0xBa1F     New Fee0Token:0xBa1F 
          -- ------------------ ------------------------ ------------------------ ------------------------ ------------------------
           1 User1:0xa11A                            0.0                      0.0                      0.0                      0.0 
           2 User2:0xa22A                            0.0                      0.0                      0.0                      0.0 
           3 User3:0xa33a                            0.0                      0.0                      0.0                      0.0 
           4 User4:0xa44a                            0.0                      0.0                      0.0                      0.0 
-          8 OptinoGov:0xBa1F                        0.0                      0.0                      0.0                      0.0 
+          7 SimpleCurve:0x6eaC                      0.0                      0.0                      0.0                      0.0 
+          8 OptinoGov:0x5Fec                        0.0                      0.0                      0.0                      0.0 
          -- ------------------ ------------------------ ------------------------ ------------------------ ------------------------
-        Token 3 symbol: 'FEE0', name: 'Fee0', decimals: 18, totalSupply: 0.0, owner: Owner:0xa00A, address: Fee0Token:0x6eaC
+        Token 3 symbol: 'FEE0', name: 'Fee0', decimals: 18, totalSupply: 0.0, owner: Owner:0xa00A, address: Fee0Token:0xBa1F
+        SimpleCurve SimpleCurve:0x6eaC @ 0x6eaC8DFBdEB9588C9FEEe24783B4137b082f9708, owner: Owner:0xa00A, pointsLength: 4
+          #       Term                    Rate%
+         -- ---------- ------------------------
+          0          2                     20.0
+          1          5                     50.0
+          2         10                    100.0
+          3        100                   1000.0
+         -- ---------- ------------------------
         
         --- Test 3 - Dummy tx to mine a new block and get the latest block.timestamp ---
-        Pausing 'Waiting' for 5s=Sat Nov 07 2020 20:08:54 GMT+1100 (Australian Eastern Daylight Time) now=Sat Nov 07 2020 20:08:49 GMT+1100 (Australian Eastern Daylight Time)
-        Paused 'Waiting' for 5s=Sat Nov 07 2020 20:08:54 GMT+1100 (Australian Eastern Daylight Time) now=Sat Nov 07 2020 20:08:54 GMT+1100 (Australian Eastern Daylight Time)
+        Pausing 'Waiting' for 5s=Sat Nov 07 2020 21:00:05 GMT+1100 (Australian Eastern Daylight Time) now=Sat Nov 07 2020 21:00:00 GMT+1100 (Australian Eastern Daylight Time)
+        Paused 'Waiting' for 5s=Sat Nov 07 2020 21:00:05 GMT+1100 (Australian Eastern Daylight Time) now=Sat Nov 07 2020 21:00:05 GMT+1100 (Australian Eastern Daylight Time)
         
-        dummy1 - gasUsed: 21000, fee: 0.00168, feeUsd: 0.6479256, @ 80.0 gwei & 385.67 ETH/USD, 0x7735966d3b58d3fd786d5c1c6f3e982369232dbbb65d28fe5f79d2e4ab9bfa7a
+        dummy1 - gasUsed: 21000, fee: 0.00168, feeUsd: 0.6479256, @ 80.0 gwei & 385.67 ETH/USD, 0x297a03f89818c85901b4eea75b4c6becaa5cc0177474c54b338237a5a494357d
         
          # Account                                     ΔETH                OptinoGov                       OG                      OGD                     FEE0
         -- ------------------------ ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
-         0 Owner:0xa00A                         -0.68559976                      0.0                      0.0                      0.0                      0.0
+         0 Owner:0xa00A                         -0.75845944                      0.0                      0.0                      0.0                      0.0
          1 User1:0xa11A                         -0.03186192                   1000.0                   9000.0                   1000.0                      0.0
          2 User2:0xa22A                          -0.0035192                      0.0                      0.0                      0.0                      0.0
          3 User3:0xa33a                          -0.0035192                      0.0                      0.0                      0.0                      0.0
          4 User4:0xa44a                                 0.0                      0.0                      0.0                      0.0                      0.0
          5 OGToken:0x1647                               0.0                      0.0                      0.0                      0.0                      0.0
          6 OGDToken:0x0f4e                              0.0                      0.0                      0.0                      0.0                      0.0
-         7 Fee0Token:0x6eaC                             0.0                      0.0                      0.0                      0.0                      0.0
-         8 OptinoGov:0xBa1F                             0.0                      0.0                   1000.0                      0.0                      0.0
+         7 SimpleCurve:0x6eaC                           0.0                      0.0                      0.0                      0.0                      0.0
+         8 OptinoGov:0x5Fec                             0.0                      0.0                   1000.0                      0.0                      0.0
+         9 Fee0Token:0xBa1F                             0.0                      0.0                      0.0                      0.0                      0.0
         -- ------------------------ ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
            Totals                                                             1000.0                  10000.0                   1000.0                      0.0
         -- ------------------------ ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
         
-        Token 0 symbol: 'OptinoGov', name: 'OptinoGov', decimals: 18, totalSupply: 1000.0, owner: n/a, address: OptinoGov:0xBa1F
+        Token 0 symbol: 'OptinoGov', name: 'OptinoGov', decimals: 18, totalSupply: 1000.0, owner: n/a, address: OptinoGov:0x5Fec
         - ogToken              : OGToken:0x1647
         - ogdToken             : OGDToken:0x0f4e
+        - curve                : SimpleCurve:0x6eaC
         - maxDuration          : 10000 seconds = 0 days
         - rewardsPerSecond     : 150000000000000000 = 0.15 = 12960.0 per day
         - collectRewardForFee  : 50000000000000000 = 5.0%
@@ -203,49 +231,60 @@ Compilation finished successfully
         - proposalCount        : 0
           # Account              Duration        End                  Balance                    Votes Delegatee                     Delegated Votes                  Accrued    Term
          -- -------------------- -------- ---------- ------------------------ ------------------------ -------------------- ------------------------ ------------------------ -------
-          0 User1:0xa11A                2 1604740146                   1000.0                     20.0 ETH|null:0x0000                           0.0                  0.00006       6
+          0 User1:0xa11A                2 1604743218                   1000.0                     20.0 ETH|null:0x0000                           0.0                  0.00006       6
          -- -------------------- -------- ---------- ------------------------ ------------------------ -------------------- ------------------------ ------------------------ -------
-        Token 1 symbol: 'OG', name: 'Optino Governance', decimals: 18, totalSupply: 10000.0, owner: OptinoGov:0xBa1F, address: OGToken:0x1647
-        Token 2 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 1000.0, owner: OptinoGov:0xBa1F, address: OGDToken:0x0f4e
+        Token 1 symbol: 'OG', name: 'Optino Governance', decimals: 18, totalSupply: 10000.0, owner: OptinoGov:0x5Fec, address: OGToken:0x1647
+        Token 2 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 1000.0, owner: OptinoGov:0x5Fec, address: OGDToken:0x0f4e
           # Dividend         Enabled                  Unclaimed
          -- ---------------- ------- --------------------------
           0 ETH|null:0x0000     true                        0.0
-          1 Fee0Token:0x6eaC    true                        0.0
+          1 Fee0Token:0xBa1F    true                        0.0
          -- ---------------- ------- --------------------------
-          # Account               Owing ETH|null:0x0000      New ETH|null:0x0000   Owing Fee0Token:0x6eaC     New Fee0Token:0x6eaC 
+          # Account               Owing ETH|null:0x0000      New ETH|null:0x0000   Owing Fee0Token:0xBa1F     New Fee0Token:0xBa1F 
          -- ------------------ ------------------------ ------------------------ ------------------------ ------------------------
           1 User1:0xa11A                            0.0                      0.0                      0.0                      0.0 
           2 User2:0xa22A                            0.0                      0.0                      0.0                      0.0 
           3 User3:0xa33a                            0.0                      0.0                      0.0                      0.0 
           4 User4:0xa44a                            0.0                      0.0                      0.0                      0.0 
-          8 OptinoGov:0xBa1F                        0.0                      0.0                      0.0                      0.0 
+          7 SimpleCurve:0x6eaC                      0.0                      0.0                      0.0                      0.0 
+          8 OptinoGov:0x5Fec                        0.0                      0.0                      0.0                      0.0 
          -- ------------------ ------------------------ ------------------------ ------------------------ ------------------------
-        Token 3 symbol: 'FEE0', name: 'Fee0', decimals: 18, totalSupply: 0.0, owner: Owner:0xa00A, address: Fee0Token:0x6eaC
+        Token 3 symbol: 'FEE0', name: 'Fee0', decimals: 18, totalSupply: 0.0, owner: Owner:0xa00A, address: Fee0Token:0xBa1F
+        SimpleCurve SimpleCurve:0x6eaC @ 0x6eaC8DFBdEB9588C9FEEe24783B4137b082f9708, owner: Owner:0xa00A, pointsLength: 4
+          #       Term                    Rate%
+         -- ---------- ------------------------
+          0          2                     20.0
+          1          5                     50.0
+          2         10                    100.0
+          3        100                   1000.0
+         -- ---------- ------------------------
         
         --- Test 4 - User1 recommit(5) ---
-        recommit1 - gasUsed: 155112, fee: 0.01240896, feeUsd: 4.7857636032, @ 80.0 gwei & 385.67 ETH/USD, 0x4d62d8b5665ef036d434d7e56bb5347caf663291eaad4f661359017640caab47
-        + OGToken.Transfer(from: ETH|null:0x0000, to: OptinoGov:0xBa1F, tokens: 0.00007)
+        recommit1 - gasUsed: 155112, fee: 0.01240896, feeUsd: 4.7857636032, @ 80.0 gwei & 385.67 ETH/USD, 0xc22590756499c91e5cd6fa4b08a8530c45b68f78d6911abe6eab89e7e4bee798
+        + OGToken.Transfer(from: ETH|null:0x0000, to: OptinoGov:0x5Fec, tokens: 0.00007)
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User1:0xa11A, tokens: 0.00007)
         + OptinoGov.Transfer(from: ETH|null:0x0000, to: User1:0xa11A, tokens: 0.00007)
         
          # Account                                     ΔETH                OptinoGov                       OG                      OGD                     FEE0
         -- ------------------------ ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
-         0 Owner:0xa00A                         -0.68559976                      0.0                      0.0                      0.0                      0.0
+         0 Owner:0xa00A                         -0.75845944                      0.0                      0.0                      0.0                      0.0
          1 User1:0xa11A                         -0.04427088               1000.00007                   9000.0               1000.00007                      0.0
          2 User2:0xa22A                          -0.0035192                      0.0                      0.0                      0.0                      0.0
          3 User3:0xa33a                          -0.0035192                      0.0                      0.0                      0.0                      0.0
          4 User4:0xa44a                                 0.0                      0.0                      0.0                      0.0                      0.0
          5 OGToken:0x1647                               0.0                      0.0                      0.0                      0.0                      0.0
          6 OGDToken:0x0f4e                              0.0                      0.0                      0.0                      0.0                      0.0
-         7 Fee0Token:0x6eaC                             0.0                      0.0                      0.0                      0.0                      0.0
-         8 OptinoGov:0xBa1F                             0.0                      0.0               1000.00007                      0.0                      0.0
+         7 SimpleCurve:0x6eaC                           0.0                      0.0                      0.0                      0.0                      0.0
+         8 OptinoGov:0x5Fec                             0.0                      0.0               1000.00007                      0.0                      0.0
+         9 Fee0Token:0xBa1F                             0.0                      0.0                      0.0                      0.0                      0.0
         -- ------------------------ ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
            Totals                                                         1000.00007              10000.00007               1000.00007                      0.0
         -- ------------------------ ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
         
-        Token 0 symbol: 'OptinoGov', name: 'OptinoGov', decimals: 18, totalSupply: 1000.00007, owner: n/a, address: OptinoGov:0xBa1F
+        Token 0 symbol: 'OptinoGov', name: 'OptinoGov', decimals: 18, totalSupply: 1000.00007, owner: n/a, address: OptinoGov:0x5Fec
         - ogToken              : OGToken:0x1647
         - ogdToken             : OGDToken:0x0f4e
+        - curve                : SimpleCurve:0x6eaC
         - maxDuration          : 10000 seconds = 0 days
         - rewardsPerSecond     : 150000000000000000 = 0.15 = 12960.0 per day
         - collectRewardForFee  : 50000000000000000 = 5.0%
@@ -262,28 +301,37 @@ Compilation finished successfully
         - proposalCount        : 0
           # Account              Duration        End                  Balance                    Votes Delegatee                     Delegated Votes                  Accrued    Term
          -- -------------------- -------- ---------- ------------------------ ------------------------ -------------------- ------------------------ ------------------------ -------
-          0 User1:0xa11A                5 1604740156               1000.00007               50.0000035 ETH|null:0x0000                           0.0                      0.0       0
+          0 User1:0xa11A                5 1604743228               1000.00007               50.0000035 ETH|null:0x0000                           0.0                      0.0       0
          -- -------------------- -------- ---------- ------------------------ ------------------------ -------------------- ------------------------ ------------------------ -------
-        Token 1 symbol: 'OG', name: 'Optino Governance', decimals: 18, totalSupply: 10000.00007, owner: OptinoGov:0xBa1F, address: OGToken:0x1647
-        Token 2 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 1000.00007, owner: OptinoGov:0xBa1F, address: OGDToken:0x0f4e
+        Token 1 symbol: 'OG', name: 'Optino Governance', decimals: 18, totalSupply: 10000.00007, owner: OptinoGov:0x5Fec, address: OGToken:0x1647
+        Token 2 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 1000.00007, owner: OptinoGov:0x5Fec, address: OGDToken:0x0f4e
           # Dividend         Enabled                  Unclaimed
          -- ---------------- ------- --------------------------
           0 ETH|null:0x0000     true                        0.0
-          1 Fee0Token:0x6eaC    true                        0.0
+          1 Fee0Token:0xBa1F    true                        0.0
          -- ---------------- ------- --------------------------
-          # Account               Owing ETH|null:0x0000      New ETH|null:0x0000   Owing Fee0Token:0x6eaC     New Fee0Token:0x6eaC 
+          # Account               Owing ETH|null:0x0000      New ETH|null:0x0000   Owing Fee0Token:0xBa1F     New Fee0Token:0xBa1F 
          -- ------------------ ------------------------ ------------------------ ------------------------ ------------------------
           1 User1:0xa11A                            0.0                      0.0                      0.0                      0.0 
           2 User2:0xa22A                            0.0                      0.0                      0.0                      0.0 
           3 User3:0xa33a                            0.0                      0.0                      0.0                      0.0 
           4 User4:0xa44a                            0.0                      0.0                      0.0                      0.0 
-          8 OptinoGov:0xBa1F                        0.0                      0.0                      0.0                      0.0 
+          7 SimpleCurve:0x6eaC                      0.0                      0.0                      0.0                      0.0 
+          8 OptinoGov:0x5Fec                        0.0                      0.0                      0.0                      0.0 
          -- ------------------ ------------------------ ------------------------ ------------------------ ------------------------
-        Token 3 symbol: 'FEE0', name: 'Fee0', decimals: 18, totalSupply: 0.0, owner: Owner:0xa00A, address: Fee0Token:0x6eaC
+        Token 3 symbol: 'FEE0', name: 'Fee0', decimals: 18, totalSupply: 0.0, owner: Owner:0xa00A, address: Fee0Token:0xBa1F
+        SimpleCurve SimpleCurve:0x6eaC @ 0x6eaC8DFBdEB9588C9FEEe24783B4137b082f9708, owner: Owner:0xa00A, pointsLength: 4
+          #       Term                    Rate%
+         -- ---------- ------------------------
+          0          2                     20.0
+          1          5                     50.0
+          2         10                    100.0
+          3        100                   1000.0
+         -- ---------- ------------------------
         
         --- Test Completed ---
 
-      ✓ Workflow #2 - Developing (6458ms)
+      ✓ Workflow #2 - Developing (6391ms)
 
 
   1 passing (9s)
