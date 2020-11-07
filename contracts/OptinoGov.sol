@@ -220,8 +220,8 @@ contract OptinoGov is ERC20, OptinoGovConfig {
     }
 
     function _changeCommitment(address tokenOwner, uint depositTokens, uint withdrawTokens, bool withdrawRewards, uint duration) internal {
-        console.log("        >   _changeCommitment(tokenOwner %s, depositTokens %s, withdrawTokens %s,", tokenOwner, depositTokens, withdrawTokens);
-        console.log("              withdrawRewards %s, duration %s)", withdrawRewards, duration);
+        // console.log("        >   _changeCommitment(tokenOwner %s, depositTokens %s, withdrawTokens %s,", tokenOwner, depositTokens, withdrawTokens);
+        // console.log("              withdrawRewards %s, duration %s)", withdrawRewards, duration);
         Account storage account = accounts[tokenOwner];
 
         // commit(tokens, duration) or recommit(duration)
@@ -234,8 +234,8 @@ contract OptinoGov is ERC20, OptinoGovConfig {
             require(withdrawTokens <= account.balance, "Unsufficient staked balance");
         }
         updateStatsBefore(account);
-        (uint reward, uint term) = _calculateReward(account);
-        console.log("        >     reward %s for %s seconds", reward, term);
+        (uint reward, /*uint term*/) = _calculateReward(account);
+        // console.log("        >     reward %s for %s seconds", reward, term);
         if (reward > 0) {
             if (withdrawRewards) {
                 require(ogToken.mint(tokenOwner, reward), "reward OG mint failed");
@@ -335,46 +335,12 @@ contract OptinoGov is ERC20, OptinoGovConfig {
     }
     // TODO
     function uncommitFor(address tokenOwner) public {
-        console.log("        > %s -> uncommitFor(%s)", msg.sender, tokenOwner);
+        // console.log("        > %s -> uncommitFor(%s)", msg.sender, tokenOwner);
         // require(duration > 0, "duration must be > 0");
         require(accounts[tokenOwner].balance > 0, "tokenOwner has no balance to tidy");
         _changeCommitment(tokenOwner, 0, 0, false, 0);
     }
 
-    // Commit OGTokens for specified duration. Cannot shorten duration if there is an existing unexpired commitment
-    function commit_old(uint tokens, uint duration) public {
-        require(duration <= maxDuration, "duration too long");
-        Account storage user = accounts[msg.sender];
-        uint reward = 0;
-        uint oldUserVotes = user.votes;
-        if (user.balance > 0) {
-            require(block.timestamp + duration >= user.end, "Cannot shorten duration");
-            uint elapsed = block.timestamp.sub(uint(user.end).sub(uint(user.duration)));
-            reward = elapsed.mul(rewardsPerSecond).mul(user.votes).div(totalVotes);
-            if (reward > rewardPool) {
-                reward = rewardPool;
-            }
-            if (reward > 0) {
-                rewardPool = rewardPool.sub(reward);
-                user.balance = user.balance.add(reward);
-            }
-            emit Collected(msg.sender, elapsed, reward, 0, rewardPool, user.end, user.duration);
-        }
-        require(ogToken.transferFrom(msg.sender, address(this), tokens), "OG transferFrom failed");
-        user.balance = user.balance.add(tokens);
-        user.duration = uint64(duration);
-        user.end = uint64(block.timestamp.add(duration));
-        user.votes = user.balance.mul(duration).div(SECONDS_PER_YEAR);
-        totalVotes = totalVotes.sub(oldUserVotes).add(user.votes);
-        if (user.delegatee != address(0)) {
-            accounts[user.delegatee].delegatedVotes = accounts[user.delegatee].delegatedVotes.sub(oldUserVotes).add(user.votes);
-        }
-        if (reward > 0) {
-            require(ogToken.mint(address(this), reward), "reward OG mint failed");
-        }
-        require(ogdToken.mint(msg.sender, tokens.add(reward)), "commitment + reward OGD mint failed");
-        emit Committed(msg.sender, tokens, user.balance, user.duration, user.end, user.delegatee, user.votes, rewardPool, totalVotes);
-    }
 
     function propose(string memory description, address[] memory targets, uint[] memory values, bytes[] memory data) public returns(uint) {
         // require(accounts[msg.sender].votes >= totalVotes.mul(proposalThreshold).div(10 ** 18), "OptinoGov: Not enough votes to propose");

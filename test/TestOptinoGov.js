@@ -288,21 +288,32 @@ describe("TestOptinoGov", function() {
       // await data.printTxData("commit6", commit6);
       // await data.printBalances();
 
-      if (false) {
-        console.log("        --- Test 3 - Dummy tx to mine a new block and get the latest block.timestamp ---");
-        duration = 4;
-        data.pause("Waiting", duration + 1);
-        const dummy1 = await data.ownerSigner.sendTransaction({ to: data.owner, value: 0 });
-        await data.printTxData("dummy1", dummy1);
-        await data.printBalances();
+      console.log("        --- Test 3 - Dummy tx to mine a new block and get the latest block.timestamp ---");
+      duration = 4;
+      data.pause("Waiting", duration + 1);
+      const dummy1 = await data.ownerSigner.sendTransaction({ to: data.owner, value: 0 });
+      await data.printTxData("dummy1", dummy1);
+      await data.printBalances();
 
-        console.log("        --- Test 4 - User2 uncommitFor(user1) ---");
-        duration = 4;
-        data.pause("Waiting", duration + 1);
-        const uncommitFor1 = await data.optinoGov.connect(data.user2Signer).uncommitFor(data.user1);
-        await data.printTxData("uncommitFor1", uncommitFor1);
-        await data.printBalances();        
-      }
+      // console.log("        --- Test 4 - User2 uncommitFor(user1) ---");
+      // duration = 4;
+      // data.pause("Waiting", duration + 1);
+      // const uncommitFor1 = await data.optinoGov.connect(data.user2Signer).uncommitFor(data.user1);
+      // await data.printTxData("uncommitFor1", uncommitFor1);
+      // await data.printBalances();
+
+      console.log("        --- Test 4 - User1 recommit(5) ---");
+      duration = 5;
+      const recommit1 = await data.optinoGov.connect(data.user1Signer).recommit(duration);
+      await data.printTxData("recommit1", recommit1);
+      await data.printBalances();
+
+      // console.log("        --- Test 4 - User1 uncommitAll() ---");
+      // duration = 4;
+      // data.pause("Waiting", duration + 1);
+      // const uncommitAll1 = await data.optinoGov.connect(data.user1Signer).uncommitAll();
+      // await data.printTxData("uncommitAll1", uncommitAll1);
+      // await data.printBalances();
 
       // console.log("        --- Test 4 - User1 uncommit(10) ---");
       // const tokensToUncommit = ethers.utils.parseUnits("10", 18);

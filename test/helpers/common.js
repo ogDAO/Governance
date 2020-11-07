@@ -16,6 +16,7 @@ class Data {
     this.decimals = [];
 
     // OptinoGov testing
+    // this.simpleCurve = null;
     this.ogToken = null;
     this.ogdToken = null;
     this.fee0Token = null;
@@ -66,6 +67,12 @@ class Data {
     }
     return address;
   }
+
+  // async setSimpleCurveData(simpleCurve) {
+  //   this.simpleCurve = simpleCurve;
+  //   this.addAccount(this.simpleCurve.address, "SimpleCurve");
+  //   this.addContract(this.simpleCurve, "SimpleCurve");
+  // }
 
   async setOptinoGovData(ogToken, ogdToken, fee0Token, optinoGov) {
     this.ogToken = ogToken;
