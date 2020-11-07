@@ -24,10 +24,6 @@ contract SimpleCurve is Owned, Curve {
 
     constructor(uint[] memory terms, uint[] memory rates) {
         _addPoints(terms, rates);
-        // points.push(Point(2, 20));
-        // points.push(Point(5, 50));
-        // points.push(Point(10, 100));
-        // points.push(Point(100, 1000));
     }
 
     function pointsLength() public view returns (uint) {
@@ -40,6 +36,8 @@ contract SimpleCurve is Owned, Curve {
 
     function replacePoint(uint i, uint term, uint rate) public onlyOwner {
         require(i < points.length);
+        // Check gas
+        // delete points[i[];
         points[i] = Point(term, rate);
     }
 
@@ -74,13 +72,4 @@ contract SimpleCurve is Owned, Curve {
             }
         }
     }
-
-    // function test() public view {
-    //     // require(getRate(1) == 20, "test #1a");
-    //     // require(getRate(2) == 20, "test #1b");
-    //     // require(getRate(5) == 50, "test #1c");
-    //     // require(getRate(10) == 100, "test #1d");
-    //     // require(getRate(100) == 1000, "test #1e");
-    //     // require(getRate(101) == 1000, "test #1f");
-    // }
 }
