@@ -6,10 +6,8 @@ pragma experimental ABIEncoderV2;
 // Use prefix "./" normally and "https://github.com/ogDAO/Governance/blob/master/contracts/" in Remix
 import "./SafeMath.sol";
 import "./Owned.sol";
+import "./CurveInterface.sol";
 
-interface Curve {
-    function getRate(uint term) external view returns (uint rate);
-}
 
 /// @notice Simple interpolated curve by term
 // SPDX-License-Identifier: GPLv2

@@ -1,4 +1,6 @@
 $ npx hardhat test test/TestOptinoGov.js > results/TestOptinoGov.txt
+Compiling 21 files with 0.7.4
+Compilation finished successfully
 
 
   TestOptinoGov
@@ -105,7 +107,7 @@ $ npx hardhat test test/TestOptinoGov.js > results/TestOptinoGov.txt
         commit1 - gasUsed: 354284, fee: 0.02834272, feeUsd: 10.9309368224, @ 80.0 gwei & 385.67 ETH/USD, 0x0d45419632ceb6c0d4a3499e1cf397838a515f87c8632151b4e08b207602eb14
         + OGToken.Transfer(from: User1:0xa11A, to: OptinoGov:0xBa1F, tokens: 1000.0)
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User1:0xa11A, tokens: 1000.0)
-        + OptinoGov.Committed(user: User1:0xa11A, tokens: 1000.0, balance: 1000.0, duration: 2, end: 1604716674, delegatee: ETH|null:0x0000, votes: 0.0, rewardPool: 1000000.0, totalVotes: 0.0)
+        + OptinoGov.Committed(user: User1:0xa11A, tokens: 1000.0, balance: 1000.0, duration: 2, end: 1604740146, delegatee: ETH|null:0x0000, votes: 0.0, rewardPool: 1000000.0, totalVotes: 0.0)
         + OptinoGov.Transfer(from: ETH|null:0x0000, to: User1:0xa11A, tokens: 1000.0)
         
          # Account                                     ΔETH                OptinoGov                       OG                      OGD                     FEE0
@@ -142,7 +144,7 @@ $ npx hardhat test test/TestOptinoGov.js > results/TestOptinoGov.txt
         - proposalCount        : 0
           # Account              Duration        End                  Balance                    Votes Delegatee                     Delegated Votes                  Accrued    Term
          -- -------------------- -------- ---------- ------------------------ ------------------------ -------------------- ------------------------ ------------------------ -------
-          0 User1:0xa11A                2 1604716674                   1000.0                     20.0 ETH|null:0x0000                           0.0                      0.0       0
+          0 User1:0xa11A                2 1604740146                   1000.0                     20.0 ETH|null:0x0000                           0.0                      0.0       0
          -- -------------------- -------- ---------- ------------------------ ------------------------ -------------------- ------------------------ ------------------------ -------
         Token 1 symbol: 'OG', name: 'Optino Governance', decimals: 18, totalSupply: 10000.0, owner: OptinoGov:0xBa1F, address: OGToken:0x1647
         Token 2 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 1000.0, owner: OptinoGov:0xBa1F, address: OGDToken:0x0f4e
@@ -162,8 +164,8 @@ $ npx hardhat test test/TestOptinoGov.js > results/TestOptinoGov.txt
         Token 3 symbol: 'FEE0', name: 'Fee0', decimals: 18, totalSupply: 0.0, owner: Owner:0xa00A, address: Fee0Token:0x6eaC
         
         --- Test 3 - Dummy tx to mine a new block and get the latest block.timestamp ---
-        Pausing 'Waiting' for 5s=Sat Nov 07 2020 13:37:42 GMT+1100 (Australian Eastern Daylight Time) now=Sat Nov 07 2020 13:37:37 GMT+1100 (Australian Eastern Daylight Time)
-        Paused 'Waiting' for 5s=Sat Nov 07 2020 13:37:42 GMT+1100 (Australian Eastern Daylight Time) now=Sat Nov 07 2020 13:37:42 GMT+1100 (Australian Eastern Daylight Time)
+        Pausing 'Waiting' for 5s=Sat Nov 07 2020 20:08:54 GMT+1100 (Australian Eastern Daylight Time) now=Sat Nov 07 2020 20:08:49 GMT+1100 (Australian Eastern Daylight Time)
+        Paused 'Waiting' for 5s=Sat Nov 07 2020 20:08:54 GMT+1100 (Australian Eastern Daylight Time) now=Sat Nov 07 2020 20:08:54 GMT+1100 (Australian Eastern Daylight Time)
         
         dummy1 - gasUsed: 21000, fee: 0.00168, feeUsd: 0.6479256, @ 80.0 gwei & 385.67 ETH/USD, 0x7735966d3b58d3fd786d5c1c6f3e982369232dbbb65d28fe5f79d2e4ab9bfa7a
         
@@ -201,7 +203,7 @@ $ npx hardhat test test/TestOptinoGov.js > results/TestOptinoGov.txt
         - proposalCount        : 0
           # Account              Duration        End                  Balance                    Votes Delegatee                     Delegated Votes                  Accrued    Term
          -- -------------------- -------- ---------- ------------------------ ------------------------ -------------------- ------------------------ ------------------------ -------
-          0 User1:0xa11A                2 1604716674                   1000.0                     20.0 ETH|null:0x0000                           0.0                  0.00006       6
+          0 User1:0xa11A                2 1604740146                   1000.0                     20.0 ETH|null:0x0000                           0.0                  0.00006       6
          -- -------------------- -------- ---------- ------------------------ ------------------------ -------------------- ------------------------ ------------------------ -------
         Token 1 symbol: 'OG', name: 'Optino Governance', decimals: 18, totalSupply: 10000.0, owner: OptinoGov:0xBa1F, address: OGToken:0x1647
         Token 2 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 1000.0, owner: OptinoGov:0xBa1F, address: OGDToken:0x0f4e
@@ -260,7 +262,7 @@ $ npx hardhat test test/TestOptinoGov.js > results/TestOptinoGov.txt
         - proposalCount        : 0
           # Account              Duration        End                  Balance                    Votes Delegatee                     Delegated Votes                  Accrued    Term
          -- -------------------- -------- ---------- ------------------------ ------------------------ -------------------- ------------------------ ------------------------ -------
-          0 User1:0xa11A                5 1604716684               1000.00007               50.0000035 ETH|null:0x0000                           0.0                      0.0       0
+          0 User1:0xa11A                5 1604740156               1000.00007               50.0000035 ETH|null:0x0000                           0.0                      0.0       0
          -- -------------------- -------- ---------- ------------------------ ------------------------ -------------------- ------------------------ ------------------------ -------
         Token 1 symbol: 'OG', name: 'Optino Governance', decimals: 18, totalSupply: 10000.00007, owner: OptinoGov:0xBa1F, address: OGToken:0x1647
         Token 2 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 1000.00007, owner: OptinoGov:0xBa1F, address: OGDToken:0x0f4e
@@ -281,7 +283,7 @@ $ npx hardhat test test/TestOptinoGov.js > results/TestOptinoGov.txt
         
         --- Test Completed ---
 
-      ✓ Workflow #2 - Developing (6294ms)
+      ✓ Workflow #2 - Developing (6458ms)
 
 
   1 passing (9s)
