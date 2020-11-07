@@ -23,6 +23,7 @@ contract SimpleCurve is Owned, Curve {
     Point[] public points;
 
     constructor(uint[] memory terms, uint[] memory rates) {
+        initOwned(msg.sender);
         _addPoints(terms, rates);
     }
 
