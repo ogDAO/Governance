@@ -265,42 +265,46 @@ class Data {
   }
 
   termString(term) {
-    if (term > 0) {
-      var secs = parseInt(term);
-      var mins = parseInt(secs / 60);
-      secs = secs % 60;
-      var hours = parseInt(mins / 60);
-      mins = mins % 60;
-      var days = parseInt(hours / 24);
-      hours = hours % 24;
-      var years = parseInt(days / 365);
-      days = days % 365;
-      var s = "";
-      if (years > 0) {
-        s += years + "y";
-      }
-      if (days > 0) {
-        s += days + "d";
-      }
-      if (hours > 0) {
-        s += hours + "h";
-      }
-      if (mins > 0) {
-        s += mins + "m";
-      }
-      if (secs > 0) {
-        s += secs + "s";
-      }
-      return s;
-    } else {
-      return "";
+    var s = "";
+    if (term < 0) {
+      term = -term;
+      s = "-";
     }
+    var secs = parseInt(term);
+    var mins = parseInt(secs / 60);
+    secs = secs % 60;
+    var hours = parseInt(mins / 60);
+    mins = mins % 60;
+    var days = parseInt(hours / 24);
+    hours = hours % 24;
+    var years = parseInt(days / 365);
+    days = days % 365;
+    if (years > 0) {
+      s += years + "y";
+    }
+    if (days > 0) {
+      s += days + "d";
+    }
+    if (hours > 0) {
+      s += hours + "h";
+    }
+    if (mins > 0) {
+      s += mins + "m";
+    }
+    if (secs > 0) {
+      s += secs + "s";
+    }
+    return s;
   }
 
   async printBalances() {
-    const blockNumber = await ethers.provider.getBlockNumber();
-    const totalTokenBalances = [];
     console.log("        ");
+    const blockNumber = await ethers.provider.getBlockNumber();
+    const block = await ethers.provider.getBlock("latest");
+    const now = block.timestamp;
+    // console.log("        block: " + util.inspect(block));
+    // console.log("        now: " + now);
+    const totalTokenBalances = [];
     let line = "         # Account                                     ΔETH";
     let separator = "        -- ------------------------ -----------------------";
     for (let t = 0; t < this.tokenContracts.length; t++) {
@@ -370,15 +374,15 @@ class Data {
         console.log("        - proposalCount        : " + proposalCount);
         // console.log("        - stakeInfoLength      : " + stakeInfoLength);
         // console.log("        - accountsLength       : " + accountsLength);
-        console.log("          # Account                Duration        End                    Rate%                  Balance                    Votes Delegatee                     Delegated Votes                  Accrued    Term");
-        console.log("         -- -------------------- ---------- ---------- ------------------------ ------------------------ ------------------------ -------------------- ------------------------ ------------------------ -------");
+        console.log("          # Account                Duration              End                    Rate%                  Balance                    Votes Delegatee                     Delegated Votes                  Accrued    Term");
+        console.log("         -- -------------------- ---------- ---------------- ------------------------ ------------------------ ------------------------ -------------------- ------------------------ ------------------------ -------");
         for (let j = 0; j < accountsLength; j++) {
           const _a = await this.optinoGov.getAccountByIndex(j);
           const accruedReward = await tokenContract.accruedReward(_a.tokenOwner);
           console.log("          " + this.padLeft(j, 2) + " " +
             this.padRight(this.getShortAccountName(_a.tokenOwner), 20) + " " +
             this.padLeft(this.termString(_a.account.duration.toString()), 10) + " " +
-            this.padLeft(_a.account.end, 10) + " " +
+            this.padLeft(this.termString(parseInt(_a.account.end.toString())-now), 16) + " " +
             this.padLeft(ethers.utils.formatUnits(_a.account.rate, 16), 24) + " " +
             this.padLeft(ethers.utils.formatUnits(_a.account.balance, 18), 24) + " " +
             this.padLeft(ethers.utils.formatUnits(_a.account.votes, 18), 24) + " " +
@@ -387,7 +391,7 @@ class Data {
             this.padLeft(ethers.utils.formatUnits(accruedReward[0], 18), 24) + " " +
             this.padLeft(accruedReward[1].toString(), 7));
         }
-        console.log("         -- -------------------- ---------- ---------- ------------------------ ------------------------ ------------------------ -------------------- ------------------------ ------------------------ -------");
+        console.log("         -- -------------------- ---------- ---------------- ------------------------ ------------------------ ------------------------ -------------------- ------------------------ ------------------------ -------");
       } else if (symbol == "OGD") {
         const dividendTokensLength = parseInt(await tokenContract.dividendTokensLength());
         // console.log("        - dividendTokensLength : " + dividendTokensLength);
