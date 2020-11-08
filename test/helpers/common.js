@@ -358,7 +358,7 @@ class Data {
       } catch (e) {
         owner = "n/a";
       }
-      console.log("        Token " + i + " symbol: '" + symbol + "', name: '" + name + "', decimals: " + decimals + ", totalSupply: " + ethers.utils.formatUnits(totalSupply, decimals) + ", owner: " + this.getShortAccountName(owner) + ", address: " + this.getShortAccountName(tokenContract.address));
+      console.log("        Token " + i + " symbol: '" + symbol + "', name: '" + name + "', decimals: " + decimals + ", totalSupply: " + ethers.utils.formatUnits(totalSupply, decimals) + ", owner: " + this.getShortAccountName(owner) + ", address: " + this.getShortAccountName(tokenContract.address) + " @ " + tokenContract.address);
       if (symbol == "OptinoGov" && this.optinoGov != null) {
         // console.log("        OptinoGov " + this.getShortAccountName(this.optinoGov.address) + " @ " + this.optinoGov.address);
         let [ogToken, ogdToken, ogRewardCurve, voteWeightCurve, accountsLength, maxDuration, collectRewardForFee, collectRewardForDelay, proposalCost, proposalThreshold] = await Promise.all([this.optinoGov.ogToken(), this.optinoGov.ogdToken(), this.optinoGov.ogRewardCurve(), this.optinoGov.voteWeightCurve(), this.optinoGov.accountsLength(), this.optinoGov.maxDuration(), this.optinoGov.collectRewardForFee(), this.optinoGov.collectRewardForDelay(), this.optinoGov.proposalCost(), this.optinoGov.proposalThreshold()]);
@@ -437,32 +437,36 @@ class Data {
           console.log(dividendSeparator);
         }
       } else if (symbol.startsWith("OGS")) {
-        const [stakingInfo, owner, accountsLength, rewardsPerYear, weightedEnd, weightedEndNumerator, /*weightedDurationDenominator,*/ slashingFactor] = await Promise.all([tokenContract.getStakingInfo(), tokenContract.owner(), tokenContract.accountsLength(), tokenContract.rewardsPerYear(), tokenContract.weightedEnd(), tokenContract.weightedEndNumerator(), /*tokenContract.weightedDurationDenominator(),*/ tokenContract.slashingFactor()]);
+        const [stakingInfo, owner, accountsLength, weightedEnd, weightedEndNumerator, /*weightedDurationDenominator,*/ slashingFactor] = await Promise.all([tokenContract.getStakingInfo(), tokenContract.owner(), tokenContract.accountsLength(), tokenContract.weightedEnd(), tokenContract.weightedEndNumerator(), /*tokenContract.weightedDurationDenominator(),*/ tokenContract.slashingFactor()]);
         console.log("        - staking @ " + this.getShortAccountName(tokenContract.address) + ", owner: " + this.getShortAccountName(owner));
         console.log("          - dataType                   : " + stakingInfo.dataType  .toString());
         console.log("          - addresses                  : " + JSON.stringify(stakingInfo.addresses.map((x) => { return this.getShortAccountName(x); })));
         console.log("          - uints                      : " + JSON.stringify(stakingInfo.uints.map((x) => { return x.toString(); })));
         console.log("          - strings                    : " + JSON.stringify([stakingInfo.string0, stakingInfo.string1, stakingInfo.string2, stakingInfo.string3]));
-        console.log("          - rewardsPerYear             : " + ethers.utils.formatUnits(rewardsPerYear, 16) + "% compounding daily/simple partial end, rewardsPerSecond: " + ethers.utils.formatUnits(rewardsPerYear.div(60*60*24*365), 16) + "%");
         // console.log("          - weightedDurationDenominator: " + new BigNumber(weightedDurationDenominator.toString()).shiftedBy(-18));
         console.log("          - weightedEnd                : " + weightedEnd + " = " + ethers.utils.formatUnits(weightedEndNumerator, decimals) + "/" + ethers.utils.formatUnits(totalSupply, decimals));
         console.log("          - slashingFactor             : " + ethers.utils.formatUnits(slashingFactor, 16) + "%");
         // console.log("          - accountsLength             : " + accountsLength);
-        console.log("          # Account              Duration        End      Index                  Balance           Accrued Reward    Term");
-        console.log("         -- -------------------- -------- ---------- ---------- ------------------------ ------------------------ -------");
+        console.log("          # Account                    Duration              End      Index                    Rate%                  Balance           Accrued Reward Accrual Term");
+        console.log("         -- -------------------- -------------- ---------------- ---------- ------------------------ ------------------------ ------------------------ ------------");
         for (let k = 0; k < accountsLength; k++) {
           const account = await tokenContract.getAccountByIndex(k);
           const accruedReward = await tokenContract.accruedReward(account.tokenOwner);
           console.log("         " + this.padLeft(k, 2) + " " +
             this.padRight(this.getShortAccountName(account.tokenOwner), 20) + " " +
-            this.padLeft(account.account.duration.toString(), 8) + " " +
-            this.padLeft(account.account.end.toString(), 10) + " " +
+
+            this.padLeft(this.termString(account.account.duration.toString()), 14) + " " +
+            this.padLeft(this.termString(parseInt(account.account.end.toString())-now), 16) + " " +
+
+            // this.padLeft(account.account.duration.toString(), 8) + " " +
+            // this.padLeft(account.account.end.toString(), 10) + " " +
             this.padLeft(account.account.index.toString(), 10) + " " +
+            this.padLeft(ethers.utils.formatUnits(account.account.rate, 16), 24) + " " +
             this.padLeft(ethers.utils.formatUnits(account.account.balance, 18), 24) + " " +
             this.padLeft(ethers.utils.formatUnits(accruedReward[0], 18), 24) + " " +
-            this.padLeft(accruedReward[1].toString(), 7));
+            this.padLeft(accruedReward[1].toString(), 12));
         }
-        console.log("         -- -------------------- -------- ---------- ---------- ------------------------ ------------------------ -------");
+        console.log("         -- -------------------- -------------- ---------------- ---------- ------------------------ ------------------------ ------------------------ ------------");
       }
     }
 
