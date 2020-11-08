@@ -73,7 +73,7 @@ contract Staking is ERC20, Owned {
     }
 
     function symbol() override external view returns (string memory _symbol) {
-        bytes memory b = new bytes(20);
+        bytes memory b = new bytes(7 + SYMBOLPREFIX.length);
         uint i;
         uint j;
         uint num;
