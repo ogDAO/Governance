@@ -180,9 +180,9 @@ describe("TestStakingFactory", function() {
       let ogTokensToStake1 = ethers.utils.parseUnits("1000", 18);
       let ogTokensToStake2 = ethers.utils.parseUnits("2000", 18);
       let ogTokensToStake3 = ethers.utils.parseUnits("3000", 18);
-      let duration1 = 1000;
-      let duration2 = 10000;
-      let duration3 = 1000000;
+      let duration1 = SECONDS_PER_DAY * 2;
+      let duration2 = SECONDS_PER_DAY * 30;
+      let duration3 = SECONDS_PER_YEAR;
       const test2 = [];
       test2.push(data.stakingFactory.connect(data.user1Signer).addStakingForToken(ogTokensToStake1, duration1, data.fee0Token.address, "FEE0Token"));
       test2.push(data.stakingFactory.connect(data.user2Signer).addStakingForToken(ogTokensToStake2, duration2, data.fee0Token.address, "FEE0Token"));

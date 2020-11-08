@@ -102,22 +102,22 @@ $ npx hardhat test test/TestStakingFactory.js > results/TestStakingFactory.txt
         
         --- Test 2 - Stake #1 - StakingFactory.addStakingForToken() ---
         Address 0x993F551fb3e9F13a6AB159985D43B403dc824979 => Staking:0x993F
-        addStake1 - gasUsed: 503060, fee: 0.0402448, feeUsd: 15.521212016, @ 80.0 gwei & 385.67 ETH/USD, 0xa2a07f524ef80a1cf42fc6af2e2a63fc01194f82a2cff2e80feb97aba650571c
+        addStake1 - gasUsed: 527951, fee: 0.04223608, feeUsd: 16.2891889736, @ 80.0 gwei & 385.67 ETH/USD, 0xfedc451f4d358c6707f0a76d6631b1ad5e8afe9f6ab842004a240ec477c9be5c
         + StakingFactory.StakingCreated(key: 0x459a64d62d70db853f0afeb7a1b37e1a67d215dfa723190f304118a13cd2ce46, staking: Staking:0x993F)
         + OGToken.Transfer(from: User1:0xa11A, to: Staking:0x993F, tokens: 1000.0)
-        + Staking.Staked(tokenOwner: User1:0xa11A, tokens: 1000.0, duration: 1000, end: 1604820838)
+        + Staking.Staked(tokenOwner: User1:0xa11A, tokens: 1000.0, duration: 172800, end: 1604994970)
         + Staking.Transfer(from: ETH|null:0x0000, to: User1:0xa11A, tokens: 1000.0)
-        addStake2 - gasUsed: 182542, fee: 0.01460336, feeUsd: 5.6320778512, @ 80.0 gwei & 385.67 ETH/USD, 0x32700e43ebb13dec9fa2d82f25863f12e6afb92ab564ab86daee8709b076fbd9
+        addStake2 - gasUsed: 207433, fee: 0.01659464, feeUsd: 6.4000548088, @ 80.0 gwei & 385.67 ETH/USD, 0x9bc5f95c852f47544e20af642cdd6ef4301b91cc874fa7dafc141d39d1737c21
         + OGToken.Transfer(from: User2:0xa22A, to: Staking:0x993F, tokens: 2000.0)
-        + Staking.Staked(tokenOwner: User2:0xa22A, tokens: 2000.0, duration: 10000, end: 1604829839)
+        + Staking.Staked(tokenOwner: User2:0xa22A, tokens: 2000.0, duration: 2592000, end: 1607414171)
         + Staking.Transfer(from: ETH|null:0x0000, to: User2:0xa22A, tokens: 2000.0)
         
          # Account                                        ΔETH                       OG                     FEE0         OGS0000000          
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------
          0 Owner:0xa00A                            -0.53063232                      0.0                    100.0                      0.0
-         1 User1:0xa11A                            -0.04376496                   9000.0                      0.0                   1000.0
-         2 User2:0xa22A                            -0.01812352                   8000.0                      0.0                   2000.0
-         3 User3:0xa33a                            -0.02011576                   7000.0                      0.0                   3000.0
+         1 User1:0xa11A                            -0.04575624                   9000.0                      0.0                   1000.0
+         2 User2:0xa22A                             -0.0201148                   8000.0                      0.0                   2000.0
+         3 User3:0xa33a                            -0.01888112                   7000.0                      0.0                   3000.0
          4 User4:0xa44a                                    0.0                      0.0                      0.0                      0.0
          5 OGToken:0x1647                                  0.0                      0.0                      0.0                      0.0
          6 Fee0Token:0x6eaC                                0.0                      0.0                      0.0                      0.0
@@ -136,13 +136,13 @@ $ npx hardhat test test/TestStakingFactory.js > results/TestStakingFactory.txt
           - addresses                  : ["Fee0Token:0x6eaC","ETH|null:0x0000","ETH|null:0x0000","ETH|null:0x0000"]
           - uints                      : ["0","0","0","0","0","0"]
           - strings                    : ["FEE0Token","","",""]
-          - weightedEnd                : 5d19h51m39s 1605323339 = 9631940036000.0/6000.0
+          - weightedEnd                : 192d19h59m59s 1621482971 = 9728897828000.0/6000.0
           - slashingFactor             : 0.0%
           # Account                    Duration              End      Index                    Rate%                  Balance           Accrued Reward Accrual Term
          -- -------------------- -------------- ---------------- ---------- ------------------------ ------------------------ ------------------------ ------------
-          0 User1:0xa11A                 16m40s           16m38s          0                   31.536                   1000.0                  0.00002            2
-          1 User2:0xa22A               2h46m40s         2h46m39s          1                   31.536                   2000.0                  0.00002            1
-          2 User3:0xa33a           11d13h46m40s     11d13h46m40s          2      32.4521098901098901                   3000.0                      0.0            0
+          0 User1:0xa11A                     2d      1d23h59m58s          0      31.6226373626373626                   1000.0     0.000020054945054945            2
+          1 User2:0xa22A                    30d     29d23h59m59s          1      34.0484835164835164                   2000.0     0.000021593406593406            1
+          2 User3:0xa33a                     1y               1y          2                   63.072                   3000.0                      0.0            0
          -- -------------------- -------------- ---------------- ---------- ------------------------ ------------------------ ------------------------ ------------
         SimpleCurve StakingRewardCurve:0x0f4e @ 0x0f4eA6f2be49d822b7cAEf4175450A4D83A32e72, owner: Owner:0xa00A, pointsLength: 3
           #       Term                Rate APY%                  Rate/s%
@@ -158,10 +158,10 @@ $ npx hardhat test test/TestStakingFactory.js > results/TestStakingFactory.txt
         - stakingsLength         : 1
           - staking 0 @ Staking:0x993F, owner: StakingFactory:0xBa1F
         
-        expectedWeightedEnd: 5d19h51m27s 1605323327 +/- 150
-        weightedEnd        : 5d19h51m39s 1605323339
-      ✓ Workflow #1 - Stake And Check weightedEnd (1336ms)
+        expectedWeightedEnd: 192d19h59m46s 1621482958 +/- 150
+        weightedEnd        : 192d19h59m59s 1621482971
+      ✓ Workflow #1 - Stake And Check weightedEnd (1396ms)
 
 
-  1 passing (3s)
+  1 passing (4s)
 
