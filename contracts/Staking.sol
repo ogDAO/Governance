@@ -9,6 +9,7 @@ import "./OGTokenInterface.sol";
 import "./StakingFactoryInterface.sol";
 import "./Owned.sol";
 import "./InterestUtils.sol";
+import "./CurveInterface.sol";
 
 // SPDX-License-Identifier: GPLv2
 contract Staking is ERC20, Owned {
@@ -32,7 +33,7 @@ contract Staking is ERC20, Owned {
         uint64 duration;
         uint64 end;
         uint64 index;
-        uint64 rate; // max 18_446744073_709551615 = 1800%
+        uint rate; // max uint64 = 18_446744073_709551615 = 1800%
         uint balance;
     }
 
@@ -45,6 +46,7 @@ contract Staking is ERC20, Owned {
 
     uint public id;
     OGTokenInterface public ogToken;
+    CurveInterface public stakingRewardCurve;
     StakingInfo public stakingInfo;
 
     uint _totalSupply;
@@ -69,6 +71,7 @@ contract Staking is ERC20, Owned {
         initOwned(msg.sender);
         id = _id;
         ogToken = _ogToken;
+        stakingRewardCurve = CurveInterface(0);
         stakingInfo = StakingInfo(dataType, addresses, uints, strings[0], strings[1], strings[2], strings[3]);
         // rewardsPerYear = 15 * 10**16; // 15%
         rewardsPerYear = 365 days * 10**10; // 31.536% compounding daily/simple partial end, or rewardsPerSecond: 0.000001%
@@ -137,6 +140,13 @@ contract Staking is ERC20, Owned {
         return allowed[tokenOwner][spender];
     }
 
+    function getRate(uint term) external view returns (uint rate) {
+        if (stakingRewardCurve == CurveInterface(0)) {
+            rate = StakingFactoryInterface(owner).getStakingRewardCurve().getRate(term);
+        } else {
+            rate = stakingRewardCurve.getRate(term);
+        }
+    }
     function getStakingInfo() public view returns (uint dataType, address[4] memory addresses, uint[6] memory uints, string memory string0, string memory string1, string memory string2, string memory string3) {
         (dataType, addresses, uints) = (stakingInfo.dataType, stakingInfo.addresses, stakingInfo.uints);
         string0 = stakingInfo.string0;

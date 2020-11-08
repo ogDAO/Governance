@@ -341,7 +341,7 @@ class Data {
       console.log(line);
     }
     console.log(separator);
-    line = "           Totals                                          ";
+    line = "           Totals                                             ";
     for (let t = 0; t < this.tokenContracts.length; t++) {
       line = line + this.padToken(totalTokenBalances[t] || BigNumber.from(0), this.decimals[t] || 18);
     }
@@ -361,7 +361,7 @@ class Data {
       console.log("        Token " + i + " symbol: '" + symbol + "', name: '" + name + "', decimals: " + decimals + ", totalSupply: " + ethers.utils.formatUnits(totalSupply, decimals) + ", owner: " + this.getShortAccountName(owner) + ", address: " + this.getShortAccountName(tokenContract.address));
       if (symbol == "OptinoGov" && this.optinoGov != null) {
         // console.log("        OptinoGov " + this.getShortAccountName(this.optinoGov.address) + " @ " + this.optinoGov.address);
-        let [ogToken, ogdToken, ogRewardCurve, voteWeightCurve, accountsLength, maxDuration, rewardsPerSecond, rewardsPerYear, collectRewardForFee, collectRewardForDelay, proposalCost, proposalThreshold] = await Promise.all([this.optinoGov.ogToken(), this.optinoGov.ogdToken(), this.optinoGov.ogRewardCurve(), this.optinoGov.voteWeightCurve(), this.optinoGov.accountsLength(), this.optinoGov.maxDuration(), this.optinoGov.rewardsPerSecond(), this.optinoGov.rewardsPerYear(), this.optinoGov.collectRewardForFee(), this.optinoGov.collectRewardForDelay(), this.optinoGov.proposalCost(), this.optinoGov.proposalThreshold()]);
+        let [ogToken, ogdToken, ogRewardCurve, voteWeightCurve, accountsLength, maxDuration, collectRewardForFee, collectRewardForDelay, proposalCost, proposalThreshold] = await Promise.all([this.optinoGov.ogToken(), this.optinoGov.ogdToken(), this.optinoGov.ogRewardCurve(), this.optinoGov.voteWeightCurve(), this.optinoGov.accountsLength(), this.optinoGov.maxDuration(), this.optinoGov.collectRewardForFee(), this.optinoGov.collectRewardForDelay(), this.optinoGov.proposalCost(), this.optinoGov.proposalThreshold()]);
         let [quorum, quorumDecayPerSecond, votingDuration, executeDelay, rewardPool, totalVotes] = await Promise.all([this.optinoGov.quorum(), this.optinoGov.quorumDecayPerSecond(), this.optinoGov.votingDuration(), this.optinoGov.executeDelay(), this.optinoGov.rewardPool(), this.optinoGov.totalVotes()]);
         let [proposalCount /*, stakeInfoLength*/] = await Promise.all([this.optinoGov.proposalCount()/*, this.optinoGov.stakeInfoLength()*/]);
         console.log("        - ogToken              : " + this.getShortAccountName(ogToken));
@@ -370,7 +370,6 @@ class Data {
         console.log("        - voteWeightCurve      : " + this.getShortAccountName(voteWeightCurve));
         let decimals = 18;
         console.log("        - maxDuration          : " + maxDuration + " seconds = " + maxDuration.div(60 * 60 * 24) + " days");
-        console.log("        - rewardsPerSecond     : " + rewardsPerSecond + " = " + ethers.utils.formatUnits(rewardsPerSecond, 18) + " = " + ethers.utils.formatUnits(rewardsPerSecond.mul(60 * 60 * 24), decimals) + " per day");
         console.log("        - collectRewardForFee  : " + collectRewardForFee + " = " + ethers.utils.formatUnits(collectRewardForFee, 16) + "%");
         console.log("        - collectRewardForDelay: " + collectRewardForDelay + " seconds = " + collectRewardForDelay.div(60 * 60 * 24) + " days");
         console.log("        - proposalCost         : " + proposalCost + " = " + ethers.utils.formatUnits(proposalCost, decimals));
@@ -381,7 +380,6 @@ class Data {
         console.log("        - executeDelay         : " + executeDelay + " seconds = " + executeDelay.div(60 * 60 * 24) + " days");
         console.log("        - rewardPool           : " + rewardPool + " = " + ethers.utils.formatUnits(rewardPool, decimals));
         console.log("        - totalVotes           : " + totalVotes + " = " + ethers.utils.formatUnits(totalVotes, decimals));
-        console.log("        - rewardsPerYear       : " + ethers.utils.formatUnits(rewardsPerYear, 16) + "% compounding daily/simple partial end, rewardsPerSecond: " + ethers.utils.formatUnits(rewardsPerYear.div(60*60*24*365), 16) + "%");
         console.log("        - proposalCount        : " + proposalCount);
         // console.log("        - stakeInfoLength      : " + stakeInfoLength);
         // console.log("        - accountsLength       : " + accountsLength);

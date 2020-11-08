@@ -21,7 +21,6 @@ contract OptinoGovConfig {
     CurveInterface public ogRewardCurve;
     CurveInterface public voteWeightCurve;
     uint public maxDuration = 10000 seconds; // Testing 365 days;
-    uint public rewardsPerSecond = 150_000_000_000_000_000; // 0.15
     uint public collectRewardForFee = 5 * 10**16; // 5%, 18 decimals
     uint public collectRewardForDelay = 1 seconds; // Testing 7 days
     uint public proposalCost = 100_000_000_000_000_000_000; // 100 tokens assuming 18 decimals
@@ -31,7 +30,6 @@ contract OptinoGovConfig {
     uint public votingDuration = 10 seconds; // 3 days;
     uint public executeDelay = 10 seconds; // 2 days;
     uint public rewardPool = 1_000_000 * 10**18;
-    uint public rewardsPerYear = 365 days * 10**10; // 31.536% compounding daily/simple partial end, or rewardsPerSecond: 0.000001%
 
     event ConfigUpdated(string key, uint value);
 
@@ -61,8 +59,6 @@ contract OptinoGovConfig {
             collectRewardForFee = value;
         } else if (equalString(key, "collectRewardForDelay")) {
             collectRewardForDelay = value;
-        } else if (equalString(key, "rewardsPerSecond")) {
-            rewardsPerSecond = value;
         } else if (equalString(key, "proposalCost")) {
             proposalCost = value;
         } else if (equalString(key, "proposalThreshold")) {
@@ -93,7 +89,7 @@ contract OptinoGov is ERC20, OptinoGovConfig {
         uint64 lastDelegated;
         uint64 lastVoted;
         uint64 index;
-        uint rate; // max 18_446744073_709551615 = 1800%
+        uint rate; // max uint64 = 18_446744073_709551615 = 1800%
         address delegatee;
         uint balance;
         uint votes;
@@ -221,8 +217,8 @@ contract OptinoGov is ERC20, OptinoGovConfig {
     }
     function _calculateReward(Account memory account) internal view returns (uint _reward, uint _term) {
         uint from = account.end == 0 ? block.timestamp : uint(account.end).sub(uint(account.duration));
-        uint futureValue = InterestUtils.futureValue(account.balance, from, block.timestamp, rewardsPerYear, 1 days);
-        // console.log("        > _calculateReward() - account.balance %s, rate %s", account.balance, rewardsPerYear);
+        uint futureValue = InterestUtils.futureValue(account.balance, from, block.timestamp, account.rate, 1 days);
+        // console.log("        > _calculateReward() - account.balance %s, rate %s", account.balance, account.rate);
         // console.log("          from %s, to %s, futureValue %s", from, block.timestamp, futureValue);
         _reward = futureValue.sub(account.balance);
         _term = block.timestamp.sub(from);

@@ -17,7 +17,7 @@ $ npx hardhat test test/TestStakingFactory.js > results/TestStakingFactory.txt
         + OGToken.Transfer(from: ETH|null:0x0000, to: Owner:0xa00A, tokens: 0.0)
         fee0TokenTx - gasUsed: 823708, fee: 0.06589664, feeUsd: 25.4143571488, @ 80.0 gwei & 385.67 ETH/USD, 0x132e66ff0a06906dd037e6e563abfc6c6dc8b220104aa73edd3b95dcbd788a09
         + Fee0Token.Transfer(from: ETH|null:0x0000, to: Owner:0xa00A, tokens: 100.0)
-        stakingFactoryTx - gasUsed: 3656778, fee: 0.29254224, feeUsd: 112.8247657008, @ 80.0 gwei & 385.67 ETH/USD, 0xc9fdb9efaf6a990a95bb911958ebff0405cedca9309693b4d7065321d0868ad7
+        stakingFactoryTx - gasUsed: 3775329, fee: 0.30202632, feeUsd: 116.4824908344, @ 80.0 gwei & 385.67 ETH/USD, 0xa7af7927fbdb39f2bc420593bb74748d7ae563cddfd9a710ea14a0cbe020bff8
         --- Setup 2 - OGToken mint(...) permissioning ---
         setPermission1 - gasUsed: 49100, fee: 0.003928, feeUsd: 1.51491176, @ 80.0 gwei & 385.67 ETH/USD, 0xba59e38f81da147f31ad1895c913eadde6020d18732a2890e71c20c8d0f8a91e
         + OGToken.PermissionUpdated(account: Owner:0xa00A, role: 1, active: true, maximum: 0, processed: 0)
@@ -26,7 +26,7 @@ $ npx hardhat test test/TestStakingFactory.js > results/TestStakingFactory.txt
         
          # Account                                        ΔETH                       OG                     FEE0
         -- --------------------------- ----------------------- ------------------------ ------------------------
-         0 Owner:0xa00A                            -0.50708272                      0.0                    100.0
+         0 Owner:0xa00A                             -0.5165668                      0.0                    100.0
          1 User1:0xa11A                                    0.0                      0.0                      0.0
          2 User2:0xa22A                                    0.0                      0.0                      0.0
          3 User3:0xa33a                                    0.0                      0.0                      0.0
@@ -72,7 +72,7 @@ $ npx hardhat test test/TestStakingFactory.js > results/TestStakingFactory.txt
         
          # Account                                        ΔETH                       OG                     FEE0
         -- --------------------------- ----------------------- ------------------------ ------------------------
-         0 Owner:0xa00A                              -0.523738                      0.0                    100.0
+         0 Owner:0xa00A                            -0.53322208                      0.0                    100.0
          1 User1:0xa11A                            -0.00352016                  10000.0                      0.0
          2 User2:0xa22A                            -0.00352016                  10000.0                      0.0
          3 User3:0xa33a                            -0.00352016                  10000.0                      0.0
@@ -102,20 +102,20 @@ $ npx hardhat test test/TestStakingFactory.js > results/TestStakingFactory.txt
         
         --- Test 2 - Stake #1 - StakingFactory.addStakingForToken() ---
         Address 0x993F551fb3e9F13a6AB159985D43B403dc824979 => Staking:0x993F
-        addStake1 - gasUsed: 489805, fee: 0.0391844, feeUsd: 15.112247548, @ 80.0 gwei & 385.67 ETH/USD, 0xa2a07f524ef80a1cf42fc6af2e2a63fc01194f82a2cff2e80feb97aba650571c
+        addStake1 - gasUsed: 491365, fee: 0.0393092, feeUsd: 15.160379164, @ 80.0 gwei & 385.67 ETH/USD, 0xa2a07f524ef80a1cf42fc6af2e2a63fc01194f82a2cff2e80feb97aba650571c
         + StakingFactory.StakingCreated(key: 0x459a64d62d70db853f0afeb7a1b37e1a67d215dfa723190f304118a13cd2ce46, staking: Staking:0x993F)
         + OGToken.Transfer(from: User1:0xa11A, to: Staking:0x993F, tokens: 1000.0)
-        + Staking.Staked(tokenOwner: User1:0xa11A, tokens: 1000.0, duration: 1000, end: 1604816095)
+        + Staking.Staked(tokenOwner: User1:0xa11A, tokens: 1000.0, duration: 1000, end: 1604816637)
         + Staking.Transfer(from: ETH|null:0x0000, to: User1:0xa11A, tokens: 1000.0)
         addStake2 - gasUsed: 150841, fee: 0.01206728, feeUsd: 4.6539878776, @ 80.0 gwei & 385.67 ETH/USD, 0x32700e43ebb13dec9fa2d82f25863f12e6afb92ab564ab86daee8709b076fbd9
         + OGToken.Transfer(from: User2:0xa22A, to: Staking:0x993F, tokens: 2000.0)
-        + Staking.Staked(tokenOwner: User2:0xa22A, tokens: 2000.0, duration: 10000, end: 1604825096)
+        + Staking.Staked(tokenOwner: User2:0xa22A, tokens: 2000.0, duration: 10000, end: 1604825638)
         + Staking.Transfer(from: ETH|null:0x0000, to: User2:0xa22A, tokens: 2000.0)
         
          # Account                                        ΔETH                       OG                     FEE0         OGS0000000          
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------
-         0 Owner:0xa00A                              -0.523738                      0.0                    100.0                      0.0
-         1 User1:0xa11A                            -0.04270456                   9000.0                      0.0                   1000.0
+         0 Owner:0xa00A                            -0.53322208                      0.0                    100.0                      0.0
+         1 User1:0xa11A                            -0.04282936                   9000.0                      0.0                   1000.0
          2 User2:0xa22A                            -0.01558744                   8000.0                      0.0                   2000.0
          3 User3:0xa33a                             -0.0155884                   7000.0                      0.0                   3000.0
          4 User4:0xa44a                                    0.0                      0.0                      0.0                      0.0
@@ -137,13 +137,13 @@ $ npx hardhat test test/TestStakingFactory.js > results/TestStakingFactory.txt
           - uints                      : ["0","0","0","0","0","0"]
           - strings                    : ["FEE0Token","","",""]
           - rewardsPerYear             : 31.536% compounding daily/simple partial end, rewardsPerSecond: 0.000001%
-          - weightedEnd                : 1605318596 = 9631911578000.0/6000.0
+          - weightedEnd                : 1605319138 = 9631914830000.0/6000.0
           - slashingFactor             : 0.0%
           # Account              Duration        End      Index                  Balance           Accrued Reward    Term
          -- -------------------- -------- ---------- ---------- ------------------------ ------------------------ -------
-          0 User1:0xa11A             1000 1604816095          0                   1000.0                  0.00002       2
-          1 User2:0xa22A            10000 1604825096          1                   2000.0                  0.00002       1
-          2 User3:0xa33a          1000000 1605815097          2                   3000.0                      0.0       0
+          0 User1:0xa11A             1000 1604816637          0                   1000.0                  0.00002       2
+          1 User2:0xa22A            10000 1604825638          1                   2000.0                  0.00002       1
+          2 User3:0xa33a          1000000 1605815639          2                   3000.0                      0.0       0
          -- -------------------- -------- ---------- ---------- ------------------------ ------------------------ -------
         SimpleCurve StakingRewardCurve:0x0f4e @ 0x0f4eA6f2be49d822b7cAEf4175450A4D83A32e72, owner: Owner:0xa00A, pointsLength: 3
           #       Term                Rate APY%                  Rate/s%
@@ -159,9 +159,9 @@ $ npx hardhat test test/TestStakingFactory.js > results/TestStakingFactory.txt
         - stakingsLength         : 1
           - staking 0 @ Staking:0x993F, owner: StakingFactory:0xBa1F
         
-        expectedWeightedEnd: 1605318584 +/- 150
-        weightedEnd        : 1605318596
-      ✓ Workflow #1 - Stake And Check weightedEnd (1361ms)
+        expectedWeightedEnd: 1605319126 +/- 150
+        weightedEnd        : 1605319138
+      ✓ Workflow #1 - Stake And Check weightedEnd (1637ms)
 
 
   1 passing (4s)
