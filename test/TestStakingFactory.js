@@ -156,7 +156,7 @@ describe("TestStakingFactory", function() {
     });
   });
 
-  describe.only("TestStakingFactory - Workflow #1 - Stake And Check weightedEnd", function() {
+  describe("TestStakingFactory - Workflow #1 - Stake And Check weightedEnd", function() {
     it("Workflow #1 - Stake And Check weightedEnd", async function() {
       console.log("        --- Test 1 - Mint 10,000 OG tokens for User{1..3}; Owner approve 100 FEE for OGToken to spend ---");
       const ogTokens = ethers.utils.parseUnits("10000", 18);
