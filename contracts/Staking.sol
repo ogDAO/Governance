@@ -137,9 +137,17 @@ contract Staking is ERC20, Owned {
 
     function _getRate(uint term) internal view returns (uint rate) {
         if (stakingRewardCurve == CurveInterface(0)) {
-            rate = StakingFactoryInterface(owner).getStakingRewardCurve().getRate(term);
+            try StakingFactoryInterface(owner).getStakingRewardCurve().getRate(term) returns (uint _rate) {
+                rate = _rate;
+            } catch {
+                rate = 0;
+            }
         } else {
-            rate = stakingRewardCurve.getRate(term);
+            try stakingRewardCurve.getRate(term) returns (uint _rate) {
+                rate = _rate;
+            } catch {
+                rate = 0;
+            }
         }
     }
     function getRate(uint term) external view returns (uint rate) {

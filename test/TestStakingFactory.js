@@ -30,7 +30,8 @@ describe("TestStakingFactory", function() {
     setup1a.push(TestToken.deploy("FEE0", "Fee0", 18, data.owner, ethers.utils.parseUnits("100", 18)));
     const [ogToken, stakingRewardCurve, fee0Token] = await Promise.all(setup1a);
     const setup1b = [];
-    setup1b.push(StakingFactory.deploy(ogToken.address, stakingRewardCurve.address));
+    // setup1b.push(StakingFactory.deploy(ogToken.address, stakingRewardCurve.address));
+    setup1b.push(StakingFactory.deploy(ogToken.address, fee0Token.address));
     const [stakingFactory] = await Promise.all(setup1b);
     await data.setStakingFactoryData(ogToken, stakingRewardCurve, fee0Token, stakingFactory);
 

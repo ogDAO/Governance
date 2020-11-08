@@ -72,12 +72,6 @@ class Data {
     return address;
   }
 
-  // async setSimpleCurveData(ogRewardCurve) {
-  //   this.ogRewardCurve = ogRewardCurve;
-  //   this.addAccount(this.ogRewardCurve.address, "SimpleCurve");
-  //   this.addContract(this.ogRewardCurve, "SimpleCurve");
-  // }
-
   async setOptinoGovData(ogToken, ogdToken, ogRewardCurve, voteWeightCurve, optinoGov, fee0Token) {
     this.ogToken = ogToken;
     this.ogdToken = ogdToken;
@@ -312,8 +306,6 @@ class Data {
     const blockNumber = await ethers.provider.getBlockNumber();
     const block = await ethers.provider.getBlock("latest");
     const now = block.timestamp;
-    // console.log("        block: " + util.inspect(block));
-    // console.log("        now: " + now);
     const totalTokenBalances = [];
     let line = "         # Account                                        ΔETH";
     let separator = "        -- --------------------------- -----------------------";
@@ -360,7 +352,6 @@ class Data {
       }
       console.log("        Token " + i + " symbol: '" + symbol + "', name: '" + name + "', decimals: " + decimals + ", totalSupply: " + ethers.utils.formatUnits(totalSupply, decimals) + ", owner: " + this.getShortAccountName(owner) + ", address: " + this.getShortAccountName(tokenContract.address) + " @ " + tokenContract.address);
       if (symbol == "OptinoGov" && this.optinoGov != null) {
-        // console.log("        OptinoGov " + this.getShortAccountName(this.optinoGov.address) + " @ " + this.optinoGov.address);
         let [ogToken, ogdToken, ogRewardCurve, voteWeightCurve, accountsLength, maxDuration, collectRewardForFee, collectRewardForDelay, proposalCost, proposalThreshold] = await Promise.all([this.optinoGov.ogToken(), this.optinoGov.ogdToken(), this.optinoGov.ogRewardCurve(), this.optinoGov.voteWeightCurve(), this.optinoGov.accountsLength(), this.optinoGov.maxDuration(), this.optinoGov.collectRewardForFee(), this.optinoGov.collectRewardForDelay(), this.optinoGov.proposalCost(), this.optinoGov.proposalThreshold()]);
         let [quorum, quorumDecayPerSecond, votingDuration, executeDelay, rewardPool, totalVotes] = await Promise.all([this.optinoGov.quorum(), this.optinoGov.quorumDecayPerSecond(), this.optinoGov.votingDuration(), this.optinoGov.executeDelay(), this.optinoGov.rewardPool(), this.optinoGov.totalVotes()]);
         let [proposalCount /*, stakeInfoLength*/] = await Promise.all([this.optinoGov.proposalCount()/*, this.optinoGov.stakeInfoLength()*/]);
@@ -382,7 +373,6 @@ class Data {
         console.log("        - totalVotes           : " + totalVotes + " = " + ethers.utils.formatUnits(totalVotes, decimals));
         console.log("        - proposalCount        : " + proposalCount);
         // console.log("        - stakeInfoLength      : " + stakeInfoLength);
-        // console.log("        - accountsLength       : " + accountsLength);
         console.log("          # Account                Duration              End                    Rate%                  Balance                    Votes Delegatee                     Delegated Votes                  Accrued    Term");
         console.log("         -- -------------------- ---------- ---------------- ------------------------ ------------------------ ------------------------ -------------------- ------------------------ ------------------------ -------");
         for (let j = 0; j < accountsLength; j++) {
@@ -403,7 +393,6 @@ class Data {
         console.log("         -- -------------------- ---------- ---------------- ------------------------ ------------------------ ------------------------ -------------------- ------------------------ ------------------------ -------");
       } else if (symbol == "OGD") {
         const dividendTokensLength = parseInt(await tokenContract.dividendTokensLength());
-        // console.log("        - dividendTokensLength : " + dividendTokensLength);
         console.log("          # Dividend         Enabled                  Unclaimed");
         console.log("         -- ---------------- ------- --------------------------");
         let dividendHeader = "";
@@ -446,7 +435,6 @@ class Data {
         // console.log("          - weightedDurationDenominator: " + new BigNumber(weightedDurationDenominator.toString()).shiftedBy(-18));
         console.log("          - weightedEnd                : " + this.termString(parseInt(weightedEnd.toString())-now) + " " + weightedEnd + " = " + ethers.utils.formatUnits(weightedEndNumerator, decimals) + "/" + ethers.utils.formatUnits(totalSupply, decimals));
         console.log("          - slashingFactor             : " + ethers.utils.formatUnits(slashingFactor, 16) + "%");
-        // console.log("          - accountsLength             : " + accountsLength);
         console.log("          # Account                    Duration              End      Index                    Rate%                  Balance           Accrued Reward Accrual Term");
         console.log("         -- -------------------- -------------- ---------------- ---------- ------------------------ ------------------------ ------------------------ ------------");
         for (let k = 0; k < accountsLength; k++) {
@@ -521,18 +509,6 @@ class Data {
         const staking = Staking.attach(stakingAddress[1]);
         const [stakingInfo, owner, accountsLength, totalSupply, weightedEnd, slashingFactor] = await Promise.all([staking.getStakingInfo(), staking.owner(), staking.accountsLength(), staking.totalSupply(), staking.weightedEnd(), staking.slashingFactor()]);
         console.log("          - staking " + j + " @ " + this.getShortAccountName(stakingAddress[1]) + ", owner: " + this.getShortAccountName(owner));
-        // console.log("          - dataType      : " + stakingInfo.dataType  .toString());
-        // console.log("          - addresses     : " + JSON.stringify(stakingInfo.addresses.map((x) => { return this.getShortAccountName(x); })));
-        // console.log("          - uints         : " + JSON.stringify(stakingInfo.uints.map((x) => { return x.toString(); })));
-        // console.log("          - strings       : " + JSON.stringify([stakingInfo.string0, stakingInfo.string1, stakingInfo.string2, stakingInfo.string3]));
-        // console.log("          - accountsLength  : " + accountsLength);
-        // console.log("          - totalSupply   : " + new BigNumber(totalSupply.toString()).shiftedBy(-18));
-        // console.log("          - weightedEnd   : " + weightedEnd);
-        // console.log("          - slashingFactor: " + new BigNumber(slashingFactor.toString()).shiftedBy(-16) + "%");
-        // for (let k = 0; k < accountsLength; k++) {
-        //   const stake = await staking.getStakeByIndex(k);
-        //   console.log("            - stake " + k + " owner: " + stake.tokenOwner + ", duration: " + stake.stake_.duration.toString() + ", end: " + stake.stake_.end.toString() + ", index: " + stake.stake_.index.toString() + ", tokens: " + new BigNumber(stake.stake_.balance.toString()).shiftedBy(-18));
-        // }
       }
     }
     console.log("        ");
