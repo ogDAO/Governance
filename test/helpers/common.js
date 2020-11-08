@@ -274,29 +274,33 @@ class Data {
       term = -term;
       s = "-";
     }
-    var secs = parseInt(term);
-    var mins = parseInt(secs / 60);
-    secs = secs % 60;
-    var hours = parseInt(mins / 60);
-    mins = mins % 60;
-    var days = parseInt(hours / 24);
-    hours = hours % 24;
-    var years = parseInt(days / 365);
-    days = days % 365;
-    if (years > 0) {
-      s += years + "y";
-    }
-    if (days > 0) {
-      s += days + "d";
-    }
-    if (hours > 0) {
-      s += hours + "h";
-    }
-    if (mins > 0) {
-      s += mins + "m";
-    }
-    if (secs >= 0) {
-      s += secs + "s";
+    if (term == 0) {
+      s = "0s";
+    } else {
+      var secs = parseInt(term);
+      var mins = parseInt(secs / 60);
+      secs = secs % 60;
+      var hours = parseInt(mins / 60);
+      mins = mins % 60;
+      var days = parseInt(hours / 24);
+      hours = hours % 24;
+      var years = parseInt(days / 365);
+      days = days % 365;
+      if (years > 0) {
+        s += years + "y";
+      }
+      if (days > 0) {
+        s += days + "d";
+      }
+      if (hours > 0) {
+        s += hours + "h";
+      }
+      if (mins > 0) {
+        s += mins + "m";
+      }
+      if (secs > 0) {
+        s += secs + "s";
+      }
     }
     return s;
   }
