@@ -19,6 +19,7 @@ class Data {
     this.ogToken = null;
     this.ogdToken = null;
     this.ogRewardCurve = null;
+    this.voteWeightCurve = null;
     this.optinoGov = null;
     this.fee0Token = null;
     this.fee1Token = null;
@@ -74,21 +75,24 @@ class Data {
   //   this.addContract(this.ogRewardCurve, "SimpleCurve");
   // }
 
-  async setOptinoGovData(ogToken, ogdToken, ogRewardCurve, optinoGov, fee0Token) {
+  async setOptinoGovData(ogToken, ogdToken, ogRewardCurve, voteWeightCurve, optinoGov, fee0Token) {
     this.ogToken = ogToken;
     this.ogdToken = ogdToken;
     this.ogRewardCurve = ogRewardCurve;
+    this.voteWeightCurve = voteWeightCurve;
     this.optinoGov = optinoGov;
     this.fee0Token = fee0Token;
     this.addAccount(this.ogToken.address, "OGToken");
     this.addAccount(this.ogdToken.address, "OGDToken");
     this.addAccount(this.ogRewardCurve.address, "OGRewardCurve");
+    this.addAccount(this.voteWeightCurve.address, "VoteWeightCurve");
     this.addAccount(this.optinoGov.address, "OptinoGov");
     this.addAccount(this.fee0Token.address, "Fee0Token");
 
     this.addContract(this.ogToken, "OGToken");
     this.addContract(this.ogdToken, "OGDToken");
     this.addContract(this.ogRewardCurve, "OGRewardCurve");
+    this.addContract(this.voteWeightCurve, "VoteWeightCurve");
     this.addContract(this.optinoGov, "OptinoGov");
     this.addContract(this.fee0Token, "Fee0Token");
 
@@ -184,7 +188,7 @@ class Data {
   }
 
   padLeft(s, n) {
-    var o = s;
+    var o = s.toString();
     while (o.length < n) {
       o = " " + o;
     }
@@ -324,7 +328,7 @@ class Data {
         tokenBalances[j] = await this.tokenContracts[j].balanceOf(account);
         totalTokenBalances[j] = totalTokenBalances[j].add(tokenBalances[j]);
       }
-      line = "         " + this.padLeft(i, 2) + " " + this.padRight(this.getShortAccountName(account), 22) + " " + this.padToken(etherBalanceDiff, 18);
+      line = "        " + this.padLeft(i, 2) + " " + this.padRight(this.getShortAccountName(account), 22) + " " + this.padToken(etherBalanceDiff, 18);
       for (let t = 0; t < this.tokenContracts.length; t++) {
         line = line + this.padToken(tokenBalances[t] || BigNumber.from(0), this.decimals[t] || 18);
       }
@@ -351,12 +355,13 @@ class Data {
       console.log("        Token " + i + " symbol: '" + symbol + "', name: '" + name + "', decimals: " + decimals + ", totalSupply: " + ethers.utils.formatUnits(totalSupply, decimals) + ", owner: " + this.getShortAccountName(owner) + ", address: " + this.getShortAccountName(tokenContract.address));
       if (symbol == "OptinoGov" && this.optinoGov != null) {
         // console.log("        OptinoGov " + this.getShortAccountName(this.optinoGov.address) + " @ " + this.optinoGov.address);
-        let [ogToken, ogdToken, curve, accountsLength, maxDuration, rewardsPerSecond, rewardsPerYear, collectRewardForFee, collectRewardForDelay, proposalCost, proposalThreshold] = await Promise.all([this.optinoGov.ogToken(), this.optinoGov.ogdToken(), this.optinoGov.curve(), this.optinoGov.accountsLength(), this.optinoGov.maxDuration(), this.optinoGov.rewardsPerSecond(), this.optinoGov.rewardsPerYear(), this.optinoGov.collectRewardForFee(), this.optinoGov.collectRewardForDelay(), this.optinoGov.proposalCost(), this.optinoGov.proposalThreshold()]);
+        let [ogToken, ogdToken, ogRewardCurve, voteWeightCurve, accountsLength, maxDuration, rewardsPerSecond, rewardsPerYear, collectRewardForFee, collectRewardForDelay, proposalCost, proposalThreshold] = await Promise.all([this.optinoGov.ogToken(), this.optinoGov.ogdToken(), this.optinoGov.ogRewardCurve(), this.optinoGov.voteWeightCurve(), this.optinoGov.accountsLength(), this.optinoGov.maxDuration(), this.optinoGov.rewardsPerSecond(), this.optinoGov.rewardsPerYear(), this.optinoGov.collectRewardForFee(), this.optinoGov.collectRewardForDelay(), this.optinoGov.proposalCost(), this.optinoGov.proposalThreshold()]);
         let [quorum, quorumDecayPerSecond, votingDuration, executeDelay, rewardPool, totalVotes] = await Promise.all([this.optinoGov.quorum(), this.optinoGov.quorumDecayPerSecond(), this.optinoGov.votingDuration(), this.optinoGov.executeDelay(), this.optinoGov.rewardPool(), this.optinoGov.totalVotes()]);
         let [proposalCount /*, stakeInfoLength*/] = await Promise.all([this.optinoGov.proposalCount()/*, this.optinoGov.stakeInfoLength()*/]);
         console.log("        - ogToken              : " + this.getShortAccountName(ogToken));
         console.log("        - ogdToken             : " + this.getShortAccountName(ogdToken));
-        console.log("        - curve                : " + this.getShortAccountName(curve));
+        console.log("        - ogRewardCurve        : " + this.getShortAccountName(ogRewardCurve));
+        console.log("        - voteWeightCurve      : " + this.getShortAccountName(voteWeightCurve));
         let decimals = 18;
         console.log("        - maxDuration          : " + maxDuration + " seconds = " + maxDuration.div(60 * 60 * 24) + " days");
         console.log("        - rewardsPerSecond     : " + rewardsPerSecond + " = " + ethers.utils.formatUnits(rewardsPerSecond, 18) + " = " + ethers.utils.formatUnits(rewardsPerSecond.mul(60 * 60 * 24), decimals) + " per day");
@@ -379,7 +384,7 @@ class Data {
         for (let j = 0; j < accountsLength; j++) {
           const _a = await this.optinoGov.getAccountByIndex(j);
           const accruedReward = await tokenContract.accruedReward(_a.tokenOwner);
-          console.log("          " + this.padLeft(j, 2) + " " +
+          console.log("         " + this.padLeft(j, 2) + " " +
             this.padRight(this.getShortAccountName(_a.tokenOwner), 20) + " " +
             this.padLeft(this.termString(_a.account.duration.toString()), 10) + " " +
             this.padLeft(this.termString(parseInt(_a.account.end.toString())-now), 16) + " " +
@@ -404,7 +409,7 @@ class Data {
           const unclaimedDividends = await tokenContract.unclaimedDividends(dividendToken[0]);
           dividendHeader = dividendHeader + this.padLeft("Owing " + this.getShortAccountName(dividendToken[0]), 24) + " " + this.padLeft("New " + this.getShortAccountName(dividendToken[0]), 24) + " ";
           dividendSeparator = dividendSeparator + " ------------------------ ------------------------";
-          console.log("          " + this.padLeft(j, 2) + " " + this.padRight(this.getShortAccountName(dividendToken[0]), 18) + "  " + this.padRight(dividendToken[1].toString(), 6) + " " + this.padLeft(ethers.utils.formatUnits(unclaimedDividends, 18), 24));
+          console.log("         " + this.padLeft(j, 2) + " " + this.padRight(this.getShortAccountName(dividendToken[0]), 18) + "  " + this.padRight(dividendToken[1].toString(), 6) + " " + this.padLeft(ethers.utils.formatUnits(unclaimedDividends, 18), 24));
         }
         console.log("         -- ---------------- ------- --------------------------");
         if (dividendTokensLength > 0) {
@@ -413,7 +418,7 @@ class Data {
           for (let j = 1; j < this.accounts.length; j++) {
             let account = this.accounts[j];
             let accountName = this.getShortAccountName(account);
-            if (!accountName.startsWith("Fee") && !accountName.startsWith("OG") && !accountName.startsWith("SimpleCurve")) {
+            if (!accountName.startsWith("Fee") && !accountName.startsWith("OG") && !accountName.startsWith("Vote")) {
               const dividendsOwing = await tokenContract.dividendsOwing(account);
               let result = "";
               let tokenList = dividendsOwing[0];
@@ -422,7 +427,7 @@ class Data {
               for (let k = 0; k < dividendTokensLength; k++) {
                 result = result + this.padLeft(ethers.utils.formatUnits(owingList[k], 18), 24) + " " + this.padLeft(ethers.utils.formatUnits(newOwingList[k], 18), 24) + " ";
               }
-              console.log("          " + this.padLeft(j, 2) + " " + this.padRight(this.getShortAccountName(account), 18) + " " + result);
+              console.log("         " + this.padLeft(j, 2) + " " + this.padRight(this.getShortAccountName(account), 18) + " " + result);
             }
           }
           console.log(dividendSeparator);
@@ -444,7 +449,7 @@ class Data {
         for (let k = 0; k < accountsLength; k++) {
           const account = await tokenContract.getAccountByIndex(k);
           const accruedReward = await tokenContract.accruedReward(account.tokenOwner);
-          console.log("          " + this.padLeft(k, 2) + " " +
+          console.log("         " + this.padLeft(k, 2) + " " +
             this.padRight(this.getShortAccountName(account.tokenOwner), 20) + " " +
             this.padLeft(account.account.duration.toString(), 8) + " " +
             this.padLeft(account.account.end.toString(), 10) + " " +
@@ -464,7 +469,21 @@ class Data {
         console.log("         -- ---------- ------------------------ ------------------------");
         for (let j = 0; j < pointsLength; j++) {
           const point = await this.ogRewardCurve.points(j);
-          console.log("          " + this.padLeft(j, 2) + " " +
+          console.log("         " + this.padLeft(j, 2) + " " +
+            this.padLeft(this.termString(point.term.toString()), 10) + " " +
+            this.padLeft(ethers.utils.formatUnits(point.rate, 16), 24) + " " +
+            this.padLeft(ethers.utils.formatUnits(point.rate.div(365 * 24 * 60 * 60), 16), 24));
+        }
+        console.log("         -- ---------- ------------------------ ------------------------");
+    }
+    if (this.voteWeightCurve != null) {
+      const [owner, pointsLength] = await Promise.all([this.voteWeightCurve.owner(), this.voteWeightCurve.pointsLength()]);
+      console.log("        SimpleCurve " + this.getShortAccountName(this.voteWeightCurve.address) + " @ " + this.voteWeightCurve.address + ", owner: " + this.getShortAccountName(owner) + ", pointsLength: " + pointsLength);
+        console.log("          #       Term             Vote Weight%           Vote Weight/s%");
+        console.log("         -- ---------- ------------------------ ------------------------");
+        for (let j = 0; j < pointsLength; j++) {
+          const point = await this.voteWeightCurve.points(j);
+          console.log("         " + this.padLeft(j, 2) + " " +
             this.padLeft(this.termString(point.term.toString()), 10) + " " +
             this.padLeft(ethers.utils.formatUnits(point.rate, 16), 24) + " " +
             this.padLeft(ethers.utils.formatUnits(point.rate.div(365 * 24 * 60 * 60), 16), 24));

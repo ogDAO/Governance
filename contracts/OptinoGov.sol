@@ -18,7 +18,8 @@ contract OptinoGovConfig {
 
     OGTokenInterface public ogToken;
     OGDTokenInterface public ogdToken;
-    CurveInterface public curve;
+    CurveInterface public ogRewardCurve;
+    CurveInterface public voteWeightCurve;
     uint public maxDuration = 10000 seconds; // Testing 365 days;
     uint public rewardsPerSecond = 150_000_000_000_000_000; // 0.15
     uint public collectRewardForFee = 5 * 10**16; // 5%, 18 decimals
@@ -39,18 +40,19 @@ contract OptinoGovConfig {
         _;
     }
 
-    constructor(OGTokenInterface _ogToken, OGDTokenInterface _ogdToken, CurveInterface _curve) {
+    constructor(OGTokenInterface _ogToken, OGDTokenInterface _ogdToken, CurveInterface _ogRewardCurve, CurveInterface _voteWeightCurve) {
         ogToken = _ogToken;
         ogdToken = _ogdToken;
-        curve = _curve;
+        ogRewardCurve = _ogRewardCurve;
+        voteWeightCurve = _voteWeightCurve;
     }
 
     function equalString(string memory s1, string memory s2) internal pure returns(bool) {
         return keccak256(abi.encodePacked(s1)) == keccak256(abi.encodePacked(s2));
     }
     function setConfig(string memory key, uint value) external onlySelf {
-        /*if (equalString(key, "curve")) {
-            curve = CurveInterface(value);
+        /*if (equalString(key, "ogRewardCurve")) {
+            ogRewardCurve = CurveInterface(value);
         } else */if (equalString(key, "maxDuration")) {
             require(maxDuration < 5 * 365 days, "Cannot exceed 5 years");
             maxDuration = value;
@@ -130,7 +132,7 @@ contract OptinoGov is ERC20, OptinoGovConfig {
     event Voted(address indexed user, uint oip, bool voteFor, uint forVotes, uint againstVotes);
     event Executed(address indexed user, uint oip);
 
-    constructor(OGTokenInterface ogToken, OGDTokenInterface ogdToken, CurveInterface curve) OptinoGovConfig(ogToken, ogdToken, curve) {
+    constructor(OGTokenInterface ogToken, OGDTokenInterface ogdToken, CurveInterface ogRewardCurve, CurveInterface voteWeightCurve) OptinoGovConfig(ogToken, ogdToken, ogRewardCurve, voteWeightCurve) {
     }
 
     function symbol() override external view returns (string memory) {
@@ -205,7 +207,9 @@ contract OptinoGov is ERC20, OptinoGovConfig {
         }
     }
     function updateStatsAfter(Account storage account) internal {
-        account.votes = account.balance.mul(account.duration).div(SECONDS_PER_YEAR);
+        uint rate = voteWeightCurve.getRate(uint(account.duration));
+        account.votes = account.balance.mul(rate).div(10**18);
+        // account.votes = account.balance.mul(account.duration).div(SECONDS_PER_YEAR);
         totalVotes = totalVotes.add(account.votes);
         if (account.delegatee != address(0)) {
             accounts[account.delegatee].delegatedVotes = accounts[account.delegatee].delegatedVotes.add(account.votes);
@@ -267,7 +271,7 @@ contract OptinoGov is ERC20, OptinoGovConfig {
         }
         if (depositTokens > 0) {
             if (account.end == 0) {
-                uint rate = curve.getRate(uint(duration));
+                uint rate = ogRewardCurve.getRate(duration);
                 accounts[tokenOwner] = Account(uint64(duration), uint64(block.timestamp.add(duration)), uint64(0), uint64(0), uint64(accountsIndex.length), rate, address(0), depositTokens, 0, 0);
                 account = accounts[tokenOwner];
                 accountsIndex.push(tokenOwner);
@@ -275,7 +279,7 @@ contract OptinoGov is ERC20, OptinoGovConfig {
                 require(block.timestamp + duration >= account.end, "Cannot shorten duration");
                 account.duration = uint64(duration);
                 account.end = uint64(block.timestamp.add(duration));
-                account.rate = curve.getRate(uint(duration));
+                account.rate = ogRewardCurve.getRate(duration);
                 account.balance = account.balance.add(depositTokens);
             }
             require(ogdToken.mint(tokenOwner, depositTokens), "OGD mint failed");
