@@ -223,6 +223,13 @@ contract OptinoGov is ERC20, OptinoGovConfig {
         _reward = futureValue.sub(account.balance);
         _term = block.timestamp.sub(from);
     }
+    function _getOGRewardRate(uint term) internal view returns (uint rate) {
+        try ogRewardCurve.getRate(term) returns (uint _rate) {
+            rate = _rate;
+        } catch {
+            rate = 0;
+        }
+    }
 
     function _changeCommitment(address tokenOwner, uint depositTokens, uint withdrawTokens, bool withdrawRewards, uint duration) internal {
         // console.log("        >   _changeCommitment(tokenOwner %s, depositTokens %s, withdrawTokens %s,", tokenOwner, depositTokens, withdrawTokens);
@@ -261,13 +268,13 @@ contract OptinoGov is ERC20, OptinoGovConfig {
         }
         if (depositTokens == 0 && withdrawTokens == 0) {
             // require(block.timestamp + duration >= account.end, "Cannot shorten duration");
-            // TODO
+            // TODO emit Recommit
             account.duration = uint64(duration);
             account.end = uint64(block.timestamp.add(duration));
         }
         if (depositTokens > 0) {
             if (account.end == 0) {
-                uint rate = ogRewardCurve.getRate(duration);
+                uint rate = _getOGRewardRate(duration);
                 accounts[tokenOwner] = Account(uint64(duration), uint64(block.timestamp.add(duration)), uint64(0), uint64(0), uint64(accountsIndex.length), rate, address(0), depositTokens, 0, 0);
                 account = accounts[tokenOwner];
                 accountsIndex.push(tokenOwner);
@@ -275,7 +282,7 @@ contract OptinoGov is ERC20, OptinoGovConfig {
                 require(block.timestamp + duration >= account.end, "Cannot shorten duration");
                 account.duration = uint64(duration);
                 account.end = uint64(block.timestamp.add(duration));
-                account.rate = ogRewardCurve.getRate(duration);
+                account.rate = _getOGRewardRate(duration);
                 account.balance = account.balance.add(depositTokens);
             }
             require(ogdToken.mint(tokenOwner, depositTokens), "OGD mint failed");
@@ -305,6 +312,7 @@ contract OptinoGov is ERC20, OptinoGovConfig {
             require(ogdToken.withdrawDividendsFor(tokenOwner, tokenOwner), "OGD withdrawDividendsFor failed");
             require(ogdToken.transferFrom(tokenOwner, address(0), withdrawTokens), "OGD transfer failed");
             require(ogToken.transfer(tokenOwner, withdrawTokens), "OG transfer failed");
+            // TODO Uncommit
         //     emit Unstaked(msg.sender, withdrawTokens, reward, tokensWithSlashingFactor, rewardWithSlashingFactor);
         }
         updateStatsAfter(account);
@@ -318,7 +326,6 @@ contract OptinoGov is ERC20, OptinoGovConfig {
     }
     function recommit(uint duration) public {
         // console.log("        > %s -> recommit(duration %s)", msg.sender, duration);
-        require(duration > 0, "duration must be > 0");
         require(accounts[msg.sender].balance > 0, "No balance to recommit");
         _changeCommitment(msg.sender, 0, 0, false, duration);
     }
@@ -340,10 +347,8 @@ contract OptinoGov is ERC20, OptinoGovConfig {
         _changeCommitment(msg.sender, 0, tokens, true, 0);
         emit Transfer(msg.sender, address(0), tokens);
     }
-    // TODO
     function uncommitFor(address tokenOwner) public {
         // console.log("        > %s -> uncommitFor(%s)", msg.sender, tokenOwner);
-        // require(duration > 0, "duration must be > 0");
         require(accounts[tokenOwner].balance > 0, "tokenOwner has no balance to tidy");
         _changeCommitment(tokenOwner, 0, 0, false, 0);
     }

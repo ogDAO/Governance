@@ -295,7 +295,7 @@ class Data {
     if (mins > 0) {
       s += mins + "m";
     }
-    if (secs > 0) {
+    if (secs >= 0) {
       s += secs + "s";
     }
     return s;
@@ -373,8 +373,8 @@ class Data {
         console.log("        - totalVotes           : " + totalVotes + " = " + ethers.utils.formatUnits(totalVotes, decimals));
         console.log("        - proposalCount        : " + proposalCount);
         // console.log("        - stakeInfoLength      : " + stakeInfoLength);
-        console.log("          # Account                Duration              End                    Rate%                  Balance                    Votes Delegatee                     Delegated Votes                  Accrued    Term");
-        console.log("         -- -------------------- ---------- ---------------- ------------------------ ------------------------ ------------------------ -------------------- ------------------------ ------------------------ -------");
+        console.log("          # Account                Duration              End                    Rate%                  Balance                    Votes Delegatee                     Delegated Votes                  Accrued Accrual Term");
+        console.log("         -- -------------------- ---------- ---------------- ------------------------ ------------------------ ------------------------ -------------------- ------------------------ ------------------------ ------------");
         for (let j = 0; j < accountsLength; j++) {
           const _a = await this.optinoGov.getAccountByIndex(j);
           const accruedReward = await tokenContract.accruedReward(_a.tokenOwner);
@@ -388,9 +388,9 @@ class Data {
             this.padRight(this.getShortAccountName(_a.account.delegatee), 20) + " " +
             this.padLeft(ethers.utils.formatUnits(_a.account.delegatedVotes, 18), 24) + " " +
             this.padLeft(ethers.utils.formatUnits(accruedReward[0], 18), 24) + " " +
-            this.padLeft(accruedReward[1].toString(), 7));
+            this.padLeft(accruedReward[1].toString(), 12));
         }
-        console.log("         -- -------------------- ---------- ---------------- ------------------------ ------------------------ ------------------------ -------------------- ------------------------ ------------------------ -------");
+        console.log("         -- -------------------- ---------- ---------------- ------------------------ ------------------------ ------------------------ -------------------- ------------------------ ------------------------ ------------");
       } else if (symbol == "OGD") {
         const dividendTokensLength = parseInt(await tokenContract.dividendTokensLength());
         console.log("          # Dividend         Enabled                  Unclaimed");
