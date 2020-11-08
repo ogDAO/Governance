@@ -105,11 +105,11 @@ $ npx hardhat test test/TestStakingFactory.js > results/TestStakingFactory.txt
         addStake1 - gasUsed: 503060, fee: 0.0402448, feeUsd: 15.521212016, @ 80.0 gwei & 385.67 ETH/USD, 0xa2a07f524ef80a1cf42fc6af2e2a63fc01194f82a2cff2e80feb97aba650571c
         + StakingFactory.StakingCreated(key: 0x459a64d62d70db853f0afeb7a1b37e1a67d215dfa723190f304118a13cd2ce46, staking: Staking:0x993F)
         + OGToken.Transfer(from: User1:0xa11A, to: Staking:0x993F, tokens: 1000.0)
-        + Staking.Staked(tokenOwner: User1:0xa11A, tokens: 1000.0, duration: 1000, end: 1604820601)
+        + Staking.Staked(tokenOwner: User1:0xa11A, tokens: 1000.0, duration: 1000, end: 1604820838)
         + Staking.Transfer(from: ETH|null:0x0000, to: User1:0xa11A, tokens: 1000.0)
         addStake2 - gasUsed: 182542, fee: 0.01460336, feeUsd: 5.6320778512, @ 80.0 gwei & 385.67 ETH/USD, 0x32700e43ebb13dec9fa2d82f25863f12e6afb92ab564ab86daee8709b076fbd9
         + OGToken.Transfer(from: User2:0xa22A, to: Staking:0x993F, tokens: 2000.0)
-        + Staking.Staked(tokenOwner: User2:0xa22A, tokens: 2000.0, duration: 10000, end: 1604829602)
+        + Staking.Staked(tokenOwner: User2:0xa22A, tokens: 2000.0, duration: 10000, end: 1604829839)
         + Staking.Transfer(from: ETH|null:0x0000, to: User2:0xa22A, tokens: 2000.0)
         
          # Account                                        ΔETH                       OG                     FEE0         OGS0000000          
@@ -136,7 +136,7 @@ $ npx hardhat test test/TestStakingFactory.js > results/TestStakingFactory.txt
           - addresses                  : ["Fee0Token:0x6eaC","ETH|null:0x0000","ETH|null:0x0000","ETH|null:0x0000"]
           - uints                      : ["0","0","0","0","0","0"]
           - strings                    : ["FEE0Token","","",""]
-          - weightedEnd                : 1605323102 = 9631938614000.0/6000.0
+          - weightedEnd                : 5d19h51m39s 1605323339 = 9631940036000.0/6000.0
           - slashingFactor             : 0.0%
           # Account                    Duration              End      Index                    Rate%                  Balance           Accrued Reward Accrual Term
          -- -------------------- -------------- ---------------- ---------- ------------------------ ------------------------ ------------------------ ------------
@@ -158,9 +158,9 @@ $ npx hardhat test test/TestStakingFactory.js > results/TestStakingFactory.txt
         - stakingsLength         : 1
           - staking 0 @ Staking:0x993F, owner: StakingFactory:0xBa1F
         
-        expectedWeightedEnd: 1605323090 +/- 150
-        weightedEnd        : 1605323102
-      ✓ Workflow #1 - Stake And Check weightedEnd (1348ms)
+        expectedWeightedEnd: 5d19h51m27s 1605323327 +/- 150
+        weightedEnd        : 5d19h51m39s 1605323339
+      ✓ Workflow #1 - Stake And Check weightedEnd (1336ms)
 
 
   1 passing (3s)

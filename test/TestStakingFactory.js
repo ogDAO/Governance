@@ -201,12 +201,14 @@ describe("TestStakingFactory", function() {
       // await data.printTxData("addStake3", addStake3);
       await data.printBalances();
 
+      const block = await ethers.provider.getBlock("latest");
+      const now = block.timestamp;
       const expectedDurationDenominator = ogTokensToStake1.add(ogTokensToStake2).add(ogTokensToStake3);
       const expectedDuration = expectedDurationDenominator.gt(0) ? ogTokensToStake1.mul(duration1).add(ogTokensToStake2.mul(duration2)).add(ogTokensToStake3.mul(duration3)).div(expectedDurationDenominator) : 0;
       const expectedWeightedEnd = expectedDuration.add(parseInt(new Date()/1000));
-      console.log("        expectedWeightedEnd: " + expectedWeightedEnd + " +/- 150");
+      console.log("        expectedWeightedEnd: " + data.termString(parseInt(expectedWeightedEnd.toString())-now) + " " + expectedWeightedEnd + " +/- 150");
       const weightedEnd = await stakings[0].weightedEnd();
-      console.log("        weightedEnd        : " + weightedEnd);
+      console.log("        weightedEnd        : " + data.termString(parseInt(weightedEnd.toString())-now) + " " + weightedEnd);
       expect(parseFloat(weightedEnd.toString())).to.be.closeTo(parseFloat(expectedWeightedEnd.toString()), 150, "weightedEnd seems off");
     });
   });

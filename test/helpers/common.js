@@ -444,7 +444,7 @@ class Data {
         console.log("          - uints                      : " + JSON.stringify(stakingInfo.uints.map((x) => { return x.toString(); })));
         console.log("          - strings                    : " + JSON.stringify([stakingInfo.string0, stakingInfo.string1, stakingInfo.string2, stakingInfo.string3]));
         // console.log("          - weightedDurationDenominator: " + new BigNumber(weightedDurationDenominator.toString()).shiftedBy(-18));
-        console.log("          - weightedEnd                : " + weightedEnd + " = " + ethers.utils.formatUnits(weightedEndNumerator, decimals) + "/" + ethers.utils.formatUnits(totalSupply, decimals));
+        console.log("          - weightedEnd                : " + this.termString(parseInt(weightedEnd.toString())-now) + " " + weightedEnd + " = " + ethers.utils.formatUnits(weightedEndNumerator, decimals) + "/" + ethers.utils.formatUnits(totalSupply, decimals));
         console.log("          - slashingFactor             : " + ethers.utils.formatUnits(slashingFactor, 16) + "%");
         // console.log("          - accountsLength             : " + accountsLength);
         console.log("          # Account                    Duration              End      Index                    Rate%                  Balance           Accrued Reward Accrual Term");
@@ -454,12 +454,8 @@ class Data {
           const accruedReward = await tokenContract.accruedReward(account.tokenOwner);
           console.log("         " + this.padLeft(k, 2) + " " +
             this.padRight(this.getShortAccountName(account.tokenOwner), 20) + " " +
-
             this.padLeft(this.termString(account.account.duration.toString()), 14) + " " +
             this.padLeft(this.termString(parseInt(account.account.end.toString())-now), 16) + " " +
-
-            // this.padLeft(account.account.duration.toString(), 8) + " " +
-            // this.padLeft(account.account.end.toString(), 10) + " " +
             this.padLeft(account.account.index.toString(), 10) + " " +
             this.padLeft(ethers.utils.formatUnits(account.account.rate, 16), 24) + " " +
             this.padLeft(ethers.utils.formatUnits(account.account.balance, 18), 24) + " " +
