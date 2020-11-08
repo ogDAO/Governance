@@ -11,17 +11,17 @@ $ npx hardhat --verbose --show-stack-traces test test/TestOptinoGov.js > results
         --- Setup 1 - Deploy OGToken, OGDToken, FEE0, then OptinoGov ---
         Address 0x1647B1461251A0c6D3E14a227dE0F16E36ba80B1 => OGToken:0x1647
         Address 0x0f4eA6f2be49d822b7cAEf4175450A4D83A32e72 => OGDToken:0x0f4e
-        Address 0x6eaC8DFBdEB9588C9FEEe24783B4137b082f9708 => SimpleCurve:0x6eaC
+        Address 0x6eaC8DFBdEB9588C9FEEe24783B4137b082f9708 => OGRewardCurve:0x6eaC
         Address 0x5Fec6C68520cdf0Cd43ca00dDAAcd4b2e7c568D0 => OptinoGov:0x5Fec
         Address 0xBa1FCDaE835E77cAB2a76a7C3884AdC630f7a5B0 => Fee0Token:0xBa1F
         ogToken.deployTransaction - gasUsed: 964615, fee: 0.0771692, feeUsd: 29.761845364, @ 80.0 gwei & 385.67 ETH/USD, 0x4bdcffa0070fecf70e8f47a53c5ee69fb27fbc603bb26add854fed7f173da6be
         + OGToken.Transfer(from: ETH|null:0x0000, to: Owner:0xa00A, tokens: 40000.0)
         ogdToken.deployTransaction - gasUsed: 2471788, fee: 0.19774304, feeUsd: 76.2635582368, @ 80.0 gwei & 385.67 ETH/USD, 0xf58fbd18f7596b9625b7158dd252163921d68744dcacbd278c05ef3320bcf239
         + OGDToken.Transfer(from: ETH|null:0x0000, to: Owner:0xa00A, tokens: 0.0)
-        simpleCurve.deployTransaction - gasUsed: 833717, fee: 0.06669736, feeUsd: 25.7231708312, @ 80.0 gwei & 385.67 ETH/USD, 0x2a0b9fcb1873d5e257982af2c34e10d0e6c4fabcb84ffbeef5ca9dec87ad0b92
-        + SimpleCurve.PointUpdated(index: 0, term: 86400, rate: 315360000000000000)
-        + SimpleCurve.PointUpdated(index: 1, term: 31536000, rate: 630720000000000000)
-        + SimpleCurve.PointUpdated(index: 2, term: 63072000, rate: 946080000000000000)
+        ogRewardCurve.deployTransaction - gasUsed: 833717, fee: 0.06669736, feeUsd: 25.7231708312, @ 80.0 gwei & 385.67 ETH/USD, 0x2a0b9fcb1873d5e257982af2c34e10d0e6c4fabcb84ffbeef5ca9dec87ad0b92
+        + OGRewardCurve.PointUpdated(index: 0, term: 86400, rate: 315360000000000000)
+        + OGRewardCurve.PointUpdated(index: 1, term: 31536000, rate: 630720000000000000)
+        + OGRewardCurve.PointUpdated(index: 2, term: 63072000, rate: 946080000000000000)
         fee0Token.deployTransaction - gasUsed: 785224, fee: 0.06281792, feeUsd: 24.2269872064, @ 80.0 gwei & 385.67 ETH/USD, 0x2903866d9eba5c9e80a3154373c2ebe22792f9d43862a61726b72a3c14c4cd93
         + Fee0Token.Transfer(from: ETH|null:0x0000, to: Owner:0xa00A, tokens: 0.0)
         optinoGov.deployTransaction - gasUsed: 3886992, fee: 0.31095936, feeUsd: 119.9276963712, @ 80.0 gwei & 385.67 ETH/USD, 0x4ddcbc61f3cac96da3081edeb1c4b7baecd05178c51b8ceedf4170057e09dd54
@@ -65,7 +65,7 @@ $ npx hardhat --verbose --show-stack-traces test test/TestOptinoGov.js > results
          4 User4:0xa44a                                 0.0                      0.0                      0.0                      0.0                      0.0
          5 OGToken:0x1647                               0.0                      0.0                      0.0                      0.0                      0.0
          6 OGDToken:0x0f4e                              0.0                      0.0                      0.0                      0.0                      0.0
-         7 SimpleCurve:0x6eaC                           0.0                      0.0                      0.0                      0.0                      0.0
+         7 OGRewardCurve:0x6eaC                         0.0                      0.0                      0.0                      0.0                      0.0
          8 OptinoGov:0x5Fec                             0.0                      0.0                      0.0                      0.0                      0.0
          9 Fee0Token:0xBa1F                             0.0                      0.0                      0.0                      0.0                      0.0
         -- ------------------------ ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
@@ -75,7 +75,7 @@ $ npx hardhat --verbose --show-stack-traces test test/TestOptinoGov.js > results
         Token 0 symbol: 'OptinoGov', name: 'OptinoGov', decimals: 18, totalSupply: 0.0, owner: n/a, address: OptinoGov:0x5Fec
         - ogToken              : OGToken:0x1647
         - ogdToken             : OGDToken:0x0f4e
-        - curve                : SimpleCurve:0x6eaC
+        - curve                : OGRewardCurve:0x6eaC
         - maxDuration          : 10000 seconds = 0 days
         - rewardsPerSecond     : 150000000000000000 = 0.15 = 12960.0 per day
         - collectRewardForFee  : 50000000000000000 = 5.0%
@@ -90,9 +90,9 @@ $ npx hardhat --verbose --show-stack-traces test test/TestOptinoGov.js > results
         - totalVotes           : 0 = 0.0
         - rewardsPerYear       : 31.536% compounding daily/simple partial end, rewardsPerSecond: 0.000001%
         - proposalCount        : 0
-          # Account              Duration        End                    Rate%                  Balance                    Votes Delegatee                     Delegated Votes                  Accrued    Term
-         -- -------------------- -------- ---------- ------------------------ ------------------------ ------------------------ -------------------- ------------------------ ------------------------ -------
-         -- -------------------- -------- ---------- ------------------------ ------------------------ ------------------------ -------------------- ------------------------ ------------------------ -------
+          # Account                Duration        End                    Rate%                  Balance                    Votes Delegatee                     Delegated Votes                  Accrued    Term
+         -- -------------------- ---------- ---------- ------------------------ ------------------------ ------------------------ -------------------- ------------------------ ------------------------ -------
+         -- -------------------- ---------- ---------- ------------------------ ------------------------ ------------------------ -------------------- ------------------------ ------------------------ -------
         Token 1 symbol: 'OG', name: 'Optino Governance', decimals: 18, totalSupply: 40000.0, owner: OptinoGov:0x5Fec, address: OGToken:0x1647
         Token 2 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 0.0, owner: OptinoGov:0x5Fec, address: OGDToken:0x0f4e
           # Dividend         Enabled                  Unclaimed
@@ -109,7 +109,7 @@ $ npx hardhat --verbose --show-stack-traces test test/TestOptinoGov.js > results
           8 OptinoGov:0x5Fec                        0.0                      0.0                      0.0                      0.0 
          -- ------------------ ------------------------ ------------------------ ------------------------ ------------------------
         Token 3 symbol: 'FEE0', name: 'Fee0', decimals: 18, totalSupply: 0.0, owner: Owner:0xa00A, address: Fee0Token:0xBa1F
-        SimpleCurve SimpleCurve:0x6eaC @ 0x6eaC8DFBdEB9588C9FEEe24783B4137b082f9708, owner: Owner:0xa00A, pointsLength: 3
+        SimpleCurve OGRewardCurve:0x6eaC @ 0x6eaC8DFBdEB9588C9FEEe24783B4137b082f9708, owner: Owner:0xa00A, pointsLength: 3
           #       Term                Rate APY%                  Rate/s%
          -- ---------- ------------------------ ------------------------
           0         1d                   31.536                 0.000001
@@ -123,17 +123,17 @@ $ npx hardhat --verbose --show-stack-traces test test/TestOptinoGov.js > results
         commit1 - gasUsed: 385351, fee: 0.03082808, feeUsd: 11.8894656136, @ 80.0 gwei & 385.67 ETH/USD, 0xefd0cf2910a20193ff7afa060887e3fe4cbb2e21d19f4a353dbefd16ef568a29
         + OGToken.Transfer(from: User1:0xa11A, to: OptinoGov:0x5Fec, tokens: 1000.0)
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User1:0xa11A, tokens: 1000.0)
-        + OptinoGov.Committed(user: User1:0xa11A, tokens: 1000.0, balance: 1000.0, duration: 2592000, end: 1607384907, delegatee: ETH|null:0x0000, votes: 0.0, rewardPool: 1000000.0, totalVotes: 0.0)
+        + OptinoGov.Committed(user: User1:0xa11A, tokens: 1000.0, balance: 1000.0, duration: 2592000, end: 1607387505, delegatee: ETH|null:0x0000, votes: 0.0, rewardPool: 1000000.0, totalVotes: 0.0)
         + OptinoGov.Transfer(from: ETH|null:0x0000, to: User1:0xa11A, tokens: 1000.0)
         commit2 - gasUsed: 299130, fee: 0.0239304, feeUsd: 9.229237368, @ 80.0 gwei & 385.67 ETH/USD, 0xb28cee16026f9909bbd525e137cc104313c64ac67ef5ca512027bfc14d28ce77
         + OGToken.Transfer(from: User2:0xa22A, to: OptinoGov:0x5Fec, tokens: 1000.0)
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User2:0xa22A, tokens: 1000.0)
-        + OptinoGov.Committed(user: User2:0xa22A, tokens: 1000.0, balance: 1000.0, duration: 31536000, end: 1636328908, delegatee: ETH|null:0x0000, votes: 0.0, rewardPool: 1000000.0, totalVotes: 25920000.0)
+        + OptinoGov.Committed(user: User2:0xa22A, tokens: 1000.0, balance: 1000.0, duration: 31536000, end: 1636331506, delegatee: ETH|null:0x0000, votes: 0.0, rewardPool: 1000000.0, totalVotes: 25920000.0)
         + OptinoGov.Transfer(from: ETH|null:0x0000, to: User2:0xa22A, tokens: 1000.0)
         commit3 - gasUsed: 316283, fee: 0.02530264, feeUsd: 9.7584691688, @ 80.0 gwei & 385.67 ETH/USD, 0x25e8d42c06cc91b31eed5a93684e086cb2cb020fee58e9ff5c37a655a357e3ff
         + OGToken.Transfer(from: User3:0xa33a, to: OptinoGov:0x5Fec, tokens: 1000.0)
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User3:0xa33a, tokens: 1000.0)
-        + OptinoGov.Committed(user: User3:0xa33a, tokens: 1000.0, balance: 1000.0, duration: 47304000, end: 1652096909, delegatee: ETH|null:0x0000, votes: 0.0, rewardPool: 1000000.0, totalVotes: 341280000.0)
+        + OptinoGov.Committed(user: User3:0xa33a, tokens: 1000.0, balance: 1000.0, duration: 47304000, end: 1652099507, delegatee: ETH|null:0x0000, votes: 0.0, rewardPool: 1000000.0, totalVotes: 341280000.0)
         + OptinoGov.Transfer(from: ETH|null:0x0000, to: User3:0xa33a, tokens: 1000.0)
         
          # Account                                     ΔETH                OptinoGov                       OG                      OGD                     FEE0
@@ -145,7 +145,7 @@ $ npx hardhat --verbose --show-stack-traces test test/TestOptinoGov.js > results
          4 User4:0xa44a                                 0.0                      0.0                      0.0                      0.0                      0.0
          5 OGToken:0x1647                               0.0                      0.0                      0.0                      0.0                      0.0
          6 OGDToken:0x0f4e                              0.0                      0.0                      0.0                      0.0                      0.0
-         7 SimpleCurve:0x6eaC                           0.0                      0.0                      0.0                      0.0                      0.0
+         7 OGRewardCurve:0x6eaC                         0.0                      0.0                      0.0                      0.0                      0.0
          8 OptinoGov:0x5Fec                             0.0                      0.0                   3000.0                      0.0                      0.0
          9 Fee0Token:0xBa1F                             0.0                      0.0                      0.0                      0.0                      0.0
         -- ------------------------ ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
@@ -155,7 +155,7 @@ $ npx hardhat --verbose --show-stack-traces test test/TestOptinoGov.js > results
         Token 0 symbol: 'OptinoGov', name: 'OptinoGov', decimals: 18, totalSupply: 3000.0, owner: n/a, address: OptinoGov:0x5Fec
         - ogToken              : OGToken:0x1647
         - ogdToken             : OGDToken:0x0f4e
-        - curve                : SimpleCurve:0x6eaC
+        - curve                : OGRewardCurve:0x6eaC
         - maxDuration          : 10000 seconds = 0 days
         - rewardsPerSecond     : 150000000000000000 = 0.15 = 12960.0 per day
         - collectRewardForFee  : 50000000000000000 = 5.0%
@@ -170,12 +170,12 @@ $ npx hardhat --verbose --show-stack-traces test test/TestOptinoGov.js > results
         - totalVotes           : 814320000000000000000000000 = 814320000.0
         - rewardsPerYear       : 31.536% compounding daily/simple partial end, rewardsPerSecond: 0.000001%
         - proposalCount        : 0
-          # Account              Duration        End                    Rate%                  Balance                    Votes Delegatee                     Delegated Votes                  Accrued    Term
-         -- -------------------- -------- ---------- ------------------------ ------------------------ ------------------------ -------------------- ------------------------ ------------------------ -------
-          0 User1:0xa11A          2592000 1607384907      34.0484835164835164                   1000.0               25920000.0 ETH|null:0x0000                           0.0                  0.00002       2
-          1 User2:0xa22A         31536000 1636328908                   63.072                   1000.0              315360000.0 ETH|null:0x0000                           0.0                  0.00001       1
-          2 User3:0xa33a         47304000 1652096909                    78.84                   1000.0              473040000.0 ETH|null:0x0000                           0.0                      0.0       0
-         -- -------------------- -------- ---------- ------------------------ ------------------------ ------------------------ -------------------- ------------------------ ------------------------ -------
+          # Account                Duration        End                    Rate%                  Balance                    Votes Delegatee                     Delegated Votes                  Accrued    Term
+         -- -------------------- ---------- ---------- ------------------------ ------------------------ ------------------------ -------------------- ------------------------ ------------------------ -------
+          0 User1:0xa11A                30d 1607387505      34.0484835164835164                   1000.0               25920000.0 ETH|null:0x0000                           0.0                  0.00002       2
+          1 User2:0xa22A                 1y 1636331506                   63.072                   1000.0              315360000.0 ETH|null:0x0000                           0.0                  0.00001       1
+          2 User3:0xa33a          1y182d12h 1652099507                    78.84                   1000.0              473040000.0 ETH|null:0x0000                           0.0                      0.0       0
+         -- -------------------- ---------- ---------- ------------------------ ------------------------ ------------------------ -------------------- ------------------------ ------------------------ -------
         Token 1 symbol: 'OG', name: 'Optino Governance', decimals: 18, totalSupply: 40000.0, owner: OptinoGov:0x5Fec, address: OGToken:0x1647
         Token 2 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 3000.0, owner: OptinoGov:0x5Fec, address: OGDToken:0x0f4e
           # Dividend         Enabled                  Unclaimed
@@ -192,7 +192,7 @@ $ npx hardhat --verbose --show-stack-traces test test/TestOptinoGov.js > results
           8 OptinoGov:0x5Fec                        0.0                      0.0                      0.0                      0.0 
          -- ------------------ ------------------------ ------------------------ ------------------------ ------------------------
         Token 3 symbol: 'FEE0', name: 'Fee0', decimals: 18, totalSupply: 0.0, owner: Owner:0xa00A, address: Fee0Token:0xBa1F
-        SimpleCurve SimpleCurve:0x6eaC @ 0x6eaC8DFBdEB9588C9FEEe24783B4137b082f9708, owner: Owner:0xa00A, pointsLength: 3
+        SimpleCurve OGRewardCurve:0x6eaC @ 0x6eaC8DFBdEB9588C9FEEe24783B4137b082f9708, owner: Owner:0xa00A, pointsLength: 3
           #       Term                Rate APY%                  Rate/s%
          -- ---------- ------------------------ ------------------------
           0         1d                   31.536                 0.000001
@@ -201,8 +201,8 @@ $ npx hardhat --verbose --show-stack-traces test test/TestOptinoGov.js > results
          -- ---------- ------------------------ ------------------------
         
         --- Test 3 - Dummy tx to mine a new block and get the latest block.timestamp ---
-        Pausing 'Waiting' for 5s=Sun Nov 08 2020 10:48:14 GMT+1100 (Australian Eastern Daylight Time) now=Sun Nov 08 2020 10:48:09 GMT+1100 (Australian Eastern Daylight Time)
-        Paused 'Waiting' for 5s=Sun Nov 08 2020 10:48:14 GMT+1100 (Australian Eastern Daylight Time) now=Sun Nov 08 2020 10:48:14 GMT+1100 (Australian Eastern Daylight Time)
+        Pausing 'Waiting' for 5s=Sun Nov 08 2020 11:31:32 GMT+1100 (Australian Eastern Daylight Time) now=Sun Nov 08 2020 11:31:27 GMT+1100 (Australian Eastern Daylight Time)
+        Paused 'Waiting' for 5s=Sun Nov 08 2020 11:31:32 GMT+1100 (Australian Eastern Daylight Time) now=Sun Nov 08 2020 11:31:32 GMT+1100 (Australian Eastern Daylight Time)
         
         dummy1 - gasUsed: 21000, fee: 0.00168, feeUsd: 0.6479256, @ 80.0 gwei & 385.67 ETH/USD, 0xb8f03931b27e7c3dec0aa9a1ec25e9cf73e26c5e2da702e35b55896725d7aadd
         
@@ -215,7 +215,7 @@ $ npx hardhat --verbose --show-stack-traces test test/TestOptinoGov.js > results
          4 User4:0xa44a                                 0.0                      0.0                      0.0                      0.0                      0.0
          5 OGToken:0x1647                               0.0                      0.0                      0.0                      0.0                      0.0
          6 OGDToken:0x0f4e                              0.0                      0.0                      0.0                      0.0                      0.0
-         7 SimpleCurve:0x6eaC                           0.0                      0.0                      0.0                      0.0                      0.0
+         7 OGRewardCurve:0x6eaC                         0.0                      0.0                      0.0                      0.0                      0.0
          8 OptinoGov:0x5Fec                             0.0                      0.0                   3000.0                      0.0                      0.0
          9 Fee0Token:0xBa1F                             0.0                      0.0                      0.0                      0.0                      0.0
         -- ------------------------ ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
@@ -225,7 +225,7 @@ $ npx hardhat --verbose --show-stack-traces test test/TestOptinoGov.js > results
         Token 0 symbol: 'OptinoGov', name: 'OptinoGov', decimals: 18, totalSupply: 3000.0, owner: n/a, address: OptinoGov:0x5Fec
         - ogToken              : OGToken:0x1647
         - ogdToken             : OGDToken:0x0f4e
-        - curve                : SimpleCurve:0x6eaC
+        - curve                : OGRewardCurve:0x6eaC
         - maxDuration          : 10000 seconds = 0 days
         - rewardsPerSecond     : 150000000000000000 = 0.15 = 12960.0 per day
         - collectRewardForFee  : 50000000000000000 = 5.0%
@@ -240,12 +240,12 @@ $ npx hardhat --verbose --show-stack-traces test test/TestOptinoGov.js > results
         - totalVotes           : 814320000000000000000000000 = 814320000.0
         - rewardsPerYear       : 31.536% compounding daily/simple partial end, rewardsPerSecond: 0.000001%
         - proposalCount        : 0
-          # Account              Duration        End                    Rate%                  Balance                    Votes Delegatee                     Delegated Votes                  Accrued    Term
-         -- -------------------- -------- ---------- ------------------------ ------------------------ ------------------------ -------------------- ------------------------ ------------------------ -------
-          0 User1:0xa11A          2592000 1607384907      34.0484835164835164                   1000.0               25920000.0 ETH|null:0x0000                           0.0                  0.00008       8
-          1 User2:0xa22A         31536000 1636328908                   63.072                   1000.0              315360000.0 ETH|null:0x0000                           0.0                  0.00007       7
-          2 User3:0xa33a         47304000 1652096909                    78.84                   1000.0              473040000.0 ETH|null:0x0000                           0.0                  0.00006       6
-         -- -------------------- -------- ---------- ------------------------ ------------------------ ------------------------ -------------------- ------------------------ ------------------------ -------
+          # Account                Duration        End                    Rate%                  Balance                    Votes Delegatee                     Delegated Votes                  Accrued    Term
+         -- -------------------- ---------- ---------- ------------------------ ------------------------ ------------------------ -------------------- ------------------------ ------------------------ -------
+          0 User1:0xa11A                30d 1607387505      34.0484835164835164                   1000.0               25920000.0 ETH|null:0x0000                           0.0                  0.00008       8
+          1 User2:0xa22A                 1y 1636331506                   63.072                   1000.0              315360000.0 ETH|null:0x0000                           0.0                  0.00007       7
+          2 User3:0xa33a          1y182d12h 1652099507                    78.84                   1000.0              473040000.0 ETH|null:0x0000                           0.0                  0.00006       6
+         -- -------------------- ---------- ---------- ------------------------ ------------------------ ------------------------ -------------------- ------------------------ ------------------------ -------
         Token 1 symbol: 'OG', name: 'Optino Governance', decimals: 18, totalSupply: 40000.0, owner: OptinoGov:0x5Fec, address: OGToken:0x1647
         Token 2 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 3000.0, owner: OptinoGov:0x5Fec, address: OGDToken:0x0f4e
           # Dividend         Enabled                  Unclaimed
@@ -262,7 +262,7 @@ $ npx hardhat --verbose --show-stack-traces test test/TestOptinoGov.js > results
           8 OptinoGov:0x5Fec                        0.0                      0.0                      0.0                      0.0 
          -- ------------------ ------------------------ ------------------------ ------------------------ ------------------------
         Token 3 symbol: 'FEE0', name: 'Fee0', decimals: 18, totalSupply: 0.0, owner: Owner:0xa00A, address: Fee0Token:0xBa1F
-        SimpleCurve SimpleCurve:0x6eaC @ 0x6eaC8DFBdEB9588C9FEEe24783B4137b082f9708, owner: Owner:0xa00A, pointsLength: 3
+        SimpleCurve OGRewardCurve:0x6eaC @ 0x6eaC8DFBdEB9588C9FEEe24783B4137b082f9708, owner: Owner:0xa00A, pointsLength: 3
           #       Term                Rate APY%                  Rate/s%
          -- ---------- ------------------------ ------------------------
           0         1d                   31.536                 0.000001
@@ -285,7 +285,7 @@ $ npx hardhat --verbose --show-stack-traces test test/TestOptinoGov.js > results
          4 User4:0xa44a                                 0.0                      0.0                      0.0                      0.0                      0.0
          5 OGToken:0x1647                               0.0                      0.0                      0.0                      0.0                      0.0
          6 OGDToken:0x0f4e                              0.0                      0.0                      0.0                      0.0                      0.0
-         7 SimpleCurve:0x6eaC                           0.0                      0.0                      0.0                      0.0                      0.0
+         7 OGRewardCurve:0x6eaC                         0.0                      0.0                      0.0                      0.0                      0.0
          8 OptinoGov:0x5Fec                             0.0                      0.0               3000.00009                      0.0                      0.0
          9 Fee0Token:0xBa1F                             0.0                      0.0                      0.0                      0.0                      0.0
         -- ------------------------ ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
@@ -295,7 +295,7 @@ $ npx hardhat --verbose --show-stack-traces test test/TestOptinoGov.js > results
         Token 0 symbol: 'OptinoGov', name: 'OptinoGov', decimals: 18, totalSupply: 3000.00009, owner: n/a, address: OptinoGov:0x5Fec
         - ogToken              : OGToken:0x1647
         - ogdToken             : OGDToken:0x0f4e
-        - curve                : SimpleCurve:0x6eaC
+        - curve                : OGRewardCurve:0x6eaC
         - maxDuration          : 10000 seconds = 0 days
         - rewardsPerSecond     : 150000000000000000 = 0.15 = 12960.0 per day
         - collectRewardForFee  : 50000000000000000 = 5.0%
@@ -310,12 +310,12 @@ $ npx hardhat --verbose --show-stack-traces test test/TestOptinoGov.js > results
         - totalVotes           : 788400050000004500000000000 = 788400050.0000045
         - rewardsPerYear       : 31.536% compounding daily/simple partial end, rewardsPerSecond: 0.000001%
         - proposalCount        : 0
-          # Account              Duration        End                    Rate%                  Balance                    Votes Delegatee                     Delegated Votes                  Accrued    Term
-         -- -------------------- -------- ---------- ------------------------ ------------------------ ------------------------ -------------------- ------------------------ ------------------------ -------
-          0 User1:0xa11A                5 1604792921      34.0484835164835164               1000.00009               50.0000045 ETH|null:0x0000                           0.0                      0.0       0
-          1 User2:0xa22A         31536000 1636328908                   63.072                   1000.0              315360000.0 ETH|null:0x0000                           0.0                  0.00008       8
-          2 User3:0xa33a         47304000 1652096909                    78.84                   1000.0              473040000.0 ETH|null:0x0000                           0.0                  0.00007       7
-         -- -------------------- -------- ---------- ------------------------ ------------------------ ------------------------ -------------------- ------------------------ ------------------------ -------
+          # Account                Duration        End                    Rate%                  Balance                    Votes Delegatee                     Delegated Votes                  Accrued    Term
+         -- -------------------- ---------- ---------- ------------------------ ------------------------ ------------------------ -------------------- ------------------------ ------------------------ -------
+          0 User1:0xa11A                 5s 1604795519      34.0484835164835164               1000.00009               50.0000045 ETH|null:0x0000                           0.0                      0.0       0
+          1 User2:0xa22A                 1y 1636331506                   63.072                   1000.0              315360000.0 ETH|null:0x0000                           0.0                  0.00008       8
+          2 User3:0xa33a          1y182d12h 1652099507                    78.84                   1000.0              473040000.0 ETH|null:0x0000                           0.0                  0.00007       7
+         -- -------------------- ---------- ---------- ------------------------ ------------------------ ------------------------ -------------------- ------------------------ ------------------------ -------
         Token 1 symbol: 'OG', name: 'Optino Governance', decimals: 18, totalSupply: 40000.00009, owner: OptinoGov:0x5Fec, address: OGToken:0x1647
         Token 2 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 3000.00009, owner: OptinoGov:0x5Fec, address: OGDToken:0x0f4e
           # Dividend         Enabled                  Unclaimed
@@ -332,7 +332,7 @@ $ npx hardhat --verbose --show-stack-traces test test/TestOptinoGov.js > results
           8 OptinoGov:0x5Fec                        0.0                      0.0                      0.0                      0.0 
          -- ------------------ ------------------------ ------------------------ ------------------------ ------------------------
         Token 3 symbol: 'FEE0', name: 'Fee0', decimals: 18, totalSupply: 0.0, owner: Owner:0xa00A, address: Fee0Token:0xBa1F
-        SimpleCurve SimpleCurve:0x6eaC @ 0x6eaC8DFBdEB9588C9FEEe24783B4137b082f9708, owner: Owner:0xa00A, pointsLength: 3
+        SimpleCurve OGRewardCurve:0x6eaC @ 0x6eaC8DFBdEB9588C9FEEe24783B4137b082f9708, owner: Owner:0xa00A, pointsLength: 3
           #       Term                Rate APY%                  Rate/s%
          -- ---------- ------------------------ ------------------------
           0         1d                   31.536                 0.000001
@@ -342,8 +342,8 @@ $ npx hardhat --verbose --show-stack-traces test test/TestOptinoGov.js > results
         
         --- Test Completed ---
 
-      ✓ Workflow #2 - Developing (6644ms)
+      ✓ Workflow #2 - Developing (6975ms)
 
 
-  1 passing (9s)
+  1 passing (10s)
 

@@ -18,7 +18,7 @@ class Data {
     // OptinoGov testing
     this.ogToken = null;
     this.ogdToken = null;
-    this.simpleCurve = null;
+    this.ogRewardCurve = null;
     this.optinoGov = null;
     this.fee0Token = null;
     this.fee1Token = null;
@@ -68,27 +68,27 @@ class Data {
     return address;
   }
 
-  // async setSimpleCurveData(simpleCurve) {
-  //   this.simpleCurve = simpleCurve;
-  //   this.addAccount(this.simpleCurve.address, "SimpleCurve");
-  //   this.addContract(this.simpleCurve, "SimpleCurve");
+  // async setSimpleCurveData(ogRewardCurve) {
+  //   this.ogRewardCurve = ogRewardCurve;
+  //   this.addAccount(this.ogRewardCurve.address, "SimpleCurve");
+  //   this.addContract(this.ogRewardCurve, "SimpleCurve");
   // }
 
-  async setOptinoGovData(ogToken, ogdToken, simpleCurve, optinoGov, fee0Token) {
+  async setOptinoGovData(ogToken, ogdToken, ogRewardCurve, optinoGov, fee0Token) {
     this.ogToken = ogToken;
     this.ogdToken = ogdToken;
-    this.simpleCurve = simpleCurve;
+    this.ogRewardCurve = ogRewardCurve;
     this.optinoGov = optinoGov;
     this.fee0Token = fee0Token;
     this.addAccount(this.ogToken.address, "OGToken");
     this.addAccount(this.ogdToken.address, "OGDToken");
-    this.addAccount(this.simpleCurve.address, "SimpleCurve");
+    this.addAccount(this.ogRewardCurve.address, "OGRewardCurve");
     this.addAccount(this.optinoGov.address, "OptinoGov");
     this.addAccount(this.fee0Token.address, "Fee0Token");
 
     this.addContract(this.ogToken, "OGToken");
     this.addContract(this.ogdToken, "OGDToken");
-    this.addContract(this.simpleCurve, "SimpleCurve");
+    this.addContract(this.ogRewardCurve, "OGRewardCurve");
     this.addContract(this.optinoGov, "OptinoGov");
     this.addContract(this.fee0Token, "Fee0Token");
 
@@ -264,6 +264,39 @@ class Data {
     });
   }
 
+  termString(term) {
+    if (term > 0) {
+      var secs = parseInt(term);
+      var mins = parseInt(secs / 60);
+      secs = secs % 60;
+      var hours = parseInt(mins / 60);
+      mins = mins % 60;
+      var days = parseInt(hours / 24);
+      hours = hours % 24;
+      var years = parseInt(days / 365);
+      days = days % 365;
+      var s = "";
+      if (years > 0) {
+        s += years + "y";
+      }
+      if (days > 0) {
+        s += days + "d";
+      }
+      if (hours > 0) {
+        s += hours + "h";
+      }
+      if (mins > 0) {
+        s += mins + "m";
+      }
+      if (secs > 0) {
+        s += secs + "s";
+      }
+      return s;
+    } else {
+      return "";
+    }
+  }
+
   async printBalances() {
     const blockNumber = await ethers.provider.getBlockNumber();
     const totalTokenBalances = [];
@@ -337,14 +370,14 @@ class Data {
         console.log("        - proposalCount        : " + proposalCount);
         // console.log("        - stakeInfoLength      : " + stakeInfoLength);
         // console.log("        - accountsLength       : " + accountsLength);
-        console.log("          # Account              Duration        End                    Rate%                  Balance                    Votes Delegatee                     Delegated Votes                  Accrued    Term");
-        console.log("         -- -------------------- -------- ---------- ------------------------ ------------------------ ------------------------ -------------------- ------------------------ ------------------------ -------");
+        console.log("          # Account                Duration        End                    Rate%                  Balance                    Votes Delegatee                     Delegated Votes                  Accrued    Term");
+        console.log("         -- -------------------- ---------- ---------- ------------------------ ------------------------ ------------------------ -------------------- ------------------------ ------------------------ -------");
         for (let j = 0; j < accountsLength; j++) {
           const _a = await this.optinoGov.getAccountByIndex(j);
           const accruedReward = await tokenContract.accruedReward(_a.tokenOwner);
           console.log("          " + this.padLeft(j, 2) + " " +
             this.padRight(this.getShortAccountName(_a.tokenOwner), 20) + " " +
-            this.padLeft(_a.account.duration.toString(), 8) + " " +
+            this.padLeft(this.termString(_a.account.duration.toString()), 10) + " " +
             this.padLeft(_a.account.end, 10) + " " +
             this.padLeft(ethers.utils.formatUnits(_a.account.rate, 16), 24) + " " +
             this.padLeft(ethers.utils.formatUnits(_a.account.balance, 18), 24) + " " +
@@ -354,7 +387,7 @@ class Data {
             this.padLeft(ethers.utils.formatUnits(accruedReward[0], 18), 24) + " " +
             this.padLeft(accruedReward[1].toString(), 7));
         }
-        console.log("         -- -------------------- -------- ---------- ------------------------ ------------------------ ------------------------ -------------------- ------------------------ ------------------------ -------");
+        console.log("         -- -------------------- ---------- ---------- ------------------------ ------------------------ ------------------------ -------------------- ------------------------ ------------------------ -------");
       } else if (symbol == "OGD") {
         const dividendTokensLength = parseInt(await tokenContract.dividendTokensLength());
         // console.log("        - dividendTokensLength : " + dividendTokensLength);
@@ -420,30 +453,15 @@ class Data {
       }
     }
 
-    function termString(t) {
-      const SECONDS_PER_DAY = 24 * 60 * 60;
-      const SECONDS_PER_YEAR = 365 * 24 * 60 * 60;
-      let s = "";
-      if (t >= SECONDS_PER_YEAR) {
-        s = " " + parseInt(t / SECONDS_PER_YEAR) + "y";
-        t = t - parseInt(t / SECONDS_PER_YEAR) * SECONDS_PER_YEAR;
-      }
-      if (t >= SECONDS_PER_DAY) {
-        s = parseInt(t / SECONDS_PER_DAY) + "d" + s;
-        t = t - parseInt(t / SECONDS_PER_DAY) * SECONDS_PER_DAY;
-      }
-      return s;
-    }
-
-    if (this.simpleCurve != null) {
-      const [owner, pointsLength] = await Promise.all([this.simpleCurve.owner(), this.simpleCurve.pointsLength()]);
-      console.log("        SimpleCurve " + this.getShortAccountName(this.simpleCurve.address) + " @ " + this.simpleCurve.address + ", owner: " + this.getShortAccountName(owner) + ", pointsLength: " + pointsLength);
+    if (this.ogRewardCurve != null) {
+      const [owner, pointsLength] = await Promise.all([this.ogRewardCurve.owner(), this.ogRewardCurve.pointsLength()]);
+      console.log("        SimpleCurve " + this.getShortAccountName(this.ogRewardCurve.address) + " @ " + this.ogRewardCurve.address + ", owner: " + this.getShortAccountName(owner) + ", pointsLength: " + pointsLength);
         console.log("          #       Term                Rate APY%                  Rate/s%");
         console.log("         -- ---------- ------------------------ ------------------------");
         for (let j = 0; j < pointsLength; j++) {
-          const point = await this.simpleCurve.points(j);
+          const point = await this.ogRewardCurve.points(j);
           console.log("          " + this.padLeft(j, 2) + " " +
-            this.padLeft(termString(point.term.toString()), 10) + " " +
+            this.padLeft(this.termString(point.term.toString()), 10) + " " +
             this.padLeft(ethers.utils.formatUnits(point.rate, 16), 24) + " " +
             this.padLeft(ethers.utils.formatUnits(point.rate.div(365 * 24 * 60 * 60), 16), 24));
         }

@@ -37,13 +37,13 @@ describe("TestOptinoGov", function() {
     setup1a.push(OGDToken.deploy("OGD", "Optino Governance Dividend", 18, data.owner, ethers.utils.parseUnits("0", 18)));
     setup1a.push(SimpleCurve.deploy(terms, rates));
     setup1a.push(TestToken.deploy("FEE0", "Fee0", 18, data.owner, mintFee0Tokens));
-    const [ogToken, ogdToken, simpleCurve, fee0Token] = await Promise.all(setup1a);
+    const [ogToken, ogdToken, ogRewardCurve, fee0Token] = await Promise.all(setup1a);
     const setup1b = [];
-    const optinoGov = await OptinoGov.deploy(ogToken.address, ogdToken.address, simpleCurve.address);
-    await data.setOptinoGovData(ogToken, ogdToken, simpleCurve, optinoGov, fee0Token);
+    const optinoGov = await OptinoGov.deploy(ogToken.address, ogdToken.address, ogRewardCurve.address);
+    await data.setOptinoGovData(ogToken, ogdToken, ogRewardCurve, optinoGov, fee0Token);
     await data.printTxData("ogToken.deployTransaction", ogToken.deployTransaction);
     await data.printTxData("ogdToken.deployTransaction", ogdToken.deployTransaction);
-    await data.printTxData("simpleCurve.deployTransaction", simpleCurve.deployTransaction);
+    await data.printTxData("ogRewardCurve.deployTransaction", ogRewardCurve.deployTransaction);
     await data.printTxData("fee0Token.deployTransaction", fee0Token.deployTransaction);
     await data.printTxData("optinoGov.deployTransaction", optinoGov.deployTransaction);
     if (verbose) {
