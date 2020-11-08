@@ -1,4 +1,4 @@
-const { ZERO_ADDRESS, Data } = require('./helpers/common');
+const { ZERO_ADDRESS, SECONDS_PER_DAY, SECONDS_PER_YEAR, Data } = require('./helpers/common');
 const { expect } = require("chai");
 const { BigNumber } = require("ethers");
 const util = require('util');
@@ -10,14 +10,12 @@ let TestToken;
 let OptinoGov;
 let data;
 const verbose = false;
-const SECONDS_PER_DAY = 24 * 60 * 60;
-const SECONDS_PER_YEAR = 365 * 24 * 60 * 60;
 
 describe("TestOptinoGov", function() {
   beforeEach("Setup", async function() {
-    SimpleCurve = await ethers.getContractFactory("SimpleCurve");
     OGToken = await ethers.getContractFactory("OGToken");
     OGDToken = await ethers.getContractFactory("OGDToken");
+    SimpleCurve = await ethers.getContractFactory("SimpleCurve");
     TestToken = await ethers.getContractFactory("TestToken");
     OptinoGov = await ethers.getContractFactory("OptinoGov");
     data = new Data();

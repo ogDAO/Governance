@@ -1,4 +1,6 @@
 const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
+const SECONDS_PER_DAY = 24 * 60 * 60;
+const SECONDS_PER_YEAR = 365 * 24 * 60 * 60;
 const { BigNumber } = require("ethers");
 const util = require('util');
 const { expect, assert } = require("chai");
@@ -24,6 +26,7 @@ class Data {
     this.fee0Token = null;
     this.fee1Token = null;
     this.fee2Token = null;
+    this.stakingRewardCurve = null;
     this.stakingFactory = null;
 
     // this.ethUsd = BigNumber.from("385.67");
@@ -141,15 +144,18 @@ class Data {
     }
   }
 
-  async setStakingFactoryData(ogToken, fee0Token, stakingFactory) {
+  async setStakingFactoryData(ogToken, stakingRewardCurve, fee0Token, stakingFactory) {
     this.ogToken = ogToken;
+    this.stakingRewardCurve = stakingRewardCurve;
     this.fee0Token = fee0Token;
     this.stakingFactory = stakingFactory;
     this.addAccount(this.ogToken.address, "OGToken");
     this.addAccount(this.fee0Token.address, "Fee0Token");
+    this.addAccount(this.stakingRewardCurve.address, "StakingRewardCurve");
     this.addAccount(this.stakingFactory.address, "StakingFactory");
     this.addContract(this.ogToken, "OGToken");
     this.addContract(this.fee0Token, "Fee0Token");
+    this.addContract(this.stakingRewardCurve, "StakingRewardCurve");
     this.addContract(this.stakingFactory, "StakingFactory");
     this.tokenContracts = [ogToken, fee0Token];
     for (let i = 0; i < this.tokenContracts.length; i++) {
@@ -309,8 +315,8 @@ class Data {
     // console.log("        block: " + util.inspect(block));
     // console.log("        now: " + now);
     const totalTokenBalances = [];
-    let line = "         # Account                                     ΔETH";
-    let separator = "        -- ------------------------ -----------------------";
+    let line = "         # Account                                        ΔETH";
+    let separator = "        -- --------------------------- -----------------------";
     for (let t = 0; t < this.tokenContracts.length; t++) {
       line = line + "         " + this.padLeft(this.symbols[t] || "???", 16);
       separator = separator + " ------------------------";
@@ -328,7 +334,7 @@ class Data {
         tokenBalances[j] = await this.tokenContracts[j].balanceOf(account);
         totalTokenBalances[j] = totalTokenBalances[j].add(tokenBalances[j]);
       }
-      line = "        " + this.padLeft(i, 2) + " " + this.padRight(this.getShortAccountName(account), 22) + " " + this.padToken(etherBalanceDiff, 18);
+      line = "        " + this.padLeft(i, 2) + " " + this.padRight(this.getShortAccountName(account), 25) + " " + this.padToken(etherBalanceDiff, 18);
       for (let t = 0; t < this.tokenContracts.length; t++) {
         line = line + this.padToken(tokenBalances[t] || BigNumber.from(0), this.decimals[t] || 18);
       }
@@ -479,10 +485,23 @@ class Data {
     if (this.voteWeightCurve != null) {
       const [owner, pointsLength] = await Promise.all([this.voteWeightCurve.owner(), this.voteWeightCurve.pointsLength()]);
       console.log("        SimpleCurve " + this.getShortAccountName(this.voteWeightCurve.address) + " @ " + this.voteWeightCurve.address + ", owner: " + this.getShortAccountName(owner) + ", pointsLength: " + pointsLength);
-        console.log("          #       Term             Vote Weight%           Vote Weight/s%");
-        console.log("         -- ---------- ------------------------ ------------------------");
+        console.log("          #       Term             Vote Weight%");
+        console.log("         -- ---------- ------------------------");
         for (let j = 0; j < pointsLength; j++) {
           const point = await this.voteWeightCurve.points(j);
+          console.log("         " + this.padLeft(j, 2) + " " +
+            this.padLeft(this.termString(point.term.toString()), 10) + " " +
+            this.padLeft(ethers.utils.formatUnits(point.rate, 16), 24));
+        }
+        console.log("         -- ---------- ------------------------");
+    }
+    if (this.stakingRewardCurve != null) {
+      const [owner, pointsLength] = await Promise.all([this.stakingRewardCurve.owner(), this.stakingRewardCurve.pointsLength()]);
+      console.log("        SimpleCurve " + this.getShortAccountName(this.stakingRewardCurve.address) + " @ " + this.stakingRewardCurve.address + ", owner: " + this.getShortAccountName(owner) + ", pointsLength: " + pointsLength);
+        console.log("          #       Term                Rate APY%                  Rate/s%");
+        console.log("         -- ---------- ------------------------ ------------------------");
+        for (let j = 0; j < pointsLength; j++) {
+          const point = await this.stakingRewardCurve.points(j);
           console.log("         " + this.padLeft(j, 2) + " " +
             this.padLeft(this.termString(point.term.toString()), 10) + " " +
             this.padLeft(ethers.utils.formatUnits(point.rate, 16), 24) + " " +
@@ -493,9 +512,10 @@ class Data {
 
     if (this.stakingFactory != null) {
       console.log("        StakingFactory " + this.getShortAccountName(this.stakingFactory.address) + " @ " + this.stakingFactory.address);
-      const [stakingTemplate, ogToken, stakingsLength] = await Promise.all([this.stakingFactory.stakingTemplate(), this.stakingFactory.ogToken(), this.stakingFactory.stakingsLength()]);
+      const [stakingTemplate, ogToken, stakingRewardCurve, stakingsLength] = await Promise.all([this.stakingFactory.stakingTemplate(), this.stakingFactory.ogToken(), this.stakingFactory.stakingRewardCurve(), this.stakingFactory.stakingsLength()]);
       console.log("        - stakingTemplate        : " + this.getShortAccountName(stakingTemplate));
       console.log("        - ogToken                : " + this.getShortAccountName(ogToken));
+      console.log("        - stakingRewardCurve     : " + this.getShortAccountName(stakingRewardCurve));
       console.log("        - stakingsLength         : " + stakingsLength);
       const Staking = await ethers.getContractFactory("Staking");
       for (let j = 0; j < stakingsLength; j++) {
@@ -524,6 +544,8 @@ class Data {
 /* Exporting the module */
 module.exports = {
     ZERO_ADDRESS,
+    SECONDS_PER_DAY,
+    SECONDS_PER_YEAR,
     Data
 }
 

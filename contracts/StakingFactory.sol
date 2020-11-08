@@ -9,11 +9,13 @@ import "./CloneFactory.sol";
 import "./OGTokenInterface.sol";
 import "./Owned.sol";
 import "./Staking.sol";
+import "./CurveInterface.sol";
 
 // SPDX-License-Identifier: GPLv2
 contract StakingFactory is CloneFactory, Owned {
     Staking public stakingTemplate;
     OGTokenInterface public ogToken;
+    CurveInterface public stakingRewardCurve;
 
     mapping(bytes32 => Staking) public stakings;
     bytes32[] public stakingsIndex;
@@ -21,10 +23,15 @@ contract StakingFactory is CloneFactory, Owned {
 
     event StakingCreated(bytes32 indexed key, Staking indexed staking);
 
-    constructor(OGTokenInterface _ogToken) {
+    constructor(OGTokenInterface _ogToken, CurveInterface _stakingRewardCurve) {
         initOwned(msg.sender);
         ogToken = _ogToken;
+        stakingRewardCurve = _stakingRewardCurve;
         stakingTemplate = new Staking();
+    }
+
+    function getStakingRewardCurve() external view returns (CurveInterface _stakingRewardCurve) {
+        _stakingRewardCurve = stakingRewardCurve;
     }
 
     function getStakingByIndex(uint i) public view returns (bytes32 key, Staking staking) {

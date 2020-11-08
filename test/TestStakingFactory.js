@@ -1,8 +1,9 @@
-const { ZERO_ADDRESS, Data } = require('./helpers/common');
+const { ZERO_ADDRESS, SECONDS_PER_DAY, SECONDS_PER_YEAR, Data } = require('./helpers/common');
 const { expect, assert } = require("chai");
 const { BigNumber } = require("ethers");
 const util = require('util');
 
+let SimpleCurve;
 let Staking;
 let StakingFactory;
 let OGToken;
@@ -12,22 +13,26 @@ const verbose = false;
 
 describe("TestStakingFactory", function() {
   beforeEach("Setup", async function() {
+    OGToken = await ethers.getContractFactory("OGToken");
+    SimpleCurve = await ethers.getContractFactory("SimpleCurve");
     Staking = await ethers.getContractFactory("Staking");
     StakingFactory = await ethers.getContractFactory("StakingFactory");
-    OGToken = await ethers.getContractFactory("OGToken");
     TestToken = await ethers.getContractFactory("TestToken");
     data = new Data();
     await data.init();
 
     console.log("        --- Setup 1 - Deploy OGToken, FEE0, StakingFactory ---");
+    let stakingRewardTerms = [SECONDS_PER_DAY, SECONDS_PER_YEAR, 2 * SECONDS_PER_YEAR];
+    let stakingRewardRates = [BigNumber.from(SECONDS_PER_YEAR).mul(BigNumber.from(10).pow(10)), BigNumber.from(2 * SECONDS_PER_YEAR).mul(BigNumber.from(10).pow(10)), BigNumber.from(3 * SECONDS_PER_YEAR).mul(BigNumber.from(10).pow(10))];
     const setup1a = [];
     setup1a.push(OGToken.deploy("OG", "Optino Governance", 18, data.owner, ethers.utils.parseUnits("0", 18)));
+    setup1a.push(SimpleCurve.deploy(stakingRewardTerms, stakingRewardRates));
     setup1a.push(TestToken.deploy("FEE0", "Fee0", 18, data.owner, ethers.utils.parseUnits("100", 18)));
-    const [ogToken, fee0Token] = await Promise.all(setup1a);
+    const [ogToken, stakingRewardCurve, fee0Token] = await Promise.all(setup1a);
     const setup1b = [];
-    setup1b.push(StakingFactory.deploy(ogToken.address));
+    setup1b.push(StakingFactory.deploy(ogToken.address, stakingRewardCurve.address));
     const [stakingFactory] = await Promise.all(setup1b);
-    await data.setStakingFactoryData(ogToken, fee0Token, stakingFactory);
+    await data.setStakingFactoryData(ogToken, stakingRewardCurve, fee0Token, stakingFactory);
 
     await data.printTxData("ogTokenTx", ogToken.deployTransaction);
     await data.printTxData("fee0TokenTx", fee0Token.deployTransaction);

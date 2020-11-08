@@ -123,11 +123,11 @@ $ npx hardhat --verbose --show-stack-traces test test/TestOptinoGov.js > results
           2         2y                   94.608                 0.000003
          -- ---------- ------------------------ ------------------------
         SimpleCurve VoteWeightCurve:0xBa1F @ 0xBa1FCDaE835E77cAB2a76a7C3884AdC630f7a5B0, owner: Owner:0xa00A, pointsLength: 2
-          #       Term             Vote Weight%           Vote Weight/s%
-         -- ---------- ------------------------ ------------------------
-          0         1d                      1.0       0.0000000317097919
-          1         3y                   1095.0       0.0000347222222222
-         -- ---------- ------------------------ ------------------------
+          #       Term             Vote Weight%
+         -- ---------- ------------------------
+          0         1d                      1.0
+          1         3y                   1095.0
+         -- ---------- ------------------------
         
         --- Setup Completed ---
 
@@ -135,17 +135,17 @@ $ npx hardhat --verbose --show-stack-traces test test/TestOptinoGov.js > results
         commit1 - gasUsed: 413036, fee: 0.03304288, feeUsd: 12.7436475296, @ 80.0 gwei & 385.67 ETH/USD, 0x749a969745f524ed3bad8344a4f93ee2c8705038fa9c0f2195914b8a271989f1
         + OGToken.Transfer(from: User1:0xa11A, to: OptinoGov:0x7305, tokens: 1000.0)
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User1:0xa11A, tokens: 1000.0)
-        + OptinoGov.Committed(user: User1:0xa11A, tokens: 1000.0, balance: 1000.0, duration: 2592000, end: 1607404412, delegatee: ETH|null:0x0000, votes: 0.0, rewardPool: 1000000.0, totalVotes: 0.0)
+        + OptinoGov.Committed(user: User1:0xa11A, tokens: 1000.0, balance: 1000.0, duration: 2592000, end: 1607406223, delegatee: ETH|null:0x0000, votes: 0.0, rewardPool: 1000000.0, totalVotes: 0.0)
         + OptinoGov.Transfer(from: ETH|null:0x0000, to: User1:0xa11A, tokens: 1000.0)
         commit2 - gasUsed: 326815, fee: 0.0261452, feeUsd: 10.083419284, @ 80.0 gwei & 385.67 ETH/USD, 0xd1d6302beb983dc93a7cc152490f2f7b90841997d5215d123768e3990bbc5987
         + OGToken.Transfer(from: User2:0xa22A, to: OptinoGov:0x7305, tokens: 1000.0)
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User2:0xa22A, tokens: 1000.0)
-        + OptinoGov.Committed(user: User2:0xa22A, tokens: 1000.0, balance: 1000.0, duration: 31536000, end: 1636348413, delegatee: ETH|null:0x0000, votes: 0.0, rewardPool: 1000000.0, totalVotes: 300.0)
+        + OptinoGov.Committed(user: User2:0xa22A, tokens: 1000.0, balance: 1000.0, duration: 31536000, end: 1636350224, delegatee: ETH|null:0x0000, votes: 0.0, rewardPool: 1000000.0, totalVotes: 300.0)
         + OptinoGov.Transfer(from: ETH|null:0x0000, to: User2:0xa22A, tokens: 1000.0)
         commit3 - gasUsed: 343968, fee: 0.02751744, feeUsd: 10.6126510848, @ 80.0 gwei & 385.67 ETH/USD, 0xd43629c2c49aba8a70f46ea16d991e4b05572504f027944f2c0cd00cdc3b033b
         + OGToken.Transfer(from: User3:0xa33a, to: OptinoGov:0x7305, tokens: 1000.0)
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User3:0xa33a, tokens: 1000.0)
-        + OptinoGov.Committed(user: User3:0xa33a, tokens: 1000.0, balance: 1000.0, duration: 47304000, end: 1652116414, delegatee: ETH|null:0x0000, votes: 0.0, rewardPool: 1000000.0, totalVotes: 3950.0)
+        + OptinoGov.Committed(user: User3:0xa33a, tokens: 1000.0, balance: 1000.0, duration: 47304000, end: 1652118225, delegatee: ETH|null:0x0000, votes: 0.0, rewardPool: 1000000.0, totalVotes: 3950.0)
         + OptinoGov.Transfer(from: ETH|null:0x0000, to: User3:0xa33a, tokens: 1000.0)
         
          # Account                                     ΔETH                OptinoGov                       OG                      OGD                     FEE0
@@ -214,15 +214,15 @@ $ npx hardhat --verbose --show-stack-traces test test/TestOptinoGov.js > results
           2         2y                   94.608                 0.000003
          -- ---------- ------------------------ ------------------------
         SimpleCurve VoteWeightCurve:0xBa1F @ 0xBa1FCDaE835E77cAB2a76a7C3884AdC630f7a5B0, owner: Owner:0xa00A, pointsLength: 2
-          #       Term             Vote Weight%           Vote Weight/s%
-         -- ---------- ------------------------ ------------------------
-          0         1d                      1.0       0.0000000317097919
-          1         3y                   1095.0       0.0000347222222222
-         -- ---------- ------------------------ ------------------------
+          #       Term             Vote Weight%
+         -- ---------- ------------------------
+          0         1d                      1.0
+          1         3y                   1095.0
+         -- ---------- ------------------------
         
         --- Test 3 - Dummy tx to mine a new block and get the latest block.timestamp ---
-        Pausing 'Waiting' for 5s=Sun Nov 08 2020 16:13:19 GMT+1100 (Australian Eastern Daylight Time) now=Sun Nov 08 2020 16:13:14 GMT+1100 (Australian Eastern Daylight Time)
-        Paused 'Waiting' for 5s=Sun Nov 08 2020 16:13:19 GMT+1100 (Australian Eastern Daylight Time) now=Sun Nov 08 2020 16:13:19 GMT+1100 (Australian Eastern Daylight Time)
+        Pausing 'Waiting' for 5s=Sun Nov 08 2020 16:43:29 GMT+1100 (Australian Eastern Daylight Time) now=Sun Nov 08 2020 16:43:24 GMT+1100 (Australian Eastern Daylight Time)
+        Paused 'Waiting' for 5s=Sun Nov 08 2020 16:43:29 GMT+1100 (Australian Eastern Daylight Time) now=Sun Nov 08 2020 16:43:29 GMT+1100 (Australian Eastern Daylight Time)
         
         dummy1 - gasUsed: 21000, fee: 0.00168, feeUsd: 0.6479256, @ 80.0 gwei & 385.67 ETH/USD, 0x2ebd073b061294b2c4a2083b635abb64c3d15b657538f8e57743833d827a9c28
         
@@ -292,11 +292,11 @@ $ npx hardhat --verbose --show-stack-traces test test/TestOptinoGov.js > results
           2         2y                   94.608                 0.000003
          -- ---------- ------------------------ ------------------------
         SimpleCurve VoteWeightCurve:0xBa1F @ 0xBa1FCDaE835E77cAB2a76a7C3884AdC630f7a5B0, owner: Owner:0xa00A, pointsLength: 2
-          #       Term             Vote Weight%           Vote Weight/s%
-         -- ---------- ------------------------ ------------------------
-          0         1d                      1.0       0.0000000317097919
-          1         3y                   1095.0       0.0000347222222222
-         -- ---------- ------------------------ ------------------------
+          #       Term             Vote Weight%
+         -- ---------- ------------------------
+          0         1d                      1.0
+          1         3y                   1095.0
+         -- ---------- ------------------------
         
         --- Test 4 - User1 recommit(5) ---
         recommit1 - gasUsed: 163001, fee: 0.01304008, feeUsd: 5.0291676536, @ 80.0 gwei & 385.67 ETH/USD, 0x32c8c290bfd73920e5491cb3fbf3aa1e8c583df7bb33be17b0ab71da486a0ac4
@@ -370,16 +370,16 @@ $ npx hardhat --verbose --show-stack-traces test test/TestOptinoGov.js > results
           2         2y                   94.608                 0.000003
          -- ---------- ------------------------ ------------------------
         SimpleCurve VoteWeightCurve:0xBa1F @ 0xBa1FCDaE835E77cAB2a76a7C3884AdC630f7a5B0, owner: Owner:0xa00A, pointsLength: 2
-          #       Term             Vote Weight%           Vote Weight/s%
-         -- ---------- ------------------------ ------------------------
-          0         1d                      1.0       0.0000000317097919
-          1         3y                   1095.0       0.0000347222222222
-         -- ---------- ------------------------ ------------------------
+          #       Term             Vote Weight%
+         -- ---------- ------------------------
+          0         1d                      1.0
+          1         3y                   1095.0
+         -- ---------- ------------------------
         
         --- Test Completed ---
 
-      ✓ Workflow #2 - Developing (6963ms)
+      ✓ Workflow #2 - Developing (7389ms)
 
 
-  1 passing (11s)
+  1 passing (10s)
 
