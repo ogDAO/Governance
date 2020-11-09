@@ -17,6 +17,9 @@ describe("TestInterestUtils", function() {
     const [testInterestUtils] = await Promise.all(setup1a);
 
     const tests = [];
+
+    tests.push({ t: "1d", term: SECONDS_PER_DAY, ratePercent: "10", amount: "100", p: "1d", secondsPerPeriod: SECONDS_PER_DAY, compoundingResult: "100.027397260" });
+
     // tests.push({ t: "0d", term: 0, ratePercent: "10", amount: "100", p: "1y", secondsPerPeriod: SECONDS_PER_YEAR, compoundingResult: "100" });
     // tests.push({ t: "0d", term: 0, ratePercent: "10", amount: "100", p: "6m", secondsPerPeriod: SECONDS_PER_YEAR / 2, compoundingResult: "100" });
     // tests.push({ t: "0d", term: 0, ratePercent: "10", amount: "100", p: "3m", secondsPerPeriod: SECONDS_PER_YEAR / 4, compoundingResult: "100" });
@@ -34,7 +37,7 @@ describe("TestInterestUtils", function() {
     // tests.push({ t: "1d", term: SECONDS_PER_DAY, ratePercent: "10", amount: "100", p: "3m", secondsPerPeriod: SECONDS_PER_YEAR / 4, compoundingResult: "100.027064059" });
     // tests.push({ t: "1d", term: SECONDS_PER_DAY, ratePercent: "10", amount: "100", p: "1m", secondsPerPeriod: SECONDS_PER_YEAR / 12, compoundingResult: "100.027287458" });
     // tests.push({ t: "1d", term: SECONDS_PER_DAY, ratePercent: "10", amount: "100", p: "7d", secondsPerPeriod: SECONDS_PER_DAY * 7, compoundingResult: "100.027374769" });
-    tests.push({ t: "1d", term: SECONDS_PER_DAY, ratePercent: "10", amount: "100", p: "1d", secondsPerPeriod: SECONDS_PER_DAY, compoundingResult: "100.027397260" });
+    // tests.push({ t: "1d", term: SECONDS_PER_DAY, ratePercent: "10", amount: "100", p: "1d", secondsPerPeriod: SECONDS_PER_DAY, compoundingResult: "100.027397260" });
     // tests.push({ t: "29d", term: SECONDS_PER_DAY * 29, ratePercent: "10", amount: "100", p: "1y", secondsPerPeriod: SECONDS_PER_YEAR, compoundingResult: "100.760133420" });
     // tests.push({ t: "29d", term: SECONDS_PER_DAY * 29, ratePercent: "10", amount: "100", p: "6m", secondsPerPeriod: SECONDS_PER_YEAR / 2, compoundingResult: "100.778308959" });
     // tests.push({ t: "29d", term: SECONDS_PER_DAY * 29, ratePercent: "10", amount: "100", p: "3m", secondsPerPeriod: SECONDS_PER_YEAR / 4, compoundingResult: "100.787838769" });
@@ -87,17 +90,19 @@ describe("TestInterestUtils", function() {
       const _amount = ethers.utils.parseUnits(test.amount, 18);
       const _to = parseInt(_from) + test.term;
       const _rate = ethers.utils.parseUnits(test.ratePercent, 16);
+
+      const jsFV = test.amount * Math.exp(test.ratePercent/100*test.term/SECONDS_PER_YEAR);
+
       try {
-        console.log("        Calling...");
         const [fv, gasUsed] = await testInterestUtils.futureValue(_amount, _from, _to, _rate/*, test.secondsPerPeriod*/);
-        console.log("        fv: " + fv);
-        console.log("        gasUsed: " + gasUsed);
-        // const compoundingResult = ethers.utils.parseUnits(test.compoundingResult, 18);
-        // const diff = fv.sub(compoundingResult);
-        // const diffPerHundred = diff.mul(100).mul(ethers.utils.parseUnits("1", 18)).div(fv);
-        // console.log("        term: " + test.t + ", period: " + test.p + ", fv: " + ethers.utils.formatUnits(fv, 18) + ", compoundingResult: " + ethers.utils.formatUnits(compoundingResult, 18) + ", diff: " + ethers.utils.formatUnits(diff, 18) + " = " + ethers.utils.formatUnits(diffPerHundred, 18) + "%, gasUsed: " + gasUsed);
+        console.log("        jsFV: " + jsFV);
+        // console.log("        gasUsed: " + gasUsed);
+        const compoundingResult = ethers.utils.parseUnits(test.compoundingResult, 18);
+        const diff = fv.sub(compoundingResult);
+        const diffPerHundred = diff.mul(100).mul(ethers.utils.parseUnits("1", 18)).div(fv);
+        console.log("        term: " + test.t + ", period: " + test.p + ", fv: " + ethers.utils.formatUnits(fv, 18) + ", compoundingResult: " + ethers.utils.formatUnits(compoundingResult, 18) + ", diff: " + ethers.utils.formatUnits(diff, 18) + " = " + ethers.utils.formatUnits(diffPerHundred, 18) + "%, gasUsed: " + gasUsed);
       } catch (e) {
-        // console.log("        term: " + test.t + ", period: " + test.p + ", Out of gas");
+        console.log("        term: " + test.t + ", period: " + test.p + ", Out of gas: " + e);
       }
     }
 
