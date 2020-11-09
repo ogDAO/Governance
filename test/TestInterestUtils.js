@@ -1,6 +1,7 @@
 const { expect, assert } = require("chai");
 const { BigNumber } = require("ethers");
 const util = require('util');
+const { Decimal } = require("decimal.js");
 
 let InterestUtils;
 
@@ -25,17 +26,13 @@ describe("TestInterestUtils", function() {
       console.log("        date: " + new Date(date * 1000).toUTCString());
       const term = date - _from;
       for (let rate = 0; rate < 3; rate = parseFloat(rate) + 0.231345) {
-        // console.log("        Math.exp0: " + Math.exp(rate/100*term/SECONDS_PER_YEAR).toString());
-        // console.log("        Math.exp1: " + ethers.utils.parseUnits(Math.exp(rate/100*term/SECONDS_PER_YEAR).toString(), 18));
-        // console.log("        Math.exp1: " + _amount.mul(ethers.utils.parseUnits(Math.exp(rate/100*term/SECONDS_PER_YEAR).toString(), 18)));
-        const expectedFV = _amount.mul(ethers.utils.parseUnits(Math.exp(rate/100*term/SECONDS_PER_YEAR).toString(), 18)).div(BigNumber.from(10).pow(18));
+        const exp = Decimal.exp(rate*term/SECONDS_PER_YEAR/100);
+        const expectedFV = exp.mul(_amount.toString());
         const _rate = ethers.utils.parseUnits(rate.toString(), 16);
         const [fv, gasUsed] = await testInterestUtils.futureValue_(_amount, BigNumber.from(_from), BigNumber.from(date), _rate);
-        // console.log("          fv: " + fv);
-        // console.log("          expectedFV: " + expectedFV);
-        const _diff = fv.sub(expectedFV.toString());
+        const _diff = fv.sub(expectedFV.toFixed(0));
         const diff = ethers.utils.formatUnits(_diff, 18);
-        console.log("          rate: " + rate + " => fv: " + ethers.utils.formatUnits(fv, 18) + " vs expectedFV: " + ethers.utils.formatUnits(expectedFV, 18) + ", diff: " + ethers.utils.formatUnits(_diff.toString(), 18) + ", gasUsed: " + gasUsed);
+        console.log("          rate: " + rate + " => fv: " + ethers.utils.formatUnits(fv, 18) + " vs expectedFV: " + ethers.utils.formatUnits(expectedFV.toFixed(0), 18) + ", diff: " + ethers.utils.formatUnits(_diff.toString(), 18) + ", gasUsed: " + gasUsed);
         expect(parseFloat(diff.toString())).to.be.closeTo(0, 0.000000001, "Diff too large");
       }
     }

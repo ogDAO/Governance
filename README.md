@@ -52,7 +52,7 @@ You will need to install the [Hardhat](https://hardhat.org/) testing framework:
 ```
 npm install --save-dev hardhat @nomiclabs/hardhat-ethers chai ethers @nomiclabs/hardhat-waffle ethereum-waffle
 npm install --save bignumber.js
-
+npm install --save decimal.js
 ```
 
 <br />
