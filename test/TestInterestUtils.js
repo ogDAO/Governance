@@ -102,7 +102,6 @@ describe("TestInterestUtils", function() {
         const _diff = fv.sub(ethers.utils.parseUnits(jsFV.toString()));
         const diff = ethers.utils.formatUnits(_diff, 18);
         console.log("          fv: " + ethers.utils.formatUnits(fv, 18) + ", _diff: " + _diff + ", diff: " + parseFloat(ethers.utils.formatUnits(_diff.toString(), 18)) + ", gasUsed: " + gasUsed);
-        // expect(diff.toString()).should.be.closeTo(0, 0.0000000001);
         expect(parseFloat(diff.toString())).to.be.closeTo(0, 0.000000001, "Diff too large");
       }
     }
