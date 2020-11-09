@@ -28,7 +28,7 @@ $ npx hardhat --verbose --show-stack-traces test test/TestOptinoGov.js > results
         + VoteWeightCurve.PointUpdated(index: 1, term: 94608000, rate: 10950000000000000000)
         fee0Token.deployTransaction - gasUsed: 823708, fee: 0.06589664, feeUsd: 25.4143571488, @ 80.0 gwei & 385.67 ETH/USD, 0x3d5c6c2fc436e9da4d06a3f973c8dc9d176e20982ba339ef5c9c340eb795ddc6
         + Fee0Token.Transfer(from: ETH|null:0x0000, to: Owner:0xa00A, tokens: 100.0)
-        optinoGov.deployTransaction - gasUsed: 5295993, fee: 0.42367944, feeUsd: 163.4004496248, @ 80.0 gwei & 385.67 ETH/USD, 0xca42ed8decbb88bf9b3e4e6209cbf9f601e0f44dab1cb3765ff15ff66ece8ecb
+        optinoGov.deployTransaction - gasUsed: 5295993, fee: 0.42367944, feeUsd: 163.4004496248, @ 80.0 gwei & 385.67 ETH/USD, 0xf013ee1c84fd3a4d4375a39ea900b0825021c14610bb938a83940b0ea649386e
         --- Setup 2 - OGDToken.addDividendToken([ETH, FEE0]), OGDToken mint(...) permissioning ---
         addDividendToken0 - gasUsed: 114431, fee: 0.00915448, feeUsd: 3.5306083016, @ 80.0 gwei & 385.67 ETH/USD, 0xeeda7f1873e5afb136acbefb6221e2eb448ec5c5a5567090d7e8db97e33098f1
         + OGDToken.DividendTokenAdded(token: ETH|null:0x0000, enabled: true)
@@ -133,17 +133,17 @@ $ npx hardhat --verbose --show-stack-traces test test/TestOptinoGov.js > results
         commit1 - gasUsed: 415823, fee: 0.03326584, feeUsd: 12.8296365128, @ 80.0 gwei & 385.67 ETH/USD, 0x749a969745f524ed3bad8344a4f93ee2c8705038fa9c0f2195914b8a271989f1
         + OGToken.Transfer(from: User1:0xa11A, to: OptinoGov:0x7305, tokens: 1000.0)
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User1:0xa11A, tokens: 1000.0)
-        + OptinoGov.Committed(user: User1:0xa11A, tokens: 1000.0, balance: 1000.0, duration: 2592000, end: 1607498036, delegatee: ETH|null:0x0000, votes: 0.0, rewardPool: 1000000.0, totalVotes: 0.0)
+        + OptinoGov.Committed(user: User1:0xa11A, tokens: 1000.0, balance: 1000.0, duration: 2592000, end: 1607512422, delegatee: ETH|null:0x0000, votes: 0.0, rewardPool: 1000000.0, totalVotes: 0.0)
         + OptinoGov.Transfer(from: ETH|null:0x0000, to: User1:0xa11A, tokens: 1000.0)
         commit2 - gasUsed: 329602, fee: 0.02636816, feeUsd: 10.1694082672, @ 80.0 gwei & 385.67 ETH/USD, 0xd1d6302beb983dc93a7cc152490f2f7b90841997d5215d123768e3990bbc5987
         + OGToken.Transfer(from: User2:0xa22A, to: OptinoGov:0x7305, tokens: 1000.0)
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User2:0xa22A, tokens: 1000.0)
-        + OptinoGov.Committed(user: User2:0xa22A, tokens: 1000.0, balance: 1000.0, duration: 31536000, end: 1636442037, delegatee: ETH|null:0x0000, votes: 0.0, rewardPool: 1000000.0, totalVotes: 300.0)
+        + OptinoGov.Committed(user: User2:0xa22A, tokens: 1000.0, balance: 1000.0, duration: 31536000, end: 1636456423, delegatee: ETH|null:0x0000, votes: 0.0, rewardPool: 1000000.0, totalVotes: 300.0)
         + OptinoGov.Transfer(from: ETH|null:0x0000, to: User2:0xa22A, tokens: 1000.0)
         commit3 - gasUsed: 346755, fee: 0.0277404, feeUsd: 10.698640068, @ 80.0 gwei & 385.67 ETH/USD, 0xd43629c2c49aba8a70f46ea16d991e4b05572504f027944f2c0cd00cdc3b033b
         + OGToken.Transfer(from: User3:0xa33a, to: OptinoGov:0x7305, tokens: 1000.0)
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User3:0xa33a, tokens: 1000.0)
-        + OptinoGov.Committed(user: User3:0xa33a, tokens: 1000.0, balance: 1000.0, duration: 47304000, end: 1652210038, delegatee: ETH|null:0x0000, votes: 0.0, rewardPool: 1000000.0, totalVotes: 3950.0)
+        + OptinoGov.Committed(user: User3:0xa33a, tokens: 1000.0, balance: 1000.0, duration: 47304000, end: 1652224424, delegatee: ETH|null:0x0000, votes: 0.0, rewardPool: 1000000.0, totalVotes: 3950.0)
         + OptinoGov.Transfer(from: ETH|null:0x0000, to: User3:0xa33a, tokens: 1000.0)
         
          # Account                                        ΔETH                OptinoGov                       OG                      OGD                     FEE0
@@ -217,8 +217,8 @@ $ npx hardhat --verbose --show-stack-traces test test/TestOptinoGov.js > results
          -- ---------- ------------------------
         
         --- Test 3 - Dummy tx to mine a new block and get the latest block.timestamp ---
-        Pausing 'Waiting' for 5s=Mon Nov 09 2020 18:13:44 GMT+1100 (Australian Eastern Daylight Time) now=Mon Nov 09 2020 18:13:39 GMT+1100 (Australian Eastern Daylight Time)
-        Paused 'Waiting' for 5s=Mon Nov 09 2020 18:13:44 GMT+1100 (Australian Eastern Daylight Time) now=Mon Nov 09 2020 18:13:44 GMT+1100 (Australian Eastern Daylight Time)
+        Pausing 'Waiting' for 5s=Mon Nov 09 2020 22:13:28 GMT+1100 (Australian Eastern Daylight Time) now=Mon Nov 09 2020 22:13:23 GMT+1100 (Australian Eastern Daylight Time)
+        Paused 'Waiting' for 5s=Mon Nov 09 2020 22:13:28 GMT+1100 (Australian Eastern Daylight Time) now=Mon Nov 09 2020 22:13:28 GMT+1100 (Australian Eastern Daylight Time)
         
         dummy1 - gasUsed: 21000, fee: 0.00168, feeUsd: 0.6479256, @ 80.0 gwei & 385.67 ETH/USD, 0x2ebd073b061294b2c4a2083b635abb64c3d15b657538f8e57743833d827a9c28
         
@@ -370,8 +370,8 @@ $ npx hardhat --verbose --show-stack-traces test test/TestOptinoGov.js > results
         
         --- Test Completed ---
 
-      ✓ Workflow #2 - Developing (8080ms)
+      ✓ Workflow #2 - Developing (6771ms)
 
 
-  1 passing (12s)
+  1 passing (10s)
 
