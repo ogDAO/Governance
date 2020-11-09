@@ -85,26 +85,51 @@ describe("TestInterestUtils", function() {
     // // tests.push({ t: "1000y", term: SECONDS_PER_YEAR * 1000, ratePercent: "1", amount: "100", p: "1d", secondsPerPeriod: SECONDS_PER_DAY, compoundingResult: "2202344.873257070" });
 
     const _from = parseInt(new Date().getTime()/1000);
-    for (let i = 0; i < tests.length; i++) {
-      const test = tests[i];
-      const _amount = ethers.utils.parseUnits(test.amount, 18);
-      const _to = parseInt(_from) + test.term;
-      const _rate = ethers.utils.parseUnits(test.ratePercent, 16);
+    const _to = parseInt(_from) + SECONDS_PER_YEAR * 2;
+    const amount = 1000000;
+    const _amount = ethers.utils.parseUnits(amount.toString(), 18);
 
-      const jsFV = test.amount * Math.exp(test.ratePercent/100*test.term/SECONDS_PER_YEAR);
-
-      try {
-        const [fv, gasUsed] = await testInterestUtils.futureValue(_amount, _from, _to, _rate/*, test.secondsPerPeriod*/);
-        console.log("        jsFV: " + jsFV);
-        // console.log("        gasUsed: " + gasUsed);
-        const compoundingResult = ethers.utils.parseUnits(test.compoundingResult, 18);
-        const diff = fv.sub(compoundingResult);
-        const diffPerHundred = diff.mul(100).mul(ethers.utils.parseUnits("1", 18)).div(fv);
-        console.log("        term: " + test.t + ", period: " + test.p + ", fv: " + ethers.utils.formatUnits(fv, 18) + ", compoundingResult: " + ethers.utils.formatUnits(compoundingResult, 18) + ", diff: " + ethers.utils.formatUnits(diff, 18) + " = " + ethers.utils.formatUnits(diffPerHundred, 18) + "%, gasUsed: " + gasUsed);
-      } catch (e) {
-        console.log("        term: " + test.t + ", period: " + test.p + ", Out of gas: " + e);
+    for (let date = _from; date < _to; date += (SECONDS_PER_DAY * 23.13)) {
+      console.log("        date: " + new Date(date * 1000).toUTCString());
+      const term = date - _from;
+      for (let rate = 0; rate < 3; rate = parseFloat(rate) + 0.231345) {
+        const jsFV = amount * Math.exp(rate/100*term/SECONDS_PER_YEAR);
+        console.log("          rate: " + rate + ", jsFV: " + jsFV);
+        console.log("          _from: " + _from + ", date: " + date + ", rate: " + rate);
+        const _rate = ethers.utils.parseUnits(rate.toString(), 16);
+        console.log("          _rate: " + _rate);
+        const [fv, gasUsed] = await testInterestUtils.futureValue(_amount, BigNumber.from(_from), BigNumber.from(date), _rate);
+        const _diff = fv.sub(ethers.utils.parseUnits(jsFV.toString()));
+        const diff = ethers.utils.formatUnits(_diff, 18);
+        console.log("          fv: " + ethers.utils.formatUnits(fv, 18) + ", _diff: " + _diff + ", diff: " + parseFloat(ethers.utils.formatUnits(_diff.toString(), 18)) + ", gasUsed: " + gasUsed);
+        // expect(diff.toString()).should.be.closeTo(0, 0.0000000001);
+        expect(parseFloat(diff.toString())).to.be.closeTo(0, 0.000000001, "Diff too large");
       }
     }
+
+
+
+
+    // for (let i = 0; i < tests.length; i++) {
+    //   const test = tests[i];
+    //   const _amount = ethers.utils.parseUnits(test.amount, 18);
+    //   const _to = parseInt(_from) + test.term;
+    //   const _rate = ethers.utils.parseUnits(test.ratePercent, 16);
+    //
+    //   const jsFV = test.amount * Math.exp(test.ratePercent/100*test.term/SECONDS_PER_YEAR);
+    //
+    //   try {
+    //     const [fv, gasUsed] = await testInterestUtils.futureValue(_amount, _from, _to, _rate/*, test.secondsPerPeriod*/);
+    //     console.log("        jsFV: " + jsFV);
+    //     // console.log("        gasUsed: " + gasUsed);
+    //     const compoundingResult = ethers.utils.parseUnits(test.compoundingResult, 18);
+    //     const diff = fv.sub(compoundingResult);
+    //     const diffPerHundred = diff.mul(100).mul(ethers.utils.parseUnits("1", 18)).div(fv);
+    //     console.log("        term: " + test.t + ", period: " + test.p + ", fv: " + ethers.utils.formatUnits(fv, 18) + ", compoundingResult: " + ethers.utils.formatUnits(compoundingResult, 18) + ", diff: " + ethers.utils.formatUnits(diff, 18) + " = " + ethers.utils.formatUnits(diffPerHundred, 18) + "%, gasUsed: " + gasUsed);
+    //   } catch (e) {
+    //     console.log("        term: " + test.t + ", period: " + test.p + ", Out of gas: " + e);
+    //   }
+    // }
 
     console.log("        --- Test Completed ---");
     console.log("");

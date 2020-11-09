@@ -1,3 +1,1542 @@
+// File: hardhat/console.sol
+
+// SPDX-License-Identifier: MIT
+pragma solidity >= 0.4.22 <0.8.0;
+
+library console {
+	address constant CONSOLE_ADDRESS = address(0x000000000000000000636F6e736F6c652e6c6f67);
+
+	function _sendLogPayload(bytes memory payload) private view {
+		uint256 payloadLength = payload.length;
+		address consoleAddress = CONSOLE_ADDRESS;
+		assembly {
+			let payloadStart := add(payload, 32)
+			let r := staticcall(gas(), consoleAddress, payloadStart, payloadLength, 0, 0)
+		}
+	}
+
+	function log() internal view {
+		_sendLogPayload(abi.encodeWithSignature("log()"));
+	}
+
+	function logInt(int p0) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(int)", p0));
+	}
+
+	function logUint(uint p0) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(uint)", p0));
+	}
+
+	function logString(string memory p0) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(string)", p0));
+	}
+
+	function logBool(bool p0) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bool)", p0));
+	}
+
+	function logAddress(address p0) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(address)", p0));
+	}
+
+	function logBytes(bytes memory p0) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bytes)", p0));
+	}
+
+	function logByte(byte p0) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(byte)", p0));
+	}
+
+	function logBytes1(bytes1 p0) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bytes1)", p0));
+	}
+
+	function logBytes2(bytes2 p0) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bytes2)", p0));
+	}
+
+	function logBytes3(bytes3 p0) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bytes3)", p0));
+	}
+
+	function logBytes4(bytes4 p0) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bytes4)", p0));
+	}
+
+	function logBytes5(bytes5 p0) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bytes5)", p0));
+	}
+
+	function logBytes6(bytes6 p0) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bytes6)", p0));
+	}
+
+	function logBytes7(bytes7 p0) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bytes7)", p0));
+	}
+
+	function logBytes8(bytes8 p0) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bytes8)", p0));
+	}
+
+	function logBytes9(bytes9 p0) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bytes9)", p0));
+	}
+
+	function logBytes10(bytes10 p0) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bytes10)", p0));
+	}
+
+	function logBytes11(bytes11 p0) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bytes11)", p0));
+	}
+
+	function logBytes12(bytes12 p0) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bytes12)", p0));
+	}
+
+	function logBytes13(bytes13 p0) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bytes13)", p0));
+	}
+
+	function logBytes14(bytes14 p0) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bytes14)", p0));
+	}
+
+	function logBytes15(bytes15 p0) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bytes15)", p0));
+	}
+
+	function logBytes16(bytes16 p0) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bytes16)", p0));
+	}
+
+	function logBytes17(bytes17 p0) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bytes17)", p0));
+	}
+
+	function logBytes18(bytes18 p0) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bytes18)", p0));
+	}
+
+	function logBytes19(bytes19 p0) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bytes19)", p0));
+	}
+
+	function logBytes20(bytes20 p0) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bytes20)", p0));
+	}
+
+	function logBytes21(bytes21 p0) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bytes21)", p0));
+	}
+
+	function logBytes22(bytes22 p0) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bytes22)", p0));
+	}
+
+	function logBytes23(bytes23 p0) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bytes23)", p0));
+	}
+
+	function logBytes24(bytes24 p0) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bytes24)", p0));
+	}
+
+	function logBytes25(bytes25 p0) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bytes25)", p0));
+	}
+
+	function logBytes26(bytes26 p0) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bytes26)", p0));
+	}
+
+	function logBytes27(bytes27 p0) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bytes27)", p0));
+	}
+
+	function logBytes28(bytes28 p0) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bytes28)", p0));
+	}
+
+	function logBytes29(bytes29 p0) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bytes29)", p0));
+	}
+
+	function logBytes30(bytes30 p0) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bytes30)", p0));
+	}
+
+	function logBytes31(bytes31 p0) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bytes31)", p0));
+	}
+
+	function logBytes32(bytes32 p0) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bytes32)", p0));
+	}
+
+	function log(uint p0) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(uint)", p0));
+	}
+
+	function log(string memory p0) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(string)", p0));
+	}
+
+	function log(bool p0) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bool)", p0));
+	}
+
+	function log(address p0) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(address)", p0));
+	}
+
+	function log(uint p0, uint p1) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(uint,uint)", p0, p1));
+	}
+
+	function log(uint p0, string memory p1) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(uint,string)", p0, p1));
+	}
+
+	function log(uint p0, bool p1) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(uint,bool)", p0, p1));
+	}
+
+	function log(uint p0, address p1) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(uint,address)", p0, p1));
+	}
+
+	function log(string memory p0, uint p1) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(string,uint)", p0, p1));
+	}
+
+	function log(string memory p0, string memory p1) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(string,string)", p0, p1));
+	}
+
+	function log(string memory p0, bool p1) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(string,bool)", p0, p1));
+	}
+
+	function log(string memory p0, address p1) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(string,address)", p0, p1));
+	}
+
+	function log(bool p0, uint p1) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bool,uint)", p0, p1));
+	}
+
+	function log(bool p0, string memory p1) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bool,string)", p0, p1));
+	}
+
+	function log(bool p0, bool p1) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bool,bool)", p0, p1));
+	}
+
+	function log(bool p0, address p1) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bool,address)", p0, p1));
+	}
+
+	function log(address p0, uint p1) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(address,uint)", p0, p1));
+	}
+
+	function log(address p0, string memory p1) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(address,string)", p0, p1));
+	}
+
+	function log(address p0, bool p1) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(address,bool)", p0, p1));
+	}
+
+	function log(address p0, address p1) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(address,address)", p0, p1));
+	}
+
+	function log(uint p0, uint p1, uint p2) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(uint,uint,uint)", p0, p1, p2));
+	}
+
+	function log(uint p0, uint p1, string memory p2) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(uint,uint,string)", p0, p1, p2));
+	}
+
+	function log(uint p0, uint p1, bool p2) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(uint,uint,bool)", p0, p1, p2));
+	}
+
+	function log(uint p0, uint p1, address p2) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(uint,uint,address)", p0, p1, p2));
+	}
+
+	function log(uint p0, string memory p1, uint p2) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(uint,string,uint)", p0, p1, p2));
+	}
+
+	function log(uint p0, string memory p1, string memory p2) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(uint,string,string)", p0, p1, p2));
+	}
+
+	function log(uint p0, string memory p1, bool p2) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(uint,string,bool)", p0, p1, p2));
+	}
+
+	function log(uint p0, string memory p1, address p2) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(uint,string,address)", p0, p1, p2));
+	}
+
+	function log(uint p0, bool p1, uint p2) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(uint,bool,uint)", p0, p1, p2));
+	}
+
+	function log(uint p0, bool p1, string memory p2) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(uint,bool,string)", p0, p1, p2));
+	}
+
+	function log(uint p0, bool p1, bool p2) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(uint,bool,bool)", p0, p1, p2));
+	}
+
+	function log(uint p0, bool p1, address p2) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(uint,bool,address)", p0, p1, p2));
+	}
+
+	function log(uint p0, address p1, uint p2) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(uint,address,uint)", p0, p1, p2));
+	}
+
+	function log(uint p0, address p1, string memory p2) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(uint,address,string)", p0, p1, p2));
+	}
+
+	function log(uint p0, address p1, bool p2) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(uint,address,bool)", p0, p1, p2));
+	}
+
+	function log(uint p0, address p1, address p2) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(uint,address,address)", p0, p1, p2));
+	}
+
+	function log(string memory p0, uint p1, uint p2) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(string,uint,uint)", p0, p1, p2));
+	}
+
+	function log(string memory p0, uint p1, string memory p2) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(string,uint,string)", p0, p1, p2));
+	}
+
+	function log(string memory p0, uint p1, bool p2) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(string,uint,bool)", p0, p1, p2));
+	}
+
+	function log(string memory p0, uint p1, address p2) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(string,uint,address)", p0, p1, p2));
+	}
+
+	function log(string memory p0, string memory p1, uint p2) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(string,string,uint)", p0, p1, p2));
+	}
+
+	function log(string memory p0, string memory p1, string memory p2) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(string,string,string)", p0, p1, p2));
+	}
+
+	function log(string memory p0, string memory p1, bool p2) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(string,string,bool)", p0, p1, p2));
+	}
+
+	function log(string memory p0, string memory p1, address p2) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(string,string,address)", p0, p1, p2));
+	}
+
+	function log(string memory p0, bool p1, uint p2) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(string,bool,uint)", p0, p1, p2));
+	}
+
+	function log(string memory p0, bool p1, string memory p2) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(string,bool,string)", p0, p1, p2));
+	}
+
+	function log(string memory p0, bool p1, bool p2) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(string,bool,bool)", p0, p1, p2));
+	}
+
+	function log(string memory p0, bool p1, address p2) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(string,bool,address)", p0, p1, p2));
+	}
+
+	function log(string memory p0, address p1, uint p2) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(string,address,uint)", p0, p1, p2));
+	}
+
+	function log(string memory p0, address p1, string memory p2) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(string,address,string)", p0, p1, p2));
+	}
+
+	function log(string memory p0, address p1, bool p2) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(string,address,bool)", p0, p1, p2));
+	}
+
+	function log(string memory p0, address p1, address p2) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(string,address,address)", p0, p1, p2));
+	}
+
+	function log(bool p0, uint p1, uint p2) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bool,uint,uint)", p0, p1, p2));
+	}
+
+	function log(bool p0, uint p1, string memory p2) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bool,uint,string)", p0, p1, p2));
+	}
+
+	function log(bool p0, uint p1, bool p2) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bool,uint,bool)", p0, p1, p2));
+	}
+
+	function log(bool p0, uint p1, address p2) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bool,uint,address)", p0, p1, p2));
+	}
+
+	function log(bool p0, string memory p1, uint p2) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bool,string,uint)", p0, p1, p2));
+	}
+
+	function log(bool p0, string memory p1, string memory p2) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bool,string,string)", p0, p1, p2));
+	}
+
+	function log(bool p0, string memory p1, bool p2) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bool,string,bool)", p0, p1, p2));
+	}
+
+	function log(bool p0, string memory p1, address p2) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bool,string,address)", p0, p1, p2));
+	}
+
+	function log(bool p0, bool p1, uint p2) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bool,bool,uint)", p0, p1, p2));
+	}
+
+	function log(bool p0, bool p1, string memory p2) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bool,bool,string)", p0, p1, p2));
+	}
+
+	function log(bool p0, bool p1, bool p2) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bool,bool,bool)", p0, p1, p2));
+	}
+
+	function log(bool p0, bool p1, address p2) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bool,bool,address)", p0, p1, p2));
+	}
+
+	function log(bool p0, address p1, uint p2) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bool,address,uint)", p0, p1, p2));
+	}
+
+	function log(bool p0, address p1, string memory p2) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bool,address,string)", p0, p1, p2));
+	}
+
+	function log(bool p0, address p1, bool p2) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bool,address,bool)", p0, p1, p2));
+	}
+
+	function log(bool p0, address p1, address p2) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bool,address,address)", p0, p1, p2));
+	}
+
+	function log(address p0, uint p1, uint p2) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(address,uint,uint)", p0, p1, p2));
+	}
+
+	function log(address p0, uint p1, string memory p2) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(address,uint,string)", p0, p1, p2));
+	}
+
+	function log(address p0, uint p1, bool p2) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(address,uint,bool)", p0, p1, p2));
+	}
+
+	function log(address p0, uint p1, address p2) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(address,uint,address)", p0, p1, p2));
+	}
+
+	function log(address p0, string memory p1, uint p2) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(address,string,uint)", p0, p1, p2));
+	}
+
+	function log(address p0, string memory p1, string memory p2) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(address,string,string)", p0, p1, p2));
+	}
+
+	function log(address p0, string memory p1, bool p2) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(address,string,bool)", p0, p1, p2));
+	}
+
+	function log(address p0, string memory p1, address p2) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(address,string,address)", p0, p1, p2));
+	}
+
+	function log(address p0, bool p1, uint p2) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(address,bool,uint)", p0, p1, p2));
+	}
+
+	function log(address p0, bool p1, string memory p2) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(address,bool,string)", p0, p1, p2));
+	}
+
+	function log(address p0, bool p1, bool p2) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(address,bool,bool)", p0, p1, p2));
+	}
+
+	function log(address p0, bool p1, address p2) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(address,bool,address)", p0, p1, p2));
+	}
+
+	function log(address p0, address p1, uint p2) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(address,address,uint)", p0, p1, p2));
+	}
+
+	function log(address p0, address p1, string memory p2) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(address,address,string)", p0, p1, p2));
+	}
+
+	function log(address p0, address p1, bool p2) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(address,address,bool)", p0, p1, p2));
+	}
+
+	function log(address p0, address p1, address p2) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(address,address,address)", p0, p1, p2));
+	}
+
+	function log(uint p0, uint p1, uint p2, uint p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(uint,uint,uint,uint)", p0, p1, p2, p3));
+	}
+
+	function log(uint p0, uint p1, uint p2, string memory p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(uint,uint,uint,string)", p0, p1, p2, p3));
+	}
+
+	function log(uint p0, uint p1, uint p2, bool p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(uint,uint,uint,bool)", p0, p1, p2, p3));
+	}
+
+	function log(uint p0, uint p1, uint p2, address p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(uint,uint,uint,address)", p0, p1, p2, p3));
+	}
+
+	function log(uint p0, uint p1, string memory p2, uint p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(uint,uint,string,uint)", p0, p1, p2, p3));
+	}
+
+	function log(uint p0, uint p1, string memory p2, string memory p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(uint,uint,string,string)", p0, p1, p2, p3));
+	}
+
+	function log(uint p0, uint p1, string memory p2, bool p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(uint,uint,string,bool)", p0, p1, p2, p3));
+	}
+
+	function log(uint p0, uint p1, string memory p2, address p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(uint,uint,string,address)", p0, p1, p2, p3));
+	}
+
+	function log(uint p0, uint p1, bool p2, uint p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(uint,uint,bool,uint)", p0, p1, p2, p3));
+	}
+
+	function log(uint p0, uint p1, bool p2, string memory p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(uint,uint,bool,string)", p0, p1, p2, p3));
+	}
+
+	function log(uint p0, uint p1, bool p2, bool p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(uint,uint,bool,bool)", p0, p1, p2, p3));
+	}
+
+	function log(uint p0, uint p1, bool p2, address p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(uint,uint,bool,address)", p0, p1, p2, p3));
+	}
+
+	function log(uint p0, uint p1, address p2, uint p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(uint,uint,address,uint)", p0, p1, p2, p3));
+	}
+
+	function log(uint p0, uint p1, address p2, string memory p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(uint,uint,address,string)", p0, p1, p2, p3));
+	}
+
+	function log(uint p0, uint p1, address p2, bool p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(uint,uint,address,bool)", p0, p1, p2, p3));
+	}
+
+	function log(uint p0, uint p1, address p2, address p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(uint,uint,address,address)", p0, p1, p2, p3));
+	}
+
+	function log(uint p0, string memory p1, uint p2, uint p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(uint,string,uint,uint)", p0, p1, p2, p3));
+	}
+
+	function log(uint p0, string memory p1, uint p2, string memory p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(uint,string,uint,string)", p0, p1, p2, p3));
+	}
+
+	function log(uint p0, string memory p1, uint p2, bool p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(uint,string,uint,bool)", p0, p1, p2, p3));
+	}
+
+	function log(uint p0, string memory p1, uint p2, address p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(uint,string,uint,address)", p0, p1, p2, p3));
+	}
+
+	function log(uint p0, string memory p1, string memory p2, uint p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(uint,string,string,uint)", p0, p1, p2, p3));
+	}
+
+	function log(uint p0, string memory p1, string memory p2, string memory p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(uint,string,string,string)", p0, p1, p2, p3));
+	}
+
+	function log(uint p0, string memory p1, string memory p2, bool p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(uint,string,string,bool)", p0, p1, p2, p3));
+	}
+
+	function log(uint p0, string memory p1, string memory p2, address p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(uint,string,string,address)", p0, p1, p2, p3));
+	}
+
+	function log(uint p0, string memory p1, bool p2, uint p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(uint,string,bool,uint)", p0, p1, p2, p3));
+	}
+
+	function log(uint p0, string memory p1, bool p2, string memory p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(uint,string,bool,string)", p0, p1, p2, p3));
+	}
+
+	function log(uint p0, string memory p1, bool p2, bool p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(uint,string,bool,bool)", p0, p1, p2, p3));
+	}
+
+	function log(uint p0, string memory p1, bool p2, address p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(uint,string,bool,address)", p0, p1, p2, p3));
+	}
+
+	function log(uint p0, string memory p1, address p2, uint p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(uint,string,address,uint)", p0, p1, p2, p3));
+	}
+
+	function log(uint p0, string memory p1, address p2, string memory p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(uint,string,address,string)", p0, p1, p2, p3));
+	}
+
+	function log(uint p0, string memory p1, address p2, bool p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(uint,string,address,bool)", p0, p1, p2, p3));
+	}
+
+	function log(uint p0, string memory p1, address p2, address p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(uint,string,address,address)", p0, p1, p2, p3));
+	}
+
+	function log(uint p0, bool p1, uint p2, uint p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(uint,bool,uint,uint)", p0, p1, p2, p3));
+	}
+
+	function log(uint p0, bool p1, uint p2, string memory p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(uint,bool,uint,string)", p0, p1, p2, p3));
+	}
+
+	function log(uint p0, bool p1, uint p2, bool p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(uint,bool,uint,bool)", p0, p1, p2, p3));
+	}
+
+	function log(uint p0, bool p1, uint p2, address p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(uint,bool,uint,address)", p0, p1, p2, p3));
+	}
+
+	function log(uint p0, bool p1, string memory p2, uint p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(uint,bool,string,uint)", p0, p1, p2, p3));
+	}
+
+	function log(uint p0, bool p1, string memory p2, string memory p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(uint,bool,string,string)", p0, p1, p2, p3));
+	}
+
+	function log(uint p0, bool p1, string memory p2, bool p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(uint,bool,string,bool)", p0, p1, p2, p3));
+	}
+
+	function log(uint p0, bool p1, string memory p2, address p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(uint,bool,string,address)", p0, p1, p2, p3));
+	}
+
+	function log(uint p0, bool p1, bool p2, uint p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(uint,bool,bool,uint)", p0, p1, p2, p3));
+	}
+
+	function log(uint p0, bool p1, bool p2, string memory p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(uint,bool,bool,string)", p0, p1, p2, p3));
+	}
+
+	function log(uint p0, bool p1, bool p2, bool p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(uint,bool,bool,bool)", p0, p1, p2, p3));
+	}
+
+	function log(uint p0, bool p1, bool p2, address p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(uint,bool,bool,address)", p0, p1, p2, p3));
+	}
+
+	function log(uint p0, bool p1, address p2, uint p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(uint,bool,address,uint)", p0, p1, p2, p3));
+	}
+
+	function log(uint p0, bool p1, address p2, string memory p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(uint,bool,address,string)", p0, p1, p2, p3));
+	}
+
+	function log(uint p0, bool p1, address p2, bool p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(uint,bool,address,bool)", p0, p1, p2, p3));
+	}
+
+	function log(uint p0, bool p1, address p2, address p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(uint,bool,address,address)", p0, p1, p2, p3));
+	}
+
+	function log(uint p0, address p1, uint p2, uint p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(uint,address,uint,uint)", p0, p1, p2, p3));
+	}
+
+	function log(uint p0, address p1, uint p2, string memory p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(uint,address,uint,string)", p0, p1, p2, p3));
+	}
+
+	function log(uint p0, address p1, uint p2, bool p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(uint,address,uint,bool)", p0, p1, p2, p3));
+	}
+
+	function log(uint p0, address p1, uint p2, address p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(uint,address,uint,address)", p0, p1, p2, p3));
+	}
+
+	function log(uint p0, address p1, string memory p2, uint p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(uint,address,string,uint)", p0, p1, p2, p3));
+	}
+
+	function log(uint p0, address p1, string memory p2, string memory p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(uint,address,string,string)", p0, p1, p2, p3));
+	}
+
+	function log(uint p0, address p1, string memory p2, bool p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(uint,address,string,bool)", p0, p1, p2, p3));
+	}
+
+	function log(uint p0, address p1, string memory p2, address p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(uint,address,string,address)", p0, p1, p2, p3));
+	}
+
+	function log(uint p0, address p1, bool p2, uint p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(uint,address,bool,uint)", p0, p1, p2, p3));
+	}
+
+	function log(uint p0, address p1, bool p2, string memory p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(uint,address,bool,string)", p0, p1, p2, p3));
+	}
+
+	function log(uint p0, address p1, bool p2, bool p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(uint,address,bool,bool)", p0, p1, p2, p3));
+	}
+
+	function log(uint p0, address p1, bool p2, address p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(uint,address,bool,address)", p0, p1, p2, p3));
+	}
+
+	function log(uint p0, address p1, address p2, uint p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(uint,address,address,uint)", p0, p1, p2, p3));
+	}
+
+	function log(uint p0, address p1, address p2, string memory p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(uint,address,address,string)", p0, p1, p2, p3));
+	}
+
+	function log(uint p0, address p1, address p2, bool p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(uint,address,address,bool)", p0, p1, p2, p3));
+	}
+
+	function log(uint p0, address p1, address p2, address p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(uint,address,address,address)", p0, p1, p2, p3));
+	}
+
+	function log(string memory p0, uint p1, uint p2, uint p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(string,uint,uint,uint)", p0, p1, p2, p3));
+	}
+
+	function log(string memory p0, uint p1, uint p2, string memory p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(string,uint,uint,string)", p0, p1, p2, p3));
+	}
+
+	function log(string memory p0, uint p1, uint p2, bool p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(string,uint,uint,bool)", p0, p1, p2, p3));
+	}
+
+	function log(string memory p0, uint p1, uint p2, address p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(string,uint,uint,address)", p0, p1, p2, p3));
+	}
+
+	function log(string memory p0, uint p1, string memory p2, uint p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(string,uint,string,uint)", p0, p1, p2, p3));
+	}
+
+	function log(string memory p0, uint p1, string memory p2, string memory p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(string,uint,string,string)", p0, p1, p2, p3));
+	}
+
+	function log(string memory p0, uint p1, string memory p2, bool p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(string,uint,string,bool)", p0, p1, p2, p3));
+	}
+
+	function log(string memory p0, uint p1, string memory p2, address p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(string,uint,string,address)", p0, p1, p2, p3));
+	}
+
+	function log(string memory p0, uint p1, bool p2, uint p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(string,uint,bool,uint)", p0, p1, p2, p3));
+	}
+
+	function log(string memory p0, uint p1, bool p2, string memory p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(string,uint,bool,string)", p0, p1, p2, p3));
+	}
+
+	function log(string memory p0, uint p1, bool p2, bool p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(string,uint,bool,bool)", p0, p1, p2, p3));
+	}
+
+	function log(string memory p0, uint p1, bool p2, address p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(string,uint,bool,address)", p0, p1, p2, p3));
+	}
+
+	function log(string memory p0, uint p1, address p2, uint p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(string,uint,address,uint)", p0, p1, p2, p3));
+	}
+
+	function log(string memory p0, uint p1, address p2, string memory p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(string,uint,address,string)", p0, p1, p2, p3));
+	}
+
+	function log(string memory p0, uint p1, address p2, bool p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(string,uint,address,bool)", p0, p1, p2, p3));
+	}
+
+	function log(string memory p0, uint p1, address p2, address p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(string,uint,address,address)", p0, p1, p2, p3));
+	}
+
+	function log(string memory p0, string memory p1, uint p2, uint p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(string,string,uint,uint)", p0, p1, p2, p3));
+	}
+
+	function log(string memory p0, string memory p1, uint p2, string memory p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(string,string,uint,string)", p0, p1, p2, p3));
+	}
+
+	function log(string memory p0, string memory p1, uint p2, bool p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(string,string,uint,bool)", p0, p1, p2, p3));
+	}
+
+	function log(string memory p0, string memory p1, uint p2, address p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(string,string,uint,address)", p0, p1, p2, p3));
+	}
+
+	function log(string memory p0, string memory p1, string memory p2, uint p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(string,string,string,uint)", p0, p1, p2, p3));
+	}
+
+	function log(string memory p0, string memory p1, string memory p2, string memory p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(string,string,string,string)", p0, p1, p2, p3));
+	}
+
+	function log(string memory p0, string memory p1, string memory p2, bool p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(string,string,string,bool)", p0, p1, p2, p3));
+	}
+
+	function log(string memory p0, string memory p1, string memory p2, address p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(string,string,string,address)", p0, p1, p2, p3));
+	}
+
+	function log(string memory p0, string memory p1, bool p2, uint p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(string,string,bool,uint)", p0, p1, p2, p3));
+	}
+
+	function log(string memory p0, string memory p1, bool p2, string memory p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(string,string,bool,string)", p0, p1, p2, p3));
+	}
+
+	function log(string memory p0, string memory p1, bool p2, bool p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(string,string,bool,bool)", p0, p1, p2, p3));
+	}
+
+	function log(string memory p0, string memory p1, bool p2, address p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(string,string,bool,address)", p0, p1, p2, p3));
+	}
+
+	function log(string memory p0, string memory p1, address p2, uint p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(string,string,address,uint)", p0, p1, p2, p3));
+	}
+
+	function log(string memory p0, string memory p1, address p2, string memory p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(string,string,address,string)", p0, p1, p2, p3));
+	}
+
+	function log(string memory p0, string memory p1, address p2, bool p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(string,string,address,bool)", p0, p1, p2, p3));
+	}
+
+	function log(string memory p0, string memory p1, address p2, address p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(string,string,address,address)", p0, p1, p2, p3));
+	}
+
+	function log(string memory p0, bool p1, uint p2, uint p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(string,bool,uint,uint)", p0, p1, p2, p3));
+	}
+
+	function log(string memory p0, bool p1, uint p2, string memory p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(string,bool,uint,string)", p0, p1, p2, p3));
+	}
+
+	function log(string memory p0, bool p1, uint p2, bool p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(string,bool,uint,bool)", p0, p1, p2, p3));
+	}
+
+	function log(string memory p0, bool p1, uint p2, address p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(string,bool,uint,address)", p0, p1, p2, p3));
+	}
+
+	function log(string memory p0, bool p1, string memory p2, uint p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(string,bool,string,uint)", p0, p1, p2, p3));
+	}
+
+	function log(string memory p0, bool p1, string memory p2, string memory p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(string,bool,string,string)", p0, p1, p2, p3));
+	}
+
+	function log(string memory p0, bool p1, string memory p2, bool p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(string,bool,string,bool)", p0, p1, p2, p3));
+	}
+
+	function log(string memory p0, bool p1, string memory p2, address p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(string,bool,string,address)", p0, p1, p2, p3));
+	}
+
+	function log(string memory p0, bool p1, bool p2, uint p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(string,bool,bool,uint)", p0, p1, p2, p3));
+	}
+
+	function log(string memory p0, bool p1, bool p2, string memory p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(string,bool,bool,string)", p0, p1, p2, p3));
+	}
+
+	function log(string memory p0, bool p1, bool p2, bool p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(string,bool,bool,bool)", p0, p1, p2, p3));
+	}
+
+	function log(string memory p0, bool p1, bool p2, address p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(string,bool,bool,address)", p0, p1, p2, p3));
+	}
+
+	function log(string memory p0, bool p1, address p2, uint p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(string,bool,address,uint)", p0, p1, p2, p3));
+	}
+
+	function log(string memory p0, bool p1, address p2, string memory p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(string,bool,address,string)", p0, p1, p2, p3));
+	}
+
+	function log(string memory p0, bool p1, address p2, bool p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(string,bool,address,bool)", p0, p1, p2, p3));
+	}
+
+	function log(string memory p0, bool p1, address p2, address p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(string,bool,address,address)", p0, p1, p2, p3));
+	}
+
+	function log(string memory p0, address p1, uint p2, uint p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(string,address,uint,uint)", p0, p1, p2, p3));
+	}
+
+	function log(string memory p0, address p1, uint p2, string memory p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(string,address,uint,string)", p0, p1, p2, p3));
+	}
+
+	function log(string memory p0, address p1, uint p2, bool p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(string,address,uint,bool)", p0, p1, p2, p3));
+	}
+
+	function log(string memory p0, address p1, uint p2, address p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(string,address,uint,address)", p0, p1, p2, p3));
+	}
+
+	function log(string memory p0, address p1, string memory p2, uint p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(string,address,string,uint)", p0, p1, p2, p3));
+	}
+
+	function log(string memory p0, address p1, string memory p2, string memory p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(string,address,string,string)", p0, p1, p2, p3));
+	}
+
+	function log(string memory p0, address p1, string memory p2, bool p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(string,address,string,bool)", p0, p1, p2, p3));
+	}
+
+	function log(string memory p0, address p1, string memory p2, address p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(string,address,string,address)", p0, p1, p2, p3));
+	}
+
+	function log(string memory p0, address p1, bool p2, uint p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(string,address,bool,uint)", p0, p1, p2, p3));
+	}
+
+	function log(string memory p0, address p1, bool p2, string memory p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(string,address,bool,string)", p0, p1, p2, p3));
+	}
+
+	function log(string memory p0, address p1, bool p2, bool p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(string,address,bool,bool)", p0, p1, p2, p3));
+	}
+
+	function log(string memory p0, address p1, bool p2, address p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(string,address,bool,address)", p0, p1, p2, p3));
+	}
+
+	function log(string memory p0, address p1, address p2, uint p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(string,address,address,uint)", p0, p1, p2, p3));
+	}
+
+	function log(string memory p0, address p1, address p2, string memory p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(string,address,address,string)", p0, p1, p2, p3));
+	}
+
+	function log(string memory p0, address p1, address p2, bool p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(string,address,address,bool)", p0, p1, p2, p3));
+	}
+
+	function log(string memory p0, address p1, address p2, address p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(string,address,address,address)", p0, p1, p2, p3));
+	}
+
+	function log(bool p0, uint p1, uint p2, uint p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bool,uint,uint,uint)", p0, p1, p2, p3));
+	}
+
+	function log(bool p0, uint p1, uint p2, string memory p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bool,uint,uint,string)", p0, p1, p2, p3));
+	}
+
+	function log(bool p0, uint p1, uint p2, bool p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bool,uint,uint,bool)", p0, p1, p2, p3));
+	}
+
+	function log(bool p0, uint p1, uint p2, address p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bool,uint,uint,address)", p0, p1, p2, p3));
+	}
+
+	function log(bool p0, uint p1, string memory p2, uint p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bool,uint,string,uint)", p0, p1, p2, p3));
+	}
+
+	function log(bool p0, uint p1, string memory p2, string memory p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bool,uint,string,string)", p0, p1, p2, p3));
+	}
+
+	function log(bool p0, uint p1, string memory p2, bool p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bool,uint,string,bool)", p0, p1, p2, p3));
+	}
+
+	function log(bool p0, uint p1, string memory p2, address p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bool,uint,string,address)", p0, p1, p2, p3));
+	}
+
+	function log(bool p0, uint p1, bool p2, uint p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bool,uint,bool,uint)", p0, p1, p2, p3));
+	}
+
+	function log(bool p0, uint p1, bool p2, string memory p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bool,uint,bool,string)", p0, p1, p2, p3));
+	}
+
+	function log(bool p0, uint p1, bool p2, bool p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bool,uint,bool,bool)", p0, p1, p2, p3));
+	}
+
+	function log(bool p0, uint p1, bool p2, address p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bool,uint,bool,address)", p0, p1, p2, p3));
+	}
+
+	function log(bool p0, uint p1, address p2, uint p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bool,uint,address,uint)", p0, p1, p2, p3));
+	}
+
+	function log(bool p0, uint p1, address p2, string memory p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bool,uint,address,string)", p0, p1, p2, p3));
+	}
+
+	function log(bool p0, uint p1, address p2, bool p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bool,uint,address,bool)", p0, p1, p2, p3));
+	}
+
+	function log(bool p0, uint p1, address p2, address p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bool,uint,address,address)", p0, p1, p2, p3));
+	}
+
+	function log(bool p0, string memory p1, uint p2, uint p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bool,string,uint,uint)", p0, p1, p2, p3));
+	}
+
+	function log(bool p0, string memory p1, uint p2, string memory p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bool,string,uint,string)", p0, p1, p2, p3));
+	}
+
+	function log(bool p0, string memory p1, uint p2, bool p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bool,string,uint,bool)", p0, p1, p2, p3));
+	}
+
+	function log(bool p0, string memory p1, uint p2, address p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bool,string,uint,address)", p0, p1, p2, p3));
+	}
+
+	function log(bool p0, string memory p1, string memory p2, uint p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bool,string,string,uint)", p0, p1, p2, p3));
+	}
+
+	function log(bool p0, string memory p1, string memory p2, string memory p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bool,string,string,string)", p0, p1, p2, p3));
+	}
+
+	function log(bool p0, string memory p1, string memory p2, bool p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bool,string,string,bool)", p0, p1, p2, p3));
+	}
+
+	function log(bool p0, string memory p1, string memory p2, address p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bool,string,string,address)", p0, p1, p2, p3));
+	}
+
+	function log(bool p0, string memory p1, bool p2, uint p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bool,string,bool,uint)", p0, p1, p2, p3));
+	}
+
+	function log(bool p0, string memory p1, bool p2, string memory p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bool,string,bool,string)", p0, p1, p2, p3));
+	}
+
+	function log(bool p0, string memory p1, bool p2, bool p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bool,string,bool,bool)", p0, p1, p2, p3));
+	}
+
+	function log(bool p0, string memory p1, bool p2, address p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bool,string,bool,address)", p0, p1, p2, p3));
+	}
+
+	function log(bool p0, string memory p1, address p2, uint p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bool,string,address,uint)", p0, p1, p2, p3));
+	}
+
+	function log(bool p0, string memory p1, address p2, string memory p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bool,string,address,string)", p0, p1, p2, p3));
+	}
+
+	function log(bool p0, string memory p1, address p2, bool p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bool,string,address,bool)", p0, p1, p2, p3));
+	}
+
+	function log(bool p0, string memory p1, address p2, address p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bool,string,address,address)", p0, p1, p2, p3));
+	}
+
+	function log(bool p0, bool p1, uint p2, uint p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bool,bool,uint,uint)", p0, p1, p2, p3));
+	}
+
+	function log(bool p0, bool p1, uint p2, string memory p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bool,bool,uint,string)", p0, p1, p2, p3));
+	}
+
+	function log(bool p0, bool p1, uint p2, bool p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bool,bool,uint,bool)", p0, p1, p2, p3));
+	}
+
+	function log(bool p0, bool p1, uint p2, address p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bool,bool,uint,address)", p0, p1, p2, p3));
+	}
+
+	function log(bool p0, bool p1, string memory p2, uint p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bool,bool,string,uint)", p0, p1, p2, p3));
+	}
+
+	function log(bool p0, bool p1, string memory p2, string memory p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bool,bool,string,string)", p0, p1, p2, p3));
+	}
+
+	function log(bool p0, bool p1, string memory p2, bool p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bool,bool,string,bool)", p0, p1, p2, p3));
+	}
+
+	function log(bool p0, bool p1, string memory p2, address p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bool,bool,string,address)", p0, p1, p2, p3));
+	}
+
+	function log(bool p0, bool p1, bool p2, uint p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bool,bool,bool,uint)", p0, p1, p2, p3));
+	}
+
+	function log(bool p0, bool p1, bool p2, string memory p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bool,bool,bool,string)", p0, p1, p2, p3));
+	}
+
+	function log(bool p0, bool p1, bool p2, bool p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bool,bool,bool,bool)", p0, p1, p2, p3));
+	}
+
+	function log(bool p0, bool p1, bool p2, address p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bool,bool,bool,address)", p0, p1, p2, p3));
+	}
+
+	function log(bool p0, bool p1, address p2, uint p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bool,bool,address,uint)", p0, p1, p2, p3));
+	}
+
+	function log(bool p0, bool p1, address p2, string memory p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bool,bool,address,string)", p0, p1, p2, p3));
+	}
+
+	function log(bool p0, bool p1, address p2, bool p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bool,bool,address,bool)", p0, p1, p2, p3));
+	}
+
+	function log(bool p0, bool p1, address p2, address p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bool,bool,address,address)", p0, p1, p2, p3));
+	}
+
+	function log(bool p0, address p1, uint p2, uint p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bool,address,uint,uint)", p0, p1, p2, p3));
+	}
+
+	function log(bool p0, address p1, uint p2, string memory p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bool,address,uint,string)", p0, p1, p2, p3));
+	}
+
+	function log(bool p0, address p1, uint p2, bool p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bool,address,uint,bool)", p0, p1, p2, p3));
+	}
+
+	function log(bool p0, address p1, uint p2, address p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bool,address,uint,address)", p0, p1, p2, p3));
+	}
+
+	function log(bool p0, address p1, string memory p2, uint p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bool,address,string,uint)", p0, p1, p2, p3));
+	}
+
+	function log(bool p0, address p1, string memory p2, string memory p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bool,address,string,string)", p0, p1, p2, p3));
+	}
+
+	function log(bool p0, address p1, string memory p2, bool p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bool,address,string,bool)", p0, p1, p2, p3));
+	}
+
+	function log(bool p0, address p1, string memory p2, address p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bool,address,string,address)", p0, p1, p2, p3));
+	}
+
+	function log(bool p0, address p1, bool p2, uint p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bool,address,bool,uint)", p0, p1, p2, p3));
+	}
+
+	function log(bool p0, address p1, bool p2, string memory p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bool,address,bool,string)", p0, p1, p2, p3));
+	}
+
+	function log(bool p0, address p1, bool p2, bool p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bool,address,bool,bool)", p0, p1, p2, p3));
+	}
+
+	function log(bool p0, address p1, bool p2, address p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bool,address,bool,address)", p0, p1, p2, p3));
+	}
+
+	function log(bool p0, address p1, address p2, uint p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bool,address,address,uint)", p0, p1, p2, p3));
+	}
+
+	function log(bool p0, address p1, address p2, string memory p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bool,address,address,string)", p0, p1, p2, p3));
+	}
+
+	function log(bool p0, address p1, address p2, bool p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bool,address,address,bool)", p0, p1, p2, p3));
+	}
+
+	function log(bool p0, address p1, address p2, address p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(bool,address,address,address)", p0, p1, p2, p3));
+	}
+
+	function log(address p0, uint p1, uint p2, uint p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(address,uint,uint,uint)", p0, p1, p2, p3));
+	}
+
+	function log(address p0, uint p1, uint p2, string memory p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(address,uint,uint,string)", p0, p1, p2, p3));
+	}
+
+	function log(address p0, uint p1, uint p2, bool p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(address,uint,uint,bool)", p0, p1, p2, p3));
+	}
+
+	function log(address p0, uint p1, uint p2, address p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(address,uint,uint,address)", p0, p1, p2, p3));
+	}
+
+	function log(address p0, uint p1, string memory p2, uint p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(address,uint,string,uint)", p0, p1, p2, p3));
+	}
+
+	function log(address p0, uint p1, string memory p2, string memory p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(address,uint,string,string)", p0, p1, p2, p3));
+	}
+
+	function log(address p0, uint p1, string memory p2, bool p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(address,uint,string,bool)", p0, p1, p2, p3));
+	}
+
+	function log(address p0, uint p1, string memory p2, address p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(address,uint,string,address)", p0, p1, p2, p3));
+	}
+
+	function log(address p0, uint p1, bool p2, uint p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(address,uint,bool,uint)", p0, p1, p2, p3));
+	}
+
+	function log(address p0, uint p1, bool p2, string memory p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(address,uint,bool,string)", p0, p1, p2, p3));
+	}
+
+	function log(address p0, uint p1, bool p2, bool p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(address,uint,bool,bool)", p0, p1, p2, p3));
+	}
+
+	function log(address p0, uint p1, bool p2, address p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(address,uint,bool,address)", p0, p1, p2, p3));
+	}
+
+	function log(address p0, uint p1, address p2, uint p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(address,uint,address,uint)", p0, p1, p2, p3));
+	}
+
+	function log(address p0, uint p1, address p2, string memory p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(address,uint,address,string)", p0, p1, p2, p3));
+	}
+
+	function log(address p0, uint p1, address p2, bool p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(address,uint,address,bool)", p0, p1, p2, p3));
+	}
+
+	function log(address p0, uint p1, address p2, address p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(address,uint,address,address)", p0, p1, p2, p3));
+	}
+
+	function log(address p0, string memory p1, uint p2, uint p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(address,string,uint,uint)", p0, p1, p2, p3));
+	}
+
+	function log(address p0, string memory p1, uint p2, string memory p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(address,string,uint,string)", p0, p1, p2, p3));
+	}
+
+	function log(address p0, string memory p1, uint p2, bool p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(address,string,uint,bool)", p0, p1, p2, p3));
+	}
+
+	function log(address p0, string memory p1, uint p2, address p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(address,string,uint,address)", p0, p1, p2, p3));
+	}
+
+	function log(address p0, string memory p1, string memory p2, uint p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(address,string,string,uint)", p0, p1, p2, p3));
+	}
+
+	function log(address p0, string memory p1, string memory p2, string memory p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(address,string,string,string)", p0, p1, p2, p3));
+	}
+
+	function log(address p0, string memory p1, string memory p2, bool p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(address,string,string,bool)", p0, p1, p2, p3));
+	}
+
+	function log(address p0, string memory p1, string memory p2, address p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(address,string,string,address)", p0, p1, p2, p3));
+	}
+
+	function log(address p0, string memory p1, bool p2, uint p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(address,string,bool,uint)", p0, p1, p2, p3));
+	}
+
+	function log(address p0, string memory p1, bool p2, string memory p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(address,string,bool,string)", p0, p1, p2, p3));
+	}
+
+	function log(address p0, string memory p1, bool p2, bool p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(address,string,bool,bool)", p0, p1, p2, p3));
+	}
+
+	function log(address p0, string memory p1, bool p2, address p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(address,string,bool,address)", p0, p1, p2, p3));
+	}
+
+	function log(address p0, string memory p1, address p2, uint p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(address,string,address,uint)", p0, p1, p2, p3));
+	}
+
+	function log(address p0, string memory p1, address p2, string memory p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(address,string,address,string)", p0, p1, p2, p3));
+	}
+
+	function log(address p0, string memory p1, address p2, bool p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(address,string,address,bool)", p0, p1, p2, p3));
+	}
+
+	function log(address p0, string memory p1, address p2, address p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(address,string,address,address)", p0, p1, p2, p3));
+	}
+
+	function log(address p0, bool p1, uint p2, uint p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(address,bool,uint,uint)", p0, p1, p2, p3));
+	}
+
+	function log(address p0, bool p1, uint p2, string memory p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(address,bool,uint,string)", p0, p1, p2, p3));
+	}
+
+	function log(address p0, bool p1, uint p2, bool p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(address,bool,uint,bool)", p0, p1, p2, p3));
+	}
+
+	function log(address p0, bool p1, uint p2, address p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(address,bool,uint,address)", p0, p1, p2, p3));
+	}
+
+	function log(address p0, bool p1, string memory p2, uint p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(address,bool,string,uint)", p0, p1, p2, p3));
+	}
+
+	function log(address p0, bool p1, string memory p2, string memory p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(address,bool,string,string)", p0, p1, p2, p3));
+	}
+
+	function log(address p0, bool p1, string memory p2, bool p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(address,bool,string,bool)", p0, p1, p2, p3));
+	}
+
+	function log(address p0, bool p1, string memory p2, address p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(address,bool,string,address)", p0, p1, p2, p3));
+	}
+
+	function log(address p0, bool p1, bool p2, uint p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(address,bool,bool,uint)", p0, p1, p2, p3));
+	}
+
+	function log(address p0, bool p1, bool p2, string memory p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(address,bool,bool,string)", p0, p1, p2, p3));
+	}
+
+	function log(address p0, bool p1, bool p2, bool p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(address,bool,bool,bool)", p0, p1, p2, p3));
+	}
+
+	function log(address p0, bool p1, bool p2, address p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(address,bool,bool,address)", p0, p1, p2, p3));
+	}
+
+	function log(address p0, bool p1, address p2, uint p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(address,bool,address,uint)", p0, p1, p2, p3));
+	}
+
+	function log(address p0, bool p1, address p2, string memory p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(address,bool,address,string)", p0, p1, p2, p3));
+	}
+
+	function log(address p0, bool p1, address p2, bool p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(address,bool,address,bool)", p0, p1, p2, p3));
+	}
+
+	function log(address p0, bool p1, address p2, address p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(address,bool,address,address)", p0, p1, p2, p3));
+	}
+
+	function log(address p0, address p1, uint p2, uint p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(address,address,uint,uint)", p0, p1, p2, p3));
+	}
+
+	function log(address p0, address p1, uint p2, string memory p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(address,address,uint,string)", p0, p1, p2, p3));
+	}
+
+	function log(address p0, address p1, uint p2, bool p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(address,address,uint,bool)", p0, p1, p2, p3));
+	}
+
+	function log(address p0, address p1, uint p2, address p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(address,address,uint,address)", p0, p1, p2, p3));
+	}
+
+	function log(address p0, address p1, string memory p2, uint p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(address,address,string,uint)", p0, p1, p2, p3));
+	}
+
+	function log(address p0, address p1, string memory p2, string memory p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(address,address,string,string)", p0, p1, p2, p3));
+	}
+
+	function log(address p0, address p1, string memory p2, bool p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(address,address,string,bool)", p0, p1, p2, p3));
+	}
+
+	function log(address p0, address p1, string memory p2, address p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(address,address,string,address)", p0, p1, p2, p3));
+	}
+
+	function log(address p0, address p1, bool p2, uint p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(address,address,bool,uint)", p0, p1, p2, p3));
+	}
+
+	function log(address p0, address p1, bool p2, string memory p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(address,address,bool,string)", p0, p1, p2, p3));
+	}
+
+	function log(address p0, address p1, bool p2, bool p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(address,address,bool,bool)", p0, p1, p2, p3));
+	}
+
+	function log(address p0, address p1, bool p2, address p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(address,address,bool,address)", p0, p1, p2, p3));
+	}
+
+	function log(address p0, address p1, address p2, uint p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(address,address,address,uint)", p0, p1, p2, p3));
+	}
+
+	function log(address p0, address p1, address p2, string memory p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(address,address,address,string)", p0, p1, p2, p3));
+	}
+
+	function log(address p0, address p1, address p2, bool p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(address,address,address,bool)", p0, p1, p2, p3));
+	}
+
+	function log(address p0, address p1, address p2, address p3) internal view {
+		_sendLogPayload(abi.encodeWithSignature("log(address,address,address,address)", p0, p1, p2, p3));
+	}
+
+}
+
 // File: contracts/ERC20.sol
 
 pragma solidity ^0.7.0;
@@ -71,14 +1610,1210 @@ library SafeMath {
     }
 }
 
+// File: contracts/ABDKMathQuad.sol
+
+// SPDX-License-Identifier: BSD-4-Clause
+/*
+ * ABDK Math Quad Smart Contract Library.  Copyright © 2019 by ABDK Consulting.
+ * Author: Mikhail Vladimirov <mikhail.vladimirov@gmail.com>
+ */
+// pragma solidity ^0.5.0 || ^0.6.0 || ^0.7.0;
+pragma solidity ^0.7.0;
+
+/**
+ * Smart contract library of mathematical functions operating with IEEE 754
+ * quadruple-precision binary floating-point numbers (quadruple precision
+ * numbers).  As long as quadruple precision numbers are 16-bytes long, they are
+ * represented by bytes16 type.
+ */
+library ABDKMathQuad {
+  /*
+   * 0.
+   */
+  bytes16 private constant POSITIVE_ZERO = 0x00000000000000000000000000000000;
+
+  /*
+   * -0.
+   */
+  bytes16 private constant NEGATIVE_ZERO = 0x80000000000000000000000000000000;
+
+  /*
+   * +Infinity.
+   */
+  bytes16 private constant POSITIVE_INFINITY = 0x7FFF0000000000000000000000000000;
+
+  /*
+   * -Infinity.
+   */
+  bytes16 private constant NEGATIVE_INFINITY = 0xFFFF0000000000000000000000000000;
+
+  /*
+   * Canonical NaN value.
+   */
+  bytes16 private constant NaN = 0x7FFF8000000000000000000000000000;
+
+  /**
+   * Convert signed 256-bit integer number into quadruple precision number.
+   *
+   * @param x signed 256-bit integer number
+   * @return quadruple precision number
+   */
+  function fromInt (int256 x) internal pure returns (bytes16) {
+    if (x == 0) return bytes16 (0);
+    else {
+      // We rely on overflow behavior here
+      uint256 result = uint256 (x > 0 ? x : -x);
+
+      uint256 msb = _msb (result);
+      if (msb < 112) result <<= 112 - msb;
+      else if (msb > 112) result >>= msb - 112;
+
+      result = result & 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFF | 16383 + msb << 112;
+      if (x < 0) result |= 0x80000000000000000000000000000000;
+
+      return bytes16 (uint128 (result));
+    }
+  }
+
+  /**
+   * Convert quadruple precision number into signed 256-bit integer number
+   * rounding towards zero.  Revert on overflow.
+   *
+   * @param x quadruple precision number
+   * @return signed 256-bit integer number
+   */
+  function toInt (bytes16 x) internal pure returns (int256) {
+    uint256 exponent = uint128 (x) >> 112 & 0x7FFF;
+
+    require (exponent <= 16638); // Overflow
+    if (exponent < 16383) return 0; // Underflow
+
+    uint256 result = uint256 (uint128 (x)) & 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFF |
+      0x10000000000000000000000000000;
+
+    if (exponent < 16495) result >>= 16495 - exponent;
+    else if (exponent > 16495) result <<= exponent - 16495;
+
+    if (uint128 (x) >= 0x80000000000000000000000000000000) { // Negative
+      require (result <= 0x8000000000000000000000000000000000000000000000000000000000000000);
+      return -int256 (result); // We rely on overflow behavior here
+    } else {
+      require (result <= 0x7FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF);
+      return int256 (result);
+    }
+  }
+
+  /**
+   * Convert unsigned 256-bit integer number into quadruple precision number.
+   *
+   * @param x unsigned 256-bit integer number
+   * @return quadruple precision number
+   */
+  function fromUInt (uint256 x) internal pure returns (bytes16) {
+    if (x == 0) return bytes16 (0);
+    else {
+      uint256 result = x;
+
+      uint256 msb = _msb (result);
+      if (msb < 112) result <<= 112 - msb;
+      else if (msb > 112) result >>= msb - 112;
+
+      result = result & 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFF | 16383 + msb << 112;
+
+      return bytes16 (uint128 (result));
+    }
+  }
+
+  /**
+   * Convert quadruple precision number into unsigned 256-bit integer number
+   * rounding towards zero.  Revert on underflow.  Note, that negative floating
+   * point numbers in range (-1.0 .. 0.0) may be converted to unsigned integer
+   * without error, because they are rounded to zero.
+   *
+   * @param x quadruple precision number
+   * @return unsigned 256-bit integer number
+   */
+  function toUInt (bytes16 x) internal pure returns (uint256) {
+    uint256 exponent = uint128 (x) >> 112 & 0x7FFF;
+
+    if (exponent < 16383) return 0; // Underflow
+
+    require (uint128 (x) < 0x80000000000000000000000000000000); // Negative
+
+    require (exponent <= 16638); // Overflow
+    uint256 result = uint256 (uint128 (x)) & 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFF |
+      0x10000000000000000000000000000;
+
+    if (exponent < 16495) result >>= 16495 - exponent;
+    else if (exponent > 16495) result <<= exponent - 16495;
+
+    return result;
+  }
+
+  /**
+   * Convert signed 128.128 bit fixed point number into quadruple precision
+   * number.
+   *
+   * @param x signed 128.128 bit fixed point number
+   * @return quadruple precision number
+   */
+  function from128x128 (int256 x) internal pure returns (bytes16) {
+    if (x == 0) return bytes16 (0);
+    else {
+      // We rely on overflow behavior here
+      uint256 result = uint256 (x > 0 ? x : -x);
+
+      uint256 msb = _msb (result);
+      if (msb < 112) result <<= 112 - msb;
+      else if (msb > 112) result >>= msb - 112;
+
+      result = result & 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFF | 16255 + msb << 112;
+      if (x < 0) result |= 0x80000000000000000000000000000000;
+
+      return bytes16 (uint128 (result));
+    }
+  }
+
+  /**
+   * Convert quadruple precision number into signed 128.128 bit fixed point
+   * number.  Revert on overflow.
+   *
+   * @param x quadruple precision number
+   * @return signed 128.128 bit fixed point number
+   */
+  function to128x128 (bytes16 x) internal pure returns (int256) {
+    uint256 exponent = uint128 (x) >> 112 & 0x7FFF;
+
+    require (exponent <= 16510); // Overflow
+    if (exponent < 16255) return 0; // Underflow
+
+    uint256 result = uint256 (uint128 (x)) & 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFF |
+      0x10000000000000000000000000000;
+
+    if (exponent < 16367) result >>= 16367 - exponent;
+    else if (exponent > 16367) result <<= exponent - 16367;
+
+    if (uint128 (x) >= 0x80000000000000000000000000000000) { // Negative
+      require (result <= 0x8000000000000000000000000000000000000000000000000000000000000000);
+      return -int256 (result); // We rely on overflow behavior here
+    } else {
+      require (result <= 0x7FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF);
+      return int256 (result);
+    }
+  }
+
+  /**
+   * Convert signed 64.64 bit fixed point number into quadruple precision
+   * number.
+   *
+   * @param x signed 64.64 bit fixed point number
+   * @return quadruple precision number
+   */
+  function from64x64 (int128 x) internal pure returns (bytes16) {
+    if (x == 0) return bytes16 (0);
+    else {
+      // We rely on overflow behavior here
+      uint256 result = uint128 (x > 0 ? x : -x);
+
+      uint256 msb = _msb (result);
+      if (msb < 112) result <<= 112 - msb;
+      else if (msb > 112) result >>= msb - 112;
+
+      result = result & 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFF | 16319 + msb << 112;
+      if (x < 0) result |= 0x80000000000000000000000000000000;
+
+      return bytes16 (uint128 (result));
+    }
+  }
+
+  /**
+   * Convert quadruple precision number into signed 64.64 bit fixed point
+   * number.  Revert on overflow.
+   *
+   * @param x quadruple precision number
+   * @return signed 64.64 bit fixed point number
+   */
+  function to64x64 (bytes16 x) internal pure returns (int128) {
+    uint256 exponent = uint128 (x) >> 112 & 0x7FFF;
+
+    require (exponent <= 16446); // Overflow
+    if (exponent < 16319) return 0; // Underflow
+
+    uint256 result = uint256 (uint128 (x)) & 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFF |
+      0x10000000000000000000000000000;
+
+    if (exponent < 16431) result >>= 16431 - exponent;
+    else if (exponent > 16431) result <<= exponent - 16431;
+
+    if (uint128 (x) >= 0x80000000000000000000000000000000) { // Negative
+      require (result <= 0x80000000000000000000000000000000);
+      return -int128 (result); // We rely on overflow behavior here
+    } else {
+      require (result <= 0x7FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF);
+      return int128 (result);
+    }
+  }
+
+  /**
+   * Convert octuple precision number into quadruple precision number.
+   *
+   * @param x octuple precision number
+   * @return quadruple precision number
+   */
+  function fromOctuple (bytes32 x) internal pure returns (bytes16) {
+    bool negative = x & 0x8000000000000000000000000000000000000000000000000000000000000000 > 0;
+
+    uint256 exponent = uint256 (x) >> 236 & 0x7FFFF;
+    uint256 significand = uint256 (x) & 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF;
+
+    if (exponent == 0x7FFFF) {
+      if (significand > 0) return NaN;
+      else return negative ? NEGATIVE_INFINITY : POSITIVE_INFINITY;
+    }
+
+    if (exponent > 278526)
+      return negative ? NEGATIVE_INFINITY : POSITIVE_INFINITY;
+    else if (exponent < 245649)
+      return negative ? NEGATIVE_ZERO : POSITIVE_ZERO;
+    else if (exponent < 245761) {
+      significand = (significand | 0x100000000000000000000000000000000000000000000000000000000000) >> 245885 - exponent;
+      exponent = 0;
+    } else {
+      significand >>= 124;
+      exponent -= 245760;
+    }
+
+    uint128 result = uint128 (significand | exponent << 112);
+    if (negative) result |= 0x80000000000000000000000000000000;
+
+    return bytes16 (result);
+  }
+
+  /**
+   * Convert quadruple precision number into octuple precision number.
+   *
+   * @param x quadruple precision number
+   * @return octuple precision number
+   */
+  function toOctuple (bytes16 x) internal pure returns (bytes32) {
+    uint256 exponent = uint128 (x) >> 112 & 0x7FFF;
+
+    uint256 result = uint128 (x) & 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFF;
+
+    if (exponent == 0x7FFF) exponent = 0x7FFFF; // Infinity or NaN
+    else if (exponent == 0) {
+      if (result > 0) {
+        uint256 msb = _msb (result);
+        result = result << 236 - msb & 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF;
+        exponent = 245649 + msb;
+      }
+    } else {
+      result <<= 124;
+      exponent += 245760;
+    }
+
+    result |= exponent << 236;
+    if (uint128 (x) >= 0x80000000000000000000000000000000)
+      result |= 0x8000000000000000000000000000000000000000000000000000000000000000;
+
+    return bytes32 (result);
+  }
+
+  /**
+   * Convert double precision number into quadruple precision number.
+   *
+   * @param x double precision number
+   * @return quadruple precision number
+   */
+  function fromDouble (bytes8 x) internal pure returns (bytes16) {
+    uint256 exponent = uint64 (x) >> 52 & 0x7FF;
+
+    uint256 result = uint64 (x) & 0xFFFFFFFFFFFFF;
+
+    if (exponent == 0x7FF) exponent = 0x7FFF; // Infinity or NaN
+    else if (exponent == 0) {
+      if (result > 0) {
+        uint256 msb = _msb (result);
+        result = result << 112 - msb & 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFF;
+        exponent = 15309 + msb;
+      }
+    } else {
+      result <<= 60;
+      exponent += 15360;
+    }
+
+    result |= exponent << 112;
+    if (x & 0x8000000000000000 > 0)
+      result |= 0x80000000000000000000000000000000;
+
+    return bytes16 (uint128 (result));
+  }
+
+  /**
+   * Convert quadruple precision number into double precision number.
+   *
+   * @param x quadruple precision number
+   * @return double precision number
+   */
+  function toDouble (bytes16 x) internal pure returns (bytes8) {
+    bool negative = uint128 (x) >= 0x80000000000000000000000000000000;
+
+    uint256 exponent = uint128 (x) >> 112 & 0x7FFF;
+    uint256 significand = uint128 (x) & 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFF;
+
+    if (exponent == 0x7FFF) {
+      if (significand > 0) return 0x7FF8000000000000; // NaN
+      else return negative ?
+          bytes8 (0xFFF0000000000000) : // -Infinity
+          bytes8 (0x7FF0000000000000); // Infinity
+    }
+
+    if (exponent > 17406)
+      return negative ?
+          bytes8 (0xFFF0000000000000) : // -Infinity
+          bytes8 (0x7FF0000000000000); // Infinity
+    else if (exponent < 15309)
+      return negative ?
+          bytes8 (0x8000000000000000) : // -0
+          bytes8 (0x0000000000000000); // 0
+    else if (exponent < 15361) {
+      significand = (significand | 0x10000000000000000000000000000) >> 15421 - exponent;
+      exponent = 0;
+    } else {
+      significand >>= 60;
+      exponent -= 15360;
+    }
+
+    uint64 result = uint64 (significand | exponent << 52);
+    if (negative) result |= 0x8000000000000000;
+
+    return bytes8 (result);
+  }
+
+  /**
+   * Test whether given quadruple precision number is NaN.
+   *
+   * @param x quadruple precision number
+   * @return true if x is NaN, false otherwise
+   */
+  function isNaN (bytes16 x) internal pure returns (bool) {
+    return uint128 (x) & 0x7FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF >
+      0x7FFF0000000000000000000000000000;
+  }
+
+  /**
+   * Test whether given quadruple precision number is positive or negative
+   * infinity.
+   *
+   * @param x quadruple precision number
+   * @return true if x is positive or negative infinity, false otherwise
+   */
+  function isInfinity (bytes16 x) internal pure returns (bool) {
+    return uint128 (x) & 0x7FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF ==
+      0x7FFF0000000000000000000000000000;
+  }
+
+  /**
+   * Calculate sign of x, i.e. -1 if x is negative, 0 if x if zero, and 1 if x
+   * is positive.  Note that sign (-0) is zero.  Revert if x is NaN.
+   *
+   * @param x quadruple precision number
+   * @return sign of x
+   */
+  function sign (bytes16 x) internal pure returns (int8) {
+    uint128 absoluteX = uint128 (x) & 0x7FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF;
+
+    require (absoluteX <= 0x7FFF0000000000000000000000000000); // Not NaN
+
+    if (absoluteX == 0) return 0;
+    else if (uint128 (x) >= 0x80000000000000000000000000000000) return -1;
+    else return 1;
+  }
+
+  /**
+   * Calculate sign (x - y).  Revert if either argument is NaN, or both
+   * arguments are infinities of the same sign.
+   *
+   * @param x quadruple precision number
+   * @param y quadruple precision number
+   * @return sign (x - y)
+   */
+  function cmp (bytes16 x, bytes16 y) internal pure returns (int8) {
+    uint128 absoluteX = uint128 (x) & 0x7FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF;
+
+    require (absoluteX <= 0x7FFF0000000000000000000000000000); // Not NaN
+
+    uint128 absoluteY = uint128 (y) & 0x7FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF;
+
+    require (absoluteY <= 0x7FFF0000000000000000000000000000); // Not NaN
+
+    // Not infinities of the same sign
+    require (x != y || absoluteX < 0x7FFF0000000000000000000000000000);
+
+    if (x == y) return 0;
+    else {
+      bool negativeX = uint128 (x) >= 0x80000000000000000000000000000000;
+      bool negativeY = uint128 (y) >= 0x80000000000000000000000000000000;
+
+      if (negativeX) {
+        if (negativeY) return absoluteX > absoluteY ? -1 : int8 (1);
+        else return -1;
+      } else {
+        if (negativeY) return 1;
+        else return absoluteX > absoluteY ? int8 (1) : -1;
+      }
+    }
+  }
+
+  /**
+   * Test whether x equals y.  NaN, infinity, and -infinity are not equal to
+   * anything.
+   *
+   * @param x quadruple precision number
+   * @param y quadruple precision number
+   * @return true if x equals to y, false otherwise
+   */
+  function eq (bytes16 x, bytes16 y) internal pure returns (bool) {
+    if (x == y) {
+      return uint128 (x) & 0x7FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF <
+        0x7FFF0000000000000000000000000000;
+    } else return false;
+  }
+
+  /**
+   * Calculate x + y.  Special values behave in the following way:
+   *
+   * NaN + x = NaN for any x.
+   * Infinity + x = Infinity for any finite x.
+   * -Infinity + x = -Infinity for any finite x.
+   * Infinity + Infinity = Infinity.
+   * -Infinity + -Infinity = -Infinity.
+   * Infinity + -Infinity = -Infinity + Infinity = NaN.
+   *
+   * @param x quadruple precision number
+   * @param y quadruple precision number
+   * @return quadruple precision number
+   */
+  function add (bytes16 x, bytes16 y) internal pure returns (bytes16) {
+    uint256 xExponent = uint128 (x) >> 112 & 0x7FFF;
+    uint256 yExponent = uint128 (y) >> 112 & 0x7FFF;
+
+    if (xExponent == 0x7FFF) {
+      if (yExponent == 0x7FFF) {
+        if (x == y) return x;
+        else return NaN;
+      } else return x;
+    } else if (yExponent == 0x7FFF) return y;
+    else {
+      bool xSign = uint128 (x) >= 0x80000000000000000000000000000000;
+      uint256 xSignifier = uint128 (x) & 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFF;
+      if (xExponent == 0) xExponent = 1;
+      else xSignifier |= 0x10000000000000000000000000000;
+
+      bool ySign = uint128 (y) >= 0x80000000000000000000000000000000;
+      uint256 ySignifier = uint128 (y) & 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFF;
+      if (yExponent == 0) yExponent = 1;
+      else ySignifier |= 0x10000000000000000000000000000;
+
+      if (xSignifier == 0) return y == NEGATIVE_ZERO ? POSITIVE_ZERO : y;
+      else if (ySignifier == 0) return x == NEGATIVE_ZERO ? POSITIVE_ZERO : x;
+      else {
+        int256 delta = int256 (xExponent) - int256 (yExponent);
+
+        if (xSign == ySign) {
+          if (delta > 112) return x;
+          else if (delta > 0) ySignifier >>= uint256 (delta);
+          else if (delta < -112) return y;
+          else if (delta < 0) {
+            xSignifier >>= uint256 (-delta);
+            xExponent = yExponent;
+          }
+
+          xSignifier += ySignifier;
+
+          if (xSignifier >= 0x20000000000000000000000000000) {
+            xSignifier >>= 1;
+            xExponent += 1;
+          }
+
+          if (xExponent == 0x7FFF)
+            return xSign ? NEGATIVE_INFINITY : POSITIVE_INFINITY;
+          else {
+            if (xSignifier < 0x10000000000000000000000000000) xExponent = 0;
+            else xSignifier &= 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFF;
+
+            return bytes16 (uint128 (
+                (xSign ? 0x80000000000000000000000000000000 : 0) |
+                (xExponent << 112) |
+                xSignifier));
+          }
+        } else {
+          if (delta > 0) {
+            xSignifier <<= 1;
+            xExponent -= 1;
+          } else if (delta < 0) {
+            ySignifier <<= 1;
+            xExponent = yExponent - 1;
+          }
+
+          if (delta > 112) ySignifier = 1;
+          else if (delta > 1) ySignifier = (ySignifier - 1 >> uint256 (delta - 1)) + 1;
+          else if (delta < -112) xSignifier = 1;
+          else if (delta < -1) xSignifier = (xSignifier - 1 >> uint256 (-delta - 1)) + 1;
+
+          if (xSignifier >= ySignifier) xSignifier -= ySignifier;
+          else {
+            xSignifier = ySignifier - xSignifier;
+            xSign = ySign;
+          }
+
+          if (xSignifier == 0)
+            return POSITIVE_ZERO;
+
+          uint256 msb = _msb (xSignifier);
+
+          if (msb == 113) {
+            xSignifier = xSignifier >> 1 & 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFF;
+            xExponent += 1;
+          } else if (msb < 112) {
+            uint256 shift = 112 - msb;
+            if (xExponent > shift) {
+              xSignifier = xSignifier << shift & 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFF;
+              xExponent -= shift;
+            } else {
+              xSignifier <<= xExponent - 1;
+              xExponent = 0;
+            }
+          } else xSignifier &= 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFF;
+
+          if (xExponent == 0x7FFF)
+            return xSign ? NEGATIVE_INFINITY : POSITIVE_INFINITY;
+          else return bytes16 (uint128 (
+              (xSign ? 0x80000000000000000000000000000000 : 0) |
+              (xExponent << 112) |
+              xSignifier));
+        }
+      }
+    }
+  }
+
+  /**
+   * Calculate x - y.  Special values behave in the following way:
+   *
+   * NaN - x = NaN for any x.
+   * Infinity - x = Infinity for any finite x.
+   * -Infinity - x = -Infinity for any finite x.
+   * Infinity - -Infinity = Infinity.
+   * -Infinity - Infinity = -Infinity.
+   * Infinity - Infinity = -Infinity - -Infinity = NaN.
+   *
+   * @param x quadruple precision number
+   * @param y quadruple precision number
+   * @return quadruple precision number
+   */
+  function sub (bytes16 x, bytes16 y) internal pure returns (bytes16) {
+    return add (x, y ^ 0x80000000000000000000000000000000);
+  }
+
+  /**
+   * Calculate x * y.  Special values behave in the following way:
+   *
+   * NaN * x = NaN for any x.
+   * Infinity * x = Infinity for any finite positive x.
+   * Infinity * x = -Infinity for any finite negative x.
+   * -Infinity * x = -Infinity for any finite positive x.
+   * -Infinity * x = Infinity for any finite negative x.
+   * Infinity * 0 = NaN.
+   * -Infinity * 0 = NaN.
+   * Infinity * Infinity = Infinity.
+   * Infinity * -Infinity = -Infinity.
+   * -Infinity * Infinity = -Infinity.
+   * -Infinity * -Infinity = Infinity.
+   *
+   * @param x quadruple precision number
+   * @param y quadruple precision number
+   * @return quadruple precision number
+   */
+  function mul (bytes16 x, bytes16 y) internal pure returns (bytes16) {
+    uint256 xExponent = uint128 (x) >> 112 & 0x7FFF;
+    uint256 yExponent = uint128 (y) >> 112 & 0x7FFF;
+
+    if (xExponent == 0x7FFF) {
+      if (yExponent == 0x7FFF) {
+        if (x == y) return x ^ y & 0x80000000000000000000000000000000;
+        else if (x ^ y == 0x80000000000000000000000000000000) return x | y;
+        else return NaN;
+      } else {
+        if (y & 0x7FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF == 0) return NaN;
+        else return x ^ y & 0x80000000000000000000000000000000;
+      }
+    } else if (yExponent == 0x7FFF) {
+        if (x & 0x7FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF == 0) return NaN;
+        else return y ^ x & 0x80000000000000000000000000000000;
+    } else {
+      uint256 xSignifier = uint128 (x) & 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFF;
+      if (xExponent == 0) xExponent = 1;
+      else xSignifier |= 0x10000000000000000000000000000;
+
+      uint256 ySignifier = uint128 (y) & 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFF;
+      if (yExponent == 0) yExponent = 1;
+      else ySignifier |= 0x10000000000000000000000000000;
+
+      xSignifier *= ySignifier;
+      if (xSignifier == 0)
+        return (x ^ y) & 0x80000000000000000000000000000000 > 0 ?
+            NEGATIVE_ZERO : POSITIVE_ZERO;
+
+      xExponent += yExponent;
+
+      uint256 msb =
+        xSignifier >= 0x200000000000000000000000000000000000000000000000000000000 ? 225 :
+        xSignifier >= 0x100000000000000000000000000000000000000000000000000000000 ? 224 :
+        _msb (xSignifier);
+
+      if (xExponent + msb < 16496) { // Underflow
+        xExponent = 0;
+        xSignifier = 0;
+      } else if (xExponent + msb < 16608) { // Subnormal
+        if (xExponent < 16496)
+          xSignifier >>= 16496 - xExponent;
+        else if (xExponent > 16496)
+          xSignifier <<= xExponent - 16496;
+        xExponent = 0;
+      } else if (xExponent + msb > 49373) {
+        xExponent = 0x7FFF;
+        xSignifier = 0;
+      } else {
+        if (msb > 112)
+          xSignifier >>= msb - 112;
+        else if (msb < 112)
+          xSignifier <<= 112 - msb;
+
+        xSignifier &= 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFF;
+
+        xExponent = xExponent + msb - 16607;
+      }
+
+      return bytes16 (uint128 (uint128 ((x ^ y) & 0x80000000000000000000000000000000) |
+          xExponent << 112 | xSignifier));
+    }
+  }
+
+  /**
+   * Calculate x / y.  Special values behave in the following way:
+   *
+   * NaN / x = NaN for any x.
+   * x / NaN = NaN for any x.
+   * Infinity / x = Infinity for any finite non-negative x.
+   * Infinity / x = -Infinity for any finite negative x including -0.
+   * -Infinity / x = -Infinity for any finite non-negative x.
+   * -Infinity / x = Infinity for any finite negative x including -0.
+   * x / Infinity = 0 for any finite non-negative x.
+   * x / -Infinity = -0 for any finite non-negative x.
+   * x / Infinity = -0 for any finite non-negative x including -0.
+   * x / -Infinity = 0 for any finite non-negative x including -0.
+   *
+   * Infinity / Infinity = NaN.
+   * Infinity / -Infinity = -NaN.
+   * -Infinity / Infinity = -NaN.
+   * -Infinity / -Infinity = NaN.
+   *
+   * Division by zero behaves in the following way:
+   *
+   * x / 0 = Infinity for any finite positive x.
+   * x / -0 = -Infinity for any finite positive x.
+   * x / 0 = -Infinity for any finite negative x.
+   * x / -0 = Infinity for any finite negative x.
+   * 0 / 0 = NaN.
+   * 0 / -0 = NaN.
+   * -0 / 0 = NaN.
+   * -0 / -0 = NaN.
+   *
+   * @param x quadruple precision number
+   * @param y quadruple precision number
+   * @return quadruple precision number
+   */
+  function div (bytes16 x, bytes16 y) internal pure returns (bytes16) {
+    uint256 xExponent = uint128 (x) >> 112 & 0x7FFF;
+    uint256 yExponent = uint128 (y) >> 112 & 0x7FFF;
+
+    if (xExponent == 0x7FFF) {
+      if (yExponent == 0x7FFF) return NaN;
+      else return x ^ y & 0x80000000000000000000000000000000;
+    } else if (yExponent == 0x7FFF) {
+      if (y & 0x0000FFFFFFFFFFFFFFFFFFFFFFFFFFFF != 0) return NaN;
+      else return POSITIVE_ZERO | (x ^ y) & 0x80000000000000000000000000000000;
+    } else if (y & 0x7FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF == 0) {
+      if (x & 0x7FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF == 0) return NaN;
+      else return POSITIVE_INFINITY | (x ^ y) & 0x80000000000000000000000000000000;
+    } else {
+      uint256 ySignifier = uint128 (y) & 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFF;
+      if (yExponent == 0) yExponent = 1;
+      else ySignifier |= 0x10000000000000000000000000000;
+
+      uint256 xSignifier = uint128 (x) & 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFF;
+      if (xExponent == 0) {
+        if (xSignifier != 0) {
+          uint shift = 226 - _msb (xSignifier);
+
+          xSignifier <<= shift;
+
+          xExponent = 1;
+          yExponent += shift - 114;
+        }
+      }
+      else {
+        xSignifier = (xSignifier | 0x10000000000000000000000000000) << 114;
+      }
+
+      xSignifier = xSignifier / ySignifier;
+      if (xSignifier == 0)
+        return (x ^ y) & 0x80000000000000000000000000000000 > 0 ?
+            NEGATIVE_ZERO : POSITIVE_ZERO;
+
+      assert (xSignifier >= 0x1000000000000000000000000000);
+
+      uint256 msb =
+        xSignifier >= 0x80000000000000000000000000000 ? _msb (xSignifier) :
+        xSignifier >= 0x40000000000000000000000000000 ? 114 :
+        xSignifier >= 0x20000000000000000000000000000 ? 113 : 112;
+
+      if (xExponent + msb > yExponent + 16497) { // Overflow
+        xExponent = 0x7FFF;
+        xSignifier = 0;
+      } else if (xExponent + msb + 16380  < yExponent) { // Underflow
+        xExponent = 0;
+        xSignifier = 0;
+      } else if (xExponent + msb + 16268  < yExponent) { // Subnormal
+        if (xExponent + 16380 > yExponent)
+          xSignifier <<= xExponent + 16380 - yExponent;
+        else if (xExponent + 16380 < yExponent)
+          xSignifier >>= yExponent - xExponent - 16380;
+
+        xExponent = 0;
+      } else { // Normal
+        if (msb > 112)
+          xSignifier >>= msb - 112;
+
+        xSignifier &= 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFF;
+
+        xExponent = xExponent + msb + 16269 - yExponent;
+      }
+
+      return bytes16 (uint128 (uint128 ((x ^ y) & 0x80000000000000000000000000000000) |
+          xExponent << 112 | xSignifier));
+    }
+  }
+
+  /**
+   * Calculate -x.
+   *
+   * @param x quadruple precision number
+   * @return quadruple precision number
+   */
+  function neg (bytes16 x) internal pure returns (bytes16) {
+    return x ^ 0x80000000000000000000000000000000;
+  }
+
+  /**
+   * Calculate |x|.
+   *
+   * @param x quadruple precision number
+   * @return quadruple precision number
+   */
+  function abs (bytes16 x) internal pure returns (bytes16) {
+    return x & 0x7FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF;
+  }
+
+  /**
+   * Calculate square root of x.  Return NaN on negative x excluding -0.
+   *
+   * @param x quadruple precision number
+   * @return quadruple precision number
+   */
+  function sqrt (bytes16 x) internal pure returns (bytes16) {
+    if (uint128 (x) >  0x80000000000000000000000000000000) return NaN;
+    else {
+      uint256 xExponent = uint128 (x) >> 112 & 0x7FFF;
+      if (xExponent == 0x7FFF) return x;
+      else {
+        uint256 xSignifier = uint128 (x) & 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFF;
+        if (xExponent == 0) xExponent = 1;
+        else xSignifier |= 0x10000000000000000000000000000;
+
+        if (xSignifier == 0) return POSITIVE_ZERO;
+
+        bool oddExponent = xExponent & 0x1 == 0;
+        xExponent = xExponent + 16383 >> 1;
+
+        if (oddExponent) {
+          if (xSignifier >= 0x10000000000000000000000000000)
+            xSignifier <<= 113;
+          else {
+            uint256 msb = _msb (xSignifier);
+            uint256 shift = (226 - msb) & 0xFE;
+            xSignifier <<= shift;
+            xExponent -= shift - 112 >> 1;
+          }
+        } else {
+          if (xSignifier >= 0x10000000000000000000000000000)
+            xSignifier <<= 112;
+          else {
+            uint256 msb = _msb (xSignifier);
+            uint256 shift = (225 - msb) & 0xFE;
+            xSignifier <<= shift;
+            xExponent -= shift - 112 >> 1;
+          }
+        }
+
+        uint256 r = 0x10000000000000000000000000000;
+        r = (r + xSignifier / r) >> 1;
+        r = (r + xSignifier / r) >> 1;
+        r = (r + xSignifier / r) >> 1;
+        r = (r + xSignifier / r) >> 1;
+        r = (r + xSignifier / r) >> 1;
+        r = (r + xSignifier / r) >> 1;
+        r = (r + xSignifier / r) >> 1; // Seven iterations should be enough
+        uint256 r1 = xSignifier / r;
+        if (r1 < r) r = r1;
+
+        return bytes16 (uint128 (xExponent << 112 | r & 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFF));
+      }
+    }
+  }
+
+  /**
+   * Calculate binary logarithm of x.  Return NaN on negative x excluding -0.
+   *
+   * @param x quadruple precision number
+   * @return quadruple precision number
+   */
+  function log_2 (bytes16 x) internal pure returns (bytes16) {
+    if (uint128 (x) > 0x80000000000000000000000000000000) return NaN;
+    else if (x == 0x3FFF0000000000000000000000000000) return POSITIVE_ZERO;
+    else {
+      uint256 xExponent = uint128 (x) >> 112 & 0x7FFF;
+      if (xExponent == 0x7FFF) return x;
+      else {
+        uint256 xSignifier = uint128 (x) & 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFF;
+        if (xExponent == 0) xExponent = 1;
+        else xSignifier |= 0x10000000000000000000000000000;
+
+        if (xSignifier == 0) return NEGATIVE_INFINITY;
+
+        bool resultNegative;
+        uint256 resultExponent = 16495;
+        uint256 resultSignifier;
+
+        if (xExponent >= 0x3FFF) {
+          resultNegative = false;
+          resultSignifier = xExponent - 0x3FFF;
+          xSignifier <<= 15;
+        } else {
+          resultNegative = true;
+          if (xSignifier >= 0x10000000000000000000000000000) {
+            resultSignifier = 0x3FFE - xExponent;
+            xSignifier <<= 15;
+          } else {
+            uint256 msb = _msb (xSignifier);
+            resultSignifier = 16493 - msb;
+            xSignifier <<= 127 - msb;
+          }
+        }
+
+        if (xSignifier == 0x80000000000000000000000000000000) {
+          if (resultNegative) resultSignifier += 1;
+          uint256 shift = 112 - _msb (resultSignifier);
+          resultSignifier <<= shift;
+          resultExponent -= shift;
+        } else {
+          uint256 bb = resultNegative ? 1 : 0;
+          while (resultSignifier < 0x10000000000000000000000000000) {
+            resultSignifier <<= 1;
+            resultExponent -= 1;
+
+            xSignifier *= xSignifier;
+            uint256 b = xSignifier >> 255;
+            resultSignifier += b ^ bb;
+            xSignifier >>= 127 + b;
+          }
+        }
+
+        return bytes16 (uint128 ((resultNegative ? 0x80000000000000000000000000000000 : 0) |
+            resultExponent << 112 | resultSignifier & 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFF));
+      }
+    }
+  }
+
+  /**
+   * Calculate natural logarithm of x.  Return NaN on negative x excluding -0.
+   *
+   * @param x quadruple precision number
+   * @return quadruple precision number
+   */
+  function ln (bytes16 x) internal pure returns (bytes16) {
+    return mul (log_2 (x), 0x3FFE62E42FEFA39EF35793C7673007E5);
+  }
+
+  /**
+   * Calculate 2^x.
+   *
+   * @param x quadruple precision number
+   * @return quadruple precision number
+   */
+  function pow_2 (bytes16 x) internal pure returns (bytes16) {
+    bool xNegative = uint128 (x) > 0x80000000000000000000000000000000;
+    uint256 xExponent = uint128 (x) >> 112 & 0x7FFF;
+    uint256 xSignifier = uint128 (x) & 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFF;
+
+    if (xExponent == 0x7FFF && xSignifier != 0) return NaN;
+    else if (xExponent > 16397)
+      return xNegative ? POSITIVE_ZERO : POSITIVE_INFINITY;
+    else if (xExponent < 16255)
+      return 0x3FFF0000000000000000000000000000;
+    else {
+      if (xExponent == 0) xExponent = 1;
+      else xSignifier |= 0x10000000000000000000000000000;
+
+      if (xExponent > 16367)
+        xSignifier <<= xExponent - 16367;
+      else if (xExponent < 16367)
+        xSignifier >>= 16367 - xExponent;
+
+      if (xNegative && xSignifier > 0x406E00000000000000000000000000000000)
+        return POSITIVE_ZERO;
+
+      if (!xNegative && xSignifier > 0x3FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF)
+        return POSITIVE_INFINITY;
+
+      uint256 resultExponent = xSignifier >> 128;
+      xSignifier &= 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF;
+      if (xNegative && xSignifier != 0) {
+        xSignifier = ~xSignifier;
+        resultExponent += 1;
+      }
+
+      uint256 resultSignifier = 0x80000000000000000000000000000000;
+      if (xSignifier & 0x80000000000000000000000000000000 > 0) resultSignifier = resultSignifier * 0x16A09E667F3BCC908B2FB1366EA957D3E >> 128;
+      if (xSignifier & 0x40000000000000000000000000000000 > 0) resultSignifier = resultSignifier * 0x1306FE0A31B7152DE8D5A46305C85EDEC >> 128;
+      if (xSignifier & 0x20000000000000000000000000000000 > 0) resultSignifier = resultSignifier * 0x1172B83C7D517ADCDF7C8C50EB14A791F >> 128;
+      if (xSignifier & 0x10000000000000000000000000000000 > 0) resultSignifier = resultSignifier * 0x10B5586CF9890F6298B92B71842A98363 >> 128;
+      if (xSignifier & 0x8000000000000000000000000000000 > 0) resultSignifier = resultSignifier * 0x1059B0D31585743AE7C548EB68CA417FD >> 128;
+      if (xSignifier & 0x4000000000000000000000000000000 > 0) resultSignifier = resultSignifier * 0x102C9A3E778060EE6F7CACA4F7A29BDE8 >> 128;
+      if (xSignifier & 0x2000000000000000000000000000000 > 0) resultSignifier = resultSignifier * 0x10163DA9FB33356D84A66AE336DCDFA3F >> 128;
+      if (xSignifier & 0x1000000000000000000000000000000 > 0) resultSignifier = resultSignifier * 0x100B1AFA5ABCBED6129AB13EC11DC9543 >> 128;
+      if (xSignifier & 0x800000000000000000000000000000 > 0) resultSignifier = resultSignifier * 0x10058C86DA1C09EA1FF19D294CF2F679B >> 128;
+      if (xSignifier & 0x400000000000000000000000000000 > 0) resultSignifier = resultSignifier * 0x1002C605E2E8CEC506D21BFC89A23A00F >> 128;
+      if (xSignifier & 0x200000000000000000000000000000 > 0) resultSignifier = resultSignifier * 0x100162F3904051FA128BCA9C55C31E5DF >> 128;
+      if (xSignifier & 0x100000000000000000000000000000 > 0) resultSignifier = resultSignifier * 0x1000B175EFFDC76BA38E31671CA939725 >> 128;
+      if (xSignifier & 0x80000000000000000000000000000 > 0) resultSignifier = resultSignifier * 0x100058BA01FB9F96D6CACD4B180917C3D >> 128;
+      if (xSignifier & 0x40000000000000000000000000000 > 0) resultSignifier = resultSignifier * 0x10002C5CC37DA9491D0985C348C68E7B3 >> 128;
+      if (xSignifier & 0x20000000000000000000000000000 > 0) resultSignifier = resultSignifier * 0x1000162E525EE054754457D5995292026 >> 128;
+      if (xSignifier & 0x10000000000000000000000000000 > 0) resultSignifier = resultSignifier * 0x10000B17255775C040618BF4A4ADE83FC >> 128;
+      if (xSignifier & 0x8000000000000000000000000000 > 0) resultSignifier = resultSignifier * 0x1000058B91B5BC9AE2EED81E9B7D4CFAB >> 128;
+      if (xSignifier & 0x4000000000000000000000000000 > 0) resultSignifier = resultSignifier * 0x100002C5C89D5EC6CA4D7C8ACC017B7C9 >> 128;
+      if (xSignifier & 0x2000000000000000000000000000 > 0) resultSignifier = resultSignifier * 0x10000162E43F4F831060E02D839A9D16D >> 128;
+      if (xSignifier & 0x1000000000000000000000000000 > 0) resultSignifier = resultSignifier * 0x100000B1721BCFC99D9F890EA06911763 >> 128;
+      if (xSignifier & 0x800000000000000000000000000 > 0) resultSignifier = resultSignifier * 0x10000058B90CF1E6D97F9CA14DBCC1628 >> 128;
+      if (xSignifier & 0x400000000000000000000000000 > 0) resultSignifier = resultSignifier * 0x1000002C5C863B73F016468F6BAC5CA2B >> 128;
+      if (xSignifier & 0x200000000000000000000000000 > 0) resultSignifier = resultSignifier * 0x100000162E430E5A18F6119E3C02282A5 >> 128;
+      if (xSignifier & 0x100000000000000000000000000 > 0) resultSignifier = resultSignifier * 0x1000000B1721835514B86E6D96EFD1BFE >> 128;
+      if (xSignifier & 0x80000000000000000000000000 > 0) resultSignifier = resultSignifier * 0x100000058B90C0B48C6BE5DF846C5B2EF >> 128;
+      if (xSignifier & 0x40000000000000000000000000 > 0) resultSignifier = resultSignifier * 0x10000002C5C8601CC6B9E94213C72737A >> 128;
+      if (xSignifier & 0x20000000000000000000000000 > 0) resultSignifier = resultSignifier * 0x1000000162E42FFF037DF38AA2B219F06 >> 128;
+      if (xSignifier & 0x10000000000000000000000000 > 0) resultSignifier = resultSignifier * 0x10000000B17217FBA9C739AA5819F44F9 >> 128;
+      if (xSignifier & 0x8000000000000000000000000 > 0) resultSignifier = resultSignifier * 0x1000000058B90BFCDEE5ACD3C1CEDC823 >> 128;
+      if (xSignifier & 0x4000000000000000000000000 > 0) resultSignifier = resultSignifier * 0x100000002C5C85FE31F35A6A30DA1BE50 >> 128;
+      if (xSignifier & 0x2000000000000000000000000 > 0) resultSignifier = resultSignifier * 0x10000000162E42FF0999CE3541B9FFFCF >> 128;
+      if (xSignifier & 0x1000000000000000000000000 > 0) resultSignifier = resultSignifier * 0x100000000B17217F80F4EF5AADDA45554 >> 128;
+      if (xSignifier & 0x800000000000000000000000 > 0) resultSignifier = resultSignifier * 0x10000000058B90BFBF8479BD5A81B51AD >> 128;
+      if (xSignifier & 0x400000000000000000000000 > 0) resultSignifier = resultSignifier * 0x1000000002C5C85FDF84BD62AE30A74CC >> 128;
+      if (xSignifier & 0x200000000000000000000000 > 0) resultSignifier = resultSignifier * 0x100000000162E42FEFB2FED257559BDAA >> 128;
+      if (xSignifier & 0x100000000000000000000000 > 0) resultSignifier = resultSignifier * 0x1000000000B17217F7D5A7716BBA4A9AE >> 128;
+      if (xSignifier & 0x80000000000000000000000 > 0) resultSignifier = resultSignifier * 0x100000000058B90BFBE9DDBAC5E109CCE >> 128;
+      if (xSignifier & 0x40000000000000000000000 > 0) resultSignifier = resultSignifier * 0x10000000002C5C85FDF4B15DE6F17EB0D >> 128;
+      if (xSignifier & 0x20000000000000000000000 > 0) resultSignifier = resultSignifier * 0x1000000000162E42FEFA494F1478FDE05 >> 128;
+      if (xSignifier & 0x10000000000000000000000 > 0) resultSignifier = resultSignifier * 0x10000000000B17217F7D20CF927C8E94C >> 128;
+      if (xSignifier & 0x8000000000000000000000 > 0) resultSignifier = resultSignifier * 0x1000000000058B90BFBE8F71CB4E4B33D >> 128;
+      if (xSignifier & 0x4000000000000000000000 > 0) resultSignifier = resultSignifier * 0x100000000002C5C85FDF477B662B26945 >> 128;
+      if (xSignifier & 0x2000000000000000000000 > 0) resultSignifier = resultSignifier * 0x10000000000162E42FEFA3AE53369388C >> 128;
+      if (xSignifier & 0x1000000000000000000000 > 0) resultSignifier = resultSignifier * 0x100000000000B17217F7D1D351A389D40 >> 128;
+      if (xSignifier & 0x800000000000000000000 > 0) resultSignifier = resultSignifier * 0x10000000000058B90BFBE8E8B2D3D4EDE >> 128;
+      if (xSignifier & 0x400000000000000000000 > 0) resultSignifier = resultSignifier * 0x1000000000002C5C85FDF4741BEA6E77E >> 128;
+      if (xSignifier & 0x200000000000000000000 > 0) resultSignifier = resultSignifier * 0x100000000000162E42FEFA39FE95583C2 >> 128;
+      if (xSignifier & 0x100000000000000000000 > 0) resultSignifier = resultSignifier * 0x1000000000000B17217F7D1CFB72B45E1 >> 128;
+      if (xSignifier & 0x80000000000000000000 > 0) resultSignifier = resultSignifier * 0x100000000000058B90BFBE8E7CC35C3F0 >> 128;
+      if (xSignifier & 0x40000000000000000000 > 0) resultSignifier = resultSignifier * 0x10000000000002C5C85FDF473E242EA38 >> 128;
+      if (xSignifier & 0x20000000000000000000 > 0) resultSignifier = resultSignifier * 0x1000000000000162E42FEFA39F02B772C >> 128;
+      if (xSignifier & 0x10000000000000000000 > 0) resultSignifier = resultSignifier * 0x10000000000000B17217F7D1CF7D83C1A >> 128;
+      if (xSignifier & 0x8000000000000000000 > 0) resultSignifier = resultSignifier * 0x1000000000000058B90BFBE8E7BDCBE2E >> 128;
+      if (xSignifier & 0x4000000000000000000 > 0) resultSignifier = resultSignifier * 0x100000000000002C5C85FDF473DEA871F >> 128;
+      if (xSignifier & 0x2000000000000000000 > 0) resultSignifier = resultSignifier * 0x10000000000000162E42FEFA39EF44D91 >> 128;
+      if (xSignifier & 0x1000000000000000000 > 0) resultSignifier = resultSignifier * 0x100000000000000B17217F7D1CF79E949 >> 128;
+      if (xSignifier & 0x800000000000000000 > 0) resultSignifier = resultSignifier * 0x10000000000000058B90BFBE8E7BCE544 >> 128;
+      if (xSignifier & 0x400000000000000000 > 0) resultSignifier = resultSignifier * 0x1000000000000002C5C85FDF473DE6ECA >> 128;
+      if (xSignifier & 0x200000000000000000 > 0) resultSignifier = resultSignifier * 0x100000000000000162E42FEFA39EF366F >> 128;
+      if (xSignifier & 0x100000000000000000 > 0) resultSignifier = resultSignifier * 0x1000000000000000B17217F7D1CF79AFA >> 128;
+      if (xSignifier & 0x80000000000000000 > 0) resultSignifier = resultSignifier * 0x100000000000000058B90BFBE8E7BCD6D >> 128;
+      if (xSignifier & 0x40000000000000000 > 0) resultSignifier = resultSignifier * 0x10000000000000002C5C85FDF473DE6B2 >> 128;
+      if (xSignifier & 0x20000000000000000 > 0) resultSignifier = resultSignifier * 0x1000000000000000162E42FEFA39EF358 >> 128;
+      if (xSignifier & 0x10000000000000000 > 0) resultSignifier = resultSignifier * 0x10000000000000000B17217F7D1CF79AB >> 128;
+      if (xSignifier & 0x8000000000000000 > 0) resultSignifier = resultSignifier * 0x1000000000000000058B90BFBE8E7BCD5 >> 128;
+      if (xSignifier & 0x4000000000000000 > 0) resultSignifier = resultSignifier * 0x100000000000000002C5C85FDF473DE6A >> 128;
+      if (xSignifier & 0x2000000000000000 > 0) resultSignifier = resultSignifier * 0x10000000000000000162E42FEFA39EF34 >> 128;
+      if (xSignifier & 0x1000000000000000 > 0) resultSignifier = resultSignifier * 0x100000000000000000B17217F7D1CF799 >> 128;
+      if (xSignifier & 0x800000000000000 > 0) resultSignifier = resultSignifier * 0x10000000000000000058B90BFBE8E7BCC >> 128;
+      if (xSignifier & 0x400000000000000 > 0) resultSignifier = resultSignifier * 0x1000000000000000002C5C85FDF473DE5 >> 128;
+      if (xSignifier & 0x200000000000000 > 0) resultSignifier = resultSignifier * 0x100000000000000000162E42FEFA39EF2 >> 128;
+      if (xSignifier & 0x100000000000000 > 0) resultSignifier = resultSignifier * 0x1000000000000000000B17217F7D1CF78 >> 128;
+      if (xSignifier & 0x80000000000000 > 0) resultSignifier = resultSignifier * 0x100000000000000000058B90BFBE8E7BB >> 128;
+      if (xSignifier & 0x40000000000000 > 0) resultSignifier = resultSignifier * 0x10000000000000000002C5C85FDF473DD >> 128;
+      if (xSignifier & 0x20000000000000 > 0) resultSignifier = resultSignifier * 0x1000000000000000000162E42FEFA39EE >> 128;
+      if (xSignifier & 0x10000000000000 > 0) resultSignifier = resultSignifier * 0x10000000000000000000B17217F7D1CF6 >> 128;
+      if (xSignifier & 0x8000000000000 > 0) resultSignifier = resultSignifier * 0x1000000000000000000058B90BFBE8E7A >> 128;
+      if (xSignifier & 0x4000000000000 > 0) resultSignifier = resultSignifier * 0x100000000000000000002C5C85FDF473C >> 128;
+      if (xSignifier & 0x2000000000000 > 0) resultSignifier = resultSignifier * 0x10000000000000000000162E42FEFA39D >> 128;
+      if (xSignifier & 0x1000000000000 > 0) resultSignifier = resultSignifier * 0x100000000000000000000B17217F7D1CE >> 128;
+      if (xSignifier & 0x800000000000 > 0) resultSignifier = resultSignifier * 0x10000000000000000000058B90BFBE8E6 >> 128;
+      if (xSignifier & 0x400000000000 > 0) resultSignifier = resultSignifier * 0x1000000000000000000002C5C85FDF472 >> 128;
+      if (xSignifier & 0x200000000000 > 0) resultSignifier = resultSignifier * 0x100000000000000000000162E42FEFA38 >> 128;
+      if (xSignifier & 0x100000000000 > 0) resultSignifier = resultSignifier * 0x1000000000000000000000B17217F7D1B >> 128;
+      if (xSignifier & 0x80000000000 > 0) resultSignifier = resultSignifier * 0x100000000000000000000058B90BFBE8D >> 128;
+      if (xSignifier & 0x40000000000 > 0) resultSignifier = resultSignifier * 0x10000000000000000000002C5C85FDF46 >> 128;
+      if (xSignifier & 0x20000000000 > 0) resultSignifier = resultSignifier * 0x1000000000000000000000162E42FEFA2 >> 128;
+      if (xSignifier & 0x10000000000 > 0) resultSignifier = resultSignifier * 0x10000000000000000000000B17217F7D0 >> 128;
+      if (xSignifier & 0x8000000000 > 0) resultSignifier = resultSignifier * 0x1000000000000000000000058B90BFBE7 >> 128;
+      if (xSignifier & 0x4000000000 > 0) resultSignifier = resultSignifier * 0x100000000000000000000002C5C85FDF3 >> 128;
+      if (xSignifier & 0x2000000000 > 0) resultSignifier = resultSignifier * 0x10000000000000000000000162E42FEF9 >> 128;
+      if (xSignifier & 0x1000000000 > 0) resultSignifier = resultSignifier * 0x100000000000000000000000B17217F7C >> 128;
+      if (xSignifier & 0x800000000 > 0) resultSignifier = resultSignifier * 0x10000000000000000000000058B90BFBD >> 128;
+      if (xSignifier & 0x400000000 > 0) resultSignifier = resultSignifier * 0x1000000000000000000000002C5C85FDE >> 128;
+      if (xSignifier & 0x200000000 > 0) resultSignifier = resultSignifier * 0x100000000000000000000000162E42FEE >> 128;
+      if (xSignifier & 0x100000000 > 0) resultSignifier = resultSignifier * 0x1000000000000000000000000B17217F6 >> 128;
+      if (xSignifier & 0x80000000 > 0) resultSignifier = resultSignifier * 0x100000000000000000000000058B90BFA >> 128;
+      if (xSignifier & 0x40000000 > 0) resultSignifier = resultSignifier * 0x10000000000000000000000002C5C85FC >> 128;
+      if (xSignifier & 0x20000000 > 0) resultSignifier = resultSignifier * 0x1000000000000000000000000162E42FD >> 128;
+      if (xSignifier & 0x10000000 > 0) resultSignifier = resultSignifier * 0x10000000000000000000000000B17217E >> 128;
+      if (xSignifier & 0x8000000 > 0) resultSignifier = resultSignifier * 0x1000000000000000000000000058B90BE >> 128;
+      if (xSignifier & 0x4000000 > 0) resultSignifier = resultSignifier * 0x100000000000000000000000002C5C85E >> 128;
+      if (xSignifier & 0x2000000 > 0) resultSignifier = resultSignifier * 0x10000000000000000000000000162E42E >> 128;
+      if (xSignifier & 0x1000000 > 0) resultSignifier = resultSignifier * 0x100000000000000000000000000B17216 >> 128;
+      if (xSignifier & 0x800000 > 0) resultSignifier = resultSignifier * 0x10000000000000000000000000058B90A >> 128;
+      if (xSignifier & 0x400000 > 0) resultSignifier = resultSignifier * 0x1000000000000000000000000002C5C84 >> 128;
+      if (xSignifier & 0x200000 > 0) resultSignifier = resultSignifier * 0x100000000000000000000000000162E41 >> 128;
+      if (xSignifier & 0x100000 > 0) resultSignifier = resultSignifier * 0x1000000000000000000000000000B1720 >> 128;
+      if (xSignifier & 0x80000 > 0) resultSignifier = resultSignifier * 0x100000000000000000000000000058B8F >> 128;
+      if (xSignifier & 0x40000 > 0) resultSignifier = resultSignifier * 0x10000000000000000000000000002C5C7 >> 128;
+      if (xSignifier & 0x20000 > 0) resultSignifier = resultSignifier * 0x1000000000000000000000000000162E3 >> 128;
+      if (xSignifier & 0x10000 > 0) resultSignifier = resultSignifier * 0x10000000000000000000000000000B171 >> 128;
+      if (xSignifier & 0x8000 > 0) resultSignifier = resultSignifier * 0x1000000000000000000000000000058B8 >> 128;
+      if (xSignifier & 0x4000 > 0) resultSignifier = resultSignifier * 0x100000000000000000000000000002C5B >> 128;
+      if (xSignifier & 0x2000 > 0) resultSignifier = resultSignifier * 0x10000000000000000000000000000162D >> 128;
+      if (xSignifier & 0x1000 > 0) resultSignifier = resultSignifier * 0x100000000000000000000000000000B16 >> 128;
+      if (xSignifier & 0x800 > 0) resultSignifier = resultSignifier * 0x10000000000000000000000000000058A >> 128;
+      if (xSignifier & 0x400 > 0) resultSignifier = resultSignifier * 0x1000000000000000000000000000002C4 >> 128;
+      if (xSignifier & 0x200 > 0) resultSignifier = resultSignifier * 0x100000000000000000000000000000161 >> 128;
+      if (xSignifier & 0x100 > 0) resultSignifier = resultSignifier * 0x1000000000000000000000000000000B0 >> 128;
+      if (xSignifier & 0x80 > 0) resultSignifier = resultSignifier * 0x100000000000000000000000000000057 >> 128;
+      if (xSignifier & 0x40 > 0) resultSignifier = resultSignifier * 0x10000000000000000000000000000002B >> 128;
+      if (xSignifier & 0x20 > 0) resultSignifier = resultSignifier * 0x100000000000000000000000000000015 >> 128;
+      if (xSignifier & 0x10 > 0) resultSignifier = resultSignifier * 0x10000000000000000000000000000000A >> 128;
+      if (xSignifier & 0x8 > 0) resultSignifier = resultSignifier * 0x100000000000000000000000000000004 >> 128;
+      if (xSignifier & 0x4 > 0) resultSignifier = resultSignifier * 0x100000000000000000000000000000001 >> 128;
+
+      if (!xNegative) {
+        resultSignifier = resultSignifier >> 15 & 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFF;
+        resultExponent += 0x3FFF;
+      } else if (resultExponent <= 0x3FFE) {
+        resultSignifier = resultSignifier >> 15 & 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFF;
+        resultExponent = 0x3FFF - resultExponent;
+      } else {
+        resultSignifier = resultSignifier >> resultExponent - 16367;
+        resultExponent = 0;
+      }
+
+      return bytes16 (uint128 (resultExponent << 112 | resultSignifier));
+    }
+  }
+
+  /**
+   * Calculate e^x.
+   *
+   * @param x quadruple precision number
+   * @return quadruple precision number
+   */
+  function exp (bytes16 x) internal pure returns (bytes16) {
+    return pow_2 (mul (x, 0x3FFF71547652B82FE1777D0FFDA0D23A));
+  }
+
+  /**
+   * Get index of the most significant non-zero bit in binary representation of
+   * x.  Reverts if x is zero.
+   *
+   * @return index of the most significant non-zero bit in binary representation
+   *         of x
+   */
+  function _msb (uint256 x) private pure returns (uint256) {
+    require (x > 0);
+
+    uint256 result = 0;
+
+    if (x >= 0x100000000000000000000000000000000) { x >>= 128; result += 128; }
+    if (x >= 0x10000000000000000) { x >>= 64; result += 64; }
+    if (x >= 0x100000000) { x >>= 32; result += 32; }
+    if (x >= 0x10000) { x >>= 16; result += 16; }
+    if (x >= 0x100) { x >>= 8; result += 8; }
+    if (x >= 0x10) { x >>= 4; result += 4; }
+    if (x >= 0x4) { x >>= 2; result += 2; }
+    if (x >= 0x2) result += 1; // No need to shift x anymore
+
+    return result;
+  }
+}
+
+// File: contracts/InterestUtils.sol
+
+pragma solidity ^0.7.0;
+
+// Use prefix "./" normally and "https://github.com/ogDAO/Governance/blob/master/contracts/" in Remix
+// import "./SafeMath.sol";
+
+
+// import "hardhat/console.sol";
+
+/// @notice Interest calculation utilities
+// SPDX-License-Identifier: GPLv2
+library InterestUtils {
+    using ABDKMathQuad for bytes16;
+
+    /// @notice fv = pv * exp(rate% x termInYears)
+    function futureValue(uint amount, uint from, uint to, uint rate) internal view returns (uint) {
+        require(from <= to, "Invalid date range");
+        bytes16 i = ABDKMathQuad.fromUInt(rate).div(ABDKMathQuad.fromUInt(10**18));
+        bytes16 t = ABDKMathQuad.fromUInt(to - from).div(ABDKMathQuad.fromUInt(365 days));
+        bytes16 fv = ABDKMathQuad.fromUInt(amount).mul(ABDKMathQuad.exp(i.mul(t)));
+        return fv.toUInt();
+    }
+}
+
+// File: contracts/CurveInterface.sol
+
+pragma solidity ^0.7.0;
+
+// SPDX-License-Identifier: GPLv2
+interface CurveInterface {
+    function getRate(uint term) external view returns (uint rate);
+}
+
 // File: contracts/OptinoGov.sol
 
 pragma solidity ^0.7.0;
 pragma experimental ABIEncoderV2;
 
-// import "hardhat/console.sol";
 
 // Use prefix "./" normally and "https://github.com/ogDAO/Governance/blob/master/contracts/" in Remix
+
+
 
 
 
@@ -87,12 +2822,13 @@ pragma experimental ABIEncoderV2;
 contract OptinoGovConfig {
     using SafeMath for uint;
 
-    uint constant SECONDS_PER_YEAR = 10000; // Testing 24 * 60 * 60 * 365;
+    uint constant SECONDS_PER_YEAR = 100; // Testing 24 * 60 * 60 * 365;
 
     OGTokenInterface public ogToken;
     OGDTokenInterface public ogdToken;
+    CurveInterface public ogRewardCurve;
+    CurveInterface public voteWeightCurve;
     uint public maxDuration = 10000 seconds; // Testing 365 days;
-    uint public rewardsPerSecond = 150_000_000_000_000_000; // 0.15
     uint public collectRewardForFee = 5 * 10**16; // 5%, 18 decimals
     uint public collectRewardForDelay = 1 seconds; // Testing 7 days
     uint public proposalCost = 100_000_000_000_000_000_000; // 100 tokens assuming 18 decimals
@@ -102,20 +2838,7 @@ contract OptinoGovConfig {
     uint public votingDuration = 10 seconds; // 3 days;
     uint public executeDelay = 10 seconds; // 2 days;
     uint public rewardPool = 1_000_000 * 10**18;
-    uint public totalVotes;
 
-    /*
-    event MaxDurationUpdated(uint maxDuration);
-    event RewardsPerSecondUpdated(uint rewardsPerSecond);
-    event CollectRewardForFeeUpdated(uint collectRewardForFee);
-    event CollectRewardForDelayUpdated(uint collectRewardForDelay);
-    event ProposalCostUpdated(uint proposalCost);
-    event ProposalThresholdUpdated(uint proposalThreshold);
-    event QuorumUpdated(uint quorum);
-    event QuorumDecayPerSecondUpdated(uint quorumDecayPerSecond);
-    event VotingDurationUpdated(uint votingDuration);
-    event ExecuteDelayUpdated(uint executeDelay);
-    */
     event ConfigUpdated(string key, uint value);
 
     modifier onlySelf {
@@ -123,23 +2846,27 @@ contract OptinoGovConfig {
         _;
     }
 
-    constructor(OGTokenInterface _ogToken, OGDTokenInterface _ogdToken) {
+    constructor(OGTokenInterface _ogToken, OGDTokenInterface _ogdToken, CurveInterface _ogRewardCurve, CurveInterface _voteWeightCurve) {
         ogToken = _ogToken;
         ogdToken = _ogdToken;
+        ogRewardCurve = _ogRewardCurve;
+        voteWeightCurve = _voteWeightCurve;
     }
 
     function equalString(string memory s1, string memory s2) internal pure returns(bool) {
         return keccak256(abi.encodePacked(s1)) == keccak256(abi.encodePacked(s2));
     }
     function setConfig(string memory key, uint value) external onlySelf {
-        if (equalString(key, "maxDuration")) {
+        /*if (equalString(key, "ogRewardCurve")) {
+            ogRewardCurve = CurveInterface(value);
+        } else */if (equalString(key, "maxDuration")) {
+            require(maxDuration < 5 * 365 days, "Cannot exceed 5 years");
             maxDuration = value;
         } else if (equalString(key, "collectRewardForFee")) {
+            require(collectRewardForFee < 10 ** 18, "Cannot exceed 100%");
             collectRewardForFee = value;
         } else if (equalString(key, "collectRewardForDelay")) {
             collectRewardForDelay = value;
-        } else if (equalString(key, "rewardsPerSecond")) {
-            rewardsPerSecond = value;
         } else if (equalString(key, "proposalCost")) {
             proposalCost = value;
         } else if (equalString(key, "proposalThreshold")) {
@@ -157,48 +2884,6 @@ contract OptinoGovConfig {
         }
         emit ConfigUpdated(key, value);
     }
-    /*
-    function setMaxDuration(uint _maxDuration) external onlySelf {
-        maxDuration = _maxDuration;
-        emit MaxDurationUpdated(maxDuration);
-    }
-    function setCollectRewardForFee(uint _collectRewardForFee) external onlySelf {
-        collectRewardForFee = _collectRewardForFee;
-        emit CollectRewardForFeeUpdated(collectRewardForFee);
-    }
-    function setCollectRewardForDelay(uint _collectRewardForDelay) external onlySelf {
-        collectRewardForDelay = _collectRewardForDelay;
-        emit CollectRewardForDelayUpdated(collectRewardForDelay);
-    }
-    function setRewardsPerSecond(uint _rewardsPerSecond) external onlySelf {
-        rewardsPerSecond = _rewardsPerSecond;
-        emit RewardsPerSecondUpdated(rewardsPerSecond);
-    }
-    function setProposalCost(uint _proposalCost) external onlySelf {
-        proposalCost = _proposalCost;
-        emit ProposalCostUpdated(proposalCost);
-    }
-    function setProposalThreshold(uint _proposalThreshold) external onlySelf {
-        proposalThreshold = _proposalThreshold;
-        emit ProposalThresholdUpdated(proposalThreshold);
-    }
-    function setQuorum(uint _quorum) external onlySelf {
-        quorum = _quorum;
-        emit QuorumUpdated(quorum);
-    }
-    function setQuorumDecayPerSecond(uint _quorumDecayPerSecond) external onlySelf {
-        quorumDecayPerSecond = _quorumDecayPerSecond;
-        emit QuorumDecayPerSecondUpdated(quorumDecayPerSecond);
-    }
-    function setVotingDuration(uint _votingDuration) external onlySelf {
-        votingDuration = _votingDuration;
-        emit VotingDurationUpdated(votingDuration);
-    }
-    function setExecuteDelay(uint _executeDelay) external onlySelf {
-        executeDelay = _executeDelay;
-        emit ExecuteDelayUpdated(executeDelay);
-    }
-    */
 }
 
 /// @notice Optino Governance. (c) The Optino Project 2020
@@ -211,24 +2896,12 @@ contract OptinoGov is ERC20, OptinoGovConfig {
         uint64 end;
         uint64 lastDelegated;
         uint64 lastVoted;
+        uint64 index;
+        uint rate; // max uint64 = 18_446744073_709551615 = 1800%
+        address delegatee;
         uint balance;
-        uint staked;
         uint votes;
         uint delegatedVotes;
-        address delegatee;
-    }
-    // Token { dataType 1, address tokenAddress }
-    // Feed { dataType 2, address feedAddress, uint feedType, uint feedDecimals, string name }
-    // Conventions { dataType 3, address [token0, token1], address [feed0, feed1], uint[6] [type0, type1, decimals0, decimals1, inverse0, inverse1], string [feed0Name, feedName2, Market, Convention] }
-    // General { dataType 4, address[4] addresses, address [feed0, feed1], uint[6] uints, string[4] strings }
-    struct StakeInfo {
-        uint dataType;
-        address[4] addresses;
-        uint[6] uints;
-        string string0; // TODO: Check issues using string[4] strings
-        string string1;
-        string string2;
-        string string3;
     }
     struct Proposal {
         uint start;
@@ -244,31 +2917,26 @@ contract OptinoGov is ERC20, OptinoGovConfig {
         bool executed;
     }
 
-    string _symbol = "OG";
-    string _name = "Optino Governance";
+    string _symbol = "OptinoGov";
+    string _name = "OptinoGov";
+    uint _totalSupply;
+    mapping(address => Account) public accounts;
+    address[] public accountsIndex;
+    mapping(address => mapping(address => uint)) allowed;
+    uint public totalVotes;
 
-    mapping(address => Account) public accounts; // Committed tokens per address
-    mapping(address => mapping(bytes32 => uint)) stakes;
-    mapping(bytes32 => StakeInfo) public stakeInfoData;
-    bytes32[] public stakeInfoIndex;
     uint public proposalCount;
     mapping(uint => Proposal) public proposals;
-    uint public _totalSupply;
-    mapping(address => mapping(address => uint)) allowed;
 
     event DelegateUpdated(address indexed oldDelegatee, address indexed delegatee, uint votes);
     event Committed(address indexed user, uint tokens, uint balance, uint duration, uint end, address delegatee, uint votes, uint rewardPool, uint totalVotes);
-    event StakeInfoAdded(bytes32 stakingKey, uint dataType, address[4] addresses, uint[6] uints, string string0, string string1, string string2, string string3);
-    event Staked(address tokenOwner, uint tokens, uint balance, bytes32 stakingKey);
-    event Unstaked(address tokenOwner, uint tokens, uint balance, bytes32 stakingKey);
-    event StakeBurnt(address tokenOwner, uint tokens, uint balance, bytes32 stakingKey);
     event Collected(address indexed user, uint elapsed, uint reward, uint callerReward, uint rewardPool, uint end, uint duration);
     event Uncommitted(address indexed user, uint tokens, uint balance, uint duration, uint end, uint votes, uint rewardPool, uint totalVotes);
     event Proposed(address indexed proposer, uint oip, string description, address[] targets, uint[] value, bytes[] data, uint start);
     event Voted(address indexed user, uint oip, bool voteFor, uint forVotes, uint againstVotes);
     event Executed(address indexed user, uint oip);
 
-    constructor(OGTokenInterface ogToken, OGDTokenInterface ogdToken) OptinoGovConfig(ogToken, ogdToken) {
+    constructor(OGTokenInterface ogToken, OGDTokenInterface ogdToken, CurveInterface ogRewardCurve, CurveInterface voteWeightCurve) OptinoGovConfig(ogToken, ogdToken, ogRewardCurve, voteWeightCurve) {
     }
 
     function symbol() override external view returns (string memory) {
@@ -310,255 +2978,189 @@ contract OptinoGov is ERC20, OptinoGovConfig {
         return allowed[tokenOwner][spender];
     }
 
-
-    /*
-    function addStakeForToken(uint tokens, address tokenAddress, string memory name) external {
-        bytes32 stakingKey = keccak256(abi.encodePacked(tokenAddress, name));
-        StakeInfo memory stakeInfo = stakeInfoData[stakingKey];
-        if (stakeInfo.dataType == 0) {
-            stakeInfoData[stakingKey] = StakeInfo(1, [tokenAddress, address(0), address(0), address(0)], [uint(0), uint(0), uint(0), uint(0), uint(0), uint(0)], name, "", "", "");
-            stakeInfoIndex.push(stakingKey);
-            emit StakeInfoAdded(stakingKey, 1, [tokenAddress, address(0), address(0), address(0)], [uint(0), uint(0), uint(0), uint(0), uint(0), uint(0)], name, "", "", "");
-        }
-        _addStake(tokens, stakingKey);
+    function getAccountByIndex(uint i) public view returns (address tokenOwner, Account memory account) {
+        require(i < accountsIndex.length, "Invalid index");
+        tokenOwner = accountsIndex[i];
+        account = accounts[tokenOwner];
     }
-    function subStakeForToken(uint tokens, address tokenAddress, string calldata name) external {
-        bytes32 stakingKey = keccak256(abi.encodePacked(tokenAddress, name));
-        _subStake(tokens, stakingKey);
+    function accountsLength() public view returns (uint) {
+        return accountsIndex.length;
     }
-    function addStakeForFeed(uint tokens, address feedAddress, uint feedType, uint feedDecimals, string calldata name) external {
-        bytes32 stakingKey = keccak256(abi.encodePacked(feedAddress, feedType, feedDecimals, name));
-        StakeInfo memory stakeInfo = stakeInfoData[stakingKey];
-        if (stakeInfo.dataType == 0) {
-            stakeInfoData[stakingKey] = StakeInfo(2, [feedAddress, address(0), address(0), address(0)], [uint(feedType), uint(feedDecimals), uint(0), uint(0), uint(0), uint(0)], name, "", "", "");
-            stakeInfoIndex.push(stakingKey);
-            emit StakeInfoAdded(stakingKey, 2, [feedAddress, address(0), address(0), address(0)], [uint(feedType), uint(feedDecimals), uint(0), uint(0), uint(0), uint(0)], name, "", "", "");
-        }
-        _addStake(tokens, stakingKey);
-    }
-    function subStakeForFeed(uint tokens, address feedAddress, uint feedType, uint feedDecimals, string calldata name) external {
-        bytes32 stakingKey = keccak256(abi.encodePacked(feedAddress, feedType, feedDecimals, name));
-        _subStake(tokens, stakingKey);
-    }
-    function addStakeForConvention(uint tokens, address[4] memory addresses, uint[6] memory uints, string[4] memory strings) external {
-        bytes32 stakingKey = keccak256(abi.encodePacked(addresses, uints, strings[0], strings[1], strings[2], strings[3]));
-        StakeInfo memory stakeInfo = stakeInfoData[stakingKey];
-        if (stakeInfo.dataType == 0) {
-            stakeInfoData[stakingKey] = StakeInfo(3, addresses, uints, strings[0], strings[1], strings[2], strings[3]);
-            stakeInfoIndex.push(stakingKey);
-            emit StakeInfoAdded(stakingKey, 3, addresses, uints, strings[0], strings[1], strings[2], strings[3]);
-        }
-        _addStake(tokens, stakingKey);
-    }
-    function subStakeForConvention(uint tokens, address[4] memory addresses, uint[6] memory uints, string[4] memory strings) external {
-        bytes32 stakingKey = keccak256(abi.encodePacked(addresses, uints, strings[0], strings[1], strings[2], strings[3]));
-        _subStake(tokens, stakingKey);
-    }
-    function addStakeForGeneral(uint tokens, uint dataType, address[4] memory addresses, uint[6] memory uints, string[4] memory strings) external {
-        bytes32 stakingKey = keccak256(abi.encodePacked(addresses, dataType, uints, strings[0], strings[1], strings[2], strings[3]));
-        StakeInfo memory stakeInfo = stakeInfoData[stakingKey];
-        if (stakeInfo.dataType == 0) {
-            stakeInfoData[stakingKey] = StakeInfo(dataType, addresses, uints, strings[0], strings[1], strings[2], strings[3]);
-            stakeInfoIndex.push(stakingKey);
-            emit StakeInfoAdded(stakingKey, dataType, addresses, uints, strings[0], strings[1], strings[2], strings[3]);
-        }
-        _addStake(tokens, stakingKey);
-    }
-    function subStakeForGeneral(uint tokens, uint dataType, address[4] memory addresses, uint[6] memory uints, string[4] memory strings) external {
-        bytes32 stakingKey = keccak256(abi.encodePacked(addresses, dataType, uints, strings[0], strings[1], strings[2], strings[3]));
-        _subStake(tokens, stakingKey);
-    }
-    function _addStake(uint tokens, bytes32 stakingKey) internal {
-        Account storage committment = accounts[msg.sender];
-        require(committment.tokens > 0, "OptinoGov: Commit before staking");
-        require(committment.tokens >= committment.staked + tokens, "OptinoGov: Insufficient tokens to stake");
-        committment.staked = committment.staked.add(tokens);
-        // TODO committment.stakes[stakingKey] = committment.stakes[stakingKey].add(tokens);
-        // TODO emit Staked(msg.sender, tokens, committment.stakes[stakingKey], stakingKey);
-    }
-    function _subStake(uint tokens, bytes32 stakingKey) internal {
-        Account storage committment = accounts[msg.sender];
-        require(committment.tokens > 0, "OptinoGov: Commit and stake tokens before unstaking");
-        // TODO require(committment.stakes[stakingKey] >= tokens, "OptinoGov: Insufficient staked tokens");
-        committment.staked = committment.staked.sub(tokens);
-        // TODO committment.stakes[stakingKey] = committment.stakes[stakingKey].sub(tokens);
-        // TODO emit Unstaked(msg.sender, tokens, committment.stakes[stakingKey], stakingKey);
-    }
-    function stakeInfoLength() public view returns (uint _stakeInfoLength) {
-        _stakeInfoLength = stakeInfoIndex.length;
-    }
-    function getStakeInfoByKey(bytes32 stakingKey) public view returns (uint dataType, address[4] memory addresses, uint[6] memory uints, string memory string0, string memory string1, string memory string2, string memory string3) {
-        StakeInfo memory stakeInfo = stakeInfoData[stakingKey];
-        (dataType, addresses, uints) = (stakeInfo.dataType, stakeInfo.addresses, stakeInfo.uints);
-        string0 = stakeInfo.string0;
-        string1 = stakeInfo.string1;
-        string2 = stakeInfo.string2;
-        string3 = stakeInfo.string3;
-    }
-    function getStaked(address tokenOwner, bytes32 stakingKey) public view returns (uint _staked) {
-        Account storage committment = accounts[tokenOwner];
-        // TODO _staked = committment.stakes[stakingKey];
-    }
-
-    function burnStake(address[] calldata tokenOwners, bytes32 stakingKey, uint percent) external onlySelf {
-        for (uint i = 0; i < tokenOwners.length; i++) {
-            address tokenOwner = tokenOwners[i];
-            Account storage committment = accounts[tokenOwner];
-            // TODO uint staked = committment.stakes[stakingKey];
-            // if (staked > 0) {
-            //     uint tokensToBurn = staked * percent / uint(100);
-            //     committment.staked = committment.staked.sub(tokensToBurn);
-            //     committment.stakes[stakingKey] = committment.stakes[stakingKey].sub(tokensToBurn);
-            //     committment.tokens = committment.tokens.sub(tokensToBurn);
-            //     require(ogToken.burn(tokensToBurn), "OptinoGov: burn failed");
-            //     emit StakeBurnt(tokenOwner, tokensToBurn, committment.stakes[stakingKey], stakingKey);
-            // }
-        }
-    }
-    */
 
     function delegate(address delegatee) public {
-        Account storage user = accounts[msg.sender];
-        require(uint(user.lastVoted) + votingDuration < block.timestamp, "Cannot delegate after recent vote");
-        address oldDelegatee = user.delegatee;
-        if (user.delegatee != address(0)) {
-            accounts[user.delegatee].delegatedVotes = accounts[user.delegatee].delegatedVotes.sub(user.votes);
+        require(accounts[delegatee].end != 0, "delegatee is not registered");
+        Account storage account = accounts[msg.sender];
+        require(uint(account.lastVoted) + votingDuration < block.timestamp, "Cannot delegate after recent vote");
+        require(uint(account.lastDelegated) + votingDuration < block.timestamp, "Cannot vote after recent delegation");
+        address oldDelegatee = account.delegatee;
+        if (account.delegatee != address(0)) {
+            accounts[account.delegatee].delegatedVotes = accounts[account.delegatee].delegatedVotes.sub(account.votes);
         }
-        user.delegatee = delegatee;
-        user.lastDelegated = uint64(block.timestamp);
-        if (user.delegatee != address(0)) {
-            accounts[user.delegatee].delegatedVotes = accounts[user.delegatee].delegatedVotes.add(user.votes);
+        account.delegatee = delegatee;
+        account.lastDelegated = uint64(block.timestamp);
+        if (account.delegatee != address(0)) {
+            accounts[account.delegatee].delegatedVotes = accounts[account.delegatee].delegatedVotes.add(account.votes);
         }
-        emit DelegateUpdated(oldDelegatee, delegatee, user.votes);
+        emit DelegateUpdated(oldDelegatee, delegatee, account.votes);
     }
 
-    // Commit OGTokens for specified duration. Cannot shorten duration if there is an existing unexpired commitment
-    function commit(uint tokens, uint duration) public {
-        require(duration <= maxDuration, "duration too long");
-        Account storage user = accounts[msg.sender];
-        uint reward = 0;
-        uint oldUserVotes = user.votes;
-        if (user.balance > 0) {
-            require(block.timestamp + duration >= user.end, "Cannot shorten duration");
-            uint elapsed = block.timestamp.sub(uint(user.end).sub(uint(user.duration)));
-            reward = elapsed.mul(rewardsPerSecond).mul(user.votes).div(totalVotes);
-            if (reward > rewardPool) {
-                reward = rewardPool;
-            }
-            if (reward > 0) {
-                rewardPool = rewardPool.sub(reward);
-                user.balance = user.balance.add(reward);
-            }
-            emit Collected(msg.sender, elapsed, reward, 0, rewardPool, user.end, user.duration);
+    function updateStatsBefore(Account storage account) internal {
+        totalVotes = totalVotes.sub(account.votes);
+        if (account.delegatee != address(0)) {
+            accounts[account.delegatee].delegatedVotes = accounts[account.delegatee].delegatedVotes.sub(account.votes);
         }
-        require(ogToken.transferFrom(msg.sender, address(this), tokens), "OG transferFrom failed");
-        user.balance = user.balance.add(tokens);
-        user.duration = uint64(duration);
-        user.end = uint64(block.timestamp.add(duration));
-        user.votes = user.balance.mul(duration).div(SECONDS_PER_YEAR);
-        totalVotes = totalVotes.sub(oldUserVotes).add(user.votes);
-        if (user.delegatee != address(0)) {
-            accounts[user.delegatee].delegatedVotes = accounts[user.delegatee].delegatedVotes.sub(oldUserVotes).add(user.votes);
+    }
+    function updateStatsAfter(Account storage account) internal {
+        uint rate = voteWeightCurve.getRate(uint(account.duration));
+        account.votes = account.balance.mul(rate).div(10**18);
+        // account.votes = account.balance.mul(account.duration).div(SECONDS_PER_YEAR);
+        totalVotes = totalVotes.add(account.votes);
+        if (account.delegatee != address(0)) {
+            accounts[account.delegatee].delegatedVotes = accounts[account.delegatee].delegatedVotes.add(account.votes);
         }
+    }
+
+    function accruedReward(address tokenOwner) public view returns (uint _reward, uint _term) {
+        return _calculateReward(accounts[tokenOwner]);
+    }
+    function _calculateReward(Account memory account) internal view returns (uint _reward, uint _term) {
+        uint from = account.end == 0 ? block.timestamp : uint(account.end).sub(uint(account.duration));
+        uint futureValue = InterestUtils.futureValue(account.balance, from, block.timestamp, account.rate/*, 1 days*/);
+        // console.log("        > _calculateReward() - account.balance %s, rate %s", account.balance, account.rate);
+        // console.log("          from %s, to %s, futureValue %s", from, block.timestamp, futureValue);
+        _reward = futureValue.sub(account.balance);
+        _term = block.timestamp.sub(from);
+    }
+    function _getOGRewardRate(uint term) internal view returns (uint rate) {
+        try ogRewardCurve.getRate(term) returns (uint _rate) {
+            rate = _rate;
+        } catch {
+            rate = 0;
+        }
+    }
+
+    function _changeCommitment(address tokenOwner, uint depositTokens, uint withdrawTokens, bool withdrawRewards, uint duration) internal {
+        // console.log("        >   _changeCommitment(tokenOwner %s, depositTokens %s, withdrawTokens %s,", tokenOwner, depositTokens, withdrawTokens);
+        // console.log("              withdrawRewards %s, duration %s)", withdrawRewards, duration);
+        Account storage account = accounts[tokenOwner];
+
+        // commit(tokens, duration) or recommit(duration)
+        if (depositTokens > 0) {
+            require(duration > 0, "Duration must be > 0");
+        }
+        // uncommit(tokens) or uncommitAll()
+        if (withdrawTokens > 0) {
+            require(uint(account.end) < block.timestamp, "Staking period still active");
+            require(withdrawTokens <= account.balance, "Unsufficient staked balance");
+        }
+        updateStatsBefore(account);
+        (uint reward, /*uint term*/) = _calculateReward(account);
+        // console.log("        >     reward %s for %s seconds", reward, term);
         if (reward > 0) {
-            require(ogToken.mint(address(this), reward), "reward OG mint failed");
-        }
-        require(ogdToken.mint(msg.sender, tokens.add(reward)), "commitment + reward OGD mint failed");
-        emit Committed(msg.sender, tokens, user.balance, user.duration, user.end, user.delegatee, user.votes, rewardPool, totalVotes);
-    }
-
-    function collectRewardFor(address tokenOwner) public {
-        _collectReward(tokenOwner, false, 0);
-    }
-    function collectReward(bool commitRewards, uint duration) public {
-        _collectReward(msg.sender, commitRewards, duration);
-    }
-    function _collectReward(address tokenOwner, bool commitRewards, uint duration) internal {
-        Account storage user = accounts[tokenOwner];
-        require(user.balance > 0);
-
-        // Pay rewards for period = now - beginning = now - (end - duration)
-        uint elapsed = block.timestamp.sub(uint(user.end).sub(uint(user.duration)));
-        uint reward = elapsed.mul(rewardsPerSecond).mul(user.votes).div(totalVotes);
-        uint callerReward = 0;
-        if (reward > rewardPool) {
-            reward = rewardPool;
-        }
-        if (reward > 0) {
-            rewardPool = rewardPool.sub(reward);
-            if (msg.sender != tokenOwner) {
-                require(user.end + collectRewardForDelay < block.timestamp, "Account with delay not ended");
-                callerReward = reward.mul(collectRewardForFee).div(10 ** 18);
-                reward = reward.sub(callerReward);
-            }
-            uint oldUserVotes = user.votes;
-            if (commitRewards) {
-                user.balance = user.balance.add(reward);
-                if (user.end < block.timestamp) {
-                    user.end = uint64(block.timestamp);
-                }
-                if (duration > 0) {
-                    require(duration <= maxDuration, "duration too long");
-                    user.duration = uint64(duration);
-                    user.end = uint64(block.timestamp.add(duration));
-                } else {
-                    user.duration = uint64(uint(user.end).sub(block.timestamp));
-                }
-                user.votes = user.balance.mul(uint(user.duration)).div(SECONDS_PER_YEAR);
-                require(ogToken.mint(address(this), reward), "OG mint failed");
-                require(ogdToken.mint(msg.sender, reward), "OGD mint failed");
+            if (withdrawRewards) {
+                require(ogToken.mint(tokenOwner, reward), "reward OG mint failed");
             } else {
-                user.duration = uint(user.end) <= block.timestamp ? 0 : uint64(uint(user.end).sub(block.timestamp));
-                user.votes = user.balance.mul(uint(user.duration)).div(SECONDS_PER_YEAR);
-                require(ogToken.mint(tokenOwner, reward), "OG mint failed");
-            }
-            totalVotes = totalVotes.sub(oldUserVotes).add(user.votes);
-            if (user.delegatee != address(0)) {
-                accounts[user.delegatee].delegatedVotes = accounts[user.delegatee].delegatedVotes.sub(oldUserVotes).add(user.votes);
-            }
-            if (callerReward > 0) {
-                require(ogToken.mint(msg.sender, callerReward), "callerReward OG mint failed");
+                if (msg.sender != tokenOwner) {
+                    uint callerReward = reward.mul(collectRewardForFee).div(10 ** 18);
+                    if (callerReward > 0) {
+                        reward = reward.sub(callerReward);
+                        require(ogToken.mint(msg.sender, callerReward), "reward OG mint failed");
+                    }
+                }
+                require(ogToken.mint(address(this), reward), "reward OG mint failed");
+                account.balance = account.balance.add(reward);
+                _totalSupply = _totalSupply.add(reward);
+                require(ogdToken.mint(tokenOwner, reward), "OGD mint failed");
+                emit Transfer(address(0), tokenOwner, reward);
             }
         }
-        emit Collected(msg.sender, elapsed, reward, callerReward, rewardPool, user.end, user.duration);
+        if (depositTokens == 0 && withdrawTokens == 0) {
+            // require(block.timestamp + duration >= account.end, "Cannot shorten duration");
+            // TODO emit Recommit
+            account.duration = uint64(duration);
+            account.end = uint64(block.timestamp.add(duration));
+        }
+        if (depositTokens > 0) {
+            if (account.end == 0) {
+                uint rate = _getOGRewardRate(duration);
+                accounts[tokenOwner] = Account(uint64(duration), uint64(block.timestamp.add(duration)), uint64(0), uint64(0), uint64(accountsIndex.length), rate, address(0), depositTokens, 0, 0);
+                account = accounts[tokenOwner];
+                accountsIndex.push(tokenOwner);
+            } else {
+                require(block.timestamp + duration >= account.end, "Cannot shorten duration");
+                account.duration = uint64(duration);
+                account.end = uint64(block.timestamp.add(duration));
+                account.rate = _getOGRewardRate(duration);
+                account.balance = account.balance.add(depositTokens);
+            }
+            require(ogdToken.mint(tokenOwner, depositTokens), "OGD mint failed");
+            // TODO account.votes not updated. remove remaining variables
+            emit Committed(tokenOwner, depositTokens, account.balance, account.duration, account.end, account.delegatee, account.votes, rewardPool, totalVotes);
+            _totalSupply = _totalSupply.add(depositTokens);
+            emit Transfer(address(0), tokenOwner, depositTokens);
+        }
+        if (withdrawTokens > 0) {
+            _totalSupply = _totalSupply.sub(withdrawTokens);
+            account.balance = account.balance.sub(withdrawTokens);
+            if (account.balance == 0) {
+                uint removedIndex = uint(account.index);
+                uint lastIndex = accountsIndex.length - 1;
+                address lastAccountAddress = accountsIndex[lastIndex];
+                accountsIndex[removedIndex] = lastAccountAddress;
+                accounts[lastAccountAddress].index = uint64(removedIndex);
+                delete accountsIndex[lastIndex];
+                delete accounts[tokenOwner];
+                if (accountsIndex.length > 0) {
+                    accountsIndex.pop();
+                }
+            }
+            // TODO: Check
+            account.duration = uint64(0);
+            account.end = uint64(block.timestamp);
+            require(ogdToken.withdrawDividendsFor(tokenOwner, tokenOwner), "OGD withdrawDividendsFor failed");
+            require(ogdToken.transferFrom(tokenOwner, address(0), withdrawTokens), "OGD transfer failed");
+            require(ogToken.transfer(tokenOwner, withdrawTokens), "OG transfer failed");
+            // TODO Uncommit
+        //     emit Unstaked(msg.sender, withdrawTokens, reward, tokensWithSlashingFactor, rewardWithSlashingFactor);
+        }
+        updateStatsAfter(account);
+    }
+    function commit(uint tokens, uint duration) public {
+        // console.log("        > %s -> commit(tokens %s, duration %s)", msg.sender, tokens, duration);
+        require(tokens > 0, "tokens must be > 0");
+        require(duration > 0, "duration must be > 0");
+        require(ogToken.transferFrom(msg.sender, address(this), tokens), "OG transferFrom failed");
+        _changeCommitment(msg.sender, tokens, 0, false, duration);
+    }
+    function recommit(uint duration) public {
+        // console.log("        > %s -> recommit(duration %s)", msg.sender, duration);
+        require(accounts[msg.sender].balance > 0, "No balance to recommit");
+        _changeCommitment(msg.sender, 0, 0, false, duration);
+    }
+    function uncommit(uint tokens) public {
+        // console.log("        > %s -> uncommit(tokens %s)", msg.sender, tokens);
+        require(tokens > 0, "tokens must be > 0");
+        require(accounts[msg.sender].balance > 0, "No balance to uncommit");
+        _changeCommitment(msg.sender, 0, tokens, tokens == accounts[msg.sender].balance, 0);
+        emit Transfer(msg.sender, address(0), tokens);
+    }
+    function uncommitAll() public {
+        uint tokens = accounts[msg.sender].balance;
+        uint ogdTokens = ogdToken.balanceOf(msg.sender);
+        if (ogdTokens < tokens) {
+            tokens = ogdTokens;
+        }
+        // console.log("        > %s -> uncommitAll(tokens %s)", msg.sender, tokens);
+        require(tokens > 0, "No balance to uncommit");
+        _changeCommitment(msg.sender, 0, tokens, true, 0);
+        emit Transfer(msg.sender, address(0), tokens);
+    }
+    function uncommitFor(address tokenOwner) public {
+        // console.log("        > %s -> uncommitFor(%s)", msg.sender, tokenOwner);
+        require(accounts[tokenOwner].balance > 0, "tokenOwner has no balance to tidy");
+        _changeCommitment(tokenOwner, 0, 0, false, 0);
     }
 
-    function uncommit(uint tokens) public {
-        Account storage user = accounts[msg.sender];
-        require(tokens <= user.balance, "Insufficient tokens");
-        require(block.timestamp > user.end, "Account not ended");
-        uint elapsed = block.timestamp.sub(uint(user.end).sub(uint(user.duration)));
-        uint reward = elapsed.mul(rewardsPerSecond).mul(user.votes).div(totalVotes);
-        if (reward > rewardPool) {
-            reward = rewardPool;
-        }
-        if (reward > 0) {
-            rewardPool = rewardPool.sub(reward);
-        }
-        totalVotes = totalVotes.sub(user.votes);
-        if (user.delegatee != address(0)) {
-            accounts[user.delegatee].delegatedVotes = accounts[user.delegatee].delegatedVotes.sub(user.votes);
-        }
-        user.balance = user.balance.sub(tokens);
-        if (user.balance == 0) {
-            user.duration = 0;
-            user.end = 0;
-            user.votes = 0;
-        } else {
-            // NOTE Rolling over remaining balance for previous duration
-            user.end = uint64(block.timestamp.add(uint(user.duration)));
-            user.votes = user.balance.mul(uint(user.duration)).div(SECONDS_PER_YEAR);
-            totalVotes = totalVotes.add(user.votes);
-            if (user.delegatee != address(0)) {
-                accounts[user.delegatee].delegatedVotes = accounts[user.delegatee].delegatedVotes.add(user.votes);
-            }
-        }
-        require(ogdToken.withdrawDividendsFor(msg.sender, msg.sender), "OGD withdrawDividendsFor failed");
-        require(ogdToken.transferFrom(msg.sender, address(0), tokens), "OGD transfer failed");
-        require(ogToken.transfer(msg.sender, tokens), "OG transfer failed");
-        require(ogToken.mint(msg.sender, reward), "OG mint failed");
-        emit Uncommitted(msg.sender, tokens, user.balance, user.duration, user.end, user.votes, rewardPool, totalVotes);
-    }
 
     function propose(string memory description, address[] memory targets, uint[] memory values, bytes[] memory data) public returns(uint) {
         // require(accounts[msg.sender].votes >= totalVotes.mul(proposalThreshold).div(10 ** 18), "OptinoGov: Not enough votes to propose");

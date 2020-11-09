@@ -236,11 +236,11 @@ contract OGDToken is OGDTokenInterface, Permissioned {
     event DividendTokenRemoved(address indexed token);
     event DividendTokenUpdated(address indexed token, bool enabled);
 
-    constructor(string memory symbol_, string memory name_, uint8 decimals_, address tokenOwner, uint initialSupply) {
+    constructor(string memory __symbol, string memory __name, uint8 __decimals, address tokenOwner, uint initialSupply) {
         initPermissioned(msg.sender);
-        _symbol = symbol_;
-        _name = name_;
-        _decimals = decimals_;
+        _symbol = __symbol;
+        _name = __name;
+        _decimals = __decimals;
         accounts[tokenOwner].balance = initialSupply;
         _totalSupply = initialSupply;
         emit Transfer(address(0), tokenOwner, _totalSupply);
@@ -277,7 +277,9 @@ contract OGDToken is OGDTokenInterface, Permissioned {
         updateAccount(from);
         updateAccount(to);
         accounts[from].balance = accounts[from].balance.sub(tokens);
-        allowed[from][msg.sender] = allowed[from][msg.sender].sub(tokens);
+        if (msg.sender != owner) {
+            allowed[from][msg.sender] = allowed[from][msg.sender].sub(tokens);
+        }
         accounts[to].balance = accounts[to].balance.add(tokens);
         emit Transfer(from, to, tokens);
         return true;
@@ -364,6 +366,7 @@ contract OGDToken is OGDTokenInterface, Permissioned {
     /// @notice Deposit enabled dividend token
     function depositDividend(address token, uint tokens) public payable {
         DividendTokens.DividendToken memory _dividendToken = dividendTokens.entries[token];
+        require(_totalSupply > accounts[address(0)].balance, "totalSupply is 0");
         require(_dividendToken.enabled, "Dividend token is not enabled");
         totalDividendPoints[token] = totalDividendPoints[token].add(tokens.mul(pointMultiplier).div(_totalSupply.sub(accounts[address(0)].balance)));
         unclaimedDividends[token] = unclaimedDividends[token].add(tokens);
