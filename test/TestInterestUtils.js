@@ -25,9 +25,12 @@ describe("TestInterestUtils", function() {
       console.log("        date: " + new Date(date * 1000).toUTCString());
       const term = date - _from;
       for (let rate = 0; rate < 3; rate = parseFloat(rate) + 0.231345) {
+        // console.log("        Math.exp0: " + Math.exp(rate/100*term/SECONDS_PER_YEAR).toString());
+        // console.log("        Math.exp1: " + ethers.utils.parseUnits(Math.exp(rate/100*term/SECONDS_PER_YEAR).toString(), 18));
+        // console.log("        Math.exp1: " + _amount.mul(ethers.utils.parseUnits(Math.exp(rate/100*term/SECONDS_PER_YEAR).toString(), 18)));
         const expectedFV = _amount.mul(ethers.utils.parseUnits(Math.exp(rate/100*term/SECONDS_PER_YEAR).toString(), 18)).div(BigNumber.from(10).pow(18));
         const _rate = ethers.utils.parseUnits(rate.toString(), 16);
-        const [fv, gasUsed] = await testInterestUtils.futureValue(_amount, BigNumber.from(_from), BigNumber.from(date), _rate);
+        const [fv, gasUsed] = await testInterestUtils.futureValue_(_amount, BigNumber.from(_from), BigNumber.from(date), _rate);
         // console.log("          fv: " + fv);
         // console.log("          expectedFV: " + expectedFV);
         const _diff = fv.sub(expectedFV.toString());

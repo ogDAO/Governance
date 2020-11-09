@@ -2776,22 +2776,23 @@ library ABDKMathQuad {
 pragma solidity ^0.7.0;
 
 // Use prefix "./" normally and "https://github.com/ogDAO/Governance/blob/master/contracts/" in Remix
-// import "./SafeMath.sol";
 
-
-// import "hardhat/console.sol";
 
 /// @notice Interest calculation utilities
 // SPDX-License-Identifier: GPLv2
-library InterestUtils {
+contract InterestUtils {
     using ABDKMathQuad for bytes16;
+    bytes16 immutable ten_18 = ABDKMathQuad.fromUInt(10**18);
+    bytes16 immutable days_365 = ABDKMathQuad.fromUInt(365 days);
 
-    /// @notice fv = pv * exp(rate% x termInYears)
-    function futureValue(uint amount, uint from, uint to, uint rate) internal view returns (uint) {
+    /// @notice futureValue = presentValue x exp(rate% x termInYears)
+    function futureValue(uint presentValue, uint from, uint to, uint rate) internal view returns (uint) {
         require(from <= to, "Invalid date range");
-        bytes16 i = ABDKMathQuad.fromUInt(rate).div(ABDKMathQuad.fromUInt(10**18));
-        bytes16 t = ABDKMathQuad.fromUInt(to - from).div(ABDKMathQuad.fromUInt(365 days));
-        bytes16 fv = ABDKMathQuad.fromUInt(amount).mul(ABDKMathQuad.exp(i.mul(t)));
+        bytes16 i = ABDKMathQuad.fromUInt(rate).div(ten_18);
+        bytes16 t = ABDKMathQuad.fromUInt(to - from).div(days_365);
+        // bytes16 i = ABDKMathQuad.fromUInt(rate).div(ABDKMathQuad.fromUInt(10**18));
+        // bytes16 t = ABDKMathQuad.fromUInt(to - from).div(ABDKMathQuad.fromUInt(365 days));
+        bytes16 fv = ABDKMathQuad.fromUInt(presentValue).mul(ABDKMathQuad.exp(i.mul(t)));
         return fv.toUInt();
     }
 }
@@ -2888,7 +2889,7 @@ contract OptinoGovConfig {
 
 /// @notice Optino Governance. (c) The Optino Project 2020
 // SPDX-License-Identifier: GPLv2
-contract OptinoGov is ERC20, OptinoGovConfig {
+contract OptinoGov is ERC20, OptinoGovConfig, InterestUtils {
     using SafeMath for uint;
 
     struct Account {

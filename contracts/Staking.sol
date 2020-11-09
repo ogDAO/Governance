@@ -12,7 +12,7 @@ import "./InterestUtils.sol";
 import "./CurveInterface.sol";
 
 // SPDX-License-Identifier: GPLv2
-contract Staking is ERC20, Owned {
+contract Staking is ERC20, Owned, InterestUtils {
     using SafeMath for uint;
 
     // Token { dataType 1, address tokenAddress }

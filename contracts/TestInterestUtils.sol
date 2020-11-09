@@ -6,8 +6,8 @@ import "hardhat/console.sol";
 import "./InterestUtils.sol";
 
 // SPDX-License-Identifier: GPLv2
-contract TestInterestUtils {
-    function futureValue(uint amount, uint from, uint to, uint rate) public view returns (uint _futureValue, uint _gasUsed) {
+contract TestInterestUtils is InterestUtils {
+    function futureValue_(uint amount, uint from, uint to, uint rate) public view returns (uint _futureValue, uint _gasUsed) {
         uint gasStart = gasleft();
         _futureValue = InterestUtils.futureValue(amount, from, to, rate);
         _gasUsed = gasStart - gasleft();

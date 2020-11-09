@@ -80,7 +80,7 @@ contract OptinoGovConfig {
 
 /// @notice Optino Governance. (c) The Optino Project 2020
 // SPDX-License-Identifier: GPLv2
-contract OptinoGov is ERC20, OptinoGovConfig {
+contract OptinoGov is ERC20, OptinoGovConfig, InterestUtils {
     using SafeMath for uint;
 
     struct Account {
