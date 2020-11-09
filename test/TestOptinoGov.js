@@ -94,7 +94,7 @@ describe("TestOptinoGov", function() {
     console.log("");
   });
 
-  describe.only("TestOptinoGov - Workflow #0", function() {
+  describe("TestOptinoGov - Workflow #0", function() {
     it("Workflow #0", async function() {
       console.log("        --- Test 1 - User{1..3} commit OGTokens for {5, 50, 500} seconds duration ---");
       const tokensToCommit = ethers.utils.parseUnits("1000", 18);
@@ -249,7 +249,7 @@ describe("TestOptinoGov", function() {
     });
   });
 
-  describe("TestOptinoGov - Workflow #2 - Developing", function() {
+  describe.only("TestOptinoGov - Workflow #2 - Developing", function() {
     it("Workflow #2 - Developing", async function() {
       console.log("        --- Test 1 - User{1..3} commit 1,000 OGTokens for {3m, 1y, 15m} seconds duration ---");
       let duration1 = 2;

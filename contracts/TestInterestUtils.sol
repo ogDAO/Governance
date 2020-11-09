@@ -7,9 +7,9 @@ import "./InterestUtils.sol";
 
 // SPDX-License-Identifier: GPLv2
 contract TestInterestUtils {
-    function futureValue(uint amount, uint from, uint to, uint rate, uint secondsPerPeriod) external view returns (uint _futureValue, uint _gasUsed) {
+    function futureValue(uint amount, uint from, uint to, uint rate/*, uint secondsPerPeriod*/) external view returns (uint _futureValue, uint _gasUsed) {
         uint gasStart = gasleft();
-        _futureValue = InterestUtils.futureValue(amount, from, to, rate, secondsPerPeriod);
+        _futureValue = InterestUtils.futureValue(amount, from, to, rate/*, secondsPerPeriod*/);
         _gasUsed = gasStart - gasleft();
         // console.log("        amount: %s, futureValue: %s, gasUsed: %s", amount, _futureValue, _gasUsed);
         // console.log("        from: %s, to: %s, diff: %s", from, to, (to - from));
