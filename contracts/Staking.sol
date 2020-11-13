@@ -6,6 +6,7 @@ import "hardhat/console.sol";
 // Use prefix "./" normally and "https://github.com/ogDAO/Governance/blob/master/contracts/" in Remix
 import "./SafeMath.sol";
 import "./OGTokenInterface.sol";
+import "./OGDTokenInterface.sol";
 import "./StakingFactoryInterface.sol";
 import "./Owned.sol";
 import "./InterestUtils.sol";
@@ -46,6 +47,7 @@ contract Staking is ERC20, Owned, InterestUtils {
 
     uint public id;
     OGTokenInterface public ogToken;
+    OGDTokenInterface public ogdToken;
     CurveInterface public stakingRewardCurve;
     StakingInfo public stakingInfo;
 
@@ -64,10 +66,11 @@ contract Staking is ERC20, Owned, InterestUtils {
 
     constructor() {
     }
-    function initStaking(uint _id, OGTokenInterface _ogToken, uint dataType, address[4] memory addresses, uint[6] memory uints, string[4] memory strings) public {
+    function initStaking(uint _id, OGTokenInterface _ogToken, OGDTokenInterface _ogdToken, uint dataType, address[4] memory addresses, uint[6] memory uints, string[4] memory strings) public {
         initOwned(msg.sender);
         id = _id;
         ogToken = _ogToken;
+        ogdToken = _ogdToken;
         stakingRewardCurve = CurveInterface(0);
         stakingInfo = StakingInfo(dataType, addresses, uints, strings[0], strings[1], strings[2], strings[3]);
     }
@@ -247,9 +250,14 @@ contract Staking is ERC20, Owned, InterestUtils {
             require(withdrawTokens <= account.balance, "Unsufficient staked balance");
         }
         updateStatsBefore(account, tokenOwner);
-        (uint reward, /*uint term*/) = _calculateReward(account, tokenOwner, account.balance);
+        (uint reward, uint term) = _calculateReward(account, tokenOwner, account.balance);
         uint rewardWithSlashingFactor;
-        // console.log("        >     reward %s", reward);
+        console.log("        >     reward %s for %s seconds", reward, term);
+        uint availableToMint = StakingFactoryInterface(owner).availableOGTokensToMint();
+        console.log("        >     availableToMint %s", availableToMint);
+        if (reward > availableToMint) {
+            reward = availableToMint;
+        }
         if (withdrawRewards) {
             if (reward > 0) {
                 rewardWithSlashingFactor = reward.sub(reward.mul(slashingFactor).div(10**18));
@@ -260,6 +268,7 @@ contract Staking is ERC20, Owned, InterestUtils {
                 StakingFactoryInterface(owner).mintOGTokens(address(this), reward);
                 account.balance = account.balance.add(reward);
                 _totalSupply = _totalSupply.add(reward);
+                StakingFactoryInterface(owner).mintOGDTokens(tokenOwner, reward);
                 emit Transfer(address(0), tokenOwner, reward);
             }
         }
@@ -278,6 +287,7 @@ contract Staking is ERC20, Owned, InterestUtils {
                 account.balance = account.balance.add(depositTokens);
             }
             if (depositTokens > 0) {
+                StakingFactoryInterface(owner).mintOGDTokens(tokenOwner, depositTokens);
                 _totalSupply = _totalSupply.add(depositTokens);
                 emit Transfer(address(0), tokenOwner, depositTokens);
             }
@@ -300,6 +310,9 @@ contract Staking is ERC20, Owned, InterestUtils {
             // TODO: Check
             account.duration = uint64(0);
             account.end = uint64(block.timestamp);
+            StakingFactoryInterface(owner).withdrawDividendsAndBurnOGDTokensFor(tokenOwner, withdrawTokens);
+            // require(ogdToken.withdrawDividendsFor(tokenOwner, tokenOwner), "OGD withdrawDividendsFor failed");
+            // require(ogdToken.transferFrom(tokenOwner, address(0), withdrawTokens), "OGD transfer failed");
             uint tokensWithSlashingFactor = withdrawTokens.sub(withdrawTokens.mul(slashingFactor).div(10**18));
             require(ogToken.transfer(tokenOwner, tokensWithSlashingFactor), "OG transfer failed");
             emit Unstaked(msg.sender, withdrawTokens, reward, tokensWithSlashingFactor, rewardWithSlashingFactor);

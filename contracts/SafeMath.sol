@@ -19,4 +19,10 @@ library SafeMath {
         require(b > 0, "Divide by 0");
         c = a / b;
     }
+    function max(uint a, uint b) internal pure returns (uint c) {
+        c = a >= b ? a : b;
+    }
+    function min(uint a, uint b) internal pure returns (uint c) {
+        c = a <= b ? a : b;
+    }
 }

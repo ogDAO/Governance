@@ -7,6 +7,7 @@ let SimpleCurve;
 let Staking;
 let StakingFactory;
 let OGToken;
+let OGDToken;
 let TestToken;
 let data;
 const verbose = false;
@@ -14,6 +15,7 @@ const verbose = false;
 describe("TestStakingFactory", function() {
   beforeEach("Setup", async function() {
     OGToken = await ethers.getContractFactory("OGToken");
+    OGDToken = await ethers.getContractFactory("OGDToken");
     SimpleCurve = await ethers.getContractFactory("SimpleCurve");
     Staking = await ethers.getContractFactory("Staking");
     StakingFactory = await ethers.getContractFactory("StakingFactory");
@@ -26,13 +28,14 @@ describe("TestStakingFactory", function() {
     let stakingRewardRates = [BigNumber.from(SECONDS_PER_YEAR).mul(BigNumber.from(10).pow(10)), BigNumber.from(2 * SECONDS_PER_YEAR).mul(BigNumber.from(10).pow(10)), BigNumber.from(3 * SECONDS_PER_YEAR).mul(BigNumber.from(10).pow(10))];
     const setup1a = [];
     setup1a.push(OGToken.deploy("OG", "Optino Governance", 18, data.owner, ethers.utils.parseUnits("0", 18)));
+    setup1a.push(OGDToken.deploy("OGD", "Optino Governance Dividend", 18, data.owner, ethers.utils.parseUnits("0", 18)));
     setup1a.push(SimpleCurve.deploy(stakingRewardTerms, stakingRewardRates));
     setup1a.push(TestToken.deploy("FEE0", "Fee0", 18, data.owner, ethers.utils.parseUnits("100", 18)));
-    const [ogToken, stakingRewardCurve, fee0Token] = await Promise.all(setup1a);
+    const [ogToken, ogdToken, stakingRewardCurve, fee0Token] = await Promise.all(setup1a);
     const setup1b = [];
-    setup1b.push(StakingFactory.deploy(ogToken.address, stakingRewardCurve.address));
+    setup1b.push(StakingFactory.deploy(ogToken.address, ogdToken.address, stakingRewardCurve.address));
     const [stakingFactory] = await Promise.all(setup1b);
-    await data.setStakingFactoryData(ogToken, stakingRewardCurve, fee0Token, stakingFactory);
+    await data.setStakingFactoryData(ogToken, ogdToken, stakingRewardCurve, fee0Token, stakingFactory);
 
     await data.printTxData("ogTokenTx", ogToken.deployTransaction);
     await data.printTxData("fee0TokenTx", fee0Token.deployTransaction);
@@ -41,8 +44,10 @@ describe("TestStakingFactory", function() {
 
     await console.log("        --- Setup 2 - OGToken mint(...) permissioning ---");
     const setup2 = [];
-    setup2.push(data.ogToken.setPermission(data.owner, 1, true, 0));
-    setup2.push(data.ogToken.setPermission(stakingFactory.address, 1, true, 0));
+    setup2.push(data.ogToken.setPermission(data.owner, 1, true, ethers.utils.parseUnits("0", 18)));
+    setup2.push(data.ogToken.setPermission(stakingFactory.address, 1, true, ethers.utils.parseUnits("100", 18)));
+    setup2.push(data.ogdToken.setPermission(stakingFactory.address, 1, true, ethers.utils.parseUnits("123456", 18)));
+    setup2.push(data.ogdToken.setPermission(stakingFactory.address, 2, true, ethers.utils.parseUnits("123456", 18)));
     const [setPermission1, setPermission2] = await Promise.all(setup2);
     await data.printTxData("setPermission1", setPermission1);
     await data.printTxData("setPermission2", setPermission2);
@@ -262,7 +267,7 @@ describe("TestStakingFactory", function() {
     });
   });
 
-  describe("TestStakingFactory - Workflow #3 - Stake, slash and unstake", function() {
+  describe.only("TestStakingFactory - Workflow #3 - Stake, slash and unstake", function() {
     it("Workflow #3 - Stake, slash and unstake", async function() {
       console.log("        --- Test 1 - Mint 10,000 OG tokens for User{1..3}; User{1..3} approve 10,000 FEE for StakingFactory to spend ---");
       const ogTokens = ethers.utils.parseUnits("10000", 18);
@@ -366,23 +371,23 @@ describe("TestStakingFactory", function() {
       await data.printTxData("addStake2", addStake2);
       await data.printBalances();
 
-      console.log("        --- Test 4 - User1 -> restake(4) ---");
-      duration = 6;
-      const test4 = [];
-      test4.push(stakings[0].connect(data.user1Signer).restake(duration));
-      const [restake1] = await Promise.all(test4);
-      await data.printTxData("restake1", restake1);
-      await data.printBalances();
-
-      console.log("        --- Test 5 - User1 -> unstake(1,000) ---");
-      let ogTokensToUnstake = ethers.utils.parseUnits("1000", 18);
-      data.pause("Waiting", duration + 1);
-      await data.printBalances();
-      const test5 = [];
-      test5.push(stakings[0].connect(data.user1Signer).unstake(ogTokensToUnstake));
-      const [unstake1] = await Promise.all(test5);
-      await data.printTxData("unstake1", unstake1);
-      await data.printBalances();
+      // console.log("        --- Test 4 - User1 -> restake(4) ---");
+      // duration = 4;
+      // const test4 = [];
+      // test4.push(stakings[0].connect(data.user1Signer).restake(duration));
+      // const [restake1] = await Promise.all(test4);
+      // await data.printTxData("restake1", restake1);
+      // await data.printBalances();
+      //
+      // console.log("        --- Test 5 - User1 -> unstake(1,000) ---");
+      // let ogTokensToUnstake = ethers.utils.parseUnits("1000", 18);
+      // data.pause("Waiting", duration + 1);
+      // await data.printBalances();
+      // const test5 = [];
+      // test5.push(stakings[0].connect(data.user1Signer).unstake(ogTokensToUnstake));
+      // const [unstake1] = await Promise.all(test5);
+      // await data.printTxData("unstake1", unstake1);
+      // await data.printBalances();
 
       console.log("        --- Test 6 - User1 -> unstakeAll() ---");
       data.pause("Waiting", duration + 1);

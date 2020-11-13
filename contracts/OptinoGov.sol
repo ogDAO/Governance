@@ -180,7 +180,8 @@ contract OptinoGov is ERC20, OptinoGovConfig, InterestUtils {
     }
 
     function delegate(address delegatee) public {
-        require(accounts[delegatee].end != 0, "delegatee is not registered");
+        require(delegatee == address(0) || accounts[delegatee].end != 0, "delegatee is not registered");
+        require(msg.sender != delegatee, "Cannot delegate to self");
         Account storage account = accounts[msg.sender];
         require(uint(account.lastVoted) + votingDuration < block.timestamp, "Cannot delegate after recent vote");
         require(uint(account.lastDelegated) + votingDuration < block.timestamp, "Cannot vote after recent delegation");
@@ -246,8 +247,13 @@ contract OptinoGov is ERC20, OptinoGovConfig, InterestUtils {
             require(withdrawTokens <= account.balance, "Unsufficient staked balance");
         }
         updateStatsBefore(account);
-        (uint reward, /*uint term*/) = _calculateReward(account);
-        // console.log("        >     reward %s for %s seconds", reward, term);
+        (uint reward, uint term) = _calculateReward(account);
+        console.log("        >     reward %s for %s seconds", reward, term);
+        uint availableToMint = ogToken.availableToMint();
+        console.log("        >     availableToMint %s", availableToMint);
+        if (reward > availableToMint) {
+            reward = availableToMint;
+        }
         if (reward > 0) {
             if (withdrawRewards) {
                 require(ogToken.mint(tokenOwner, reward), "reward OG mint failed");
@@ -309,8 +315,9 @@ contract OptinoGov is ERC20, OptinoGovConfig, InterestUtils {
             // TODO: Check
             account.duration = uint64(0);
             account.end = uint64(block.timestamp);
-            require(ogdToken.withdrawDividendsFor(tokenOwner, tokenOwner), "OGD withdrawDividendsFor failed");
-            require(ogdToken.transferFrom(tokenOwner, address(0), withdrawTokens), "OGD transfer failed");
+            require(ogdToken.withdrawDividendsAndBurnFor(tokenOwner, withdrawTokens), "OG withdrawDividendsAndBurnFor failed");
+            // require(ogdToken.withdrawDividendsFor(tokenOwner, tokenOwner), "OGD withdrawDividendsFor failed");
+            // require(ogdToken.transferFrom(tokenOwner, address(0), withdrawTokens), "OGD transfer failed");
             require(ogToken.transfer(tokenOwner, withdrawTokens), "OG transfer failed");
             // TODO Uncommit
         //     emit Unstaked(msg.sender, withdrawTokens, reward, tokensWithSlashingFactor, rewardWithSlashingFactor);

@@ -7,6 +7,7 @@ let InterestUtils;
 
 describe("TestInterestUtils", function() {
   it("TestInterestUtils - #0", async function() {
+    Decimal.set({ precision: 30 });
     const SECONDS_PER_DAY = 60 * 60 * 24;
     const SECONDS_PER_YEAR = 365 * SECONDS_PER_DAY;
 
@@ -26,7 +27,8 @@ describe("TestInterestUtils", function() {
       console.log("        date: " + new Date(date * 1000).toUTCString());
       const term = date - _from;
       for (let rate = 0; rate < 3; rate = parseFloat(rate) + 0.231345) {
-        const exp = Decimal.exp(rate*term/SECONDS_PER_YEAR/100);
+        const exp = Decimal.exp(new Decimal(rate).mul(term).div(SECONDS_PER_YEAR).div(100));
+        // console.log("      > exp: " + exp.toPrecision(30));
         const expectedFV = exp.mul(_amount.toString());
         const _rate = ethers.utils.parseUnits(rate.toString(), 16);
         const [fv, gasUsed] = await testInterestUtils.futureValue_(_amount, BigNumber.from(_from), BigNumber.from(date), _rate);

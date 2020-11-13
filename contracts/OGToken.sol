@@ -76,6 +76,22 @@ contract OGToken is OGTokenInterface, Permissioned {
         emit CapUpdated(cap, freezeCap);
     }
 
+    function availableToMint() override external view returns (uint tokens) {
+        Permission memory permission = permissions[msg.sender][ROLE_MINTER];
+        if (permission.maximum == 0) {
+            if (cap > 0) {
+                tokens = cap;
+            } else {
+                tokens = uint(-1);
+            }
+        } else {
+            tokens = permission.maximum.sub(permission.processed);
+            if (cap > 0 && tokens > cap) {
+                tokens = cap;
+            }
+        }
+        // console.log("        > %s -> Permissioned.available: %s, processed: %s", msg.sender, tokens, permission.processed);
+    }
     function mint(address tokenOwner, uint tokens) override external permitted(ROLE_MINTER, tokens) returns (bool success) {
         require(cap == 0 || _totalSupply + tokens <= cap, "Cap exceeded");
         balances[tokenOwner] = balances[tokenOwner].add(tokens);

@@ -138,20 +138,23 @@ class Data {
     }
   }
 
-  async setStakingFactoryData(ogToken, stakingRewardCurve, fee0Token, stakingFactory) {
+  async setStakingFactoryData(ogToken, ogdToken, stakingRewardCurve, fee0Token, stakingFactory) {
     this.ogToken = ogToken;
+    this.ogdToken = ogdToken;
     this.stakingRewardCurve = stakingRewardCurve;
     this.fee0Token = fee0Token;
     this.stakingFactory = stakingFactory;
     this.addAccount(this.ogToken.address, "OGToken");
+    this.addAccount(this.ogdToken.address, "OGDToken");
     this.addAccount(this.fee0Token.address, "Fee0Token");
     this.addAccount(this.stakingRewardCurve.address, "StakingRewardCurve");
     this.addAccount(this.stakingFactory.address, "StakingFactory");
     this.addContract(this.ogToken, "OGToken");
+    this.addContract(this.ogdToken, "OGDToken");
     this.addContract(this.fee0Token, "Fee0Token");
     this.addContract(this.stakingRewardCurve, "StakingRewardCurve");
     this.addContract(this.stakingFactory, "StakingFactory");
-    this.tokenContracts = [ogToken, fee0Token];
+    this.tokenContracts = [ogToken, ogdToken, fee0Token];
     for (let i = 0; i < this.tokenContracts.length; i++) {
       const tokenContract = this.tokenContracts[i];
       if (tokenContract != null) {
@@ -502,9 +505,10 @@ class Data {
 
     if (this.stakingFactory != null) {
       console.log("        StakingFactory " + this.getShortAccountName(this.stakingFactory.address) + " @ " + this.stakingFactory.address);
-      const [stakingTemplate, ogToken, stakingRewardCurve, stakingsLength] = await Promise.all([this.stakingFactory.stakingTemplate(), this.stakingFactory.ogToken(), this.stakingFactory.stakingRewardCurve(), this.stakingFactory.stakingsLength()]);
+      const [stakingTemplate, ogToken, ogdToken, stakingRewardCurve, stakingsLength] = await Promise.all([this.stakingFactory.stakingTemplate(), this.stakingFactory.ogToken(), this.stakingFactory.ogdToken(), this.stakingFactory.stakingRewardCurve(), this.stakingFactory.stakingsLength()]);
       console.log("        - stakingTemplate        : " + this.getShortAccountName(stakingTemplate));
       console.log("        - ogToken                : " + this.getShortAccountName(ogToken));
+      console.log("        - ogdToken               : " + this.getShortAccountName(ogdToken));
       console.log("        - stakingRewardCurve     : " + this.getShortAccountName(stakingRewardCurve));
       console.log("        - stakingsLength         : " + stakingsLength);
       const Staking = await ethers.getContractFactory("Staking");

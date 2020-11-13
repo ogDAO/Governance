@@ -7,6 +7,7 @@ pragma experimental ABIEncoderV2;
 import "./ERC20.sol";
 import "./CloneFactory.sol";
 import "./OGTokenInterface.sol";
+import "./OGDTokenInterface.sol";
 import "./Owned.sol";
 import "./Staking.sol";
 import "./CurveInterface.sol";
@@ -15,6 +16,7 @@ import "./CurveInterface.sol";
 contract StakingFactory is CloneFactory, Owned {
     Staking public stakingTemplate;
     OGTokenInterface public ogToken;
+    OGDTokenInterface public ogdToken;
     CurveInterface public stakingRewardCurve;
 
     mapping(bytes32 => Staking) public stakings;
@@ -23,9 +25,10 @@ contract StakingFactory is CloneFactory, Owned {
 
     event StakingCreated(bytes32 indexed key, Staking indexed staking);
 
-    constructor(OGTokenInterface _ogToken, CurveInterface _stakingRewardCurve) {
+    constructor(OGTokenInterface _ogToken, OGDTokenInterface _ogdToken, CurveInterface _stakingRewardCurve) {
         initOwned(msg.sender);
         ogToken = _ogToken;
+        ogdToken = _ogdToken;
         stakingRewardCurve = _stakingRewardCurve;
         stakingTemplate = new Staking();
     }
@@ -55,7 +58,7 @@ contract StakingFactory is CloneFactory, Owned {
         staking = stakings[key];
         if (address(staking) == address(0)) {
             staking = Staking(createClone(address(stakingTemplate)));
-            staking.initStaking(stakingsIndex.length, ogToken, dataType, addresses, uints, strings);
+            staking.initStaking(stakingsIndex.length, ogToken, ogdToken, dataType, addresses, uints, strings);
             stakings[key] = staking;
             stakingsIndex.push(key);
             contracts[staking] = true;
@@ -69,10 +72,25 @@ contract StakingFactory is CloneFactory, Owned {
         staking.slash(slashingFactor);
     }
 
+    function availableOGTokensToMint() external view returns (uint tokens) {
+        tokens = ogToken.availableToMint();
+    }
     function mintOGTokens(address tokenOwner, uint tokens) public {
         require(contracts[Staking(msg.sender)], "Caller not child");
         console.log("        >   %s -> StakingFactory.mintOGTokens(%s, %s)", msg.sender, tokenOwner, tokens);
         require(ogToken.mint(tokenOwner, tokens), "OG mint failed");
+    }
+    function mintOGDTokens(address tokenOwner, uint tokens) public {
+        require(contracts[Staking(msg.sender)], "Caller not child");
+        console.log("        >   %s -> StakingFactory.mintOGDTokens(%s, %s)", msg.sender, tokenOwner, tokens);
+        require(ogdToken.mint(tokenOwner, tokens), "OG mint failed");
+    }
+    function withdrawDividendsAndBurnOGDTokensFor(address tokenOwner, uint tokens) public {
+        require(contracts[Staking(msg.sender)], "Caller not child");
+        console.log("        >   %s -> StakingFactory.withdrawDividendsAndBurnOGDTokensFor(tokenOwner %s, tokens %s)", msg.sender, tokenOwner, tokens);
+        require(ogdToken.withdrawDividendsAndBurnFor(tokenOwner, tokens), "OG withdrawDividendsAndBurnFor failed");
+        // require(ogdToken.withdrawDividendsFor(tokenOwner, tokenOwner), "OGD withdrawDividendsFor failed");
+        // require(ogdToken.transferFrom(tokenOwner, address(0), withdrawTokens), "OGD transfer failed");
     }
 
     // function addStakeForGeneral(uint tokens, uint dataType, address[4] memory addresses, uint[6] memory uints, string[4] memory strings) external {

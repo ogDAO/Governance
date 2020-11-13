@@ -1,5 +1,7 @@
 pragma solidity ^0.7.0;
 
+// import "hardhat/console.sol";
+
 import "./SafeMath.sol";
 import "./Owned.sol";
 
@@ -24,7 +26,7 @@ contract Permissioned is Owned {
 
     modifier permitted(uint role, uint tokens) {
         Permission storage permission = permissions[msg.sender][role];
-        require(permission.active && (permission.maximum == 0 || permission.processed + tokens < permission.maximum), "Not permissioned");
+        require(permission.active && (permission.maximum == 0 || permission.processed + tokens <= permission.maximum), "Not permissioned");
         permission.processed = permission.processed.add(tokens);
         _;
     }
@@ -39,4 +41,9 @@ contract Permissioned is Owned {
         permissions[account][role] = Permission({ active: active, maximum: maximum, processed: processed });
         emit PermissionUpdated(account, role, active, maximum, processed);
     }
+    // function available(uint role) public view returns (uint tokens) {
+    //     Permission memory permission = permissions[msg.sender][role];
+    //     tokens = permission.maximum == 0 ? uint(-1) : permission.maximum.sub(permission.processed);
+    //     console.log("        > %s -> Permissioned.available: %s, processed: %s", msg.sender, tokens, permission.processed);
+    // }
 }
