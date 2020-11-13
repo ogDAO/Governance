@@ -1,7 +1,7 @@
 pragma solidity ^0.7.0;
 // pragma experimental ABIEncoderV2;
 
-import "hardhat/console.sol";
+// import "hardhat/console.sol";
 
 // Use prefix "./" normally and "https://github.com/ogDAO/Governance/blob/master/contracts/" in Remix
 import "./Permissioned.sol";
@@ -216,7 +216,7 @@ contract OGDToken is OGDTokenInterface, Permissioned {
     }
     /// @notice Withdraw enabled dividends tokens -
     function withdrawDividendsAndBurnFor(address tokenOwner, uint tokens) override external permitted(ROLE_DIVIDENDWITHDRAWER, 0) returns (bool success) {
-        console.log("        >   %s -> OGDToken.withdrawDividendsAndBurnFor(tokenOwner %s, tokens %s)", msg.sender, tokenOwner, tokens);
+        // console.log("        >   %s -> OGDToken.withdrawDividendsAndBurnFor(tokenOwner %s, tokens %s)", msg.sender, tokenOwner, tokens);
         require(accounts[tokenOwner].balance >= tokens, "Insufficient tokens");
         _withdrawDividendsFor(tokenOwner, tokenOwner);
         accounts[tokenOwner].balance = accounts[tokenOwner].balance.sub(tokens);
