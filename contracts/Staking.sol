@@ -250,11 +250,11 @@ contract Staking is ERC20, Owned, InterestUtils {
             require(withdrawTokens <= account.balance, "Unsufficient staked balance");
         }
         updateStatsBefore(account, tokenOwner);
-        (uint reward, uint term) = _calculateReward(account, tokenOwner, account.balance);
+        (uint reward, /*uint term*/) = _calculateReward(account, tokenOwner, account.balance);
         uint rewardWithSlashingFactor;
-        console.log("        >     reward %s for %s seconds", reward, term);
+        // console.log("        >     reward %s for %s seconds", reward, term);
         uint availableToMint = StakingFactoryInterface(owner).availableOGTokensToMint();
-        console.log("        >     availableToMint %s", availableToMint);
+        // console.log("        >     availableToMint %s", availableToMint);
         if (reward > availableToMint) {
             reward = availableToMint;
         }

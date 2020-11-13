@@ -247,10 +247,10 @@ contract OptinoGov is ERC20, OptinoGovConfig, InterestUtils {
             require(withdrawTokens <= account.balance, "Unsufficient staked balance");
         }
         updateStatsBefore(account);
-        (uint reward, uint term) = _calculateReward(account);
-        console.log("        >     reward %s for %s seconds", reward, term);
+        (uint reward, /*uint term*/) = _calculateReward(account);
+        // console.log("        >     reward %s for %s seconds", reward, term);
         uint availableToMint = ogToken.availableToMint();
-        console.log("        >     availableToMint %s", availableToMint);
+        // console.log("        >     availableToMint %s", availableToMint);
         if (reward > availableToMint) {
             reward = availableToMint;
         }

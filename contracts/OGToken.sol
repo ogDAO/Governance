@@ -90,7 +90,6 @@ contract OGToken is OGTokenInterface, Permissioned {
                 tokens = cap;
             }
         }
-        // console.log("        > %s -> Permissioned.available: %s, processed: %s", msg.sender, tokens, permission.processed);
     }
     function mint(address tokenOwner, uint tokens) override external permitted(ROLE_MINTER, tokens) returns (bool success) {
         require(cap == 0 || _totalSupply + tokens <= cap, "Cap exceeded");

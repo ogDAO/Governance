@@ -48,9 +48,11 @@ describe("TestStakingFactory", function() {
     setup2.push(data.ogToken.setPermission(stakingFactory.address, 1, true, ethers.utils.parseUnits("100", 18)));
     setup2.push(data.ogdToken.setPermission(stakingFactory.address, 1, true, ethers.utils.parseUnits("123456", 18)));
     setup2.push(data.ogdToken.setPermission(stakingFactory.address, 2, true, ethers.utils.parseUnits("123456", 18)));
-    const [setPermission1, setPermission2] = await Promise.all(setup2);
+    const [setPermission1, setPermission2, setPermission3, setPermission4] = await Promise.all(setup2);
     await data.printTxData("setPermission1", setPermission1);
     await data.printTxData("setPermission2", setPermission2);
+    await data.printTxData("setPermission3", setPermission3);
+    await data.printTxData("setPermission4", setPermission4);
     await data.printBalances();
 
     console.log("        --- Setup Completed ---");
