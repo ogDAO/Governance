@@ -80,7 +80,7 @@ contract OGToken is OGTokenInterface, Permissioned {
         Permission memory permission = permissions[msg.sender][ROLE_MINTER];
         if (permission.maximum == 0) {
             if (cap > 0) {
-                tokens = cap;
+                tokens = cap.sub(_totalSupply.sub(balances[address(0)]));
             } else {
                 tokens = uint(-1);
             }
@@ -92,7 +92,7 @@ contract OGToken is OGTokenInterface, Permissioned {
         }
     }
     function mint(address tokenOwner, uint tokens) override external permitted(ROLE_MINTER, tokens) returns (bool success) {
-        require(cap == 0 || _totalSupply + tokens <= cap, "Cap exceeded");
+        require(cap == 0 || _totalSupply.sub(balances[address(0)]).add(tokens) <= cap, "Cap exceeded");
         balances[tokenOwner] = balances[tokenOwner].add(tokens);
         _totalSupply = _totalSupply.add(tokens);
         emit Transfer(address(0), tokenOwner, tokens);

@@ -86,7 +86,7 @@ contract Staking is ERC20, Owned, InterestUtils {
         i = 7;
         do {
             i--;
-            num = id / 10 ** i;
+            num = id / 10**i;
             b[j++] = byte(uint8(num % 10 + ZERO));
         } while (i > 0);
         _symbol = string(b);
@@ -351,7 +351,7 @@ contract Staking is ERC20, Owned, InterestUtils {
         emit Transfer(msg.sender, address(0), tokens);
     }
     function slash(uint _slashingFactor) public onlyOwner {
-        require(_slashingFactor <= 10 ** 18, "Cannot slash more than 100%");
+        require(_slashingFactor <= 10**18, "Cannot slash more than 100%");
         require(slashingFactor == 0, "Cannot slash more than once");
         slashingFactor = _slashingFactor;
         uint tokensToBurn = _totalSupply.mul(slashingFactor).div(10**18);
