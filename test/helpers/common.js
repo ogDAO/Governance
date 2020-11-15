@@ -358,6 +358,22 @@ class Data {
         owner = "n/a";
       }
       console.log("        Token " + i + " symbol: '" + symbol + "', name: '" + name + "', decimals: " + decimals + ", totalSupply: " + ethers.utils.formatUnits(totalSupply, decimals) + ", owner: " + this.getShortAccountName(owner) + ", address: " + this.getShortAccountName(tokenContract.address) + " @ " + tokenContract.address);
+      try {
+        const permissionsLength = await tokenContract.permissionsLength();
+        console.log("          # Account                Role  Active                  Maximum                Processed");
+        console.log("         -- -------------------- ------ ------- ------------------------ ------------------------");
+        for (let j = 0; j < permissionsLength; j++) {
+          const _p = await tokenContract.getPermissionByIndex(j);
+          console.log("         " + this.padLeft(j, 2) + " " +
+            this.padRight(this.getShortAccountName(_p.account), 20) + " " +
+            this.padLeft(_p.role.toString(), 6) + " " +
+            this.padLeft(_p.active.toString(), 7) + " " +
+            this.padLeft(ethers.utils.formatUnits(_p.maximum, 18), 24) + " " +
+            this.padLeft(ethers.utils.formatUnits(_p.processed, 18), 24));
+        }
+        console.log("         -- -------------------- ------ ------- ------------------------ ------------------------");
+      } catch (e) {
+      }
       if (symbol == "OptinoGov" && this.optinoGov != null) {
         let [ogToken, ogdToken, ogRewardCurve, voteWeightCurve, accountsLength, maxDuration, collectRewardForFee, collectRewardForDelay, proposalCost, proposalThreshold] = await Promise.all([this.optinoGov.ogToken(), this.optinoGov.ogdToken(), this.optinoGov.ogRewardCurve(), this.optinoGov.voteWeightCurve(), this.optinoGov.accountsLength(), this.optinoGov.maxDuration(), this.optinoGov.collectRewardForFee(), this.optinoGov.collectRewardForDelay(), this.optinoGov.proposalCost(), this.optinoGov.proposalThreshold()]);
         let [quorum, quorumDecayPerSecond, votingDuration, executeDelay, rewardPool, totalVotes] = await Promise.all([this.optinoGov.quorum(), this.optinoGov.quorumDecayPerSecond(), this.optinoGov.votingDuration(), this.optinoGov.executeDelay(), this.optinoGov.rewardPool(), this.optinoGov.totalVotes()]);

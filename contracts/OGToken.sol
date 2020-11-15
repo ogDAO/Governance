@@ -78,7 +78,8 @@ contract OGToken is OGTokenInterface, Permissioned {
     }
 
     function availableToMint() override external view returns (uint tokens) {
-        Permission memory permission = permissions[msg.sender][ROLE_MINTER];
+        bytes32 key = keccak256(abi.encodePacked(msg.sender, ROLE_MINTER));
+        Permission memory permission = permissions[key];
         if (permission.maximum == 0) {
             if (cap > 0) {
                 tokens = cap.sub(_totalSupply.sub(balances[address(0)]));
