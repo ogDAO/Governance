@@ -72,7 +72,7 @@ contract OGToken is OGTokenInterface, Permissioned {
 
     function setCap(uint _cap, bool _freezeCap) external onlyOwner {
         require(!freezeCap, "Cap frozen");
-        require(_cap > _totalSupply.sub(balances[address(0)]), "cap must be >= totalSupply");
+        require(_cap >= _totalSupply.sub(balances[address(0)]), "cap must be >= totalSupply");
         (cap, freezeCap) = (_cap, _freezeCap);
         emit CapUpdated(cap, freezeCap);
     }
