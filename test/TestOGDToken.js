@@ -1,4 +1,4 @@
-const { ZERO_ADDRESS, Data } = require('./helpers/common');
+const { ZERO_ADDRESS, ROLE_SETPERMISSION, ROLE_SETCONFIG, ROLE_MINTTOKENS, ROLE_BURNTOKENS, ROLE_RECOVERTOKENS, Data } = require('./helpers/common');
 const { expect } = require("chai");
 const { BigNumber } = require("ethers");
 const util = require('util');
@@ -17,10 +17,10 @@ describe("TestOGDToken", function() {
 
     console.log("        --- Setup 1 - Deploy OGDToken, FEE{0..2} ---");
     const setup1 = [];
-    setup1.push(OGDToken.deploy("OGD", "Optino Governance Dividend", 18, data.owner, ethers.utils.parseUnits("0", 18)));
-    setup1.push(TestToken.deploy("FEE0", "Fee0", 18, data.owner, ethers.utils.parseUnits("100", 18)));
-    setup1.push(TestToken.deploy("FEE1", "Fee1", 18, data.owner, ethers.utils.parseUnits("1000", 18)));
-    setup1.push(TestToken.deploy("FEE2", "Fee2", 18, data.owner, ethers.utils.parseUnits("10000", 18)));
+    setup1.push(OGDToken.deploy("OGD", "Optino Governance Dividend", 18, data.deployer, ethers.utils.parseUnits("0", 18)));
+    setup1.push(TestToken.deploy("FEE0", "Fee0", 18, data.deployer, ethers.utils.parseUnits("100", 18)));
+    setup1.push(TestToken.deploy("FEE1", "Fee1", 18, data.deployer, ethers.utils.parseUnits("1000", 18)));
+    setup1.push(TestToken.deploy("FEE2", "Fee2", 18, data.deployer, ethers.utils.parseUnits("10000", 18)));
     const [ogdToken, fee0Token, fee1Token, fee2Token] = await Promise.all(setup1);
     await data.setOGDTokenData(ogdToken, fee0Token, fee1Token, fee2Token);
     await data.printTxData("ogdTokenTx", ogdToken.deployTransaction);
@@ -35,18 +35,20 @@ describe("TestOGDToken", function() {
 
   describe("TestOGDToken - Workflow #0", function() {
     it("Workflow #0", async function() {
-      console.log("        --- Test 1 - OGDToken.addDividendTokens for ETH and FEE0, OGDToken mint(...) permissioning ---");
-      const test1 = [];
-      test1.push(data.ogdToken.addDividendToken(ZERO_ADDRESS));
-      test1.push(data.ogdToken.addDividendToken(data.fee0Token.address));
-      test1.push(data.ogdToken.setPermission(data.owner, 1, true, 0));
-      const [addDividendToken0, addDividendToken1, setPermission1] = await Promise.all(test1);
+      console.log("        --- Test 1 - OGDToken mint(...) permissioning, OGDToken.addDividendTokens for ETH and FEE0 ---");
+      const test1a = [];
+      test1a.push(data.ogdToken.setPermission(data.deployer, ROLE_SETCONFIG, true, 0));
+      test1a.push(data.ogdToken.setPermission(data.deployer, ROLE_MINTTOKENS, true, 0));
+      const [setPermission1, setPermission2] = await Promise.all(test1a);
+      data.printTxData("setPermission1", setPermission1);
+      data.printTxData("setPermission2", setPermission2);
+      const test1b = [];
+      test1b.push(data.ogdToken.addDividendToken(ZERO_ADDRESS));
+      test1b.push(data.ogdToken.addDividendToken(data.fee0Token.address));
+      const [addDividendToken0, addDividendToken1] = await Promise.all(test1b);
       data.printTxData("addDividendToken0", addDividendToken0);
       data.printTxData("addDividendToken1", addDividendToken1);
-      data.printTxData("setPermission1", setPermission1);
-      if (verbose) {
-        await data.printBalances();
-      }
+      await data.printBalances();
 
       console.log("        --- Test 2 - Mint 10,000 OGD tokens for User{1..3}; Owner approve 100 FEE for OGToken to spend ---");
       const ogdTokens = ethers.utils.parseUnits("10000", 18);
@@ -162,18 +164,20 @@ describe("TestOGDToken", function() {
 
   describe("TestOGDToken - Workflow #1 - Transfer Test", function() {
     it("Workflow #1 - Transfer Test", async function() {
-      console.log("        --- Test 1 - OGDToken.addDividendTokens for ETH and FEE0, OGDToken mint(...) permissioning ---");
-      const test1 = [];
-      test1.push(data.ogdToken.addDividendToken(ZERO_ADDRESS));
-      test1.push(data.ogdToken.addDividendToken(data.fee0Token.address));
-      test1.push(data.ogdToken.setPermission(data.owner, 1, true, 0));
-      const [addDividendToken0, addDividendToken1, setPermission1] = await Promise.all(test1);
+      console.log("        --- Test 1 - OGDToken mint(...) permissioning, OGDToken.addDividendTokens for ETH and FEE0 ---");
+      const test1a = [];
+      test1a.push(data.ogdToken.setPermission(data.deployer, ROLE_SETCONFIG, true, 0));
+      test1a.push(data.ogdToken.setPermission(data.deployer, ROLE_MINTTOKENS, true, 0));
+      const [setPermission1, setPermission2] = await Promise.all(test1a);
+      data.printTxData("setPermission1", setPermission1);
+      data.printTxData("setPermission2", setPermission2);
+      const test1b = [];
+      test1b.push(data.ogdToken.addDividendToken(ZERO_ADDRESS));
+      test1b.push(data.ogdToken.addDividendToken(data.fee0Token.address));
+      const [addDividendToken0, addDividendToken1] = await Promise.all(test1b);
       data.printTxData("addDividendToken0", addDividendToken0);
       data.printTxData("addDividendToken1", addDividendToken1);
-      data.printTxData("setPermission1", setPermission1);
-      if (verbose) {
-        await data.printBalances();
-      }
+      await data.printBalances();
 
       // console.log("        --- Setup 3 - Mint 10,000 OGD tokens for User{1..3}; Owner approve 100 FEE for OGToken to spend ---");
       console.log("        --- Test 2 - Mint 10,000 OGD tokens for User{1,2}; Owner approve 100 FEE for OGToken to spend ---");
@@ -231,18 +235,20 @@ describe("TestOGDToken", function() {
 
   describe("TestOGDToken - Workflow #2 - address(0) with balance", function() {
     it("Workflow #1 - Transfer Test", async function() {
-      console.log("        --- Test 1 - OGDToken.addDividendTokens for ETH and FEE0, OGDToken mint(...) permissioning ---");
-      const test1 = [];
-      test1.push(data.ogdToken.addDividendToken(ZERO_ADDRESS));
-      test1.push(data.ogdToken.addDividendToken(data.fee0Token.address));
-      test1.push(data.ogdToken.setPermission(data.owner, 1, true, 0));
-      const [addDividendToken0, addDividendToken1, setPermission1] = await Promise.all(test1);
+      console.log("        --- Test 1 - OGDToken mint(...) permissioning, OGDToken.addDividendTokens for ETH and FEE0 ---");
+      const test1a = [];
+      test1a.push(data.ogdToken.setPermission(data.deployer, ROLE_SETCONFIG, true, 0));
+      test1a.push(data.ogdToken.setPermission(data.deployer, ROLE_MINTTOKENS, true, 0));
+      const [setPermission1, setPermission2] = await Promise.all(test1a);
+      data.printTxData("setPermission1", setPermission1);
+      data.printTxData("setPermission2", setPermission2);
+      const test1b = [];
+      test1b.push(data.ogdToken.addDividendToken(ZERO_ADDRESS));
+      test1b.push(data.ogdToken.addDividendToken(data.fee0Token.address));
+      const [addDividendToken0, addDividendToken1] = await Promise.all(test1b);
       data.printTxData("addDividendToken0", addDividendToken0);
       data.printTxData("addDividendToken1", addDividendToken1);
-      data.printTxData("setPermission1", setPermission1);
-      if (verbose) {
-        await data.printBalances();
-      }
+      await data.printBalances();
 
       console.log("        --- Test 2 - Mint 10,000 OGD tokens for User{1,2,3} and address(0); Owner approve 100 FEE for OGToken to spend ---");
       const ogdTokens = ethers.utils.parseUnits("10000", 18);
