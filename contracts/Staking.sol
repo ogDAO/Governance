@@ -16,6 +16,7 @@ import "./CurveInterface.sol";
 contract Staking is ERC20, Owned, InterestUtils {
     using SafeMath for uint;
 
+    // Contracts { dataType 0, address contractAddress, string name }
     // Token { dataType 1, address tokenAddress }
     // Feed { dataType 2, address feedAddress, uint feedType, uint feedDecimals, string name }
     // Conventions { dataType 3, address [token0, token1], address [feed0, feed1], uint[6] [type0, type1, decimals0, decimals1, inverse0, inverse1], string [feed0Name, feedName2, Market, Convention] }
@@ -220,13 +221,13 @@ contract Staking is ERC20, Owned, InterestUtils {
     // }
 
     function accruedReward(address tokenOwner) public view returns (uint _reward, uint _term) {
-        return _calculateReward(accounts[tokenOwner], accounts[tokenOwner].balance);
+        return _calculateReward(accounts[tokenOwner]);
     }
 
-    function _calculateReward(Account memory account, uint tokens) internal view returns (uint _reward, uint _term) {
+    function _calculateReward(Account memory account) internal view returns (uint _reward, uint _term) {
         uint from = account.end == 0 ? block.timestamp : uint(account.end).sub(uint(account.duration));
-        uint futureValue = InterestUtils.futureValue(tokens, from, block.timestamp, account.rate);
-        _reward = futureValue.sub(tokens);
+        uint futureValue = InterestUtils.futureValue(account.balance, from, block.timestamp, account.rate);
+        _reward = futureValue.sub(account.balance);
         _term = block.timestamp.sub(from);
     }
 
@@ -246,7 +247,7 @@ contract Staking is ERC20, Owned, InterestUtils {
             require(withdrawTokens <= account.balance, "Unsufficient staked balance");
         }
         updateStatsBefore(account, tokenOwner);
-        (uint reward, /*uint term*/) = _calculateReward(account, account.balance);
+        (uint reward, /*uint term*/) = _calculateReward(account);
         uint rewardWithSlashingFactor;
         uint availableToMint = StakingFactoryInterface(owner).availableOGTokensToMint();
         if (reward > availableToMint) {
@@ -347,22 +348,6 @@ contract Staking is ERC20, Owned, InterestUtils {
 }
 
 /*
-// mapping(bytes32 => StakeInfo) public stakeInfoData;
-// bytes32[] public stakeInfoIndex;
-
-// // Token { dataType 1, address tokenAddress }
-// // Feed { dataType 2, address feedAddress, uint feedType, uint feedDecimals, string name }
-// // Conventions { dataType 3, address [token0, token1], address [feed0, feed1], uint[6] [type0, type1, decimals0, decimals1, inverse0, inverse1], string [feed0Name, feedName2, Market, Convention] }
-// // General { dataType 4, address[4] addresses, address [feed0, feed1], uint[6] uints, string[4] strings }
-// struct StakeInfo {
-//     uint dataType;
-//     address[4] addresses;
-//     uint[6] uints;
-//     string string0; // TODO: Check issues using string[4] strings
-//     string string1;
-//     string string2;
-//     string string3;
-// }
 
 struct Account {
     uint64 duration;

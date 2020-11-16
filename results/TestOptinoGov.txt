@@ -22,15 +22,15 @@ $ npx hardhat --verbose --show-stack-traces test test/TestOptinoGov.js > results
         + OGDToken.PermissionUpdated(account: Deployer:0xa00A, role: 0, active: true, maximum: 0, processed: 0)
         + OGDToken.Transfer(from: ETH|null:0x0000, to: Deployer:0xa00A, tokens: 0.0)
         ogRewardCurve.deployTransaction - gasUsed: 833717, fee: 0.06669736, feeUsd: 25.7231708312, @ 80.0 gwei & 385.67 ETH/USD, 0x20fa873abb822147939d552e23165844cc27382e0402cf2e417fe4334ecd716a
-        + OGRewardCurve.PointUpdated(index: 0, term: 86400, rate: 315360000000000000)
-        + OGRewardCurve.PointUpdated(index: 1, term: 31536000, rate: 630720000000000000)
-        + OGRewardCurve.PointUpdated(index: 2, term: 63072000, rate: 946080000000000000)
+        + OGRewardCurve.PointUpdated(index: 0, term: 1d, rate: 31.536%)
+        + OGRewardCurve.PointUpdated(index: 1, term: 1y, rate: 63.072%)
+        + OGRewardCurve.PointUpdated(index: 2, term: 2y, rate: 94.608%)
         voteWeightCurve.deployTransaction - gasUsed: 789336, fee: 0.06314688, feeUsd: 24.3538572096, @ 80.0 gwei & 385.67 ETH/USD, 0xdf94afd57de9e67e3d25d4f1cbaaa15e62f610ab3c297d86940788c42519d737
-        + VoteWeightCurve.PointUpdated(index: 0, term: 86400, rate: 10000000000000000)
-        + VoteWeightCurve.PointUpdated(index: 1, term: 94608000, rate: 10950000000000000000)
+        + VoteWeightCurve.PointUpdated(index: 0, term: 1d, rate: 1.0%)
+        + VoteWeightCurve.PointUpdated(index: 1, term: 3y, rate: 1095.0%)
         fee0Token.deployTransaction - gasUsed: 823708, fee: 0.06589664, feeUsd: 25.4143571488, @ 80.0 gwei & 385.67 ETH/USD, 0xed5ba149a4e4441718db4a4a7342a08d0c164530c6c44a13ab2b78b077f49173
         + Fee0Token.Transfer(from: ETH|null:0x0000, to: Deployer:0xa00A, tokens: 100.0)
-        optinoGov.deployTransaction - gasUsed: 5319533, fee: 0.42556264, feeUsd: 164.1267433688, @ 80.0 gwei & 385.67 ETH/USD, 0x0affebf0b5fb9e8deff7e256ef3bd913b7696dee01fbca97e4fd374d4abd9d91
+        optinoGov.deployTransaction - gasUsed: 5319533, fee: 0.42556264, feeUsd: 164.1267433688, @ 80.0 gwei & 385.67 ETH/USD, 0x50897ab2eceea12a3dbbd3fdefdc187ba7945f2defc43db9be395e09927e6255
         --- Setup 2 - OGToken and OGDToken permissioning ---
         setup2Txs[0] - gasUsed: 78942, fee: 0.00631536, feeUsd: 2.4356448912, @ 80.0 gwei & 385.67 ETH/USD, 0xdcf1bd0bb6a7821b94947c7884ae113f87efa6b38a9933f8a4c9aff34fa76ef3
         + OGToken.PermissionUpdated(account: Deployer:0xa00A, role: 1, active: true, maximum: 0, processed: 0)
@@ -421,17 +421,17 @@ $ npx hardhat --verbose --show-stack-traces test test/TestOptinoGov.js > results
         commit1 - gasUsed: 378022, fee: 0.03024176, feeUsd: 11.6633395792, @ 80.0 gwei & 385.67 ETH/USD, 0x3a614bae46098f4115c0c0bfc824e486ffb0985d0bd4f9302bf46f7799a65052
         + OGToken.Transfer(from: User1:0xa11A, to: OptinoGov:0x7305, tokens: 1000.0)
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User1:0xa11A, tokens: 1000.0)
-        + OptinoGov.Committed(user: User1:0xa11A, tokens: 1000.0, balance: 1000.0, duration: 5, end: 1605499337, delegatee: ETH|null:0x0000, votes: 0.0, rewardPool: 1000000.0, totalVotes: 0.0)
+        + OptinoGov.Committed(user: User1:0xa11A, tokens: 1000.0, balance: 1000.0, duration: 5, end: 1605505269, delegatee: ETH|null:0x0000, votes: 0.0, rewardPool: 1000000.0, totalVotes: 0.0)
         + OptinoGov.Transfer(from: ETH|null:0x0000, to: User1:0xa11A, tokens: 1000.0)
         commit2 - gasUsed: 307222, fee: 0.02457776, feeUsd: 9.4789046992, @ 80.0 gwei & 385.67 ETH/USD, 0x6831859cd708398ae09c70b127fa509beba366c59d06994c7a768b52d7f18ee6
         + OGToken.Transfer(from: User2:0xa22A, to: OptinoGov:0x7305, tokens: 1000.0)
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User2:0xa22A, tokens: 1000.0)
-        + OptinoGov.Committed(user: User2:0xa22A, tokens: 1000.0, balance: 1000.0, duration: 50, end: 1605499383, delegatee: ETH|null:0x0000, votes: 0.0, rewardPool: 1000000.0, totalVotes: 10.0)
+        + OptinoGov.Committed(user: User2:0xa22A, tokens: 1000.0, balance: 1000.0, duration: 50, end: 1605505315, delegatee: ETH|null:0x0000, votes: 0.0, rewardPool: 1000000.0, totalVotes: 10.0)
         + OptinoGov.Transfer(from: ETH|null:0x0000, to: User2:0xa22A, tokens: 1000.0)
         commit3 - gasUsed: 307234, fee: 0.02457872, feeUsd: 9.4792749424, @ 80.0 gwei & 385.67 ETH/USD, 0x093d3e4e6670bf4fcef9aad62a3271f43c92f3793e638fe2f549969e900b9d81
         + OGToken.Transfer(from: User3:0xa33a, to: OptinoGov:0x7305, tokens: 1000.0)
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User3:0xa33a, tokens: 1000.0)
-        + OptinoGov.Committed(user: User3:0xa33a, tokens: 1000.0, balance: 1000.0, duration: 500, end: 1605499834, delegatee: ETH|null:0x0000, votes: 0.0, rewardPool: 1000000.0, totalVotes: 20.0)
+        + OptinoGov.Committed(user: User3:0xa33a, tokens: 1000.0, balance: 1000.0, duration: 500, end: 1605505766, delegatee: ETH|null:0x0000, votes: 0.0, rewardPool: 1000000.0, totalVotes: 20.0)
         + OptinoGov.Transfer(from: ETH|null:0x0000, to: User3:0xa33a, tokens: 1000.0)
         
          # Account                                        ΔETH                OptinoGov                       OG                      OGD                     FEE0
@@ -623,7 +623,7 @@ $ npx hardhat --verbose --show-stack-traces test test/TestOptinoGov.js > results
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User2:0xa22A, tokens: 0.0000400000008)
         + OptinoGov.Transfer(from: ETH|null:0x0000, to: User2:0xa22A, tokens: 0.0000400000008)
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User2:0xa22A, tokens: 1000.0)
-        + OptinoGov.Committed(user: User2:0xa22A, tokens: 1000.0, balance: 2000.0000400000008, duration: 55, end: 1605499392, delegatee: User3:0xa33a, votes: 10.0, rewardPool: 1000000.0, totalVotes: 20.0)
+        + OptinoGov.Committed(user: User2:0xa22A, tokens: 1000.0, balance: 2000.0000400000008, duration: 55, end: 1605505324, delegatee: User3:0xa33a, votes: 10.0, rewardPool: 1000000.0, totalVotes: 20.0)
         + OptinoGov.Transfer(from: ETH|null:0x0000, to: User2:0xa22A, tokens: 1000.0)
         
          # Account                                        ΔETH                OptinoGov                       OG                      OGD                     FEE0
@@ -817,8 +817,8 @@ $ npx hardhat --verbose --show-stack-traces test test/TestOptinoGov.js > results
          -- ---------- ------------------------
         
         --- Test 5 - Owner uncommitFor(user1) for a % fee ---
-        Pausing 'Waiting' for 5s=Mon Nov 16 2020 15:01:54 GMT+1100 (Australian Eastern Daylight Time) now=Mon Nov 16 2020 15:01:49 GMT+1100 (Australian Eastern Daylight Time)
-        Paused 'Waiting' for 5s=Mon Nov 16 2020 15:01:54 GMT+1100 (Australian Eastern Daylight Time) now=Mon Nov 16 2020 15:01:54 GMT+1100 (Australian Eastern Daylight Time)
+        Pausing 'Waiting' for 5s=Mon Nov 16 2020 16:40:46 GMT+1100 (Australian Eastern Daylight Time) now=Mon Nov 16 2020 16:40:41 GMT+1100 (Australian Eastern Daylight Time)
+        Paused 'Waiting' for 5s=Mon Nov 16 2020 16:40:46 GMT+1100 (Australian Eastern Daylight Time) now=Mon Nov 16 2020 16:40:46 GMT+1100 (Australian Eastern Daylight Time)
         
         uncommitFor1 - gasUsed: 200440, fee: 0.0160352, feeUsd: 6.184295584, @ 80.0 gwei & 385.67 ETH/USD, 0x42b0cea753b8ba966b78fe882b4634eeb22ebf645bbcb2822da2b830a97376db
         + OGToken.Transfer(from: ETH|null:0x0000, to: Deployer:0xa00A, tokens: 0.0000040000004)
@@ -1113,7 +1113,7 @@ $ npx hardhat --verbose --show-stack-traces test test/TestOptinoGov.js > results
         
         --- Test Completed ---
 
-      ✓ Workflow #0 (10543ms)
+      ✓ Workflow #0 (9898ms)
     TestOptinoGov - Workflow #1
         Address 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E => Deployer:0xa00A
         Address 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433 => User1:0xa11A
@@ -1134,15 +1134,15 @@ $ npx hardhat --verbose --show-stack-traces test test/TestOptinoGov.js > results
         + OGDToken.PermissionUpdated(account: Deployer:0xa00A, role: 0, active: true, maximum: 0, processed: 0)
         + OGDToken.Transfer(from: ETH|null:0x0000, to: Deployer:0xa00A, tokens: 0.0)
         ogRewardCurve.deployTransaction - gasUsed: 833717, fee: 0.06669736, feeUsd: 25.7231708312, @ 80.0 gwei & 385.67 ETH/USD, 0x440b35cf075a427df3cc43429142f5cf7500a1ebab6f6e6864562b95753d8c3d
-        + OGRewardCurve.PointUpdated(index: 0, term: 86400, rate: 315360000000000000)
-        + OGRewardCurve.PointUpdated(index: 1, term: 31536000, rate: 630720000000000000)
-        + OGRewardCurve.PointUpdated(index: 2, term: 63072000, rate: 946080000000000000)
+        + OGRewardCurve.PointUpdated(index: 0, term: 1d, rate: 31.536%)
+        + OGRewardCurve.PointUpdated(index: 1, term: 1y, rate: 63.072%)
+        + OGRewardCurve.PointUpdated(index: 2, term: 2y, rate: 94.608%)
         voteWeightCurve.deployTransaction - gasUsed: 789336, fee: 0.06314688, feeUsd: 24.3538572096, @ 80.0 gwei & 385.67 ETH/USD, 0xbf2093e7521cc77cfd4427743a1e84b51e30e124e031e19a72edef1098bedd4b
-        + VoteWeightCurve.PointUpdated(index: 0, term: 86400, rate: 10000000000000000)
-        + VoteWeightCurve.PointUpdated(index: 1, term: 94608000, rate: 10950000000000000000)
+        + VoteWeightCurve.PointUpdated(index: 0, term: 1d, rate: 1.0%)
+        + VoteWeightCurve.PointUpdated(index: 1, term: 3y, rate: 1095.0%)
         fee0Token.deployTransaction - gasUsed: 823708, fee: 0.06589664, feeUsd: 25.4143571488, @ 80.0 gwei & 385.67 ETH/USD, 0x8b296e008b0d25809188fa72d6a6326eff43aa42171c60590af72fdb0d3bac7e
         + Fee0Token.Transfer(from: ETH|null:0x0000, to: Deployer:0xa00A, tokens: 100.0)
-        optinoGov.deployTransaction - gasUsed: 5319521, fee: 0.42556168, feeUsd: 164.1263731256, @ 80.0 gwei & 385.67 ETH/USD, 0xe41f9a60673b816be31fc8d7c5055f6eb07c6fa72bc112ea788e52e5ce9f6cb5
+        optinoGov.deployTransaction - gasUsed: 5319521, fee: 0.42556168, feeUsd: 164.1263731256, @ 80.0 gwei & 385.67 ETH/USD, 0x22091078d1e743f42a71d88f374494fb7252e37863bd9c5745903c0113eb343c
         --- Setup 2 - OGToken and OGDToken permissioning ---
         setup2Txs[0] - gasUsed: 78942, fee: 0.00631536, feeUsd: 2.4356448912, @ 80.0 gwei & 385.67 ETH/USD, 0x759485b2fe5a4b5b96cb90c182b9f13e0e9198f135715059872585b0d8d62cc3
         + OGToken.PermissionUpdated(account: Deployer:0xa00A, role: 1, active: true, maximum: 0, processed: 0)
@@ -1533,17 +1533,17 @@ $ npx hardhat --verbose --show-stack-traces test test/TestOptinoGov.js > results
         commit1 - gasUsed: 378022, fee: 0.03024176, feeUsd: 11.6633395792, @ 80.0 gwei & 385.67 ETH/USD, 0xd746a9bf47d2fbc879d6a3a12ffb659006d7860b30f4546b0e100bf3c60e4821
         + OGToken.Transfer(from: User1:0xa11A, to: OptinoGov:0xe669, tokens: 1000.0)
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User1:0xa11A, tokens: 1000.0)
-        + OptinoGov.Committed(user: User1:0xa11A, tokens: 1000.0, balance: 1000.0, duration: 1, end: 1605499382, delegatee: ETH|null:0x0000, votes: 0.0, rewardPool: 1000000.0, totalVotes: 0.0)
+        + OptinoGov.Committed(user: User1:0xa11A, tokens: 1000.0, balance: 1000.0, duration: 1, end: 1605505314, delegatee: ETH|null:0x0000, votes: 0.0, rewardPool: 1000000.0, totalVotes: 0.0)
         + OptinoGov.Transfer(from: ETH|null:0x0000, to: User1:0xa11A, tokens: 1000.0)
         commit2 - gasUsed: 307222, fee: 0.02457776, feeUsd: 9.4789046992, @ 80.0 gwei & 385.67 ETH/USD, 0x2a854e38dba245bb4ccb38504c8087ed8997d36a113654cffff8a3fdb83ace7a
         + OGToken.Transfer(from: User2:0xa22A, to: OptinoGov:0xe669, tokens: 1000.0)
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User2:0xa22A, tokens: 1000.0)
-        + OptinoGov.Committed(user: User2:0xa22A, tokens: 1000.0, balance: 1000.0, duration: 1, end: 1605499383, delegatee: ETH|null:0x0000, votes: 0.0, rewardPool: 1000000.0, totalVotes: 10.0)
+        + OptinoGov.Committed(user: User2:0xa22A, tokens: 1000.0, balance: 1000.0, duration: 1, end: 1605505315, delegatee: ETH|null:0x0000, votes: 0.0, rewardPool: 1000000.0, totalVotes: 10.0)
         + OptinoGov.Transfer(from: ETH|null:0x0000, to: User2:0xa22A, tokens: 1000.0)
         commit3 - gasUsed: 307222, fee: 0.02457776, feeUsd: 9.4789046992, @ 80.0 gwei & 385.67 ETH/USD, 0x6651a3844a29a4dd626722e65bc7ed047aa8828b28abbcf8980fc85c1b090315
         + OGToken.Transfer(from: User3:0xa33a, to: OptinoGov:0xe669, tokens: 1000.0)
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User3:0xa33a, tokens: 1000.0)
-        + OptinoGov.Committed(user: User3:0xa33a, tokens: 1000.0, balance: 1000.0, duration: 1, end: 1605499384, delegatee: ETH|null:0x0000, votes: 0.0, rewardPool: 1000000.0, totalVotes: 20.0)
+        + OptinoGov.Committed(user: User3:0xa33a, tokens: 1000.0, balance: 1000.0, duration: 1, end: 1605505316, delegatee: ETH|null:0x0000, votes: 0.0, rewardPool: 1000000.0, totalVotes: 20.0)
         + OptinoGov.Transfer(from: ETH|null:0x0000, to: User3:0xa33a, tokens: 1000.0)
         
          # Account                                        ΔETH                OptinoGov                       OG                      OGD                     FEE0
@@ -1680,9 +1680,9 @@ $ npx hardhat --verbose --show-stack-traces test test/TestOptinoGov.js > results
         - proposalCount        : 0
           # Account                Duration              End                    Rate%                  Balance                    Votes Delegatee                     Delegated Votes                  Accrued Accrual Term
          -- -------------------- ---------- ---------------- ------------------------ ------------------------ ------------------------ -------------------- ------------------------ ------------------------ ------------
-          0 User1:0xa11A                 1s              -5s                   31.536                   1000.0                     10.0 ETH|null:0x0000                           0.0          0.0000600000018            6
-          1 User2:0xa22A                 1s              -4s                   31.536                   1000.0                     10.0 ETH|null:0x0000                           0.0         0.00005000000125            5
-          2 User3:0xa33a                 1s              -3s                   31.536                   1000.0                     10.0 ETH|null:0x0000                           0.0          0.0000400000008            4
+          0 User1:0xa11A                 1s              -6s                   31.536                   1000.0                     10.0 ETH|null:0x0000                           0.0         0.00007000000245            7
+          1 User2:0xa22A                 1s              -5s                   31.536                   1000.0                     10.0 ETH|null:0x0000                           0.0          0.0000600000018            6
+          2 User3:0xa33a                 1s              -4s                   31.536                   1000.0                     10.0 ETH|null:0x0000                           0.0         0.00005000000125            5
          -- -------------------- ---------- ---------------- ------------------------ ------------------------ ------------------------ -------------------- ------------------------ ------------------------ ------------
         Token 1 symbol: 'OG', name: 'Optino Governance', decimals: 18, totalSupply: 40000.0, owner: n/a, address: OGToken:0x44dc @ 0x44dc2Abc4FdDDf5F94b7B2c28f381EEC68B7a946
           # Permissioned account     Role            Active                  Maximum                Processed
@@ -1775,9 +1775,9 @@ $ npx hardhat --verbose --show-stack-traces test test/TestOptinoGov.js > results
         - proposalCount        : 0
           # Account                Duration              End                    Rate%                  Balance                    Votes Delegatee                     Delegated Votes                  Accrued Accrual Term
          -- -------------------- ---------- ---------------- ------------------------ ------------------------ ------------------------ -------------------- ------------------------ ------------------------ ------------
-          0 User1:0xa11A                 1s              -7s                   31.536                   1000.0                     10.0 ETH|null:0x0000                           0.0          0.0000800000032            8
-          1 User2:0xa22A                 1s              -6s                   31.536                   1000.0                     10.0 ETH|null:0x0000                           0.0         0.00007000000245            7
-          2 User3:0xa33a                 1s              -5s                   31.536                   1000.0                     10.0 ETH|null:0x0000                           0.0          0.0000600000018            6
+          0 User1:0xa11A                 1s              -8s                   31.536                   1000.0                     10.0 ETH|null:0x0000                           0.0         0.00009000000405            9
+          1 User2:0xa22A                 1s              -7s                   31.536                   1000.0                     10.0 ETH|null:0x0000                           0.0          0.0000800000032            8
+          2 User3:0xa33a                 1s              -6s                   31.536                   1000.0                     10.0 ETH|null:0x0000                           0.0         0.00007000000245            7
          -- -------------------- ---------- ---------------- ------------------------ ------------------------ ------------------------ -------------------- ------------------------ ------------------------ ------------
         Token 1 symbol: 'OG', name: 'Optino Governance', decimals: 18, totalSupply: 40000.0, owner: n/a, address: OGToken:0x44dc @ 0x44dc2Abc4FdDDf5F94b7B2c28f381EEC68B7a946
           # Permissioned account     Role            Active                  Maximum                Processed
@@ -1828,30 +1828,30 @@ $ npx hardhat --verbose --show-stack-traces test test/TestOptinoGov.js > results
          -- ---------- ------------------------
         
         --- Test 4 - User{1..3} uncommit OGTokens ---
-        uncommit1 - gasUsed: 349196, fee: 0.02793568, feeUsd: 10.7739537056, @ 80.0 gwei & 385.67 ETH/USD, 0xb1b53f06315e4690b444d0d6132580a17569246f65245d0fecf5d29f07a406f4
-        + OGToken.Transfer(from: ETH|null:0x0000, to: OptinoGov:0xe669, tokens: 0.00009000000405)
-        + OGDToken.Transfer(from: ETH|null:0x0000, to: User1:0xa11A, tokens: 0.00009000000405)
-        + OptinoGov.Transfer(from: ETH|null:0x0000, to: User1:0xa11A, tokens: 0.00009000000405)
+        uncommit1 - gasUsed: 349098, fee: 0.02792784, feeUsd: 10.7709300528, @ 80.0 gwei & 385.67 ETH/USD, 0xb1b53f06315e4690b444d0d6132580a17569246f65245d0fecf5d29f07a406f4
+        + OGToken.Transfer(from: ETH|null:0x0000, to: OptinoGov:0xe669, tokens: 0.000100000005)
+        + OGDToken.Transfer(from: ETH|null:0x0000, to: User1:0xa11A, tokens: 0.000100000005)
+        + OptinoGov.Transfer(from: ETH|null:0x0000, to: User1:0xa11A, tokens: 0.000100000005)
         + OGDToken.DividendWithdrawn(account: User1:0xa11A, destination: User1:0xa11A, token: ETH|null:0x0000, tokens: 3.333333333333333333)
         + Fee0Token.Transfer(from: OGDToken:0xc2e1, to: User1:0xa11A, tokens: 33.333333333333333333)
         + OGDToken.DividendWithdrawn(account: User1:0xa11A, destination: User1:0xa11A, token: Fee0Token:0xd3c9, tokens: 33.333333333333333333)
         + OGDToken.Transfer(from: User1:0xa11A, to: ETH|null:0x0000, tokens: 100.0)
         + OGToken.Transfer(from: OptinoGov:0xe669, to: User1:0xa11A, tokens: 100.0)
         + OptinoGov.Transfer(from: User1:0xa11A, to: ETH|null:0x0000, tokens: 100.0)
-        uncommit2 - gasUsed: 334196, fee: 0.02673568, feeUsd: 10.3111497056, @ 80.0 gwei & 385.67 ETH/USD, 0x9aa74d0112b1f4a7320fa64d958562c4f56ed5b8bf38220e120c9ca086c0143a
-        + OGToken.Transfer(from: ETH|null:0x0000, to: OptinoGov:0xe669, tokens: 0.00009000000405)
-        + OGDToken.Transfer(from: ETH|null:0x0000, to: User2:0xa22A, tokens: 0.00009000000405)
-        + OptinoGov.Transfer(from: ETH|null:0x0000, to: User2:0xa22A, tokens: 0.00009000000405)
+        uncommit2 - gasUsed: 334098, fee: 0.02672784, feeUsd: 10.3081260528, @ 80.0 gwei & 385.67 ETH/USD, 0x9aa74d0112b1f4a7320fa64d958562c4f56ed5b8bf38220e120c9ca086c0143a
+        + OGToken.Transfer(from: ETH|null:0x0000, to: OptinoGov:0xe669, tokens: 0.000100000005)
+        + OGDToken.Transfer(from: ETH|null:0x0000, to: User2:0xa22A, tokens: 0.000100000005)
+        + OptinoGov.Transfer(from: ETH|null:0x0000, to: User2:0xa22A, tokens: 0.000100000005)
         + OGDToken.DividendWithdrawn(account: User2:0xa22A, destination: User2:0xa22A, token: ETH|null:0x0000, tokens: 3.333333333333333333)
         + Fee0Token.Transfer(from: OGDToken:0xc2e1, to: User2:0xa22A, tokens: 33.333333333333333333)
         + OGDToken.DividendWithdrawn(account: User2:0xa22A, destination: User2:0xa22A, token: Fee0Token:0xd3c9, tokens: 33.333333333333333333)
         + OGDToken.Transfer(from: User2:0xa22A, to: ETH|null:0x0000, tokens: 100.0)
         + OGToken.Transfer(from: OptinoGov:0xe669, to: User2:0xa22A, tokens: 100.0)
         + OptinoGov.Transfer(from: User2:0xa22A, to: ETH|null:0x0000, tokens: 100.0)
-        uncommit3 - gasUsed: 334196, fee: 0.02673568, feeUsd: 10.3111497056, @ 80.0 gwei & 385.67 ETH/USD, 0xdb0668a2692dcdfa5e2d5f0c2425602fb1546989056b6670ad820073e3a1513b
-        + OGToken.Transfer(from: ETH|null:0x0000, to: OptinoGov:0xe669, tokens: 0.00009000000405)
-        + OGDToken.Transfer(from: ETH|null:0x0000, to: User3:0xa33a, tokens: 0.00009000000405)
-        + OptinoGov.Transfer(from: ETH|null:0x0000, to: User3:0xa33a, tokens: 0.00009000000405)
+        uncommit3 - gasUsed: 334098, fee: 0.02672784, feeUsd: 10.3081260528, @ 80.0 gwei & 385.67 ETH/USD, 0xdb0668a2692dcdfa5e2d5f0c2425602fb1546989056b6670ad820073e3a1513b
+        + OGToken.Transfer(from: ETH|null:0x0000, to: OptinoGov:0xe669, tokens: 0.000100000005)
+        + OGDToken.Transfer(from: ETH|null:0x0000, to: User3:0xa33a, tokens: 0.000100000005)
+        + OptinoGov.Transfer(from: ETH|null:0x0000, to: User3:0xa33a, tokens: 0.000100000005)
         + OGDToken.DividendWithdrawn(account: User3:0xa33a, destination: User3:0xa33a, token: ETH|null:0x0000, tokens: 3.333333333333333333)
         + Fee0Token.Transfer(from: OGDToken:0xc2e1, to: User3:0xa33a, tokens: 33.333333333333333333)
         + OGDToken.DividendWithdrawn(account: User3:0xa33a, destination: User3:0xa33a, token: Fee0Token:0xd3c9, tokens: 33.333333333333333333)
@@ -1862,21 +1862,21 @@ $ npx hardhat --verbose --show-stack-traces test test/TestOptinoGov.js > results
          # Account                                        ΔETH                OptinoGov                       OG                      OGD                     FEE0
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
          0 Deployer:0xa00A                        -11.07886248                      0.0                  10000.0                      0.0                      0.0
-         1 User1:0xa11A                   3.268115653333333333       900.00009000000405                   9100.0       900.00009000000405    33.333333333333333333
-         2 User2:0xa22A                   3.274979653333333333       900.00009000000405                   9100.0       900.00009000000405    33.333333333333333333
-         3 User3:0xa33a                   3.274979653333333333       900.00009000000405                   9100.0       900.00009000000405    33.333333333333333333
+         1 User1:0xa11A                   3.268123493333333333         900.000100000005                   9100.0         900.000100000005    33.333333333333333333
+         2 User2:0xa22A                   3.274987493333333333         900.000100000005                   9100.0         900.000100000005    33.333333333333333333
+         3 User3:0xa33a                   3.274987493333333333         900.000100000005                   9100.0         900.000100000005    33.333333333333333333
          4 User4:0xa44a                                    0.0                      0.0                      0.0                      0.0                      0.0
          5 OGToken:0x44dc                                  0.0                      0.0                      0.0                      0.0                      0.0
          6 OGDToken:0xc2e1                0.000000000000000001                      0.0                      0.0                      0.0     0.000000000000000001
          7 OGRewardCurve:0xC27e                            0.0                      0.0                      0.0                      0.0                      0.0
          8 VoteWeightCurve:0xD728                          0.0                      0.0                      0.0                      0.0                      0.0
-         9 OptinoGov:0xe669                                0.0                      0.0      2700.00027000001215                      0.0                      0.0
+         9 OptinoGov:0xe669                                0.0                      0.0        2700.000300000015                      0.0                      0.0
         10 Fee0Token:0xd3c9                                0.0                      0.0                      0.0                      0.0                      0.0
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
-           Totals                                                   2700.00027000001215     40000.00027000001215      2700.00027000001215                    100.0
+           Totals                                                     2700.000300000015       40000.000300000015        2700.000300000015                    100.0
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
         
-        Token 0 symbol: 'OptinoGov', name: 'OptinoGov', decimals: 18, totalSupply: 2700.00027000001215, owner: n/a, address: OptinoGov:0xe669 @ 0xe669FCe9956608d2D90DB75737ec1B2133864937
+        Token 0 symbol: 'OptinoGov', name: 'OptinoGov', decimals: 18, totalSupply: 2700.000300000015, owner: n/a, address: OptinoGov:0xe669 @ 0xe669FCe9956608d2D90DB75737ec1B2133864937
         - ogToken              : OGToken:0x44dc
         - ogdToken             : OGDToken:0xc2e1
         - ogRewardCurve        : OGRewardCurve:0xC27e
@@ -1891,32 +1891,32 @@ $ npx hardhat --verbose --show-stack-traces test test/TestOptinoGov.js > results
         - votingDuration       : 10 seconds = 0 days
         - executeDelay         : 10 seconds = 0 days
         - rewardPool           : 1000000000000000000000000 = 1000000.0
-        - totalVotes           : 27000002700000121500 = 27.0000027000001215
+        - totalVotes           : 27000003000000150000 = 27.00000300000015
         - proposalCount        : 0
           # Account                Duration              End                    Rate%                  Balance                    Votes Delegatee                     Delegated Votes                  Accrued Accrual Term
          -- -------------------- ---------- ---------------- ------------------------ ------------------------ ------------------------ -------------------- ------------------------ ------------------------ ------------
-          0 User1:0xa11A                 0s              -2s                   31.536       900.00009000000405       9.0000009000000405 ETH|null:0x0000                           0.0         0.00001800000198            2
-          1 User2:0xa22A                 0s              -1s                   31.536       900.00009000000405       9.0000009000000405 ETH|null:0x0000                           0.0        0.000009000000945            1
-          2 User3:0xa33a                 0s               0s                   31.536       900.00009000000405       9.0000009000000405 ETH|null:0x0000                           0.0                      0.0            0
+          0 User1:0xa11A                 0s              -2s                   31.536         900.000100000005         9.00000100000005 ETH|null:0x0000                           0.0         0.00001800000218            2
+          1 User2:0xa22A                 0s              -1s                   31.536         900.000100000005         9.00000100000005 ETH|null:0x0000                           0.0        0.000009000001045            1
+          2 User3:0xa33a                 0s               0s                   31.536         900.000100000005         9.00000100000005 ETH|null:0x0000                           0.0                      0.0            0
          -- -------------------- ---------- ---------------- ------------------------ ------------------------ ------------------------ -------------------- ------------------------ ------------------------ ------------
-        Token 1 symbol: 'OG', name: 'Optino Governance', decimals: 18, totalSupply: 40000.00027000001215, owner: n/a, address: OGToken:0x44dc @ 0x44dc2Abc4FdDDf5F94b7B2c28f381EEC68B7a946
+        Token 1 symbol: 'OG', name: 'Optino Governance', decimals: 18, totalSupply: 40000.000300000015, owner: n/a, address: OGToken:0x44dc @ 0x44dc2Abc4FdDDf5F94b7B2c28f381EEC68B7a946
           # Permissioned account     Role            Active                  Maximum                Processed
          -- ------------------------ --------------- ------ ------------------------ ------------------------
           0 Deployer:0xa00A          Set Permission  No                          0.0                      0.0
           1 Deployer:0xa00A          Set Config      No                          0.0                      0.0
           2 OptinoGov:0xe669         Set Permission  Yes                         0.0                      0.0
           3 OptinoGov:0xe669         Set Config      Yes                         0.0                      0.0
-          4 OptinoGov:0xe669         Mint Tokens     Yes                 123456789.0         0.00027000001215
+          4 OptinoGov:0xe669         Mint Tokens     Yes                 123456789.0           0.000300000015
           5 OptinoGov:0xe669         Burn Tokens     Yes                         0.0                      0.0
          -- ------------------------ --------------- ------ ------------------------ ------------------------
-        Token 2 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 2700.00027000001215, owner: n/a, address: OGDToken:0xc2e1 @ 0xc2e1fE1fA3a7B0bBa563Ed561dC63BA4F26B2c20
+        Token 2 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 2700.000300000015, owner: n/a, address: OGDToken:0xc2e1 @ 0xc2e1fE1fA3a7B0bBa563Ed561dC63BA4F26B2c20
           # Permissioned account     Role            Active                  Maximum                Processed
          -- ------------------------ --------------- ------ ------------------------ ------------------------
           0 Deployer:0xa00A          Set Permission  No                          0.0                      0.0
           1 Deployer:0xa00A          Set Config      No                          0.0                      0.0
           2 OptinoGov:0xe669         Set Permission  Yes                         0.0                      0.0
           3 OptinoGov:0xe669         Set Config      Yes                         0.0                      0.0
-          4 OptinoGov:0xe669         Mint Tokens     Yes                 123456789.0      3000.00027000001215
+          4 OptinoGov:0xe669         Mint Tokens     Yes                 123456789.0        3000.000300000015
           5 OptinoGov:0xe669         Burn Tokens     Yes                         0.0                      0.0
          -- ------------------------ --------------- ------ ------------------------ ------------------------
           # Dividend         Enabled                  Unclaimed
@@ -1949,7 +1949,7 @@ $ npx hardhat --verbose --show-stack-traces test test/TestOptinoGov.js > results
         
         --- Test Completed ---
 
-      ✓ Workflow #1 (3703ms)
+      ✓ Workflow #1 (3592ms)
     TestOptinoGov - Workflow #2 - Developing
         Address 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E => Deployer:0xa00A
         Address 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433 => User1:0xa11A
@@ -1970,15 +1970,15 @@ $ npx hardhat --verbose --show-stack-traces test test/TestOptinoGov.js > results
         + OGDToken.PermissionUpdated(account: Deployer:0xa00A, role: 0, active: true, maximum: 0, processed: 0)
         + OGDToken.Transfer(from: ETH|null:0x0000, to: Deployer:0xa00A, tokens: 0.0)
         ogRewardCurve.deployTransaction - gasUsed: 833717, fee: 0.06669736, feeUsd: 25.7231708312, @ 80.0 gwei & 385.67 ETH/USD, 0xccef747e41ee7fbf68e124add85ce759dd52c6268157bb49314782f49136b8db
-        + OGRewardCurve.PointUpdated(index: 0, term: 86400, rate: 315360000000000000)
-        + OGRewardCurve.PointUpdated(index: 1, term: 31536000, rate: 630720000000000000)
-        + OGRewardCurve.PointUpdated(index: 2, term: 63072000, rate: 946080000000000000)
+        + OGRewardCurve.PointUpdated(index: 0, term: 1d, rate: 31.536%)
+        + OGRewardCurve.PointUpdated(index: 1, term: 1y, rate: 63.072%)
+        + OGRewardCurve.PointUpdated(index: 2, term: 2y, rate: 94.608%)
         voteWeightCurve.deployTransaction - gasUsed: 789336, fee: 0.06314688, feeUsd: 24.3538572096, @ 80.0 gwei & 385.67 ETH/USD, 0xf14e2f7a1b32e3947b7d2c9e15c949f3d69676ae853a692c6118248cba772c0f
-        + VoteWeightCurve.PointUpdated(index: 0, term: 86400, rate: 10000000000000000)
-        + VoteWeightCurve.PointUpdated(index: 1, term: 94608000, rate: 10950000000000000000)
+        + VoteWeightCurve.PointUpdated(index: 0, term: 1d, rate: 1.0%)
+        + VoteWeightCurve.PointUpdated(index: 1, term: 3y, rate: 1095.0%)
         fee0Token.deployTransaction - gasUsed: 823708, fee: 0.06589664, feeUsd: 25.4143571488, @ 80.0 gwei & 385.67 ETH/USD, 0xb392008ce22d320083b07c5fe66d3a0f6e59cf5648bae37a4cf15fc1f9286412
         + Fee0Token.Transfer(from: ETH|null:0x0000, to: Deployer:0xa00A, tokens: 100.0)
-        optinoGov.deployTransaction - gasUsed: 5319533, fee: 0.42556264, feeUsd: 164.1267433688, @ 80.0 gwei & 385.67 ETH/USD, 0x8b6fd965427bcd74346768fe13c8a5e8f04c4cac754817008c5d9e36a3d7e39b
+        optinoGov.deployTransaction - gasUsed: 5319533, fee: 0.42556264, feeUsd: 164.1267433688, @ 80.0 gwei & 385.67 ETH/USD, 0x0110c1e3f7566a4ffa0af9c64c596c0b83eb22a25c9c147df435bc432e681ccd
         --- Setup 2 - OGToken and OGDToken permissioning ---
         setup2Txs[0] - gasUsed: 78942, fee: 0.00631536, feeUsd: 2.4356448912, @ 80.0 gwei & 385.67 ETH/USD, 0x7c23d28e40353f86b189d8ca8ba709339df7ece32ffdea65126e8fde77ed1d63
         + OGToken.PermissionUpdated(account: Deployer:0xa00A, role: 1, active: true, maximum: 0, processed: 0)
@@ -2369,7 +2369,7 @@ $ npx hardhat --verbose --show-stack-traces test test/TestOptinoGov.js > results
         commit1 - gasUsed: 378022, fee: 0.03024176, feeUsd: 11.6633395792, @ 80.0 gwei & 385.67 ETH/USD, 0x7518d449abaae5b13df72f660e82040b549e57a4347f6d1f7b56af4d6a064459
         + OGToken.Transfer(from: User1:0xa11A, to: OptinoGov:0x1b9B, tokens: 1000.0)
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User1:0xa11A, tokens: 1000.0)
-        + OptinoGov.Committed(user: User1:0xa11A, tokens: 1000.0, balance: 1000.0, duration: 2, end: 1605499424, delegatee: ETH|null:0x0000, votes: 0.0, rewardPool: 1000000.0, totalVotes: 0.0)
+        + OptinoGov.Committed(user: User1:0xa11A, tokens: 1000.0, balance: 1000.0, duration: 2, end: 1605505357, delegatee: ETH|null:0x0000, votes: 0.0, rewardPool: 1000000.0, totalVotes: 0.0)
         + OptinoGov.Transfer(from: ETH|null:0x0000, to: User1:0xa11A, tokens: 1000.0)
         
          # Account                                        ΔETH                OptinoGov                       OG                      OGD                     FEE0
@@ -2459,8 +2459,8 @@ $ npx hardhat --verbose --show-stack-traces test test/TestOptinoGov.js > results
          -- ---------- ------------------------
         
         --- Test 3 - Dummy tx to mine a new block and get the latest block.timestamp ---
-        Pausing 'Waiting' for 5s=Mon Nov 16 2020 15:02:12 GMT+1100 (Australian Eastern Daylight Time) now=Mon Nov 16 2020 15:02:07 GMT+1100 (Australian Eastern Daylight Time)
-        Paused 'Waiting' for 5s=Mon Nov 16 2020 15:02:12 GMT+1100 (Australian Eastern Daylight Time) now=Mon Nov 16 2020 15:02:12 GMT+1100 (Australian Eastern Daylight Time)
+        Pausing 'Waiting' for 5s=Mon Nov 16 2020 16:41:04 GMT+1100 (Australian Eastern Daylight Time) now=Mon Nov 16 2020 16:40:59 GMT+1100 (Australian Eastern Daylight Time)
+        Paused 'Waiting' for 5s=Mon Nov 16 2020 16:41:04 GMT+1100 (Australian Eastern Daylight Time) now=Mon Nov 16 2020 16:41:04 GMT+1100 (Australian Eastern Daylight Time)
         
         dummy1 - gasUsed: 21000, fee: 0.00168, feeUsd: 0.6479256, @ 80.0 gwei & 385.67 ETH/USD, 0x4bced70bc97fa579c15518ef093fbf3ef2666c84ac6f0299287ce0b6dc00e886
         
@@ -2551,8 +2551,8 @@ $ npx hardhat --verbose --show-stack-traces test test/TestOptinoGov.js > results
          -- ---------- ------------------------
         
         --- Test 4 - User1 uncommitAll() ---
-        Pausing 'Waiting' for 5s=Mon Nov 16 2020 15:02:17 GMT+1100 (Australian Eastern Daylight Time) now=Mon Nov 16 2020 15:02:12 GMT+1100 (Australian Eastern Daylight Time)
-        Paused 'Waiting' for 5s=Mon Nov 16 2020 15:02:17 GMT+1100 (Australian Eastern Daylight Time) now=Mon Nov 16 2020 15:02:17 GMT+1100 (Australian Eastern Daylight Time)
+        Pausing 'Waiting' for 5s=Mon Nov 16 2020 16:41:09 GMT+1100 (Australian Eastern Daylight Time) now=Mon Nov 16 2020 16:41:04 GMT+1100 (Australian Eastern Daylight Time)
+        Paused 'Waiting' for 5s=Mon Nov 16 2020 16:41:09 GMT+1100 (Australian Eastern Daylight Time) now=Mon Nov 16 2020 16:41:09 GMT+1100 (Australian Eastern Daylight Time)
         
         uncommitAll1 - gasUsed: 120255, fee: 0.0096204, feeUsd: 3.710299668, @ 80.0 gwei & 385.67 ETH/USD, 0x6779a941cac3dac3055b87348fc86c8d69629d3a267a5dd708d0cf4a9f8fd192
         + OGToken.Transfer(from: ETH|null:0x0000, to: User1:0xa11A, tokens: 0.00011000000605)
@@ -2647,7 +2647,7 @@ $ npx hardhat --verbose --show-stack-traces test test/TestOptinoGov.js > results
         
         --- Test Completed ---
 
-      ✓ Workflow #2 - Developing (10837ms)
+      ✓ Workflow #2 - Developing (11180ms)
 
 
   3 passing (37s)

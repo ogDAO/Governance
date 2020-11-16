@@ -207,6 +207,43 @@ class Data {
     return o;
   }
 
+  termString(term) {
+    var s = "";
+    if (term < 0) {
+      term = -term;
+      s = "-";
+    }
+    if (term == 0) {
+      s = "0s";
+    } else {
+      var secs = parseInt(term);
+      var mins = parseInt(secs / 60);
+      secs = secs % 60;
+      var hours = parseInt(mins / 60);
+      mins = mins % 60;
+      var days = parseInt(hours / 24);
+      hours = hours % 24;
+      var years = parseInt(days / 365);
+      days = days % 365;
+      if (years > 0) {
+        s += years + "y";
+      }
+      if (days > 0) {
+        s += days + "d";
+      }
+      if (hours > 0) {
+        s += hours + "h";
+      }
+      if (mins > 0) {
+        s += mins + "m";
+      }
+      if (secs > 0) {
+        s += secs + "s";
+      }
+    }
+    return s;
+  }
+
   printEvent(log) {
     var address = log.address;
     var _contract = this.contractsByAddress[address.toLowerCase()];
@@ -222,8 +259,10 @@ class Data {
           if (a.name == 'tokens' || a.name == 'amount' || a.name == 'balance' || a.name == 'votes' || a.name == 'reward' || a.name == 'rewardPool' || a.name == 'totalVotes' || a.name == 'tokensBurnt' || a.name == 'tokensWithSlashingFactor' || a.name == 'rewardWithSlashingFactor') {
             // TODO Get decimals from token contracts, and only convert for token contract values
             result = result + ethers.utils.formatUnits(data.args[a.name], 18);
-          } else if (a.name == 'slashingFactor') {
+          } else if (a.name == 'slashingFactor' || a.name == 'rate') {
             result = result + ethers.utils.formatUnits(data.args[a.name], 16) + "%";
+          } else if (a.name == 'term') {
+            result = result + this.termString(data.args[a.name].toString());
           } else {
             result = result + data.args[a.name].toString();
           }
@@ -270,43 +309,6 @@ class Data {
     receipt.logs.forEach((log) => {
       this.printEvent(log);
     });
-  }
-
-  termString(term) {
-    var s = "";
-    if (term < 0) {
-      term = -term;
-      s = "-";
-    }
-    if (term == 0) {
-      s = "0s";
-    } else {
-      var secs = parseInt(term);
-      var mins = parseInt(secs / 60);
-      secs = secs % 60;
-      var hours = parseInt(mins / 60);
-      mins = mins % 60;
-      var days = parseInt(hours / 24);
-      hours = hours % 24;
-      var years = parseInt(days / 365);
-      days = days % 365;
-      if (years > 0) {
-        s += years + "y";
-      }
-      if (days > 0) {
-        s += days + "d";
-      }
-      if (hours > 0) {
-        s += hours + "h";
-      }
-      if (mins > 0) {
-        s += mins + "m";
-      }
-      if (secs > 0) {
-        s += secs + "s";
-      }
-    }
-    return s;
   }
 
   async printBalances() {

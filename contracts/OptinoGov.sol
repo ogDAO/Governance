@@ -219,8 +219,6 @@ contract OptinoGov is ERC20, OptinoGovConfig, InterestUtils {
     function _calculateReward(Account memory account) internal view returns (uint _reward, uint _term) {
         uint from = account.end == 0 ? block.timestamp : uint(account.end).sub(uint(account.duration));
         uint futureValue = InterestUtils.futureValue(account.balance, from, block.timestamp, account.rate);
-        // console.log("        > _calculateReward() - account.balance %s, rate %s", account.balance, account.rate);
-        // console.log("          from %s, to %s, futureValue %s", from, block.timestamp, futureValue);
         _reward = futureValue.sub(account.balance);
         _term = block.timestamp.sub(from);
     }
