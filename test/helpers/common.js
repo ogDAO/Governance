@@ -1,7 +1,7 @@
 const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
 const SECONDS_PER_DAY = 24 * 60 * 60;
 const SECONDS_PER_YEAR = 365 * 24 * 60 * 60;
-const [ROLE_SETPERMISSION, ROLE_SETCONFIG, ROLE_MINTTOKENS, ROLE_BURNTOKENS, ROLE_RECOVERTOKENS] = [0, 1, 2, 3, 4];
+const ROLE = {SETPERMISSION: 0, SETCONFIG: 1, MINTTOKENS: 2, BURNTOKENS: 3, RECOVERTOKENS: 4};
 const { BigNumber } = require("ethers");
 const util = require('util');
 const { expect, assert } = require("chai");
@@ -560,11 +560,7 @@ module.exports = {
     ZERO_ADDRESS,
     SECONDS_PER_DAY,
     SECONDS_PER_YEAR,
-    ROLE_SETPERMISSION,
-    ROLE_SETCONFIG,
-    ROLE_MINTTOKENS,
-    ROLE_BURNTOKENS,
-    ROLE_RECOVERTOKENS,
+    ROLE,
     Data
 }
 

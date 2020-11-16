@@ -1,4 +1,4 @@
-const { ZERO_ADDRESS, SECONDS_PER_DAY, SECONDS_PER_YEAR, ROLE_SETPERMISSION, ROLE_SETCONFIG, ROLE_MINTTOKENS, ROLE_BURNTOKENS, ROLE_RECOVERTOKENS, Data } = require('./helpers/common');
+const { ZERO_ADDRESS, SECONDS_PER_DAY, SECONDS_PER_YEAR, ROLE, Data } = require('./helpers/common');
 const { expect } = require("chai");
 const { BigNumber } = require("ethers");
 const util = require('util');
@@ -50,16 +50,16 @@ describe("TestOptinoGov", function() {
 
     console.log("        --- Setup 2 - OGToken and OGDToken permissioning ---");
     const setup2 = [];
-    setup2.push(ogToken.setPermission(data.deployer, ROLE_SETCONFIG, true, 0));
-    setup2.push(ogToken.setPermission(data.optinoGov.address, ROLE_SETPERMISSION, true, 0));
-    setup2.push(ogToken.setPermission(data.optinoGov.address, ROLE_SETCONFIG, true, 0));
-    setup2.push(ogToken.setPermission(data.optinoGov.address, ROLE_MINTTOKENS, true, ethers.utils.parseUnits("123456789", 18)));
-    setup2.push(ogToken.setPermission(data.optinoGov.address, ROLE_BURNTOKENS, true, 0));
-    setup2.push(ogdToken.setPermission(data.deployer, ROLE_SETCONFIG, true, 0));
-    setup2.push(ogdToken.setPermission(data.optinoGov.address, ROLE_SETPERMISSION, true, 0));
-    setup2.push(ogdToken.setPermission(data.optinoGov.address, ROLE_SETCONFIG, true, 0));
-    setup2.push(ogdToken.setPermission(data.optinoGov.address, ROLE_MINTTOKENS, true, ethers.utils.parseUnits("123456789", 18)));
-    setup2.push(ogdToken.setPermission(data.optinoGov.address, ROLE_BURNTOKENS, true, 0));
+    setup2.push(ogToken.setPermission(data.deployer, ROLE.SETCONFIG, true, 0));
+    setup2.push(ogToken.setPermission(data.optinoGov.address, ROLE.SETPERMISSION, true, 0));
+    setup2.push(ogToken.setPermission(data.optinoGov.address, ROLE.SETCONFIG, true, 0));
+    setup2.push(ogToken.setPermission(data.optinoGov.address, ROLE.MINTTOKENS, true, ethers.utils.parseUnits("123456789", 18)));
+    setup2.push(ogToken.setPermission(data.optinoGov.address, ROLE.BURNTOKENS, true, 0));
+    setup2.push(ogdToken.setPermission(data.deployer, ROLE.SETCONFIG, true, 0));
+    setup2.push(ogdToken.setPermission(data.optinoGov.address, ROLE.SETPERMISSION, true, 0));
+    setup2.push(ogdToken.setPermission(data.optinoGov.address, ROLE.SETCONFIG, true, 0));
+    setup2.push(ogdToken.setPermission(data.optinoGov.address, ROLE.MINTTOKENS, true, ethers.utils.parseUnits("123456789", 18)));
+    setup2.push(ogdToken.setPermission(data.optinoGov.address, ROLE.BURNTOKENS, true, 0));
     const setup2Txs = await Promise.all(setup2);
     for (let j = 0; j < setup2Txs.length; j++) {
         await data.printTxData("setup2Txs[" + j + "]", setup2Txs[j]);
@@ -77,10 +77,10 @@ describe("TestOptinoGov", function() {
 
     console.log("        --- Setup 4 - Remove deployer permissions from OGToken and OGDToken ---");
     const setup4 = [];
-    setup4.push(ogToken.setPermission(data.deployer, ROLE_SETCONFIG, false, 0));
-    setup4.push(ogToken.setPermission(data.deployer, ROLE_SETPERMISSION, false, 0));
-    setup4.push(ogdToken.setPermission(data.deployer, ROLE_SETCONFIG, false, 0));
-    setup4.push(ogdToken.setPermission(data.deployer, ROLE_SETPERMISSION, false, 0));
+    setup4.push(ogToken.setPermission(data.deployer, ROLE.SETCONFIG, false, 0));
+    setup4.push(ogToken.setPermission(data.deployer, ROLE.SETPERMISSION, false, 0));
+    setup4.push(ogdToken.setPermission(data.deployer, ROLE.SETCONFIG, false, 0));
+    setup4.push(ogdToken.setPermission(data.deployer, ROLE.SETPERMISSION, false, 0));
     const setup4Txs = await Promise.all(setup4);
     for (let j = 0; j < setup4Txs.length; j++) {
         await data.printTxData("setup4Txs[" + j + "]", setup4Txs[j]);

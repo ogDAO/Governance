@@ -1,4 +1,4 @@
-const { ZERO_ADDRESS, ROLE_SETPERMISSION, ROLE_SETCONFIG, ROLE_MINTTOKENS, ROLE_BURNTOKENS, ROLE_RECOVERTOKENS, Data } = require('./helpers/common');
+const { ZERO_ADDRESS, ROLE, Data } = require('./helpers/common');
 const { expect } = require("chai");
 const { BigNumber } = require("ethers");
 const util = require('util');
@@ -37,8 +37,8 @@ describe("TestOGDToken", function() {
     it("Workflow #0", async function() {
       console.log("        --- Test 1 - OGDToken mint(...) permissioning, OGDToken.addDividendTokens for ETH and FEE0 ---");
       const test1a = [];
-      test1a.push(data.ogdToken.setPermission(data.deployer, ROLE_SETCONFIG, true, 0));
-      test1a.push(data.ogdToken.setPermission(data.deployer, ROLE_MINTTOKENS, true, 0));
+      test1a.push(data.ogdToken.setPermission(data.deployer, ROLE.SETCONFIG, true, 0));
+      test1a.push(data.ogdToken.setPermission(data.deployer, ROLE.MINTTOKENS, true, 0));
       const [setPermission1, setPermission2] = await Promise.all(test1a);
       data.printTxData("setPermission1", setPermission1);
       data.printTxData("setPermission2", setPermission2);
@@ -166,8 +166,8 @@ describe("TestOGDToken", function() {
     it("Workflow #1 - Transfer Test", async function() {
       console.log("        --- Test 1 - OGDToken mint(...) permissioning, OGDToken.addDividendTokens for ETH and FEE0 ---");
       const test1a = [];
-      test1a.push(data.ogdToken.setPermission(data.deployer, ROLE_SETCONFIG, true, 0));
-      test1a.push(data.ogdToken.setPermission(data.deployer, ROLE_MINTTOKENS, true, 0));
+      test1a.push(data.ogdToken.setPermission(data.deployer, ROLE.SETCONFIG, true, 0));
+      test1a.push(data.ogdToken.setPermission(data.deployer, ROLE.MINTTOKENS, true, 0));
       const [setPermission1, setPermission2] = await Promise.all(test1a);
       data.printTxData("setPermission1", setPermission1);
       data.printTxData("setPermission2", setPermission2);
@@ -237,8 +237,8 @@ describe("TestOGDToken", function() {
     it("Workflow #1 - Transfer Test", async function() {
       console.log("        --- Test 1 - OGDToken mint(...) permissioning, OGDToken.addDividendTokens for ETH and FEE0 ---");
       const test1a = [];
-      test1a.push(data.ogdToken.setPermission(data.deployer, ROLE_SETCONFIG, true, 0));
-      test1a.push(data.ogdToken.setPermission(data.deployer, ROLE_MINTTOKENS, true, 0));
+      test1a.push(data.ogdToken.setPermission(data.deployer, ROLE.SETCONFIG, true, 0));
+      test1a.push(data.ogdToken.setPermission(data.deployer, ROLE.MINTTOKENS, true, 0));
       const [setPermission1, setPermission2] = await Promise.all(test1a);
       data.printTxData("setPermission1", setPermission1);
       data.printTxData("setPermission2", setPermission2);

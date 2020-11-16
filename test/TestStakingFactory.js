@@ -1,4 +1,4 @@
-const { ZERO_ADDRESS, SECONDS_PER_DAY, SECONDS_PER_YEAR, ROLE_SETPERMISSION, ROLE_SETCONFIG, ROLE_MINTTOKENS, ROLE_BURNTOKENS, ROLE_RECOVERTOKENS, Data } = require('./helpers/common');
+const { ZERO_ADDRESS, SECONDS_PER_DAY, SECONDS_PER_YEAR, ROLE, Data } = require('./helpers/common');
 const { expect, assert } = require("chai");
 const { BigNumber } = require("ethers");
 const util = require('util');
@@ -58,17 +58,17 @@ describe("TestStakingFactory", function() {
 
     console.log("        --- Setup 2 - OGToken and OGDToken permissioning ---");
     const setup2 = [];
-    setup2.push(ogToken.setPermission(data.deployer, ROLE_SETCONFIG, true, 0));
-    setup2.push(ogToken.setPermission(data.deployer, ROLE_MINTTOKENS, true, ethers.utils.parseUnits("123456789", 18)));
-    // setup2.push(ogToken.setPermission(stakingFactory.address, ROLE_SETPERMISSION, true, 0));
-    // setup2.push(ogToken.setPermission(stakingFactory.address, ROLE_SETCONFIG, true, 0));
-    setup2.push(ogToken.setPermission(stakingFactory.address, ROLE_MINTTOKENS, true, ethers.utils.parseUnits("123456789", 18)));
-    setup2.push(ogToken.setPermission(stakingFactory.address, ROLE_BURNTOKENS, true, 0));
-    setup2.push(ogdToken.setPermission(data.deployer, ROLE_SETCONFIG, true, 0));
-    // setup2.push(ogdToken.setPermission(stakingFactory.address, ROLE_SETPERMISSION, true, 0));
-    // setup2.push(ogdToken.setPermission(stakingFactory.address, ROLE_SETCONFIG, true, 0));
-    setup2.push(ogdToken.setPermission(stakingFactory.address, ROLE_MINTTOKENS, true, ethers.utils.parseUnits("123456789", 18)));
-    setup2.push(ogdToken.setPermission(stakingFactory.address, ROLE_BURNTOKENS, true, 0));
+    setup2.push(ogToken.setPermission(data.deployer, ROLE.SETCONFIG, true, 0));
+    setup2.push(ogToken.setPermission(data.deployer, ROLE.MINTTOKENS, true, ethers.utils.parseUnits("123456789", 18)));
+    // setup2.push(ogToken.setPermission(stakingFactory.address, ROLE.SETPERMISSION, true, 0));
+    // setup2.push(ogToken.setPermission(stakingFactory.address, ROLE.SETCONFIG, true, 0));
+    setup2.push(ogToken.setPermission(stakingFactory.address, ROLE.MINTTOKENS, true, ethers.utils.parseUnits("123456789", 18)));
+    setup2.push(ogToken.setPermission(stakingFactory.address, ROLE.BURNTOKENS, true, 0));
+    setup2.push(ogdToken.setPermission(data.deployer, ROLE.SETCONFIG, true, 0));
+    // setup2.push(ogdToken.setPermission(stakingFactory.address, ROLE.SETPERMISSION, true, 0));
+    // setup2.push(ogdToken.setPermission(stakingFactory.address, ROLE.SETCONFIG, true, 0));
+    setup2.push(ogdToken.setPermission(stakingFactory.address, ROLE.MINTTOKENS, true, ethers.utils.parseUnits("123456789", 18)));
+    setup2.push(ogdToken.setPermission(stakingFactory.address, ROLE.BURNTOKENS, true, 0));
     const setup2Txs = await Promise.all(setup2);
     for (let j = 0; j < setup2Txs.length; j++) {
         await data.printTxData("setup2Txs[" + j + "]", setup2Txs[j]);
