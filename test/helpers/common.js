@@ -199,12 +199,41 @@ class Data {
     return o;
   }
 
+  padLeft0(s, n) {
+    var result = s.toString();
+    while (result.length < n) {
+      result = "0" + result;
+    }
+    return result;
+  }
+
   padRight(s, n) {
     var o = s;
     while (o.length < n) {
       o = o + " ";
     }
     return o;
+  }
+
+  addressToHex64(address) {
+    if (address.substring(0, 2) == "0x") {
+      return this.padLeft0(address.substring(2, 42).toLowerCase(), 64);
+    } else {
+      return this.padLeft0(address.substring(0, 40).toLowerCase(), 64);
+    }
+  }
+
+  uint256ToHex64(number) {
+    var bigNumber = BigNumber.from(number).toHexString();
+    if (bigNumber.substring(0, 2) == "0x") {
+      return this.padLeft0(bigNumber.substring(2, 66).toLowerCase(), 64);
+    } else {
+      return this.padLeft0(bigNumber.substring(0, 64).toLowerCase(), 64);
+    }
+  }
+
+  stringToHex(s) {
+    return web3.toHex(s).substring(2);
   }
 
   termString(term) {

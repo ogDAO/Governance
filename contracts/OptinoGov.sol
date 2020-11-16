@@ -1,7 +1,7 @@
 pragma solidity ^0.7.0;
 pragma experimental ABIEncoderV2;
 
-// import "hardhat/console.sol";
+import "hardhat/console.sol";
 
 // Use prefix "./" normally and "https://github.com/ogDAO/Governance/blob/master/contracts/" in Remix
 import "./OGTokenInterface.sol";
@@ -360,6 +360,7 @@ contract OptinoGov is ERC20, OptinoGovConfig, InterestUtils {
 
 
     function propose(string memory description, address[] memory targets, uint[] memory values, bytes[] memory data) public returns(uint) {
+        console.log("        > %s -> propose(description %s)", msg.sender, description);
         // require(accounts[msg.sender].votes >= totalVotes.mul(proposalThreshold).div(10**18), "OptinoGov: Not enough votes to propose");
 
         proposalCount++;
