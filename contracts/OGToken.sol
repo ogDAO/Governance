@@ -70,7 +70,7 @@ contract OGToken is OGTokenInterface, Permissioned {
         return allowed[tokenOwner][spender];
     }
 
-    function setCap(uint _cap, bool _freezeCap) external onlyOwner {
+    function setCap(uint _cap, bool _freezeCap) external permitted(ROLE_SETCONFIG, 0) {
         require(!freezeCap, "Cap frozen");
         require(_cap >= _totalSupply.sub(balances[address(0)]), "cap must be >= totalSupply");
         (cap, freezeCap) = (_cap, _freezeCap);
@@ -78,7 +78,7 @@ contract OGToken is OGTokenInterface, Permissioned {
     }
 
     function availableToMint() override external view returns (uint tokens) {
-        bytes32 key = keccak256(abi.encodePacked(msg.sender, ROLE_MINTER));
+        bytes32 key = keccak256(abi.encodePacked(msg.sender, ROLE_MINTTOKENS));
         Permission memory permission = permissions[key];
         if (permission.maximum == 0) {
             if (cap > 0) {
@@ -93,7 +93,7 @@ contract OGToken is OGTokenInterface, Permissioned {
             }
         }
     }
-    function mint(address tokenOwner, uint tokens) override external permitted(ROLE_MINTER, tokens) returns (bool success) {
+    function mint(address tokenOwner, uint tokens) override external permitted(ROLE_MINTTOKENS, tokens) returns (bool success) {
         require(cap == 0 || _totalSupply.sub(balances[address(0)]).add(tokens) <= cap, "cap exceeded");
         balances[tokenOwner] = balances[tokenOwner].add(tokens);
         _totalSupply = _totalSupply.add(tokens);

@@ -1,6 +1,7 @@
 const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
 const SECONDS_PER_DAY = 24 * 60 * 60;
 const SECONDS_PER_YEAR = 365 * 24 * 60 * 60;
+const [ROLE_SETPERMISSION, ROLE_SETCONFIG, ROLE_MINTTOKENS, ROLE_BURNTOKENS, ROLE_RECOVERTOKENS] = [0, 1, 2, 3, 4];
 const { BigNumber } = require("ethers");
 const util = require('util');
 const { expect, assert } = require("chai");
@@ -34,9 +35,9 @@ class Data {
   }
 
   async init() {
-    [this.ownerSigner, this.user1Signer, this.user2Signer, this.user3Signer, this.user4Signer] = await ethers.getSigners();
-    [this.owner, this.user1, this.user2, this.user3, this.user4] = await Promise.all([this.ownerSigner.getAddress(), this.user1Signer.getAddress(), this.user2Signer.getAddress(), this.user3Signer.getAddress(), this.user4Signer.getAddress()]);
-    this.addAccount(this.owner, "Owner");
+    [this.deployerSigner, this.user1Signer, this.user2Signer, this.user3Signer, this.user4Signer] = await ethers.getSigners();
+    [this.deployer, this.user1, this.user2, this.user3, this.user4] = await Promise.all([this.deployerSigner.getAddress(), this.user1Signer.getAddress(), this.user2Signer.getAddress(), this.user3Signer.getAddress(), this.user4Signer.getAddress()]);
+    this.addAccount(this.deployer, "Deployer");
     this.addAccount(this.user1, "User1");
     this.addAccount(this.user2, "User2");
     this.addAccount(this.user3, "User3");
@@ -358,20 +359,35 @@ class Data {
         owner = "n/a";
       }
       console.log("        Token " + i + " symbol: '" + symbol + "', name: '" + name + "', decimals: " + decimals + ", totalSupply: " + ethers.utils.formatUnits(totalSupply, decimals) + ", owner: " + this.getShortAccountName(owner) + ", address: " + this.getShortAccountName(tokenContract.address) + " @ " + tokenContract.address);
+      function roleString(r) {
+        if (r == 0) {
+          return "Set Permission";
+        } else if (r == 1) {
+          return "Set Config";
+        } else if (r == 2) {
+          return "Mint tokens";
+        } else if (r == 3) {
+          return "Burn tokens";
+        } else if (r == 4) {
+          return "Recover tokens";
+        } else {
+          return "" + r;
+        }
+      }
       try {
         const permissionsLength = await tokenContract.permissionsLength();
-        console.log("          # Account                Role  Active                  Maximum                Processed");
-        console.log("         -- -------------------- ------ ------- ------------------------ ------------------------");
+        console.log("          # Permissioned account Role           Active                  Maximum                Processed");
+        console.log("         -- -------------------- -------------- ------ ------------------------ ------------------------");
         for (let j = 0; j < permissionsLength; j++) {
           const _p = await tokenContract.getPermissionByIndex(j);
           console.log("         " + this.padLeft(j, 2) + " " +
             this.padRight(this.getShortAccountName(_p.account), 20) + " " +
-            this.padLeft(_p.role.toString(), 6) + " " +
-            this.padLeft(_p.active.toString(), 7) + " " +
+            this.padRight(roleString(_p.role.toString()), 14) + " " +
+            this.padRight(_p.active.toString() == 1 ? "y" : "n", 6) + " " +
             this.padLeft(ethers.utils.formatUnits(_p.maximum, 18), 24) + " " +
             this.padLeft(ethers.utils.formatUnits(_p.processed, 18), 24));
         }
-        console.log("         -- -------------------- ------ ------- ------------------------ ------------------------");
+        console.log("         -- -------------------- -------------- ------ ------------------------ ------------------------");
       } catch (e) {
       }
       if (symbol == "OptinoGov" && this.optinoGov != null) {
@@ -544,6 +560,11 @@ module.exports = {
     ZERO_ADDRESS,
     SECONDS_PER_DAY,
     SECONDS_PER_YEAR,
+    ROLE_SETPERMISSION,
+    ROLE_SETCONFIG,
+    ROLE_MINTTOKENS,
+    ROLE_BURNTOKENS,
+    ROLE_RECOVERTOKENS,
     Data
 }
 

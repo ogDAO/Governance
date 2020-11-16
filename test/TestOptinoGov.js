@@ -1,4 +1,4 @@
-const { ZERO_ADDRESS, SECONDS_PER_DAY, SECONDS_PER_YEAR, Data } = require('./helpers/common');
+const { ZERO_ADDRESS, SECONDS_PER_DAY, SECONDS_PER_YEAR, ROLE_SETPERMISSION, ROLE_SETCONFIG, ROLE_MINTTOKENS, ROLE_BURNTOKENS, ROLE_RECOVERTOKENS, Data } = require('./helpers/common');
 const { expect } = require("chai");
 const { BigNumber } = require("ethers");
 const util = require('util');
@@ -29,11 +29,11 @@ describe("TestOptinoGov", function() {
     let ogRewardRates = [BigNumber.from(SECONDS_PER_YEAR).mul(BigNumber.from(10).pow(10)), BigNumber.from(2 * SECONDS_PER_YEAR).mul(BigNumber.from(10).pow(10)), BigNumber.from(3 * SECONDS_PER_YEAR).mul(BigNumber.from(10).pow(10))];
     let voteWeightTerms = [SECONDS_PER_DAY, 3 * SECONDS_PER_YEAR];
     let voteWeightRates = [BigNumber.from("1").mul(BigNumber.from(10).pow(16)), BigNumber.from("365").mul(3).mul(BigNumber.from(10).pow(16))];
-    setup1a.push(OGToken.deploy("OG", "Optino Governance", 18, data.owner, mintOGTokens));
-    setup1a.push(OGDToken.deploy("OGD", "Optino Governance Dividend", 18, data.owner, ethers.utils.parseUnits("0", 18)));
+    setup1a.push(OGToken.deploy("OG", "Optino Governance", 18, data.deployer, mintOGTokens));
+    setup1a.push(OGDToken.deploy("OGD", "Optino Governance Dividend", 18, data.deployer, ethers.utils.parseUnits("0", 18)));
     setup1a.push(SimpleCurve.deploy(ogRewardTerms, ogRewardRates));
     setup1a.push(SimpleCurve.deploy(voteWeightTerms, voteWeightRates));
-    setup1a.push(TestToken.deploy("FEE0", "Fee0", 18, data.owner, mintFee0Tokens));
+    setup1a.push(TestToken.deploy("FEE0", "Fee0", 18, data.deployer, mintFee0Tokens));
     const [ogToken, ogdToken, ogRewardCurve, voteWeightCurve, fee0Token] = await Promise.all(setup1a);
     const setup1b = [];
     const optinoGov = await OptinoGov.deploy(ogToken.address, ogdToken.address, ogRewardCurve.address, voteWeightCurve.address);
@@ -48,38 +48,60 @@ describe("TestOptinoGov", function() {
       await data.printBalances();
     }
 
-    console.log("        --- Setup 2 - OGDToken.addDividendToken([ETH, FEE0]), OGDToken mint(...) permissioning ---");
+    console.log("        --- Setup 2 - OGToken and OGDToken permissioning ---");
     const setup2 = [];
-    // const maxOGTokensForOptinoGov = ethers.utils.parseUnits("0.000000001", 18);
-    setup2.push(data.ogdToken.addDividendToken(ZERO_ADDRESS));
-    setup2.push(data.ogdToken.addDividendToken(fee0Token.address));
-    setup2.push(ogToken.setPermission(data.optinoGov.address, 1, true, ethers.utils.parseUnits("123456789", 18) /*maxOGTokensForOptinoGov*/));
-    setup2.push(data.ogdToken.setPermission(data.optinoGov.address, 1, true, ethers.utils.parseUnits("0", 18)));
-    setup2.push(data.ogdToken.setPermission(data.optinoGov.address, 2, true, ethers.utils.parseUnits("123456789", 18)));
-    const [addDividendToken0, addDividendToken1, setPermission1, setPermission2, setPermission3] = await Promise.all(setup2);
+    setup2.push(ogToken.setPermission(data.deployer, ROLE_SETCONFIG, true, 0));
+    setup2.push(ogToken.setPermission(data.optinoGov.address, ROLE_SETPERMISSION, true, 0));
+    setup2.push(ogToken.setPermission(data.optinoGov.address, ROLE_SETCONFIG, true, 0));
+    setup2.push(ogToken.setPermission(data.optinoGov.address, ROLE_MINTTOKENS, true, ethers.utils.parseUnits("123456789", 18)));
+    setup2.push(ogToken.setPermission(data.optinoGov.address, ROLE_BURNTOKENS, true, 0));
+    setup2.push(ogdToken.setPermission(data.deployer, ROLE_SETCONFIG, true, 0));
+    setup2.push(ogdToken.setPermission(data.optinoGov.address, ROLE_SETPERMISSION, true, 0));
+    setup2.push(ogdToken.setPermission(data.optinoGov.address, ROLE_SETCONFIG, true, 0));
+    setup2.push(ogdToken.setPermission(data.optinoGov.address, ROLE_MINTTOKENS, true, ethers.utils.parseUnits("123456789", 18)));
+    setup2.push(ogdToken.setPermission(data.optinoGov.address, ROLE_BURNTOKENS, true, 0));
+    const setup2Txs = await Promise.all(setup2);
+    for (let j = 0; j < setup2Txs.length; j++) {
+        await data.printTxData("setup2Txs[" + j + "]", setup2Txs[j]);
+    }
+    await data.printBalances();
+
+    console.log("        --- Setup 3 - OGDToken.addDividendToken([ETH, FEE0]) ---");
+    const setup3 = [];
+    setup3.push(data.ogdToken.addDividendToken(ZERO_ADDRESS));
+    setup3.push(data.ogdToken.addDividendToken(fee0Token.address));
+    const [addDividendToken0, addDividendToken1] = await Promise.all(setup3);
     await data.printTxData("addDividendToken0", addDividendToken0);
     await data.printTxData("addDividendToken1", addDividendToken1);
-    await data.printTxData("setPermission1", setPermission1);
-    await data.printTxData("setPermission2", setPermission2);
-    await data.printTxData("setPermission3", setPermission3);
-    if (verbose) {
-      await data.printBalances();
-    }
+    await data.printBalances();
 
-    console.log("        --- Setup 3 - Transfer OGTokens, User{1..3} approve 2,000 OGTokens to OptinoGov, Owner approve 2,000 FEE0 tokens to OGDToken, Transfer OGToken and OGDToken ownership to OptinoGov ---");
+    console.log("        --- Setup 4 - Remove deployer permissions from OGToken and OGDToken ---");
+    const setup4 = [];
+    setup4.push(ogToken.setPermission(data.deployer, ROLE_SETCONFIG, false, 0));
+    setup4.push(ogToken.setPermission(data.deployer, ROLE_SETPERMISSION, false, 0));
+    setup4.push(ogdToken.setPermission(data.deployer, ROLE_SETCONFIG, false, 0));
+    setup4.push(ogdToken.setPermission(data.deployer, ROLE_SETPERMISSION, false, 0));
+    const setup4Txs = await Promise.all(setup4);
+    for (let j = 0; j < setup4Txs.length; j++) {
+        await data.printTxData("setup4Txs[" + j + "]", setup4Txs[j]);
+    }
+    await data.printBalances();
+
+
+    console.log("        --- Setup 5 - Transfer OGTokens, User{1..3} approve 2,000 OGTokens to OptinoGov, Owner approve 2,000 FEE0 tokens to OGDToken, Transfer OGToken and OGDToken ownership to OptinoGov ---");
     const ogTokens = ethers.utils.parseUnits("10000", 18);
     const approveTokens = ethers.utils.parseUnits("2000", 18);
-    const setup3 = [];
-    setup3.push(ogToken.transfer(data.user1, ogTokens));
-    setup3.push(ogToken.transfer(data.user2, ogTokens));
-    setup3.push(ogToken.transfer(data.user3, ogTokens));
-    setup3.push(ogToken.connect(data.user1Signer).approve(data.optinoGov.address, approveTokens));
-    setup3.push(ogToken.connect(data.user2Signer).approve(data.optinoGov.address, approveTokens));
-    setup3.push(ogToken.connect(data.user3Signer).approve(data.optinoGov.address, approveTokens));
-    setup3.push(fee0Token.approve(data.ogdToken.address, approveTokens));
-    setup3.push(ogToken.transferOwnership(data.optinoGov.address));
-    setup3.push(data.ogdToken.transferOwnership(data.optinoGov.address));
-    const [transfer1, transfer2, transfer3, approve1, approve2, approve3, approve4, transferOwnership1, transferOwnership2] = await Promise.all(setup3);
+    const setup5 = [];
+    setup5.push(ogToken.transfer(data.user1, ogTokens));
+    setup5.push(ogToken.transfer(data.user2, ogTokens));
+    setup5.push(ogToken.transfer(data.user3, ogTokens));
+    setup5.push(ogToken.connect(data.user1Signer).approve(data.optinoGov.address, approveTokens));
+    setup5.push(ogToken.connect(data.user2Signer).approve(data.optinoGov.address, approveTokens));
+    setup5.push(ogToken.connect(data.user3Signer).approve(data.optinoGov.address, approveTokens));
+    setup5.push(fee0Token.approve(data.ogdToken.address, approveTokens));
+    setup5.push(ogToken.transferOwnership(data.optinoGov.address));
+    setup5.push(data.ogdToken.transferOwnership(data.optinoGov.address));
+    const [transfer1, transfer2, transfer3, approve1, approve2, approve3, approve4, transferOwnership1, transferOwnership2] = await Promise.all(setup5);
     await data.printTxData("transfer1", transfer1);
     await data.printTxData("transfer2", transfer2);
     await data.printTxData("transfer3", transfer3);

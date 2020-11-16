@@ -94,17 +94,17 @@ contract OGDToken is OGDTokenInterface, Permissioned {
         return allowed[tokenOwner][spender];
     }
 
-    function addDividendToken(address _dividendToken) external onlyOwner {
+    function addDividendToken(address _dividendToken) external permitted(ROLE_SETCONFIG, 0) {
         if (!dividendTokens.initialised) {
             dividendTokens.init();
         }
         dividendTokens.add(_dividendToken, true);
     }
-    function updateDividendToken(address token, bool enabled) public onlyOwner {
+    function updateDividendToken(address token, bool enabled) public permitted(ROLE_SETCONFIG, 0) {
         require(dividendTokens.initialised);
         dividendTokens.update(token, enabled);
     }
-    function removeDividendToken(address token) public onlyOwner {
+    function removeDividendToken(address token) public permitted(ROLE_SETCONFIG, 0) {
         require(dividendTokens.initialised);
         dividendTokens.remove(token);
     }
@@ -215,7 +215,7 @@ contract OGDToken is OGDTokenInterface, Permissioned {
         _withdrawDividendsFor(msg.sender, msg.sender);
     }
     /// @notice Withdraw enabled dividends tokens -
-    function withdrawDividendsAndBurnFor(address tokenOwner, uint tokens) override external permitted(ROLE_DIVIDENDWITHDRAWER, 0) returns (bool success) {
+    function withdrawDividendsAndBurnFor(address tokenOwner, uint tokens) override external permitted(ROLE_BURNTOKENS, 0) returns (bool success) {
         // console.log("        >   %s -> OGDToken.withdrawDividendsAndBurnFor(tokenOwner %s, tokens %s)", msg.sender, tokenOwner, tokens);
         require(accounts[tokenOwner].balance >= tokens, "Insufficient tokens");
         _withdrawDividendsFor(tokenOwner, tokenOwner);
@@ -240,7 +240,7 @@ contract OGDToken is OGDTokenInterface, Permissioned {
     }
 
     /// @notice Mint tokens
-    function mint(address tokenOwner, uint tokens) override external permitted(ROLE_MINTER, tokens) returns (bool success) {
+    function mint(address tokenOwner, uint tokens) override external permitted(ROLE_MINTTOKENS, tokens) returns (bool success) {
         updateAccount(tokenOwner);
         accounts[tokenOwner].balance = accounts[tokenOwner].balance.add(tokens);
         _totalSupply = _totalSupply.add(tokens);
@@ -257,13 +257,13 @@ contract OGDToken is OGDTokenInterface, Permissioned {
     }
 
     /// @notice Recover tokens for non enabled dividend tokens
-    function recoverTokens(address token, uint tokens) public onlyOwner {
+    function recoverTokens(address token, uint tokens) public permitted(ROLE_RECOVERTOKENS, 0) {
         DividendTokens.DividendToken memory dividendToken = dividendTokens.entries[token];
         require(dividendToken.timestamp == 0 || !dividendToken.enabled, "Cannot recover tokens for enabled dividend token");
         if (token == address(0)) {
-            require(payable(owner).send((tokens == 0 ? address(this).balance : tokens)), "ETH send failure");
+            require(payable(msg.sender).send((tokens == 0 ? address(this).balance : tokens)), "ETH send failure");
         } else {
-            require(ERC20(token).transfer(owner, tokens == 0 ? ERC20(token).balanceOf(address(this)) : tokens), "ERC20 transfer failure");
+            require(ERC20(token).transfer(msg.sender, tokens == 0 ? ERC20(token).balanceOf(address(this)) : tokens), "ERC20 transfer failure");
         }
     }
 }

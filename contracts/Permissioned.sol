@@ -3,11 +3,11 @@ pragma solidity ^0.7.0;
 // import "hardhat/console.sol";
 
 import "./SafeMath.sol";
-import "./Owned.sol";
+// import "./Owned.sol";
 
 /// @notice Permissioned
 // SPDX-License-Identifier: GPLv2
-contract Permissioned is Owned {
+contract Permissioned /*is Owned*/ {
     using SafeMath for uint;
 
     struct Permission {
@@ -18,10 +18,11 @@ contract Permissioned is Owned {
         uint processed;
     }
 
-    uint32 public constant ROLE_MINTER = 1;
-    uint32 public constant ROLE_DIVIDENDWITHDRAWER = 2;
-    // Don't need ROLE_BURNER at the moment
-    // uint public constant ROLE_BURNER = 2;
+    uint32 public constant ROLE_SETPERMISSION = 0;
+    uint32 public constant ROLE_SETCONFIG = 1;
+    uint32 public constant ROLE_MINTTOKENS = 2;
+    uint32 public constant ROLE_BURNTOKENS = 3;
+    uint32 public constant ROLE_RECOVERTOKENS = 4;
     mapping(bytes32 => Permission) public permissions;
     bytes32[] permissionsIndex;
 
@@ -36,11 +37,10 @@ contract Permissioned is Owned {
     }
 
     function initPermissioned(address _owner) internal {
-        initOwned(_owner);
-        // setPermission(_owner, ROLE_MINTER, true, 0);
-        // setPermission(_owner, ROLE_BURNER, true, 0);
+        _setPermission(_owner, ROLE_SETPERMISSION, true, 0);
+        // _setPermission(_owner, ROLE_SETCONFIG, true, 0);
     }
-    function setPermission(address account, uint32 role, bool active, uint maximum) public onlyOwner {
+    function _setPermission(address account, uint32 role, bool active, uint maximum) internal {
         bytes32 key = keccak256(abi.encodePacked(account, role));
         uint processed = permissions[key].processed;
         require(maximum == 0 || maximum >= processed, "Invalid maximum");
@@ -53,6 +53,9 @@ contract Permissioned is Owned {
         }
         emit PermissionUpdated(account, role, active, maximum, processed);
     }
+    function setPermission(address account, uint32 role, bool active, uint maximum) public permitted(ROLE_SETPERMISSION, 0) {
+        _setPermission(account, role, active, maximum);
+    }
 
     function getPermissionByIndex(uint i) public view returns (address account, uint32 role, uint8 active, uint maximum, uint processed) {
         require(i < permissionsIndex.length, "Invalid index");
@@ -63,10 +66,4 @@ contract Permissioned is Owned {
     function permissionsLength() public view returns (uint) {
         return permissionsIndex.length;
     }
-
-    // function available(uint role) public view returns (uint tokens) {
-    //     Permission memory permission = permissions[msg.sender][role];
-    //     tokens = permission.maximum == 0 ? uint(-1) : permission.maximum.sub(permission.processed);
-    //     console.log("        > %s -> Permissioned.available: %s, processed: %s", msg.sender, tokens, permission.processed);
-    // }
 }
