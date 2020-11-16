@@ -87,8 +87,7 @@ describe("TestOptinoGov", function() {
     }
     await data.printBalances();
 
-
-    console.log("        --- Setup 5 - Transfer OGTokens, User{1..3} approve 2,000 OGTokens to OptinoGov, Owner approve 2,000 FEE0 tokens to OGDToken, Transfer OGToken and OGDToken ownership to OptinoGov ---");
+    console.log("        --- Setup 5 - Transfer OGTokens, User{1..3} approve 2,000 OGTokens to OptinoGov, Owner approve 2,000 FEE0 tokens to OGDToken ---");
     const ogTokens = ethers.utils.parseUnits("10000", 18);
     const approveTokens = ethers.utils.parseUnits("2000", 18);
     const setup5 = [];
@@ -99,9 +98,7 @@ describe("TestOptinoGov", function() {
     setup5.push(ogToken.connect(data.user2Signer).approve(data.optinoGov.address, approveTokens));
     setup5.push(ogToken.connect(data.user3Signer).approve(data.optinoGov.address, approveTokens));
     setup5.push(fee0Token.approve(data.ogdToken.address, approveTokens));
-    setup5.push(ogToken.transferOwnership(data.optinoGov.address));
-    setup5.push(data.ogdToken.transferOwnership(data.optinoGov.address));
-    const [transfer1, transfer2, transfer3, approve1, approve2, approve3, approve4, transferOwnership1, transferOwnership2] = await Promise.all(setup5);
+    const [transfer1, transfer2, transfer3, approve1, approve2, approve3, approve4] = await Promise.all(setup5);
     await data.printTxData("transfer1", transfer1);
     await data.printTxData("transfer2", transfer2);
     await data.printTxData("transfer3", transfer3);
@@ -109,8 +106,6 @@ describe("TestOptinoGov", function() {
     await data.printTxData("approve2", approve2);
     await data.printTxData("approve3", approve3);
     await data.printTxData("approve4", approve4);
-    await data.printTxData("transferOwnership1", transferOwnership1);
-    await data.printTxData("transferOwnership2", transferOwnership2);
     await data.printBalances();
 
     console.log("        --- Setup Completed ---");
@@ -272,7 +267,7 @@ describe("TestOptinoGov", function() {
     });
   });
 
-  describe.only("TestOptinoGov - Workflow #2 - Developing", function() {
+  describe("TestOptinoGov - Workflow #2 - Developing", function() {
     it("Workflow #2 - Developing", async function() {
       console.log("        --- Test 1 - User{1..3} commit 1,000 OGTokens for {3m, 1y, 15m} seconds duration ---");
       let duration1 = 2;
@@ -303,7 +298,7 @@ describe("TestOptinoGov", function() {
       console.log("        --- Test 3 - Dummy tx to mine a new block and get the latest block.timestamp ---");
       duration = 4;
       data.pause("Waiting", duration + 1);
-      const dummy1 = await data.ownerSigner.sendTransaction({ to: data.owner, value: 0 });
+      const dummy1 = await data.deployerSigner.sendTransaction({ to: data.deployer, value: 0 });
       await data.printTxData("dummy1", dummy1);
       await data.printBalances();
 

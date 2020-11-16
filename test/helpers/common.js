@@ -365,11 +365,11 @@ class Data {
         } else if (r == 1) {
           return "Set Config";
         } else if (r == 2) {
-          return "Mint tokens";
+          return "Mint Tokens";
         } else if (r == 3) {
-          return "Burn tokens";
+          return "Burn Tokens";
         } else if (r == 4) {
-          return "Recover tokens";
+          return "Recover Tokens";
         } else {
           return "" + r;
         }
