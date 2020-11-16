@@ -21,33 +21,11 @@ library SafeMath {
         require(b > 0, "Divide by 0");
         c = a / b;
     }
-}
-
-// File: contracts/Owned.sol
-
-pragma solidity ^0.7.0;
-
-/// @notice Ownership
-// SPDX-License-Identifier: GPLv2
-contract Owned {
-    bool initialised;
-    address public owner;
-
-    event OwnershipTransferred(address indexed from, address indexed to);
-
-    modifier onlyOwner {
-        require(msg.sender == owner, "Not owner");
-        _;
+    function max(uint a, uint b) internal pure returns (uint c) {
+        c = a >= b ? a : b;
     }
-
-    function initOwned(address _owner) internal {
-        require(!initialised, "Already initialised");
-        owner = address(uint160(_owner));
-        initialised = true;
-    }
-    function transferOwnership(address _newOwner) public onlyOwner {
-        emit OwnershipTransferred(owner, _newOwner);
-        owner = _newOwner;
+    function min(uint a, uint b) internal pure returns (uint c) {
+        c = a <= b ? a : b;
     }
 }
 
@@ -55,43 +33,66 @@ contract Owned {
 
 pragma solidity ^0.7.0;
 
+// import "hardhat/console.sol";
 
 
 /// @notice Permissioned
 // SPDX-License-Identifier: GPLv2
-contract Permissioned is Owned {
+contract Permissioned {
     using SafeMath for uint;
 
     struct Permission {
-        bool active;
+        address account;
+        uint32 role;
+        uint8 active;
         uint maximum;
         uint processed;
     }
 
-    uint public constant ROLE_MINTER = 1;
-    uint public constant ROLE_DIVIDENDWITHDRAWER = 2;
-    // Don't need ROLE_BURNER at the moment
-    // uint public constant ROLE_BURNER = 2;
-    mapping(address => mapping(uint => Permission)) public permissions;
+    uint32 public constant ROLE_SETPERMISSION = 0;
+    uint32 public constant ROLE_SETCONFIG = 1;
+    uint32 public constant ROLE_MINTTOKENS = 2;
+    uint32 public constant ROLE_BURNTOKENS = 3;
+    uint32 public constant ROLE_RECOVERTOKENS = 4;
+    mapping(bytes32 => Permission) permissions;
+    bytes32[] permissionsIndex;
 
     event PermissionUpdated(address indexed account, uint role, bool active, uint maximum, uint processed);
 
-    modifier permitted(uint role, uint tokens) {
-        Permission storage permission = permissions[msg.sender][role];
-        require(permission.active && (permission.maximum == 0 || permission.processed + tokens < permission.maximum), "Not permissioned");
+    modifier permitted(uint32 role, uint tokens) {
+        bytes32 key = keccak256(abi.encodePacked(msg.sender, role));
+        Permission storage permission = permissions[key];
+        require(permission.active == uint8(1) && (permission.maximum == 0 || permission.processed.add(tokens) <= permission.maximum), "Not permissioned");
         permission.processed = permission.processed.add(tokens);
         _;
     }
 
     function initPermissioned(address _owner) internal {
-        initOwned(_owner);
-        // setPermission(_owner, ROLE_MINTER, true, 0);
-        // setPermission(_owner, ROLE_BURNER, true, 0);
+        _setPermission(_owner, ROLE_SETPERMISSION, true, 0);
     }
-    function setPermission(address account, uint role, bool active, uint maximum) public onlyOwner {
-        uint processed = permissions[account][role].processed;
-        permissions[account][role] = Permission({ active: active, maximum: maximum, processed: processed });
+    function _setPermission(address account, uint32 role, bool active, uint maximum) internal {
+        bytes32 key = keccak256(abi.encodePacked(account, role));
+        uint processed = permissions[key].processed;
+        require(maximum == 0 || maximum >= processed, "Invalid maximum");
+        if (permissions[key].account == address(0)) {
+            permissions[key] = Permission({ account: account, role: role, active: active ? uint8(1) : uint8(0), maximum: maximum, processed: processed });
+            permissionsIndex.push(key);
+        } else {
+            permissions[key].active = active ? uint8(1) : uint8(0);
+            permissions[key].maximum = maximum;
+        }
         emit PermissionUpdated(account, role, active, maximum, processed);
+    }
+    function setPermission(address account, uint32 role, bool active, uint maximum) public permitted(ROLE_SETPERMISSION, 0) {
+        _setPermission(account, role, active, maximum);
+    }
+    function getPermissionByIndex(uint i) public view returns (address account, uint32 role, uint8 active, uint maximum, uint processed) {
+        require(i < permissionsIndex.length, "Invalid index");
+        Permission memory permission = permissions[permissionsIndex[i]];
+        return (permission.account, permission.role, permission.active, permission.maximum, permission.processed);
+    }
+    function permissionsLength() public view returns (uint) {
+        return permissionsIndex.length;
     }
 }
 
@@ -127,7 +128,7 @@ pragma solidity ^0.7.0;
 interface OGDTokenInterface is ERC20 {
     function mint(address tokenOwner, uint tokens) external returns (bool success);
     function burn(uint tokens) external returns (bool success);
-    function withdrawDividendsFor(address account, address destination) external returns (bool success);
+    function withdrawDividendsAndBurnFor(address tokenOwner, uint tokens) external returns (bool success);
 }
 
 // File: contracts/DividendTokens.sol
@@ -276,10 +277,8 @@ contract OGDToken is OGDTokenInterface, Permissioned {
     function transferFrom(address from, address to, uint tokens) override external returns (bool success) {
         updateAccount(from);
         updateAccount(to);
+        allowed[from][msg.sender] = allowed[from][msg.sender].sub(tokens);
         accounts[from].balance = accounts[from].balance.sub(tokens);
-        if (msg.sender != owner) {
-            allowed[from][msg.sender] = allowed[from][msg.sender].sub(tokens);
-        }
         accounts[to].balance = accounts[to].balance.add(tokens);
         emit Transfer(from, to, tokens);
         return true;
@@ -288,17 +287,17 @@ contract OGDToken is OGDTokenInterface, Permissioned {
         return allowed[tokenOwner][spender];
     }
 
-    function addDividendToken(address _dividendToken) external onlyOwner {
+    function addDividendToken(address _dividendToken) external permitted(ROLE_SETCONFIG, 0) {
         if (!dividendTokens.initialised) {
             dividendTokens.init();
         }
         dividendTokens.add(_dividendToken, true);
     }
-    function updateDividendToken(address token, bool enabled) public onlyOwner {
+    function updateDividendToken(address token, bool enabled) public permitted(ROLE_SETCONFIG, 0) {
         require(dividendTokens.initialised);
         dividendTokens.update(token, enabled);
     }
-    function removeDividendToken(address token) public onlyOwner {
+    function removeDividendToken(address token) public permitted(ROLE_SETCONFIG, 0) {
         require(dividendTokens.initialised);
         dividendTokens.remove(token);
     }
@@ -409,8 +408,13 @@ contract OGDToken is OGDTokenInterface, Permissioned {
         _withdrawDividendsFor(msg.sender, msg.sender);
     }
     /// @notice Withdraw enabled dividends tokens -
-    function withdrawDividendsFor(address account, address destination) override external permitted(ROLE_DIVIDENDWITHDRAWER, 0) returns (bool success) {
-        _withdrawDividendsFor(account, destination);
+    function withdrawDividendsAndBurnFor(address tokenOwner, uint tokens) override external permitted(ROLE_BURNTOKENS, 0) returns (bool success) {
+        // console.log("        >   %s -> OGDToken.withdrawDividendsAndBurnFor(tokenOwner %s, tokens %s)", msg.sender, tokenOwner, tokens);
+        require(accounts[tokenOwner].balance >= tokens, "Insufficient tokens");
+        _withdrawDividendsFor(tokenOwner, tokenOwner);
+        accounts[tokenOwner].balance = accounts[tokenOwner].balance.sub(tokens);
+        _totalSupply = _totalSupply.sub(tokens);
+        emit Transfer(tokenOwner, address(0), tokens);
         return true;
     }
     /// @notice Withdraw enabled and disabled dividends tokens
@@ -429,7 +433,7 @@ contract OGDToken is OGDTokenInterface, Permissioned {
     }
 
     /// @notice Mint tokens
-    function mint(address tokenOwner, uint tokens) override external permitted(ROLE_MINTER, tokens) returns (bool success) {
+    function mint(address tokenOwner, uint tokens) override external permitted(ROLE_MINTTOKENS, tokens) returns (bool success) {
         updateAccount(tokenOwner);
         accounts[tokenOwner].balance = accounts[tokenOwner].balance.add(tokens);
         _totalSupply = _totalSupply.add(tokens);
@@ -446,13 +450,13 @@ contract OGDToken is OGDTokenInterface, Permissioned {
     }
 
     /// @notice Recover tokens for non enabled dividend tokens
-    function recoverTokens(address token, uint tokens) public onlyOwner {
+    function recoverTokens(address token, uint tokens) public permitted(ROLE_RECOVERTOKENS, 0) {
         DividendTokens.DividendToken memory dividendToken = dividendTokens.entries[token];
         require(dividendToken.timestamp == 0 || !dividendToken.enabled, "Cannot recover tokens for enabled dividend token");
         if (token == address(0)) {
-            require(payable(owner).send((tokens == 0 ? address(this).balance : tokens)), "ETH send failure");
+            require(payable(msg.sender).send((tokens == 0 ? address(this).balance : tokens)), "ETH send failure");
         } else {
-            require(ERC20(token).transfer(owner, tokens == 0 ? ERC20(token).balanceOf(address(this)) : tokens), "ERC20 transfer failure");
+            require(ERC20(token).transfer(msg.sender, tokens == 0 ? ERC20(token).balanceOf(address(this)) : tokens), "ERC20 transfer failure");
         }
     }
 }

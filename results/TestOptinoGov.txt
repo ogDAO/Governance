@@ -1,6 +1,4 @@
 $ npx hardhat --verbose --show-stack-traces test test/TestOptinoGov.js > results/TestOptinoGov.txt
-Compiling 22 files with 0.7.4
-Compilation finished successfully
 
 
   TestOptinoGov
@@ -32,7 +30,7 @@ Compilation finished successfully
         + VoteWeightCurve.PointUpdated(index: 1, term: 94608000, rate: 10950000000000000000)
         fee0Token.deployTransaction - gasUsed: 823708, fee: 0.06589664, feeUsd: 25.4143571488, @ 80.0 gwei & 385.67 ETH/USD, 0xed5ba149a4e4441718db4a4a7342a08d0c164530c6c44a13ab2b78b077f49173
         + Fee0Token.Transfer(from: ETH|null:0x0000, to: Deployer:0xa00A, tokens: 100.0)
-        optinoGov.deployTransaction - gasUsed: 5319533, fee: 0.42556264, feeUsd: 164.1267433688, @ 80.0 gwei & 385.67 ETH/USD, 0x32f63f92c33370fc26ff53128e359f901609f32b3348d72414f5410a80c4cd7c
+        optinoGov.deployTransaction - gasUsed: 5319533, fee: 0.42556264, feeUsd: 164.1267433688, @ 80.0 gwei & 385.67 ETH/USD, 0x0affebf0b5fb9e8deff7e256ef3bd913b7696dee01fbca97e4fd374d4abd9d91
         --- Setup 2 - OGToken and OGDToken permissioning ---
         setup2Txs[0] - gasUsed: 78962, fee: 0.00631696, feeUsd: 2.4362619632, @ 80.0 gwei & 385.67 ETH/USD, 0xdcf1bd0bb6a7821b94947c7884ae113f87efa6b38a9933f8a4c9aff34fa76ef3
         + OGToken.PermissionUpdated(account: Deployer:0xa00A, role: 1, active: true, maximum: 0, processed: 0)
@@ -93,25 +91,25 @@ Compilation finished successfully
          -- -------------------- ---------- ---------------- ------------------------ ------------------------ ------------------------ -------------------- ------------------------ ------------------------ ------------
          -- -------------------- ---------- ---------------- ------------------------ ------------------------ ------------------------ -------------------- ------------------------ ------------------------ ------------
         Token 1 symbol: 'OG', name: 'Optino Governance', decimals: 18, totalSupply: 40000.0, owner: n/a, address: OGToken:0x1647 @ 0x1647B1461251A0c6D3E14a227dE0F16E36ba80B1
-          # Permissioned account Role           Active                  Maximum                Processed
-         -- -------------------- -------------- ------ ------------------------ ------------------------
-          0 Deployer:0xa00A      Set Permission y                           0.0                      0.0
-          1 Deployer:0xa00A      Set Config     y                           0.0                      0.0
-          2 OptinoGov:0x7305     Set Permission y                           0.0                      0.0
-          3 OptinoGov:0x7305     Set Config     y                           0.0                      0.0
-          4 OptinoGov:0x7305     Mint Tokens    y                   123456789.0                      0.0
-          5 OptinoGov:0x7305     Burn Tokens    y                           0.0                      0.0
-         -- -------------------- -------------- ------ ------------------------ ------------------------
+          # Permissioned account     Role           Active                  Maximum                Processed
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
+          0 Deployer:0xa00A          Set Permission y                           0.0                      0.0
+          1 Deployer:0xa00A          Set Config     y                           0.0                      0.0
+          2 OptinoGov:0x7305         Set Permission y                           0.0                      0.0
+          3 OptinoGov:0x7305         Set Config     y                           0.0                      0.0
+          4 OptinoGov:0x7305         Mint Tokens    y                   123456789.0                      0.0
+          5 OptinoGov:0x7305         Burn Tokens    y                           0.0                      0.0
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
         Token 2 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 0.0, owner: n/a, address: OGDToken:0x0f4e @ 0x0f4eA6f2be49d822b7cAEf4175450A4D83A32e72
-          # Permissioned account Role           Active                  Maximum                Processed
-         -- -------------------- -------------- ------ ------------------------ ------------------------
-          0 Deployer:0xa00A      Set Permission y                           0.0                      0.0
-          1 Deployer:0xa00A      Set Config     y                           0.0                      0.0
-          2 OptinoGov:0x7305     Set Permission y                           0.0                      0.0
-          3 OptinoGov:0x7305     Set Config     y                           0.0                      0.0
-          4 OptinoGov:0x7305     Mint Tokens    y                   123456789.0                      0.0
-          5 OptinoGov:0x7305     Burn Tokens    y                           0.0                      0.0
-         -- -------------------- -------------- ------ ------------------------ ------------------------
+          # Permissioned account     Role           Active                  Maximum                Processed
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
+          0 Deployer:0xa00A          Set Permission y                           0.0                      0.0
+          1 Deployer:0xa00A          Set Config     y                           0.0                      0.0
+          2 OptinoGov:0x7305         Set Permission y                           0.0                      0.0
+          3 OptinoGov:0x7305         Set Config     y                           0.0                      0.0
+          4 OptinoGov:0x7305         Mint Tokens    y                   123456789.0                      0.0
+          5 OptinoGov:0x7305         Burn Tokens    y                           0.0                      0.0
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
           # Dividend         Enabled                  Unclaimed
          -- ---------------- ------- --------------------------
          -- ---------------- ------- --------------------------
@@ -174,25 +172,25 @@ Compilation finished successfully
          -- -------------------- ---------- ---------------- ------------------------ ------------------------ ------------------------ -------------------- ------------------------ ------------------------ ------------
          -- -------------------- ---------- ---------------- ------------------------ ------------------------ ------------------------ -------------------- ------------------------ ------------------------ ------------
         Token 1 symbol: 'OG', name: 'Optino Governance', decimals: 18, totalSupply: 40000.0, owner: n/a, address: OGToken:0x1647 @ 0x1647B1461251A0c6D3E14a227dE0F16E36ba80B1
-          # Permissioned account Role           Active                  Maximum                Processed
-         -- -------------------- -------------- ------ ------------------------ ------------------------
-          0 Deployer:0xa00A      Set Permission y                           0.0                      0.0
-          1 Deployer:0xa00A      Set Config     y                           0.0                      0.0
-          2 OptinoGov:0x7305     Set Permission y                           0.0                      0.0
-          3 OptinoGov:0x7305     Set Config     y                           0.0                      0.0
-          4 OptinoGov:0x7305     Mint Tokens    y                   123456789.0                      0.0
-          5 OptinoGov:0x7305     Burn Tokens    y                           0.0                      0.0
-         -- -------------------- -------------- ------ ------------------------ ------------------------
+          # Permissioned account     Role           Active                  Maximum                Processed
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
+          0 Deployer:0xa00A          Set Permission y                           0.0                      0.0
+          1 Deployer:0xa00A          Set Config     y                           0.0                      0.0
+          2 OptinoGov:0x7305         Set Permission y                           0.0                      0.0
+          3 OptinoGov:0x7305         Set Config     y                           0.0                      0.0
+          4 OptinoGov:0x7305         Mint Tokens    y                   123456789.0                      0.0
+          5 OptinoGov:0x7305         Burn Tokens    y                           0.0                      0.0
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
         Token 2 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 0.0, owner: n/a, address: OGDToken:0x0f4e @ 0x0f4eA6f2be49d822b7cAEf4175450A4D83A32e72
-          # Permissioned account Role           Active                  Maximum                Processed
-         -- -------------------- -------------- ------ ------------------------ ------------------------
-          0 Deployer:0xa00A      Set Permission y                           0.0                      0.0
-          1 Deployer:0xa00A      Set Config     y                           0.0                      0.0
-          2 OptinoGov:0x7305     Set Permission y                           0.0                      0.0
-          3 OptinoGov:0x7305     Set Config     y                           0.0                      0.0
-          4 OptinoGov:0x7305     Mint Tokens    y                   123456789.0                      0.0
-          5 OptinoGov:0x7305     Burn Tokens    y                           0.0                      0.0
-         -- -------------------- -------------- ------ ------------------------ ------------------------
+          # Permissioned account     Role           Active                  Maximum                Processed
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
+          0 Deployer:0xa00A          Set Permission y                           0.0                      0.0
+          1 Deployer:0xa00A          Set Config     y                           0.0                      0.0
+          2 OptinoGov:0x7305         Set Permission y                           0.0                      0.0
+          3 OptinoGov:0x7305         Set Config     y                           0.0                      0.0
+          4 OptinoGov:0x7305         Mint Tokens    y                   123456789.0                      0.0
+          5 OptinoGov:0x7305         Burn Tokens    y                           0.0                      0.0
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
           # Dividend         Enabled                  Unclaimed
          -- ---------------- ------- --------------------------
           0 ETH|null:0x0000     true                        0.0
@@ -269,25 +267,25 @@ Compilation finished successfully
          -- -------------------- ---------- ---------------- ------------------------ ------------------------ ------------------------ -------------------- ------------------------ ------------------------ ------------
          -- -------------------- ---------- ---------------- ------------------------ ------------------------ ------------------------ -------------------- ------------------------ ------------------------ ------------
         Token 1 symbol: 'OG', name: 'Optino Governance', decimals: 18, totalSupply: 40000.0, owner: n/a, address: OGToken:0x1647 @ 0x1647B1461251A0c6D3E14a227dE0F16E36ba80B1
-          # Permissioned account Role           Active                  Maximum                Processed
-         -- -------------------- -------------- ------ ------------------------ ------------------------
-          0 Deployer:0xa00A      Set Permission n                           0.0                      0.0
-          1 Deployer:0xa00A      Set Config     n                           0.0                      0.0
-          2 OptinoGov:0x7305     Set Permission y                           0.0                      0.0
-          3 OptinoGov:0x7305     Set Config     y                           0.0                      0.0
-          4 OptinoGov:0x7305     Mint Tokens    y                   123456789.0                      0.0
-          5 OptinoGov:0x7305     Burn Tokens    y                           0.0                      0.0
-         -- -------------------- -------------- ------ ------------------------ ------------------------
+          # Permissioned account     Role           Active                  Maximum                Processed
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
+          0 Deployer:0xa00A          Set Permission n                           0.0                      0.0
+          1 Deployer:0xa00A          Set Config     n                           0.0                      0.0
+          2 OptinoGov:0x7305         Set Permission y                           0.0                      0.0
+          3 OptinoGov:0x7305         Set Config     y                           0.0                      0.0
+          4 OptinoGov:0x7305         Mint Tokens    y                   123456789.0                      0.0
+          5 OptinoGov:0x7305         Burn Tokens    y                           0.0                      0.0
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
         Token 2 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 0.0, owner: n/a, address: OGDToken:0x0f4e @ 0x0f4eA6f2be49d822b7cAEf4175450A4D83A32e72
-          # Permissioned account Role           Active                  Maximum                Processed
-         -- -------------------- -------------- ------ ------------------------ ------------------------
-          0 Deployer:0xa00A      Set Permission n                           0.0                      0.0
-          1 Deployer:0xa00A      Set Config     n                           0.0                      0.0
-          2 OptinoGov:0x7305     Set Permission y                           0.0                      0.0
-          3 OptinoGov:0x7305     Set Config     y                           0.0                      0.0
-          4 OptinoGov:0x7305     Mint Tokens    y                   123456789.0                      0.0
-          5 OptinoGov:0x7305     Burn Tokens    y                           0.0                      0.0
-         -- -------------------- -------------- ------ ------------------------ ------------------------
+          # Permissioned account     Role           Active                  Maximum                Processed
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
+          0 Deployer:0xa00A          Set Permission n                           0.0                      0.0
+          1 Deployer:0xa00A          Set Config     n                           0.0                      0.0
+          2 OptinoGov:0x7305         Set Permission y                           0.0                      0.0
+          3 OptinoGov:0x7305         Set Config     y                           0.0                      0.0
+          4 OptinoGov:0x7305         Mint Tokens    y                   123456789.0                      0.0
+          5 OptinoGov:0x7305         Burn Tokens    y                           0.0                      0.0
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
           # Dividend         Enabled                  Unclaimed
          -- ---------------- ------- --------------------------
           0 ETH|null:0x0000     true                        0.0
@@ -370,25 +368,25 @@ Compilation finished successfully
          -- -------------------- ---------- ---------------- ------------------------ ------------------------ ------------------------ -------------------- ------------------------ ------------------------ ------------
          -- -------------------- ---------- ---------------- ------------------------ ------------------------ ------------------------ -------------------- ------------------------ ------------------------ ------------
         Token 1 symbol: 'OG', name: 'Optino Governance', decimals: 18, totalSupply: 40000.0, owner: n/a, address: OGToken:0x1647 @ 0x1647B1461251A0c6D3E14a227dE0F16E36ba80B1
-          # Permissioned account Role           Active                  Maximum                Processed
-         -- -------------------- -------------- ------ ------------------------ ------------------------
-          0 Deployer:0xa00A      Set Permission n                           0.0                      0.0
-          1 Deployer:0xa00A      Set Config     n                           0.0                      0.0
-          2 OptinoGov:0x7305     Set Permission y                           0.0                      0.0
-          3 OptinoGov:0x7305     Set Config     y                           0.0                      0.0
-          4 OptinoGov:0x7305     Mint Tokens    y                   123456789.0                      0.0
-          5 OptinoGov:0x7305     Burn Tokens    y                           0.0                      0.0
-         -- -------------------- -------------- ------ ------------------------ ------------------------
+          # Permissioned account     Role           Active                  Maximum                Processed
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
+          0 Deployer:0xa00A          Set Permission n                           0.0                      0.0
+          1 Deployer:0xa00A          Set Config     n                           0.0                      0.0
+          2 OptinoGov:0x7305         Set Permission y                           0.0                      0.0
+          3 OptinoGov:0x7305         Set Config     y                           0.0                      0.0
+          4 OptinoGov:0x7305         Mint Tokens    y                   123456789.0                      0.0
+          5 OptinoGov:0x7305         Burn Tokens    y                           0.0                      0.0
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
         Token 2 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 0.0, owner: n/a, address: OGDToken:0x0f4e @ 0x0f4eA6f2be49d822b7cAEf4175450A4D83A32e72
-          # Permissioned account Role           Active                  Maximum                Processed
-         -- -------------------- -------------- ------ ------------------------ ------------------------
-          0 Deployer:0xa00A      Set Permission n                           0.0                      0.0
-          1 Deployer:0xa00A      Set Config     n                           0.0                      0.0
-          2 OptinoGov:0x7305     Set Permission y                           0.0                      0.0
-          3 OptinoGov:0x7305     Set Config     y                           0.0                      0.0
-          4 OptinoGov:0x7305     Mint Tokens    y                   123456789.0                      0.0
-          5 OptinoGov:0x7305     Burn Tokens    y                           0.0                      0.0
-         -- -------------------- -------------- ------ ------------------------ ------------------------
+          # Permissioned account     Role           Active                  Maximum                Processed
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
+          0 Deployer:0xa00A          Set Permission n                           0.0                      0.0
+          1 Deployer:0xa00A          Set Config     n                           0.0                      0.0
+          2 OptinoGov:0x7305         Set Permission y                           0.0                      0.0
+          3 OptinoGov:0x7305         Set Config     y                           0.0                      0.0
+          4 OptinoGov:0x7305         Mint Tokens    y                   123456789.0                      0.0
+          5 OptinoGov:0x7305         Burn Tokens    y                           0.0                      0.0
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
           # Dividend         Enabled                  Unclaimed
          -- ---------------- ------- --------------------------
           0 ETH|null:0x0000     true                        0.0
@@ -423,17 +421,17 @@ Compilation finished successfully
         commit1 - gasUsed: 378033, fee: 0.03024264, feeUsd: 11.6636789688, @ 80.0 gwei & 385.67 ETH/USD, 0x3a614bae46098f4115c0c0bfc824e486ffb0985d0bd4f9302bf46f7799a65052
         + OGToken.Transfer(from: User1:0xa11A, to: OptinoGov:0x7305, tokens: 1000.0)
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User1:0xa11A, tokens: 1000.0)
-        + OptinoGov.Committed(user: User1:0xa11A, tokens: 1000.0, balance: 1000.0, duration: 5, end: 1605490056, delegatee: ETH|null:0x0000, votes: 0.0, rewardPool: 1000000.0, totalVotes: 0.0)
+        + OptinoGov.Committed(user: User1:0xa11A, tokens: 1000.0, balance: 1000.0, duration: 5, end: 1605491569, delegatee: ETH|null:0x0000, votes: 0.0, rewardPool: 1000000.0, totalVotes: 0.0)
         + OptinoGov.Transfer(from: ETH|null:0x0000, to: User1:0xa11A, tokens: 1000.0)
         commit2 - gasUsed: 307233, fee: 0.02457864, feeUsd: 9.4792440888, @ 80.0 gwei & 385.67 ETH/USD, 0x6831859cd708398ae09c70b127fa509beba366c59d06994c7a768b52d7f18ee6
         + OGToken.Transfer(from: User2:0xa22A, to: OptinoGov:0x7305, tokens: 1000.0)
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User2:0xa22A, tokens: 1000.0)
-        + OptinoGov.Committed(user: User2:0xa22A, tokens: 1000.0, balance: 1000.0, duration: 50, end: 1605490102, delegatee: ETH|null:0x0000, votes: 0.0, rewardPool: 1000000.0, totalVotes: 10.0)
+        + OptinoGov.Committed(user: User2:0xa22A, tokens: 1000.0, balance: 1000.0, duration: 50, end: 1605491615, delegatee: ETH|null:0x0000, votes: 0.0, rewardPool: 1000000.0, totalVotes: 10.0)
         + OptinoGov.Transfer(from: ETH|null:0x0000, to: User2:0xa22A, tokens: 1000.0)
         commit3 - gasUsed: 307245, fee: 0.0245796, feeUsd: 9.479614332, @ 80.0 gwei & 385.67 ETH/USD, 0x093d3e4e6670bf4fcef9aad62a3271f43c92f3793e638fe2f549969e900b9d81
         + OGToken.Transfer(from: User3:0xa33a, to: OptinoGov:0x7305, tokens: 1000.0)
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User3:0xa33a, tokens: 1000.0)
-        + OptinoGov.Committed(user: User3:0xa33a, tokens: 1000.0, balance: 1000.0, duration: 500, end: 1605490553, delegatee: ETH|null:0x0000, votes: 0.0, rewardPool: 1000000.0, totalVotes: 20.0)
+        + OptinoGov.Committed(user: User3:0xa33a, tokens: 1000.0, balance: 1000.0, duration: 500, end: 1605492066, delegatee: ETH|null:0x0000, votes: 0.0, rewardPool: 1000000.0, totalVotes: 20.0)
         + OptinoGov.Transfer(from: ETH|null:0x0000, to: User3:0xa33a, tokens: 1000.0)
         
          # Account                                        ΔETH                OptinoGov                       OG                      OGD                     FEE0
@@ -477,25 +475,25 @@ Compilation finished successfully
           2 User3:0xa33a              8m20s            8m20s                   31.536                   1000.0                     10.0 ETH|null:0x0000                           0.0                      0.0            0
          -- -------------------- ---------- ---------------- ------------------------ ------------------------ ------------------------ -------------------- ------------------------ ------------------------ ------------
         Token 1 symbol: 'OG', name: 'Optino Governance', decimals: 18, totalSupply: 40000.0, owner: n/a, address: OGToken:0x1647 @ 0x1647B1461251A0c6D3E14a227dE0F16E36ba80B1
-          # Permissioned account Role           Active                  Maximum                Processed
-         -- -------------------- -------------- ------ ------------------------ ------------------------
-          0 Deployer:0xa00A      Set Permission n                           0.0                      0.0
-          1 Deployer:0xa00A      Set Config     n                           0.0                      0.0
-          2 OptinoGov:0x7305     Set Permission y                           0.0                      0.0
-          3 OptinoGov:0x7305     Set Config     y                           0.0                      0.0
-          4 OptinoGov:0x7305     Mint Tokens    y                   123456789.0                      0.0
-          5 OptinoGov:0x7305     Burn Tokens    y                           0.0                      0.0
-         -- -------------------- -------------- ------ ------------------------ ------------------------
+          # Permissioned account     Role           Active                  Maximum                Processed
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
+          0 Deployer:0xa00A          Set Permission n                           0.0                      0.0
+          1 Deployer:0xa00A          Set Config     n                           0.0                      0.0
+          2 OptinoGov:0x7305         Set Permission y                           0.0                      0.0
+          3 OptinoGov:0x7305         Set Config     y                           0.0                      0.0
+          4 OptinoGov:0x7305         Mint Tokens    y                   123456789.0                      0.0
+          5 OptinoGov:0x7305         Burn Tokens    y                           0.0                      0.0
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
         Token 2 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 3000.0, owner: n/a, address: OGDToken:0x0f4e @ 0x0f4eA6f2be49d822b7cAEf4175450A4D83A32e72
-          # Permissioned account Role           Active                  Maximum                Processed
-         -- -------------------- -------------- ------ ------------------------ ------------------------
-          0 Deployer:0xa00A      Set Permission n                           0.0                      0.0
-          1 Deployer:0xa00A      Set Config     n                           0.0                      0.0
-          2 OptinoGov:0x7305     Set Permission y                           0.0                      0.0
-          3 OptinoGov:0x7305     Set Config     y                           0.0                      0.0
-          4 OptinoGov:0x7305     Mint Tokens    y                   123456789.0                   3000.0
-          5 OptinoGov:0x7305     Burn Tokens    y                           0.0                      0.0
-         -- -------------------- -------------- ------ ------------------------ ------------------------
+          # Permissioned account     Role           Active                  Maximum                Processed
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
+          0 Deployer:0xa00A          Set Permission n                           0.0                      0.0
+          1 Deployer:0xa00A          Set Config     n                           0.0                      0.0
+          2 OptinoGov:0x7305         Set Permission y                           0.0                      0.0
+          3 OptinoGov:0x7305         Set Config     y                           0.0                      0.0
+          4 OptinoGov:0x7305         Mint Tokens    y                   123456789.0                   3000.0
+          5 OptinoGov:0x7305         Burn Tokens    y                           0.0                      0.0
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
           # Dividend         Enabled                  Unclaimed
          -- ---------------- ------- --------------------------
           0 ETH|null:0x0000     true                        0.0
@@ -571,25 +569,25 @@ Compilation finished successfully
           2 User3:0xa33a              8m20s            8m18s                   31.536                   1000.0                     10.0 ETH|null:0x0000                          20.0          0.0000200000002            2
          -- -------------------- ---------- ---------------- ------------------------ ------------------------ ------------------------ -------------------- ------------------------ ------------------------ ------------
         Token 1 symbol: 'OG', name: 'Optino Governance', decimals: 18, totalSupply: 40000.0, owner: n/a, address: OGToken:0x1647 @ 0x1647B1461251A0c6D3E14a227dE0F16E36ba80B1
-          # Permissioned account Role           Active                  Maximum                Processed
-         -- -------------------- -------------- ------ ------------------------ ------------------------
-          0 Deployer:0xa00A      Set Permission n                           0.0                      0.0
-          1 Deployer:0xa00A      Set Config     n                           0.0                      0.0
-          2 OptinoGov:0x7305     Set Permission y                           0.0                      0.0
-          3 OptinoGov:0x7305     Set Config     y                           0.0                      0.0
-          4 OptinoGov:0x7305     Mint Tokens    y                   123456789.0                      0.0
-          5 OptinoGov:0x7305     Burn Tokens    y                           0.0                      0.0
-         -- -------------------- -------------- ------ ------------------------ ------------------------
+          # Permissioned account     Role           Active                  Maximum                Processed
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
+          0 Deployer:0xa00A          Set Permission n                           0.0                      0.0
+          1 Deployer:0xa00A          Set Config     n                           0.0                      0.0
+          2 OptinoGov:0x7305         Set Permission y                           0.0                      0.0
+          3 OptinoGov:0x7305         Set Config     y                           0.0                      0.0
+          4 OptinoGov:0x7305         Mint Tokens    y                   123456789.0                      0.0
+          5 OptinoGov:0x7305         Burn Tokens    y                           0.0                      0.0
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
         Token 2 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 3000.0, owner: n/a, address: OGDToken:0x0f4e @ 0x0f4eA6f2be49d822b7cAEf4175450A4D83A32e72
-          # Permissioned account Role           Active                  Maximum                Processed
-         -- -------------------- -------------- ------ ------------------------ ------------------------
-          0 Deployer:0xa00A      Set Permission n                           0.0                      0.0
-          1 Deployer:0xa00A      Set Config     n                           0.0                      0.0
-          2 OptinoGov:0x7305     Set Permission y                           0.0                      0.0
-          3 OptinoGov:0x7305     Set Config     y                           0.0                      0.0
-          4 OptinoGov:0x7305     Mint Tokens    y                   123456789.0                   3000.0
-          5 OptinoGov:0x7305     Burn Tokens    y                           0.0                      0.0
-         -- -------------------- -------------- ------ ------------------------ ------------------------
+          # Permissioned account     Role           Active                  Maximum                Processed
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
+          0 Deployer:0xa00A          Set Permission n                           0.0                      0.0
+          1 Deployer:0xa00A          Set Config     n                           0.0                      0.0
+          2 OptinoGov:0x7305         Set Permission y                           0.0                      0.0
+          3 OptinoGov:0x7305         Set Config     y                           0.0                      0.0
+          4 OptinoGov:0x7305         Mint Tokens    y                   123456789.0                   3000.0
+          5 OptinoGov:0x7305         Burn Tokens    y                           0.0                      0.0
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
           # Dividend         Enabled                  Unclaimed
          -- ---------------- ------- --------------------------
           0 ETH|null:0x0000     true                        0.0
@@ -625,7 +623,7 @@ Compilation finished successfully
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User2:0xa22A, tokens: 0.0000400000008)
         + OptinoGov.Transfer(from: ETH|null:0x0000, to: User2:0xa22A, tokens: 0.0000400000008)
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User2:0xa22A, tokens: 1000.0)
-        + OptinoGov.Committed(user: User2:0xa22A, tokens: 1000.0, balance: 2000.0000400000008, duration: 55, end: 1605490111, delegatee: User3:0xa33a, votes: 10.0, rewardPool: 1000000.0, totalVotes: 20.0)
+        + OptinoGov.Committed(user: User2:0xa22A, tokens: 1000.0, balance: 2000.0000400000008, duration: 55, end: 1605491624, delegatee: User3:0xa33a, votes: 10.0, rewardPool: 1000000.0, totalVotes: 20.0)
         + OptinoGov.Transfer(from: ETH|null:0x0000, to: User2:0xa22A, tokens: 1000.0)
         
          # Account                                        ΔETH                OptinoGov                       OG                      OGD                     FEE0
@@ -669,25 +667,25 @@ Compilation finished successfully
           2 User3:0xa33a              8m20s            8m17s                   31.536                   1000.0                     10.0 ETH|null:0x0000            30.000000400000008         0.00003000000045            3
          -- -------------------- ---------- ---------------- ------------------------ ------------------------ ------------------------ -------------------- ------------------------ ------------------------ ------------
         Token 1 symbol: 'OG', name: 'Optino Governance', decimals: 18, totalSupply: 40000.0000400000008, owner: n/a, address: OGToken:0x1647 @ 0x1647B1461251A0c6D3E14a227dE0F16E36ba80B1
-          # Permissioned account Role           Active                  Maximum                Processed
-         -- -------------------- -------------- ------ ------------------------ ------------------------
-          0 Deployer:0xa00A      Set Permission n                           0.0                      0.0
-          1 Deployer:0xa00A      Set Config     n                           0.0                      0.0
-          2 OptinoGov:0x7305     Set Permission y                           0.0                      0.0
-          3 OptinoGov:0x7305     Set Config     y                           0.0                      0.0
-          4 OptinoGov:0x7305     Mint Tokens    y                   123456789.0          0.0000400000008
-          5 OptinoGov:0x7305     Burn Tokens    y                           0.0                      0.0
-         -- -------------------- -------------- ------ ------------------------ ------------------------
+          # Permissioned account     Role           Active                  Maximum                Processed
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
+          0 Deployer:0xa00A          Set Permission n                           0.0                      0.0
+          1 Deployer:0xa00A          Set Config     n                           0.0                      0.0
+          2 OptinoGov:0x7305         Set Permission y                           0.0                      0.0
+          3 OptinoGov:0x7305         Set Config     y                           0.0                      0.0
+          4 OptinoGov:0x7305         Mint Tokens    y                   123456789.0          0.0000400000008
+          5 OptinoGov:0x7305         Burn Tokens    y                           0.0                      0.0
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
         Token 2 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 4000.0000400000008, owner: n/a, address: OGDToken:0x0f4e @ 0x0f4eA6f2be49d822b7cAEf4175450A4D83A32e72
-          # Permissioned account Role           Active                  Maximum                Processed
-         -- -------------------- -------------- ------ ------------------------ ------------------------
-          0 Deployer:0xa00A      Set Permission n                           0.0                      0.0
-          1 Deployer:0xa00A      Set Config     n                           0.0                      0.0
-          2 OptinoGov:0x7305     Set Permission y                           0.0                      0.0
-          3 OptinoGov:0x7305     Set Config     y                           0.0                      0.0
-          4 OptinoGov:0x7305     Mint Tokens    y                   123456789.0       4000.0000400000008
-          5 OptinoGov:0x7305     Burn Tokens    y                           0.0                      0.0
-         -- -------------------- -------------- ------ ------------------------ ------------------------
+          # Permissioned account     Role           Active                  Maximum                Processed
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
+          0 Deployer:0xa00A          Set Permission n                           0.0                      0.0
+          1 Deployer:0xa00A          Set Config     n                           0.0                      0.0
+          2 OptinoGov:0x7305         Set Permission y                           0.0                      0.0
+          3 OptinoGov:0x7305         Set Config     y                           0.0                      0.0
+          4 OptinoGov:0x7305         Mint Tokens    y                   123456789.0       4000.0000400000008
+          5 OptinoGov:0x7305         Burn Tokens    y                           0.0                      0.0
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
           # Dividend         Enabled                  Unclaimed
          -- ---------------- ------- --------------------------
           0 ETH|null:0x0000     true                        0.0
@@ -771,25 +769,25 @@ Compilation finished successfully
           2 User3:0xa33a                 1d               1d                   31.536       1000.0000600000018       10.000000600000018 ETH|null:0x0000            30.000001400000038                      0.0            0
          -- -------------------- ---------- ---------------- ------------------------ ------------------------ ------------------------ -------------------- ------------------------ ------------------------ ------------
         Token 1 symbol: 'OG', name: 'Optino Governance', decimals: 18, totalSupply: 40000.0002000000056, owner: n/a, address: OGToken:0x1647 @ 0x1647B1461251A0c6D3E14a227dE0F16E36ba80B1
-          # Permissioned account Role           Active                  Maximum                Processed
-         -- -------------------- -------------- ------ ------------------------ ------------------------
-          0 Deployer:0xa00A      Set Permission n                           0.0                      0.0
-          1 Deployer:0xa00A      Set Config     n                           0.0                      0.0
-          2 OptinoGov:0x7305     Set Permission y                           0.0                      0.0
-          3 OptinoGov:0x7305     Set Config     y                           0.0                      0.0
-          4 OptinoGov:0x7305     Mint Tokens    y                   123456789.0          0.0002000000056
-          5 OptinoGov:0x7305     Burn Tokens    y                           0.0                      0.0
-         -- -------------------- -------------- ------ ------------------------ ------------------------
+          # Permissioned account     Role           Active                  Maximum                Processed
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
+          0 Deployer:0xa00A          Set Permission n                           0.0                      0.0
+          1 Deployer:0xa00A          Set Config     n                           0.0                      0.0
+          2 OptinoGov:0x7305         Set Permission y                           0.0                      0.0
+          3 OptinoGov:0x7305         Set Config     y                           0.0                      0.0
+          4 OptinoGov:0x7305         Mint Tokens    y                   123456789.0          0.0002000000056
+          5 OptinoGov:0x7305         Burn Tokens    y                           0.0                      0.0
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
         Token 2 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 4000.0002000000056, owner: n/a, address: OGDToken:0x0f4e @ 0x0f4eA6f2be49d822b7cAEf4175450A4D83A32e72
-          # Permissioned account Role           Active                  Maximum                Processed
-         -- -------------------- -------------- ------ ------------------------ ------------------------
-          0 Deployer:0xa00A      Set Permission n                           0.0                      0.0
-          1 Deployer:0xa00A      Set Config     n                           0.0                      0.0
-          2 OptinoGov:0x7305     Set Permission y                           0.0                      0.0
-          3 OptinoGov:0x7305     Set Config     y                           0.0                      0.0
-          4 OptinoGov:0x7305     Mint Tokens    y                   123456789.0       4000.0002000000056
-          5 OptinoGov:0x7305     Burn Tokens    y                           0.0                      0.0
-         -- -------------------- -------------- ------ ------------------------ ------------------------
+          # Permissioned account     Role           Active                  Maximum                Processed
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
+          0 Deployer:0xa00A          Set Permission n                           0.0                      0.0
+          1 Deployer:0xa00A          Set Config     n                           0.0                      0.0
+          2 OptinoGov:0x7305         Set Permission y                           0.0                      0.0
+          3 OptinoGov:0x7305         Set Config     y                           0.0                      0.0
+          4 OptinoGov:0x7305         Mint Tokens    y                   123456789.0       4000.0002000000056
+          5 OptinoGov:0x7305         Burn Tokens    y                           0.0                      0.0
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
           # Dividend         Enabled                  Unclaimed
          -- ---------------- ------- --------------------------
           0 ETH|null:0x0000     true                        0.0
@@ -819,8 +817,8 @@ Compilation finished successfully
          -- ---------- ------------------------
         
         --- Test 5 - Owner uncommitFor(user1) for a % fee ---
-        Pausing 'Waiting' for 5s=Mon Nov 16 2020 12:27:13 GMT+1100 (Australian Eastern Daylight Time) now=Mon Nov 16 2020 12:27:08 GMT+1100 (Australian Eastern Daylight Time)
-        Paused 'Waiting' for 5s=Mon Nov 16 2020 12:27:13 GMT+1100 (Australian Eastern Daylight Time) now=Mon Nov 16 2020 12:27:13 GMT+1100 (Australian Eastern Daylight Time)
+        Pausing 'Waiting' for 5s=Mon Nov 16 2020 12:52:26 GMT+1100 (Australian Eastern Daylight Time) now=Mon Nov 16 2020 12:52:21 GMT+1100 (Australian Eastern Daylight Time)
+        Paused 'Waiting' for 5s=Mon Nov 16 2020 12:52:26 GMT+1100 (Australian Eastern Daylight Time) now=Mon Nov 16 2020 12:52:26 GMT+1100 (Australian Eastern Daylight Time)
         
         uncommitFor1 - gasUsed: 200473, fee: 0.01603784, feeUsd: 6.1853137528, @ 80.0 gwei & 385.67 ETH/USD, 0x42b0cea753b8ba966b78fe882b4634eeb22ebf645bbcb2822da2b830a97376db
         + OGToken.Transfer(from: ETH|null:0x0000, to: Deployer:0xa00A, tokens: 0.0000040000004)
@@ -869,25 +867,25 @@ Compilation finished successfully
           2 User3:0xa33a                 1d        23h59m54s                   31.536       1000.0000600000018       10.000000600000018 ETH|null:0x0000            30.000002160000114          0.0000600000054            6
          -- -------------------- ---------- ---------------- ------------------------ ------------------------ ------------------------ -------------------- ------------------------ ------------------------ ------------
         Token 1 symbol: 'OG', name: 'Optino Governance', decimals: 18, totalSupply: 40000.0002800000136, owner: n/a, address: OGToken:0x1647 @ 0x1647B1461251A0c6D3E14a227dE0F16E36ba80B1
-          # Permissioned account Role           Active                  Maximum                Processed
-         -- -------------------- -------------- ------ ------------------------ ------------------------
-          0 Deployer:0xa00A      Set Permission n                           0.0                      0.0
-          1 Deployer:0xa00A      Set Config     n                           0.0                      0.0
-          2 OptinoGov:0x7305     Set Permission y                           0.0                      0.0
-          3 OptinoGov:0x7305     Set Config     y                           0.0                      0.0
-          4 OptinoGov:0x7305     Mint Tokens    y                   123456789.0          0.0002800000136
-          5 OptinoGov:0x7305     Burn Tokens    y                           0.0                      0.0
-         -- -------------------- -------------- ------ ------------------------ ------------------------
+          # Permissioned account     Role           Active                  Maximum                Processed
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
+          0 Deployer:0xa00A          Set Permission n                           0.0                      0.0
+          1 Deployer:0xa00A          Set Config     n                           0.0                      0.0
+          2 OptinoGov:0x7305         Set Permission y                           0.0                      0.0
+          3 OptinoGov:0x7305         Set Config     y                           0.0                      0.0
+          4 OptinoGov:0x7305         Mint Tokens    y                   123456789.0          0.0002800000136
+          5 OptinoGov:0x7305         Burn Tokens    y                           0.0                      0.0
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
         Token 2 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 4000.0002760000132, owner: n/a, address: OGDToken:0x0f4e @ 0x0f4eA6f2be49d822b7cAEf4175450A4D83A32e72
-          # Permissioned account Role           Active                  Maximum                Processed
-         -- -------------------- -------------- ------ ------------------------ ------------------------
-          0 Deployer:0xa00A      Set Permission n                           0.0                      0.0
-          1 Deployer:0xa00A      Set Config     n                           0.0                      0.0
-          2 OptinoGov:0x7305     Set Permission y                           0.0                      0.0
-          3 OptinoGov:0x7305     Set Config     y                           0.0                      0.0
-          4 OptinoGov:0x7305     Mint Tokens    y                   123456789.0       4000.0002760000132
-          5 OptinoGov:0x7305     Burn Tokens    y                           0.0                      0.0
-         -- -------------------- -------------- ------ ------------------------ ------------------------
+          # Permissioned account     Role           Active                  Maximum                Processed
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
+          0 Deployer:0xa00A          Set Permission n                           0.0                      0.0
+          1 Deployer:0xa00A          Set Config     n                           0.0                      0.0
+          2 OptinoGov:0x7305         Set Permission y                           0.0                      0.0
+          3 OptinoGov:0x7305         Set Config     y                           0.0                      0.0
+          4 OptinoGov:0x7305         Mint Tokens    y                   123456789.0       4000.0002760000132
+          5 OptinoGov:0x7305         Burn Tokens    y                           0.0                      0.0
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
           # Dividend         Enabled                  Unclaimed
          -- ---------------- ------- --------------------------
           0 ETH|null:0x0000     true                        0.0
@@ -964,25 +962,25 @@ Compilation finished successfully
           2 User3:0xa33a                 1d        23h59m52s                   31.536       1000.0000600000018       10.000000600000018 ETH|null:0x0000            30.000002160000114           0.000080000008            8
          -- -------------------- ---------- ---------------- ------------------------ ------------------------ ------------------------ -------------------- ------------------------ ------------------------ ------------
         Token 1 symbol: 'OG', name: 'Optino Governance', decimals: 18, totalSupply: 40000.0002800000136, owner: n/a, address: OGToken:0x1647 @ 0x1647B1461251A0c6D3E14a227dE0F16E36ba80B1
-          # Permissioned account Role           Active                  Maximum                Processed
-         -- -------------------- -------------- ------ ------------------------ ------------------------
-          0 Deployer:0xa00A      Set Permission n                           0.0                      0.0
-          1 Deployer:0xa00A      Set Config     n                           0.0                      0.0
-          2 OptinoGov:0x7305     Set Permission y                           0.0                      0.0
-          3 OptinoGov:0x7305     Set Config     y                           0.0                      0.0
-          4 OptinoGov:0x7305     Mint Tokens    y                   123456789.0          0.0002800000136
-          5 OptinoGov:0x7305     Burn Tokens    y                           0.0                      0.0
-         -- -------------------- -------------- ------ ------------------------ ------------------------
+          # Permissioned account     Role           Active                  Maximum                Processed
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
+          0 Deployer:0xa00A          Set Permission n                           0.0                      0.0
+          1 Deployer:0xa00A          Set Config     n                           0.0                      0.0
+          2 OptinoGov:0x7305         Set Permission y                           0.0                      0.0
+          3 OptinoGov:0x7305         Set Config     y                           0.0                      0.0
+          4 OptinoGov:0x7305         Mint Tokens    y                   123456789.0          0.0002800000136
+          5 OptinoGov:0x7305         Burn Tokens    y                           0.0                      0.0
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
         Token 2 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 4000.0002760000132, owner: n/a, address: OGDToken:0x0f4e @ 0x0f4eA6f2be49d822b7cAEf4175450A4D83A32e72
-          # Permissioned account Role           Active                  Maximum                Processed
-         -- -------------------- -------------- ------ ------------------------ ------------------------
-          0 Deployer:0xa00A      Set Permission n                           0.0                      0.0
-          1 Deployer:0xa00A      Set Config     n                           0.0                      0.0
-          2 OptinoGov:0x7305     Set Permission y                           0.0                      0.0
-          3 OptinoGov:0x7305     Set Config     y                           0.0                      0.0
-          4 OptinoGov:0x7305     Mint Tokens    y                   123456789.0       4000.0002760000132
-          5 OptinoGov:0x7305     Burn Tokens    y                           0.0                      0.0
-         -- -------------------- -------------- ------ ------------------------ ------------------------
+          # Permissioned account     Role           Active                  Maximum                Processed
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
+          0 Deployer:0xa00A          Set Permission n                           0.0                      0.0
+          1 Deployer:0xa00A          Set Config     n                           0.0                      0.0
+          2 OptinoGov:0x7305         Set Permission y                           0.0                      0.0
+          3 OptinoGov:0x7305         Set Config     y                           0.0                      0.0
+          4 OptinoGov:0x7305         Mint Tokens    y                   123456789.0       4000.0002760000132
+          5 OptinoGov:0x7305         Burn Tokens    y                           0.0                      0.0
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
           # Dividend         Enabled                  Unclaimed
          -- ---------------- ------- --------------------------
           0 ETH|null:0x0000     true                       10.0
@@ -1066,25 +1064,25 @@ Compilation finished successfully
           2 User3:0xa33a                 1d        23h59m49s                   31.536       1000.0000600000018       10.000000600000018 ETH|null:0x0000            30.000002160000114         0.00011000001265           11
          -- -------------------- ---------- ---------------- ------------------------ ------------------------ ------------------------ -------------------- ------------------------ ------------------------ ------------
         Token 1 symbol: 'OG', name: 'Optino Governance', decimals: 18, totalSupply: 40000.0002800000136, owner: n/a, address: OGToken:0x1647 @ 0x1647B1461251A0c6D3E14a227dE0F16E36ba80B1
-          # Permissioned account Role           Active                  Maximum                Processed
-         -- -------------------- -------------- ------ ------------------------ ------------------------
-          0 Deployer:0xa00A      Set Permission n                           0.0                      0.0
-          1 Deployer:0xa00A      Set Config     n                           0.0                      0.0
-          2 OptinoGov:0x7305     Set Permission y                           0.0                      0.0
-          3 OptinoGov:0x7305     Set Config     y                           0.0                      0.0
-          4 OptinoGov:0x7305     Mint Tokens    y                   123456789.0          0.0002800000136
-          5 OptinoGov:0x7305     Burn Tokens    y                           0.0                      0.0
-         -- -------------------- -------------- ------ ------------------------ ------------------------
+          # Permissioned account     Role           Active                  Maximum                Processed
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
+          0 Deployer:0xa00A          Set Permission n                           0.0                      0.0
+          1 Deployer:0xa00A          Set Config     n                           0.0                      0.0
+          2 OptinoGov:0x7305         Set Permission y                           0.0                      0.0
+          3 OptinoGov:0x7305         Set Config     y                           0.0                      0.0
+          4 OptinoGov:0x7305         Mint Tokens    y                   123456789.0          0.0002800000136
+          5 OptinoGov:0x7305         Burn Tokens    y                           0.0                      0.0
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
         Token 2 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 4000.0002760000132, owner: n/a, address: OGDToken:0x0f4e @ 0x0f4eA6f2be49d822b7cAEf4175450A4D83A32e72
-          # Permissioned account Role           Active                  Maximum                Processed
-         -- -------------------- -------------- ------ ------------------------ ------------------------
-          0 Deployer:0xa00A      Set Permission n                           0.0                      0.0
-          1 Deployer:0xa00A      Set Config     n                           0.0                      0.0
-          2 OptinoGov:0x7305     Set Permission y                           0.0                      0.0
-          3 OptinoGov:0x7305     Set Config     y                           0.0                      0.0
-          4 OptinoGov:0x7305     Mint Tokens    y                   123456789.0       4000.0002760000132
-          5 OptinoGov:0x7305     Burn Tokens    y                           0.0                      0.0
-         -- -------------------- -------------- ------ ------------------------ ------------------------
+          # Permissioned account     Role           Active                  Maximum                Processed
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
+          0 Deployer:0xa00A          Set Permission n                           0.0                      0.0
+          1 Deployer:0xa00A          Set Config     n                           0.0                      0.0
+          2 OptinoGov:0x7305         Set Permission y                           0.0                      0.0
+          3 OptinoGov:0x7305         Set Config     y                           0.0                      0.0
+          4 OptinoGov:0x7305         Mint Tokens    y                   123456789.0       4000.0002760000132
+          5 OptinoGov:0x7305         Burn Tokens    y                           0.0                      0.0
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
           # Dividend         Enabled                  Unclaimed
          -- ---------------- ------- --------------------------
           0 ETH|null:0x0000     true       0.000000000000000001
@@ -1115,7 +1113,7 @@ Compilation finished successfully
         
         --- Test Completed ---
 
-      ✓ Workflow #0 (10253ms)
+      ✓ Workflow #0 (10471ms)
     TestOptinoGov - Workflow #1
         Address 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E => Deployer:0xa00A
         Address 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433 => User1:0xa11A
@@ -1144,7 +1142,7 @@ Compilation finished successfully
         + VoteWeightCurve.PointUpdated(index: 1, term: 94608000, rate: 10950000000000000000)
         fee0Token.deployTransaction - gasUsed: 823708, fee: 0.06589664, feeUsd: 25.4143571488, @ 80.0 gwei & 385.67 ETH/USD, 0x8b296e008b0d25809188fa72d6a6326eff43aa42171c60590af72fdb0d3bac7e
         + Fee0Token.Transfer(from: ETH|null:0x0000, to: Deployer:0xa00A, tokens: 100.0)
-        optinoGov.deployTransaction - gasUsed: 5319521, fee: 0.42556168, feeUsd: 164.1263731256, @ 80.0 gwei & 385.67 ETH/USD, 0x74a09dbdbc14f4667532d51ad7667bd5de5eedbec60d73ca2079632ef93e5ee8
+        optinoGov.deployTransaction - gasUsed: 5319521, fee: 0.42556168, feeUsd: 164.1263731256, @ 80.0 gwei & 385.67 ETH/USD, 0xe41f9a60673b816be31fc8d7c5055f6eb07c6fa72bc112ea788e52e5ce9f6cb5
         --- Setup 2 - OGToken and OGDToken permissioning ---
         setup2Txs[0] - gasUsed: 78962, fee: 0.00631696, feeUsd: 2.4362619632, @ 80.0 gwei & 385.67 ETH/USD, 0x759485b2fe5a4b5b96cb90c182b9f13e0e9198f135715059872585b0d8d62cc3
         + OGToken.PermissionUpdated(account: Deployer:0xa00A, role: 1, active: true, maximum: 0, processed: 0)
@@ -1205,25 +1203,25 @@ Compilation finished successfully
          -- -------------------- ---------- ---------------- ------------------------ ------------------------ ------------------------ -------------------- ------------------------ ------------------------ ------------
          -- -------------------- ---------- ---------------- ------------------------ ------------------------ ------------------------ -------------------- ------------------------ ------------------------ ------------
         Token 1 symbol: 'OG', name: 'Optino Governance', decimals: 18, totalSupply: 40000.0, owner: n/a, address: OGToken:0x44dc @ 0x44dc2Abc4FdDDf5F94b7B2c28f381EEC68B7a946
-          # Permissioned account Role           Active                  Maximum                Processed
-         -- -------------------- -------------- ------ ------------------------ ------------------------
-          0 Deployer:0xa00A      Set Permission y                           0.0                      0.0
-          1 Deployer:0xa00A      Set Config     y                           0.0                      0.0
-          2 OptinoGov:0xe669     Set Permission y                           0.0                      0.0
-          3 OptinoGov:0xe669     Set Config     y                           0.0                      0.0
-          4 OptinoGov:0xe669     Mint Tokens    y                   123456789.0                      0.0
-          5 OptinoGov:0xe669     Burn Tokens    y                           0.0                      0.0
-         -- -------------------- -------------- ------ ------------------------ ------------------------
+          # Permissioned account     Role           Active                  Maximum                Processed
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
+          0 Deployer:0xa00A          Set Permission y                           0.0                      0.0
+          1 Deployer:0xa00A          Set Config     y                           0.0                      0.0
+          2 OptinoGov:0xe669         Set Permission y                           0.0                      0.0
+          3 OptinoGov:0xe669         Set Config     y                           0.0                      0.0
+          4 OptinoGov:0xe669         Mint Tokens    y                   123456789.0                      0.0
+          5 OptinoGov:0xe669         Burn Tokens    y                           0.0                      0.0
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
         Token 2 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 0.0, owner: n/a, address: OGDToken:0xc2e1 @ 0xc2e1fE1fA3a7B0bBa563Ed561dC63BA4F26B2c20
-          # Permissioned account Role           Active                  Maximum                Processed
-         -- -------------------- -------------- ------ ------------------------ ------------------------
-          0 Deployer:0xa00A      Set Permission y                           0.0                      0.0
-          1 Deployer:0xa00A      Set Config     y                           0.0                      0.0
-          2 OptinoGov:0xe669     Set Permission y                           0.0                      0.0
-          3 OptinoGov:0xe669     Set Config     y                           0.0                      0.0
-          4 OptinoGov:0xe669     Mint Tokens    y                   123456789.0                      0.0
-          5 OptinoGov:0xe669     Burn Tokens    y                           0.0                      0.0
-         -- -------------------- -------------- ------ ------------------------ ------------------------
+          # Permissioned account     Role           Active                  Maximum                Processed
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
+          0 Deployer:0xa00A          Set Permission y                           0.0                      0.0
+          1 Deployer:0xa00A          Set Config     y                           0.0                      0.0
+          2 OptinoGov:0xe669         Set Permission y                           0.0                      0.0
+          3 OptinoGov:0xe669         Set Config     y                           0.0                      0.0
+          4 OptinoGov:0xe669         Mint Tokens    y                   123456789.0                      0.0
+          5 OptinoGov:0xe669         Burn Tokens    y                           0.0                      0.0
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
           # Dividend         Enabled                  Unclaimed
          -- ---------------- ------- --------------------------
          -- ---------------- ------- --------------------------
@@ -1286,25 +1284,25 @@ Compilation finished successfully
          -- -------------------- ---------- ---------------- ------------------------ ------------------------ ------------------------ -------------------- ------------------------ ------------------------ ------------
          -- -------------------- ---------- ---------------- ------------------------ ------------------------ ------------------------ -------------------- ------------------------ ------------------------ ------------
         Token 1 symbol: 'OG', name: 'Optino Governance', decimals: 18, totalSupply: 40000.0, owner: n/a, address: OGToken:0x44dc @ 0x44dc2Abc4FdDDf5F94b7B2c28f381EEC68B7a946
-          # Permissioned account Role           Active                  Maximum                Processed
-         -- -------------------- -------------- ------ ------------------------ ------------------------
-          0 Deployer:0xa00A      Set Permission y                           0.0                      0.0
-          1 Deployer:0xa00A      Set Config     y                           0.0                      0.0
-          2 OptinoGov:0xe669     Set Permission y                           0.0                      0.0
-          3 OptinoGov:0xe669     Set Config     y                           0.0                      0.0
-          4 OptinoGov:0xe669     Mint Tokens    y                   123456789.0                      0.0
-          5 OptinoGov:0xe669     Burn Tokens    y                           0.0                      0.0
-         -- -------------------- -------------- ------ ------------------------ ------------------------
+          # Permissioned account     Role           Active                  Maximum                Processed
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
+          0 Deployer:0xa00A          Set Permission y                           0.0                      0.0
+          1 Deployer:0xa00A          Set Config     y                           0.0                      0.0
+          2 OptinoGov:0xe669         Set Permission y                           0.0                      0.0
+          3 OptinoGov:0xe669         Set Config     y                           0.0                      0.0
+          4 OptinoGov:0xe669         Mint Tokens    y                   123456789.0                      0.0
+          5 OptinoGov:0xe669         Burn Tokens    y                           0.0                      0.0
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
         Token 2 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 0.0, owner: n/a, address: OGDToken:0xc2e1 @ 0xc2e1fE1fA3a7B0bBa563Ed561dC63BA4F26B2c20
-          # Permissioned account Role           Active                  Maximum                Processed
-         -- -------------------- -------------- ------ ------------------------ ------------------------
-          0 Deployer:0xa00A      Set Permission y                           0.0                      0.0
-          1 Deployer:0xa00A      Set Config     y                           0.0                      0.0
-          2 OptinoGov:0xe669     Set Permission y                           0.0                      0.0
-          3 OptinoGov:0xe669     Set Config     y                           0.0                      0.0
-          4 OptinoGov:0xe669     Mint Tokens    y                   123456789.0                      0.0
-          5 OptinoGov:0xe669     Burn Tokens    y                           0.0                      0.0
-         -- -------------------- -------------- ------ ------------------------ ------------------------
+          # Permissioned account     Role           Active                  Maximum                Processed
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
+          0 Deployer:0xa00A          Set Permission y                           0.0                      0.0
+          1 Deployer:0xa00A          Set Config     y                           0.0                      0.0
+          2 OptinoGov:0xe669         Set Permission y                           0.0                      0.0
+          3 OptinoGov:0xe669         Set Config     y                           0.0                      0.0
+          4 OptinoGov:0xe669         Mint Tokens    y                   123456789.0                      0.0
+          5 OptinoGov:0xe669         Burn Tokens    y                           0.0                      0.0
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
           # Dividend         Enabled                  Unclaimed
          -- ---------------- ------- --------------------------
           0 ETH|null:0x0000     true                        0.0
@@ -1381,25 +1379,25 @@ Compilation finished successfully
          -- -------------------- ---------- ---------------- ------------------------ ------------------------ ------------------------ -------------------- ------------------------ ------------------------ ------------
          -- -------------------- ---------- ---------------- ------------------------ ------------------------ ------------------------ -------------------- ------------------------ ------------------------ ------------
         Token 1 symbol: 'OG', name: 'Optino Governance', decimals: 18, totalSupply: 40000.0, owner: n/a, address: OGToken:0x44dc @ 0x44dc2Abc4FdDDf5F94b7B2c28f381EEC68B7a946
-          # Permissioned account Role           Active                  Maximum                Processed
-         -- -------------------- -------------- ------ ------------------------ ------------------------
-          0 Deployer:0xa00A      Set Permission n                           0.0                      0.0
-          1 Deployer:0xa00A      Set Config     n                           0.0                      0.0
-          2 OptinoGov:0xe669     Set Permission y                           0.0                      0.0
-          3 OptinoGov:0xe669     Set Config     y                           0.0                      0.0
-          4 OptinoGov:0xe669     Mint Tokens    y                   123456789.0                      0.0
-          5 OptinoGov:0xe669     Burn Tokens    y                           0.0                      0.0
-         -- -------------------- -------------- ------ ------------------------ ------------------------
+          # Permissioned account     Role           Active                  Maximum                Processed
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
+          0 Deployer:0xa00A          Set Permission n                           0.0                      0.0
+          1 Deployer:0xa00A          Set Config     n                           0.0                      0.0
+          2 OptinoGov:0xe669         Set Permission y                           0.0                      0.0
+          3 OptinoGov:0xe669         Set Config     y                           0.0                      0.0
+          4 OptinoGov:0xe669         Mint Tokens    y                   123456789.0                      0.0
+          5 OptinoGov:0xe669         Burn Tokens    y                           0.0                      0.0
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
         Token 2 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 0.0, owner: n/a, address: OGDToken:0xc2e1 @ 0xc2e1fE1fA3a7B0bBa563Ed561dC63BA4F26B2c20
-          # Permissioned account Role           Active                  Maximum                Processed
-         -- -------------------- -------------- ------ ------------------------ ------------------------
-          0 Deployer:0xa00A      Set Permission n                           0.0                      0.0
-          1 Deployer:0xa00A      Set Config     n                           0.0                      0.0
-          2 OptinoGov:0xe669     Set Permission y                           0.0                      0.0
-          3 OptinoGov:0xe669     Set Config     y                           0.0                      0.0
-          4 OptinoGov:0xe669     Mint Tokens    y                   123456789.0                      0.0
-          5 OptinoGov:0xe669     Burn Tokens    y                           0.0                      0.0
-         -- -------------------- -------------- ------ ------------------------ ------------------------
+          # Permissioned account     Role           Active                  Maximum                Processed
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
+          0 Deployer:0xa00A          Set Permission n                           0.0                      0.0
+          1 Deployer:0xa00A          Set Config     n                           0.0                      0.0
+          2 OptinoGov:0xe669         Set Permission y                           0.0                      0.0
+          3 OptinoGov:0xe669         Set Config     y                           0.0                      0.0
+          4 OptinoGov:0xe669         Mint Tokens    y                   123456789.0                      0.0
+          5 OptinoGov:0xe669         Burn Tokens    y                           0.0                      0.0
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
           # Dividend         Enabled                  Unclaimed
          -- ---------------- ------- --------------------------
           0 ETH|null:0x0000     true                        0.0
@@ -1482,25 +1480,25 @@ Compilation finished successfully
          -- -------------------- ---------- ---------------- ------------------------ ------------------------ ------------------------ -------------------- ------------------------ ------------------------ ------------
          -- -------------------- ---------- ---------------- ------------------------ ------------------------ ------------------------ -------------------- ------------------------ ------------------------ ------------
         Token 1 symbol: 'OG', name: 'Optino Governance', decimals: 18, totalSupply: 40000.0, owner: n/a, address: OGToken:0x44dc @ 0x44dc2Abc4FdDDf5F94b7B2c28f381EEC68B7a946
-          # Permissioned account Role           Active                  Maximum                Processed
-         -- -------------------- -------------- ------ ------------------------ ------------------------
-          0 Deployer:0xa00A      Set Permission n                           0.0                      0.0
-          1 Deployer:0xa00A      Set Config     n                           0.0                      0.0
-          2 OptinoGov:0xe669     Set Permission y                           0.0                      0.0
-          3 OptinoGov:0xe669     Set Config     y                           0.0                      0.0
-          4 OptinoGov:0xe669     Mint Tokens    y                   123456789.0                      0.0
-          5 OptinoGov:0xe669     Burn Tokens    y                           0.0                      0.0
-         -- -------------------- -------------- ------ ------------------------ ------------------------
+          # Permissioned account     Role           Active                  Maximum                Processed
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
+          0 Deployer:0xa00A          Set Permission n                           0.0                      0.0
+          1 Deployer:0xa00A          Set Config     n                           0.0                      0.0
+          2 OptinoGov:0xe669         Set Permission y                           0.0                      0.0
+          3 OptinoGov:0xe669         Set Config     y                           0.0                      0.0
+          4 OptinoGov:0xe669         Mint Tokens    y                   123456789.0                      0.0
+          5 OptinoGov:0xe669         Burn Tokens    y                           0.0                      0.0
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
         Token 2 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 0.0, owner: n/a, address: OGDToken:0xc2e1 @ 0xc2e1fE1fA3a7B0bBa563Ed561dC63BA4F26B2c20
-          # Permissioned account Role           Active                  Maximum                Processed
-         -- -------------------- -------------- ------ ------------------------ ------------------------
-          0 Deployer:0xa00A      Set Permission n                           0.0                      0.0
-          1 Deployer:0xa00A      Set Config     n                           0.0                      0.0
-          2 OptinoGov:0xe669     Set Permission y                           0.0                      0.0
-          3 OptinoGov:0xe669     Set Config     y                           0.0                      0.0
-          4 OptinoGov:0xe669     Mint Tokens    y                   123456789.0                      0.0
-          5 OptinoGov:0xe669     Burn Tokens    y                           0.0                      0.0
-         -- -------------------- -------------- ------ ------------------------ ------------------------
+          # Permissioned account     Role           Active                  Maximum                Processed
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
+          0 Deployer:0xa00A          Set Permission n                           0.0                      0.0
+          1 Deployer:0xa00A          Set Config     n                           0.0                      0.0
+          2 OptinoGov:0xe669         Set Permission y                           0.0                      0.0
+          3 OptinoGov:0xe669         Set Config     y                           0.0                      0.0
+          4 OptinoGov:0xe669         Mint Tokens    y                   123456789.0                      0.0
+          5 OptinoGov:0xe669         Burn Tokens    y                           0.0                      0.0
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
           # Dividend         Enabled                  Unclaimed
          -- ---------------- ------- --------------------------
           0 ETH|null:0x0000     true                        0.0
@@ -1535,17 +1533,17 @@ Compilation finished successfully
         commit1 - gasUsed: 378033, fee: 0.03024264, feeUsd: 11.6636789688, @ 80.0 gwei & 385.67 ETH/USD, 0xd746a9bf47d2fbc879d6a3a12ffb659006d7860b30f4546b0e100bf3c60e4821
         + OGToken.Transfer(from: User1:0xa11A, to: OptinoGov:0xe669, tokens: 1000.0)
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User1:0xa11A, tokens: 1000.0)
-        + OptinoGov.Committed(user: User1:0xa11A, tokens: 1000.0, balance: 1000.0, duration: 1, end: 1605490101, delegatee: ETH|null:0x0000, votes: 0.0, rewardPool: 1000000.0, totalVotes: 0.0)
+        + OptinoGov.Committed(user: User1:0xa11A, tokens: 1000.0, balance: 1000.0, duration: 1, end: 1605491614, delegatee: ETH|null:0x0000, votes: 0.0, rewardPool: 1000000.0, totalVotes: 0.0)
         + OptinoGov.Transfer(from: ETH|null:0x0000, to: User1:0xa11A, tokens: 1000.0)
         commit2 - gasUsed: 307233, fee: 0.02457864, feeUsd: 9.4792440888, @ 80.0 gwei & 385.67 ETH/USD, 0x2a854e38dba245bb4ccb38504c8087ed8997d36a113654cffff8a3fdb83ace7a
         + OGToken.Transfer(from: User2:0xa22A, to: OptinoGov:0xe669, tokens: 1000.0)
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User2:0xa22A, tokens: 1000.0)
-        + OptinoGov.Committed(user: User2:0xa22A, tokens: 1000.0, balance: 1000.0, duration: 1, end: 1605490102, delegatee: ETH|null:0x0000, votes: 0.0, rewardPool: 1000000.0, totalVotes: 10.0)
+        + OptinoGov.Committed(user: User2:0xa22A, tokens: 1000.0, balance: 1000.0, duration: 1, end: 1605491615, delegatee: ETH|null:0x0000, votes: 0.0, rewardPool: 1000000.0, totalVotes: 10.0)
         + OptinoGov.Transfer(from: ETH|null:0x0000, to: User2:0xa22A, tokens: 1000.0)
         commit3 - gasUsed: 307233, fee: 0.02457864, feeUsd: 9.4792440888, @ 80.0 gwei & 385.67 ETH/USD, 0x6651a3844a29a4dd626722e65bc7ed047aa8828b28abbcf8980fc85c1b090315
         + OGToken.Transfer(from: User3:0xa33a, to: OptinoGov:0xe669, tokens: 1000.0)
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User3:0xa33a, tokens: 1000.0)
-        + OptinoGov.Committed(user: User3:0xa33a, tokens: 1000.0, balance: 1000.0, duration: 1, end: 1605490103, delegatee: ETH|null:0x0000, votes: 0.0, rewardPool: 1000000.0, totalVotes: 20.0)
+        + OptinoGov.Committed(user: User3:0xa33a, tokens: 1000.0, balance: 1000.0, duration: 1, end: 1605491616, delegatee: ETH|null:0x0000, votes: 0.0, rewardPool: 1000000.0, totalVotes: 20.0)
         + OptinoGov.Transfer(from: ETH|null:0x0000, to: User3:0xa33a, tokens: 1000.0)
         
          # Account                                        ΔETH                OptinoGov                       OG                      OGD                     FEE0
@@ -1589,25 +1587,25 @@ Compilation finished successfully
           2 User3:0xa33a                 1s               1s                   31.536                   1000.0                     10.0 ETH|null:0x0000                           0.0                      0.0            0
          -- -------------------- ---------- ---------------- ------------------------ ------------------------ ------------------------ -------------------- ------------------------ ------------------------ ------------
         Token 1 symbol: 'OG', name: 'Optino Governance', decimals: 18, totalSupply: 40000.0, owner: n/a, address: OGToken:0x44dc @ 0x44dc2Abc4FdDDf5F94b7B2c28f381EEC68B7a946
-          # Permissioned account Role           Active                  Maximum                Processed
-         -- -------------------- -------------- ------ ------------------------ ------------------------
-          0 Deployer:0xa00A      Set Permission n                           0.0                      0.0
-          1 Deployer:0xa00A      Set Config     n                           0.0                      0.0
-          2 OptinoGov:0xe669     Set Permission y                           0.0                      0.0
-          3 OptinoGov:0xe669     Set Config     y                           0.0                      0.0
-          4 OptinoGov:0xe669     Mint Tokens    y                   123456789.0                      0.0
-          5 OptinoGov:0xe669     Burn Tokens    y                           0.0                      0.0
-         -- -------------------- -------------- ------ ------------------------ ------------------------
+          # Permissioned account     Role           Active                  Maximum                Processed
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
+          0 Deployer:0xa00A          Set Permission n                           0.0                      0.0
+          1 Deployer:0xa00A          Set Config     n                           0.0                      0.0
+          2 OptinoGov:0xe669         Set Permission y                           0.0                      0.0
+          3 OptinoGov:0xe669         Set Config     y                           0.0                      0.0
+          4 OptinoGov:0xe669         Mint Tokens    y                   123456789.0                      0.0
+          5 OptinoGov:0xe669         Burn Tokens    y                           0.0                      0.0
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
         Token 2 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 3000.0, owner: n/a, address: OGDToken:0xc2e1 @ 0xc2e1fE1fA3a7B0bBa563Ed561dC63BA4F26B2c20
-          # Permissioned account Role           Active                  Maximum                Processed
-         -- -------------------- -------------- ------ ------------------------ ------------------------
-          0 Deployer:0xa00A      Set Permission n                           0.0                      0.0
-          1 Deployer:0xa00A      Set Config     n                           0.0                      0.0
-          2 OptinoGov:0xe669     Set Permission y                           0.0                      0.0
-          3 OptinoGov:0xe669     Set Config     y                           0.0                      0.0
-          4 OptinoGov:0xe669     Mint Tokens    y                   123456789.0                   3000.0
-          5 OptinoGov:0xe669     Burn Tokens    y                           0.0                      0.0
-         -- -------------------- -------------- ------ ------------------------ ------------------------
+          # Permissioned account     Role           Active                  Maximum                Processed
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
+          0 Deployer:0xa00A          Set Permission n                           0.0                      0.0
+          1 Deployer:0xa00A          Set Config     n                           0.0                      0.0
+          2 OptinoGov:0xe669         Set Permission y                           0.0                      0.0
+          3 OptinoGov:0xe669         Set Config     y                           0.0                      0.0
+          4 OptinoGov:0xe669         Mint Tokens    y                   123456789.0                   3000.0
+          5 OptinoGov:0xe669         Burn Tokens    y                           0.0                      0.0
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
           # Dividend         Enabled                  Unclaimed
          -- ---------------- ------- --------------------------
           0 ETH|null:0x0000     true                        0.0
@@ -1687,25 +1685,25 @@ Compilation finished successfully
           2 User3:0xa33a                 1s              -3s                   31.536                   1000.0                     10.0 ETH|null:0x0000                           0.0          0.0000400000008            4
          -- -------------------- ---------- ---------------- ------------------------ ------------------------ ------------------------ -------------------- ------------------------ ------------------------ ------------
         Token 1 symbol: 'OG', name: 'Optino Governance', decimals: 18, totalSupply: 40000.0, owner: n/a, address: OGToken:0x44dc @ 0x44dc2Abc4FdDDf5F94b7B2c28f381EEC68B7a946
-          # Permissioned account Role           Active                  Maximum                Processed
-         -- -------------------- -------------- ------ ------------------------ ------------------------
-          0 Deployer:0xa00A      Set Permission n                           0.0                      0.0
-          1 Deployer:0xa00A      Set Config     n                           0.0                      0.0
-          2 OptinoGov:0xe669     Set Permission y                           0.0                      0.0
-          3 OptinoGov:0xe669     Set Config     y                           0.0                      0.0
-          4 OptinoGov:0xe669     Mint Tokens    y                   123456789.0                      0.0
-          5 OptinoGov:0xe669     Burn Tokens    y                           0.0                      0.0
-         -- -------------------- -------------- ------ ------------------------ ------------------------
+          # Permissioned account     Role           Active                  Maximum                Processed
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
+          0 Deployer:0xa00A          Set Permission n                           0.0                      0.0
+          1 Deployer:0xa00A          Set Config     n                           0.0                      0.0
+          2 OptinoGov:0xe669         Set Permission y                           0.0                      0.0
+          3 OptinoGov:0xe669         Set Config     y                           0.0                      0.0
+          4 OptinoGov:0xe669         Mint Tokens    y                   123456789.0                      0.0
+          5 OptinoGov:0xe669         Burn Tokens    y                           0.0                      0.0
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
         Token 2 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 3000.0, owner: n/a, address: OGDToken:0xc2e1 @ 0xc2e1fE1fA3a7B0bBa563Ed561dC63BA4F26B2c20
-          # Permissioned account Role           Active                  Maximum                Processed
-         -- -------------------- -------------- ------ ------------------------ ------------------------
-          0 Deployer:0xa00A      Set Permission n                           0.0                      0.0
-          1 Deployer:0xa00A      Set Config     n                           0.0                      0.0
-          2 OptinoGov:0xe669     Set Permission y                           0.0                      0.0
-          3 OptinoGov:0xe669     Set Config     y                           0.0                      0.0
-          4 OptinoGov:0xe669     Mint Tokens    y                   123456789.0                   3000.0
-          5 OptinoGov:0xe669     Burn Tokens    y                           0.0                      0.0
-         -- -------------------- -------------- ------ ------------------------ ------------------------
+          # Permissioned account     Role           Active                  Maximum                Processed
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
+          0 Deployer:0xa00A          Set Permission n                           0.0                      0.0
+          1 Deployer:0xa00A          Set Config     n                           0.0                      0.0
+          2 OptinoGov:0xe669         Set Permission y                           0.0                      0.0
+          3 OptinoGov:0xe669         Set Config     y                           0.0                      0.0
+          4 OptinoGov:0xe669         Mint Tokens    y                   123456789.0                   3000.0
+          5 OptinoGov:0xe669         Burn Tokens    y                           0.0                      0.0
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
           # Dividend         Enabled                  Unclaimed
          -- ---------------- ------- --------------------------
           0 ETH|null:0x0000     true                        0.0
@@ -1782,25 +1780,25 @@ Compilation finished successfully
           2 User3:0xa33a                 1s              -5s                   31.536                   1000.0                     10.0 ETH|null:0x0000                           0.0          0.0000600000018            6
          -- -------------------- ---------- ---------------- ------------------------ ------------------------ ------------------------ -------------------- ------------------------ ------------------------ ------------
         Token 1 symbol: 'OG', name: 'Optino Governance', decimals: 18, totalSupply: 40000.0, owner: n/a, address: OGToken:0x44dc @ 0x44dc2Abc4FdDDf5F94b7B2c28f381EEC68B7a946
-          # Permissioned account Role           Active                  Maximum                Processed
-         -- -------------------- -------------- ------ ------------------------ ------------------------
-          0 Deployer:0xa00A      Set Permission n                           0.0                      0.0
-          1 Deployer:0xa00A      Set Config     n                           0.0                      0.0
-          2 OptinoGov:0xe669     Set Permission y                           0.0                      0.0
-          3 OptinoGov:0xe669     Set Config     y                           0.0                      0.0
-          4 OptinoGov:0xe669     Mint Tokens    y                   123456789.0                      0.0
-          5 OptinoGov:0xe669     Burn Tokens    y                           0.0                      0.0
-         -- -------------------- -------------- ------ ------------------------ ------------------------
+          # Permissioned account     Role           Active                  Maximum                Processed
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
+          0 Deployer:0xa00A          Set Permission n                           0.0                      0.0
+          1 Deployer:0xa00A          Set Config     n                           0.0                      0.0
+          2 OptinoGov:0xe669         Set Permission y                           0.0                      0.0
+          3 OptinoGov:0xe669         Set Config     y                           0.0                      0.0
+          4 OptinoGov:0xe669         Mint Tokens    y                   123456789.0                      0.0
+          5 OptinoGov:0xe669         Burn Tokens    y                           0.0                      0.0
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
         Token 2 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 3000.0, owner: n/a, address: OGDToken:0xc2e1 @ 0xc2e1fE1fA3a7B0bBa563Ed561dC63BA4F26B2c20
-          # Permissioned account Role           Active                  Maximum                Processed
-         -- -------------------- -------------- ------ ------------------------ ------------------------
-          0 Deployer:0xa00A      Set Permission n                           0.0                      0.0
-          1 Deployer:0xa00A      Set Config     n                           0.0                      0.0
-          2 OptinoGov:0xe669     Set Permission y                           0.0                      0.0
-          3 OptinoGov:0xe669     Set Config     y                           0.0                      0.0
-          4 OptinoGov:0xe669     Mint Tokens    y                   123456789.0                   3000.0
-          5 OptinoGov:0xe669     Burn Tokens    y                           0.0                      0.0
-         -- -------------------- -------------- ------ ------------------------ ------------------------
+          # Permissioned account     Role           Active                  Maximum                Processed
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
+          0 Deployer:0xa00A          Set Permission n                           0.0                      0.0
+          1 Deployer:0xa00A          Set Config     n                           0.0                      0.0
+          2 OptinoGov:0xe669         Set Permission y                           0.0                      0.0
+          3 OptinoGov:0xe669         Set Config     y                           0.0                      0.0
+          4 OptinoGov:0xe669         Mint Tokens    y                   123456789.0                   3000.0
+          5 OptinoGov:0xe669         Burn Tokens    y                           0.0                      0.0
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
           # Dividend         Enabled                  Unclaimed
          -- ---------------- ------- --------------------------
           0 ETH|null:0x0000     true                       10.0
@@ -1902,25 +1900,25 @@ Compilation finished successfully
           2 User3:0xa33a                 0s               0s                   31.536       900.00009000000405       9.0000009000000405 ETH|null:0x0000                           0.0                      0.0            0
          -- -------------------- ---------- ---------------- ------------------------ ------------------------ ------------------------ -------------------- ------------------------ ------------------------ ------------
         Token 1 symbol: 'OG', name: 'Optino Governance', decimals: 18, totalSupply: 40000.00027000001215, owner: n/a, address: OGToken:0x44dc @ 0x44dc2Abc4FdDDf5F94b7B2c28f381EEC68B7a946
-          # Permissioned account Role           Active                  Maximum                Processed
-         -- -------------------- -------------- ------ ------------------------ ------------------------
-          0 Deployer:0xa00A      Set Permission n                           0.0                      0.0
-          1 Deployer:0xa00A      Set Config     n                           0.0                      0.0
-          2 OptinoGov:0xe669     Set Permission y                           0.0                      0.0
-          3 OptinoGov:0xe669     Set Config     y                           0.0                      0.0
-          4 OptinoGov:0xe669     Mint Tokens    y                   123456789.0         0.00027000001215
-          5 OptinoGov:0xe669     Burn Tokens    y                           0.0                      0.0
-         -- -------------------- -------------- ------ ------------------------ ------------------------
+          # Permissioned account     Role           Active                  Maximum                Processed
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
+          0 Deployer:0xa00A          Set Permission n                           0.0                      0.0
+          1 Deployer:0xa00A          Set Config     n                           0.0                      0.0
+          2 OptinoGov:0xe669         Set Permission y                           0.0                      0.0
+          3 OptinoGov:0xe669         Set Config     y                           0.0                      0.0
+          4 OptinoGov:0xe669         Mint Tokens    y                   123456789.0         0.00027000001215
+          5 OptinoGov:0xe669         Burn Tokens    y                           0.0                      0.0
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
         Token 2 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 2700.00027000001215, owner: n/a, address: OGDToken:0xc2e1 @ 0xc2e1fE1fA3a7B0bBa563Ed561dC63BA4F26B2c20
-          # Permissioned account Role           Active                  Maximum                Processed
-         -- -------------------- -------------- ------ ------------------------ ------------------------
-          0 Deployer:0xa00A      Set Permission n                           0.0                      0.0
-          1 Deployer:0xa00A      Set Config     n                           0.0                      0.0
-          2 OptinoGov:0xe669     Set Permission y                           0.0                      0.0
-          3 OptinoGov:0xe669     Set Config     y                           0.0                      0.0
-          4 OptinoGov:0xe669     Mint Tokens    y                   123456789.0      3000.00027000001215
-          5 OptinoGov:0xe669     Burn Tokens    y                           0.0                      0.0
-         -- -------------------- -------------- ------ ------------------------ ------------------------
+          # Permissioned account     Role           Active                  Maximum                Processed
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
+          0 Deployer:0xa00A          Set Permission n                           0.0                      0.0
+          1 Deployer:0xa00A          Set Config     n                           0.0                      0.0
+          2 OptinoGov:0xe669         Set Permission y                           0.0                      0.0
+          3 OptinoGov:0xe669         Set Config     y                           0.0                      0.0
+          4 OptinoGov:0xe669         Mint Tokens    y                   123456789.0      3000.00027000001215
+          5 OptinoGov:0xe669         Burn Tokens    y                           0.0                      0.0
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
           # Dividend         Enabled                  Unclaimed
          -- ---------------- ------- --------------------------
           0 ETH|null:0x0000     true       0.000000000000000001
@@ -1951,7 +1949,7 @@ Compilation finished successfully
         
         --- Test Completed ---
 
-      ✓ Workflow #1 (3488ms)
+      ✓ Workflow #1 (3404ms)
     TestOptinoGov - Workflow #2 - Developing
         Address 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E => Deployer:0xa00A
         Address 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433 => User1:0xa11A
@@ -1980,7 +1978,7 @@ Compilation finished successfully
         + VoteWeightCurve.PointUpdated(index: 1, term: 94608000, rate: 10950000000000000000)
         fee0Token.deployTransaction - gasUsed: 823708, fee: 0.06589664, feeUsd: 25.4143571488, @ 80.0 gwei & 385.67 ETH/USD, 0xb392008ce22d320083b07c5fe66d3a0f6e59cf5648bae37a4cf15fc1f9286412
         + Fee0Token.Transfer(from: ETH|null:0x0000, to: Deployer:0xa00A, tokens: 100.0)
-        optinoGov.deployTransaction - gasUsed: 5319533, fee: 0.42556264, feeUsd: 164.1267433688, @ 80.0 gwei & 385.67 ETH/USD, 0x8855e28ed08cbda9b82057a000464a946b27ef3faa79b6131914603152fa5a33
+        optinoGov.deployTransaction - gasUsed: 5319533, fee: 0.42556264, feeUsd: 164.1267433688, @ 80.0 gwei & 385.67 ETH/USD, 0x8b6fd965427bcd74346768fe13c8a5e8f04c4cac754817008c5d9e36a3d7e39b
         --- Setup 2 - OGToken and OGDToken permissioning ---
         setup2Txs[0] - gasUsed: 78962, fee: 0.00631696, feeUsd: 2.4362619632, @ 80.0 gwei & 385.67 ETH/USD, 0x7c23d28e40353f86b189d8ca8ba709339df7ece32ffdea65126e8fde77ed1d63
         + OGToken.PermissionUpdated(account: Deployer:0xa00A, role: 1, active: true, maximum: 0, processed: 0)
@@ -2041,25 +2039,25 @@ Compilation finished successfully
          -- -------------------- ---------- ---------------- ------------------------ ------------------------ ------------------------ -------------------- ------------------------ ------------------------ ------------
          -- -------------------- ---------- ---------------- ------------------------ ------------------------ ------------------------ -------------------- ------------------------ ------------------------ ------------
         Token 1 symbol: 'OG', name: 'Optino Governance', decimals: 18, totalSupply: 40000.0, owner: n/a, address: OGToken:0xc848 @ 0xc848668d2e7F52cb59b6827f15257088d83cBd40
-          # Permissioned account Role           Active                  Maximum                Processed
-         -- -------------------- -------------- ------ ------------------------ ------------------------
-          0 Deployer:0xa00A      Set Permission y                           0.0                      0.0
-          1 Deployer:0xa00A      Set Config     y                           0.0                      0.0
-          2 OptinoGov:0x1b9B     Set Permission y                           0.0                      0.0
-          3 OptinoGov:0x1b9B     Set Config     y                           0.0                      0.0
-          4 OptinoGov:0x1b9B     Mint Tokens    y                   123456789.0                      0.0
-          5 OptinoGov:0x1b9B     Burn Tokens    y                           0.0                      0.0
-         -- -------------------- -------------- ------ ------------------------ ------------------------
+          # Permissioned account     Role           Active                  Maximum                Processed
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
+          0 Deployer:0xa00A          Set Permission y                           0.0                      0.0
+          1 Deployer:0xa00A          Set Config     y                           0.0                      0.0
+          2 OptinoGov:0x1b9B         Set Permission y                           0.0                      0.0
+          3 OptinoGov:0x1b9B         Set Config     y                           0.0                      0.0
+          4 OptinoGov:0x1b9B         Mint Tokens    y                   123456789.0                      0.0
+          5 OptinoGov:0x1b9B         Burn Tokens    y                           0.0                      0.0
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
         Token 2 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 0.0, owner: n/a, address: OGDToken:0x63e9 @ 0x63e924f6aC428aee2F661fF36Dcb58ca59affC9d
-          # Permissioned account Role           Active                  Maximum                Processed
-         -- -------------------- -------------- ------ ------------------------ ------------------------
-          0 Deployer:0xa00A      Set Permission y                           0.0                      0.0
-          1 Deployer:0xa00A      Set Config     y                           0.0                      0.0
-          2 OptinoGov:0x1b9B     Set Permission y                           0.0                      0.0
-          3 OptinoGov:0x1b9B     Set Config     y                           0.0                      0.0
-          4 OptinoGov:0x1b9B     Mint Tokens    y                   123456789.0                      0.0
-          5 OptinoGov:0x1b9B     Burn Tokens    y                           0.0                      0.0
-         -- -------------------- -------------- ------ ------------------------ ------------------------
+          # Permissioned account     Role           Active                  Maximum                Processed
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
+          0 Deployer:0xa00A          Set Permission y                           0.0                      0.0
+          1 Deployer:0xa00A          Set Config     y                           0.0                      0.0
+          2 OptinoGov:0x1b9B         Set Permission y                           0.0                      0.0
+          3 OptinoGov:0x1b9B         Set Config     y                           0.0                      0.0
+          4 OptinoGov:0x1b9B         Mint Tokens    y                   123456789.0                      0.0
+          5 OptinoGov:0x1b9B         Burn Tokens    y                           0.0                      0.0
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
           # Dividend         Enabled                  Unclaimed
          -- ---------------- ------- --------------------------
          -- ---------------- ------- --------------------------
@@ -2122,25 +2120,25 @@ Compilation finished successfully
          -- -------------------- ---------- ---------------- ------------------------ ------------------------ ------------------------ -------------------- ------------------------ ------------------------ ------------
          -- -------------------- ---------- ---------------- ------------------------ ------------------------ ------------------------ -------------------- ------------------------ ------------------------ ------------
         Token 1 symbol: 'OG', name: 'Optino Governance', decimals: 18, totalSupply: 40000.0, owner: n/a, address: OGToken:0xc848 @ 0xc848668d2e7F52cb59b6827f15257088d83cBd40
-          # Permissioned account Role           Active                  Maximum                Processed
-         -- -------------------- -------------- ------ ------------------------ ------------------------
-          0 Deployer:0xa00A      Set Permission y                           0.0                      0.0
-          1 Deployer:0xa00A      Set Config     y                           0.0                      0.0
-          2 OptinoGov:0x1b9B     Set Permission y                           0.0                      0.0
-          3 OptinoGov:0x1b9B     Set Config     y                           0.0                      0.0
-          4 OptinoGov:0x1b9B     Mint Tokens    y                   123456789.0                      0.0
-          5 OptinoGov:0x1b9B     Burn Tokens    y                           0.0                      0.0
-         -- -------------------- -------------- ------ ------------------------ ------------------------
+          # Permissioned account     Role           Active                  Maximum                Processed
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
+          0 Deployer:0xa00A          Set Permission y                           0.0                      0.0
+          1 Deployer:0xa00A          Set Config     y                           0.0                      0.0
+          2 OptinoGov:0x1b9B         Set Permission y                           0.0                      0.0
+          3 OptinoGov:0x1b9B         Set Config     y                           0.0                      0.0
+          4 OptinoGov:0x1b9B         Mint Tokens    y                   123456789.0                      0.0
+          5 OptinoGov:0x1b9B         Burn Tokens    y                           0.0                      0.0
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
         Token 2 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 0.0, owner: n/a, address: OGDToken:0x63e9 @ 0x63e924f6aC428aee2F661fF36Dcb58ca59affC9d
-          # Permissioned account Role           Active                  Maximum                Processed
-         -- -------------------- -------------- ------ ------------------------ ------------------------
-          0 Deployer:0xa00A      Set Permission y                           0.0                      0.0
-          1 Deployer:0xa00A      Set Config     y                           0.0                      0.0
-          2 OptinoGov:0x1b9B     Set Permission y                           0.0                      0.0
-          3 OptinoGov:0x1b9B     Set Config     y                           0.0                      0.0
-          4 OptinoGov:0x1b9B     Mint Tokens    y                   123456789.0                      0.0
-          5 OptinoGov:0x1b9B     Burn Tokens    y                           0.0                      0.0
-         -- -------------------- -------------- ------ ------------------------ ------------------------
+          # Permissioned account     Role           Active                  Maximum                Processed
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
+          0 Deployer:0xa00A          Set Permission y                           0.0                      0.0
+          1 Deployer:0xa00A          Set Config     y                           0.0                      0.0
+          2 OptinoGov:0x1b9B         Set Permission y                           0.0                      0.0
+          3 OptinoGov:0x1b9B         Set Config     y                           0.0                      0.0
+          4 OptinoGov:0x1b9B         Mint Tokens    y                   123456789.0                      0.0
+          5 OptinoGov:0x1b9B         Burn Tokens    y                           0.0                      0.0
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
           # Dividend         Enabled                  Unclaimed
          -- ---------------- ------- --------------------------
           0 ETH|null:0x0000     true                        0.0
@@ -2217,25 +2215,25 @@ Compilation finished successfully
          -- -------------------- ---------- ---------------- ------------------------ ------------------------ ------------------------ -------------------- ------------------------ ------------------------ ------------
          -- -------------------- ---------- ---------------- ------------------------ ------------------------ ------------------------ -------------------- ------------------------ ------------------------ ------------
         Token 1 symbol: 'OG', name: 'Optino Governance', decimals: 18, totalSupply: 40000.0, owner: n/a, address: OGToken:0xc848 @ 0xc848668d2e7F52cb59b6827f15257088d83cBd40
-          # Permissioned account Role           Active                  Maximum                Processed
-         -- -------------------- -------------- ------ ------------------------ ------------------------
-          0 Deployer:0xa00A      Set Permission n                           0.0                      0.0
-          1 Deployer:0xa00A      Set Config     n                           0.0                      0.0
-          2 OptinoGov:0x1b9B     Set Permission y                           0.0                      0.0
-          3 OptinoGov:0x1b9B     Set Config     y                           0.0                      0.0
-          4 OptinoGov:0x1b9B     Mint Tokens    y                   123456789.0                      0.0
-          5 OptinoGov:0x1b9B     Burn Tokens    y                           0.0                      0.0
-         -- -------------------- -------------- ------ ------------------------ ------------------------
+          # Permissioned account     Role           Active                  Maximum                Processed
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
+          0 Deployer:0xa00A          Set Permission n                           0.0                      0.0
+          1 Deployer:0xa00A          Set Config     n                           0.0                      0.0
+          2 OptinoGov:0x1b9B         Set Permission y                           0.0                      0.0
+          3 OptinoGov:0x1b9B         Set Config     y                           0.0                      0.0
+          4 OptinoGov:0x1b9B         Mint Tokens    y                   123456789.0                      0.0
+          5 OptinoGov:0x1b9B         Burn Tokens    y                           0.0                      0.0
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
         Token 2 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 0.0, owner: n/a, address: OGDToken:0x63e9 @ 0x63e924f6aC428aee2F661fF36Dcb58ca59affC9d
-          # Permissioned account Role           Active                  Maximum                Processed
-         -- -------------------- -------------- ------ ------------------------ ------------------------
-          0 Deployer:0xa00A      Set Permission n                           0.0                      0.0
-          1 Deployer:0xa00A      Set Config     n                           0.0                      0.0
-          2 OptinoGov:0x1b9B     Set Permission y                           0.0                      0.0
-          3 OptinoGov:0x1b9B     Set Config     y                           0.0                      0.0
-          4 OptinoGov:0x1b9B     Mint Tokens    y                   123456789.0                      0.0
-          5 OptinoGov:0x1b9B     Burn Tokens    y                           0.0                      0.0
-         -- -------------------- -------------- ------ ------------------------ ------------------------
+          # Permissioned account     Role           Active                  Maximum                Processed
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
+          0 Deployer:0xa00A          Set Permission n                           0.0                      0.0
+          1 Deployer:0xa00A          Set Config     n                           0.0                      0.0
+          2 OptinoGov:0x1b9B         Set Permission y                           0.0                      0.0
+          3 OptinoGov:0x1b9B         Set Config     y                           0.0                      0.0
+          4 OptinoGov:0x1b9B         Mint Tokens    y                   123456789.0                      0.0
+          5 OptinoGov:0x1b9B         Burn Tokens    y                           0.0                      0.0
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
           # Dividend         Enabled                  Unclaimed
          -- ---------------- ------- --------------------------
           0 ETH|null:0x0000     true                        0.0
@@ -2318,25 +2316,25 @@ Compilation finished successfully
          -- -------------------- ---------- ---------------- ------------------------ ------------------------ ------------------------ -------------------- ------------------------ ------------------------ ------------
          -- -------------------- ---------- ---------------- ------------------------ ------------------------ ------------------------ -------------------- ------------------------ ------------------------ ------------
         Token 1 symbol: 'OG', name: 'Optino Governance', decimals: 18, totalSupply: 40000.0, owner: n/a, address: OGToken:0xc848 @ 0xc848668d2e7F52cb59b6827f15257088d83cBd40
-          # Permissioned account Role           Active                  Maximum                Processed
-         -- -------------------- -------------- ------ ------------------------ ------------------------
-          0 Deployer:0xa00A      Set Permission n                           0.0                      0.0
-          1 Deployer:0xa00A      Set Config     n                           0.0                      0.0
-          2 OptinoGov:0x1b9B     Set Permission y                           0.0                      0.0
-          3 OptinoGov:0x1b9B     Set Config     y                           0.0                      0.0
-          4 OptinoGov:0x1b9B     Mint Tokens    y                   123456789.0                      0.0
-          5 OptinoGov:0x1b9B     Burn Tokens    y                           0.0                      0.0
-         -- -------------------- -------------- ------ ------------------------ ------------------------
+          # Permissioned account     Role           Active                  Maximum                Processed
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
+          0 Deployer:0xa00A          Set Permission n                           0.0                      0.0
+          1 Deployer:0xa00A          Set Config     n                           0.0                      0.0
+          2 OptinoGov:0x1b9B         Set Permission y                           0.0                      0.0
+          3 OptinoGov:0x1b9B         Set Config     y                           0.0                      0.0
+          4 OptinoGov:0x1b9B         Mint Tokens    y                   123456789.0                      0.0
+          5 OptinoGov:0x1b9B         Burn Tokens    y                           0.0                      0.0
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
         Token 2 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 0.0, owner: n/a, address: OGDToken:0x63e9 @ 0x63e924f6aC428aee2F661fF36Dcb58ca59affC9d
-          # Permissioned account Role           Active                  Maximum                Processed
-         -- -------------------- -------------- ------ ------------------------ ------------------------
-          0 Deployer:0xa00A      Set Permission n                           0.0                      0.0
-          1 Deployer:0xa00A      Set Config     n                           0.0                      0.0
-          2 OptinoGov:0x1b9B     Set Permission y                           0.0                      0.0
-          3 OptinoGov:0x1b9B     Set Config     y                           0.0                      0.0
-          4 OptinoGov:0x1b9B     Mint Tokens    y                   123456789.0                      0.0
-          5 OptinoGov:0x1b9B     Burn Tokens    y                           0.0                      0.0
-         -- -------------------- -------------- ------ ------------------------ ------------------------
+          # Permissioned account     Role           Active                  Maximum                Processed
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
+          0 Deployer:0xa00A          Set Permission n                           0.0                      0.0
+          1 Deployer:0xa00A          Set Config     n                           0.0                      0.0
+          2 OptinoGov:0x1b9B         Set Permission y                           0.0                      0.0
+          3 OptinoGov:0x1b9B         Set Config     y                           0.0                      0.0
+          4 OptinoGov:0x1b9B         Mint Tokens    y                   123456789.0                      0.0
+          5 OptinoGov:0x1b9B         Burn Tokens    y                           0.0                      0.0
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
           # Dividend         Enabled                  Unclaimed
          -- ---------------- ------- --------------------------
           0 ETH|null:0x0000     true                        0.0
@@ -2371,7 +2369,7 @@ Compilation finished successfully
         commit1 - gasUsed: 378033, fee: 0.03024264, feeUsd: 11.6636789688, @ 80.0 gwei & 385.67 ETH/USD, 0x7518d449abaae5b13df72f660e82040b549e57a4347f6d1f7b56af4d6a064459
         + OGToken.Transfer(from: User1:0xa11A, to: OptinoGov:0x1b9B, tokens: 1000.0)
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User1:0xa11A, tokens: 1000.0)
-        + OptinoGov.Committed(user: User1:0xa11A, tokens: 1000.0, balance: 1000.0, duration: 2, end: 1605490143, delegatee: ETH|null:0x0000, votes: 0.0, rewardPool: 1000000.0, totalVotes: 0.0)
+        + OptinoGov.Committed(user: User1:0xa11A, tokens: 1000.0, balance: 1000.0, duration: 2, end: 1605491656, delegatee: ETH|null:0x0000, votes: 0.0, rewardPool: 1000000.0, totalVotes: 0.0)
         + OptinoGov.Transfer(from: ETH|null:0x0000, to: User1:0xa11A, tokens: 1000.0)
         
          # Account                                        ΔETH                OptinoGov                       OG                      OGD                     FEE0
@@ -2413,25 +2411,25 @@ Compilation finished successfully
           0 User1:0xa11A                 2s               2s                   31.536                   1000.0                     10.0 ETH|null:0x0000                           0.0                      0.0            0
          -- -------------------- ---------- ---------------- ------------------------ ------------------------ ------------------------ -------------------- ------------------------ ------------------------ ------------
         Token 1 symbol: 'OG', name: 'Optino Governance', decimals: 18, totalSupply: 40000.0, owner: n/a, address: OGToken:0xc848 @ 0xc848668d2e7F52cb59b6827f15257088d83cBd40
-          # Permissioned account Role           Active                  Maximum                Processed
-         -- -------------------- -------------- ------ ------------------------ ------------------------
-          0 Deployer:0xa00A      Set Permission n                           0.0                      0.0
-          1 Deployer:0xa00A      Set Config     n                           0.0                      0.0
-          2 OptinoGov:0x1b9B     Set Permission y                           0.0                      0.0
-          3 OptinoGov:0x1b9B     Set Config     y                           0.0                      0.0
-          4 OptinoGov:0x1b9B     Mint Tokens    y                   123456789.0                      0.0
-          5 OptinoGov:0x1b9B     Burn Tokens    y                           0.0                      0.0
-         -- -------------------- -------------- ------ ------------------------ ------------------------
+          # Permissioned account     Role           Active                  Maximum                Processed
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
+          0 Deployer:0xa00A          Set Permission n                           0.0                      0.0
+          1 Deployer:0xa00A          Set Config     n                           0.0                      0.0
+          2 OptinoGov:0x1b9B         Set Permission y                           0.0                      0.0
+          3 OptinoGov:0x1b9B         Set Config     y                           0.0                      0.0
+          4 OptinoGov:0x1b9B         Mint Tokens    y                   123456789.0                      0.0
+          5 OptinoGov:0x1b9B         Burn Tokens    y                           0.0                      0.0
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
         Token 2 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 1000.0, owner: n/a, address: OGDToken:0x63e9 @ 0x63e924f6aC428aee2F661fF36Dcb58ca59affC9d
-          # Permissioned account Role           Active                  Maximum                Processed
-         -- -------------------- -------------- ------ ------------------------ ------------------------
-          0 Deployer:0xa00A      Set Permission n                           0.0                      0.0
-          1 Deployer:0xa00A      Set Config     n                           0.0                      0.0
-          2 OptinoGov:0x1b9B     Set Permission y                           0.0                      0.0
-          3 OptinoGov:0x1b9B     Set Config     y                           0.0                      0.0
-          4 OptinoGov:0x1b9B     Mint Tokens    y                   123456789.0                   1000.0
-          5 OptinoGov:0x1b9B     Burn Tokens    y                           0.0                      0.0
-         -- -------------------- -------------- ------ ------------------------ ------------------------
+          # Permissioned account     Role           Active                  Maximum                Processed
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
+          0 Deployer:0xa00A          Set Permission n                           0.0                      0.0
+          1 Deployer:0xa00A          Set Config     n                           0.0                      0.0
+          2 OptinoGov:0x1b9B         Set Permission y                           0.0                      0.0
+          3 OptinoGov:0x1b9B         Set Config     y                           0.0                      0.0
+          4 OptinoGov:0x1b9B         Mint Tokens    y                   123456789.0                   1000.0
+          5 OptinoGov:0x1b9B         Burn Tokens    y                           0.0                      0.0
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
           # Dividend         Enabled                  Unclaimed
          -- ---------------- ------- --------------------------
           0 ETH|null:0x0000     true                        0.0
@@ -2461,8 +2459,8 @@ Compilation finished successfully
          -- ---------- ------------------------
         
         --- Test 3 - Dummy tx to mine a new block and get the latest block.timestamp ---
-        Pausing 'Waiting' for 5s=Mon Nov 16 2020 12:27:31 GMT+1100 (Australian Eastern Daylight Time) now=Mon Nov 16 2020 12:27:26 GMT+1100 (Australian Eastern Daylight Time)
-        Paused 'Waiting' for 5s=Mon Nov 16 2020 12:27:31 GMT+1100 (Australian Eastern Daylight Time) now=Mon Nov 16 2020 12:27:31 GMT+1100 (Australian Eastern Daylight Time)
+        Pausing 'Waiting' for 5s=Mon Nov 16 2020 12:52:44 GMT+1100 (Australian Eastern Daylight Time) now=Mon Nov 16 2020 12:52:39 GMT+1100 (Australian Eastern Daylight Time)
+        Paused 'Waiting' for 5s=Mon Nov 16 2020 12:52:44 GMT+1100 (Australian Eastern Daylight Time) now=Mon Nov 16 2020 12:52:44 GMT+1100 (Australian Eastern Daylight Time)
         
         dummy1 - gasUsed: 21000, fee: 0.00168, feeUsd: 0.6479256, @ 80.0 gwei & 385.67 ETH/USD, 0x4bced70bc97fa579c15518ef093fbf3ef2666c84ac6f0299287ce0b6dc00e886
         
@@ -2505,25 +2503,25 @@ Compilation finished successfully
           0 User1:0xa11A                 2s              -4s                   31.536                   1000.0                     10.0 ETH|null:0x0000                           0.0          0.0000600000018            6
          -- -------------------- ---------- ---------------- ------------------------ ------------------------ ------------------------ -------------------- ------------------------ ------------------------ ------------
         Token 1 symbol: 'OG', name: 'Optino Governance', decimals: 18, totalSupply: 40000.0, owner: n/a, address: OGToken:0xc848 @ 0xc848668d2e7F52cb59b6827f15257088d83cBd40
-          # Permissioned account Role           Active                  Maximum                Processed
-         -- -------------------- -------------- ------ ------------------------ ------------------------
-          0 Deployer:0xa00A      Set Permission n                           0.0                      0.0
-          1 Deployer:0xa00A      Set Config     n                           0.0                      0.0
-          2 OptinoGov:0x1b9B     Set Permission y                           0.0                      0.0
-          3 OptinoGov:0x1b9B     Set Config     y                           0.0                      0.0
-          4 OptinoGov:0x1b9B     Mint Tokens    y                   123456789.0                      0.0
-          5 OptinoGov:0x1b9B     Burn Tokens    y                           0.0                      0.0
-         -- -------------------- -------------- ------ ------------------------ ------------------------
+          # Permissioned account     Role           Active                  Maximum                Processed
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
+          0 Deployer:0xa00A          Set Permission n                           0.0                      0.0
+          1 Deployer:0xa00A          Set Config     n                           0.0                      0.0
+          2 OptinoGov:0x1b9B         Set Permission y                           0.0                      0.0
+          3 OptinoGov:0x1b9B         Set Config     y                           0.0                      0.0
+          4 OptinoGov:0x1b9B         Mint Tokens    y                   123456789.0                      0.0
+          5 OptinoGov:0x1b9B         Burn Tokens    y                           0.0                      0.0
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
         Token 2 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 1000.0, owner: n/a, address: OGDToken:0x63e9 @ 0x63e924f6aC428aee2F661fF36Dcb58ca59affC9d
-          # Permissioned account Role           Active                  Maximum                Processed
-         -- -------------------- -------------- ------ ------------------------ ------------------------
-          0 Deployer:0xa00A      Set Permission n                           0.0                      0.0
-          1 Deployer:0xa00A      Set Config     n                           0.0                      0.0
-          2 OptinoGov:0x1b9B     Set Permission y                           0.0                      0.0
-          3 OptinoGov:0x1b9B     Set Config     y                           0.0                      0.0
-          4 OptinoGov:0x1b9B     Mint Tokens    y                   123456789.0                   1000.0
-          5 OptinoGov:0x1b9B     Burn Tokens    y                           0.0                      0.0
-         -- -------------------- -------------- ------ ------------------------ ------------------------
+          # Permissioned account     Role           Active                  Maximum                Processed
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
+          0 Deployer:0xa00A          Set Permission n                           0.0                      0.0
+          1 Deployer:0xa00A          Set Config     n                           0.0                      0.0
+          2 OptinoGov:0x1b9B         Set Permission y                           0.0                      0.0
+          3 OptinoGov:0x1b9B         Set Config     y                           0.0                      0.0
+          4 OptinoGov:0x1b9B         Mint Tokens    y                   123456789.0                   1000.0
+          5 OptinoGov:0x1b9B         Burn Tokens    y                           0.0                      0.0
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
           # Dividend         Enabled                  Unclaimed
          -- ---------------- ------- --------------------------
           0 ETH|null:0x0000     true                        0.0
@@ -2553,8 +2551,8 @@ Compilation finished successfully
          -- ---------- ------------------------
         
         --- Test 4 - User1 uncommitAll() ---
-        Pausing 'Waiting' for 5s=Mon Nov 16 2020 12:27:36 GMT+1100 (Australian Eastern Daylight Time) now=Mon Nov 16 2020 12:27:31 GMT+1100 (Australian Eastern Daylight Time)
-        Paused 'Waiting' for 5s=Mon Nov 16 2020 12:27:36 GMT+1100 (Australian Eastern Daylight Time) now=Mon Nov 16 2020 12:27:36 GMT+1100 (Australian Eastern Daylight Time)
+        Pausing 'Waiting' for 5s=Mon Nov 16 2020 12:52:49 GMT+1100 (Australian Eastern Daylight Time) now=Mon Nov 16 2020 12:52:44 GMT+1100 (Australian Eastern Daylight Time)
+        Paused 'Waiting' for 5s=Mon Nov 16 2020 12:52:49 GMT+1100 (Australian Eastern Daylight Time) now=Mon Nov 16 2020 12:52:49 GMT+1100 (Australian Eastern Daylight Time)
         
         uncommitAll1 - gasUsed: 120266, fee: 0.00962128, feeUsd: 3.7106390576, @ 80.0 gwei & 385.67 ETH/USD, 0x6779a941cac3dac3055b87348fc86c8d69629d3a267a5dd708d0cf4a9f8fd192
         + OGToken.Transfer(from: ETH|null:0x0000, to: User1:0xa11A, tokens: 0.00011000000605)
@@ -2600,25 +2598,25 @@ Compilation finished successfully
          -- -------------------- ---------- ---------------- ------------------------ ------------------------ ------------------------ -------------------- ------------------------ ------------------------ ------------
          -- -------------------- ---------- ---------------- ------------------------ ------------------------ ------------------------ -------------------- ------------------------ ------------------------ ------------
         Token 1 symbol: 'OG', name: 'Optino Governance', decimals: 18, totalSupply: 40000.00011000000605, owner: n/a, address: OGToken:0xc848 @ 0xc848668d2e7F52cb59b6827f15257088d83cBd40
-          # Permissioned account Role           Active                  Maximum                Processed
-         -- -------------------- -------------- ------ ------------------------ ------------------------
-          0 Deployer:0xa00A      Set Permission n                           0.0                      0.0
-          1 Deployer:0xa00A      Set Config     n                           0.0                      0.0
-          2 OptinoGov:0x1b9B     Set Permission y                           0.0                      0.0
-          3 OptinoGov:0x1b9B     Set Config     y                           0.0                      0.0
-          4 OptinoGov:0x1b9B     Mint Tokens    y                   123456789.0         0.00011000000605
-          5 OptinoGov:0x1b9B     Burn Tokens    y                           0.0                      0.0
-         -- -------------------- -------------- ------ ------------------------ ------------------------
+          # Permissioned account     Role           Active                  Maximum                Processed
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
+          0 Deployer:0xa00A          Set Permission n                           0.0                      0.0
+          1 Deployer:0xa00A          Set Config     n                           0.0                      0.0
+          2 OptinoGov:0x1b9B         Set Permission y                           0.0                      0.0
+          3 OptinoGov:0x1b9B         Set Config     y                           0.0                      0.0
+          4 OptinoGov:0x1b9B         Mint Tokens    y                   123456789.0         0.00011000000605
+          5 OptinoGov:0x1b9B         Burn Tokens    y                           0.0                      0.0
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
         Token 2 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 0.0, owner: n/a, address: OGDToken:0x63e9 @ 0x63e924f6aC428aee2F661fF36Dcb58ca59affC9d
-          # Permissioned account Role           Active                  Maximum                Processed
-         -- -------------------- -------------- ------ ------------------------ ------------------------
-          0 Deployer:0xa00A      Set Permission n                           0.0                      0.0
-          1 Deployer:0xa00A      Set Config     n                           0.0                      0.0
-          2 OptinoGov:0x1b9B     Set Permission y                           0.0                      0.0
-          3 OptinoGov:0x1b9B     Set Config     y                           0.0                      0.0
-          4 OptinoGov:0x1b9B     Mint Tokens    y                   123456789.0                   1000.0
-          5 OptinoGov:0x1b9B     Burn Tokens    y                           0.0                      0.0
-         -- -------------------- -------------- ------ ------------------------ ------------------------
+          # Permissioned account     Role           Active                  Maximum                Processed
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
+          0 Deployer:0xa00A          Set Permission n                           0.0                      0.0
+          1 Deployer:0xa00A          Set Config     n                           0.0                      0.0
+          2 OptinoGov:0x1b9B         Set Permission y                           0.0                      0.0
+          3 OptinoGov:0x1b9B         Set Config     y                           0.0                      0.0
+          4 OptinoGov:0x1b9B         Mint Tokens    y                   123456789.0                   1000.0
+          5 OptinoGov:0x1b9B         Burn Tokens    y                           0.0                      0.0
+         -- ------------------------ -------------- ------ ------------------------ ------------------------
           # Dividend         Enabled                  Unclaimed
          -- ---------------- ------- --------------------------
           0 ETH|null:0x0000     true                        0.0
@@ -2649,7 +2647,7 @@ Compilation finished successfully
         
         --- Test Completed ---
 
-      ✓ Workflow #2 - Developing (11096ms)
+      ✓ Workflow #2 - Developing (11249ms)
 
 
   3 passing (37s)

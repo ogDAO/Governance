@@ -49,6 +49,12 @@ library SafeMath {
         require(b > 0, "Divide by 0");
         c = a / b;
     }
+    function max(uint a, uint b) internal pure returns (uint c) {
+        c = a >= b ? a : b;
+    }
+    function min(uint a, uint b) internal pure returns (uint c) {
+        c = a <= b ? a : b;
+    }
 }
 
 // File: contracts/ERC20.sol
@@ -81,6 +87,7 @@ pragma solidity ^0.7.0;
 /// @notice OGTokenInterface = ERC20 + mint + burn
 // SPDX-License-Identifier: GPLv2
 interface OGTokenInterface is ERC20 {
+    function availableToMint() external view returns (uint tokens);
     function mint(address tokenOwner, uint tokens) external returns (bool success);
     function burn(uint tokens) external returns (bool success);
     // function burnFrom(address tokenOwner, uint tokens) external returns (bool success);

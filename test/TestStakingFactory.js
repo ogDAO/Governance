@@ -75,7 +75,6 @@ describe("TestStakingFactory", function() {
     }
     await data.printBalances();
 
-
     console.log("        --- Setup Completed ---");
     console.log("");
   });

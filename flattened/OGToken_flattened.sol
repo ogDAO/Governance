@@ -21,33 +21,11 @@ library SafeMath {
         require(b > 0, "Divide by 0");
         c = a / b;
     }
-}
-
-// File: contracts/Owned.sol
-
-pragma solidity ^0.7.0;
-
-/// @notice Ownership
-// SPDX-License-Identifier: GPLv2
-contract Owned {
-    bool initialised;
-    address public owner;
-
-    event OwnershipTransferred(address indexed from, address indexed to);
-
-    modifier onlyOwner {
-        require(msg.sender == owner, "Not owner");
-        _;
+    function max(uint a, uint b) internal pure returns (uint c) {
+        c = a >= b ? a : b;
     }
-
-    function initOwned(address _owner) internal {
-        require(!initialised, "Already initialised");
-        owner = address(uint160(_owner));
-        initialised = true;
-    }
-    function transferOwnership(address _newOwner) public onlyOwner {
-        emit OwnershipTransferred(owner, _newOwner);
-        owner = _newOwner;
+    function min(uint a, uint b) internal pure returns (uint c) {
+        c = a <= b ? a : b;
     }
 }
 
@@ -55,43 +33,66 @@ contract Owned {
 
 pragma solidity ^0.7.0;
 
+// import "hardhat/console.sol";
 
 
 /// @notice Permissioned
 // SPDX-License-Identifier: GPLv2
-contract Permissioned is Owned {
+contract Permissioned {
     using SafeMath for uint;
 
     struct Permission {
-        bool active;
+        address account;
+        uint32 role;
+        uint8 active;
         uint maximum;
         uint processed;
     }
 
-    uint public constant ROLE_MINTER = 1;
-    uint public constant ROLE_DIVIDENDWITHDRAWER = 2;
-    // Don't need ROLE_BURNER at the moment
-    // uint public constant ROLE_BURNER = 2;
-    mapping(address => mapping(uint => Permission)) public permissions;
+    uint32 public constant ROLE_SETPERMISSION = 0;
+    uint32 public constant ROLE_SETCONFIG = 1;
+    uint32 public constant ROLE_MINTTOKENS = 2;
+    uint32 public constant ROLE_BURNTOKENS = 3;
+    uint32 public constant ROLE_RECOVERTOKENS = 4;
+    mapping(bytes32 => Permission) permissions;
+    bytes32[] permissionsIndex;
 
     event PermissionUpdated(address indexed account, uint role, bool active, uint maximum, uint processed);
 
-    modifier permitted(uint role, uint tokens) {
-        Permission storage permission = permissions[msg.sender][role];
-        require(permission.active && (permission.maximum == 0 || permission.processed + tokens < permission.maximum), "Not permissioned");
+    modifier permitted(uint32 role, uint tokens) {
+        bytes32 key = keccak256(abi.encodePacked(msg.sender, role));
+        Permission storage permission = permissions[key];
+        require(permission.active == uint8(1) && (permission.maximum == 0 || permission.processed.add(tokens) <= permission.maximum), "Not permissioned");
         permission.processed = permission.processed.add(tokens);
         _;
     }
 
     function initPermissioned(address _owner) internal {
-        initOwned(_owner);
-        // setPermission(_owner, ROLE_MINTER, true, 0);
-        // setPermission(_owner, ROLE_BURNER, true, 0);
+        _setPermission(_owner, ROLE_SETPERMISSION, true, 0);
     }
-    function setPermission(address account, uint role, bool active, uint maximum) public onlyOwner {
-        uint processed = permissions[account][role].processed;
-        permissions[account][role] = Permission({ active: active, maximum: maximum, processed: processed });
+    function _setPermission(address account, uint32 role, bool active, uint maximum) internal {
+        bytes32 key = keccak256(abi.encodePacked(account, role));
+        uint processed = permissions[key].processed;
+        require(maximum == 0 || maximum >= processed, "Invalid maximum");
+        if (permissions[key].account == address(0)) {
+            permissions[key] = Permission({ account: account, role: role, active: active ? uint8(1) : uint8(0), maximum: maximum, processed: processed });
+            permissionsIndex.push(key);
+        } else {
+            permissions[key].active = active ? uint8(1) : uint8(0);
+            permissions[key].maximum = maximum;
+        }
         emit PermissionUpdated(account, role, active, maximum, processed);
+    }
+    function setPermission(address account, uint32 role, bool active, uint maximum) public permitted(ROLE_SETPERMISSION, 0) {
+        _setPermission(account, role, active, maximum);
+    }
+    function getPermissionByIndex(uint i) public view returns (address account, uint32 role, uint8 active, uint maximum, uint processed) {
+        require(i < permissionsIndex.length, "Invalid index");
+        Permission memory permission = permissions[permissionsIndex[i]];
+        return (permission.account, permission.role, permission.active, permission.maximum, permission.processed);
+    }
+    function permissionsLength() public view returns (uint) {
+        return permissionsIndex.length;
     }
 }
 
@@ -125,6 +126,7 @@ pragma solidity ^0.7.0;
 /// @notice OGTokenInterface = ERC20 + mint + burn
 // SPDX-License-Identifier: GPLv2
 interface OGTokenInterface is ERC20 {
+    function availableToMint() external view returns (uint tokens);
     function mint(address tokenOwner, uint tokens) external returns (bool success);
     function burn(uint tokens) external returns (bool success);
     // function burnFrom(address tokenOwner, uint tokens) external returns (bool success);
@@ -204,14 +206,31 @@ contract OGToken is OGTokenInterface, Permissioned {
         return allowed[tokenOwner][spender];
     }
 
-    function setCap(uint _cap, bool _freezeCap) external onlyOwner {
+    function setCap(uint _cap, bool _freezeCap) external permitted(ROLE_SETCONFIG, 0) {
         require(!freezeCap, "Cap frozen");
+        require(_cap >= _totalSupply.sub(balances[address(0)]), "cap must be >= totalSupply");
         (cap, freezeCap) = (_cap, _freezeCap);
         emit CapUpdated(cap, freezeCap);
     }
 
-    function mint(address tokenOwner, uint tokens) override external permitted(ROLE_MINTER, tokens) returns (bool success) {
-        require(cap == 0 || _totalSupply + tokens <= cap, "Cap exceeded");
+    function availableToMint() override external view returns (uint tokens) {
+        bytes32 key = keccak256(abi.encodePacked(msg.sender, ROLE_MINTTOKENS));
+        Permission memory permission = permissions[key];
+        if (permission.maximum == 0) {
+            if (cap > 0) {
+                tokens = cap.sub(_totalSupply.sub(balances[address(0)]));
+            } else {
+                tokens = uint(-1);
+            }
+        } else {
+            tokens = permission.maximum.sub(permission.processed);
+            if (cap > 0 && tokens > cap) {
+                tokens = cap;
+            }
+        }
+    }
+    function mint(address tokenOwner, uint tokens) override external permitted(ROLE_MINTTOKENS, tokens) returns (bool success) {
+        require(cap == 0 || _totalSupply.sub(balances[address(0)]).add(tokens) <= cap, "cap exceeded");
         balances[tokenOwner] = balances[tokenOwner].add(tokens);
         _totalSupply = _totalSupply.add(tokens);
         emit Transfer(address(0), tokenOwner, tokens);
