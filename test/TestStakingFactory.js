@@ -1,4 +1,4 @@
-const { ZERO_ADDRESS, SECONDS_PER_DAY, SECONDS_PER_YEAR, Data } = require('./helpers/common');
+const { ZERO_ADDRESS, SECONDS_PER_DAY, SECONDS_PER_YEAR, ROLE_SETPERMISSION, ROLE_SETCONFIG, ROLE_MINTTOKENS, ROLE_BURNTOKENS, ROLE_RECOVERTOKENS, Data } = require('./helpers/common');
 const { expect, assert } = require("chai");
 const { BigNumber } = require("ethers");
 const util = require('util');
@@ -27,10 +27,10 @@ describe("TestStakingFactory", function() {
     let stakingRewardTerms = [SECONDS_PER_DAY, SECONDS_PER_YEAR, 2 * SECONDS_PER_YEAR];
     let stakingRewardRates = [BigNumber.from(SECONDS_PER_YEAR).mul(BigNumber.from(10).pow(10)), BigNumber.from(2 * SECONDS_PER_YEAR).mul(BigNumber.from(10).pow(10)), BigNumber.from(3 * SECONDS_PER_YEAR).mul(BigNumber.from(10).pow(10))];
     const setup1a = [];
-    setup1a.push(OGToken.deploy("OG", "Optino Governance", 18, data.owner, ethers.utils.parseUnits("0", 18)));
-    setup1a.push(OGDToken.deploy("OGD", "Optino Governance Dividend", 18, data.owner, ethers.utils.parseUnits("0", 18)));
+    setup1a.push(OGToken.deploy("OG", "Optino Governance", 18, data.deployer, ethers.utils.parseUnits("0", 18)));
+    setup1a.push(OGDToken.deploy("OGD", "Optino Governance Dividend", 18, data.deployer, ethers.utils.parseUnits("0", 18)));
     setup1a.push(SimpleCurve.deploy(stakingRewardTerms, stakingRewardRates));
-    setup1a.push(TestToken.deploy("FEE0", "Fee0", 18, data.owner, ethers.utils.parseUnits("100", 18)));
+    setup1a.push(TestToken.deploy("FEE0", "Fee0", 18, data.deployer, ethers.utils.parseUnits("100", 18)));
     const [ogToken, ogdToken, stakingRewardCurve, fee0Token] = await Promise.all(setup1a);
     const setup1b = [];
     setup1b.push(StakingFactory.deploy(ogToken.address, ogdToken.address, stakingRewardCurve.address));
@@ -42,18 +42,39 @@ describe("TestStakingFactory", function() {
     await data.printTxData("stakingFactoryTx", stakingFactory.deployTransaction);
     // await data.printBalances();
 
-    await console.log("        --- Setup 2 - OGToken mint(...) permissioning ---");
+    // await console.log("        --- Setup 2 - OGToken mint(...) permissioning ---");
+    // const setup2 = [];
+    // setup2.push(data.ogToken.setPermission(data.deployer, 1, true, ethers.utils.parseUnits("0", 18)));
+    // setup2.push(data.ogToken.setPermission(stakingFactory.address, 1, true, ethers.utils.parseUnits("100", 18)));
+    // setup2.push(data.ogdToken.setPermission(stakingFactory.address, 1, true, ethers.utils.parseUnits("123456", 18)));
+    // setup2.push(data.ogdToken.setPermission(stakingFactory.address, 2, true, ethers.utils.parseUnits("123456", 18)));
+    // const [setPermission1, setPermission2, setPermission3, setPermission4] = await Promise.all(setup2);
+    // await data.printTxData("setPermission1", setPermission1);
+    // await data.printTxData("setPermission2", setPermission2);
+    // await data.printTxData("setPermission3", setPermission3);
+    // await data.printTxData("setPermission4", setPermission4);
+    // await data.printBalances();
+
+
+    console.log("        --- Setup 2 - OGToken and OGDToken permissioning ---");
     const setup2 = [];
-    setup2.push(data.ogToken.setPermission(data.owner, 1, true, ethers.utils.parseUnits("0", 18)));
-    setup2.push(data.ogToken.setPermission(stakingFactory.address, 1, true, ethers.utils.parseUnits("100", 18)));
-    setup2.push(data.ogdToken.setPermission(stakingFactory.address, 1, true, ethers.utils.parseUnits("123456", 18)));
-    setup2.push(data.ogdToken.setPermission(stakingFactory.address, 2, true, ethers.utils.parseUnits("123456", 18)));
-    const [setPermission1, setPermission2, setPermission3, setPermission4] = await Promise.all(setup2);
-    await data.printTxData("setPermission1", setPermission1);
-    await data.printTxData("setPermission2", setPermission2);
-    await data.printTxData("setPermission3", setPermission3);
-    await data.printTxData("setPermission4", setPermission4);
+    setup2.push(ogToken.setPermission(data.deployer, ROLE_SETCONFIG, true, 0));
+    setup2.push(ogToken.setPermission(data.deployer, ROLE_MINTTOKENS, true, ethers.utils.parseUnits("123456789", 18)));
+    // setup2.push(ogToken.setPermission(stakingFactory.address, ROLE_SETPERMISSION, true, 0));
+    // setup2.push(ogToken.setPermission(stakingFactory.address, ROLE_SETCONFIG, true, 0));
+    setup2.push(ogToken.setPermission(stakingFactory.address, ROLE_MINTTOKENS, true, ethers.utils.parseUnits("123456789", 18)));
+    setup2.push(ogToken.setPermission(stakingFactory.address, ROLE_BURNTOKENS, true, 0));
+    setup2.push(ogdToken.setPermission(data.deployer, ROLE_SETCONFIG, true, 0));
+    // setup2.push(ogdToken.setPermission(stakingFactory.address, ROLE_SETPERMISSION, true, 0));
+    // setup2.push(ogdToken.setPermission(stakingFactory.address, ROLE_SETCONFIG, true, 0));
+    setup2.push(ogdToken.setPermission(stakingFactory.address, ROLE_MINTTOKENS, true, ethers.utils.parseUnits("123456789", 18)));
+    setup2.push(ogdToken.setPermission(stakingFactory.address, ROLE_BURNTOKENS, true, 0));
+    const setup2Txs = await Promise.all(setup2);
+    for (let j = 0; j < setup2Txs.length; j++) {
+        await data.printTxData("setup2Txs[" + j + "]", setup2Txs[j]);
+    }
     await data.printBalances();
+
 
     console.log("        --- Setup Completed ---");
     console.log("");
@@ -269,7 +290,7 @@ describe("TestStakingFactory", function() {
     });
   });
 
-  describe.only("TestStakingFactory - Workflow #3 - Stake, slash and unstake", function() {
+  describe("TestStakingFactory - Workflow #3 - Stake, slash and unstake", function() {
     it("Workflow #3 - Stake, slash and unstake", async function() {
       console.log("        --- Test 1 - Mint 10,000 OG tokens for User{1..3}; User{1..3} approve 10,000 FEE for StakingFactory to spend ---");
       const ogTokens = ethers.utils.parseUnits("10000", 18);

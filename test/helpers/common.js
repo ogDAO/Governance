@@ -376,18 +376,18 @@ class Data {
       }
       try {
         const permissionsLength = await tokenContract.permissionsLength();
-        console.log("          # Permissioned account Role           Active                  Maximum                Processed");
-        console.log("         -- -------------------- -------------- ------ ------------------------ ------------------------");
+        console.log("          # Permissioned account     Role           Active                  Maximum                Processed");
+        console.log("         -- ------------------------ -------------- ------ ------------------------ ------------------------");
         for (let j = 0; j < permissionsLength; j++) {
           const _p = await tokenContract.getPermissionByIndex(j);
           console.log("         " + this.padLeft(j, 2) + " " +
-            this.padRight(this.getShortAccountName(_p.account), 20) + " " +
+            this.padRight(this.getShortAccountName(_p.account), 24) + " " +
             this.padRight(roleString(_p.role.toString()), 14) + " " +
             this.padRight(_p.active.toString() == 1 ? "y" : "n", 6) + " " +
             this.padLeft(ethers.utils.formatUnits(_p.maximum, 18), 24) + " " +
             this.padLeft(ethers.utils.formatUnits(_p.processed, 18), 24));
         }
-        console.log("         -- -------------------- -------------- ------ ------------------------ ------------------------");
+        console.log("         -- ------------------------ -------------- ------ ------------------------ ------------------------");
       } catch (e) {
       }
       if (symbol == "OptinoGov" && this.optinoGov != null) {
