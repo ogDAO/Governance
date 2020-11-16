@@ -1,4 +1,6 @@
 $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
+Compiling 21 files with 0.7.4
+Compilation finished successfully
 
 
   TestOGDToken
@@ -13,7 +15,7 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         Address 0x0f4eA6f2be49d822b7cAEf4175450A4D83A32e72 => Fee0Token:0x0f4e
         Address 0x6eaC8DFBdEB9588C9FEEe24783B4137b082f9708 => Fee1Token:0x6eaC
         Address 0xBa1FCDaE835E77cAB2a76a7C3884AdC630f7a5B0 => Fee2Token:0xBa1F
-        ogdTokenTx - gasUsed: 2834074, fee: 0.22672592, feeUsd: 87.4413855664, @ 80.0 gwei & 385.67 ETH/USD, 0x65eccde97a6160fe77a062b8ccdabca23f22bc796289f4034b20cee9be1df8c2
+        ogdTokenTx - gasUsed: 2830190, fee: 0.2264152, feeUsd: 87.321550184, @ 80.0 gwei & 385.67 ETH/USD, 0x58de7452003f5189630dff3cfa353fbe7d81d564788cbb7a291f0da425f3b7ec
         + OGDToken.PermissionUpdated(account: Deployer:0xa00A, role: 0, active: true, maximum: 0, processed: 0)
         + OGDToken.Transfer(from: ETH|null:0x0000, to: Deployer:0xa00A, tokens: 0.0)
         fee0TokenTx - gasUsed: 823708, fee: 0.06589664, feeUsd: 25.4143571488, @ 80.0 gwei & 385.67 ETH/USD, 0x86695166f58d7afc3dadaefac8a1307196f0596c42e57bcdf5b5e03f7b82336e
@@ -25,7 +27,7 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         
          # Account                                        ΔETH                      OGD                     FEE0                     FEE1                     FEE2
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
-         0 Deployer:0xa00A                          -0.4244168                      0.0                    100.0                   1000.0                  10000.0
+         0 Deployer:0xa00A                         -0.42410608                      0.0                    100.0                   1000.0                  10000.0
          1 User1:0xa11A                                    0.0                      0.0                      0.0                      0.0                      0.0
          2 User2:0xa22A                                    0.0                      0.0                      0.0                      0.0                      0.0
          3 User3:0xa33a                                    0.0                      0.0                      0.0                      0.0                      0.0
@@ -39,10 +41,10 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
         
         Token 0 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 0.0, owner: n/a, address: OGDToken:0x1647 @ 0x1647B1461251A0c6D3E14a227dE0F16E36ba80B1
-          # Permissioned account     Role           Active                  Maximum                Processed
-         -- ------------------------ -------------- ------ ------------------------ ------------------------
-          0 Deployer:0xa00A          Set Permission y                           0.0                      0.0
-         -- ------------------------ -------------- ------ ------------------------ ------------------------
+          # Permissioned account     Role            Active                  Maximum                Processed
+         -- ------------------------ --------------- ------ ------------------------ ------------------------
+          0 Deployer:0xa00A          Set Permission  Yes                         0.0                      0.0
+         -- ------------------------ --------------- ------ ------------------------ ------------------------
           # Dividend         Enabled                  Unclaimed
          -- ---------------- ------- --------------------------
          -- ---------------- ------- --------------------------
@@ -53,18 +55,18 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         --- Setup Completed ---
 
         --- Test 1 - OGDToken mint(...) permissioning, OGDToken.addDividendTokens for ETH and FEE0 ---
-        setPermission1 - gasUsed: 79007, fee: 0.00632056, feeUsd: 2.4376503752, @ 80.0 gwei & 385.67 ETH/USD, 0x96498e2c33280012a7efc44feec889dc9a9615eb341168cee6007f0aa0dfbab1
+        setPermission1 - gasUsed: 78987, fee: 0.00631896, feeUsd: 2.4370333032, @ 80.0 gwei & 385.67 ETH/USD, 0x96498e2c33280012a7efc44feec889dc9a9615eb341168cee6007f0aa0dfbab1
         + OGDToken.PermissionUpdated(account: Deployer:0xa00A, role: 1, active: true, maximum: 0, processed: 0)
-        setPermission2 - gasUsed: 79007, fee: 0.00632056, feeUsd: 2.4376503752, @ 80.0 gwei & 385.67 ETH/USD, 0x8c80650ab1ff66393a57f67bee1872a2e801bf66b0918655131ed01cf32deafc
+        setPermission2 - gasUsed: 78987, fee: 0.00631896, feeUsd: 2.4370333032, @ 80.0 gwei & 385.67 ETH/USD, 0x8c80650ab1ff66393a57f67bee1872a2e801bf66b0918655131ed01cf32deafc
         + OGDToken.PermissionUpdated(account: Deployer:0xa00A, role: 2, active: true, maximum: 0, processed: 0)
         
-        addDividendToken0 - gasUsed: 117189, fee: 0.00937512, feeUsd: 3.6157025304, @ 80.0 gwei & 385.67 ETH/USD, 0xbf63d16e4aa6d36ac5b5d17c5d3ab61a72f0c7c8197e2d0cd8cf0fbf83574bb7
+        addDividendToken0 - gasUsed: 117187, fee: 0.00937496, feeUsd: 3.6156408232, @ 80.0 gwei & 385.67 ETH/USD, 0xbf63d16e4aa6d36ac5b5d17c5d3ab61a72f0c7c8197e2d0cd8cf0fbf83574bb7
         + OGDToken.DividendTokenAdded(token: ETH|null:0x0000, enabled: true)
-        addDividendToken1 - gasUsed: 119156, fee: 0.00953248, feeUsd: 3.6763915616, @ 80.0 gwei & 385.67 ETH/USD, 0x96efa77fe1cf859ed61d2c0943cd05e34c43a5ef1ef67401f254c3264d23c81b
+        addDividendToken1 - gasUsed: 119154, fee: 0.00953232, feeUsd: 3.6763298544, @ 80.0 gwei & 385.67 ETH/USD, 0x96efa77fe1cf859ed61d2c0943cd05e34c43a5ef1ef67401f254c3264d23c81b
         + OGDToken.DividendTokenAdded(token: Fee0Token:0x0f4e, enabled: true)
          # Account                                        ΔETH                      OGD                     FEE0                     FEE1                     FEE2
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
-         0 Deployer:0xa00A                         -0.45596552                      0.0                    100.0                   1000.0                  10000.0
+         0 Deployer:0xa00A                         -0.45565128                      0.0                    100.0                   1000.0                  10000.0
          1 User1:0xa11A                                    0.0                      0.0                      0.0                      0.0                      0.0
          2 User2:0xa22A                                    0.0                      0.0                      0.0                      0.0                      0.0
          3 User3:0xa33a                                    0.0                      0.0                      0.0                      0.0                      0.0
@@ -78,12 +80,12 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
         
         Token 0 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 0.0, owner: n/a, address: OGDToken:0x1647 @ 0x1647B1461251A0c6D3E14a227dE0F16E36ba80B1
-          # Permissioned account     Role           Active                  Maximum                Processed
-         -- ------------------------ -------------- ------ ------------------------ ------------------------
-          0 Deployer:0xa00A          Set Permission y                           0.0                      0.0
-          1 Deployer:0xa00A          Set Config     y                           0.0                      0.0
-          2 Deployer:0xa00A          Mint Tokens    y                           0.0                      0.0
-         -- ------------------------ -------------- ------ ------------------------ ------------------------
+          # Permissioned account     Role            Active                  Maximum                Processed
+         -- ------------------------ --------------- ------ ------------------------ ------------------------
+          0 Deployer:0xa00A          Set Permission  Yes                         0.0                      0.0
+          1 Deployer:0xa00A          Set Config      Yes                         0.0                      0.0
+          2 Deployer:0xa00A          Mint Tokens     Yes                         0.0                      0.0
+         -- ------------------------ --------------- ------ ------------------------ ------------------------
           # Dividend         Enabled                  Unclaimed
          -- ---------------- ------- --------------------------
           0 ETH|null:0x0000     true                        0.0
@@ -101,11 +103,11 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         Token 3 symbol: 'FEE2', name: 'Fee2', decimals: 18, totalSupply: 10000.0, owner: Deployer:0xa00A, address: Fee2Token:0xBa1F @ 0xBa1FCDaE835E77cAB2a76a7C3884AdC630f7a5B0
         
         --- Test 2 - Mint 10,000 OGD tokens for User{1..3}; Owner approve 100 FEE for OGToken to spend ---
-        mint1 - gasUsed: 110305, fee: 0.0088244, feeUsd: 3.403306348, @ 80.0 gwei & 385.67 ETH/USD, 0xd6e25335ab423562bf1c5675e9918de81c01d6fbf024804c99d94d720002afbf
+        mint1 - gasUsed: 110294, fee: 0.00882352, feeUsd: 3.4029669584, @ 80.0 gwei & 385.67 ETH/USD, 0xd6e25335ab423562bf1c5675e9918de81c01d6fbf024804c99d94d720002afbf
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User1:0xa11A, tokens: 10000.0)
-        mint2 - gasUsed: 80305, fee: 0.0064244, feeUsd: 2.477698348, @ 80.0 gwei & 385.67 ETH/USD, 0x5594e374cf94aba88213d35f4c8d1c9bca704b61d87a965e5476863ab57a8b4a
+        mint2 - gasUsed: 80294, fee: 0.00642352, feeUsd: 2.4773589584, @ 80.0 gwei & 385.67 ETH/USD, 0x5594e374cf94aba88213d35f4c8d1c9bca704b61d87a965e5476863ab57a8b4a
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User2:0xa22A, tokens: 10000.0)
-        mint3 - gasUsed: 80305, fee: 0.0064244, feeUsd: 2.477698348, @ 80.0 gwei & 385.67 ETH/USD, 0x62cbbb8f957937ab2cedaee4ee81475d93bd04a286eff655fbe1f8fd02d9f554
+        mint3 - gasUsed: 80294, fee: 0.00642352, feeUsd: 2.4773589584, @ 80.0 gwei & 385.67 ETH/USD, 0x62cbbb8f957937ab2cedaee4ee81475d93bd04a286eff655fbe1f8fd02d9f554
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User3:0xa33a, tokens: 10000.0)
         ownerApproveFee0Tokens - gasUsed: 43968, fee: 0.00351744, feeUsd: 1.3565710848, @ 80.0 gwei & 385.67 ETH/USD, 0xea4272d8c70f2e20d749f63c597f93817c56a67833e175ff68ea8b175090a051
         + Fee0Token.Approval(tokenOwner: Deployer:0xa00A, spender: OGDToken:0x1647, tokens: 100.0)
@@ -116,7 +118,7 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         
          # Account                                        ΔETH                      OGD                     FEE0                     FEE1                     FEE2
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
-         0 Deployer:0xa00A                           -0.488192                      0.0                    100.0                   1000.0                  10000.0
+         0 Deployer:0xa00A                         -0.48787512                      0.0                    100.0                   1000.0                  10000.0
          1 User1:0xa11A                                    0.0                  10000.0                      0.0                      0.0                      0.0
          2 User2:0xa22A                                    0.0                  10000.0                      0.0                      0.0                      0.0
          3 User3:0xa33a                                    0.0                  10000.0                      0.0                      0.0                      0.0
@@ -130,12 +132,12 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
         
         Token 0 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 30000.0, owner: n/a, address: OGDToken:0x1647 @ 0x1647B1461251A0c6D3E14a227dE0F16E36ba80B1
-          # Permissioned account     Role           Active                  Maximum                Processed
-         -- ------------------------ -------------- ------ ------------------------ ------------------------
-          0 Deployer:0xa00A          Set Permission y                           0.0                      0.0
-          1 Deployer:0xa00A          Set Config     y                           0.0                      0.0
-          2 Deployer:0xa00A          Mint Tokens    y                           0.0                  30000.0
-         -- ------------------------ -------------- ------ ------------------------ ------------------------
+          # Permissioned account     Role            Active                  Maximum                Processed
+         -- ------------------------ --------------- ------ ------------------------ ------------------------
+          0 Deployer:0xa00A          Set Permission  Yes                         0.0                      0.0
+          1 Deployer:0xa00A          Set Config      Yes                         0.0                      0.0
+          2 Deployer:0xa00A          Mint Tokens     Yes                         0.0                  30000.0
+         -- ------------------------ --------------- ------ ------------------------ ------------------------
           # Dividend         Enabled                  Unclaimed
          -- ---------------- ------- --------------------------
           0 ETH|null:0x0000     true                        0.0
@@ -161,7 +163,7 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         
          # Account                                        ΔETH                      OGD                     FEE0                     FEE1                     FEE2
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
-         0 Deployer:0xa00A                          -10.500256                      0.0                      0.0                   1000.0                  10000.0
+         0 Deployer:0xa00A                        -10.49993912                      0.0                      0.0                   1000.0                  10000.0
          1 User1:0xa11A                                    0.0                  10000.0                      0.0                      0.0                      0.0
          2 User2:0xa22A                                    0.0                  10000.0                      0.0                      0.0                      0.0
          3 User3:0xa33a                                    0.0                  10000.0                      0.0                      0.0                      0.0
@@ -175,12 +177,12 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
         
         Token 0 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 30000.0, owner: n/a, address: OGDToken:0x1647 @ 0x1647B1461251A0c6D3E14a227dE0F16E36ba80B1
-          # Permissioned account     Role           Active                  Maximum                Processed
-         -- ------------------------ -------------- ------ ------------------------ ------------------------
-          0 Deployer:0xa00A          Set Permission y                           0.0                      0.0
-          1 Deployer:0xa00A          Set Config     y                           0.0                      0.0
-          2 Deployer:0xa00A          Mint Tokens    y                           0.0                  30000.0
-         -- ------------------------ -------------- ------ ------------------------ ------------------------
+          # Permissioned account     Role            Active                  Maximum                Processed
+         -- ------------------------ --------------- ------ ------------------------ ------------------------
+          0 Deployer:0xa00A          Set Permission  Yes                         0.0                      0.0
+          1 Deployer:0xa00A          Set Config      Yes                         0.0                      0.0
+          2 Deployer:0xa00A          Mint Tokens     Yes                         0.0                  30000.0
+         -- ------------------------ --------------- ------ ------------------------ ------------------------
           # Dividend         Enabled                  Unclaimed
          -- ---------------- ------- --------------------------
           0 ETH|null:0x0000     true                       10.0
@@ -203,7 +205,7 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         
          # Account                                        ΔETH                      OGD                     FEE0                     FEE1                     FEE2
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
-         0 Deployer:0xa00A                          -10.500256                      0.0                      0.0                   1000.0                  10000.0
+         0 Deployer:0xa00A                        -10.49993912                      0.0                      0.0                   1000.0                  10000.0
          1 User1:0xa11A                                    0.0                  10000.0                      0.0                      0.0                      0.0
          2 User2:0xa22A                            -0.01310384                  10000.0                      0.0                      0.0                      0.0
          3 User3:0xa33a                                    0.0                  10000.0                      0.0                      0.0                      0.0
@@ -217,12 +219,12 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
         
         Token 0 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 30000.0, owner: n/a, address: OGDToken:0x1647 @ 0x1647B1461251A0c6D3E14a227dE0F16E36ba80B1
-          # Permissioned account     Role           Active                  Maximum                Processed
-         -- ------------------------ -------------- ------ ------------------------ ------------------------
-          0 Deployer:0xa00A          Set Permission y                           0.0                      0.0
-          1 Deployer:0xa00A          Set Config     y                           0.0                      0.0
-          2 Deployer:0xa00A          Mint Tokens    y                           0.0                  30000.0
-         -- ------------------------ -------------- ------ ------------------------ ------------------------
+          # Permissioned account     Role            Active                  Maximum                Processed
+         -- ------------------------ --------------- ------ ------------------------ ------------------------
+          0 Deployer:0xa00A          Set Permission  Yes                         0.0                      0.0
+          1 Deployer:0xa00A          Set Config      Yes                         0.0                      0.0
+          2 Deployer:0xa00A          Mint Tokens     Yes                         0.0                  30000.0
+         -- ------------------------ --------------- ------ ------------------------ ------------------------
           # Dividend         Enabled                  Unclaimed
          -- ---------------- ------- --------------------------
           0 ETH|null:0x0000     true       6.666666666666666667
@@ -255,7 +257,7 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         
          # Account                                        ΔETH                      OGD                     FEE0                     FEE1                     FEE2
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
-         0 Deployer:0xa00A                          -10.500256                      0.0                      0.0                   1000.0                  10000.0
+         0 Deployer:0xa00A                        -10.49993912                      0.0                      0.0                   1000.0                  10000.0
          1 User1:0xa11A                   3.320837333333333333                  10000.0    33.333333333333333333                      0.0                      0.0
          2 User2:0xa22A                   3.313831893333333333                  10000.0    33.333333333333333333                      0.0                      0.0
          3 User3:0xa33a                   3.320837333333333333                  10000.0    33.333333333333333333                      0.0                      0.0
@@ -269,12 +271,12 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
         
         Token 0 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 30000.0, owner: n/a, address: OGDToken:0x1647 @ 0x1647B1461251A0c6D3E14a227dE0F16E36ba80B1
-          # Permissioned account     Role           Active                  Maximum                Processed
-         -- ------------------------ -------------- ------ ------------------------ ------------------------
-          0 Deployer:0xa00A          Set Permission y                           0.0                      0.0
-          1 Deployer:0xa00A          Set Config     y                           0.0                      0.0
-          2 Deployer:0xa00A          Mint Tokens    y                           0.0                  30000.0
-         -- ------------------------ -------------- ------ ------------------------ ------------------------
+          # Permissioned account     Role            Active                  Maximum                Processed
+         -- ------------------------ --------------- ------ ------------------------ ------------------------
+          0 Deployer:0xa00A          Set Permission  Yes                         0.0                      0.0
+          1 Deployer:0xa00A          Set Config      Yes                         0.0                      0.0
+          2 Deployer:0xa00A          Mint Tokens     Yes                         0.0                  30000.0
+         -- ------------------------ --------------- ------ ------------------------ ------------------------
           # Dividend         Enabled                  Unclaimed
          -- ---------------- ------- --------------------------
           0 ETH|null:0x0000     true       0.000000000000000001
@@ -292,17 +294,17 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         Token 3 symbol: 'FEE2', name: 'Fee2', decimals: 18, totalSupply: 10000.0, owner: Deployer:0xa00A, address: Fee2Token:0xBa1F @ 0xBa1FCDaE835E77cAB2a76a7C3884AdC630f7a5B0
         
         --- Test 6 - Add Fee{1..2} Dividend Token ---
-        addDividendToken2 - gasUsed: 119156, fee: 0.00953248, feeUsd: 3.6763915616, @ 80.0 gwei & 385.67 ETH/USD, 0xe7ced0055c48be49172f2237f3dfb34bee317638a3624e54be6d51b8c132eae9
+        addDividendToken2 - gasUsed: 119154, fee: 0.00953232, feeUsd: 3.6763298544, @ 80.0 gwei & 385.67 ETH/USD, 0xe7ced0055c48be49172f2237f3dfb34bee317638a3624e54be6d51b8c132eae9
         + OGDToken.DividendTokenAdded(token: Fee1Token:0x6eaC, enabled: true)
-        addDividendToken3 - gasUsed: 119156, fee: 0.00953248, feeUsd: 3.6763915616, @ 80.0 gwei & 385.67 ETH/USD, 0x1090c2d9895b982bedaac599b9b434545b6a9dcd3631434428a612f5adb2fce7
+        addDividendToken3 - gasUsed: 119154, fee: 0.00953232, feeUsd: 3.6763298544, @ 80.0 gwei & 385.67 ETH/USD, 0x1090c2d9895b982bedaac599b9b434545b6a9dcd3631434428a612f5adb2fce7
         + OGDToken.DividendTokenAdded(token: Fee2Token:0xBa1F, enabled: true)
         --- Test 7 - Mint 10,000 OGD tokens for User4 ---
-        mint4 - gasUsed: 139428, fee: 0.01115424, feeUsd: 4.3018557408, @ 80.0 gwei & 385.67 ETH/USD, 0x7c10ee1f52fea1aa685107a633bc8f709f0d63db7c49c9152abe20b71f12442e
+        mint4 - gasUsed: 139417, fee: 0.01115336, feeUsd: 4.3015163512, @ 80.0 gwei & 385.67 ETH/USD, 0x7c10ee1f52fea1aa685107a633bc8f709f0d63db7c49c9152abe20b71f12442e
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User4:0xa44a, tokens: 10000.0)
         
          # Account                                        ΔETH                      OGD                     FEE0                     FEE1                     FEE2
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
-         0 Deployer:0xa00A                         -10.5304752                      0.0                      0.0                   1000.0                  10000.0
+         0 Deployer:0xa00A                        -10.53015712                      0.0                      0.0                   1000.0                  10000.0
          1 User1:0xa11A                   3.320837333333333333                  10000.0    33.333333333333333333                      0.0                      0.0
          2 User2:0xa22A                   3.313831893333333333                  10000.0    33.333333333333333333                      0.0                      0.0
          3 User3:0xa33a                   3.320837333333333333                  10000.0    33.333333333333333333                      0.0                      0.0
@@ -316,12 +318,12 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
         
         Token 0 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 40000.0, owner: n/a, address: OGDToken:0x1647 @ 0x1647B1461251A0c6D3E14a227dE0F16E36ba80B1
-          # Permissioned account     Role           Active                  Maximum                Processed
-         -- ------------------------ -------------- ------ ------------------------ ------------------------
-          0 Deployer:0xa00A          Set Permission y                           0.0                      0.0
-          1 Deployer:0xa00A          Set Config     y                           0.0                      0.0
-          2 Deployer:0xa00A          Mint Tokens    y                           0.0                  40000.0
-         -- ------------------------ -------------- ------ ------------------------ ------------------------
+          # Permissioned account     Role            Active                  Maximum                Processed
+         -- ------------------------ --------------- ------ ------------------------ ------------------------
+          0 Deployer:0xa00A          Set Permission  Yes                         0.0                      0.0
+          1 Deployer:0xa00A          Set Config      Yes                         0.0                      0.0
+          2 Deployer:0xa00A          Mint Tokens     Yes                         0.0                  40000.0
+         -- ------------------------ --------------- ------ ------------------------ ------------------------
           # Dividend         Enabled                  Unclaimed
          -- ---------------- ------- --------------------------
           0 ETH|null:0x0000     true       0.000000000000000001
@@ -371,7 +373,7 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         
          # Account                                        ΔETH                      OGD                     FEE0                     FEE1                     FEE2
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
-         0 Deployer:0xa00A                         -10.5431216                      0.0                      0.0                      0.0                      0.0
+         0 Deployer:0xa00A                        -10.54280352                      0.0                      0.0                      0.0                      0.0
          1 User1:0xa11A                   3.303781253333333333                  10000.0    33.333333333333333333                    250.0                   2500.0
          2 User2:0xa22A                   3.296775813333333333                  10000.0    33.333333333333333333                    250.0                   2500.0
          3 User3:0xa33a                   3.303781253333333333                  10000.0    33.333333333333333333                    250.0                   2500.0
@@ -385,12 +387,12 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
         
         Token 0 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 40000.0, owner: n/a, address: OGDToken:0x1647 @ 0x1647B1461251A0c6D3E14a227dE0F16E36ba80B1
-          # Permissioned account     Role           Active                  Maximum                Processed
-         -- ------------------------ -------------- ------ ------------------------ ------------------------
-          0 Deployer:0xa00A          Set Permission y                           0.0                      0.0
-          1 Deployer:0xa00A          Set Config     y                           0.0                      0.0
-          2 Deployer:0xa00A          Mint Tokens    y                           0.0                  40000.0
-         -- ------------------------ -------------- ------ ------------------------ ------------------------
+          # Permissioned account     Role            Active                  Maximum                Processed
+         -- ------------------------ --------------- ------ ------------------------ ------------------------
+          0 Deployer:0xa00A          Set Permission  Yes                         0.0                      0.0
+          1 Deployer:0xa00A          Set Config      Yes                         0.0                      0.0
+          2 Deployer:0xa00A          Mint Tokens     Yes                         0.0                  40000.0
+         -- ------------------------ --------------- ------ ------------------------ ------------------------
           # Dividend         Enabled                  Unclaimed
          -- ---------------- ------- --------------------------
           0 ETH|null:0x0000     true       0.000000000000000001
@@ -415,7 +417,7 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         
          # Account                                        ΔETH                      OGD                     FEE0                     FEE1                     FEE2
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
-         0 Deployer:0xa00A                         -10.5431216                      0.0                      0.0                      0.0                      0.0
+         0 Deployer:0xa00A                        -10.54280352                      0.0                      0.0                      0.0                      0.0
          1 User1:0xa11A                   3.303781253333333333                  10000.0    33.333333333333333333                    250.0                   2500.0
          2 User2:0xa22A                   3.287108053333333333  9999.876543210876543211    33.333333333333333333                    250.0                   2500.0
          3 User3:0xa33a                   3.303781253333333333 10000.123456789123456789    33.333333333333333333                    250.0                   2500.0
@@ -429,12 +431,12 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
         
         Token 0 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 40000.0, owner: n/a, address: OGDToken:0x1647 @ 0x1647B1461251A0c6D3E14a227dE0F16E36ba80B1
-          # Permissioned account     Role           Active                  Maximum                Processed
-         -- ------------------------ -------------- ------ ------------------------ ------------------------
-          0 Deployer:0xa00A          Set Permission y                           0.0                      0.0
-          1 Deployer:0xa00A          Set Config     y                           0.0                      0.0
-          2 Deployer:0xa00A          Mint Tokens    y                           0.0                  40000.0
-         -- ------------------------ -------------- ------ ------------------------ ------------------------
+          # Permissioned account     Role            Active                  Maximum                Processed
+         -- ------------------------ --------------- ------ ------------------------ ------------------------
+          0 Deployer:0xa00A          Set Permission  Yes                         0.0                      0.0
+          1 Deployer:0xa00A          Set Config      Yes                         0.0                      0.0
+          2 Deployer:0xa00A          Mint Tokens     Yes                         0.0                  40000.0
+         -- ------------------------ --------------- ------ ------------------------ ------------------------
           # Dividend         Enabled                  Unclaimed
          -- ---------------- ------- --------------------------
           0 ETH|null:0x0000     true       0.000000000000000001
@@ -455,7 +457,7 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         
         --- Test Completed ---
 
-      ✓ Workflow #0 (4756ms)
+      ✓ Workflow #0 (5965ms)
     TestOGDToken - Workflow #1 - Transfer Test
         Address 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E => Deployer:0xa00A
         Address 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433 => User1:0xa11A
@@ -467,7 +469,7 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         Address 0x0b70A80b0336777A1697A5b505A6F1f3cC1087A0 => Fee0Token:0x0b70
         Address 0xA92f39B1123B4051a6Ef6736879F85249AB45845 => Fee1Token:0xA92f
         Address 0xb5EBF7c369B492493e17032CA29E41c0496EcbE5 => Fee2Token:0xb5EB
-        ogdTokenTx - gasUsed: 2834074, fee: 0.22672592, feeUsd: 87.4413855664, @ 80.0 gwei & 385.67 ETH/USD, 0xe923ea6887ee7418129cb98e9f5dd66c20c5b1b18fa25c2dba83446dca6941a5
+        ogdTokenTx - gasUsed: 2830190, fee: 0.2264152, feeUsd: 87.321550184, @ 80.0 gwei & 385.67 ETH/USD, 0x91280201ecfd570e173fafa8da3f9ac7a9d5d0f029a1daeeed003f6e72bcb664
         + OGDToken.PermissionUpdated(account: Deployer:0xa00A, role: 0, active: true, maximum: 0, processed: 0)
         + OGDToken.Transfer(from: ETH|null:0x0000, to: Deployer:0xa00A, tokens: 0.0)
         fee0TokenTx - gasUsed: 823708, fee: 0.06589664, feeUsd: 25.4143571488, @ 80.0 gwei & 385.67 ETH/USD, 0xdda354629396e5f22e1eecb0715576838aee97a062bff06d45279e97de75389d
@@ -479,7 +481,7 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         
          # Account                                        ΔETH                      OGD                     FEE0                     FEE1                     FEE2
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
-         0 Deployer:0xa00A                          -0.4244168                      0.0                    100.0                   1000.0                  10000.0
+         0 Deployer:0xa00A                         -0.42410608                      0.0                    100.0                   1000.0                  10000.0
          1 User1:0xa11A                                    0.0                      0.0                      0.0                      0.0                      0.0
          2 User2:0xa22A                                    0.0                      0.0                      0.0                      0.0                      0.0
          3 User3:0xa33a                                    0.0                      0.0                      0.0                      0.0                      0.0
@@ -493,10 +495,10 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
         
         Token 0 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 0.0, owner: n/a, address: OGDToken:0xee9a @ 0xee9a0dAE3e21Fe8b9B9E2E13E693F41E0aB3f42b
-          # Permissioned account     Role           Active                  Maximum                Processed
-         -- ------------------------ -------------- ------ ------------------------ ------------------------
-          0 Deployer:0xa00A          Set Permission y                           0.0                      0.0
-         -- ------------------------ -------------- ------ ------------------------ ------------------------
+          # Permissioned account     Role            Active                  Maximum                Processed
+         -- ------------------------ --------------- ------ ------------------------ ------------------------
+          0 Deployer:0xa00A          Set Permission  Yes                         0.0                      0.0
+         -- ------------------------ --------------- ------ ------------------------ ------------------------
           # Dividend         Enabled                  Unclaimed
          -- ---------------- ------- --------------------------
          -- ---------------- ------- --------------------------
@@ -507,18 +509,18 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         --- Setup Completed ---
 
         --- Test 1 - OGDToken mint(...) permissioning, OGDToken.addDividendTokens for ETH and FEE0 ---
-        setPermission1 - gasUsed: 79007, fee: 0.00632056, feeUsd: 2.4376503752, @ 80.0 gwei & 385.67 ETH/USD, 0x5640bf7e005680c1a0ebe4a354edc6b99429a85eba1df05eb761640c9f74c5ed
+        setPermission1 - gasUsed: 78987, fee: 0.00631896, feeUsd: 2.4370333032, @ 80.0 gwei & 385.67 ETH/USD, 0x5640bf7e005680c1a0ebe4a354edc6b99429a85eba1df05eb761640c9f74c5ed
         + OGDToken.PermissionUpdated(account: Deployer:0xa00A, role: 1, active: true, maximum: 0, processed: 0)
-        setPermission2 - gasUsed: 79007, fee: 0.00632056, feeUsd: 2.4376503752, @ 80.0 gwei & 385.67 ETH/USD, 0xf3015ae8431385a92c982b4060489f0a6e5d6791bf32435407f15f07a3926ef3
+        setPermission2 - gasUsed: 78987, fee: 0.00631896, feeUsd: 2.4370333032, @ 80.0 gwei & 385.67 ETH/USD, 0xf3015ae8431385a92c982b4060489f0a6e5d6791bf32435407f15f07a3926ef3
         + OGDToken.PermissionUpdated(account: Deployer:0xa00A, role: 2, active: true, maximum: 0, processed: 0)
         
-        addDividendToken0 - gasUsed: 117189, fee: 0.00937512, feeUsd: 3.6157025304, @ 80.0 gwei & 385.67 ETH/USD, 0xc9a7a2335b0089a4f3b83071ccbced661fb8e6d4ad53241a5d9c35bdf847d01d
+        addDividendToken0 - gasUsed: 117187, fee: 0.00937496, feeUsd: 3.6156408232, @ 80.0 gwei & 385.67 ETH/USD, 0xc9a7a2335b0089a4f3b83071ccbced661fb8e6d4ad53241a5d9c35bdf847d01d
         + OGDToken.DividendTokenAdded(token: ETH|null:0x0000, enabled: true)
-        addDividendToken1 - gasUsed: 119156, fee: 0.00953248, feeUsd: 3.6763915616, @ 80.0 gwei & 385.67 ETH/USD, 0xdb5dd7a2de087e58974fbc7acdbb1dca7e9e558fb25c0c3c13178f1d18d758ab
+        addDividendToken1 - gasUsed: 119154, fee: 0.00953232, feeUsd: 3.6763298544, @ 80.0 gwei & 385.67 ETH/USD, 0xdb5dd7a2de087e58974fbc7acdbb1dca7e9e558fb25c0c3c13178f1d18d758ab
         + OGDToken.DividendTokenAdded(token: Fee0Token:0x0b70, enabled: true)
          # Account                                        ΔETH                      OGD                     FEE0                     FEE1                     FEE2
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
-         0 Deployer:0xa00A                         -0.45596552                      0.0                    100.0                   1000.0                  10000.0
+         0 Deployer:0xa00A                         -0.45565128                      0.0                    100.0                   1000.0                  10000.0
          1 User1:0xa11A                                    0.0                      0.0                      0.0                      0.0                      0.0
          2 User2:0xa22A                                    0.0                      0.0                      0.0                      0.0                      0.0
          3 User3:0xa33a                                    0.0                      0.0                      0.0                      0.0                      0.0
@@ -532,12 +534,12 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
         
         Token 0 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 0.0, owner: n/a, address: OGDToken:0xee9a @ 0xee9a0dAE3e21Fe8b9B9E2E13E693F41E0aB3f42b
-          # Permissioned account     Role           Active                  Maximum                Processed
-         -- ------------------------ -------------- ------ ------------------------ ------------------------
-          0 Deployer:0xa00A          Set Permission y                           0.0                      0.0
-          1 Deployer:0xa00A          Set Config     y                           0.0                      0.0
-          2 Deployer:0xa00A          Mint Tokens    y                           0.0                      0.0
-         -- ------------------------ -------------- ------ ------------------------ ------------------------
+          # Permissioned account     Role            Active                  Maximum                Processed
+         -- ------------------------ --------------- ------ ------------------------ ------------------------
+          0 Deployer:0xa00A          Set Permission  Yes                         0.0                      0.0
+          1 Deployer:0xa00A          Set Config      Yes                         0.0                      0.0
+          2 Deployer:0xa00A          Mint Tokens     Yes                         0.0                      0.0
+         -- ------------------------ --------------- ------ ------------------------ ------------------------
           # Dividend         Enabled                  Unclaimed
          -- ---------------- ------- --------------------------
           0 ETH|null:0x0000     true                        0.0
@@ -555,9 +557,9 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         Token 3 symbol: 'FEE2', name: 'Fee2', decimals: 18, totalSupply: 10000.0, owner: Deployer:0xa00A, address: Fee2Token:0xb5EB @ 0xb5EBF7c369B492493e17032CA29E41c0496EcbE5
         
         --- Test 2 - Mint 10,000 OGD tokens for User{1,2}; Owner approve 100 FEE for OGToken to spend ---
-        mint1 - gasUsed: 110305, fee: 0.0088244, feeUsd: 3.403306348, @ 80.0 gwei & 385.67 ETH/USD, 0xafdc410adf34aafa5b2b0197296d18ba8df4f3d1f9976f96e07582bb8f1a6217
+        mint1 - gasUsed: 110294, fee: 0.00882352, feeUsd: 3.4029669584, @ 80.0 gwei & 385.67 ETH/USD, 0xafdc410adf34aafa5b2b0197296d18ba8df4f3d1f9976f96e07582bb8f1a6217
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User1:0xa11A, tokens: 10000.0)
-        mint2 - gasUsed: 80305, fee: 0.0064244, feeUsd: 2.477698348, @ 80.0 gwei & 385.67 ETH/USD, 0x54c766771aa30747018c45b96620ac69b118fe43aeb4335f6104e0d23ebf9ff1
+        mint2 - gasUsed: 80294, fee: 0.00642352, feeUsd: 2.4773589584, @ 80.0 gwei & 385.67 ETH/USD, 0x54c766771aa30747018c45b96620ac69b118fe43aeb4335f6104e0d23ebf9ff1
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User2:0xa22A, tokens: 10000.0)
         ownerApproveFee0Tokens - gasUsed: 43968, fee: 0.00351744, feeUsd: 1.3565710848, @ 80.0 gwei & 385.67 ETH/USD, 0xa102ddb730a35b02d2db59ec23548eebc80537516920771c8ae7ca1df1742786
         + Fee0Token.Approval(tokenOwner: Deployer:0xa00A, spender: OGDToken:0xee9a, tokens: 100.0)
@@ -568,7 +570,7 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         
          # Account                                        ΔETH                      OGD                     FEE0                     FEE1                     FEE2
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
-         0 Deployer:0xa00A                          -0.4817676                      0.0                    100.0                   1000.0                  10000.0
+         0 Deployer:0xa00A                          -0.4814516                      0.0                    100.0                   1000.0                  10000.0
          1 User1:0xa11A                                    0.0                  10000.0                      0.0                      0.0                      0.0
          2 User2:0xa22A                                    0.0                  10000.0                      0.0                      0.0                      0.0
          3 User3:0xa33a                                    0.0                      0.0                      0.0                      0.0                      0.0
@@ -582,12 +584,12 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
         
         Token 0 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 20000.0, owner: n/a, address: OGDToken:0xee9a @ 0xee9a0dAE3e21Fe8b9B9E2E13E693F41E0aB3f42b
-          # Permissioned account     Role           Active                  Maximum                Processed
-         -- ------------------------ -------------- ------ ------------------------ ------------------------
-          0 Deployer:0xa00A          Set Permission y                           0.0                      0.0
-          1 Deployer:0xa00A          Set Config     y                           0.0                      0.0
-          2 Deployer:0xa00A          Mint Tokens    y                           0.0                  20000.0
-         -- ------------------------ -------------- ------ ------------------------ ------------------------
+          # Permissioned account     Role            Active                  Maximum                Processed
+         -- ------------------------ --------------- ------ ------------------------ ------------------------
+          0 Deployer:0xa00A          Set Permission  Yes                         0.0                      0.0
+          1 Deployer:0xa00A          Set Config      Yes                         0.0                      0.0
+          2 Deployer:0xa00A          Mint Tokens     Yes                         0.0                  20000.0
+         -- ------------------------ --------------- ------ ------------------------ ------------------------
           # Dividend         Enabled                  Unclaimed
          -- ---------------- ------- --------------------------
           0 ETH|null:0x0000     true                        0.0
@@ -613,7 +615,7 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         
          # Account                                        ΔETH                      OGD                     FEE0                     FEE1                     FEE2
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
-         0 Deployer:0xa00A                         -10.4938316                      0.0                      0.0                   1000.0                  10000.0
+         0 Deployer:0xa00A                         -10.4935156                      0.0                      0.0                   1000.0                  10000.0
          1 User1:0xa11A                                    0.0                  10000.0                      0.0                      0.0                      0.0
          2 User2:0xa22A                                    0.0                  10000.0                      0.0                      0.0                      0.0
          3 User3:0xa33a                                    0.0                      0.0                      0.0                      0.0                      0.0
@@ -627,12 +629,12 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
         
         Token 0 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 20000.0, owner: n/a, address: OGDToken:0xee9a @ 0xee9a0dAE3e21Fe8b9B9E2E13E693F41E0aB3f42b
-          # Permissioned account     Role           Active                  Maximum                Processed
-         -- ------------------------ -------------- ------ ------------------------ ------------------------
-          0 Deployer:0xa00A          Set Permission y                           0.0                      0.0
-          1 Deployer:0xa00A          Set Config     y                           0.0                      0.0
-          2 Deployer:0xa00A          Mint Tokens    y                           0.0                  20000.0
-         -- ------------------------ -------------- ------ ------------------------ ------------------------
+          # Permissioned account     Role            Active                  Maximum                Processed
+         -- ------------------------ --------------- ------ ------------------------ ------------------------
+          0 Deployer:0xa00A          Set Permission  Yes                         0.0                      0.0
+          1 Deployer:0xa00A          Set Config      Yes                         0.0                      0.0
+          2 Deployer:0xa00A          Mint Tokens     Yes                         0.0                  20000.0
+         -- ------------------------ --------------- ------ ------------------------ ------------------------
           # Dividend         Enabled                  Unclaimed
          -- ---------------- ------- --------------------------
           0 ETH|null:0x0000     true                       10.0
@@ -655,7 +657,7 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         
          # Account                                        ΔETH                      OGD                     FEE0                     FEE1                     FEE2
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
-         0 Deployer:0xa00A                         -10.4938316                      0.0                      0.0                   1000.0                  10000.0
+         0 Deployer:0xa00A                         -10.4935156                      0.0                      0.0                   1000.0                  10000.0
          1 User1:0xa11A                                    0.0                  10000.0                      0.0                      0.0                      0.0
          2 User2:0xa22A                             -0.0168488                      0.0                      0.0                      0.0                      0.0
          3 User3:0xa33a                                    0.0                  10000.0                      0.0                      0.0                      0.0
@@ -669,12 +671,12 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
         
         Token 0 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 20000.0, owner: n/a, address: OGDToken:0xee9a @ 0xee9a0dAE3e21Fe8b9B9E2E13E693F41E0aB3f42b
-          # Permissioned account     Role           Active                  Maximum                Processed
-         -- ------------------------ -------------- ------ ------------------------ ------------------------
-          0 Deployer:0xa00A          Set Permission y                           0.0                      0.0
-          1 Deployer:0xa00A          Set Config     y                           0.0                      0.0
-          2 Deployer:0xa00A          Mint Tokens    y                           0.0                  20000.0
-         -- ------------------------ -------------- ------ ------------------------ ------------------------
+          # Permissioned account     Role            Active                  Maximum                Processed
+         -- ------------------------ --------------- ------ ------------------------ ------------------------
+          0 Deployer:0xa00A          Set Permission  Yes                         0.0                      0.0
+          1 Deployer:0xa00A          Set Config      Yes                         0.0                      0.0
+          2 Deployer:0xa00A          Mint Tokens     Yes                         0.0                  20000.0
+         -- ------------------------ --------------- ------ ------------------------ ------------------------
           # Dividend         Enabled                  Unclaimed
          -- ---------------- ------- --------------------------
           0 ETH|null:0x0000     true                        5.0
@@ -704,7 +706,7 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         
          # Account                                        ΔETH                      OGD                     FEE0                     FEE1                     FEE2
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
-         0 Deployer:0xa00A                         -10.4938316                      0.0                      0.0                   1000.0                  10000.0
+         0 Deployer:0xa00A                         -10.4935156                      0.0                      0.0                   1000.0                  10000.0
          1 User1:0xa11A                               4.989904                  10000.0                     50.0                      0.0                      0.0
          2 User2:0xa22A                             4.97795936                      0.0                     50.0                      0.0                      0.0
          3 User3:0xa33a                            -0.00452616                  10000.0                      0.0                      0.0                      0.0
@@ -718,12 +720,12 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
         
         Token 0 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 20000.0, owner: n/a, address: OGDToken:0xee9a @ 0xee9a0dAE3e21Fe8b9B9E2E13E693F41E0aB3f42b
-          # Permissioned account     Role           Active                  Maximum                Processed
-         -- ------------------------ -------------- ------ ------------------------ ------------------------
-          0 Deployer:0xa00A          Set Permission y                           0.0                      0.0
-          1 Deployer:0xa00A          Set Config     y                           0.0                      0.0
-          2 Deployer:0xa00A          Mint Tokens    y                           0.0                  20000.0
-         -- ------------------------ -------------- ------ ------------------------ ------------------------
+          # Permissioned account     Role            Active                  Maximum                Processed
+         -- ------------------------ --------------- ------ ------------------------ ------------------------
+          0 Deployer:0xa00A          Set Permission  Yes                         0.0                      0.0
+          1 Deployer:0xa00A          Set Config      Yes                         0.0                      0.0
+          2 Deployer:0xa00A          Mint Tokens     Yes                         0.0                  20000.0
+         -- ------------------------ --------------- ------ ------------------------ ------------------------
           # Dividend         Enabled                  Unclaimed
          -- ---------------- ------- --------------------------
           0 ETH|null:0x0000     true                        0.0
@@ -740,7 +742,7 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         Token 2 symbol: 'FEE1', name: 'Fee1', decimals: 18, totalSupply: 1000.0, owner: Deployer:0xa00A, address: Fee1Token:0xA92f @ 0xA92f39B1123B4051a6Ef6736879F85249AB45845
         Token 3 symbol: 'FEE2', name: 'Fee2', decimals: 18, totalSupply: 10000.0, owner: Deployer:0xa00A, address: Fee2Token:0xb5EB @ 0xb5EBF7c369B492493e17032CA29E41c0496EcbE5
         
-      ✓ Workflow #1 - Transfer Test (2442ms)
+      ✓ Workflow #1 - Transfer Test (2668ms)
     TestOGDToken - Workflow #2 - address(0) with balance
         Address 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E => Deployer:0xa00A
         Address 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433 => User1:0xa11A
@@ -752,7 +754,7 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         Address 0x103f080fe5981A6C1651F87717806921e0000805 => Fee0Token:0x103f
         Address 0xaa2549768781Bc188ed636287d25aaBb73A2E3D8 => Fee1Token:0xaa25
         Address 0x2787C8cBC9B5D4A3b49dba8b2d31376616933Ca9 => Fee2Token:0x2787
-        ogdTokenTx - gasUsed: 2834074, fee: 0.22672592, feeUsd: 87.4413855664, @ 80.0 gwei & 385.67 ETH/USD, 0x35fd4703b25bdfcb33ee3b7fa8e319e9b36877372d8b3ed69e3a1078a738db24
+        ogdTokenTx - gasUsed: 2830190, fee: 0.2264152, feeUsd: 87.321550184, @ 80.0 gwei & 385.67 ETH/USD, 0x2896469380c0c5bf4d1add4cf0f2bb76e2d86af634e7d0dfa198a0303dc6d1b6
         + OGDToken.PermissionUpdated(account: Deployer:0xa00A, role: 0, active: true, maximum: 0, processed: 0)
         + OGDToken.Transfer(from: ETH|null:0x0000, to: Deployer:0xa00A, tokens: 0.0)
         fee0TokenTx - gasUsed: 823708, fee: 0.06589664, feeUsd: 25.4143571488, @ 80.0 gwei & 385.67 ETH/USD, 0x4956e822237b687efaa47307148dd6b48748bf7c7239de43cc79b66950fcdd39
@@ -764,7 +766,7 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         
          # Account                                        ΔETH                      OGD                     FEE0                     FEE1                     FEE2
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
-         0 Deployer:0xa00A                          -0.4244168                      0.0                    100.0                   1000.0                  10000.0
+         0 Deployer:0xa00A                         -0.42410608                      0.0                    100.0                   1000.0                  10000.0
          1 User1:0xa11A                                    0.0                      0.0                      0.0                      0.0                      0.0
          2 User2:0xa22A                                    0.0                      0.0                      0.0                      0.0                      0.0
          3 User3:0xa33a                                    0.0                      0.0                      0.0                      0.0                      0.0
@@ -778,10 +780,10 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
         
         Token 0 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 0.0, owner: n/a, address: OGDToken:0xF393 @ 0xF39360dB9BF6A2555233509B638b408D838caa9e
-          # Permissioned account     Role           Active                  Maximum                Processed
-         -- ------------------------ -------------- ------ ------------------------ ------------------------
-          0 Deployer:0xa00A          Set Permission y                           0.0                      0.0
-         -- ------------------------ -------------- ------ ------------------------ ------------------------
+          # Permissioned account     Role            Active                  Maximum                Processed
+         -- ------------------------ --------------- ------ ------------------------ ------------------------
+          0 Deployer:0xa00A          Set Permission  Yes                         0.0                      0.0
+         -- ------------------------ --------------- ------ ------------------------ ------------------------
           # Dividend         Enabled                  Unclaimed
          -- ---------------- ------- --------------------------
          -- ---------------- ------- --------------------------
@@ -792,18 +794,18 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         --- Setup Completed ---
 
         --- Test 1 - OGDToken mint(...) permissioning, OGDToken.addDividendTokens for ETH and FEE0 ---
-        setPermission1 - gasUsed: 79007, fee: 0.00632056, feeUsd: 2.4376503752, @ 80.0 gwei & 385.67 ETH/USD, 0x4c13a9a7e74f4b8fbcfaa1e3ebf9c22349df2d104f3c7e5b1638d7f6a0b18935
+        setPermission1 - gasUsed: 78987, fee: 0.00631896, feeUsd: 2.4370333032, @ 80.0 gwei & 385.67 ETH/USD, 0x4c13a9a7e74f4b8fbcfaa1e3ebf9c22349df2d104f3c7e5b1638d7f6a0b18935
         + OGDToken.PermissionUpdated(account: Deployer:0xa00A, role: 1, active: true, maximum: 0, processed: 0)
-        setPermission2 - gasUsed: 79007, fee: 0.00632056, feeUsd: 2.4376503752, @ 80.0 gwei & 385.67 ETH/USD, 0x5ff00d0dc66c56129c037f3cb2771b3059e5003edc9a900c30459cac7b7db3e2
+        setPermission2 - gasUsed: 78987, fee: 0.00631896, feeUsd: 2.4370333032, @ 80.0 gwei & 385.67 ETH/USD, 0x5ff00d0dc66c56129c037f3cb2771b3059e5003edc9a900c30459cac7b7db3e2
         + OGDToken.PermissionUpdated(account: Deployer:0xa00A, role: 2, active: true, maximum: 0, processed: 0)
         
-        addDividendToken0 - gasUsed: 117189, fee: 0.00937512, feeUsd: 3.6157025304, @ 80.0 gwei & 385.67 ETH/USD, 0xf45cf03a73aea001d107f6c9356c418dddd7d99b4dea221a4fd1d16dd533e107
+        addDividendToken0 - gasUsed: 117187, fee: 0.00937496, feeUsd: 3.6156408232, @ 80.0 gwei & 385.67 ETH/USD, 0xf45cf03a73aea001d107f6c9356c418dddd7d99b4dea221a4fd1d16dd533e107
         + OGDToken.DividendTokenAdded(token: ETH|null:0x0000, enabled: true)
-        addDividendToken1 - gasUsed: 119144, fee: 0.00953152, feeUsd: 3.6760213184, @ 80.0 gwei & 385.67 ETH/USD, 0x671fc2dbd02d8e571ce7aca8d8a209c6e5abe95a79130fe5340d548a1f8d47a6
+        addDividendToken1 - gasUsed: 119142, fee: 0.00953136, feeUsd: 3.6759596112, @ 80.0 gwei & 385.67 ETH/USD, 0x671fc2dbd02d8e571ce7aca8d8a209c6e5abe95a79130fe5340d548a1f8d47a6
         + OGDToken.DividendTokenAdded(token: Fee0Token:0x103f, enabled: true)
          # Account                                        ΔETH                      OGD                     FEE0                     FEE1                     FEE2
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
-         0 Deployer:0xa00A                         -0.45596456                      0.0                    100.0                   1000.0                  10000.0
+         0 Deployer:0xa00A                         -0.45565032                      0.0                    100.0                   1000.0                  10000.0
          1 User1:0xa11A                                    0.0                      0.0                      0.0                      0.0                      0.0
          2 User2:0xa22A                                    0.0                      0.0                      0.0                      0.0                      0.0
          3 User3:0xa33a                                    0.0                      0.0                      0.0                      0.0                      0.0
@@ -817,12 +819,12 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
         
         Token 0 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 0.0, owner: n/a, address: OGDToken:0xF393 @ 0xF39360dB9BF6A2555233509B638b408D838caa9e
-          # Permissioned account     Role           Active                  Maximum                Processed
-         -- ------------------------ -------------- ------ ------------------------ ------------------------
-          0 Deployer:0xa00A          Set Permission y                           0.0                      0.0
-          1 Deployer:0xa00A          Set Config     y                           0.0                      0.0
-          2 Deployer:0xa00A          Mint Tokens    y                           0.0                      0.0
-         -- ------------------------ -------------- ------ ------------------------ ------------------------
+          # Permissioned account     Role            Active                  Maximum                Processed
+         -- ------------------------ --------------- ------ ------------------------ ------------------------
+          0 Deployer:0xa00A          Set Permission  Yes                         0.0                      0.0
+          1 Deployer:0xa00A          Set Config      Yes                         0.0                      0.0
+          2 Deployer:0xa00A          Mint Tokens     Yes                         0.0                      0.0
+         -- ------------------------ --------------- ------ ------------------------ ------------------------
           # Dividend         Enabled                  Unclaimed
          -- ---------------- ------- --------------------------
           0 ETH|null:0x0000     true                        0.0
@@ -840,13 +842,13 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         Token 3 symbol: 'FEE2', name: 'Fee2', decimals: 18, totalSupply: 10000.0, owner: Deployer:0xa00A, address: Fee2Token:0x2787 @ 0x2787C8cBC9B5D4A3b49dba8b2d31376616933Ca9
         
         --- Test 2 - Mint 10,000 OGD tokens for User{1,2,3} and address(0); Owner approve 100 FEE for OGToken to spend ---
-        mint1 - gasUsed: 110305, fee: 0.0088244, feeUsd: 3.403306348, @ 80.0 gwei & 385.67 ETH/USD, 0x57f5e021ecb00a8d778b890cbb6f9da296bb016bdf58e7876a9d861f06238792
+        mint1 - gasUsed: 110294, fee: 0.00882352, feeUsd: 3.4029669584, @ 80.0 gwei & 385.67 ETH/USD, 0x57f5e021ecb00a8d778b890cbb6f9da296bb016bdf58e7876a9d861f06238792
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User1:0xa11A, tokens: 10000.0)
-        mint2 - gasUsed: 80305, fee: 0.0064244, feeUsd: 2.477698348, @ 80.0 gwei & 385.67 ETH/USD, 0x73d9b64900383f9ff7bca02260fdf29ebf37aa53f7efb4c783f9ce19be39e57a
+        mint2 - gasUsed: 80294, fee: 0.00642352, feeUsd: 2.4773589584, @ 80.0 gwei & 385.67 ETH/USD, 0x73d9b64900383f9ff7bca02260fdf29ebf37aa53f7efb4c783f9ce19be39e57a
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User2:0xa22A, tokens: 10000.0)
-        mint3 - gasUsed: 80305, fee: 0.0064244, feeUsd: 2.477698348, @ 80.0 gwei & 385.67 ETH/USD, 0x3e260fd8b6bd1ca4d293e734d7fc3d5273c09743bddf8471271f10d15be8ce81
+        mint3 - gasUsed: 80294, fee: 0.00642352, feeUsd: 2.4773589584, @ 80.0 gwei & 385.67 ETH/USD, 0x3e260fd8b6bd1ca4d293e734d7fc3d5273c09743bddf8471271f10d15be8ce81
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User3:0xa33a, tokens: 10000.0)
-        mint4 - gasUsed: 80065, fee: 0.0064052, feeUsd: 2.470293484, @ 80.0 gwei & 385.67 ETH/USD, 0xf13055aeb87294f9c482f2cc62208b7913b43572e972a2e83e20fd0cdc3d5133
+        mint4 - gasUsed: 80054, fee: 0.00640432, feeUsd: 2.4699540944, @ 80.0 gwei & 385.67 ETH/USD, 0xf13055aeb87294f9c482f2cc62208b7913b43572e972a2e83e20fd0cdc3d5133
         + OGDToken.Transfer(from: ETH|null:0x0000, to: ETH|null:0x0000, tokens: 10000.0)
         ownerApproveFee0Tokens - gasUsed: 43968, fee: 0.00351744, feeUsd: 1.3565710848, @ 80.0 gwei & 385.67 ETH/USD, 0xacfa05e15b4c3a91c51f54035ad21546ba650c5ef92917f19dca1b082f7e8eb7
         + Fee0Token.Approval(tokenOwner: Deployer:0xa00A, spender: OGDToken:0xF393, tokens: 100.0)
@@ -857,7 +859,7 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         
          # Account                                        ΔETH                      OGD                     FEE0                     FEE1                     FEE2
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
-         0 Deployer:0xa00A                         -0.49459624                      0.0                    100.0                   1000.0                  10000.0
+         0 Deployer:0xa00A                         -0.49427848                      0.0                    100.0                   1000.0                  10000.0
          1 User1:0xa11A                                    0.0                  10000.0                      0.0                      0.0                      0.0
          2 User2:0xa22A                                    0.0                  10000.0                      0.0                      0.0                      0.0
          3 User3:0xa33a                                    0.0                  10000.0                      0.0                      0.0                      0.0
@@ -871,12 +873,12 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
         
         Token 0 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 30000.0, owner: n/a, address: OGDToken:0xF393 @ 0xF39360dB9BF6A2555233509B638b408D838caa9e
-          # Permissioned account     Role           Active                  Maximum                Processed
-         -- ------------------------ -------------- ------ ------------------------ ------------------------
-          0 Deployer:0xa00A          Set Permission y                           0.0                      0.0
-          1 Deployer:0xa00A          Set Config     y                           0.0                      0.0
-          2 Deployer:0xa00A          Mint Tokens    y                           0.0                  40000.0
-         -- ------------------------ -------------- ------ ------------------------ ------------------------
+          # Permissioned account     Role            Active                  Maximum                Processed
+         -- ------------------------ --------------- ------ ------------------------ ------------------------
+          0 Deployer:0xa00A          Set Permission  Yes                         0.0                      0.0
+          1 Deployer:0xa00A          Set Config      Yes                         0.0                      0.0
+          2 Deployer:0xa00A          Mint Tokens     Yes                         0.0                  40000.0
+         -- ------------------------ --------------- ------ ------------------------ ------------------------
           # Dividend         Enabled                  Unclaimed
          -- ---------------- ------- --------------------------
           0 ETH|null:0x0000     true                        0.0
@@ -902,7 +904,7 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         
          # Account                                        ΔETH                      OGD                     FEE0                     FEE1                     FEE2
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
-         0 Deployer:0xa00A                        -10.50665928                      0.0                      0.0                   1000.0                  10000.0
+         0 Deployer:0xa00A                        -10.50634152                      0.0                      0.0                   1000.0                  10000.0
          1 User1:0xa11A                                    0.0                  10000.0                      0.0                      0.0                      0.0
          2 User2:0xa22A                                    0.0                  10000.0                      0.0                      0.0                      0.0
          3 User3:0xa33a                                    0.0                  10000.0                      0.0                      0.0                      0.0
@@ -916,12 +918,12 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
         
         Token 0 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 30000.0, owner: n/a, address: OGDToken:0xF393 @ 0xF39360dB9BF6A2555233509B638b408D838caa9e
-          # Permissioned account     Role           Active                  Maximum                Processed
-         -- ------------------------ -------------- ------ ------------------------ ------------------------
-          0 Deployer:0xa00A          Set Permission y                           0.0                      0.0
-          1 Deployer:0xa00A          Set Config     y                           0.0                      0.0
-          2 Deployer:0xa00A          Mint Tokens    y                           0.0                  40000.0
-         -- ------------------------ -------------- ------ ------------------------ ------------------------
+          # Permissioned account     Role            Active                  Maximum                Processed
+         -- ------------------------ --------------- ------ ------------------------ ------------------------
+          0 Deployer:0xa00A          Set Permission  Yes                         0.0                      0.0
+          1 Deployer:0xa00A          Set Config      Yes                         0.0                      0.0
+          2 Deployer:0xa00A          Mint Tokens     Yes                         0.0                  40000.0
+         -- ------------------------ --------------- ------ ------------------------ ------------------------
           # Dividend         Enabled                  Unclaimed
          -- ---------------- ------- --------------------------
           0 ETH|null:0x0000     true                       10.0
@@ -954,7 +956,7 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         
          # Account                                        ΔETH                      OGD                     FEE0                     FEE1                     FEE2
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
-         0 Deployer:0xa00A                        -10.50665928                      0.0                      0.0                   1000.0                  10000.0
+         0 Deployer:0xa00A                        -10.50634152                      0.0                      0.0                   1000.0                  10000.0
          1 User1:0xa11A                   3.320837333333333333                  10000.0    33.333333333333333333                      0.0                      0.0
          2 User2:0xa22A                   3.320837333333333333                  10000.0    33.333333333333333333                      0.0                      0.0
          3 User3:0xa33a                   3.320837333333333333                  10000.0    33.333333333333333333                      0.0                      0.0
@@ -968,12 +970,12 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
         
         Token 0 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 30000.0, owner: n/a, address: OGDToken:0xF393 @ 0xF39360dB9BF6A2555233509B638b408D838caa9e
-          # Permissioned account     Role           Active                  Maximum                Processed
-         -- ------------------------ -------------- ------ ------------------------ ------------------------
-          0 Deployer:0xa00A          Set Permission y                           0.0                      0.0
-          1 Deployer:0xa00A          Set Config     y                           0.0                      0.0
-          2 Deployer:0xa00A          Mint Tokens    y                           0.0                  40000.0
-         -- ------------------------ -------------- ------ ------------------------ ------------------------
+          # Permissioned account     Role            Active                  Maximum                Processed
+         -- ------------------------ --------------- ------ ------------------------ ------------------------
+          0 Deployer:0xa00A          Set Permission  Yes                         0.0                      0.0
+          1 Deployer:0xa00A          Set Config      Yes                         0.0                      0.0
+          2 Deployer:0xa00A          Mint Tokens     Yes                         0.0                  40000.0
+         -- ------------------------ --------------- ------ ------------------------ ------------------------
           # Dividend         Enabled                  Unclaimed
          -- ---------------- ------- --------------------------
           0 ETH|null:0x0000     true       0.000000000000000001
@@ -990,8 +992,8 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         Token 2 symbol: 'FEE1', name: 'Fee1', decimals: 18, totalSupply: 1000.0, owner: Deployer:0xa00A, address: Fee1Token:0xaa25 @ 0xaa2549768781Bc188ed636287d25aaBb73A2E3D8
         Token 3 symbol: 'FEE2', name: 'Fee2', decimals: 18, totalSupply: 10000.0, owner: Deployer:0xa00A, address: Fee2Token:0x2787 @ 0x2787C8cBC9B5D4A3b49dba8b2d31376616933Ca9
         
-      ✓ Workflow #1 - Transfer Test (2009ms)
+      ✓ Workflow #1 - Transfer Test (2126ms)
 
 
-  3 passing (13s)
+  3 passing (14s)
 

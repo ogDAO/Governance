@@ -28,8 +28,7 @@ contract Permissioned {
     event PermissionUpdated(address indexed account, uint role, bool active, uint maximum, uint processed);
 
     modifier permitted(uint32 role, uint tokens) {
-        bytes32 key = keccak256(abi.encodePacked(msg.sender, role));
-        Permission storage permission = permissions[key];
+        Permission storage permission = permissions[keccak256(abi.encodePacked(msg.sender, role))];
         require(permission.active == uint8(1) && (permission.maximum == 0 || permission.processed.add(tokens) <= permission.maximum), "Not permissioned");
         permission.processed = permission.processed.add(tokens);
         _;
