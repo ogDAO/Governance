@@ -424,7 +424,7 @@ class Data {
       if (symbol == "OptinoGov" && this.optinoGov != null) {
         let [ogToken, ogdToken, ogRewardCurve, voteWeightCurve, accountsLength, maxDuration, collectRewardForFee, collectRewardForDelay, proposalCost, proposalThreshold] = await Promise.all([this.optinoGov.ogToken(), this.optinoGov.ogdToken(), this.optinoGov.ogRewardCurve(), this.optinoGov.voteWeightCurve(), this.optinoGov.accountsLength(), this.optinoGov.maxDuration(), this.optinoGov.collectRewardForFee(), this.optinoGov.collectRewardForDelay(), this.optinoGov.proposalCost(), this.optinoGov.proposalThreshold()]);
         let [quorum, quorumDecayPerSecond, votingDuration, executeDelay, rewardPool, totalVotes] = await Promise.all([this.optinoGov.quorum(), this.optinoGov.quorumDecayPerSecond(), this.optinoGov.votingDuration(), this.optinoGov.executeDelay(), this.optinoGov.rewardPool(), this.optinoGov.totalVotes()]);
-        let [proposalCount /*, stakeInfoLength*/] = await Promise.all([this.optinoGov.proposalCount()/*, this.optinoGov.stakeInfoLength()*/]);
+        let [proposalsLength /*, stakeInfoLength*/] = await Promise.all([this.optinoGov.proposalsLength()/*, this.optinoGov.stakeInfoLength()*/]);
         console.log("        - ogToken              : " + this.getShortAccountName(ogToken));
         console.log("        - ogdToken             : " + this.getShortAccountName(ogdToken));
         console.log("        - ogRewardCurve        : " + this.getShortAccountName(ogRewardCurve));
@@ -441,7 +441,7 @@ class Data {
         console.log("        - executeDelay         : " + executeDelay + " seconds = " + executeDelay.div(60 * 60 * 24) + " days");
         console.log("        - rewardPool           : " + rewardPool + " = " + ethers.utils.formatUnits(rewardPool, decimals));
         console.log("        - totalVotes           : " + totalVotes + " = " + ethers.utils.formatUnits(totalVotes, decimals));
-        console.log("        - proposalCount        : " + proposalCount);
+        // console.log("        - proposalsLength      : " + proposalsLength);
         // console.log("        - stakeInfoLength      : " + stakeInfoLength);
         console.log("          # Account                Duration              End                    Rate%                  Balance                    Votes Delegatee                     Delegated Votes                  Accrued Accrual Term");
         console.log("         -- -------------------- ---------- ---------------- ------------------------ ------------------------ ------------------------ -------------------- ------------------------ ------------------------ ------------");
@@ -461,6 +461,29 @@ class Data {
             this.padLeft(accruedReward[1].toString(), 12));
         }
         console.log("         -- -------------------- ---------- ---------------- ------------------------ ------------------------ ------------------------ -------------------- ------------------------ ------------------------ ------------");
+        console.log("          #      Start Executed Proposer             Description                                             For Votes            Against Votes");
+        console.log("         -- ---------- -------- -------------------- ---------------------------------------- ------------------------ ------------------------");
+        for (let j = 0; j < proposalsLength; j++) {
+          const proposal = await this.optinoGov.getProposal(j);
+          // console.log("         " + this.padLeft(j, 2) + " " + JSON.stringify(proposal));
+          console.log("         " + this.padLeft(j, 2) + " " +
+            this.padLeft(this.termString(parseInt(proposal.start.toString())-now), 10) + " " +
+            this.padLeft(proposal.executed.toString() == 0 ? "no": "yes", 8) + " " +
+            this.padRight(this.getShortAccountName(proposal.proposer), 20) + " " +
+            this.padRight(proposal.description, 40) + " " +
+            this.padLeft(ethers.utils.formatUnits(proposal.forVotes, 18), 24) + " " +
+            this.padLeft(ethers.utils.formatUnits(proposal.againstVotes, 18), 24));
+          for (let k = 0; k < proposal.targets.length; k++) {
+              console.log("           + " + k + ". target: " + this.getShortAccountName(proposal.targets[k]) +
+                ", value: " + ethers.utils.formatUnits(proposal._values[k], 18) +
+                ", data: " + proposal.data[k]);
+          }
+        }
+        console.log("         -- ---------- -------- -------------------- ---------------------------------------- ------------------------ ------------------------");
+      } else if (symbol == "OG") {
+        const [cap, freezeCap] = await Promise.all([tokenContract.cap(), tokenContract.freezeCap()]);
+        console.log("        - cap      : " + ethers.utils.formatUnits(cap, 18));
+        console.log("        - freezeCap: " + freezeCap);
       } else if (symbol == "OGD") {
         const dividendTokensLength = parseInt(await tokenContract.dividendTokensLength());
         console.log("          # Dividend         Enabled                  Unclaimed");

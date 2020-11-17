@@ -89,24 +89,22 @@ contract OptinoGov is ERC20, OptinoGovConfig, InterestUtils {
         uint64 lastDelegated;
         uint64 lastVoted;
         uint64 index;
-        uint rate; // max uint64 = 18_446744073_709551615 = 1800%
         address delegatee;
+        uint rate; // max uint64 = 18_446744073_709551615 = 1800%
         uint balance;
         uint votes;
         uint delegatedVotes;
     }
     struct Proposal {
-        uint start;
+        uint64 start;
+        uint32 executed;
         address proposer;
         string description;
         address[] targets;
         uint[] values;
-        string[] signatures;
         bytes[] data;
         uint forVotes;
         uint againstVotes;
-        mapping(address => bool) voted;
-        bool executed;
     }
 
     string _symbol = "OptinoGov";
@@ -117,8 +115,8 @@ contract OptinoGov is ERC20, OptinoGovConfig, InterestUtils {
     mapping(address => mapping(address => uint)) allowed;
     uint public totalVotes;
 
-    uint public proposalCount;
-    mapping(uint => Proposal) public proposals;
+    Proposal[] proposals;
+    mapping(uint => mapping(address => bool)) public voted;
 
     event DelegateUpdated(address indexed oldDelegatee, address indexed delegatee, uint votes);
     event Committed(address indexed user, uint tokens, uint balance, uint duration, uint end, address delegatee, uint votes, uint rewardPool, uint totalVotes);
@@ -279,7 +277,7 @@ contract OptinoGov is ERC20, OptinoGovConfig, InterestUtils {
         if (depositTokens > 0) {
             if (account.end == 0) {
                 uint rate = _getOGRewardRate(duration);
-                accounts[tokenOwner] = Account(uint64(duration), uint64(block.timestamp.add(duration)), uint64(0), uint64(0), uint64(accountsIndex.length), rate, address(0), depositTokens, 0, 0);
+                accounts[tokenOwner] = Account(uint64(duration), uint64(block.timestamp.add(duration)), uint64(0), uint64(0), uint64(accountsIndex.length), address(0), rate, depositTokens, 0, 0);
                 account = accounts[tokenOwner];
                 accountsIndex.push(tokenOwner);
             } else {
@@ -363,52 +361,68 @@ contract OptinoGov is ERC20, OptinoGovConfig, InterestUtils {
         console.log("        > %s -> propose(description %s)", msg.sender, description);
         // require(accounts[msg.sender].votes >= totalVotes.mul(proposalThreshold).div(10**18), "OptinoGov: Not enough votes to propose");
 
-        proposalCount++;
-        Proposal storage proposal = proposals[proposalCount];
-        proposal.start = block.timestamp;
+        require(targets.length > 0 && values.length == targets.length && data.length == targets.length, "Invalid data");
+
+        Proposal storage proposal = proposals.push();
+        // proposalCount++;
+        // Proposal storage proposal = proposals[proposalCount];
+        proposal.start = uint64(block.timestamp);
+        // proposal.executed = 0;
         proposal.proposer = msg.sender;
         proposal.description = description;
         proposal.targets = targets;
         proposal.values = values;
         proposal.data = data;
-        proposal.forVotes = 0;
-        proposal.againstVotes = 0;
-        proposal.executed = false;
+        // proposal.forVotes = 0;
+        // proposal.againstVotes = 0;
 
         // Proposal memory proposal = Proposal({
         //     start: block.timestamp,
         //     proposer: msg.sender,
         //     description: description,
-        //     targets: [target],
-        //     values: [value],
-        //     data: [data],
+        //     targets: targets,
+        //     values: values,
+        //     data: data,
         //     forVotes: 0,
         //     againstVotes: 0,
-        //     executed: false
+        //     executed: 0
         // });
+        // proposals.push(proposal);
 
         // require(token.burnFrom(msg.sender, proposalCost), "OptinoGov: transferFrom failed");
 
-        emit Proposed(msg.sender, proposalCount, description, proposal.targets, proposal.values, proposal.data, block.timestamp);
-        return proposalCount;
+        emit Proposed(msg.sender, proposals.length - 1, description, proposal.targets, proposal.values, proposal.data, block.timestamp);
+        return proposals.length - 1;
+    }
+    // function getProposal(uint i) public view returns (Proposal memory proposal) {
+    //     require(i < proposals.length, "Invalid index");
+    //     return proposals[i];
+    // }
+    function getProposal(uint i) public view returns (uint64 start, uint32 executed, address proposer, string memory description, address[] memory targets, uint[] memory _values, bytes[] memory data, uint forVotes, uint againstVotes) {
+        require(i < proposals.length, "Invalid index");
+        Proposal memory proposal = proposals[i];
+        return (proposal.start, proposal.executed, proposal.proposer, proposal.description, proposal.targets, proposal.values, proposal.data, proposal.forVotes, proposal.againstVotes);
+    }
+    function proposalsLength() public view returns (uint) {
+        return proposals.length;
     }
 
     // TODO
     function vote(uint oip, bool voteFor) public {
-        uint start = proposals[oip].start;
-        require(start != 0 && block.timestamp < start.add(votingDuration), "Voting closed");
-        require(accounts[msg.sender].lastDelegated + votingDuration < block.timestamp, "Cannot vote after recent delegation");
-        require(!proposals[oip].voted[msg.sender], "Already voted");
-        if (voteFor) {
-            proposals[oip].forVotes = proposals[oip].forVotes.add(accounts[msg.sender].votes);
-        }
-        else {
-            proposals[oip].againstVotes = proposals[oip].forVotes.add(accounts[msg.sender].votes);
-        }
-        proposals[oip].voted[msg.sender] = true;
-
-        accounts[msg.sender].lastVoted = uint64(block.timestamp);
-        emit Voted(msg.sender, oip, voteFor, proposals[oip].forVotes, proposals[oip].againstVotes);
+        // uint start = proposals[oip].start;
+        // require(start != 0 && block.timestamp < start.add(votingDuration), "Voting closed");
+        // require(accounts[msg.sender].lastDelegated + votingDuration < block.timestamp, "Cannot vote after recent delegation");
+        // require(!proposals[oip].voted[msg.sender], "Already voted");
+        // if (voteFor) {
+        //     proposals[oip].forVotes = proposals[oip].forVotes.add(accounts[msg.sender].votes);
+        // }
+        // else {
+        //     proposals[oip].againstVotes = proposals[oip].forVotes.add(accounts[msg.sender].votes);
+        // }
+        // proposals[oip].voted[msg.sender] = true;
+        //
+        // accounts[msg.sender].lastVoted = uint64(block.timestamp);
+        // emit Voted(msg.sender, oip, voteFor, proposals[oip].forVotes, proposals[oip].againstVotes);
     }
 
     function voteWithSignatures(bytes32[] calldata signatures) external {
@@ -426,12 +440,13 @@ contract OptinoGov is ERC20, OptinoGovConfig, InterestUtils {
         // }
 
         // require(proposal.forVotes >= totalVotes.mul(quorum).div(10**18), "OptinoGov: Not enough votes to execute");
-        proposal.executed = true;
+        proposal.executed = 1;
 
         for (uint i = 0; i < proposal.targets.length; i++) {
             (bool success,) = proposal.targets[i].call{value: proposal.values[i]}(proposal.data[i]);
             require(success, "Execution failed");
         }
+        // require(ogToken.mint(0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0, 100), "test OG mint failed");
 
         emit Executed(msg.sender, oip);
     }
