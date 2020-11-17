@@ -21,15 +21,14 @@ contract OptinoGovConfig {
     CurveInterface public ogRewardCurve;
     CurveInterface public voteWeightCurve;
     uint public maxDuration = 10000 seconds; // Testing 365 days;
-    uint public collectRewardForFee = 5 * 10**16; // 5%, 18 decimals
+    uint public collectRewardForFee = 5e16; // 5%, 18 decimals
     uint public collectRewardForDelay = 1 seconds; // Testing 7 days
-    uint public proposalCost = 100_000_000_000_000_000_000; // 100 tokens assuming 18 decimals
-    uint public proposalThreshold = 1 * 10**15; // 0.1%, 18 decimals
-    uint public quorum = 2 * 10**17; // 20%, 18 decimals
-    uint public quorumDecayPerSecond = 4 * 10**17 / uint(60 * 60 * 24 * 365); // 40% per year, i.e., 0 in 6 months
+    uint public proposalCost = 100e18; // 100 tokens assuming 18 decimals
+    uint public proposalThreshold = 1e15; // 0.1%, 18 decimals
+    uint public quorum = 2e17; // 20%, 18 decimals
+    uint public quorumDecayPerSecond = 4e17 / uint(365 days); // 40% per year, i.e., 0 in 6 months
     uint public votingDuration = 10 seconds; // 3 days;
     uint public executeDelay = 10 seconds; // 2 days;
-    uint public rewardPool = 1_000_000 * 10**18;
 
     event ConfigUpdated(string key, uint value);
 
@@ -119,12 +118,12 @@ contract OptinoGov is ERC20, OptinoGovConfig, InterestUtils {
     mapping(uint => mapping(address => bool)) public voted;
 
     event DelegateUpdated(address indexed oldDelegatee, address indexed delegatee, uint votes);
-    event Committed(address indexed user, uint tokens, uint balance, uint duration, uint end, address delegatee, uint votes, uint rewardPool, uint totalVotes);
-    event Collected(address indexed user, uint elapsed, uint reward, uint callerReward, uint rewardPool, uint end, uint duration);
-    event Uncommitted(address indexed user, uint tokens, uint balance, uint duration, uint end, uint votes, uint rewardPool, uint totalVotes);
-    event Proposed(address indexed proposer, uint oip, string description, address[] targets, uint[] value, bytes[] data, uint start);
-    event Voted(address indexed user, uint oip, bool voteFor, uint forVotes, uint againstVotes);
-    event Executed(address indexed user, uint oip);
+    event Committed(address indexed user, uint tokens, uint balance, uint duration, uint end, address delegatee, uint votes, uint totalVotes);
+    event Collected(address indexed user, uint elapsed, uint reward, uint callerReward, uint end, uint duration);
+    event Uncommitted(address indexed user, uint tokens, uint balance, uint duration, uint end, uint votes, uint totalVotes);
+    event Proposed(address indexed proposer, uint id, string description, address[] targets, uint[] value, bytes[] data, uint start);
+    event Voted(address indexed user, uint id, bool voteFor, uint forVotes, uint againstVotes);
+    event Executed(address indexed user, uint id);
 
     constructor(OGTokenInterface ogToken, OGDTokenInterface ogdToken, CurveInterface ogRewardCurve, CurveInterface voteWeightCurve) OptinoGovConfig(ogToken, ogdToken, ogRewardCurve, voteWeightCurve) {
     }
@@ -289,7 +288,7 @@ contract OptinoGov is ERC20, OptinoGovConfig, InterestUtils {
             }
             require(ogdToken.mint(tokenOwner, depositTokens), "OGD mint failed");
             // TODO account.votes not updated. remove remaining variables
-            emit Committed(tokenOwner, depositTokens, account.balance, account.duration, account.end, account.delegatee, account.votes, rewardPool, totalVotes);
+            emit Committed(tokenOwner, depositTokens, account.balance, account.duration, account.end, account.delegatee, account.votes, totalVotes);
             _totalSupply = _totalSupply.add(depositTokens);
             emit Transfer(address(0), tokenOwner, depositTokens);
         }
@@ -429,8 +428,8 @@ contract OptinoGov is ERC20, OptinoGovConfig, InterestUtils {
         // TODO
     }
 
-    function execute(uint oip) public {
-        Proposal storage proposal = proposals[oip];
+    function execute(uint id) public {
+        Proposal storage proposal = proposals[id];
         // require(proposal.start != 0 && block.timestamp >= proposal.start.add(votingDuration).add(executeDelay));
 
         // if (quorum > currentTime.sub(proposalTime).mul(quorumDecayPerWeek).div(1 weeks)) {
@@ -446,9 +445,8 @@ contract OptinoGov is ERC20, OptinoGovConfig, InterestUtils {
             (bool success,) = proposal.targets[i].call{value: proposal.values[i]}(proposal.data[i]);
             require(success, "Execution failed");
         }
-        // require(ogToken.mint(0xa33a6c312D9aD0E0F2E95541BeED0Cc081621fd0, 100), "test OG mint failed");
 
-        emit Executed(msg.sender, oip);
+        emit Executed(msg.sender, id);
     }
 
     receive () external payable {

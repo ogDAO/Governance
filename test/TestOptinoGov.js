@@ -306,7 +306,7 @@ describe("TestOptinoGov", function() {
       var capTokens = ethers.utils.parseUnits("888888888.888", 18);
       var targets = [data.ogToken.address];
       var values = [0];
-      var bytes0 = '0x' + setCapFunctionSig.substring(2) + data.uint256ToHex64(capTokens) + data.uint256ToHex64(1);
+      var bytes0 = '0x' + setCapFunctionSig.substring(2) + data.uint256ToHex64(capTokens) + data.uint256ToHex64(0);
       const dataItems = [bytes0];
       console.log("        setCapFunctionSig: " + setCapFunctionSig);
       console.log("        description      : " + description);
