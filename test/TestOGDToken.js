@@ -50,7 +50,7 @@ describe("TestOGDToken", function() {
       data.printTxData("addDividendToken1", addDividendToken1);
       await data.printBalances();
 
-      console.log("        --- Test 2 - Mint 10,000 OGD tokens for User{1..3}; Owner approve 100 FEE for OGToken to spend ---");
+      console.log("        --- Test 2 - Mint 10,000 OGD tokens for user{1..3}; deployer approve 100 FEE for OGToken to spend ---");
       const ogdTokens = ethers.utils.parseUnits("10000", 18);
       const approveFee0Tokens = ethers.utils.parseUnits("100", 18);
       const approveFee1Tokens = ethers.utils.parseUnits("1000", 18);
@@ -71,7 +71,7 @@ describe("TestOGDToken", function() {
       await data.printTxData("ownerApproveFee2Tokens", ownerApproveFee2Tokens);
       await data.printBalances();
 
-      console.log("        --- Test 3 - Owner deposits dividends of 100 FEE0 and 10 ETH ---");
+      console.log("        --- Test 3 - deployer deposits dividends of 100 FEE0 and 10 ETH ---");
       const depositFee0Tokens = ethers.utils.parseUnits("100", 18);
       const depositFeeETH = ethers.utils.parseUnits("10", 18);
       const test3 = [];
@@ -82,14 +82,14 @@ describe("TestOGDToken", function() {
       await data.printTxData("depositDividendETH0", depositDividendETH0);
       await data.printBalances();
 
-      console.log("        --- Test 4 - User1 dummy transfer to same account (internal stats update) ---");
+      console.log("        --- Test 4 - user1 dummy transfer to same account (internal stats update) ---");
       const test4 = [];
       test4.push(data.ogdToken.connect(data.user2Signer).transfer(data.user2, "1"));
       const [transfer1] = await Promise.all(test4);
       await data.printTxData("transfer1", transfer1);
       await data.printBalances();
 
-      console.log("        --- Test 5 - User{1..3} withdraw 33.333333333333333333 FEE0 and 3.333333333333333333 ETH ---");
+      console.log("        --- Test 5 - user{1..3} withdraw 33.333333333333333333 FEE0 and 3.333333333333333333 ETH ---");
       const test5 = [];
       test5.push(data.ogdToken.connect(data.user1Signer).withdrawDividends());
       test5.push(data.ogdToken.connect(data.user2Signer).withdrawDividends());
@@ -111,14 +111,14 @@ describe("TestOGDToken", function() {
         await data.printBalances();
       }
 
-      console.log("        --- Test 7 - Mint 10,000 OGD tokens for User4 ---");
+      console.log("        --- Test 7 - Mint 10,000 OGD tokens for user4 ---");
       const test7 = [];
       test7.push(test7.push(data.ogdToken.mint(data.user4, ogdTokens)));
       const [mint4] = await Promise.all(test7);
       await data.printTxData("mint4", mint4);
       await data.printBalances();
 
-      console.log("        --- Test 8 - Owner deposits dividends of 1,000 FEE1 and 10,000 FEE2 ---");
+      console.log("        --- Test 8 - deployer deposits dividends of 1,000 FEE1 and 10,000 FEE2 ---");
       const depositFee1Tokens = ethers.utils.parseUnits("1000", 18);
       const depositFee2Tokens = ethers.utils.parseUnits("10000", 18);
       const test8 = [];
@@ -131,7 +131,7 @@ describe("TestOGDToken", function() {
         await data.printBalances();
       }
 
-      console.log("        --- Test 9 - User{1..4} withdraw 250 FEE1 and 2500 FEE2 ---");
+      console.log("        --- Test 9 - user{1..4} withdraw 250 FEE1 and 2500 FEE2 ---");
       const test9 = [];
       test9.push(data.ogdToken.connect(data.user1Signer).withdrawDividends());
       test9.push(data.ogdToken.connect(data.user2Signer).withdrawDividends());
@@ -144,7 +144,7 @@ describe("TestOGDToken", function() {
       await data.printTxData("withdrawDividends7", withdrawDividends7);
       await data.printBalances();
 
-      console.log("        --- Test 10 - User2 transfer 0.123456789123456789 OGD to User3 ---");
+      console.log("        --- Test 10 - user2 transfer 0.123456789123456789 OGD to user3 ---");
       const test10 = [];
       test10.push(data.ogdToken.connect(data.user2Signer).transfer(data.user3, ethers.utils.parseUnits("0.123456789123456789", 18)));
       const [transfer2] = await Promise.all(test10);
@@ -179,8 +179,8 @@ describe("TestOGDToken", function() {
       data.printTxData("addDividendToken1", addDividendToken1);
       await data.printBalances();
 
-      // console.log("        --- Setup 3 - Mint 10,000 OGD tokens for User{1..3}; Owner approve 100 FEE for OGToken to spend ---");
-      console.log("        --- Test 2 - Mint 10,000 OGD tokens for User{1,2}; Owner approve 100 FEE for OGToken to spend ---");
+      // console.log("        --- Setup 3 - Mint 10,000 OGD tokens for user{1..3}; deployer approve 100 FEE for OGToken to spend ---");
+      console.log("        --- Test 2 - Mint 10,000 OGD tokens for user{1,2}; deployer approve 100 FEE for OGToken to spend ---");
       const ogdTokens = ethers.utils.parseUnits("10000", 18);
       const approveFee0Tokens = ethers.utils.parseUnits("100", 18);
       const approveFee1Tokens = ethers.utils.parseUnits("1000", 18);
@@ -201,7 +201,7 @@ describe("TestOGDToken", function() {
       await data.printTxData("ownerApproveFee2Tokens", ownerApproveFee2Tokens);
       await data.printBalances();
 
-      console.log("        --- Test 3 - Owner deposits dividends of 100 FEE0 and 10 ETH ---");
+      console.log("        --- Test 3 - deployer deposits dividends of 100 FEE0 and 10 ETH ---");
       const depositFee0Tokens = ethers.utils.parseUnits("100", 18);
       const depositFeeETH = ethers.utils.parseUnits("10", 18);
       const test3 = [];
@@ -212,7 +212,7 @@ describe("TestOGDToken", function() {
       await data.printTxData("depositDividendETH0", depositDividendETH0);
       await data.printBalances();
 
-      console.log("        --- Test 4 - User2 transfer all tokens to user3 ---");
+      console.log("        --- Test 4 - user2 transfer all tokens to user3 ---");
       const tokensToTransfer = ethers.utils.parseUnits("10000", 18);
       const test4 = [];
       test4.push(data.ogdToken.connect(data.user2Signer).transfer(data.user3, tokensToTransfer));
@@ -220,7 +220,7 @@ describe("TestOGDToken", function() {
       await data.printTxData("transfer1", transfer1);
       await data.printBalances();
 
-      console.log("        --- Test 5 - User{1..3} withdraw FEE0 ---");
+      console.log("        --- Test 5 - user{1..3} withdraw FEE0 ---");
       const test5 = [];
       test5.push(data.ogdToken.connect(data.user1Signer).withdrawDividends());
       test5.push(data.ogdToken.connect(data.user2Signer).withdrawDividends());
@@ -250,7 +250,7 @@ describe("TestOGDToken", function() {
       data.printTxData("addDividendToken1", addDividendToken1);
       await data.printBalances();
 
-      console.log("        --- Test 2 - Mint 10,000 OGD tokens for User{1,2,3} and address(0); Owner approve 100 FEE for OGToken to spend ---");
+      console.log("        --- Test 2 - Mint 10,000 OGD tokens for user{1,2,3} and address(0); deployer approve 100 FEE for OGToken to spend ---");
       const ogdTokens = ethers.utils.parseUnits("10000", 18);
       const approveFee0Tokens = ethers.utils.parseUnits("100", 18);
       const approveFee1Tokens = ethers.utils.parseUnits("1000", 18);
@@ -273,7 +273,7 @@ describe("TestOGDToken", function() {
       await data.printTxData("ownerApproveFee2Tokens", ownerApproveFee2Tokens);
       await data.printBalances();
 
-      console.log("        --- Test 3 - Owner deposits dividends of 100 FEE0 and 10 ETH ---");
+      console.log("        --- Test 3 - deployer deposits dividends of 100 FEE0 and 10 ETH ---");
       const depositFee0Tokens = ethers.utils.parseUnits("100", 18);
       const depositFeeETH = ethers.utils.parseUnits("10", 18);
       const test3 = [];
@@ -284,7 +284,7 @@ describe("TestOGDToken", function() {
       await data.printTxData("depositDividendETH0", depositDividendETH0);
       await data.printBalances();
 
-      console.log("        --- Test 4 - User{1..3} withdraw FEE0 ---");
+      console.log("        --- Test 4 - user{1..3} withdraw FEE0 ---");
       const test4 = [];
       test4.push(data.ogdToken.connect(data.user1Signer).withdrawDividends());
       test4.push(data.ogdToken.connect(data.user2Signer).withdrawDividends());

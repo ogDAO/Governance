@@ -81,7 +81,7 @@ describe("TestStakingFactory", function() {
 
   describe("TestStakingFactory - Workflow #0 - Stake, stake, stake, unstake, unstake", function() {
     it("Workflow #0 - Stake, stake, stake, unstake, unstake", async function() {
-      console.log("        --- Test 1 - Mint 10,000 OG tokens for User{1..3}; Owner approve 100 FEE for OGToken to spend ---");
+      console.log("        --- Test 1 - Mint 10,000 OG tokens for user{1..3}; user approve 100 FEE for OGToken to spend ---");
       const ogTokens = ethers.utils.parseUnits("10000", 18);
       const test1 = [];
       test1.push(data.ogToken.mint(data.user1, ogTokens));
@@ -185,7 +185,7 @@ describe("TestStakingFactory", function() {
 
   describe("TestStakingFactory - Workflow #1 - Stake And Check weightedEnd", function() {
     it("Workflow #1 - Stake And Check weightedEnd", async function() {
-      console.log("        --- Test 1 - Mint 10,000 OG tokens for User{1..3}; Owner approve 100 FEE for OGToken to spend ---");
+      console.log("        --- Test 1 - Mint 10,000 OG tokens for user{1..3}; user approve 100 FEE for OGToken to spend ---");
       const ogTokens = ethers.utils.parseUnits("10000", 18);
       const test1 = [];
       test1.push(data.ogToken.mint(data.user1, ogTokens));
@@ -242,7 +242,7 @@ describe("TestStakingFactory", function() {
 
   describe("TestStakingFactory - Workflow #2 - Stake with expected exception", function() {
     it("Workflow #2 - Stake with expected exception", async function() {
-      console.log("        --- Test 1 - Mint 10,000 OG tokens for User{1..3}; Owner approve 100 FEE for OGToken to spend ---");
+      console.log("        --- Test 1 - Mint 10,000 OG tokens for user{1..3}; user approve 100 FEE for OGToken to spend ---");
       const ogTokens = ethers.utils.parseUnits("10000", 18);
       const test1 = [];
       test1.push(data.ogToken.mint(data.user1, ogTokens));
@@ -291,7 +291,7 @@ describe("TestStakingFactory", function() {
 
   describe("TestStakingFactory - Workflow #3 - Stake, slash and unstake", function() {
     it("Workflow #3 - Stake, slash and unstake", async function() {
-      console.log("        --- Test 1 - Mint 10,000 OG tokens for User{1..3}; User{1..3} approve 10,000 FEE for StakingFactory to spend ---");
+      console.log("        --- Test 1 - Mint 10,000 OG tokens for user{1..3}; user{1..3} approve 10,000 FEE for StakingFactory to spend ---");
       const ogTokens = ethers.utils.parseUnits("10000", 18);
       const test1 = [];
       test1.push(data.ogToken.mint(data.user1, ogTokens));
@@ -309,7 +309,7 @@ describe("TestStakingFactory", function() {
       await data.printTxData("approve3", approve3);
       await data.printBalances();
 
-      console.log("        --- Test 2 - User{1..3} -> StakingFactory.addStakingForToken(1,000, duration) ---");
+      console.log("        --- Test 2 - user{1..3} -> StakingFactory.addStakingForToken(1,000, duration) ---");
       let ogTokensToStake = ethers.utils.parseUnits("1000", 18);
       let duration = 3;
       const test2 = [];
@@ -338,7 +338,7 @@ describe("TestStakingFactory", function() {
       await data.printTxData("slash1", slash1);
       await data.printBalances();
 
-      console.log("        --- Test 4 - User{1..3} -> unstake(1,000) ---");
+      console.log("        --- Test 4 - user{1..3} -> unstake(1,000) ---");
       ogTokensToUnstake = ethers.utils.parseUnits("1000", 18);
       const test4 = [];
       test4.push(stakings[0].connect(data.user1Signer).unstake(ogTokensToUnstake));
@@ -354,7 +354,7 @@ describe("TestStakingFactory", function() {
 
   describe("TestStakingFactory - Workflow #3 - Stake through factory, stake, restake, unstake(some), unstakeAll()", function() {
     it("Stake through factory, stake, restake, unstake(some), unstakeAll()", async function() {
-      console.log("        --- Test 1 - Mint 10,000 OG tokens for User1; User1 approve 10,000 FEE for StakingFactory to spend ---");
+      console.log("        --- Test 1 - Mint 10,000 OG tokens for user1; user1 approve 10,000 FEE for StakingFactory to spend ---");
       const ogTokens = ethers.utils.parseUnits("10000", 18);
       const test1 = [];
       test1.push(data.ogToken.mint(data.user1, ogTokens));
@@ -364,7 +364,7 @@ describe("TestStakingFactory", function() {
       await data.printTxData("approve1", approve1);
       await data.printBalances();
 
-      console.log("        --- Test 2 - User1 -> StakingFactory.addStakingForToken(1,000, duration) ---");
+      console.log("        --- Test 2 - user1 -> StakingFactory.addStakingForToken(1,000, duration) ---");
       let ogTokensToStake = ethers.utils.parseUnits("1000", 18);
       let duration = 2;
       const test2 = [];
@@ -381,7 +381,7 @@ describe("TestStakingFactory", function() {
       await data.printTxData("addStake1", addStake1);
       await data.printBalances();
 
-      console.log("        ---  Test 3 - User1 -> OGToken.approve(stakeAddress, 1,000) and User1 -> Staking.stake(1,000, duration)---");
+      console.log("        ---  Test 3 - user1 -> OGToken.approve(stakeAddress, 1,000) and user1 -> Staking.stake(1,000, duration)---");
       duration = 3;
       const test3a = [];
       test3a.push(data.ogToken.connect(data.user1Signer).approve(stakings[0].address, ogTokensToStake));
@@ -393,7 +393,7 @@ describe("TestStakingFactory", function() {
       await data.printTxData("addStake2", addStake2);
       await data.printBalances();
 
-      // console.log("        --- Test 4 - User1 -> restake(4) ---");
+      // console.log("        --- Test 4 - user1 -> restake(4) ---");
       // duration = 4;
       // const test4 = [];
       // test4.push(stakings[0].connect(data.user1Signer).restake(duration));
@@ -401,7 +401,7 @@ describe("TestStakingFactory", function() {
       // await data.printTxData("restake1", restake1);
       // await data.printBalances();
       //
-      // console.log("        --- Test 5 - User1 -> unstake(1,000) ---");
+      // console.log("        --- Test 5 - user1 -> unstake(1,000) ---");
       // let ogTokensToUnstake = ethers.utils.parseUnits("1000", 18);
       // data.pause("Waiting", duration + 1);
       // await data.printBalances();
@@ -411,7 +411,7 @@ describe("TestStakingFactory", function() {
       // await data.printTxData("unstake1", unstake1);
       // await data.printBalances();
 
-      console.log("        --- Test 6 - User1 -> unstakeAll() ---");
+      console.log("        --- Test 6 - user1 -> unstakeAll() ---");
       data.pause("Waiting", duration + 1);
       await data.printBalances();
       const test6 = [];
@@ -424,7 +424,7 @@ describe("TestStakingFactory", function() {
 
   // describe("TestStakingFactory - Workflow #4 - Stake, and test transfers", function() {
   //   it("Workflow #4 - Stake, and test transfers", async function() {
-  //     console.log("        --- Test 1 - Mint 10,000 OG tokens for User{1..3}; User{1..3} approve 10,000 FEE for StakingFactory to spend ---");
+  //     console.log("        --- Test 1 - Mint 10,000 OG tokens for user{1..3}; user{1..3} approve 10,000 FEE for StakingFactory to spend ---");
   //     const ogTokens = ethers.utils.parseUnits("10000", 18);
   //     const test1 = [];
   //     test1.push(data.ogToken.mint(data.user1, ogTokens));
@@ -442,7 +442,7 @@ describe("TestStakingFactory", function() {
   //     // await data.printTxData("approve3", approve3);
   //     await data.printBalances();
   //
-  //     console.log("        --- Test 2 - User1 -> StakingFactory.addStakingForToken(1,000, duration) ---");
+  //     console.log("        --- Test 2 - user1 -> StakingFactory.addStakingForToken(1,000, duration) ---");
   //     let ogTokensToStake = ethers.utils.parseUnits("1000", 18);
   //     let duration = 2;
   //     const test2 = [];

@@ -100,7 +100,7 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         Token 2 symbol: 'FEE1', name: 'Fee1', decimals: 18, totalSupply: 1000.0, owner: Deployer:0xa00A, address: Fee1Token:0x6eaC @ 0x6eaC8DFBdEB9588C9FEEe24783B4137b082f9708
         Token 3 symbol: 'FEE2', name: 'Fee2', decimals: 18, totalSupply: 10000.0, owner: Deployer:0xa00A, address: Fee2Token:0xBa1F @ 0xBa1FCDaE835E77cAB2a76a7C3884AdC630f7a5B0
         
-        --- Test 2 - Mint 10,000 OGD tokens for User{1..3}; Owner approve 100 FEE for OGToken to spend ---
+        --- Test 2 - Mint 10,000 OGD tokens for user{1..3}; deployer approve 100 FEE for OGToken to spend ---
         mint1 - gasUsed: 110294, fee: 0.00882352, feeUsd: 3.4029669584, @ 80.0 gwei & 385.67 ETH/USD, 0xd6e25335ab423562bf1c5675e9918de81c01d6fbf024804c99d94d720002afbf
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User1:0xa11A, tokens: 10000.0)
         mint2 - gasUsed: 80294, fee: 0.00642352, feeUsd: 2.4773589584, @ 80.0 gwei & 385.67 ETH/USD, 0x5594e374cf94aba88213d35f4c8d1c9bca704b61d87a965e5476863ab57a8b4a
@@ -152,7 +152,7 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         Token 2 symbol: 'FEE1', name: 'Fee1', decimals: 18, totalSupply: 1000.0, owner: Deployer:0xa00A, address: Fee1Token:0x6eaC @ 0x6eaC8DFBdEB9588C9FEEe24783B4137b082f9708
         Token 3 symbol: 'FEE2', name: 'Fee2', decimals: 18, totalSupply: 10000.0, owner: Deployer:0xa00A, address: Fee2Token:0xBa1F @ 0xBa1FCDaE835E77cAB2a76a7C3884AdC630f7a5B0
         
-        --- Test 3 - Owner deposits dividends of 100 FEE0 and 10 ETH ---
+        --- Test 3 - deployer deposits dividends of 100 FEE0 and 10 ETH ---
         depositDividendFee0 - gasUsed: 79034, fee: 0.00632272, feeUsd: 2.4384834224, @ 80.0 gwei & 385.67 ETH/USD, 0x8cb88c1b9a5ef5c747335f96a24aab6f9a30924730707b732b3d07d5369aa222
         + Fee0Token.Transfer(from: Deployer:0xa00A, to: OGDToken:0x1647, tokens: 100.0)
         + OGDToken.DividendDeposited(token: Fee0Token:0x0f4e, tokens: 100.0)
@@ -197,7 +197,7 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         Token 2 symbol: 'FEE1', name: 'Fee1', decimals: 18, totalSupply: 1000.0, owner: Deployer:0xa00A, address: Fee1Token:0x6eaC @ 0x6eaC8DFBdEB9588C9FEEe24783B4137b082f9708
         Token 3 symbol: 'FEE2', name: 'Fee2', decimals: 18, totalSupply: 10000.0, owner: Deployer:0xa00A, address: Fee2Token:0xBa1F @ 0xBa1FCDaE835E77cAB2a76a7C3884AdC630f7a5B0
         
-        --- Test 4 - User1 dummy transfer to same account (internal stats update) ---
+        --- Test 4 - user1 dummy transfer to same account (internal stats update) ---
         transfer1 - gasUsed: 163798, fee: 0.01310384, feeUsd: 5.0537579728, @ 80.0 gwei & 385.67 ETH/USD, 0x361f82e27e299edcc5880788540594dc8dc2e0865868d243c888b7cd82bdcf21
         + OGDToken.Transfer(from: User2:0xa22A, to: User2:0xa22A, tokens: 0.000000000000000001)
         
@@ -239,7 +239,7 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         Token 2 symbol: 'FEE1', name: 'Fee1', decimals: 18, totalSupply: 1000.0, owner: Deployer:0xa00A, address: Fee1Token:0x6eaC @ 0x6eaC8DFBdEB9588C9FEEe24783B4137b082f9708
         Token 3 symbol: 'FEE2', name: 'Fee2', decimals: 18, totalSupply: 10000.0, owner: Deployer:0xa00A, address: Fee2Token:0xBa1F @ 0xBa1FCDaE835E77cAB2a76a7C3884AdC630f7a5B0
         
-        --- Test 5 - User{1..3} withdraw 33.333333333333333333 FEE0 and 3.333333333333333333 ETH ---
+        --- Test 5 - user{1..3} withdraw 33.333333333333333333 FEE0 and 3.333333333333333333 ETH ---
         withdrawDividends1 - gasUsed: 156200, fee: 0.012496, feeUsd: 4.81933232, @ 80.0 gwei & 385.67 ETH/USD, 0xcbec2a6157ff5ca3108c233ecd1bf267de846802feea62cf774f6ca76b8e7c67
         + OGDToken.DividendWithdrawn(account: User1:0xa11A, destination: User1:0xa11A, token: ETH|null:0x0000, tokens: 3.333333333333333333)
         + Fee0Token.Transfer(from: OGDToken:0x1647, to: User1:0xa11A, tokens: 33.333333333333333333)
@@ -296,7 +296,7 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         + OGDToken.DividendTokenAdded(token: Fee1Token:0x6eaC, enabled: true)
         addDividendToken3 - gasUsed: 119154, fee: 0.00953232, feeUsd: 3.6763298544, @ 80.0 gwei & 385.67 ETH/USD, 0x1090c2d9895b982bedaac599b9b434545b6a9dcd3631434428a612f5adb2fce7
         + OGDToken.DividendTokenAdded(token: Fee2Token:0xBa1F, enabled: true)
-        --- Test 7 - Mint 10,000 OGD tokens for User4 ---
+        --- Test 7 - Mint 10,000 OGD tokens for user4 ---
         mint4 - gasUsed: 139417, fee: 0.01115336, feeUsd: 4.3015163512, @ 80.0 gwei & 385.67 ETH/USD, 0x7c10ee1f52fea1aa685107a633bc8f709f0d63db7c49c9152abe20b71f12442e
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User4:0xa44a, tokens: 10000.0)
         
@@ -340,14 +340,14 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         Token 2 symbol: 'FEE1', name: 'Fee1', decimals: 18, totalSupply: 1000.0, owner: Deployer:0xa00A, address: Fee1Token:0x6eaC @ 0x6eaC8DFBdEB9588C9FEEe24783B4137b082f9708
         Token 3 symbol: 'FEE2', name: 'Fee2', decimals: 18, totalSupply: 10000.0, owner: Deployer:0xa00A, address: Fee2Token:0xBa1F @ 0xBa1FCDaE835E77cAB2a76a7C3884AdC630f7a5B0
         
-        --- Test 8 - Owner deposits dividends of 1,000 FEE1 and 10,000 FEE2 ---
+        --- Test 8 - deployer deposits dividends of 1,000 FEE1 and 10,000 FEE2 ---
         depositDividendFee1 - gasUsed: 79034, fee: 0.00632272, feeUsd: 2.4384834224, @ 80.0 gwei & 385.67 ETH/USD, 0x4663b7c2095702390ada487734a086dacd6842dbb3626179bb260b144dacaeb1
         + Fee1Token.Transfer(from: Deployer:0xa00A, to: OGDToken:0x1647, tokens: 1000.0)
         + OGDToken.DividendDeposited(token: Fee1Token:0x6eaC, tokens: 1000.0)
         depositDividendFee2 - gasUsed: 79046, fee: 0.00632368, feeUsd: 2.4388536656, @ 80.0 gwei & 385.67 ETH/USD, 0xd35209cc2ba073a3cabbf19317a58d27d9234bf984b7d132f150e299093f6884
         + Fee2Token.Transfer(from: Deployer:0xa00A, to: OGDToken:0x1647, tokens: 10000.0)
         + OGDToken.DividendDeposited(token: Fee2Token:0xBa1F, tokens: 10000.0)
-        --- Test 9 - User{1..4} withdraw 250 FEE1 and 2500 FEE2 ---
+        --- Test 9 - user{1..4} withdraw 250 FEE1 and 2500 FEE2 ---
         withdrawDividends4 - gasUsed: 213201, fee: 0.01705608, feeUsd: 6.5780183736, @ 80.0 gwei & 385.67 ETH/USD, 0x47597c2701d878ed659e15d2f6916cee66ded687bc4e5e59b558c5e95ea12de0
         + Fee1Token.Transfer(from: OGDToken:0x1647, to: User1:0xa11A, tokens: 250.0)
         + OGDToken.DividendWithdrawn(account: User1:0xa11A, destination: User1:0xa11A, token: Fee1Token:0x6eaC, tokens: 250.0)
@@ -409,7 +409,7 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         Token 2 symbol: 'FEE1', name: 'Fee1', decimals: 18, totalSupply: 1000.0, owner: Deployer:0xa00A, address: Fee1Token:0x6eaC @ 0x6eaC8DFBdEB9588C9FEEe24783B4137b082f9708
         Token 3 symbol: 'FEE2', name: 'Fee2', decimals: 18, totalSupply: 10000.0, owner: Deployer:0xa00A, address: Fee2Token:0xBa1F @ 0xBa1FCDaE835E77cAB2a76a7C3884AdC630f7a5B0
         
-        --- Test 10 - User2 transfer 0.123456789123456789 OGD to User3 ---
+        --- Test 10 - user2 transfer 0.123456789123456789 OGD to user3 ---
         transfer2 - gasUsed: 120847, fee: 0.00966776, feeUsd: 3.7285649992, @ 80.0 gwei & 385.67 ETH/USD, 0xe6027c9392633b69e0c0223c2e8b90e0035f196b696546f18ef9e6bc93cca620
         + OGDToken.Transfer(from: User2:0xa22A, to: User3:0xa33a, tokens: 0.123456789123456789)
         
@@ -455,7 +455,7 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         
         --- Test Completed ---
 
-      ✓ Workflow #0 (5016ms)
+      ✓ Workflow #0 (5076ms)
     TestOGDToken - Workflow #1 - Transfer Test
         Address 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E => Deployer:0xa00A
         Address 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433 => User1:0xa11A
@@ -554,7 +554,7 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         Token 2 symbol: 'FEE1', name: 'Fee1', decimals: 18, totalSupply: 1000.0, owner: Deployer:0xa00A, address: Fee1Token:0xA92f @ 0xA92f39B1123B4051a6Ef6736879F85249AB45845
         Token 3 symbol: 'FEE2', name: 'Fee2', decimals: 18, totalSupply: 10000.0, owner: Deployer:0xa00A, address: Fee2Token:0xb5EB @ 0xb5EBF7c369B492493e17032CA29E41c0496EcbE5
         
-        --- Test 2 - Mint 10,000 OGD tokens for User{1,2}; Owner approve 100 FEE for OGToken to spend ---
+        --- Test 2 - Mint 10,000 OGD tokens for user{1,2}; deployer approve 100 FEE for OGToken to spend ---
         mint1 - gasUsed: 110294, fee: 0.00882352, feeUsd: 3.4029669584, @ 80.0 gwei & 385.67 ETH/USD, 0xafdc410adf34aafa5b2b0197296d18ba8df4f3d1f9976f96e07582bb8f1a6217
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User1:0xa11A, tokens: 10000.0)
         mint2 - gasUsed: 80294, fee: 0.00642352, feeUsd: 2.4773589584, @ 80.0 gwei & 385.67 ETH/USD, 0x54c766771aa30747018c45b96620ac69b118fe43aeb4335f6104e0d23ebf9ff1
@@ -604,7 +604,7 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         Token 2 symbol: 'FEE1', name: 'Fee1', decimals: 18, totalSupply: 1000.0, owner: Deployer:0xa00A, address: Fee1Token:0xA92f @ 0xA92f39B1123B4051a6Ef6736879F85249AB45845
         Token 3 symbol: 'FEE2', name: 'Fee2', decimals: 18, totalSupply: 10000.0, owner: Deployer:0xa00A, address: Fee2Token:0xb5EB @ 0xb5EBF7c369B492493e17032CA29E41c0496EcbE5
         
-        --- Test 3 - Owner deposits dividends of 100 FEE0 and 10 ETH ---
+        --- Test 3 - deployer deposits dividends of 100 FEE0 and 10 ETH ---
         depositDividendFee0 - gasUsed: 79034, fee: 0.00632272, feeUsd: 2.4384834224, @ 80.0 gwei & 385.67 ETH/USD, 0xc1827a16ef14d27355caaec1469b44a28ec575031c4c3542759710b1c3b78ed1
         + Fee0Token.Transfer(from: Deployer:0xa00A, to: OGDToken:0xee9a, tokens: 100.0)
         + OGDToken.DividendDeposited(token: Fee0Token:0x0b70, tokens: 100.0)
@@ -649,7 +649,7 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         Token 2 symbol: 'FEE1', name: 'Fee1', decimals: 18, totalSupply: 1000.0, owner: Deployer:0xa00A, address: Fee1Token:0xA92f @ 0xA92f39B1123B4051a6Ef6736879F85249AB45845
         Token 3 symbol: 'FEE2', name: 'Fee2', decimals: 18, totalSupply: 10000.0, owner: Deployer:0xa00A, address: Fee2Token:0xb5EB @ 0xb5EBF7c369B492493e17032CA29E41c0496EcbE5
         
-        --- Test 4 - User2 transfer all tokens to user3 ---
+        --- Test 4 - user2 transfer all tokens to user3 ---
         transfer1 - gasUsed: 210610, fee: 0.0168488, feeUsd: 6.498076696, @ 80.0 gwei & 385.67 ETH/USD, 0x90a2b494fc987a4b6457c07ce01f698d0ab2516edc97376c06ba551ab5968a58
         + OGDToken.Transfer(from: User2:0xa22A, to: User3:0xa33a, tokens: 10000.0)
         
@@ -691,7 +691,7 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         Token 2 symbol: 'FEE1', name: 'Fee1', decimals: 18, totalSupply: 1000.0, owner: Deployer:0xa00A, address: Fee1Token:0xA92f @ 0xA92f39B1123B4051a6Ef6736879F85249AB45845
         Token 3 symbol: 'FEE2', name: 'Fee2', decimals: 18, totalSupply: 10000.0, owner: Deployer:0xa00A, address: Fee2Token:0xb5EB @ 0xb5EBF7c369B492493e17032CA29E41c0496EcbE5
         
-        --- Test 5 - User{1..3} withdraw FEE0 ---
+        --- Test 5 - user{1..3} withdraw FEE0 ---
         withdrawDividends1 - gasUsed: 126200, fee: 0.010096, feeUsd: 3.89372432, @ 80.0 gwei & 385.67 ETH/USD, 0x835921093303362aa7b8e914d5bab82b4c9e87896de0f9887acfa74bc649ba7d
         + OGDToken.DividendWithdrawn(account: User1:0xa11A, destination: User1:0xa11A, token: ETH|null:0x0000, tokens: 5.0)
         + Fee0Token.Transfer(from: OGDToken:0xee9a, to: User1:0xa11A, tokens: 50.0)
@@ -740,7 +740,7 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         Token 2 symbol: 'FEE1', name: 'Fee1', decimals: 18, totalSupply: 1000.0, owner: Deployer:0xa00A, address: Fee1Token:0xA92f @ 0xA92f39B1123B4051a6Ef6736879F85249AB45845
         Token 3 symbol: 'FEE2', name: 'Fee2', decimals: 18, totalSupply: 10000.0, owner: Deployer:0xa00A, address: Fee2Token:0xb5EB @ 0xb5EBF7c369B492493e17032CA29E41c0496EcbE5
         
-      ✓ Workflow #1 - Transfer Test (2659ms)
+      ✓ Workflow #1 - Transfer Test (2601ms)
     TestOGDToken - Workflow #2 - address(0) with balance
         Address 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E => Deployer:0xa00A
         Address 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433 => User1:0xa11A
@@ -839,7 +839,7 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         Token 2 symbol: 'FEE1', name: 'Fee1', decimals: 18, totalSupply: 1000.0, owner: Deployer:0xa00A, address: Fee1Token:0xaa25 @ 0xaa2549768781Bc188ed636287d25aaBb73A2E3D8
         Token 3 symbol: 'FEE2', name: 'Fee2', decimals: 18, totalSupply: 10000.0, owner: Deployer:0xa00A, address: Fee2Token:0x2787 @ 0x2787C8cBC9B5D4A3b49dba8b2d31376616933Ca9
         
-        --- Test 2 - Mint 10,000 OGD tokens for User{1,2,3} and address(0); Owner approve 100 FEE for OGToken to spend ---
+        --- Test 2 - Mint 10,000 OGD tokens for user{1,2,3} and address(0); deployer approve 100 FEE for OGToken to spend ---
         mint1 - gasUsed: 110294, fee: 0.00882352, feeUsd: 3.4029669584, @ 80.0 gwei & 385.67 ETH/USD, 0x57f5e021ecb00a8d778b890cbb6f9da296bb016bdf58e7876a9d861f06238792
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User1:0xa11A, tokens: 10000.0)
         mint2 - gasUsed: 80294, fee: 0.00642352, feeUsd: 2.4773589584, @ 80.0 gwei & 385.67 ETH/USD, 0x73d9b64900383f9ff7bca02260fdf29ebf37aa53f7efb4c783f9ce19be39e57a
@@ -893,7 +893,7 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         Token 2 symbol: 'FEE1', name: 'Fee1', decimals: 18, totalSupply: 1000.0, owner: Deployer:0xa00A, address: Fee1Token:0xaa25 @ 0xaa2549768781Bc188ed636287d25aaBb73A2E3D8
         Token 3 symbol: 'FEE2', name: 'Fee2', decimals: 18, totalSupply: 10000.0, owner: Deployer:0xa00A, address: Fee2Token:0x2787 @ 0x2787C8cBC9B5D4A3b49dba8b2d31376616933Ca9
         
-        --- Test 3 - Owner deposits dividends of 100 FEE0 and 10 ETH ---
+        --- Test 3 - deployer deposits dividends of 100 FEE0 and 10 ETH ---
         depositDividendFee0 - gasUsed: 79022, fee: 0.00632176, feeUsd: 2.4381131792, @ 80.0 gwei & 385.67 ETH/USD, 0xe429bac58583a847985a39cef78cf538f9fb23d420cd564a1c732df643c68d1a
         + Fee0Token.Transfer(from: Deployer:0xa00A, to: OGDToken:0xF393, tokens: 100.0)
         + OGDToken.DividendDeposited(token: Fee0Token:0x103f, tokens: 100.0)
@@ -938,7 +938,7 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         Token 2 symbol: 'FEE1', name: 'Fee1', decimals: 18, totalSupply: 1000.0, owner: Deployer:0xa00A, address: Fee1Token:0xaa25 @ 0xaa2549768781Bc188ed636287d25aaBb73A2E3D8
         Token 3 symbol: 'FEE2', name: 'Fee2', decimals: 18, totalSupply: 10000.0, owner: Deployer:0xa00A, address: Fee2Token:0x2787 @ 0x2787C8cBC9B5D4A3b49dba8b2d31376616933Ca9
         
-        --- Test 4 - User{1..3} withdraw FEE0 ---
+        --- Test 4 - user{1..3} withdraw FEE0 ---
         withdrawDividends1 - gasUsed: 156200, fee: 0.012496, feeUsd: 4.81933232, @ 80.0 gwei & 385.67 ETH/USD, 0x19bd5d3eacaac93c64fba49d0c71925c2b6485e5474750645395052025a9e59c
         + OGDToken.DividendWithdrawn(account: User1:0xa11A, destination: User1:0xa11A, token: ETH|null:0x0000, tokens: 3.333333333333333333)
         + Fee0Token.Transfer(from: OGDToken:0xF393, to: User1:0xa11A, tokens: 33.333333333333333333)
@@ -990,7 +990,7 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         Token 2 symbol: 'FEE1', name: 'Fee1', decimals: 18, totalSupply: 1000.0, owner: Deployer:0xa00A, address: Fee1Token:0xaa25 @ 0xaa2549768781Bc188ed636287d25aaBb73A2E3D8
         Token 3 symbol: 'FEE2', name: 'Fee2', decimals: 18, totalSupply: 10000.0, owner: Deployer:0xa00A, address: Fee2Token:0x2787 @ 0x2787C8cBC9B5D4A3b49dba8b2d31376616933Ca9
         
-      ✓ Workflow #1 - Transfer Test (2026ms)
+      ✓ Workflow #1 - Transfer Test (2058ms)
 
 
   3 passing (13s)

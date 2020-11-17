@@ -87,29 +87,25 @@ describe("TestOptinoGov", function() {
     }
     // await data.printBalances();
 
-    console.log("        --- Setup 5 - Transfer OGTokens, User{1..4} approve 2,000 OGTokens to OptinoGov, Owner approve 2,000 FEE0 tokens to OGDToken ---");
+    console.log("        --- Setup 5 - Transfer OGTokens, user{1..3} approve 2,000 OGTokens to OptinoGov, Owner approve 2,000 FEE0 tokens to OGDToken ---");
     const ogTokens = ethers.utils.parseUnits("10000", 18);
     const approveTokens = ethers.utils.parseUnits("2000", 18);
     const setup5 = [];
     setup5.push(ogToken.transfer(data.user1, ogTokens));
     setup5.push(ogToken.transfer(data.user2, ogTokens));
     setup5.push(ogToken.transfer(data.user3, ogTokens));
-    setup5.push(ogToken.transfer(data.user4, ogTokens));
     setup5.push(ogToken.connect(data.user1Signer).approve(data.optinoGov.address, approveTokens));
     setup5.push(ogToken.connect(data.user2Signer).approve(data.optinoGov.address, approveTokens));
     setup5.push(ogToken.connect(data.user3Signer).approve(data.optinoGov.address, approveTokens));
-    setup5.push(ogToken.connect(data.user4Signer).approve(data.optinoGov.address, approveTokens));
     setup5.push(fee0Token.approve(data.ogdToken.address, approveTokens));
-    const [transfer1, transfer2, transfer3, transfer4, approve1, approve2, approve3, approve4, approve5] = await Promise.all(setup5);
+    const [transfer1, transfer2, transfer3, approve1, approve2, approve3, approve4] = await Promise.all(setup5);
     await data.printTxData("transfer1", transfer1);
     await data.printTxData("transfer2", transfer2);
     await data.printTxData("transfer3", transfer3);
-    await data.printTxData("transfer4", transfer4);
     await data.printTxData("approve1", approve1);
     await data.printTxData("approve2", approve2);
     await data.printTxData("approve3", approve3);
     await data.printTxData("approve4", approve4);
-    await data.printTxData("approve5", approve5);
     await data.printBalances();
 
     console.log("        --- Setup Completed ---");
@@ -118,7 +114,7 @@ describe("TestOptinoGov", function() {
 
   describe("TestOptinoGov - Workflow #0", function() {
     it("Workflow #0", async function() {
-      console.log("        --- Test 1 - User{1..3} commit OGTokens for {5, 50, 500} seconds duration ---");
+      console.log("        --- Test 1 - user{1..3} commit OGTokens for {5, 50, 500} seconds duration ---");
       const tokensToCommit = ethers.utils.parseUnits("1000", 18);
       const test1 = [];
       test1.push(data.optinoGov.connect(data.user1Signer).commit(tokensToCommit, 5));
@@ -130,7 +126,7 @@ describe("TestOptinoGov", function() {
       await data.printTxData("commit3", commit3);
       await data.printBalances();
 
-      console.log("        --- Test 2 - User{1,2} delegate to User3---");
+      console.log("        --- Test 2 - user{1,2} delegate to user3---");
       const test2 = [];
       test2.push(data.optinoGov.connect(data.user1Signer).delegate(data.user3));
       test2.push(data.optinoGov.connect(data.user2Signer).delegate(data.user3));
@@ -139,14 +135,14 @@ describe("TestOptinoGov", function() {
       await data.printTxData("delegate2", delegate2);
       await data.printBalances();
 
-      console.log("        --- Test 3 - User{2} commit again for {55} seconds duration ---");
+      console.log("        --- Test 3 - user{2} commit again for {55} seconds duration ---");
       const test3 = [];
       test3.push(data.optinoGov.connect(data.user2Signer).commit(tokensToCommit, 55));
       const [commit4] = await Promise.all(test3);
       await data.printTxData("commit4", commit4);
       await data.printBalances();
 
-      console.log("        --- Test 4 - User{1..2} collecting rewards, user3 collecting and committing rewards and extending duration to 1d ---");
+      console.log("        --- Test 4 - user{1..2} collecting rewards, user3 collecting and committing rewards and extending duration to 1d ---");
       const test4 = [];
       test4.push(data.optinoGov.connect(data.user1Signer).recommit(0));
       test4.push(data.optinoGov.connect(data.user2Signer).recommit(0));
@@ -157,7 +153,7 @@ describe("TestOptinoGov", function() {
       await data.printTxData("collectReward3", collectReward3);
       await data.printBalances();
 
-      await console.log("        --- Test 5 - Owner uncommitFor(user1) for a % fee ---");
+      await console.log("        --- Test 5 - deployer uncommitFor(user1) for a % fee ---");
       data.pause("Waiting", 5);
       const test5 = [];
       test5.push(data.optinoGov.uncommitFor(data.user1));
@@ -165,7 +161,7 @@ describe("TestOptinoGov", function() {
       await data.printTxData("uncommitFor1", uncommitFor1);
       await data.printBalances();
 
-      console.log("        --- Test 6 - Owner deposits dividends of 10 ETH and 100 FEE ---");
+      console.log("        --- Test 6 - deployer deposits dividends of 10 ETH and 100 FEE ---");
       const depositFee1Tokens = ethers.utils.parseUnits("10", 18);
       const depositFee2Tokens = ethers.utils.parseUnits("100", 18);
       const test6 = [];
@@ -176,7 +172,7 @@ describe("TestOptinoGov", function() {
       await data.printTxData("depositDividendFee2", depositDividendFee2);
       await data.printBalances();
 
-      console.log("        --- Test 7 - User{1..3} withdraw ETH and FEE dividends ---");
+      console.log("        --- Test 7 - user{1..3} withdraw ETH and FEE dividends ---");
       const test7 = [];
       test7.push(data.ogdToken.connect(data.user1Signer).withdrawDividends());
       test7.push(data.ogdToken.connect(data.user2Signer).withdrawDividends());
@@ -198,7 +194,7 @@ describe("TestOptinoGov", function() {
 
   describe("TestOptinoGov - Workflow #1", function() {
     it("Workflow #1", async function() {
-      console.log("        --- Test 1 - User{1..3} commit OGTokens for {1, 1, 1} seconds duration ---");
+      console.log("        --- Test 1 - user{1..3} commit OGTokens for {1, 1, 1} seconds duration ---");
       const tokensToCommit = ethers.utils.parseUnits("1000", 18);
       const test1 = [];
       test1.push(data.optinoGov.connect(data.user1Signer).commit(tokensToCommit, 1));
@@ -210,7 +206,7 @@ describe("TestOptinoGov", function() {
       await data.printTxData("commit3", commit3);
       await data.printBalances();
 
-      console.log("        --- Test 2 - User{1..3} approve 2,000 OGDTokens to OptinoGov ---");
+      console.log("        --- Test 2 - user{1..3} approve 2,000 OGDTokens to OptinoGov ---");
       const approveTokens = ethers.utils.parseUnits("2000", 18);
       const test2 = [];
       test2.push(data.ogdToken.connect(data.user1Signer).approve(data.optinoGov.address, approveTokens));
@@ -224,7 +220,7 @@ describe("TestOptinoGov", function() {
       await data.printTxData("approve3", approve4);
       await data.printBalances();
 
-      console.log("        --- Test 3 - Owner deposits dividends of 10 ETH and 100 FEE ---");
+      console.log("        --- Test 3 - deployer deposits dividends of 10 ETH and 100 FEE ---");
       const depositFee1Tokens = ethers.utils.parseUnits("10", 18);
       const depositFee2Tokens = ethers.utils.parseUnits("100", 18);
       const test3 = [];
@@ -235,14 +231,14 @@ describe("TestOptinoGov", function() {
       await data.printTxData("depositDividendFee2", depositDividendFee2);
       await data.printBalances();
 
-      // console.log("        --- Test 4 - User2 transfer all to user3 ---");
+      // console.log("        --- Test 4 - user2 transfer all to user3 ---");
       // const test4 = [];
       // test4.push(data.ogdToken.connect(data.user2Signer).transfer(data.user3, tokensToCommit));
       // const [transfer1] = await Promise.all(test4);
       // await data.printTxData("transfer1", transfer1);
       // await data.printBalances();
       //
-      // console.log("        --- Test 5 - User{1..3} withdraw ETH and FEE dividends ---");
+      // console.log("        --- Test 5 - user{1..3} withdraw ETH and FEE dividends ---");
       // const test5 = [];
       // test5.push(data.ogdToken.connect(data.user1Signer).withdrawDividends());
       // test5.push(data.ogdToken.connect(data.user2Signer).withdrawDividends());
@@ -253,7 +249,7 @@ describe("TestOptinoGov", function() {
       // await data.printTxData("withdrawDividends3", withdrawDividends3);
       // await data.printBalances();
 
-      console.log("        --- Test 4 - User{1..3} uncommit OGTokens ---");
+      console.log("        --- Test 4 - user{1..3} uncommit OGTokens ---");
       const tokensToUncommit = ethers.utils.parseUnits("100", 18);
       const test4 = [];
       // data.pause("Waiting", 5);
@@ -273,7 +269,7 @@ describe("TestOptinoGov", function() {
 
   describe.only("TestOptinoGov - Workflow #2 - Developing", function() {
     it("Workflow #2 - Developing", async function() {
-      console.log("        --- Test 1 - User{1..4} commit 1,000 OGTokens for x seconds ---");
+      console.log("        --- Test 1 - user{1..3} commit 1,000 OGTokens for x seconds, user3 delegate to user1 ---");
       let duration1 = 2;
       let tokensToCommit = ethers.utils.parseUnits("1000", 18);
       const test1 = [];
@@ -281,12 +277,14 @@ describe("TestOptinoGov", function() {
       test1.push(data.optinoGov.connect(data.user2Signer).commit(tokensToCommit, duration1 /*SECONDS_PER_YEAR*/));
       test1.push(data.optinoGov.connect(data.user3Signer).commit(tokensToCommit, duration1 /*SECONDS_PER_YEAR * 3 / 2*/));
       const [commit1, commit2, commit3] = await Promise.all(test1);
+      const delegate1 = await data.optinoGov.connect(data.user3Signer).delegate(data.user1);
       await data.printTxData("commit1", commit1);
       await data.printTxData("commit2", commit2);
       await data.printTxData("commit3", commit3);
+      await data.printTxData("delegate1", delegate1);
       await data.printBalances();
 
-      // console.log("        --- Test 4 - User1 propose(OGToken.mint(user{2,3}, 888.888)) ---");
+      // console.log("        --- Test 4 - user1 propose(OGToken.mint(user{2,3}, 888.888)) ---");
       // var mintFunctionSig = ethers.utils.keccak256(ethers.utils.toUtf8Bytes("mint(address,uint256)")).substring(0,10);
       // var description = "Proposal 0 - OGToken.mint(user{2,3}, 888.888)";
       // var mintTokens = ethers.utils.parseUnits("888.888", 18);
@@ -304,7 +302,7 @@ describe("TestOptinoGov", function() {
       // await data.printTxData("propose1", propose1);
       // await data.printBalances();
 
-      console.log("        --- Test 2 - User1 propose(OGToken.setCap(888888888.888, true)) ---");
+      console.log("        --- Test 2 - user1 propose(OGToken.setCap(888888888.888, true)) ---");
       var setCapFunctionSig = ethers.utils.keccak256(ethers.utils.toUtf8Bytes("setCap(uint256,bool)")).substring(0,10);
       var description = "Proposal 0 - OGToken.setCap(888888888.888, true)";
       var capTokens = ethers.utils.parseUnits("888888888.888", 18);
@@ -321,24 +319,24 @@ describe("TestOptinoGov", function() {
       await data.printTxData("propose1", propose1);
       await data.printBalances();
 
-      console.log("        --- Test 3 - User{1..3} vote ---");
+      console.log("        --- Test 3 - user{1,2} vote ---");
       const test3 = [];
       test3.push(data.optinoGov.connect(data.user1Signer).vote(0, true));
       test3.push(data.optinoGov.connect(data.user2Signer).vote(0, true));
-      test3.push(data.optinoGov.connect(data.user3Signer).vote(0, true));
-      const [vote1, vote2, vote3] = await Promise.all(test3);
+      // test3.push(data.optinoGov.connect(data.user3Signer).vote(0, true));
+      const [vote1, vote2/*, vote3*/] = await Promise.all(test3);
       await data.printTxData("vote1", vote1);
       await data.printTxData("vote2", vote2);
-      await data.printTxData("vote3", vote3);
+      // await data.printTxData("vote3", vote3);
       await data.printBalances();
 
 
-      console.log("        --- Test 4 - User1 execute(0) ---");
+      console.log("        --- Test 4 - user1 execute(0) ---");
       const execute1 = await data.optinoGov.connect(data.user1Signer).execute(0);
       await data.printTxData("execute1", execute1);
       await data.printBalances();
 
-      // console.log("        --- Test 2 - User{1..3} commit OGTokens for {1, 1, 1} seconds duration ---");
+      // console.log("        --- Test 2 - user{1..3} commit OGTokens for {1, 1, 1} seconds duration ---");
       // duration = 3;
       // tokensToCommit = ethers.utils.parseUnits("1000", 18);
       // const test2 = [];
@@ -358,34 +356,34 @@ describe("TestOptinoGov", function() {
       // await data.printTxData("dummy1", dummy1);
       // await data.printBalances();
 
-      // console.log("        --- Test 4 - User2 uncommitFor(user1) ---");
+      // console.log("        --- Test 4 - user2 uncommitFor(user1) ---");
       // duration = 4;
       // data.pause("Waiting", duration + 1);
       // const uncommitFor1 = await data.optinoGov.connect(data.user2Signer).uncommitFor(data.user1);
       // await data.printTxData("uncommitFor1", uncommitFor1);
       // await data.printBalances();
 
-      // console.log("        --- Test 4 - User1 recommit(5) ---");
+      // console.log("        --- Test 4 - user1 recommit(5) ---");
       // duration = 5;
       // const recommit1 = await data.optinoGov.connect(data.user1Signer).recommit(duration);
       // await data.printTxData("recommit1", recommit1);
       // await data.printBalances();
 
-      // console.log("        --- Test 4b - User1 recommit(5) ---");
+      // console.log("        --- Test 4b - user1 recommit(5) ---");
       // duration = 5;
       // data.pause("Waiting", duration + 1);
       // const recommit2 = await data.optinoGov.connect(data.user1Signer).recommit(duration);
       // await data.printTxData("recommit2", recommit2);
       // await data.printBalances();
 
-      // console.log("        --- Test 4 - User1 uncommitAll() ---");
+      // console.log("        --- Test 4 - user1 uncommitAll() ---");
       // duration = 4;
       // data.pause("Waiting", duration + 1);
       // const uncommitAll1 = await data.optinoGov.connect(data.user1Signer).uncommitAll();
       // await data.printTxData("uncommitAll1", uncommitAll1);
       // await data.printBalances();
 
-      // console.log("        --- Test 4 - User1 uncommit(10) ---");
+      // console.log("        --- Test 4 - user1 uncommit(10) ---");
       // const tokensToUncommit = ethers.utils.parseUnits("10", 18);
       // // const tokensToUncommit = await data.optinoGov.balanceOf(data.user1);
       // const test4 = [];
@@ -399,7 +397,7 @@ describe("TestOptinoGov", function() {
       // // await data.printTxData("uncommit3", uncommit3);
       // await data.printBalances();
       //
-      // console.log("        --- Test 5 - User{1..3} uncommitAll() ---");
+      // console.log("        --- Test 5 - user{1..3} uncommitAll() ---");
       // const test5 = [];
       // test5.push(data.optinoGov.connect(data.user1Signer).uncommitAll());
       // test5.push(data.optinoGov.connect(data.user2Signer).uncommitAll());

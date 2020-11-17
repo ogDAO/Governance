@@ -1,6 +1,4 @@
 $ npx hardhat test test/TestStakingFactory.js > results/TestStakingFactory.txt
-Compiling 22 files with 0.7.4
-Compilation finished successfully
 
 
   TestStakingFactory
@@ -21,7 +19,7 @@ Compilation finished successfully
         + OGToken.Transfer(from: ETH|null:0x0000, to: Deployer:0xa00A, tokens: 0.0)
         fee0TokenTx - gasUsed: 823708, fee: 0.06589664, feeUsd: 25.4143571488, @ 80.0 gwei & 385.67 ETH/USD, 0xd2fb3f46bba8b181b11d8a38516f43dd81d1b643c686f63cd12939378433bf95
         + Fee0Token.Transfer(from: ETH|null:0x0000, to: Deployer:0xa00A, tokens: 100.0)
-        stakingFactoryTx - gasUsed: 5439921, fee: 0.43519368, feeUsd: 167.8411465656, @ 80.0 gwei & 385.67 ETH/USD, 0x4a07e6a8ca627c81e349fa09a3113542d9387851f2c9d190ba68c27d71e08100
+        stakingFactoryTx - gasUsed: 5439921, fee: 0.43519368, feeUsd: 167.8411465656, @ 80.0 gwei & 385.67 ETH/USD, 0x14ef241ef03dd715350662721b3839e5c28bddffc5a85a6cd042e65222a1b647
         --- Setup 2 - OGToken and OGDToken permissioning ---
         setup2Txs[0] - gasUsed: 78942, fee: 0.00631536, feeUsd: 2.4356448912, @ 80.0 gwei & 385.67 ETH/USD, 0x1c7fdc095296886c0450ac361dff0be8aa4cda65e3eb90ac5f888046125415ad
         + OGToken.PermissionUpdated(account: Deployer:0xa00A, role: 1, active: true, maximum: 0, processed: 0)
@@ -63,6 +61,8 @@ Compilation finished successfully
           3 StakingFactory:0x5Fec    Mint Tokens     Yes                 123456789.0                      0.0
           4 StakingFactory:0x5Fec    Burn Tokens     Yes                         0.0                      0.0
          -- ------------------------ --------------- ------ ------------------------ ------------------------
+        - cap      : 0.0
+        - freezeCap: false
         Token 1 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 0.0, owner: n/a, address: OGDToken:0x0f4e @ 0x0f4eA6f2be49d822b7cAEf4175450A4D83A32e72
           # Permissioned account     Role            Active                  Maximum                Processed
          -- ------------------------ --------------- ------ ------------------------ ------------------------
@@ -91,7 +91,7 @@ Compilation finished successfully
         
         --- Setup Completed ---
 
-        --- Test 1 - Mint 10,000 OG tokens for User{1..3}; Owner approve 100 FEE for OGToken to spend ---
+        --- Test 1 - Mint 10,000 OG tokens for user{1..3}; user approve 100 FEE for OGToken to spend ---
         mint1 - gasUsed: 91248, fee: 0.00729984, feeUsd: 2.8153292928, @ 80.0 gwei & 385.67 ETH/USD, 0x3054578bcd3f7af1bccffa83945d03b3dfc5528c5c0408205ee3a4590dfc3a56
         + OGToken.Transfer(from: ETH|null:0x0000, to: User1:0xa11A, tokens: 10000.0)
         mint2 - gasUsed: 61248, fee: 0.00489984, feeUsd: 1.8897212928, @ 80.0 gwei & 385.67 ETH/USD, 0xae1e8c00f6d448daf804fa24ff740311c78eb02fdcd305dd934f745e01e02378
@@ -130,6 +130,8 @@ Compilation finished successfully
           3 StakingFactory:0x5Fec    Mint Tokens     Yes                 123456789.0                      0.0
           4 StakingFactory:0x5Fec    Burn Tokens     Yes                         0.0                      0.0
          -- ------------------------ --------------- ------ ------------------------ ------------------------
+        - cap      : 0.0
+        - freezeCap: false
         Token 1 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 0.0, owner: n/a, address: OGDToken:0x0f4e @ 0x0f4eA6f2be49d822b7cAEf4175450A4D83A32e72
           # Permissioned account     Role            Active                  Maximum                Processed
          -- ------------------------ --------------- ------ ------------------------ ------------------------
@@ -162,18 +164,18 @@ Compilation finished successfully
         addStake1 - gasUsed: 616750, fee: 0.04934, feeUsd: 19.0289578, @ 80.0 gwei & 385.67 ETH/USD, 0xbcadbd6f3691c3e23f35e6675d86efb97e4d853ecf24fdaf792ed803aec4d234
         + StakingFactory.StakingCreated(key: 0x84e7f81c8f95dbae66dbb9b6a36e3421648ca96ba532a04dedb0060eb3b206b1, staking: Staking:0xeee7)
         + OGToken.Transfer(from: User1:0xa11A, to: Staking:0xeee7, tokens: 1000.0)
-        + Staking.Staked(tokenOwner: User1:0xa11A, tokens: 1000.0, duration: 6, end: 1605572057)
+        + Staking.Staked(tokenOwner: User1:0xa11A, tokens: 1000.0, duration: 6, end: 1605597402)
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User1:0xa11A, tokens: 1000.0)
         + Staking.Transfer(from: ETH|null:0x0000, to: User1:0xa11A, tokens: 1000.0)
         addStake2 - gasUsed: 244579, fee: 0.01956632, feeUsd: 7.5461426344, @ 80.0 gwei & 385.67 ETH/USD, 0x143abdbc74268507157116862edb65a34c620da2c7d1673ac2c03efd48be37c1
         + OGToken.Transfer(from: User2:0xa22A, to: Staking:0xeee7, tokens: 1000.0)
-        + Staking.Staked(tokenOwner: User2:0xa22A, tokens: 1000.0, duration: 6, end: 1605572058)
+        + Staking.Staked(tokenOwner: User2:0xa22A, tokens: 1000.0, duration: 6, end: 1605597403)
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User2:0xa22A, tokens: 1000.0)
         + Staking.Transfer(from: ETH|null:0x0000, to: User2:0xa22A, tokens: 1000.0)
         addStake3 - gasUsed: 590926, fee: 0.04727408, feeUsd: 18.2321944336, @ 80.0 gwei & 385.67 ETH/USD, 0xa5eba82a7005efa1a837150604968b3618bf4396cab1202d6cc71891b85a64f8
         + StakingFactory.StakingCreated(key: 0x7d8d54967263de610de5be310aeac6c0f3b10aef74ce989301d6f0386e349f84, staking: Staking:0xf9AA)
         + OGToken.Transfer(from: User3:0xa33a, to: Staking:0xf9AA, tokens: 1000.0)
-        + Staking.Staked(tokenOwner: User3:0xa33a, tokens: 1000.0, duration: 6, end: 1605572059)
+        + Staking.Staked(tokenOwner: User3:0xa33a, tokens: 1000.0, duration: 6, end: 1605597404)
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User3:0xa33a, tokens: 1000.0)
         + Staking.Transfer(from: ETH|null:0x0000, to: User3:0xa33a, tokens: 1000.0)
         
@@ -204,6 +206,8 @@ Compilation finished successfully
           3 StakingFactory:0x5Fec    Mint Tokens     Yes                 123456789.0                      0.0
           4 StakingFactory:0x5Fec    Burn Tokens     Yes                         0.0                      0.0
          -- ------------------------ --------------- ------ ------------------------ ------------------------
+        - cap      : 0.0
+        - freezeCap: false
         Token 1 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 3000.0, owner: n/a, address: OGDToken:0x0f4e @ 0x0f4eA6f2be49d822b7cAEf4175450A4D83A32e72
           # Permissioned account     Role            Active                  Maximum                Processed
          -- ------------------------ --------------- ------ ------------------------ ------------------------
@@ -222,7 +226,7 @@ Compilation finished successfully
           - addresses                  : ["Fee0Token:0xBa1F","ETH|null:0x0000","ETH|null:0x0000","ETH|null:0x0000"]
           - uints                      : ["0","0","0","0","0","0"]
           - strings                    : ["FEE0Token","","",""]
-          - weightedEnd                : 4s 1605572057 = 3211144115000.0/2000.0
+          - weightedEnd                : 4s 1605597402 = 3211194805000.0/2000.0
           - slashingFactor             : 0.0%
           # Account                    Duration              End      Index                    Rate%                  Balance           Accrued Reward Accrual Term
          -- -------------------- -------------- ---------------- ---------- ------------------------ ------------------------ ------------------------ ------------
@@ -235,7 +239,7 @@ Compilation finished successfully
           - addresses                  : ["OGToken:0x1647","ETH|null:0x0000","ETH|null:0x0000","ETH|null:0x0000"]
           - uints                      : ["0","0","0","0","0","0"]
           - strings                    : ["OGToken","","",""]
-          - weightedEnd                : 6s 1605572059 = 1605572059000.0/1000.0
+          - weightedEnd                : 6s 1605597404 = 1605597404000.0/1000.0
           - slashingFactor             : 0.0%
           # Account                    Duration              End      Index                    Rate%                  Balance           Accrued Reward Accrual Term
          -- -------------------- -------------- ---------------- ---------- ------------------------ ------------------------ ------------------------ ------------
@@ -258,8 +262,8 @@ Compilation finished successfully
           - staking 1 @ Staking:0xf9AA, owner: StakingFactory:0x5Fec
         
         --- Test 3 - Stake #2 - StakingFactory.addStakingForToken() ---
-        Pausing 'Waiting' for 6s=Tue Nov 17 2020 11:14:01 GMT+1100 (Australian Eastern Daylight Time) now=Tue Nov 17 2020 11:13:55 GMT+1100 (Australian Eastern Daylight Time)
-        Paused 'Waiting' for 6s=Tue Nov 17 2020 11:14:01 GMT+1100 (Australian Eastern Daylight Time) now=Tue Nov 17 2020 11:14:01 GMT+1100 (Australian Eastern Daylight Time)
+        Pausing 'Waiting' for 6s=Tue Nov 17 2020 18:16:26 GMT+1100 (Australian Eastern Daylight Time) now=Tue Nov 17 2020 18:16:20 GMT+1100 (Australian Eastern Daylight Time)
+        Paused 'Waiting' for 6s=Tue Nov 17 2020 18:16:26 GMT+1100 (Australian Eastern Daylight Time) now=Tue Nov 17 2020 18:16:26 GMT+1100 (Australian Eastern Daylight Time)
         
         addStake4 - gasUsed: 222581, fee: 0.01780648, feeUsd: 6.8674251416, @ 80.0 gwei & 385.67 ETH/USD, 0x92234ec39cae2d351e2fb1fcb867c837238f35d343b34d0e6a5e3adc79470ca7
         + OGToken.Transfer(from: User1:0xa11A, to: Staking:0xeee7, tokens: 1000.0)
@@ -310,6 +314,8 @@ Compilation finished successfully
           3 StakingFactory:0x5Fec    Mint Tokens     Yes                 123456789.0         0.00027000001215
           4 StakingFactory:0x5Fec    Burn Tokens     Yes                         0.0                      0.0
          -- ------------------------ --------------- ------ ------------------------ ------------------------
+        - cap      : 0.0
+        - freezeCap: false
         Token 1 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 6000.00027000001215, owner: n/a, address: OGDToken:0x0f4e @ 0x0f4eA6f2be49d822b7cAEf4175450A4D83A32e72
           # Permissioned account     Role            Active                  Maximum                Processed
          -- ------------------------ --------------- ------ ------------------------ ------------------------
@@ -328,7 +334,7 @@ Compilation finished successfully
           - addresses                  : ["Fee0Token:0xBa1F","ETH|null:0x0000","ETH|null:0x0000","ETH|null:0x0000"]
           - uints                      : ["0","0","0","0","0","0"]
           - strings                    : ["FEE0Token","","",""]
-          - weightedEnd                : 1s 1605572063 = 6422288543002.98443513371435/4000.0001800000081
+          - weightedEnd                : 1s 1605597408 = 6422389923007.54653533900885/4000.0001800000081
           - slashingFactor             : 0.0%
           # Account                    Duration              End      Index                    Rate%                  Balance           Accrued Reward Accrual Term
          -- -------------------- -------------- ---------------- ---------- ------------------------ ------------------------ ------------------------ ------------
@@ -341,7 +347,7 @@ Compilation finished successfully
           - addresses                  : ["OGToken:0x1647","ETH|null:0x0000","ETH|null:0x0000","ETH|null:0x0000"]
           - uints                      : ["0","0","0","0","0","0"]
           - strings                    : ["OGToken","","",""]
-          - weightedEnd                : 3s 1605572065 = 3211144274501.49235256686325/2000.00009000000405
+          - weightedEnd                : 3s 1605597410 = 3211194964503.7734026695105/2000.00009000000405
           - slashingFactor             : 0.0%
           # Account                    Duration              End      Index                    Rate%                  Balance           Accrued Reward Accrual Term
          -- -------------------- -------------- ---------------- ---------- ------------------------ ------------------------ ------------------------ ------------
@@ -419,6 +425,8 @@ Compilation finished successfully
           3 StakingFactory:0x5Fec    Mint Tokens     Yes                 123456789.0         0.00063000003915
           4 StakingFactory:0x5Fec    Burn Tokens     Yes                         0.0                      0.0
          -- ------------------------ --------------- ------ ------------------------ ------------------------
+        - cap      : 0.0
+        - freezeCap: false
         Token 1 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 9000.00063000003915, owner: n/a, address: OGDToken:0x0f4e @ 0x0f4eA6f2be49d822b7cAEf4175450A4D83A32e72
           # Permissioned account     Role            Active                  Maximum                Processed
          -- ------------------------ --------------- ------ ------------------------ ------------------------
@@ -437,7 +445,7 @@ Compilation finished successfully
           - addresses                  : ["Fee0Token:0xBa1F","ETH|null:0x0000","ETH|null:0x0000","ETH|null:0x0000"]
           - uints                      : ["0","0","0","0","0","0"]
           - strings                    : ["FEE0Token","","",""]
-          - weightedEnd                : 1s 1605572069 = 9633433091340.31109543101395/6000.0004200000261
+          - weightedEnd                : 1s 1605597414 = 9633585161350.95599609251845/6000.0004200000261
           - slashingFactor             : 0.0%
           # Account                    Duration              End      Index                    Rate%                  Balance           Accrued Reward Accrual Term
          -- -------------------- -------------- ---------------- ---------- ------------------------ ------------------------ ------------------------ ------------
@@ -450,7 +458,7 @@ Compilation finished successfully
           - addresses                  : ["OGToken:0x1647","ETH|null:0x0000","ETH|null:0x0000","ETH|null:0x0000"]
           - uints                      : ["0","0","0","0","0","0"]
           - strings                    : ["OGToken","","",""]
-          - weightedEnd                : 3s 1605572071 = 4816716550170.15586271552655/3000.00021000001305
+          - weightedEnd                : 3s 1605597416 = 4816792585175.4783130462788/3000.00021000001305
           - slashingFactor             : 0.0%
           # Account                    Duration              End      Index                    Rate%                  Balance           Accrued Reward Accrual Term
          -- -------------------- -------------- ---------------- ---------- ------------------------ ------------------------ ------------------------ ------------
@@ -473,8 +481,8 @@ Compilation finished successfully
           - staking 1 @ Staking:0xf9AA, owner: StakingFactory:0x5Fec
         
         --- Test 5 - Unstake #1 - unstake(some) ---
-        Pausing 'Waiting' for 3s=Tue Nov 17 2020 11:14:06 GMT+1100 (Australian Eastern Daylight Time) now=Tue Nov 17 2020 11:14:03 GMT+1100 (Australian Eastern Daylight Time)
-        Paused 'Waiting' for 3s=Tue Nov 17 2020 11:14:06 GMT+1100 (Australian Eastern Daylight Time) now=Tue Nov 17 2020 11:14:06 GMT+1100 (Australian Eastern Daylight Time)
+        Pausing 'Waiting' for 3s=Tue Nov 17 2020 18:16:31 GMT+1100 (Australian Eastern Daylight Time) now=Tue Nov 17 2020 18:16:28 GMT+1100 (Australian Eastern Daylight Time)
+        Paused 'Waiting' for 3s=Tue Nov 17 2020 18:16:31 GMT+1100 (Australian Eastern Daylight Time) now=Tue Nov 17 2020 18:16:31 GMT+1100 (Australian Eastern Daylight Time)
         
         unstake1 - gasUsed: 183988, fee: 0.01471904, feeUsd: 5.6766921568, @ 80.0 gwei & 385.67 ETH/USD, 0x102e0add7cbdcc6f9a94841950b73f8937eaf4f826ebe0561295013357a8b7f0
         + OGToken.Transfer(from: ETH|null:0x0000, to: Staking:0xeee7, tokens: 0.000180000018000001)
@@ -528,6 +536,8 @@ Compilation finished successfully
           3 StakingFactory:0x5Fec    Mint Tokens     Yes                 123456789.0     0.001170000093150003
           4 StakingFactory:0x5Fec    Burn Tokens     Yes                         0.0                      0.0
          -- ------------------------ --------------- ------ ------------------------ ------------------------
+        - cap      : 0.0
+        - freezeCap: false
         Token 1 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 3000.001170000093150003, owner: n/a, address: OGDToken:0x0f4e @ 0x0f4eA6f2be49d822b7cAEf4175450A4D83A32e72
           # Permissioned account     Role            Active                  Maximum                Processed
          -- ------------------------ --------------- ------ ------------------------ ------------------------
@@ -546,7 +556,7 @@ Compilation finished successfully
           - addresses                  : ["Fee0Token:0xBa1F","ETH|null:0x0000","ETH|null:0x0000","ETH|null:0x0000"]
           - uints                      : ["0","0","0","0","0","0"]
           - strings                    : ["FEE0Token","","",""]
-          - weightedEnd                : 0s 1605572074 = 3211145397346.316256028913394145/2000.000780000062100002
+          - weightedEnd                : 0s 1605597419 = 3211196087366.085357602837944835/2000.000780000062100002
           - slashingFactor             : 0.0%
           # Account                    Duration              End      Index                    Rate%                  Balance           Accrued Reward Accrual Term
          -- -------------------- -------------- ---------------- ---------- ------------------------ ------------------------ ------------------------ ------------
@@ -559,7 +569,7 @@ Compilation finished successfully
           - addresses                  : ["OGToken:0x1647","ETH|null:0x0000","ETH|null:0x0000","ETH|null:0x0000"]
           - uints                      : ["0","0","0","0","0","0"]
           - strings                    : ["OGToken","","",""]
-          - weightedEnd                : 0s 1605572074 = 1605572700173.158713014503272074/1000.000390000031050001
+          - weightedEnd                : 0s 1605597419 = 1605598045183.043263801465547419/1000.000390000031050001
           - slashingFactor             : 0.0%
           # Account                    Duration              End      Index                    Rate%                  Balance           Accrued Reward Accrual Term
          -- -------------------- -------------- ---------------- ---------- ------------------------ ------------------------ ------------------------ ------------
@@ -634,6 +644,8 @@ Compilation finished successfully
           3 StakingFactory:0x5Fec    Mint Tokens     Yes                 123456789.0     0.001260000129600006
           4 StakingFactory:0x5Fec    Burn Tokens     Yes                         0.0                      0.0
          -- ------------------------ --------------- ------ ------------------------ ------------------------
+        - cap      : 0.0
+        - freezeCap: false
         Token 1 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 0.001260000129600006, owner: n/a, address: OGDToken:0x0f4e @ 0x0f4eA6f2be49d822b7cAEf4175450A4D83A32e72
           # Permissioned account     Role            Active                  Maximum                Processed
          -- ------------------------ --------------- ------ ------------------------ ------------------------
@@ -652,7 +664,7 @@ Compilation finished successfully
           - addresses                  : ["Fee0Token:0xBa1F","ETH|null:0x0000","ETH|null:0x0000","ETH|null:0x0000"]
           - uints                      : ["0","0","0","0","0","0"]
           - strings                    : ["FEE0Token","","",""]
-          - weightedEnd                : 0s 1605572077 = 1348680.682141433745488302/0.000840000086400004
+          - weightedEnd                : 0s 1605597422 = 1348701.971943623553589682/0.000840000086400004
           - slashingFactor             : 0.0%
           # Account                    Duration              End      Index                    Rate%                  Balance           Accrued Reward Accrual Term
          -- -------------------- -------------- ---------------- ---------- ------------------------ ------------------------ ------------------------ ------------
@@ -665,7 +677,7 @@ Compilation finished successfully
           - addresses                  : ["OGToken:0x1647","ETH|null:0x0000","ETH|null:0x0000","ETH|null:0x0000"]
           - uints                      : ["0","0","0","0","0","0"]
           - strings                    : ["OGToken","","",""]
-          - weightedEnd                : 0s 1605572077 = 674340.341700716937544154/0.000420000043200002
+          - weightedEnd                : 0s 1605597422 = 674350.986601811841594844/0.000420000043200002
           - slashingFactor             : 0.0%
           # Account                    Duration              End      Index                    Rate%                  Balance           Accrued Reward Accrual Term
          -- -------------------- -------------- ---------------- ---------- ------------------------ ------------------------ ------------------------ ------------
@@ -687,7 +699,7 @@ Compilation finished successfully
           - staking 0 @ Staking:0xeee7, owner: StakingFactory:0x5Fec
           - staking 1 @ Staking:0xf9AA, owner: StakingFactory:0x5Fec
         
-      ✓ Workflow #0 - Stake, stake, stake, unstake, unstake (14795ms)
+      ✓ Workflow #0 - Stake, stake, stake, unstake, unstake (14840ms)
     TestStakingFactory - Workflow #1 - Stake And Check weightedEnd
         Address 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E => Deployer:0xa00A
         Address 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433 => User1:0xa11A
@@ -705,7 +717,7 @@ Compilation finished successfully
         + OGToken.Transfer(from: ETH|null:0x0000, to: Deployer:0xa00A, tokens: 0.0)
         fee0TokenTx - gasUsed: 823708, fee: 0.06589664, feeUsd: 25.4143571488, @ 80.0 gwei & 385.67 ETH/USD, 0x88d367cc386ff08a56eeb83a812bf42f6529c6e9a9f2e63d1084a98739ebebd5
         + Fee0Token.Transfer(from: ETH|null:0x0000, to: Deployer:0xa00A, tokens: 100.0)
-        stakingFactoryTx - gasUsed: 5439921, fee: 0.43519368, feeUsd: 167.8411465656, @ 80.0 gwei & 385.67 ETH/USD, 0xc8338cd6c135ec8e78fbdf15474b455b8c75250f1d8ddffe716cf494f289e8ba
+        stakingFactoryTx - gasUsed: 5439921, fee: 0.43519368, feeUsd: 167.8411465656, @ 80.0 gwei & 385.67 ETH/USD, 0x36e8ff97c3c7b406061f429805d88f77ce85ed0efc1e82adfe3595db0db684f5
         --- Setup 2 - OGToken and OGDToken permissioning ---
         setup2Txs[0] - gasUsed: 78942, fee: 0.00631536, feeUsd: 2.4356448912, @ 80.0 gwei & 385.67 ETH/USD, 0x66736bcf0d8ea8e193f3c42f276d1fe843f1970dfbffc1deaa7198e4c28de7dd
         + OGToken.PermissionUpdated(account: Deployer:0xa00A, role: 1, active: true, maximum: 0, processed: 0)
@@ -747,6 +759,8 @@ Compilation finished successfully
           3 StakingFactory:0x5fe7    Mint Tokens     Yes                 123456789.0                      0.0
           4 StakingFactory:0x5fe7    Burn Tokens     Yes                         0.0                      0.0
          -- ------------------------ --------------- ------ ------------------------ ------------------------
+        - cap      : 0.0
+        - freezeCap: false
         Token 1 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 0.0, owner: n/a, address: OGDToken:0x967C @ 0x967C635e5b7C32B215b7255Ea5355D39F68fCDcc
           # Permissioned account     Role            Active                  Maximum                Processed
          -- ------------------------ --------------- ------ ------------------------ ------------------------
@@ -775,7 +789,7 @@ Compilation finished successfully
         
         --- Setup Completed ---
 
-        --- Test 1 - Mint 10,000 OG tokens for User{1..3}; Owner approve 100 FEE for OGToken to spend ---
+        --- Test 1 - Mint 10,000 OG tokens for user{1..3}; user approve 100 FEE for OGToken to spend ---
         mint1 - gasUsed: 91248, fee: 0.00729984, feeUsd: 2.8153292928, @ 80.0 gwei & 385.67 ETH/USD, 0xae087b97b4dc4eec3bd03f3eb2e5436a53d1d2609b11b1acf96c3066b3e7b736
         + OGToken.Transfer(from: ETH|null:0x0000, to: User1:0xa11A, tokens: 10000.0)
         mint2 - gasUsed: 61248, fee: 0.00489984, feeUsd: 1.8897212928, @ 80.0 gwei & 385.67 ETH/USD, 0x6908aa16621b183a0d4512b35b21f7894fbdb2f9e69678fbb508105177d1cedf
@@ -814,6 +828,8 @@ Compilation finished successfully
           3 StakingFactory:0x5fe7    Mint Tokens     Yes                 123456789.0                      0.0
           4 StakingFactory:0x5fe7    Burn Tokens     Yes                         0.0                      0.0
          -- ------------------------ --------------- ------ ------------------------ ------------------------
+        - cap      : 0.0
+        - freezeCap: false
         Token 1 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 0.0, owner: n/a, address: OGDToken:0x967C @ 0x967C635e5b7C32B215b7255Ea5355D39F68fCDcc
           # Permissioned account     Role            Active                  Maximum                Processed
          -- ------------------------ --------------- ------ ------------------------ ------------------------
@@ -845,12 +861,12 @@ Compilation finished successfully
         addStake1 - gasUsed: 641653, fee: 0.05133224, feeUsd: 19.7973050008, @ 80.0 gwei & 385.67 ETH/USD, 0x78f82c9115ff34cd790a02c02370d7ee5f34d540d0a2fbbdefb0773870e7cb93
         + StakingFactory.StakingCreated(key: 0xc1ee7458fb473c9dc24d8c58449a335efd87f7ca18caeb85ba07445b654ff1c6, staking: Staking:0x9291)
         + OGToken.Transfer(from: User1:0xa11A, to: Staking:0x9291, tokens: 1000.0)
-        + Staking.Staked(tokenOwner: User1:0xa11A, tokens: 1000.0, duration: 172800, end: 1605744896)
+        + Staking.Staked(tokenOwner: User1:0xa11A, tokens: 1000.0, duration: 172800, end: 1605770241)
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User1:0xa11A, tokens: 1000.0)
         + Staking.Transfer(from: ETH|null:0x0000, to: User1:0xa11A, tokens: 1000.0)
         addStake2 - gasUsed: 269482, fee: 0.02155856, feeUsd: 8.3144898352, @ 80.0 gwei & 385.67 ETH/USD, 0xce34b7c96eb869b3da73a0f1f245fdb95102cc533320548bb16a968b44b5784c
         + OGToken.Transfer(from: User2:0xa22A, to: Staking:0x9291, tokens: 2000.0)
-        + Staking.Staked(tokenOwner: User2:0xa22A, tokens: 2000.0, duration: 2592000, end: 1608164097)
+        + Staking.Staked(tokenOwner: User2:0xa22A, tokens: 2000.0, duration: 2592000, end: 1608189442)
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User2:0xa22A, tokens: 2000.0)
         + Staking.Transfer(from: ETH|null:0x0000, to: User2:0xa22A, tokens: 2000.0)
         
@@ -880,6 +896,8 @@ Compilation finished successfully
           3 StakingFactory:0x5fe7    Mint Tokens     Yes                 123456789.0                      0.0
           4 StakingFactory:0x5fe7    Burn Tokens     Yes                         0.0                      0.0
          -- ------------------------ --------------- ------ ------------------------ ------------------------
+        - cap      : 0.0
+        - freezeCap: false
         Token 1 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 6000.0, owner: n/a, address: OGDToken:0x967C @ 0x967C635e5b7C32B215b7255Ea5355D39F68fCDcc
           # Permissioned account     Role            Active                  Maximum                Processed
          -- ------------------------ --------------- ------ ------------------------ ------------------------
@@ -898,7 +916,7 @@ Compilation finished successfully
           - addresses                  : ["Fee0Token:0x337c","ETH|null:0x0000","ETH|null:0x0000","ETH|null:0x0000"]
           - uints                      : ["0","0","0","0","0","0"]
           - strings                    : ["FEE0Token","","",""]
-          - weightedEnd                : 192d19h59m59s 1622232897 = 9733397384000.0/6000.0
+          - weightedEnd                : 192d19h59m59s 1622258242 = 9733549454000.0/6000.0
           - slashingFactor             : 0.0%
           # Account                    Duration              End      Index                    Rate%                  Balance           Accrued Reward Accrual Term
          -- -------------------- -------------- ---------------- ---------- ------------------------ ------------------------ ------------------------ ------------
@@ -921,9 +939,9 @@ Compilation finished successfully
         - stakingsLength         : 1
           - staking 0 @ Staking:0x9291, owner: StakingFactory:0x5fe7
         
-        expectedWeightedEnd: 192d19h59m12s 1622232850 +/- 150
-        weightedEnd        : 192d19h59m59s 1622232897
-      ✓ Workflow #1 - Stake And Check weightedEnd (1478ms)
+        expectedWeightedEnd: 192d19h59m12s 1622258195 +/- 150
+        weightedEnd        : 192d19h59m59s 1622258242
+      ✓ Workflow #1 - Stake And Check weightedEnd (1385ms)
     TestStakingFactory - Workflow #2 - Stake with expected exception
         Address 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E => Deployer:0xa00A
         Address 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433 => User1:0xa11A
@@ -941,7 +959,7 @@ Compilation finished successfully
         + OGToken.Transfer(from: ETH|null:0x0000, to: Deployer:0xa00A, tokens: 0.0)
         fee0TokenTx - gasUsed: 823708, fee: 0.06589664, feeUsd: 25.4143571488, @ 80.0 gwei & 385.67 ETH/USD, 0x8b296e008b0d25809188fa72d6a6326eff43aa42171c60590af72fdb0d3bac7e
         + Fee0Token.Transfer(from: ETH|null:0x0000, to: Deployer:0xa00A, tokens: 100.0)
-        stakingFactoryTx - gasUsed: 5439909, fee: 0.43519272, feeUsd: 167.8407763224, @ 80.0 gwei & 385.67 ETH/USD, 0xbc81ec98d92f010e6e0fe7187bc8fd5ac0d163f1d450b1412311d5f4b3100664
+        stakingFactoryTx - gasUsed: 5439909, fee: 0.43519272, feeUsd: 167.8407763224, @ 80.0 gwei & 385.67 ETH/USD, 0xec03404207a4482ec0e1a0368cc7648cbf808090e9617f92ccce89928c847237
         --- Setup 2 - OGToken and OGDToken permissioning ---
         setup2Txs[0] - gasUsed: 78942, fee: 0.00631536, feeUsd: 2.4356448912, @ 80.0 gwei & 385.67 ETH/USD, 0x006265d54fca5d94733d3159ee636182ea66e14b603a04527548ca6bb22d85c7
         + OGToken.PermissionUpdated(account: Deployer:0xa00A, role: 1, active: true, maximum: 0, processed: 0)
@@ -983,6 +1001,8 @@ Compilation finished successfully
           3 StakingFactory:0xe669    Mint Tokens     Yes                 123456789.0                      0.0
           4 StakingFactory:0xe669    Burn Tokens     Yes                         0.0                      0.0
          -- ------------------------ --------------- ------ ------------------------ ------------------------
+        - cap      : 0.0
+        - freezeCap: false
         Token 1 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 0.0, owner: n/a, address: OGDToken:0xC27e @ 0xC27e7714400f7b6c4E2a3baB00a0dB8Fb0719275
           # Permissioned account     Role            Active                  Maximum                Processed
          -- ------------------------ --------------- ------ ------------------------ ------------------------
@@ -1011,7 +1031,7 @@ Compilation finished successfully
         
         --- Setup Completed ---
 
-        --- Test 1 - Mint 10,000 OG tokens for User{1..3}; Owner approve 100 FEE for OGToken to spend ---
+        --- Test 1 - Mint 10,000 OG tokens for user{1..3}; user approve 100 FEE for OGToken to spend ---
         mint1 - gasUsed: 91248, fee: 0.00729984, feeUsd: 2.8153292928, @ 80.0 gwei & 385.67 ETH/USD, 0x92d817b0904863e67426ed7ef15e263229d822e587b83871273472151253db40
         + OGToken.Transfer(from: ETH|null:0x0000, to: User1:0xa11A, tokens: 10000.0)
         mint2 - gasUsed: 61248, fee: 0.00489984, feeUsd: 1.8897212928, @ 80.0 gwei & 385.67 ETH/USD, 0x310ed92face80f72f6e7ae87dc3245a99eb27b9895926893e183fceb9a4f9492
@@ -1050,6 +1070,8 @@ Compilation finished successfully
           3 StakingFactory:0xe669    Mint Tokens     Yes                 123456789.0                      0.0
           4 StakingFactory:0xe669    Burn Tokens     Yes                         0.0                      0.0
          -- ------------------------ --------------- ------ ------------------------ ------------------------
+        - cap      : 0.0
+        - freezeCap: false
         Token 1 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 0.0, owner: n/a, address: OGDToken:0xC27e @ 0xC27e7714400f7b6c4E2a3baB00a0dB8Fb0719275
           # Permissioned account     Role            Active                  Maximum                Processed
          -- ------------------------ --------------- ------ ------------------------ ------------------------
@@ -1082,12 +1104,12 @@ Compilation finished successfully
         addStake1 - gasUsed: 616762, fee: 0.04934096, feeUsd: 19.0293280432, @ 80.0 gwei & 385.67 ETH/USD, 0x7d063119ab5eb28566ce6961f2cd3ccd23294d2c46afebda12414cea09086902
         + StakingFactory.StakingCreated(key: 0x9ae6b74dfd264cc11c074c46533cb4abea3029c693715b457287eac20f9ac423, staking: Staking:0xf7e7)
         + OGToken.Transfer(from: User1:0xa11A, to: Staking:0xf7e7, tokens: 1000.0)
-        + Staking.Staked(tokenOwner: User1:0xa11A, tokens: 1000.0, duration: 1000, end: 1605573117)
+        + Staking.Staked(tokenOwner: User1:0xa11A, tokens: 1000.0, duration: 1000, end: 1605598462)
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User1:0xa11A, tokens: 1000.0)
         + Staking.Transfer(from: ETH|null:0x0000, to: User1:0xa11A, tokens: 1000.0)
         addStake2 - gasUsed: 244591, fee: 0.01956728, feeUsd: 7.5465128776, @ 80.0 gwei & 385.67 ETH/USD, 0xfdef8310d78ab820534a2c26a8a844a24d3fc2635184a8b7b5e8839ee55a6784
         + OGToken.Transfer(from: User2:0xa22A, to: Staking:0xf7e7, tokens: 2000.0)
-        + Staking.Staked(tokenOwner: User2:0xa22A, tokens: 2000.0, duration: 10000, end: 1605582118)
+        + Staking.Staked(tokenOwner: User2:0xa22A, tokens: 2000.0, duration: 10000, end: 1605607463)
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User2:0xa22A, tokens: 2000.0)
         + Staking.Transfer(from: ETH|null:0x0000, to: User2:0xa22A, tokens: 2000.0)
         
@@ -1117,6 +1139,8 @@ Compilation finished successfully
           3 StakingFactory:0xe669    Mint Tokens     Yes                 123456789.0                      0.0
           4 StakingFactory:0xe669    Burn Tokens     Yes                         0.0                      0.0
          -- ------------------------ --------------- ------ ------------------------ ------------------------
+        - cap      : 0.0
+        - freezeCap: false
         Token 1 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 3000.0, owner: n/a, address: OGDToken:0xC27e @ 0xC27e7714400f7b6c4E2a3baB00a0dB8Fb0719275
           # Permissioned account     Role            Active                  Maximum                Processed
          -- ------------------------ --------------- ------ ------------------------ ------------------------
@@ -1135,7 +1159,7 @@ Compilation finished successfully
           - addresses                  : ["Fee0Token:0xd3c9","ETH|null:0x0000","ETH|null:0x0000","ETH|null:0x0000"]
           - uints                      : ["0","0","0","0","0","0"]
           - strings                    : ["FEE0Token","","",""]
-          - weightedEnd                : 1h56m38s 1605579117 = 4816737353000.0/3000.0
+          - weightedEnd                : 1h56m38s 1605604462 = 4816813388000.0/3000.0
           - slashingFactor             : 0.0%
           # Account                    Duration              End      Index                    Rate%                  Balance           Accrued Reward Accrual Term
          -- -------------------- -------------- ---------------- ---------- ------------------------ ------------------------ ------------------------ ------------
@@ -1157,7 +1181,7 @@ Compilation finished successfully
         - stakingsLength         : 1
           - staking 0 @ Staking:0xf7e7, owner: StakingFactory:0xe669
         
-      ✓ Workflow #2 - Stake with expected exception (1359ms)
+      ✓ Workflow #2 - Stake with expected exception (1530ms)
     TestStakingFactory - Workflow #3 - Stake, slash and unstake
         Address 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E => Deployer:0xa00A
         Address 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433 => User1:0xa11A
@@ -1175,7 +1199,7 @@ Compilation finished successfully
         + OGToken.Transfer(from: ETH|null:0x0000, to: Deployer:0xa00A, tokens: 0.0)
         fee0TokenTx - gasUsed: 823708, fee: 0.06589664, feeUsd: 25.4143571488, @ 80.0 gwei & 385.67 ETH/USD, 0x381833c06decdc7433e6e80b59dc0042f06897965e047837347c188483113de8
         + Fee0Token.Transfer(from: ETH|null:0x0000, to: Deployer:0xa00A, tokens: 100.0)
-        stakingFactoryTx - gasUsed: 5439921, fee: 0.43519368, feeUsd: 167.8411465656, @ 80.0 gwei & 385.67 ETH/USD, 0xa1c2c750fa8790721215a3feaa004a2696f90d76d5ae27a9026e86904af45ef2
+        stakingFactoryTx - gasUsed: 5439921, fee: 0.43519368, feeUsd: 167.8411465656, @ 80.0 gwei & 385.67 ETH/USD, 0x9b46e48e646f5e2fa85aa5e479965350a77b994f7ba499af60422882c041dc0a
         --- Setup 2 - OGToken and OGDToken permissioning ---
         setup2Txs[0] - gasUsed: 78942, fee: 0.00631536, feeUsd: 2.4356448912, @ 80.0 gwei & 385.67 ETH/USD, 0xd29b551a28aa85af1a22d818a38ef114abd860f75de2ee5e2dfb0ee3342ec67c
         + OGToken.PermissionUpdated(account: Deployer:0xa00A, role: 1, active: true, maximum: 0, processed: 0)
@@ -1217,6 +1241,8 @@ Compilation finished successfully
           3 StakingFactory:0x7114    Mint Tokens     Yes                 123456789.0                      0.0
           4 StakingFactory:0x7114    Burn Tokens     Yes                         0.0                      0.0
          -- ------------------------ --------------- ------ ------------------------ ------------------------
+        - cap      : 0.0
+        - freezeCap: false
         Token 1 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 0.0, owner: n/a, address: OGDToken:0xDA36 @ 0xDA36A974FfdFC9C23698e1d493b898c6992983f9
           # Permissioned account     Role            Active                  Maximum                Processed
          -- ------------------------ --------------- ------ ------------------------ ------------------------
@@ -1245,7 +1271,7 @@ Compilation finished successfully
         
         --- Setup Completed ---
 
-        --- Test 1 - Mint 10,000 OG tokens for User{1..3}; User{1..3} approve 10,000 FEE for StakingFactory to spend ---
+        --- Test 1 - Mint 10,000 OG tokens for user{1..3}; user{1..3} approve 10,000 FEE for StakingFactory to spend ---
         mint1 - gasUsed: 91248, fee: 0.00729984, feeUsd: 2.8153292928, @ 80.0 gwei & 385.67 ETH/USD, 0xc07a7bcad22fdcc83e5646c7f2feae1fae042c5af38aaef86af9deb6d723b8ee
         + OGToken.Transfer(from: ETH|null:0x0000, to: User1:0xa11A, tokens: 10000.0)
         mint2 - gasUsed: 61248, fee: 0.00489984, feeUsd: 1.8897212928, @ 80.0 gwei & 385.67 ETH/USD, 0x6a3f6a62ecf0d745e160b5dee386907ca46b7aab549281c55b2340ab5f43b5e4
@@ -1284,6 +1310,8 @@ Compilation finished successfully
           3 StakingFactory:0x7114    Mint Tokens     Yes                 123456789.0                      0.0
           4 StakingFactory:0x7114    Burn Tokens     Yes                         0.0                      0.0
          -- ------------------------ --------------- ------ ------------------------ ------------------------
+        - cap      : 0.0
+        - freezeCap: false
         Token 1 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 0.0, owner: n/a, address: OGDToken:0xDA36 @ 0xDA36A974FfdFC9C23698e1d493b898c6992983f9
           # Permissioned account     Role            Active                  Maximum                Processed
          -- ------------------------ --------------- ------ ------------------------ ------------------------
@@ -1310,22 +1338,22 @@ Compilation finished successfully
         - stakingRewardCurve     : StakingRewardCurve:0x6c82
         - stakingsLength         : 0
         
-        --- Test 2 - User{1..3} -> StakingFactory.addStakingForToken(1,000, duration) ---
+        --- Test 2 - user{1..3} -> StakingFactory.addStakingForToken(1,000, duration) ---
         Address 0xd60Db24BaE03f13808993A1Fe749cb1919BE6616 => Staking:0xd60D
         addStake1 - gasUsed: 616750, fee: 0.04934, feeUsd: 19.0289578, @ 80.0 gwei & 385.67 ETH/USD, 0x4f6d2bd94a9876bafb4c33b46366eb3a7892474b67ac786d270a5f0fab68188d
         + StakingFactory.StakingCreated(key: 0x3db41382694d0dcf8393260b83ae50d074a62b83a8fb0cd4405b893c79a3753d, staking: Staking:0xd60D)
         + OGToken.Transfer(from: User1:0xa11A, to: Staking:0xd60D, tokens: 1000.0)
-        + Staking.Staked(tokenOwner: User1:0xa11A, tokens: 1000.0, duration: 3, end: 1605572141)
+        + Staking.Staked(tokenOwner: User1:0xa11A, tokens: 1000.0, duration: 3, end: 1605597486)
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User1:0xa11A, tokens: 1000.0)
         + Staking.Transfer(from: ETH|null:0x0000, to: User1:0xa11A, tokens: 1000.0)
         addStake2 - gasUsed: 244579, fee: 0.01956632, feeUsd: 7.5461426344, @ 80.0 gwei & 385.67 ETH/USD, 0xa226fe691bece8026cb0a715223827bd85c5e3c6f561e895c1a3ce491cf7f1bd
         + OGToken.Transfer(from: User2:0xa22A, to: Staking:0xd60D, tokens: 1000.0)
-        + Staking.Staked(tokenOwner: User2:0xa22A, tokens: 1000.0, duration: 3, end: 1605572142)
+        + Staking.Staked(tokenOwner: User2:0xa22A, tokens: 1000.0, duration: 3, end: 1605597487)
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User2:0xa22A, tokens: 1000.0)
         + Staking.Transfer(from: ETH|null:0x0000, to: User2:0xa22A, tokens: 1000.0)
         addStake3 - gasUsed: 244579, fee: 0.01956632, feeUsd: 7.5461426344, @ 80.0 gwei & 385.67 ETH/USD, 0xbbbed0b972c27ef2ace39146f709c59f24535c347eeda2f31cc2a1bceaebc3be
         + OGToken.Transfer(from: User3:0xa33a, to: Staking:0xd60D, tokens: 1000.0)
-        + Staking.Staked(tokenOwner: User3:0xa33a, tokens: 1000.0, duration: 3, end: 1605572143)
+        + Staking.Staked(tokenOwner: User3:0xa33a, tokens: 1000.0, duration: 3, end: 1605597488)
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User3:0xa33a, tokens: 1000.0)
         + Staking.Transfer(from: ETH|null:0x0000, to: User3:0xa33a, tokens: 1000.0)
         
@@ -1355,6 +1383,8 @@ Compilation finished successfully
           3 StakingFactory:0x7114    Mint Tokens     Yes                 123456789.0                      0.0
           4 StakingFactory:0x7114    Burn Tokens     Yes                         0.0                      0.0
          -- ------------------------ --------------- ------ ------------------------ ------------------------
+        - cap      : 0.0
+        - freezeCap: false
         Token 1 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 3000.0, owner: n/a, address: OGDToken:0xDA36 @ 0xDA36A974FfdFC9C23698e1d493b898c6992983f9
           # Permissioned account     Role            Active                  Maximum                Processed
          -- ------------------------ --------------- ------ ------------------------ ------------------------
@@ -1373,7 +1403,7 @@ Compilation finished successfully
           - addresses                  : ["Fee0Token:0xE7D2","ETH|null:0x0000","ETH|null:0x0000","ETH|null:0x0000"]
           - uints                      : ["0","0","0","0","0","0"]
           - strings                    : ["FEE0Token","","",""]
-          - weightedEnd                : 2s 1605572142 = 4816716426000.0/3000.0
+          - weightedEnd                : 2s 1605597487 = 4816792461000.0/3000.0
           - slashingFactor             : 0.0%
           # Account                    Duration              End      Index                    Rate%                  Balance           Accrued Reward Accrual Term
          -- -------------------- -------------- ---------------- ---------- ------------------------ ------------------------ ------------------------ ------------
@@ -1427,6 +1457,8 @@ Compilation finished successfully
           3 StakingFactory:0x7114    Mint Tokens     Yes                 123456789.0                      0.0
           4 StakingFactory:0x7114    Burn Tokens     Yes                         0.0                      0.0
          -- ------------------------ --------------- ------ ------------------------ ------------------------
+        - cap      : 0.0
+        - freezeCap: false
         Token 1 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 3000.0, owner: n/a, address: OGDToken:0xDA36 @ 0xDA36A974FfdFC9C23698e1d493b898c6992983f9
           # Permissioned account     Role            Active                  Maximum                Processed
          -- ------------------------ --------------- ------ ------------------------ ------------------------
@@ -1445,7 +1477,7 @@ Compilation finished successfully
           - addresses                  : ["Fee0Token:0xE7D2","ETH|null:0x0000","ETH|null:0x0000","ETH|null:0x0000"]
           - uints                      : ["0","0","0","0","0","0"]
           - strings                    : ["FEE0Token","","",""]
-          - weightedEnd                : 1s 1605572142 = 4816716426000.0/3000.0
+          - weightedEnd                : 1s 1605597487 = 4816792461000.0/3000.0
           - slashingFactor             : 30.0%
           # Account                    Duration              End      Index                    Rate%                  Balance           Accrued Reward Accrual Term
          -- -------------------- -------------- ---------------- ---------- ------------------------ ------------------------ ------------------------ ------------
@@ -1468,7 +1500,7 @@ Compilation finished successfully
         - stakingsLength         : 1
           - staking 0 @ Staking:0xd60D, owner: StakingFactory:0x7114
         
-        --- Test 4 - User{1..3} -> unstake(1,000) ---
+        --- Test 4 - user{1..3} -> unstake(1,000) ---
         unstake1 - gasUsed: 150160, fee: 0.0120128, feeUsd: 4.632976576, @ 80.0 gwei & 385.67 ETH/USD, 0x7278b7297118b50277bcf168edde65d501cc0310ba3e2c17e9f5c6e9795bcc7e
         + OGToken.Transfer(from: ETH|null:0x0000, to: User1:0xa11A, tokens: 0.00002800000056)
         + OGDToken.Transfer(from: User1:0xa11A, to: ETH|null:0x0000, tokens: 1000.0)
@@ -1514,6 +1546,8 @@ Compilation finished successfully
           3 StakingFactory:0x7114    Mint Tokens     Yes                 123456789.0         0.00008400000168
           4 StakingFactory:0x7114    Burn Tokens     Yes                         0.0                      0.0
          -- ------------------------ --------------- ------ ------------------------ ------------------------
+        - cap      : 0.0
+        - freezeCap: false
         Token 1 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 0.0, owner: n/a, address: OGDToken:0xDA36 @ 0xDA36A974FfdFC9C23698e1d493b898c6992983f9
           # Permissioned account     Role            Active                  Maximum                Processed
          -- ------------------------ --------------- ------ ------------------------ ------------------------
@@ -1532,7 +1566,7 @@ Compilation finished successfully
           - addresses                  : ["Fee0Token:0xE7D2","ETH|null:0x0000","ETH|null:0x0000","ETH|null:0x0000"]
           - uints                      : ["0","0","0","0","0","0"]
           - strings                    : ["FEE0Token","","",""]
-          - weightedEnd                : 0s 1605572144 = 0.0/0.0
+          - weightedEnd                : 0s 1605597489 = 0.0/0.0
           - slashingFactor             : 30.0%
           # Account                    Duration              End      Index                    Rate%                  Balance           Accrued Reward Accrual Term
          -- -------------------- -------------- ---------------- ---------- ------------------------ ------------------------ ------------------------ ------------
@@ -1552,7 +1586,7 @@ Compilation finished successfully
         - stakingsLength         : 1
           - staking 0 @ Staking:0xd60D, owner: StakingFactory:0x7114
         
-      ✓ Workflow #3 - Stake, slash and unstake (2861ms)
+      ✓ Workflow #3 - Stake, slash and unstake (3139ms)
     TestStakingFactory - Workflow #3 - Stake through factory, stake, restake, unstake(some), unstakeAll()
         Address 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E => Deployer:0xa00A
         Address 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433 => User1:0xa11A
@@ -1570,7 +1604,7 @@ Compilation finished successfully
         + OGToken.Transfer(from: ETH|null:0x0000, to: Deployer:0xa00A, tokens: 0.0)
         fee0TokenTx - gasUsed: 823708, fee: 0.06589664, feeUsd: 25.4143571488, @ 80.0 gwei & 385.67 ETH/USD, 0x642b809905e14b9a891ad1a3fd2dd0434c006b0b368e9be532588dfcb35010f2
         + Fee0Token.Transfer(from: ETH|null:0x0000, to: Deployer:0xa00A, tokens: 100.0)
-        stakingFactoryTx - gasUsed: 5439921, fee: 0.43519368, feeUsd: 167.8411465656, @ 80.0 gwei & 385.67 ETH/USD, 0x758ebdbf8da3c569b35d8d993e8a3e808889688036f6177326bd755887d5837e
+        stakingFactoryTx - gasUsed: 5439921, fee: 0.43519368, feeUsd: 167.8411465656, @ 80.0 gwei & 385.67 ETH/USD, 0xff5a9a3676657431a6ffd7675bd59542abd5839b11dcfe9a781b8a48529d40f8
         --- Setup 2 - OGToken and OGDToken permissioning ---
         setup2Txs[0] - gasUsed: 78942, fee: 0.00631536, feeUsd: 2.4356448912, @ 80.0 gwei & 385.67 ETH/USD, 0x52b06a35a0884d97ee08b7873243746dc192095bb7597f21ae57f158c854bf25
         + OGToken.PermissionUpdated(account: Deployer:0xa00A, role: 1, active: true, maximum: 0, processed: 0)
@@ -1612,6 +1646,8 @@ Compilation finished successfully
           3 StakingFactory:0x5666    Mint Tokens     Yes                 123456789.0                      0.0
           4 StakingFactory:0x5666    Burn Tokens     Yes                         0.0                      0.0
          -- ------------------------ --------------- ------ ------------------------ ------------------------
+        - cap      : 0.0
+        - freezeCap: false
         Token 1 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 0.0, owner: n/a, address: OGDToken:0x4A54 @ 0x4A54E385b595aFCB2379e67a26fd0a48D98446f6
           # Permissioned account     Role            Active                  Maximum                Processed
          -- ------------------------ --------------- ------ ------------------------ ------------------------
@@ -1640,7 +1676,7 @@ Compilation finished successfully
         
         --- Setup Completed ---
 
-        --- Test 1 - Mint 10,000 OG tokens for User1; User1 approve 10,000 FEE for StakingFactory to spend ---
+        --- Test 1 - Mint 10,000 OG tokens for user1; user1 approve 10,000 FEE for StakingFactory to spend ---
         mint1 - gasUsed: 91248, fee: 0.00729984, feeUsd: 2.8153292928, @ 80.0 gwei & 385.67 ETH/USD, 0xf80bdddadc2bd7b77fe2471d20cba4aef4b7a8961139251a6bee574c719a5c21
         + OGToken.Transfer(from: ETH|null:0x0000, to: User1:0xa11A, tokens: 10000.0)
         approve1 - gasUsed: 43980, fee: 0.0035184, feeUsd: 1.356941328, @ 80.0 gwei & 385.67 ETH/USD, 0xded0e3aa9f8a48b6d7b6a7cf0e894cd73c22c8eabcc9507f5a8e719b3b26703e
@@ -1671,6 +1707,8 @@ Compilation finished successfully
           3 StakingFactory:0x5666    Mint Tokens     Yes                 123456789.0                      0.0
           4 StakingFactory:0x5666    Burn Tokens     Yes                         0.0                      0.0
          -- ------------------------ --------------- ------ ------------------------ ------------------------
+        - cap      : 0.0
+        - freezeCap: false
         Token 1 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 0.0, owner: n/a, address: OGDToken:0x4A54 @ 0x4A54E385b595aFCB2379e67a26fd0a48D98446f6
           # Permissioned account     Role            Active                  Maximum                Processed
          -- ------------------------ --------------- ------ ------------------------ ------------------------
@@ -1697,12 +1735,12 @@ Compilation finished successfully
         - stakingRewardCurve     : StakingRewardCurve:0x1b9B
         - stakingsLength         : 0
         
-        --- Test 2 - User1 -> StakingFactory.addStakingForToken(1,000, duration) ---
+        --- Test 2 - user1 -> StakingFactory.addStakingForToken(1,000, duration) ---
         Address 0xAE41e0f41b0E8D7E2F53A99D23Fe0b958D027C71 => Staking:0xAE41
         addStake1 - gasUsed: 616750, fee: 0.04934, feeUsd: 19.0289578, @ 80.0 gwei & 385.67 ETH/USD, 0x8405c72519c4ce82fcd3d6fa053f1f40d0a44363baa53d39c903d641b024884b
         + StakingFactory.StakingCreated(key: 0x499af3df32f9f6972e513da11fdf23019ff3ad35da19294570c4f0a5d187959d, staking: Staking:0xAE41)
         + OGToken.Transfer(from: User1:0xa11A, to: Staking:0xAE41, tokens: 1000.0)
-        + Staking.Staked(tokenOwner: User1:0xa11A, tokens: 1000.0, duration: 2, end: 1605572161)
+        + Staking.Staked(tokenOwner: User1:0xa11A, tokens: 1000.0, duration: 2, end: 1605597506)
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User1:0xa11A, tokens: 1000.0)
         + Staking.Transfer(from: ETH|null:0x0000, to: User1:0xa11A, tokens: 1000.0)
         
@@ -1732,6 +1770,8 @@ Compilation finished successfully
           3 StakingFactory:0x5666    Mint Tokens     Yes                 123456789.0                      0.0
           4 StakingFactory:0x5666    Burn Tokens     Yes                         0.0                      0.0
          -- ------------------------ --------------- ------ ------------------------ ------------------------
+        - cap      : 0.0
+        - freezeCap: false
         Token 1 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 1000.0, owner: n/a, address: OGDToken:0x4A54 @ 0x4A54E385b595aFCB2379e67a26fd0a48D98446f6
           # Permissioned account     Role            Active                  Maximum                Processed
          -- ------------------------ --------------- ------ ------------------------ ------------------------
@@ -1750,7 +1790,7 @@ Compilation finished successfully
           - addresses                  : ["Fee0Token:0x62C1","ETH|null:0x0000","ETH|null:0x0000","ETH|null:0x0000"]
           - uints                      : ["0","0","0","0","0","0"]
           - strings                    : ["FEE0Token","","",""]
-          - weightedEnd                : 2s 1605572161 = 1605572161000.0/1000.0
+          - weightedEnd                : 2s 1605597506 = 1605597506000.0/1000.0
           - slashingFactor             : 0.0%
           # Account                    Duration              End      Index                    Rate%                  Balance           Accrued Reward Accrual Term
          -- -------------------- -------------- ---------------- ---------- ------------------------ ------------------------ ------------------------ ------------
@@ -1771,7 +1811,7 @@ Compilation finished successfully
         - stakingsLength         : 1
           - staking 0 @ Staking:0xAE41, owner: StakingFactory:0x5666
         
-        ---  Test 3 - User1 -> OGToken.approve(stakeAddress, 1,000) and User1 -> Staking.stake(1,000, duration)---
+        ---  Test 3 - user1 -> OGToken.approve(stakeAddress, 1,000) and user1 -> Staking.stake(1,000, duration)---
         approve2 - gasUsed: 43968, fee: 0.00351744, feeUsd: 1.3565710848, @ 80.0 gwei & 385.67 ETH/USD, 0xf6cd7ee9c8e518d2cf44d56ebbb634a0c817a870c5987cb056b6e789880bc39a
         + OGToken.Approval(tokenOwner: User1:0xa11A, spender: Staking:0xAE41, tokens: 1000.0)
         addStake2 - gasUsed: 199670, fee: 0.0159736, feeUsd: 6.160538312, @ 80.0 gwei & 385.67 ETH/USD, 0x8c17cefc5583a4fa02395ff3735dcf8b449df0be1581e953909280b9d5d71a7e
@@ -1808,6 +1848,8 @@ Compilation finished successfully
           3 StakingFactory:0x5666    Mint Tokens     Yes                 123456789.0          0.0000200000002
           4 StakingFactory:0x5666    Burn Tokens     Yes                         0.0                      0.0
          -- ------------------------ --------------- ------ ------------------------ ------------------------
+        - cap      : 0.0
+        - freezeCap: false
         Token 1 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 2000.0000200000002, owner: n/a, address: OGDToken:0x4A54 @ 0x4A54E385b595aFCB2379e67a26fd0a48D98446f6
           # Permissioned account     Role            Active                  Maximum                Processed
          -- ------------------------ --------------- ------ ------------------------ ------------------------
@@ -1826,7 +1868,7 @@ Compilation finished successfully
           - addresses                  : ["Fee0Token:0x62C1","ETH|null:0x0000","ETH|null:0x0000","ETH|null:0x0000"]
           - uints                      : ["0","0","0","0","0","0"]
           - strings                    : ["FEE0Token","","",""]
-          - weightedEnd                : 3s 1605572164 = 3211144360111.4436011144328/2000.0000200000002
+          - weightedEnd                : 3s 1605597509 = 3211195050111.9505011195018/2000.0000200000002
           - slashingFactor             : 0.0%
           # Account                    Duration              End      Index                    Rate%                  Balance           Accrued Reward Accrual Term
          -- -------------------- -------------- ---------------- ---------- ------------------------ ------------------------ ------------------------ ------------
@@ -1847,9 +1889,9 @@ Compilation finished successfully
         - stakingsLength         : 1
           - staking 0 @ Staking:0xAE41, owner: StakingFactory:0x5666
         
-        --- Test 6 - User1 -> unstakeAll() ---
-        Pausing 'Waiting' for 4s=Tue Nov 17 2020 11:14:23 GMT+1100 (Australian Eastern Daylight Time) now=Tue Nov 17 2020 11:14:19 GMT+1100 (Australian Eastern Daylight Time)
-        Paused 'Waiting' for 4s=Tue Nov 17 2020 11:14:23 GMT+1100 (Australian Eastern Daylight Time) now=Tue Nov 17 2020 11:14:23 GMT+1100 (Australian Eastern Daylight Time)
+        --- Test 6 - user1 -> unstakeAll() ---
+        Pausing 'Waiting' for 4s=Tue Nov 17 2020 18:16:49 GMT+1100 (Australian Eastern Daylight Time) now=Tue Nov 17 2020 18:16:45 GMT+1100 (Australian Eastern Daylight Time)
+        Paused 'Waiting' for 4s=Tue Nov 17 2020 18:16:49 GMT+1100 (Australian Eastern Daylight Time) now=Tue Nov 17 2020 18:16:49 GMT+1100 (Australian Eastern Daylight Time)
         
         
          # Account                                        ΔETH                       OG                      OGD                     FEE0               OGS0000000
@@ -1878,6 +1920,8 @@ Compilation finished successfully
           3 StakingFactory:0x5666    Mint Tokens     Yes                 123456789.0          0.0000200000002
           4 StakingFactory:0x5666    Burn Tokens     Yes                         0.0                      0.0
          -- ------------------------ --------------- ------ ------------------------ ------------------------
+        - cap      : 0.0
+        - freezeCap: false
         Token 1 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 2000.0000200000002, owner: n/a, address: OGDToken:0x4A54 @ 0x4A54E385b595aFCB2379e67a26fd0a48D98446f6
           # Permissioned account     Role            Active                  Maximum                Processed
          -- ------------------------ --------------- ------ ------------------------ ------------------------
@@ -1896,7 +1940,7 @@ Compilation finished successfully
           - addresses                  : ["Fee0Token:0x62C1","ETH|null:0x0000","ETH|null:0x0000","ETH|null:0x0000"]
           - uints                      : ["0","0","0","0","0","0"]
           - strings                    : ["FEE0Token","","",""]
-          - weightedEnd                : 3s 1605572164 = 3211144360111.4436011144328/2000.0000200000002
+          - weightedEnd                : 3s 1605597509 = 3211195050111.9505011195018/2000.0000200000002
           - slashingFactor             : 0.0%
           # Account                    Duration              End      Index                    Rate%                  Balance           Accrued Reward Accrual Term
          -- -------------------- -------------- ---------------- ---------- ------------------------ ------------------------ ------------------------ ------------
@@ -1950,6 +1994,8 @@ Compilation finished successfully
           3 StakingFactory:0x5666    Mint Tokens     Yes                 123456789.0          0.0001200000037
           4 StakingFactory:0x5666    Burn Tokens     Yes                         0.0                      0.0
          -- ------------------------ --------------- ------ ------------------------ ------------------------
+        - cap      : 0.0
+        - freezeCap: false
         Token 1 symbol: 'OGD', name: 'Optino Governance Dividend', decimals: 18, totalSupply: 0.0, owner: n/a, address: OGDToken:0x4A54 @ 0x4A54E385b595aFCB2379e67a26fd0a48D98446f6
           # Permissioned account     Role            Active                  Maximum                Processed
          -- ------------------------ --------------- ------ ------------------------ ------------------------
@@ -1968,7 +2014,7 @@ Compilation finished successfully
           - addresses                  : ["Fee0Token:0x62C1","ETH|null:0x0000","ETH|null:0x0000","ETH|null:0x0000"]
           - uints                      : ["0","0","0","0","0","0"]
           - strings                    : ["FEE0Token","","",""]
-          - weightedEnd                : 0s 1605572166 = 0.0/0.0
+          - weightedEnd                : 0s 1605597511 = 0.0/0.0
           - slashingFactor             : 0.0%
           # Account                    Duration              End      Index                    Rate%                  Balance           Accrued Reward Accrual Term
          -- -------------------- -------------- ---------------- ---------- ------------------------ ------------------------ ------------------------ ------------
@@ -1988,8 +2034,8 @@ Compilation finished successfully
         - stakingsLength         : 1
           - staking 0 @ Staking:0xAE41, owner: StakingFactory:0x5666
         
-      ✓ Stake through factory, stake, restake, unstake(some), unstakeAll() (6723ms)
+      ✓ Stake through factory, stake, restake, unstake(some), unstakeAll() (7195ms)
 
 
-  5 passing (33s)
+  5 passing (35s)
 
