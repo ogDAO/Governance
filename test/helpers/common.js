@@ -285,7 +285,7 @@ class Data {
         if (a.type == 'address') {
           result = result + this.getShortAccountName(data.args[a.name].toString());
         } else if (a.type == 'uint256') {
-          if (a.name == 'tokens' || a.name == 'amount' || a.name == 'balance' || a.name == 'votes' || a.name == 'reward' || a.name == 'totalVotes' || a.name == 'tokensBurnt' || a.name == 'tokensWithSlashingFactor' || a.name == 'rewardWithSlashingFactor') {
+          if (a.name == 'tokens' || a.name == 'amount' || a.name == 'balance' || a.name == 'votes' || a.name == 'reward' || a.name == 'totalVotes' || a.name == 'forVotes' || a.name == 'againstVotes' || a.name == 'tokensBurnt' || a.name == 'tokensWithSlashingFactor' || a.name == 'rewardWithSlashingFactor') {
             // TODO Get decimals from token contracts, and only convert for token contract values
             result = result + ethers.utils.formatUnits(data.args[a.name], 18);
           } else if (a.name == 'slashingFactor' || a.name == 'rate') {
@@ -460,8 +460,8 @@ class Data {
             this.padLeft(accruedReward[1].toString(), 12));
         }
         console.log("         -- -------------------- ---------- ---------------- ------------------------ ------------------------ ------------------------ -------------------- ------------------------ ------------------------ ------------");
-        console.log("          #      Start Executed Proposer             Description                                             For Votes            Against Votes");
-        console.log("         -- ---------- -------- -------------------- ---------------------------------------- ------------------------ ------------------------");
+        console.log("          #      Start Executed Proposer             Description                                                                 For Votes            Against Votes");
+        console.log("         -- ---------- -------- -------------------- ------------------------------------------------------------ ------------------------ ------------------------");
         for (let j = 0; j < proposalsLength; j++) {
           const proposal = await this.optinoGov.getProposal(j);
           // console.log("         " + this.padLeft(j, 2) + " " + JSON.stringify(proposal));
@@ -469,16 +469,24 @@ class Data {
             this.padLeft(this.termString(parseInt(proposal.start.toString())-now), 10) + " " +
             this.padLeft(proposal.executed.toString() == 0 ? "no": "yes", 8) + " " +
             this.padRight(this.getShortAccountName(proposal.proposer), 20) + " " +
-            this.padRight(proposal.description, 40) + " " +
+            this.padRight(proposal.description, 60) + " " +
             this.padLeft(ethers.utils.formatUnits(proposal.forVotes, 18), 24) + " " +
             this.padLeft(ethers.utils.formatUnits(proposal.againstVotes, 18), 24));
           for (let k = 0; k < proposal.targets.length; k++) {
-              console.log("           + " + k + ". target: " + this.getShortAccountName(proposal.targets[k]) +
+              console.log("           + exec " + k + ". target: " + this.getShortAccountName(proposal.targets[k]) +
                 ", value: " + ethers.utils.formatUnits(proposal._values[k], 18) +
                 ", data: " + proposal.data[k]);
           }
+          let separator = "";
+          let votes = "";
+          for (let k = 1; k < 5; k++) {
+            const voted = await this.optinoGov.voted(j, this.accounts[k]);
+            votes = votes + separator + this.getShortAccountName(this.accounts[k]) + ": " + voted;
+            separator = ", ";
+          }
+          console.log("           + votes: " + votes);
         }
-        console.log("         -- ---------- -------- -------------------- ---------------------------------------- ------------------------ ------------------------");
+        console.log("         -- ---------- -------- -------------------- ------------------------------------------------------------ ------------------------ ------------------------");
       } else if (symbol == "OG") {
         const [cap, freezeCap] = await Promise.all([tokenContract.cap(), tokenContract.freezeCap()]);
         console.log("        - cap      : " + ethers.utils.formatUnits(cap, 18));

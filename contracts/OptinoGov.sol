@@ -122,7 +122,7 @@ contract OptinoGov is ERC20, OptinoGovConfig, InterestUtils {
     event Collected(address indexed user, uint elapsed, uint reward, uint callerReward, uint end, uint duration);
     event Uncommitted(address indexed user, uint tokens, uint balance, uint duration, uint end, uint votes, uint totalVotes);
     event Proposed(address indexed proposer, uint id, string description, address[] targets, uint[] value, bytes[] data, uint start);
-    event Voted(address indexed user, uint id, bool voteFor, uint forVotes, uint againstVotes);
+    event Voted(address indexed user, uint id, bool voteFor, uint votes, uint forVotes, uint againstVotes);
     event Executed(address indexed user, uint id);
 
     constructor(OGTokenInterface ogToken, OGDTokenInterface ogdToken, CurveInterface ogRewardCurve, CurveInterface voteWeightCurve) OptinoGovConfig(ogToken, ogdToken, ogRewardCurve, voteWeightCurve) {
@@ -407,27 +407,28 @@ contract OptinoGov is ERC20, OptinoGovConfig, InterestUtils {
     }
 
     // TODO
-    function vote(uint oip, bool voteFor) public {
-        // uint start = proposals[oip].start;
-        // require(start != 0 && block.timestamp < start.add(votingDuration), "Voting closed");
-        // require(accounts[msg.sender].lastDelegated + votingDuration < block.timestamp, "Cannot vote after recent delegation");
-        // require(!proposals[oip].voted[msg.sender], "Already voted");
-        // if (voteFor) {
-        //     proposals[oip].forVotes = proposals[oip].forVotes.add(accounts[msg.sender].votes);
-        // }
-        // else {
-        //     proposals[oip].againstVotes = proposals[oip].forVotes.add(accounts[msg.sender].votes);
-        // }
-        // proposals[oip].voted[msg.sender] = true;
-        //
-        // accounts[msg.sender].lastVoted = uint64(block.timestamp);
-        // emit Voted(msg.sender, oip, voteFor, proposals[oip].forVotes, proposals[oip].againstVotes);
+    function vote(uint id, bool voteFor) public {
+        Proposal storage proposal = proposals[id];
+        require(proposal.start != 0 && block.timestamp < uint(proposal.start).add(votingDuration), "Voting not open");
+        require(accounts[msg.sender].lastDelegated + votingDuration < block.timestamp, "Cannot vote after recent delegation");
+        require(!voted[id][msg.sender], "Already voted");
+        uint votes = accounts[msg.sender].votes + accounts[msg.sender].delegatedVotes;
+        if (voteFor) {
+            proposal.forVotes = proposal.forVotes.add(votes);
+        } else {
+            proposal.againstVotes = proposal.forVotes.add(votes);
+        }
+        voted[id][msg.sender] = true;
+
+        accounts[msg.sender].lastVoted = uint64(block.timestamp);
+        emit Voted(msg.sender, id, voteFor, votes, proposal.forVotes, proposal.againstVotes);
     }
 
     function voteWithSignatures(bytes32[] calldata signatures) external {
         // TODO
     }
 
+    // TODO
     function execute(uint id) public {
         Proposal storage proposal = proposals[id];
         // require(proposal.start != 0 && block.timestamp >= proposal.start.add(votingDuration).add(executeDelay));

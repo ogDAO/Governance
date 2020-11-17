@@ -300,7 +300,7 @@ describe("TestOptinoGov", function() {
       // await data.printTxData("propose1", propose1);
       // await data.printBalances();
 
-      console.log("        --- Test 4 - User1 propose(OGToken.setCap(888888888.888, true)) ---");
+      console.log("        --- Test 2 - User1 propose(OGToken.setCap(888888888.888, true)) ---");
       var setCapFunctionSig = ethers.utils.keccak256(ethers.utils.toUtf8Bytes("setCap(uint256,bool)")).substring(0,10);
       var description = "Proposal 0 - OGToken.setCap(888888888.888, true)";
       var capTokens = ethers.utils.parseUnits("888888888.888", 18);
@@ -317,6 +317,19 @@ describe("TestOptinoGov", function() {
       await data.printTxData("propose1", propose1);
       await data.printBalances();
 
+      console.log("        --- Test 3 - User{1..3} vote ---");
+      const test3 = [];
+      test3.push(data.optinoGov.connect(data.user1Signer).vote(0, true));
+      test3.push(data.optinoGov.connect(data.user2Signer).vote(0, true));
+      test3.push(data.optinoGov.connect(data.user3Signer).vote(0, true));
+      const [vote1, vote2, vote3] = await Promise.all(test3);
+      await data.printTxData("vote1", vote1);
+      await data.printTxData("vote2", vote2);
+      await data.printTxData("vote3", vote3);
+      await data.printBalances();
+
+
+      console.log("        --- Test 4 - User1 execute(0) ---");
       const execute1 = await data.optinoGov.connect(data.user1Signer).execute(0);
       await data.printTxData("execute1", execute1);
       await data.printBalances();
