@@ -87,25 +87,29 @@ describe("TestOptinoGov", function() {
     }
     // await data.printBalances();
 
-    console.log("        --- Setup 5 - Transfer OGTokens, User{1..3} approve 2,000 OGTokens to OptinoGov, Owner approve 2,000 FEE0 tokens to OGDToken ---");
+    console.log("        --- Setup 5 - Transfer OGTokens, User{1..4} approve 2,000 OGTokens to OptinoGov, Owner approve 2,000 FEE0 tokens to OGDToken ---");
     const ogTokens = ethers.utils.parseUnits("10000", 18);
     const approveTokens = ethers.utils.parseUnits("2000", 18);
     const setup5 = [];
     setup5.push(ogToken.transfer(data.user1, ogTokens));
     setup5.push(ogToken.transfer(data.user2, ogTokens));
     setup5.push(ogToken.transfer(data.user3, ogTokens));
+    setup5.push(ogToken.transfer(data.user4, ogTokens));
     setup5.push(ogToken.connect(data.user1Signer).approve(data.optinoGov.address, approveTokens));
     setup5.push(ogToken.connect(data.user2Signer).approve(data.optinoGov.address, approveTokens));
     setup5.push(ogToken.connect(data.user3Signer).approve(data.optinoGov.address, approveTokens));
+    setup5.push(ogToken.connect(data.user4Signer).approve(data.optinoGov.address, approveTokens));
     setup5.push(fee0Token.approve(data.ogdToken.address, approveTokens));
-    const [transfer1, transfer2, transfer3, approve1, approve2, approve3, approve4] = await Promise.all(setup5);
+    const [transfer1, transfer2, transfer3, transfer4, approve1, approve2, approve3, approve4, approve5] = await Promise.all(setup5);
     await data.printTxData("transfer1", transfer1);
     await data.printTxData("transfer2", transfer2);
     await data.printTxData("transfer3", transfer3);
+    await data.printTxData("transfer4", transfer4);
     await data.printTxData("approve1", approve1);
     await data.printTxData("approve2", approve2);
     await data.printTxData("approve3", approve3);
     await data.printTxData("approve4", approve4);
+    await data.printTxData("approve5", approve5);
     await data.printBalances();
 
     console.log("        --- Setup Completed ---");
@@ -269,7 +273,7 @@ describe("TestOptinoGov", function() {
 
   describe.only("TestOptinoGov - Workflow #2 - Developing", function() {
     it("Workflow #2 - Developing", async function() {
-      console.log("        --- Test 1 - User{1..3} commit 1,000 OGTokens for {3m, 1y, 15m} seconds duration ---");
+      console.log("        --- Test 1 - User{1..4} commit 1,000 OGTokens for x seconds ---");
       let duration1 = 2;
       let tokensToCommit = ethers.utils.parseUnits("1000", 18);
       const test1 = [];

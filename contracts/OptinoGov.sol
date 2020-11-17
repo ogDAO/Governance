@@ -54,7 +54,7 @@ contract OptinoGovConfig {
             require(maxDuration < 5 * 365 days, "Cannot exceed 5 years");
             maxDuration = value;
         } else if (equalString(key, "collectRewardForFee")) {
-            require(collectRewardForFee < 10**18, "Cannot exceed 100%");
+            require(collectRewardForFee < 1e18, "Cannot exceed 100%");
             collectRewardForFee = value;
         } else if (equalString(key, "collectRewardForDelay")) {
             collectRewardForDelay = value;
@@ -202,7 +202,7 @@ contract OptinoGov is ERC20, OptinoGovConfig, InterestUtils {
     }
     function updateStatsAfter(Account storage account) internal {
         uint rate = voteWeightCurve.getRate(uint(account.duration));
-        account.votes = account.balance.mul(rate).div(10**18);
+        account.votes = account.balance.mul(rate).div(1e18);
         // account.votes = account.balance.mul(account.duration).div(SECONDS_PER_YEAR);
         totalVotes = totalVotes.add(account.votes);
         if (account.delegatee != address(0)) {
@@ -254,7 +254,7 @@ contract OptinoGov is ERC20, OptinoGovConfig, InterestUtils {
                 require(ogToken.mint(tokenOwner, reward), "reward OG mint failed");
             } else {
                 if (msg.sender != tokenOwner) {
-                    uint callerReward = reward.mul(collectRewardForFee).div(10**18);
+                    uint callerReward = reward.mul(collectRewardForFee).div(1e18);
                     if (callerReward > 0) {
                         reward = reward.sub(callerReward);
                         require(ogToken.mint(msg.sender, callerReward), "reward OG mint failed");
@@ -358,7 +358,7 @@ contract OptinoGov is ERC20, OptinoGovConfig, InterestUtils {
 
     function propose(string memory description, address[] memory targets, uint[] memory values, bytes[] memory data) public returns(uint) {
         console.log("        > %s -> propose(description %s)", msg.sender, description);
-        // require(accounts[msg.sender].votes >= totalVotes.mul(proposalThreshold).div(10**18), "OptinoGov: Not enough votes to propose");
+        // require(accounts[msg.sender].votes >= totalVotes.mul(proposalThreshold).div(1e18), "OptinoGov: Not enough votes to propose");
 
         require(targets.length > 0 && values.length == targets.length && data.length == targets.length, "Invalid data");
 
@@ -439,7 +439,7 @@ contract OptinoGov is ERC20, OptinoGovConfig, InterestUtils {
         //     return 0;
         // }
 
-        // require(proposal.forVotes >= totalVotes.mul(quorum).div(10**18), "OptinoGov: Not enough votes to execute");
+        // require(proposal.forVotes >= totalVotes.mul(quorum).div(1e18), "OptinoGov: Not enough votes to execute");
         proposal.executed = 1;
 
         for (uint i = 0; i < proposal.targets.length; i++) {

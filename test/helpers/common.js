@@ -285,7 +285,7 @@ class Data {
         if (a.type == 'address') {
           result = result + this.getShortAccountName(data.args[a.name].toString());
         } else if (a.type == 'uint256') {
-          if (a.name == 'tokens' || a.name == 'amount' || a.name == 'balance' || a.name == 'votes' || a.name == 'reward' || a.name == 'totalVotes' || a.name == 'forVotes' || a.name == 'againstVotes' || a.name == 'tokensBurnt' || a.name == 'tokensWithSlashingFactor' || a.name == 'rewardWithSlashingFactor') {
+          if (a.name == 'tokens' || a.name == 'amount' || a.name == 'balance' || a.name == 'votes' || a.name == 'reward' || a.name == 'totalVotes' || a.name == 'forVotes' || a.name == 'againstVotes' || a.name == 'tokensBurnt' || a.name == 'tokensWithSlashingFactor' || a.name == 'rewardWithSlashingFactor' || a.name == 'cap') {
             // TODO Get decimals from token contracts, and only convert for token contract values
             result = result + ethers.utils.formatUnits(data.args[a.name], 18);
           } else if (a.name == 'slashingFactor' || a.name == 'rate') {

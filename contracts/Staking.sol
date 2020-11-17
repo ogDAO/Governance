@@ -255,7 +255,7 @@ contract Staking is ERC20, Owned, InterestUtils {
         }
         if (withdrawRewards) {
             if (reward > 0) {
-                rewardWithSlashingFactor = reward.sub(reward.mul(slashingFactor).div(10**18));
+                rewardWithSlashingFactor = reward.sub(reward.mul(slashingFactor).div(1e18));
                 StakingFactoryInterface(owner).mintOGTokens(tokenOwner, rewardWithSlashingFactor);
             }
         } else {
@@ -305,7 +305,7 @@ contract Staking is ERC20, Owned, InterestUtils {
             account.duration = uint64(0);
             account.end = uint64(block.timestamp);
             StakingFactoryInterface(owner).withdrawDividendsAndBurnOGDTokensFor(tokenOwner, withdrawTokens);
-            uint tokensWithSlashingFactor = withdrawTokens.sub(withdrawTokens.mul(slashingFactor).div(10**18));
+            uint tokensWithSlashingFactor = withdrawTokens.sub(withdrawTokens.mul(slashingFactor).div(1e18));
             require(ogToken.transfer(tokenOwner, tokensWithSlashingFactor), "OG transfer failed");
             emit Unstaked(msg.sender, withdrawTokens, reward, tokensWithSlashingFactor, rewardWithSlashingFactor);
         }
@@ -338,10 +338,10 @@ contract Staking is ERC20, Owned, InterestUtils {
         emit Transfer(msg.sender, address(0), tokens);
     }
     function slash(uint _slashingFactor) public onlyOwner {
-        require(_slashingFactor <= 10**18, "Cannot slash more than 100%");
+        require(_slashingFactor <= 1e18, "Cannot slash more than 100%");
         require(slashingFactor == 0, "Cannot slash more than once");
         slashingFactor = _slashingFactor;
-        uint tokensToBurn = _totalSupply.mul(slashingFactor).div(10**18);
+        uint tokensToBurn = _totalSupply.mul(slashingFactor).div(1e18);
         require(ogToken.burn(tokensToBurn), "OG burn failed");
         emit Slashed(_slashingFactor, tokensToBurn);
     }
