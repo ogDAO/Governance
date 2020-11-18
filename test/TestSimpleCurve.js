@@ -11,9 +11,9 @@ describe("TestSimpleCurve", function() {
     const owner = await simpleCurve.owner();
     console.log("        owner: " + owner);
 
-    let ownerSigner;
-    [ownerSigner] = await ethers.getSigners();
-    const expectedOwner = await ownerSigner.getAddress();
+    let deployerSigner;
+    [deployerSigner] = await ethers.getSigners();
+    const expectedOwner = await deployerSigner.getAddress();
     expect(owner).to.equal(expectedOwner);
 
     async function test(terms, rates, testTerms, expectedRates, decimals) {

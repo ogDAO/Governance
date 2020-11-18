@@ -122,7 +122,7 @@ contract OptinoGov is ERC20, OptinoGovConfig, InterestUtils {
     event Collected(address indexed user, uint elapsed, uint reward, uint callerReward, uint end, uint duration);
     event Uncommitted(address indexed user, uint tokens, uint balance, uint duration, uint end, uint votes, uint totalVotes);
     event Proposed(address indexed proposer, uint id, string description, address[] targets, uint[] value, bytes[] data, uint start);
-    event Voted(address indexed user, uint id, bool voteFor, uint votes, uint forVotes, uint againstVotes);
+    event Voted(address indexed user, uint id, bool support, uint votes, uint forVotes, uint againstVotes);
     event Executed(address indexed user, uint id);
 
     constructor(OGTokenInterface ogToken, OGDTokenInterface ogdToken, CurveInterface ogRewardCurve, CurveInterface voteWeightCurve) OptinoGovConfig(ogToken, ogdToken, ogRewardCurve, voteWeightCurve) {
@@ -407,13 +407,13 @@ contract OptinoGov is ERC20, OptinoGovConfig, InterestUtils {
     }
 
     // TODO
-    function vote(uint id, bool voteFor) public {
+    function vote(uint id, bool support) public {
         Proposal storage proposal = proposals[id];
         require(proposal.start != 0 && block.timestamp < uint(proposal.start).add(votingDuration), "Voting not open");
         require(accounts[msg.sender].lastDelegated + votingDuration < block.timestamp, "Cannot vote after recent delegation");
         require(!voted[id][msg.sender], "Already voted");
         uint votes = accounts[msg.sender].votes + accounts[msg.sender].delegatedVotes;
-        if (voteFor) {
+        if (support) {
             proposal.forVotes = proposal.forVotes.add(votes);
         } else {
             proposal.againstVotes = proposal.forVotes.add(votes);
@@ -421,7 +421,7 @@ contract OptinoGov is ERC20, OptinoGovConfig, InterestUtils {
         voted[id][msg.sender] = true;
 
         accounts[msg.sender].lastVoted = uint64(block.timestamp);
-        emit Voted(msg.sender, id, voteFor, votes, proposal.forVotes, proposal.againstVotes);
+        emit Voted(msg.sender, id, support, votes, proposal.forVotes, proposal.againstVotes);
     }
 
     function voteWithSignatures(bytes32[] calldata signatures) external {

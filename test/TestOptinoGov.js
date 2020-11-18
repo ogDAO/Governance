@@ -87,7 +87,7 @@ describe("TestOptinoGov", function() {
     }
     // await data.printBalances();
 
-    console.log("        --- Setup 5 - Transfer OGTokens, user{1..3} approve 2,000 OGTokens to OptinoGov, Owner approve 2,000 FEE0 tokens to OGDToken ---");
+    console.log("        --- Setup 5 - Transfer OGTokens, user{1..3} approve 2,000 OGTokens to OptinoGov, deployer approve 2,000 FEE0 tokens to OGDToken ---");
     const ogTokens = ethers.utils.parseUnits("10000", 18);
     const approveTokens = ethers.utils.parseUnits("2000", 18);
     const setup5 = [];
@@ -267,7 +267,7 @@ describe("TestOptinoGov", function() {
     });
   });
 
-  describe.only("TestOptinoGov - Workflow #2 - Developing", function() {
+  describe("TestOptinoGov - Workflow #2 - Developing", function() {
     it("Workflow #2 - Developing", async function() {
       console.log("        --- Test 1 - user{1..3} commit 1,000 OGTokens for x seconds, user3 delegate to user1 ---");
       let duration1 = 2;

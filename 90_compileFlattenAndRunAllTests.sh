@@ -54,3 +54,9 @@ TEST4INPUT=test/TestInterestUtils.js
 TEST4OUTPUT=results/TestInterestUtils.txt
 echo "\$ npx hardhat test $TEST4INPUT > $TEST4OUTPUT" | tee $TEST4OUTPUT
 npx hardhat test $TEST4INPUT | tee -a $TEST4OUTPUT
+
+echo "Test 5 - TestSimpleCurve"
+TEST5INPUT=test/TestSimpleCurve.js
+TEST5OUTPUT=results/TestSimpleCurve.txt
+echo "\$ npx hardhat test $TEST5INPUT > $TEST5OUTPUT" | tee $TEST5OUTPUT
+npx hardhat test $TEST5INPUT | tee -a $TEST5OUTPUT

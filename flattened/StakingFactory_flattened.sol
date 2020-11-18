@@ -1400,6 +1400,7 @@ pragma experimental ABIEncoderV2;
 contract Staking is ERC20, Owned, InterestUtils {
     using SafeMath for uint;
 
+    // Contracts { dataType 0, address contractAddress, string name }
     // Token { dataType 1, address tokenAddress }
     // Feed { dataType 2, address feedAddress, uint feedType, uint feedDecimals, string name }
     // Conventions { dataType 3, address [token0, token1], address [feed0, feed1], uint[6] [type0, type1, decimals0, decimals1, inverse0, inverse1], string [feed0Name, feedName2, Market, Convention] }
@@ -1564,9 +1565,9 @@ contract Staking is ERC20, Owned, InterestUtils {
         }
     }
 
-    function computeWeight(Account memory account) internal pure returns (uint _weight) {
-        _weight = account.balance.mul(account.duration).div(365 days);
-    }
+    // function computeWeight(Account memory account) internal pure returns (uint _weight) {
+    //     _weight = account.balance.mul(account.duration).div(365 days);
+    // }
     function updateStatsBefore(Account memory account, address tokenOwner) internal {
         weightedEndNumerator = weightedEndNumerator.sub(uint(account.end).mul(tokenOwner == address(0) ? 0 : account.balance));
         // uint weightedDuration = computeWeight(account);
@@ -1604,18 +1605,14 @@ contract Staking is ERC20, Owned, InterestUtils {
     // }
 
     function accruedReward(address tokenOwner) public view returns (uint _reward, uint _term) {
-        return _calculateReward(accounts[tokenOwner], tokenOwner, accounts[tokenOwner].balance);
+        return _calculateReward(accounts[tokenOwner]);
     }
 
-    function _calculateReward(Account memory account, address /*tokenOwner*/, uint tokens) internal view returns (uint _reward, uint _term) {
-        // console.log("        >     _calculateReward(tokenOwner %s, tokens %s)", tokenOwner, tokens);
+    function _calculateReward(Account memory account) internal view returns (uint _reward, uint _term) {
         uint from = account.end == 0 ? block.timestamp : uint(account.end).sub(uint(account.duration));
-        uint futureValue = InterestUtils.futureValue(tokens, from, block.timestamp, account.rate);
-        // console.log("        > _calculateReward(%s) - tokens %s, rate %s", tokenOwner, tokens, rewardsPerYear);
-        // console.log("          from %s, to %s, futureValue %s", from, block.timestamp, futureValue);
-        _reward = futureValue.sub(tokens);
+        uint futureValue = InterestUtils.futureValue(account.balance, from, block.timestamp, account.rate);
+        _reward = futureValue.sub(account.balance);
         _term = block.timestamp.sub(from);
-        // console.log("          _reward %s", _reward);
     }
 
     function _changeStake(address tokenOwner, uint depositTokens, uint withdrawTokens, bool withdrawRewards, uint duration) internal {
@@ -1634,17 +1631,15 @@ contract Staking is ERC20, Owned, InterestUtils {
             require(withdrawTokens <= account.balance, "Unsufficient staked balance");
         }
         updateStatsBefore(account, tokenOwner);
-        (uint reward, /*uint term*/) = _calculateReward(account, tokenOwner, account.balance);
+        (uint reward, /*uint term*/) = _calculateReward(account);
         uint rewardWithSlashingFactor;
-        // console.log("        >     reward %s for %s seconds", reward, term);
         uint availableToMint = StakingFactoryInterface(owner).availableOGTokensToMint();
-        // console.log("        >     availableToMint %s", availableToMint);
         if (reward > availableToMint) {
             reward = availableToMint;
         }
         if (withdrawRewards) {
             if (reward > 0) {
-                rewardWithSlashingFactor = reward.sub(reward.mul(slashingFactor).div(10**18));
+                rewardWithSlashingFactor = reward.sub(reward.mul(slashingFactor).div(1e18));
                 StakingFactoryInterface(owner).mintOGTokens(tokenOwner, rewardWithSlashingFactor);
             }
         } else {
@@ -1691,13 +1686,10 @@ contract Staking is ERC20, Owned, InterestUtils {
                     accountsIndex.pop();
                 }
             }
-            // TODO: Check
             account.duration = uint64(0);
             account.end = uint64(block.timestamp);
             StakingFactoryInterface(owner).withdrawDividendsAndBurnOGDTokensFor(tokenOwner, withdrawTokens);
-            // require(ogdToken.withdrawDividendsFor(tokenOwner, tokenOwner), "OGD withdrawDividendsFor failed");
-            // require(ogdToken.transferFrom(tokenOwner, address(0), withdrawTokens), "OGD transfer failed");
-            uint tokensWithSlashingFactor = withdrawTokens.sub(withdrawTokens.mul(slashingFactor).div(10**18));
+            uint tokensWithSlashingFactor = withdrawTokens.sub(withdrawTokens.mul(slashingFactor).div(1e18));
             require(ogToken.transfer(tokenOwner, tokensWithSlashingFactor), "OG transfer failed");
             emit Unstaked(msg.sender, withdrawTokens, reward, tokensWithSlashingFactor, rewardWithSlashingFactor);
         }
@@ -1705,23 +1697,19 @@ contract Staking is ERC20, Owned, InterestUtils {
     }
 
     function stakeThroughFactory(address tokenOwner, uint tokens, uint duration) public onlyOwner {
-        // console.log("        > StakingFactory.stakeThroughFactory(tokenOwner %s, tokens %s, duration %s)", tokenOwner, tokens, duration);
         require(tokens > 0, "tokens must be > 0");
         _changeStake(tokenOwner, tokens, 0, false, duration);
     }
     function stake(uint tokens, uint duration) public {
-        // console.log("        > %s -> stake(tokens %s, duration %s)", msg.sender, tokens, duration);
         require(tokens > 0, "tokens must be > 0");
         require(ogToken.transferFrom(msg.sender, address(this), tokens), "OG transferFrom failed");
         _changeStake(msg.sender, tokens, 0, false, duration);
     }
     function restake(uint duration) public {
-        // console.log("        > %s -> restake(duration %s)", msg.sender, duration);
         require(accounts[msg.sender].balance > 0, "No balance to restake");
         _changeStake(msg.sender, 0, 0, false, duration);
     }
     function unstake(uint tokens) public {
-        // console.log("        > %s -> unstake(tokens %s)", msg.sender, tokens);
         require(tokens > 0, "tokens must be > 0");
         require(accounts[msg.sender].balance > 0, "No balance to unstake");
         _changeStake(msg.sender, 0, tokens, tokens == accounts[msg.sender].balance, 0);
@@ -1729,38 +1717,21 @@ contract Staking is ERC20, Owned, InterestUtils {
     }
     function unstakeAll() public {
         uint tokens = accounts[msg.sender].balance;
-        // console.log("        > %s -> unstakeAll(tokens %s)", msg.sender, tokens);
         require(tokens > 0, "No balance to unstake");
         _changeStake(msg.sender, 0, tokens, true, 0);
         emit Transfer(msg.sender, address(0), tokens);
     }
     function slash(uint _slashingFactor) public onlyOwner {
-        require(_slashingFactor <= 10**18, "Cannot slash more than 100%");
+        require(_slashingFactor <= 1e18, "Cannot slash more than 100%");
         require(slashingFactor == 0, "Cannot slash more than once");
         slashingFactor = _slashingFactor;
-        uint tokensToBurn = _totalSupply.mul(slashingFactor).div(10**18);
+        uint tokensToBurn = _totalSupply.mul(slashingFactor).div(1e18);
         require(ogToken.burn(tokensToBurn), "OG burn failed");
         emit Slashed(_slashingFactor, tokensToBurn);
     }
 }
 
 /*
-// mapping(bytes32 => StakeInfo) public stakeInfoData;
-// bytes32[] public stakeInfoIndex;
-
-// // Token { dataType 1, address tokenAddress }
-// // Feed { dataType 2, address feedAddress, uint feedType, uint feedDecimals, string name }
-// // Conventions { dataType 3, address [token0, token1], address [feed0, feed1], uint[6] [type0, type1, decimals0, decimals1, inverse0, inverse1], string [feed0Name, feedName2, Market, Convention] }
-// // General { dataType 4, address[4] addresses, address [feed0, feed1], uint[6] uints, string[4] strings }
-// struct StakeInfo {
-//     uint dataType;
-//     address[4] addresses;
-//     uint[6] uints;
-//     string string0; // TODO: Check issues using string[4] strings
-//     string string1;
-//     string string2;
-//     string string3;
-// }
 
 struct Account {
     uint64 duration;

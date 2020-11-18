@@ -62,13 +62,13 @@ describe("TestOGDToken", function() {
       test2.push(data.fee0Token.approve(data.ogdToken.address, approveFee0Tokens));
       test2.push(data.fee1Token.approve(data.ogdToken.address, approveFee1Tokens));
       test2.push(data.fee2Token.approve(data.ogdToken.address, approveFee2Tokens));
-      const [mint1, mint2, mint3, ownerApproveFee0Tokens, ownerApproveFee1Tokens, ownerApproveFee2Tokens] = await Promise.all(test2);
+      const [mint1, mint2, mint3, deployerApproveFee0Tokens, deployerApproveFee1Tokens, deployerApproveFee2Tokens] = await Promise.all(test2);
       await data.printTxData("mint1", mint1);
       await data.printTxData("mint2", mint2);
       await data.printTxData("mint3", mint3);
-      await data.printTxData("ownerApproveFee0Tokens", ownerApproveFee0Tokens);
-      await data.printTxData("ownerApproveFee1Tokens", ownerApproveFee1Tokens);
-      await data.printTxData("ownerApproveFee2Tokens", ownerApproveFee2Tokens);
+      await data.printTxData("deployerApproveFee0Tokens", deployerApproveFee0Tokens);
+      await data.printTxData("deployerApproveFee1Tokens", deployerApproveFee1Tokens);
+      await data.printTxData("deployerApproveFee2Tokens", deployerApproveFee2Tokens);
       await data.printBalances();
 
       console.log("        --- Test 3 - deployer deposits dividends of 100 FEE0 and 10 ETH ---");
@@ -192,13 +192,13 @@ describe("TestOGDToken", function() {
       test2.push(data.fee0Token.approve(data.ogdToken.address, approveFee0Tokens));
       test2.push(data.fee1Token.approve(data.ogdToken.address, approveFee1Tokens));
       test2.push(data.fee2Token.approve(data.ogdToken.address, approveFee2Tokens));
-      const [mint1, mint2, /*mint3, */ ownerApproveFee0Tokens, ownerApproveFee1Tokens, ownerApproveFee2Tokens] = await Promise.all(test2);
+      const [mint1, mint2, /*mint3, */ deployerApproveFee0Tokens, deployerApproveFee1Tokens, deployerApproveFee2Tokens] = await Promise.all(test2);
       await data.printTxData("mint1", mint1);
       await data.printTxData("mint2", mint2);
       // await data.printTxData("mint3", mint3);
-      await data.printTxData("ownerApproveFee0Tokens", ownerApproveFee0Tokens);
-      await data.printTxData("ownerApproveFee1Tokens", ownerApproveFee1Tokens);
-      await data.printTxData("ownerApproveFee2Tokens", ownerApproveFee2Tokens);
+      await data.printTxData("deployerApproveFee0Tokens", deployerApproveFee0Tokens);
+      await data.printTxData("deployerApproveFee1Tokens", deployerApproveFee1Tokens);
+      await data.printTxData("deployerApproveFee2Tokens", deployerApproveFee2Tokens);
       await data.printBalances();
 
       console.log("        --- Test 3 - deployer deposits dividends of 100 FEE0 and 10 ETH ---");
@@ -263,14 +263,14 @@ describe("TestOGDToken", function() {
       test2.push(data.fee0Token.approve(data.ogdToken.address, approveFee0Tokens));
       test2.push(data.fee1Token.approve(data.ogdToken.address, approveFee1Tokens));
       test2.push(data.fee2Token.approve(data.ogdToken.address, approveFee2Tokens));
-      const [mint1, mint2, mint3, mint4, ownerApproveFee0Tokens, ownerApproveFee1Tokens, ownerApproveFee2Tokens] = await Promise.all(test2);
+      const [mint1, mint2, mint3, mint4, deployerApproveFee0Tokens, deployerApproveFee1Tokens, deployerApproveFee2Tokens] = await Promise.all(test2);
       await data.printTxData("mint1", mint1);
       await data.printTxData("mint2", mint2);
       await data.printTxData("mint3", mint3);
       await data.printTxData("mint4", mint4);
-      await data.printTxData("ownerApproveFee0Tokens", ownerApproveFee0Tokens);
-      await data.printTxData("ownerApproveFee1Tokens", ownerApproveFee1Tokens);
-      await data.printTxData("ownerApproveFee2Tokens", ownerApproveFee2Tokens);
+      await data.printTxData("deployerApproveFee0Tokens", deployerApproveFee0Tokens);
+      await data.printTxData("deployerApproveFee1Tokens", deployerApproveFee1Tokens);
+      await data.printTxData("deployerApproveFee2Tokens", deployerApproveFee2Tokens);
       await data.printBalances();
 
       console.log("        --- Test 3 - deployer deposits dividends of 100 FEE0 and 10 ETH ---");

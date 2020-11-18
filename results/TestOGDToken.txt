@@ -107,11 +107,11 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User2:0xa22A, tokens: 10000.0)
         mint3 - gasUsed: 80294, fee: 0.00642352, feeUsd: 2.4773589584, @ 80.0 gwei & 385.67 ETH/USD, 0x62cbbb8f957937ab2cedaee4ee81475d93bd04a286eff655fbe1f8fd02d9f554
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User3:0xa33a, tokens: 10000.0)
-        ownerApproveFee0Tokens - gasUsed: 43968, fee: 0.00351744, feeUsd: 1.3565710848, @ 80.0 gwei & 385.67 ETH/USD, 0xea4272d8c70f2e20d749f63c597f93817c56a67833e175ff68ea8b175090a051
+        deployerApproveFee0Tokens - gasUsed: 43968, fee: 0.00351744, feeUsd: 1.3565710848, @ 80.0 gwei & 385.67 ETH/USD, 0xea4272d8c70f2e20d749f63c597f93817c56a67833e175ff68ea8b175090a051
         + Fee0Token.Approval(tokenOwner: Deployer:0xa00A, spender: OGDToken:0x1647, tokens: 100.0)
-        ownerApproveFee1Tokens - gasUsed: 43968, fee: 0.00351744, feeUsd: 1.3565710848, @ 80.0 gwei & 385.67 ETH/USD, 0x97a4bbd826a6d92ce000763ff4964f180d31ad6b82a45827c6873535f9a071de
+        deployerApproveFee1Tokens - gasUsed: 43968, fee: 0.00351744, feeUsd: 1.3565710848, @ 80.0 gwei & 385.67 ETH/USD, 0x97a4bbd826a6d92ce000763ff4964f180d31ad6b82a45827c6873535f9a071de
         + Fee1Token.Approval(tokenOwner: Deployer:0xa00A, spender: OGDToken:0x1647, tokens: 1000.0)
-        ownerApproveFee2Tokens - gasUsed: 43980, fee: 0.0035184, feeUsd: 1.356941328, @ 80.0 gwei & 385.67 ETH/USD, 0xb9d9e66e10b3d6797ba878efed593d191ab26f38e7d5e0f58de1b6e78383818f
+        deployerApproveFee2Tokens - gasUsed: 43980, fee: 0.0035184, feeUsd: 1.356941328, @ 80.0 gwei & 385.67 ETH/USD, 0xb9d9e66e10b3d6797ba878efed593d191ab26f38e7d5e0f58de1b6e78383818f
         + Fee2Token.Approval(tokenOwner: Deployer:0xa00A, spender: OGDToken:0x1647, tokens: 10000.0)
         
          # Account                                        ΔETH                      OGD                     FEE0                     FEE1                     FEE2
@@ -455,7 +455,7 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         
         --- Test Completed ---
 
-      ✓ Workflow #0 (5076ms)
+      ✓ Workflow #0 (4684ms)
     TestOGDToken - Workflow #1 - Transfer Test
         Address 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E => Deployer:0xa00A
         Address 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433 => User1:0xa11A
@@ -559,11 +559,11 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User1:0xa11A, tokens: 10000.0)
         mint2 - gasUsed: 80294, fee: 0.00642352, feeUsd: 2.4773589584, @ 80.0 gwei & 385.67 ETH/USD, 0x54c766771aa30747018c45b96620ac69b118fe43aeb4335f6104e0d23ebf9ff1
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User2:0xa22A, tokens: 10000.0)
-        ownerApproveFee0Tokens - gasUsed: 43968, fee: 0.00351744, feeUsd: 1.3565710848, @ 80.0 gwei & 385.67 ETH/USD, 0xa102ddb730a35b02d2db59ec23548eebc80537516920771c8ae7ca1df1742786
+        deployerApproveFee0Tokens - gasUsed: 43968, fee: 0.00351744, feeUsd: 1.3565710848, @ 80.0 gwei & 385.67 ETH/USD, 0xa102ddb730a35b02d2db59ec23548eebc80537516920771c8ae7ca1df1742786
         + Fee0Token.Approval(tokenOwner: Deployer:0xa00A, spender: OGDToken:0xee9a, tokens: 100.0)
-        ownerApproveFee1Tokens - gasUsed: 43968, fee: 0.00351744, feeUsd: 1.3565710848, @ 80.0 gwei & 385.67 ETH/USD, 0x243660def4de298a0b58a263542aa2f9b1a991fadec47d9ecd2015bd2cad00ff
+        deployerApproveFee1Tokens - gasUsed: 43968, fee: 0.00351744, feeUsd: 1.3565710848, @ 80.0 gwei & 385.67 ETH/USD, 0x243660def4de298a0b58a263542aa2f9b1a991fadec47d9ecd2015bd2cad00ff
         + Fee1Token.Approval(tokenOwner: Deployer:0xa00A, spender: OGDToken:0xee9a, tokens: 1000.0)
-        ownerApproveFee2Tokens - gasUsed: 43980, fee: 0.0035184, feeUsd: 1.356941328, @ 80.0 gwei & 385.67 ETH/USD, 0xec8c7035360e266498a37b4ebac935f28cd9ea15724e0a562b88fddca641debb
+        deployerApproveFee2Tokens - gasUsed: 43980, fee: 0.0035184, feeUsd: 1.356941328, @ 80.0 gwei & 385.67 ETH/USD, 0xec8c7035360e266498a37b4ebac935f28cd9ea15724e0a562b88fddca641debb
         + Fee2Token.Approval(tokenOwner: Deployer:0xa00A, spender: OGDToken:0xee9a, tokens: 10000.0)
         
          # Account                                        ΔETH                      OGD                     FEE0                     FEE1                     FEE2
@@ -740,7 +740,7 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         Token 2 symbol: 'FEE1', name: 'Fee1', decimals: 18, totalSupply: 1000.0, owner: Deployer:0xa00A, address: Fee1Token:0xA92f @ 0xA92f39B1123B4051a6Ef6736879F85249AB45845
         Token 3 symbol: 'FEE2', name: 'Fee2', decimals: 18, totalSupply: 10000.0, owner: Deployer:0xa00A, address: Fee2Token:0xb5EB @ 0xb5EBF7c369B492493e17032CA29E41c0496EcbE5
         
-      ✓ Workflow #1 - Transfer Test (2601ms)
+      ✓ Workflow #1 - Transfer Test (2230ms)
     TestOGDToken - Workflow #2 - address(0) with balance
         Address 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E => Deployer:0xa00A
         Address 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433 => User1:0xa11A
@@ -848,11 +848,11 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User3:0xa33a, tokens: 10000.0)
         mint4 - gasUsed: 80054, fee: 0.00640432, feeUsd: 2.4699540944, @ 80.0 gwei & 385.67 ETH/USD, 0xf13055aeb87294f9c482f2cc62208b7913b43572e972a2e83e20fd0cdc3d5133
         + OGDToken.Transfer(from: ETH|null:0x0000, to: ETH|null:0x0000, tokens: 10000.0)
-        ownerApproveFee0Tokens - gasUsed: 43968, fee: 0.00351744, feeUsd: 1.3565710848, @ 80.0 gwei & 385.67 ETH/USD, 0xacfa05e15b4c3a91c51f54035ad21546ba650c5ef92917f19dca1b082f7e8eb7
+        deployerApproveFee0Tokens - gasUsed: 43968, fee: 0.00351744, feeUsd: 1.3565710848, @ 80.0 gwei & 385.67 ETH/USD, 0xacfa05e15b4c3a91c51f54035ad21546ba650c5ef92917f19dca1b082f7e8eb7
         + Fee0Token.Approval(tokenOwner: Deployer:0xa00A, spender: OGDToken:0xF393, tokens: 100.0)
-        ownerApproveFee1Tokens - gasUsed: 43968, fee: 0.00351744, feeUsd: 1.3565710848, @ 80.0 gwei & 385.67 ETH/USD, 0xa5e03a6447bbc82fa85ff57937c4c888f3a25710982fc6381b516c78a780562e
+        deployerApproveFee1Tokens - gasUsed: 43968, fee: 0.00351744, feeUsd: 1.3565710848, @ 80.0 gwei & 385.67 ETH/USD, 0xa5e03a6447bbc82fa85ff57937c4c888f3a25710982fc6381b516c78a780562e
         + Fee1Token.Approval(tokenOwner: Deployer:0xa00A, spender: OGDToken:0xF393, tokens: 1000.0)
-        ownerApproveFee2Tokens - gasUsed: 43980, fee: 0.0035184, feeUsd: 1.356941328, @ 80.0 gwei & 385.67 ETH/USD, 0xdddd6f58f48e19975e44e1f1192cb7977146af98746ed9cf82cfa45be53841d0
+        deployerApproveFee2Tokens - gasUsed: 43980, fee: 0.0035184, feeUsd: 1.356941328, @ 80.0 gwei & 385.67 ETH/USD, 0xdddd6f58f48e19975e44e1f1192cb7977146af98746ed9cf82cfa45be53841d0
         + Fee2Token.Approval(tokenOwner: Deployer:0xa00A, spender: OGDToken:0xF393, tokens: 10000.0)
         
          # Account                                        ΔETH                      OGD                     FEE0                     FEE1                     FEE2
@@ -990,8 +990,8 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         Token 2 symbol: 'FEE1', name: 'Fee1', decimals: 18, totalSupply: 1000.0, owner: Deployer:0xa00A, address: Fee1Token:0xaa25 @ 0xaa2549768781Bc188ed636287d25aaBb73A2E3D8
         Token 3 symbol: 'FEE2', name: 'Fee2', decimals: 18, totalSupply: 10000.0, owner: Deployer:0xa00A, address: Fee2Token:0x2787 @ 0x2787C8cBC9B5D4A3b49dba8b2d31376616933Ca9
         
-      ✓ Workflow #1 - Transfer Test (2058ms)
+      ✓ Workflow #1 - Transfer Test (1883ms)
 
 
-  3 passing (13s)
+  3 passing (12s)
 

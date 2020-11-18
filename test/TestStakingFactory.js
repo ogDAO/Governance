@@ -330,7 +330,7 @@ describe("TestStakingFactory", function() {
       await data.printTxData("addStake3", addStake3);
       await data.printBalances();
 
-      console.log("        --- Test 3 - owner -> StakingFactory.slash(staking, 30%) ---");
+      console.log("        --- Test 3 - deployer -> StakingFactory.slash(staking, 30%) ---");
       let slashingFactor = ethers.utils.parseUnits("3", 17); // 30%
       const test3 = [];
       test3.push(data.stakingFactory.slash(stakings[0].address, slashingFactor));
