@@ -32,6 +32,7 @@ module.exports = {
         { privateKey: "0xad968434bf82b4cab68a26d098d2b86cf608a29b367fa974c6702f62abebd99d", balance: "10000000000000000000000", },
       ],
       gasPrice: 80000000000,
+      allowUnlimitedContractSize: true, // TODO: Remove after debugging
     },
     // rinkeby: {
     //   url: "https://rinkeby.infura.io/v3/123abc123abc123abc123abc123abcde",
@@ -39,7 +40,7 @@ module.exports = {
     // }
   },
   solidity: {
-    "version": "0.7.4",
+    "version": "0.7.5",
     "settings": {
       "optimizer": {
         "enabled": true,

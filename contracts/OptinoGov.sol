@@ -1,7 +1,7 @@
 pragma solidity ^0.7.0;
 pragma experimental ABIEncoderV2;
 
-// import "hardhat/console.sol";
+import "hardhat/console.sol";
 
 // Use prefix "./" normally and "https://github.com/ogDAO/Governance/blob/master/contracts/" in Remix
 import "./OGTokenInterface.sol";
@@ -388,7 +388,7 @@ contract OptinoGov is ERC20, OptinoGovBase, InterestUtils {
 
 
     function propose(string memory description, address[] memory targets, uint[] memory values, bytes[] memory data) public returns(uint) {
-        // console.log("        > %s -> propose(description %s)", msg.sender, description);
+        console.log("        > %s -> propose(description %s)", msg.sender, description);
         // require(accounts[msg.sender].votes >= totalVotes.mul(proposalThreshold).div(1e18), "OptinoGov: Not enough votes to propose");
 
         require(targets.length > 0 && values.length == targets.length && data.length == targets.length, "Invalid data");
@@ -424,10 +424,6 @@ contract OptinoGov is ERC20, OptinoGovBase, InterestUtils {
         emit Proposed(msg.sender, proposals.length - 1, description, proposal.targets, proposal.values, proposal.data, block.timestamp);
         return proposals.length - 1;
     }
-    // function getProposal(uint i) public view returns (Proposal memory proposal) {
-    //     require(i < proposals.length, "Invalid index");
-    //     return proposals[i];
-    // }
     function getProposal(uint i) public view returns (uint64 start, uint32 executed, address proposer, string memory description, address[] memory targets, uint[] memory _values, bytes[] memory data, uint forVotes, uint againstVotes) {
         require(i < proposals.length, "Invalid index");
         Proposal memory proposal = proposals[i];
