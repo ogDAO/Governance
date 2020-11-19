@@ -11,7 +11,7 @@ import "./InterestUtils.sol";
 import "./CurveInterface.sol";
 
 /// @notice Optino Governance config
-contract OptinoGovConfig {
+contract OptinoGovBase {
     using SafeMath for uint;
 
     bytes32 private constant KEY_OGTOKEN = keccak256(abi.encodePacked("ogToken"));
@@ -91,11 +91,51 @@ contract OptinoGovConfig {
         }
         emit ConfigUpdated(key, value);
     }
+
+
+    // ------------------------------------------------------------------------
+    // ecrecover from a signature rather than the signature in parts [v, r, s]
+    // The signature format is a compact form {bytes32 r}{bytes32 s}{uint8 v}.
+    // Compact means, uint8 is not padded to 32 bytes.
+    //
+    // An invalid signature results in the address(0) being returned, make
+    // sure that the returned result is checked to be non-zero for validity
+    //
+    // Parts from https://gist.github.com/axic/5b33912c6f61ae6fd96d6c4a47afde6d
+    // ------------------------------------------------------------------------
+    function ecrecoverFromSig(bytes32 hash, bytes memory sig) public pure returns (address recoveredAddress) {
+        bytes32 r;
+        bytes32 s;
+        uint8 v;
+        if (sig.length != 65) return address(0);
+        assembly {
+            r := mload(add(sig, 32))
+            s := mload(add(sig, 64))
+            // Here we are loading the last 32 bytes. We exploit the fact that 'mload' will pad with zeroes if we overread.
+            // There is no 'mload8' to do this, but that would be nicer.
+            v := byte(0, mload(add(sig, 96)))
+        }
+        // Albeit non-transactional signatures are not specified by the YP, one would expect it to match the YP range of [27, 28]
+        // geth uses [0, 1] and some clients have followed. This might change, see https://github.com/ethereum/go-ethereum/issues/2053
+        if (v < 27) {
+          v += 27;
+        }
+        if (v != 27 && v != 28) return address(0);
+        return ecrecover(hash, v, r, s);
+    }
+
+    function getChainId() internal pure returns (uint) {
+        uint chainId;
+        assembly {
+            chainId := chainid()
+        }
+        return chainId;
+    }
 }
 
 /// @notice Optino Governance. (c) The Optino Project 2020
 // SPDX-License-Identifier: GPLv2
-contract OptinoGov is ERC20, OptinoGovConfig, InterestUtils {
+contract OptinoGov is ERC20, OptinoGovBase, InterestUtils {
     using SafeMath for uint;
 
     struct Account {
@@ -122,6 +162,12 @@ contract OptinoGov is ERC20, OptinoGovConfig, InterestUtils {
         uint againstVotes;
     }
 
+    string private constant NAME = "OptinoGov";
+    bytes32 private constant EIP712_DOMAIN_TYPEHASH = keccak256("EIP712Domain(string name,uint256 chainId,address verifyingContract)");
+    bytes32 private constant EIP712_VOTE_TYPEHASH = keccak256("Vote(uint256 id,bool support)");
+    // TODO - Delete after testing
+    // bytes private constant SIGNING_PREFIX = "\x19Ethereum Signed Message:\n32";
+
     uint private _totalSupply;
     mapping(address => Account) private accounts;
     address[] public accountsIndex;
@@ -139,14 +185,14 @@ contract OptinoGov is ERC20, OptinoGovConfig, InterestUtils {
     event Voted(address indexed user, uint id, bool support, uint votes, uint forVotes, uint againstVotes);
     event Executed(address indexed user, uint id);
 
-    constructor(OGTokenInterface ogToken, OGDTokenInterface ogdToken, CurveInterface ogRewardCurve, CurveInterface voteWeightCurve) OptinoGovConfig(ogToken, ogdToken, ogRewardCurve, voteWeightCurve) {
+    constructor(OGTokenInterface ogToken, OGDTokenInterface ogdToken, CurveInterface ogRewardCurve, CurveInterface voteWeightCurve) OptinoGovBase(ogToken, ogdToken, ogRewardCurve, voteWeightCurve) {
     }
 
     function symbol() override external pure returns (string memory) {
-        return "OptinoGov";
+        return NAME;
     }
     function name() override external pure returns (string memory) {
-        return "OptinoGov";
+        return NAME;
     }
     function decimals() override external pure returns (uint8) {
         return 18;
@@ -391,26 +437,42 @@ contract OptinoGov is ERC20, OptinoGovConfig, InterestUtils {
         return proposals.length;
     }
 
-    // TODO
     function vote(uint id, bool support) public {
+        _vote(msg.sender, id, support);
+    }
+    function _vote(address voter, uint id, bool support) internal {
         Proposal storage proposal = proposals[id];
         require(proposal.start != 0 && block.timestamp < uint(proposal.start).add(votingDuration), "Voting not open");
-        require(accounts[msg.sender].lastDelegated + votingDuration < block.timestamp, "Cannot vote after recent delegation");
-        require(!voted[id][msg.sender], "Already voted");
-        uint votes = accounts[msg.sender].votes + accounts[msg.sender].delegatedVotes;
+        require(accounts[voter].lastDelegated + votingDuration < block.timestamp, "Cannot vote after recent delegation");
+        require(!voted[id][voter], "Already voted");
+        uint votes = accounts[voter].votes + accounts[voter].delegatedVotes;
         if (support) {
             proposal.forVotes = proposal.forVotes.add(votes);
         } else {
             proposal.againstVotes = proposal.forVotes.add(votes);
         }
-        voted[id][msg.sender] = true;
-
-        accounts[msg.sender].lastVoted = uint64(block.timestamp);
-        emit Voted(msg.sender, id, support, votes, proposal.forVotes, proposal.againstVotes);
+        voted[id][voter] = true;
+        accounts[voter].lastVoted = uint64(block.timestamp);
+        emit Voted(voter, id, support, votes, proposal.forVotes, proposal.againstVotes);
     }
-
-    function voteWithSignatures(bytes32[] calldata signatures) external {
-        // TODO
+    function voteDigest(uint id, bool support) public view returns (bytes32 digest) {
+        bytes32 domainSeparator = keccak256(abi.encode(EIP712_DOMAIN_TYPEHASH, keccak256(bytes(NAME)), getChainId(), address(this)));
+        bytes32 structHash = keccak256(abi.encode(EIP712_VOTE_TYPEHASH, id, support));
+        digest = keccak256(abi.encodePacked("\x19\x01", domainSeparator, structHash));
+    }
+    function voteBySigs(uint id, bool[] memory _supports, bytes[] memory sigs) public {
+        require(_supports.length == sigs.length);
+        for (uint i = 0; i < _supports.length; i++) {
+            bool support = _supports[i];
+            bytes memory sig = sigs[i];
+            bytes32 digest = voteDigest(id, support);
+            // EIP-712
+            address voter = ecrecoverFromSig(digest, sig);
+            // web3js 0.x go-ethereum
+            // address voter = ecrecoverFromSig(keccak256(abi.encodePacked(SIGNING_PREFIX, digest)), sig);
+            require(voter != address(0), "Invalid signature");
+            _vote(voter, id, support);
+        }
     }
 
     // TODO
