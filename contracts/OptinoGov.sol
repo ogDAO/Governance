@@ -165,8 +165,6 @@ contract OptinoGov is ERC20, OptinoGovBase, InterestUtils {
     string private constant NAME = "OptinoGov";
     bytes32 private constant EIP712_DOMAIN_TYPEHASH = keccak256("EIP712Domain(string name,uint256 chainId,address verifyingContract)");
     bytes32 private constant EIP712_VOTE_TYPEHASH = keccak256("Vote(uint256 id,bool support)");
-    // TODO - Delete after testing
-    // bytes private constant SIGNING_PREFIX = "\x19Ethereum Signed Message:\n32";
 
     uint private _totalSupply;
     mapping(address => Account) private accounts;
@@ -462,10 +460,7 @@ contract OptinoGov is ERC20, OptinoGovBase, InterestUtils {
             bool support = _supports[i];
             bytes memory sig = sigs[i];
             bytes32 digest = voteDigest(id, support);
-            // EIP-712
             address voter = ecrecoverFromSig(digest, sig);
-            // web3js 0.x go-ethereum
-            // address voter = ecrecoverFromSig(keccak256(abi.encodePacked(SIGNING_PREFIX, digest)), sig);
             require(voter != address(0), "Invalid signature");
             if (!voted[id][voter]) {
                 _vote(voter, id, support);

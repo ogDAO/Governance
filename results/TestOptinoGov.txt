@@ -1,4 +1,6 @@
 $ npx hardhat --verbose --show-stack-traces test test/TestOptinoGov.js > results/TestOptinoGov.txt
+Compiling 22 files with 0.7.5
+Compilation finished successfully
 
 
   TestOptinoGov
@@ -30,7 +32,7 @@ $ npx hardhat --verbose --show-stack-traces test test/TestOptinoGov.js > results
         + VoteWeightCurve.PointUpdated(index: 1, term: 3y, rate: 1095.0%)
         fee0Token.deployTransaction - gasUsed: 823708, fee: 0.06589664, feeUsd: 25.4143571488, @ 80.0 gwei & 385.67 ETH/USD, 0x74c3ba83e6810cba2def1d1ecafa12899db407ed473c380a19d796d4f5c7eaf1
         + Fee0Token.Transfer(from: ETH|null:0x0000, to: Deployer:0xa00A, tokens: 100.0)
-        optinoGov.deployTransaction - gasUsed: 5648463, fee: 0.45187704, feeUsd: 174.2754180168, @ 80.0 gwei & 385.67 ETH/USD, 0x346fede38563e36093bc048666d9141325aa08be1022f901ebcd9a38225aecce
+        optinoGov.deployTransaction - gasUsed: 5648463, fee: 0.45187704, feeUsd: 174.2754180168, @ 80.0 gwei & 385.67 ETH/USD, 0x180dd5a9409b56161c1c86654549b6e599373b0788cabc4074150734bdb531cf
         OptinoGov.bytecode.length/2: 25457
         --- Setup 2 - OGToken and OGDToken permissioning ---
         setup2Txs[0] - gasUsed: 78942, fee: 0.00631536, feeUsd: 2.4356448912, @ 80.0 gwei & 385.67 ETH/USD, 0xdcf1bd0bb6a7821b94947c7884ae113f87efa6b38a9933f8a4c9aff34fa76ef3
@@ -177,17 +179,17 @@ $ npx hardhat --verbose --show-stack-traces test test/TestOptinoGov.js > results
         commit1 - gasUsed: 376142, fee: 0.03009136, feeUsd: 11.6053348112, @ 80.0 gwei & 385.67 ETH/USD, 0x2b6eeaec436b279a05a5ea9de74be33e5559e59d2243be1786ccc61ffc2e41ce
         + OGToken.Transfer(from: User1:0xa11A, to: OptinoGov:0x7305, tokens: 1000.0)
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User1:0xa11A, tokens: 1000.0)
-        + OptinoGov.Committed(user: User1:0xa11A, tokens: 1000.0, balance: 1000.0, duration: 2, end: 1605770138, delegatee: ETH|null:0x0000, votes: 0.0, totalVotes: 0.0)
+        + OptinoGov.Committed(user: User1:0xa11A, tokens: 1000.0, balance: 1000.0, duration: 2, end: 1605770346, delegatee: ETH|null:0x0000, votes: 0.0, totalVotes: 0.0)
         + OptinoGov.Transfer(from: ETH|null:0x0000, to: User1:0xa11A, tokens: 1000.0)
         commit2 - gasUsed: 305342, fee: 0.02442736, feeUsd: 9.4208999312, @ 80.0 gwei & 385.67 ETH/USD, 0x142b1412dde0470d151229ee5b35eb21c38454dbdb38e29d1407793a30822b94
         + OGToken.Transfer(from: User2:0xa22A, to: OptinoGov:0x7305, tokens: 1000.0)
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User2:0xa22A, tokens: 1000.0)
-        + OptinoGov.Committed(user: User2:0xa22A, tokens: 1000.0, balance: 1000.0, duration: 2, end: 1605770139, delegatee: ETH|null:0x0000, votes: 0.0, totalVotes: 10.0)
+        + OptinoGov.Committed(user: User2:0xa22A, tokens: 1000.0, balance: 1000.0, duration: 2, end: 1605770347, delegatee: ETH|null:0x0000, votes: 0.0, totalVotes: 10.0)
         + OptinoGov.Transfer(from: ETH|null:0x0000, to: User2:0xa22A, tokens: 1000.0)
         commit3 - gasUsed: 305342, fee: 0.02442736, feeUsd: 9.4208999312, @ 80.0 gwei & 385.67 ETH/USD, 0x53f61a8c4056da74a0a900e4e99890f4682277081646bad7f0a7f39669c6425f
         + OGToken.Transfer(from: User3:0xa33a, to: OptinoGov:0x7305, tokens: 1000.0)
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User3:0xa33a, tokens: 1000.0)
-        + OptinoGov.Committed(user: User3:0xa33a, tokens: 1000.0, balance: 1000.0, duration: 2, end: 1605770140, delegatee: ETH|null:0x0000, votes: 0.0, totalVotes: 20.0)
+        + OptinoGov.Committed(user: User3:0xa33a, tokens: 1000.0, balance: 1000.0, duration: 2, end: 1605770348, delegatee: ETH|null:0x0000, votes: 0.0, totalVotes: 20.0)
         + OptinoGov.Transfer(from: ETH|null:0x0000, to: User3:0xa33a, tokens: 1000.0)
         delegate1 - gasUsed: 65108, fee: 0.00520864, feeUsd: 2.0088161888, @ 80.0 gwei & 385.67 ETH/USD, 0x07bc7dbe050b57ae4749d4fe626eedb8b80a0384fc6ce4ad4c8ba9a0374ae88d
         + OptinoGov.DelegateUpdated(oldDelegatee: ETH|null:0x0000, delegatee: User1:0xa11A, votes: 10.0)
@@ -291,7 +293,7 @@ $ npx hardhat --verbose --show-stack-traces test test/TestOptinoGov.js > results
         dataItems        : ["0x156d3a46000000000000000000000000000000000000000002df458b38b62d1ae66c00000000000000000000000000000000000000000000000000000000000000000000"]
         > 0xa11aae29840fbb5c86e6fd4cf809eba183aef433 -> propose(description Proposal 0 - OGToken.setCap(888888888.888, true))
         propose1 - gasUsed: 296154, fee: 0.02369232, feeUsd: 9.1374170544, @ 80.0 gwei & 385.67 ETH/USD, 0xfa471d67291e75b8e9c686bacba2e23405d87f2c8976846a8fae80a54b675623
-        + OptinoGov.Proposed(proposer: User1:0xa11A, id: 0, description: Proposal 0 - OGToken.setCap(888888888.888, true), targets: 0x1647B1461251A0c6D3E14a227dE0F16E36ba80B1, value: 0, data: 0x156d3a46000000000000000000000000000000000000000002df458b38b62d1ae66c00000000000000000000000000000000000000000000000000000000000000000000, start: 1605770140)
+        + OptinoGov.Proposed(proposer: User1:0xa11A, id: 0, description: Proposal 0 - OGToken.setCap(888888888.888, true), targets: 0x1647B1461251A0c6D3E14a227dE0F16E36ba80B1, value: 0, data: 0x156d3a46000000000000000000000000000000000000000002df458b38b62d1ae66c00000000000000000000000000000000000000000000000000000000000000000000, start: 1605770348)
         
          # Account                                        ΔETH                OptinoGov                       OG                      OGD                     FEE0
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
@@ -387,7 +389,7 @@ $ npx hardhat --verbose --show-stack-traces test test/TestOptinoGov.js > results
           1         3y                   1095.0
          -- ---------- ------------------------
         
-        --- Test 4 - user1 execute(0) ---
+        --- Test 3 - voteBySigs ---
         signature : 0x5a402c5880ca147c800bef8fe1ed375b2439f4b5d387c79db6c8ca4f730f952763c35b410a43819837bf35ad6f9773518e373ff83d9d1706b36bcaf4fb1accdc1c
         voteBySigs1 - gasUsed: 91467, fee: 0.00731736, feeUsd: 2.8220862312, @ 80.0 gwei & 385.67 ETH/USD, 0xd4f76635a0e4f713fa1d703b94cd9a8c0b7cfe194744aa53a06bd48762cd54dc
         + OptinoGov.Voted(user: User1:0xa11A, id: 0, support: true, votes: 20.0, forVotes: 20.0, againstVotes: 0.0)
@@ -488,7 +490,7 @@ $ npx hardhat --verbose --show-stack-traces test test/TestOptinoGov.js > results
         
         --- Test Completed ---
 
-      ✓ Workflow #2 - Developing (3023ms)
+      ✓ Workflow #2 - Developing (3084ms)
 
 
   1 passing (6s)

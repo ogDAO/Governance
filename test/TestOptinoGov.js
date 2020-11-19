@@ -320,24 +320,11 @@ describe("TestOptinoGov", function() {
       await data.printTxData("propose1", propose1);
       await data.printBalances();
 
-      console.log("        --- Test 4 - user1 execute(0) ---");
-      // const message = "Hello";
-      // console.log("Test getBlockNumber 2 b - message: " + message);
-
-      // test account 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E
-      // let privateKey = '0x56554ba7c55d35844ffe3b132ad064faa810780fe73b952f8c8593facfcb1eaa';
-      // test account 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433
+      console.log("        --- Test 3 - voteBySigs ---");
       let privateKey = '0x9f9752b9387aa98f6b6ef115a34be9941264876381692b24b85fdd015d660124';
       let wallet = new ethers.Wallet(privateKey);
-      // console.log("Test getBlockNumber 2 b - wallet: " + util.inspect(wallet));
-      // let ethersSignature = await wallet.signMessage(message);
-      // console.log("Test getBlockNumber 2 b - ethersSignature: " + ethersSignature);
-      // // const ethersSigningAccount = await web3.eth.accounts.recover(message, ethersSignature, false);
-      // const ethersSigningAccount = ethers.utils.verifyMessage(message, ethersSignature);
-      // console.log("Test getBlockNumber 2 b - ethersSigningAccount: " + ethersSigningAccount);
       const domain = {
           name: 'OptinoGov',
-          // version: '1',
           chainId: 31337,
           verifyingContract: '0x7305816b5991eb8B06Ba62F9F48531410c4Cd610'
       }
@@ -351,23 +338,11 @@ describe("TestOptinoGov", function() {
           id: 0,
           support: 'true'
       }
-      // const voteDigest = await data.optinoGov.connect(data.deployerSigner).voteDigest(0, true);
-      // console.log("        voteDigest: " + voteDigest);
-      // const typedData = ethers.utils._TypedDataEncoder.encode(domain, types, value);
-      // console.log("        typedData : " + typedData);
       const signature = await wallet._signTypedData(domain, types, value);
       console.log("        signature : " + signature);
       const voteBySigs1 = await data.optinoGov.connect(data.deployerSigner).voteBySigs(0, [true], [signature]);
       await data.printTxData("voteBySigs1", voteBySigs1);
       await data.printBalances();
-
-
-      // function voteBySigs(uint id, bool[] memory _supports, bytes[] memory sigs);
-
-      // console.log("        data.user1Signer: " + util.inspect(data.user1Signer));
-      // const signature1 = await data.user1Signer._signTypedData(domain, types, value);
-      // console.log("        signature1: " + signature1);
-
 
 
       // console.log("        --- Test 3 - user{1,2} vote ---");
