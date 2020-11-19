@@ -467,7 +467,9 @@ contract OptinoGov is ERC20, OptinoGovBase, InterestUtils {
             // web3js 0.x go-ethereum
             // address voter = ecrecoverFromSig(keccak256(abi.encodePacked(SIGNING_PREFIX, digest)), sig);
             require(voter != address(0), "Invalid signature");
-            _vote(voter, id, support);
+            if (!voted[id][voter]) {
+                _vote(voter, id, support);
+            }
         }
     }
 
