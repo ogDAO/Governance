@@ -165,6 +165,7 @@ contract OptinoGov is ERC20, OptinoGovBase, InterestUtils {
     string private constant NAME = "OptinoGov";
     bytes32 private constant EIP712_DOMAIN_TYPEHASH = keccak256("EIP712Domain(string name,uint256 chainId,address verifyingContract)");
     bytes32 private constant EIP712_VOTE_TYPEHASH = keccak256("Vote(uint256 id,bool support)");
+    bytes32 private immutable EIP712_DOMAIN_SEPARATOR = keccak256(abi.encode(EIP712_DOMAIN_TYPEHASH, keccak256(bytes(NAME)), getChainId(), address(this)));
 
     uint private _totalSupply;
     mapping(address => Account) private accounts;
@@ -436,7 +437,7 @@ contract OptinoGov is ERC20, OptinoGovBase, InterestUtils {
     }
     function _vote(address voter, uint id, bool support) internal {
         Proposal storage proposal = proposals[id];
-        require(proposal.start != 0 && block.timestamp < uint(proposal.start).add(votingDuration), "Voting not open");
+        require(proposal.start != 0 && block.timestamp < uint(proposal.start).add(votingDuration), "Voting closed");
         require(accounts[voter].lastDelegated + votingDuration < block.timestamp, "Cannot vote after recent delegation");
         require(!voted[id][voter], "Already voted");
         uint votes = accounts[voter].votes + accounts[voter].delegatedVotes;
@@ -450,17 +451,20 @@ contract OptinoGov is ERC20, OptinoGovBase, InterestUtils {
         emit Voted(voter, id, support, votes, proposal.forVotes, proposal.againstVotes);
     }
     function voteDigest(uint id, bool support) public view returns (bytes32 digest) {
-        bytes32 domainSeparator = keccak256(abi.encode(EIP712_DOMAIN_TYPEHASH, keccak256(bytes(NAME)), getChainId(), address(this)));
+        // bytes32 domainSeparator = keccak256(abi.encode(EIP712_DOMAIN_TYPEHASH, keccak256(bytes(NAME)), getChainId(), address(this)));
         bytes32 structHash = keccak256(abi.encode(EIP712_VOTE_TYPEHASH, id, support));
-        digest = keccak256(abi.encodePacked("\x19\x01", domainSeparator, structHash));
+        digest = keccak256(abi.encodePacked("\x19\x01", EIP712_DOMAIN_SEPARATOR, structHash));
     }
     function voteBySigs(uint id, bool[] memory _supports, bytes[] memory sigs) public {
         require(_supports.length == sigs.length);
         for (uint i = 0; i < _supports.length; i++) {
             bool support = _supports[i];
             bytes memory sig = sigs[i];
+            uint gasStart = gasleft();
             bytes32 digest = voteDigest(id, support);
             address voter = ecrecoverFromSig(digest, sig);
+            uint gasUsed = gasStart - gasleft();
+            console.log("        > voteBySigs - gasUsed: ", gasUsed);
             require(voter != address(0), "Invalid signature");
             if (!voted[id][voter]) {
                 _vote(voter, id, support);
