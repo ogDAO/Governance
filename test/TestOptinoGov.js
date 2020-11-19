@@ -44,6 +44,7 @@ describe("TestOptinoGov", function() {
     await data.printTxData("voteWeightCurve.deployTransaction", voteWeightCurve.deployTransaction);
     await data.printTxData("fee0Token.deployTransaction", fee0Token.deployTransaction);
     await data.printTxData("optinoGov.deployTransaction", optinoGov.deployTransaction);
+    console.log("        OptinoGov.bytecode.length/2: " + OptinoGov.bytecode.length/2);
     // if (verbose) {
     //   await data.printBalances();
     // }
@@ -267,7 +268,7 @@ describe("TestOptinoGov", function() {
     });
   });
 
-  describe("TestOptinoGov - Workflow #2 - Developing", function() {
+  describe.only("TestOptinoGov - Workflow #2 - Developing", function() {
     it("Workflow #2 - Developing", async function() {
       console.log("        --- Test 1 - user{1..3} commit 1,000 OGTokens for x seconds, user3 delegate to user1 ---");
       let duration1 = 2;

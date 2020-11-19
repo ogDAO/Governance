@@ -1,7 +1,7 @@
 pragma solidity ^0.7.0;
 pragma experimental ABIEncoderV2;
 
-import "hardhat/console.sol";
+// import "hardhat/console.sol";
 
 // Use prefix "./" normally and "https://github.com/ogDAO/Governance/blob/master/contracts/" in Remix
 import "./OGTokenInterface.sol";
@@ -14,7 +14,19 @@ import "./CurveInterface.sol";
 contract OptinoGovConfig {
     using SafeMath for uint;
 
-    uint constant SECONDS_PER_YEAR = 100; // Testing 24 * 60 * 60 * 365;
+    bytes32 private immutable KEY_OGTOKEN = keccak256(abi.encodePacked("ogToken"));
+    bytes32 private immutable KEY_OGDTOKEN = keccak256(abi.encodePacked("ogdToken"));
+    bytes32 private immutable KEY_OGREWARDCURVE = keccak256(abi.encodePacked("ogRewardCurve"));
+    bytes32 private immutable KEY_VOTEWEIGHTCURVE = keccak256(abi.encodePacked("voteWeightCurve"));
+    bytes32 private immutable KEY_MAXDURATION = keccak256(abi.encodePacked("maxDuration"));
+    bytes32 private immutable KEY_COLLECTREWARDFORFEE = keccak256(abi.encodePacked("collectRewardForFee"));
+    bytes32 private immutable KEY_COLLECTREWARDFORDELAY = keccak256(abi.encodePacked("collectRewardForDelay"));
+    bytes32 private immutable KEY_PROPOSALCOST = keccak256(abi.encodePacked("proposalCost"));
+    bytes32 private immutable KEY_PROPOSALTHRESHOLD = keccak256(abi.encodePacked("proposalThreshold"));
+    bytes32 private immutable KEY_QUORUM = keccak256(abi.encodePacked("quorum"));
+    bytes32 private immutable KEY_QUORUMDECAYPERSECOND = keccak256(abi.encodePacked("quorumDecayPerSecond"));
+    bytes32 private immutable KEY_VOTINGDURATION = keccak256(abi.encodePacked("votingDuration"));
+    bytes32 private immutable KEY_EXECUTEDELAY = keccak256(abi.encodePacked("executeDelay"));
 
     OGTokenInterface public ogToken;
     OGDTokenInterface public ogdToken;
@@ -44,31 +56,35 @@ contract OptinoGovConfig {
         voteWeightCurve = _voteWeightCurve;
     }
 
-    function equalString(string memory s1, string memory s2) internal pure returns(bool) {
-        return keccak256(abi.encodePacked(s1)) == keccak256(abi.encodePacked(s2));
-    }
     function setConfig(string memory key, uint value) external onlySelf {
-        /*if (equalString(key, "ogRewardCurve")) {
-            ogRewardCurve = CurveInterface(value);
-        } else */if (equalString(key, "maxDuration")) {
+        bytes32 _key = keccak256(abi.encodePacked(key));
+        if (_key == KEY_OGTOKEN) {
+            ogToken = OGTokenInterface(address(value));
+        } else if (_key == KEY_VOTEWEIGHTCURVE) {
+            ogdToken = OGDTokenInterface(address(value));
+        } else if (_key == KEY_OGREWARDCURVE) {
+            ogRewardCurve = CurveInterface(address(value));
+        } else if (_key == KEY_VOTEWEIGHTCURVE) {
+            voteWeightCurve = CurveInterface(address(value));
+        } else if (_key == KEY_MAXDURATION) {
             require(maxDuration < 5 * 365 days, "Cannot exceed 5 years");
             maxDuration = value;
-        } else if (equalString(key, "collectRewardForFee")) {
+        } else if (_key == KEY_COLLECTREWARDFORFEE) {
             require(collectRewardForFee < 1e18, "Cannot exceed 100%");
             collectRewardForFee = value;
-        } else if (equalString(key, "collectRewardForDelay")) {
+        } else if (_key == KEY_COLLECTREWARDFORDELAY) {
             collectRewardForDelay = value;
-        } else if (equalString(key, "proposalCost")) {
+        } else if (_key == KEY_PROPOSALCOST) {
             proposalCost = value;
-        } else if (equalString(key, "proposalThreshold")) {
+        } else if (_key == KEY_PROPOSALTHRESHOLD) {
             proposalThreshold = value;
-        } else if (equalString(key, "quorum")) {
+        } else if (_key == KEY_QUORUM) {
             quorum = value;
-        } else if (equalString(key, "quorumDecayPerSecond")) {
+        } else if (_key == KEY_QUORUMDECAYPERSECOND) {
             quorumDecayPerSecond = value;
-        } else if (equalString(key, "votingDuration")) {
+        } else if (_key == KEY_VOTINGDURATION) {
             votingDuration = value;
-        } else if (equalString(key, "executeDelay")) {
+        } else if (_key == KEY_EXECUTEDELAY) {
             executeDelay = value;
         } else {
             revert("Invalid key");
@@ -106,8 +122,6 @@ contract OptinoGov is ERC20, OptinoGovConfig, InterestUtils {
         uint againstVotes;
     }
 
-    string _symbol = "OptinoGov";
-    string _name = "OptinoGov";
     uint _totalSupply;
     mapping(address => Account) public accounts;
     address[] public accountsIndex;
@@ -128,11 +142,11 @@ contract OptinoGov is ERC20, OptinoGovConfig, InterestUtils {
     constructor(OGTokenInterface ogToken, OGDTokenInterface ogdToken, CurveInterface ogRewardCurve, CurveInterface voteWeightCurve) OptinoGovConfig(ogToken, ogdToken, ogRewardCurve, voteWeightCurve) {
     }
 
-    function symbol() override external view returns (string memory) {
-        return _symbol;
+    function symbol() override external pure returns (string memory) {
+        return "OptinoGov";
     }
-    function name() override external view returns (string memory) {
-        return _name;
+    function name() override external pure returns (string memory) {
+        return "OptinoGov";
     }
     function decimals() override external pure returns (uint8) {
         return 18;
@@ -143,24 +157,20 @@ contract OptinoGov is ERC20, OptinoGovConfig, InterestUtils {
     function balanceOf(address tokenOwner) override external view returns (uint balance) {
         return accounts[tokenOwner].balance;
     }
-    function transfer(address to, uint tokens) override external returns (bool success) {
-        require(tokens == 0, "Not implemented");
-        accounts[msg.sender].balance = accounts[msg.sender].balance.sub(tokens);
-        accounts[to].balance = accounts[to].balance.add(tokens);
-        emit Transfer(msg.sender, to, tokens);
+    function transfer(address /*to*/, uint /*tokens*/) override external returns (bool success) {
+        require(false, "Not implemented");
+        accounts[address(0)].balance = accounts[address(0)].balance;
         return true;
     }
     function approve(address spender, uint tokens) override external returns (bool success) {
+        require(false, "Not implemented");
         allowed[msg.sender][spender] = tokens;
-        emit Approval(msg.sender, spender, tokens);
+        // emit Approval(msg.sender, spender, tokens);
         return true;
     }
-    function transferFrom(address from, address to, uint tokens) override external returns (bool success) {
-        require(tokens == 0, "Not implemented");
-        accounts[from].balance = accounts[from].balance.sub(tokens);
-        allowed[from][msg.sender] = allowed[from][msg.sender].sub(tokens);
-        accounts[to].balance = accounts[to].balance.add(tokens);
-        emit Transfer(from, to, tokens);
+    function transferFrom(address /*from*/, address /*to*/, uint /*tokens*/) override external returns (bool success) {
+        require(false, "Not implemented");
+        accounts[address(0)].balance = accounts[address(0)].balance;
         return true;
     }
     function allowance(address tokenOwner, address spender) override external view returns (uint remaining) {
@@ -203,7 +213,6 @@ contract OptinoGov is ERC20, OptinoGovConfig, InterestUtils {
     function updateStatsAfter(Account storage account) internal {
         uint rate = voteWeightCurve.getRate(uint(account.duration));
         account.votes = account.balance.mul(rate).div(1e18);
-        // account.votes = account.balance.mul(account.duration).div(SECONDS_PER_YEAR);
         totalVotes = totalVotes.add(account.votes);
         if (account.delegatee != address(0)) {
             accounts[account.delegatee].delegatedVotes = accounts[account.delegatee].delegatedVotes.add(account.votes);
@@ -320,44 +329,30 @@ contract OptinoGov is ERC20, OptinoGovConfig, InterestUtils {
         updateStatsAfter(account);
     }
     function commit(uint tokens, uint duration) public {
-        // console.log("        > %s -> commit(tokens %s, duration %s)", msg.sender, tokens, duration);
-        require(tokens > 0, "tokens must be > 0");
         require(duration > 0, "duration must be > 0");
         require(ogToken.transferFrom(msg.sender, address(this), tokens), "OG transferFrom failed");
         _changeCommitment(msg.sender, tokens, 0, false, duration);
     }
-    function recommit(uint duration) public {
-        // console.log("        > %s -> recommit(duration %s)", msg.sender, duration);
-        require(accounts[msg.sender].balance > 0, "No balance to recommit");
-        _changeCommitment(msg.sender, 0, 0, false, duration);
-    }
     function uncommit(uint tokens) public {
-        // console.log("        > %s -> uncommit(tokens %s)", msg.sender, tokens);
-        require(tokens > 0, "tokens must be > 0");
+        if (tokens == 0) {
+            tokens = accounts[msg.sender].balance;
+            uint ogdTokens = ogdToken.balanceOf(msg.sender);
+            if (ogdTokens < tokens) {
+                tokens = ogdTokens;
+            }
+        }
         require(accounts[msg.sender].balance > 0, "No balance to uncommit");
         _changeCommitment(msg.sender, 0, tokens, tokens == accounts[msg.sender].balance, 0);
         emit Transfer(msg.sender, address(0), tokens);
     }
-    function uncommitAll() public {
-        uint tokens = accounts[msg.sender].balance;
-        uint ogdTokens = ogdToken.balanceOf(msg.sender);
-        if (ogdTokens < tokens) {
-            tokens = ogdTokens;
-        }
-        // console.log("        > %s -> uncommitAll(tokens %s)", msg.sender, tokens);
-        require(tokens > 0, "No balance to uncommit");
-        _changeCommitment(msg.sender, 0, tokens, true, 0);
-        emit Transfer(msg.sender, address(0), tokens);
-    }
     function uncommitFor(address tokenOwner) public {
-        // console.log("        > %s -> uncommitFor(%s)", msg.sender, tokenOwner);
         require(accounts[tokenOwner].balance > 0, "tokenOwner has no balance to tidy");
         _changeCommitment(tokenOwner, 0, 0, false, 0);
     }
 
 
     function propose(string memory description, address[] memory targets, uint[] memory values, bytes[] memory data) public returns(uint) {
-        console.log("        > %s -> propose(description %s)", msg.sender, description);
+        // console.log("        > %s -> propose(description %s)", msg.sender, description);
         // require(accounts[msg.sender].votes >= totalVotes.mul(proposalThreshold).div(1e18), "OptinoGov: Not enough votes to propose");
 
         require(targets.length > 0 && values.length == targets.length && data.length == targets.length, "Invalid data");
