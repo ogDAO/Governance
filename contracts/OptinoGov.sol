@@ -14,19 +14,19 @@ import "./CurveInterface.sol";
 contract OptinoGovConfig {
     using SafeMath for uint;
 
-    bytes32 private immutable KEY_OGTOKEN = keccak256(abi.encodePacked("ogToken"));
-    bytes32 private immutable KEY_OGDTOKEN = keccak256(abi.encodePacked("ogdToken"));
-    bytes32 private immutable KEY_OGREWARDCURVE = keccak256(abi.encodePacked("ogRewardCurve"));
-    bytes32 private immutable KEY_VOTEWEIGHTCURVE = keccak256(abi.encodePacked("voteWeightCurve"));
-    bytes32 private immutable KEY_MAXDURATION = keccak256(abi.encodePacked("maxDuration"));
-    bytes32 private immutable KEY_COLLECTREWARDFORFEE = keccak256(abi.encodePacked("collectRewardForFee"));
-    bytes32 private immutable KEY_COLLECTREWARDFORDELAY = keccak256(abi.encodePacked("collectRewardForDelay"));
-    bytes32 private immutable KEY_PROPOSALCOST = keccak256(abi.encodePacked("proposalCost"));
-    bytes32 private immutable KEY_PROPOSALTHRESHOLD = keccak256(abi.encodePacked("proposalThreshold"));
-    bytes32 private immutable KEY_QUORUM = keccak256(abi.encodePacked("quorum"));
-    bytes32 private immutable KEY_QUORUMDECAYPERSECOND = keccak256(abi.encodePacked("quorumDecayPerSecond"));
-    bytes32 private immutable KEY_VOTINGDURATION = keccak256(abi.encodePacked("votingDuration"));
-    bytes32 private immutable KEY_EXECUTEDELAY = keccak256(abi.encodePacked("executeDelay"));
+    bytes32 private constant KEY_OGTOKEN = keccak256(abi.encodePacked("ogToken"));
+    bytes32 private constant KEY_OGDTOKEN = keccak256(abi.encodePacked("ogdToken"));
+    bytes32 private constant KEY_OGREWARDCURVE = keccak256(abi.encodePacked("ogRewardCurve"));
+    bytes32 private constant KEY_VOTEWEIGHTCURVE = keccak256(abi.encodePacked("voteWeightCurve"));
+    bytes32 private constant KEY_MAXDURATION = keccak256(abi.encodePacked("maxDuration"));
+    bytes32 private constant KEY_COLLECTREWARDFORFEE = keccak256(abi.encodePacked("collectRewardForFee"));
+    bytes32 private constant KEY_COLLECTREWARDFORDELAY = keccak256(abi.encodePacked("collectRewardForDelay"));
+    bytes32 private constant KEY_PROPOSALCOST = keccak256(abi.encodePacked("proposalCost"));
+    bytes32 private constant KEY_PROPOSALTHRESHOLD = keccak256(abi.encodePacked("proposalThreshold"));
+    bytes32 private constant KEY_QUORUM = keccak256(abi.encodePacked("quorum"));
+    bytes32 private constant KEY_QUORUMDECAYPERSECOND = keccak256(abi.encodePacked("quorumDecayPerSecond"));
+    bytes32 private constant KEY_VOTINGDURATION = keccak256(abi.encodePacked("votingDuration"));
+    bytes32 private constant KEY_EXECUTEDELAY = keccak256(abi.encodePacked("executeDelay"));
 
     OGTokenInterface public ogToken;
     OGDTokenInterface public ogdToken;
@@ -122,13 +122,13 @@ contract OptinoGov is ERC20, OptinoGovConfig, InterestUtils {
         uint againstVotes;
     }
 
-    uint _totalSupply;
-    mapping(address => Account) public accounts;
+    uint private _totalSupply;
+    mapping(address => Account) private accounts;
     address[] public accountsIndex;
-    mapping(address => mapping(address => uint)) allowed;
+    mapping(address => mapping(address => uint)) private allowed;
     uint public totalVotes;
 
-    Proposal[] proposals;
+    Proposal[] private proposals;
     mapping(uint => mapping(address => bool)) public voted;
 
     event DelegateUpdated(address indexed oldDelegatee, address indexed delegatee, uint votes);
