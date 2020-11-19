@@ -32,8 +32,8 @@ Compilation finished successfully
         + VoteWeightCurve.PointUpdated(index: 1, term: 3y, rate: 1095.0%)
         fee0Token.deployTransaction - gasUsed: 823708, fee: 0.06589664, feeUsd: 25.4143571488, @ 80.0 gwei & 385.67 ETH/USD, 0xed5ba149a4e4441718db4a4a7342a08d0c164530c6c44a13ab2b78b077f49173
         + Fee0Token.Transfer(from: ETH|null:0x0000, to: Deployer:0xa00A, tokens: 100.0)
-        optinoGov.deployTransaction - gasUsed: 5320029, fee: 0.42560232, feeUsd: 164.1420467544, @ 80.0 gwei & 385.67 ETH/USD, 0xa4cd9bce3a73968143ae575df6e962fab459821e842e9fa5e8827aa66cb2425a
-        OptinoGov.bytecode.length/2: 24896
+        optinoGov.deployTransaction - gasUsed: 5312041, fee: 0.42496328, feeUsd: 163.8955881976, @ 80.0 gwei & 385.67 ETH/USD, 0x4b8245e1c0a9f91fc8314f8ba0f306473ca288db488eb286c770b530dd27473f
+        OptinoGov.bytecode.length/2: 24859
         --- Setup 2 - OGToken and OGDToken permissioning ---
         setup2Txs[0] - gasUsed: 78942, fee: 0.00631536, feeUsd: 2.4356448912, @ 80.0 gwei & 385.67 ETH/USD, 0xdcf1bd0bb6a7821b94947c7884ae113f87efa6b38a9933f8a4c9aff34fa76ef3
         + OGToken.PermissionUpdated(account: Deployer:0xa00A, role: 1, active: true, maximum: 0, processed: 0)
@@ -87,7 +87,7 @@ Compilation finished successfully
         
          # Account                                        ΔETH                OptinoGov                       OG                      OGD                     FEE0
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
-         0 Deployer:0xa00A                         -1.06365768                      0.0                  10000.0                      0.0                    100.0
+         0 Deployer:0xa00A                         -1.06301864                      0.0                  10000.0                      0.0                    100.0
          1 User1:0xa11A                            -0.00351744                      0.0                  10000.0                      0.0                      0.0
          2 User2:0xa22A                            -0.00351744                      0.0                  10000.0                      0.0                      0.0
          3 User3:0xa33a                            -0.00351744                      0.0                  10000.0                      0.0                      0.0
@@ -179,24 +179,24 @@ Compilation finished successfully
         commit1 - gasUsed: 376231, fee: 0.03009848, feeUsd: 11.6080807816, @ 80.0 gwei & 385.67 ETH/USD, 0x2b6eeaec436b279a05a5ea9de74be33e5559e59d2243be1786ccc61ffc2e41ce
         + OGToken.Transfer(from: User1:0xa11A, to: OptinoGov:0x7305, tokens: 1000.0)
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User1:0xa11A, tokens: 1000.0)
-        + OptinoGov.Committed(user: User1:0xa11A, tokens: 1000.0, balance: 1000.0, duration: 2, end: 1605749615, delegatee: ETH|null:0x0000, votes: 0.0, totalVotes: 0.0)
+        + OptinoGov.Committed(user: User1:0xa11A, tokens: 1000.0, balance: 1000.0, duration: 2, end: 1605749782, delegatee: ETH|null:0x0000, votes: 0.0, totalVotes: 0.0)
         + OptinoGov.Transfer(from: ETH|null:0x0000, to: User1:0xa11A, tokens: 1000.0)
         commit2 - gasUsed: 305431, fee: 0.02443448, feeUsd: 9.4236459016, @ 80.0 gwei & 385.67 ETH/USD, 0x142b1412dde0470d151229ee5b35eb21c38454dbdb38e29d1407793a30822b94
         + OGToken.Transfer(from: User2:0xa22A, to: OptinoGov:0x7305, tokens: 1000.0)
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User2:0xa22A, tokens: 1000.0)
-        + OptinoGov.Committed(user: User2:0xa22A, tokens: 1000.0, balance: 1000.0, duration: 2, end: 1605749616, delegatee: ETH|null:0x0000, votes: 0.0, totalVotes: 10.0)
+        + OptinoGov.Committed(user: User2:0xa22A, tokens: 1000.0, balance: 1000.0, duration: 2, end: 1605749783, delegatee: ETH|null:0x0000, votes: 0.0, totalVotes: 10.0)
         + OptinoGov.Transfer(from: ETH|null:0x0000, to: User2:0xa22A, tokens: 1000.0)
         commit3 - gasUsed: 305431, fee: 0.02443448, feeUsd: 9.4236459016, @ 80.0 gwei & 385.67 ETH/USD, 0x53f61a8c4056da74a0a900e4e99890f4682277081646bad7f0a7f39669c6425f
         + OGToken.Transfer(from: User3:0xa33a, to: OptinoGov:0x7305, tokens: 1000.0)
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User3:0xa33a, tokens: 1000.0)
-        + OptinoGov.Committed(user: User3:0xa33a, tokens: 1000.0, balance: 1000.0, duration: 2, end: 1605749617, delegatee: ETH|null:0x0000, votes: 0.0, totalVotes: 20.0)
+        + OptinoGov.Committed(user: User3:0xa33a, tokens: 1000.0, balance: 1000.0, duration: 2, end: 1605749784, delegatee: ETH|null:0x0000, votes: 0.0, totalVotes: 20.0)
         + OptinoGov.Transfer(from: ETH|null:0x0000, to: User3:0xa33a, tokens: 1000.0)
         delegate1 - gasUsed: 65086, fee: 0.00520688, feeUsd: 2.0081374096, @ 80.0 gwei & 385.67 ETH/USD, 0x07bc7dbe050b57ae4749d4fe626eedb8b80a0384fc6ce4ad4c8ba9a0374ae88d
         + OptinoGov.DelegateUpdated(oldDelegatee: ETH|null:0x0000, delegatee: User1:0xa11A, votes: 10.0)
         
          # Account                                        ΔETH                OptinoGov                       OG                      OGD                     FEE0
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
-         0 Deployer:0xa00A                         -1.06365768                      0.0                  10000.0                      0.0                    100.0
+         0 Deployer:0xa00A                         -1.06301864                      0.0                  10000.0                      0.0                    100.0
          1 User1:0xa11A                            -0.03361592                   1000.0                   9000.0                   1000.0                      0.0
          2 User2:0xa22A                            -0.02795192                   1000.0                   9000.0                   1000.0                      0.0
          3 User3:0xa33a                             -0.0331588                   1000.0                   9000.0                   1000.0                      0.0
@@ -292,11 +292,11 @@ Compilation finished successfully
         values           : [0]
         dataItems        : ["0x156d3a46000000000000000000000000000000000000000002df458b38b62d1ae66c00000000000000000000000000000000000000000000000000000000000000000000"]
         propose1 - gasUsed: 294268, fee: 0.02354144, feeUsd: 9.0792271648, @ 80.0 gwei & 385.67 ETH/USD, 0xfa471d67291e75b8e9c686bacba2e23405d87f2c8976846a8fae80a54b675623
-        + OptinoGov.Proposed(proposer: User1:0xa11A, id: 0, description: Proposal 0 - OGToken.setCap(888888888.888, true), targets: 0x1647B1461251A0c6D3E14a227dE0F16E36ba80B1, value: 0, data: 0x156d3a46000000000000000000000000000000000000000002df458b38b62d1ae66c00000000000000000000000000000000000000000000000000000000000000000000, start: 1605749617)
+        + OptinoGov.Proposed(proposer: User1:0xa11A, id: 0, description: Proposal 0 - OGToken.setCap(888888888.888, true), targets: 0x1647B1461251A0c6D3E14a227dE0F16E36ba80B1, value: 0, data: 0x156d3a46000000000000000000000000000000000000000002df458b38b62d1ae66c00000000000000000000000000000000000000000000000000000000000000000000, start: 1605749784)
         
          # Account                                        ΔETH                OptinoGov                       OG                      OGD                     FEE0
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
-         0 Deployer:0xa00A                         -1.06365768                      0.0                  10000.0                      0.0                    100.0
+         0 Deployer:0xa00A                         -1.06301864                      0.0                  10000.0                      0.0                    100.0
          1 User1:0xa11A                            -0.05715736                   1000.0                   9000.0                   1000.0                      0.0
          2 User2:0xa22A                            -0.02795192                   1000.0                   9000.0                   1000.0                      0.0
          3 User3:0xa33a                             -0.0331588                   1000.0                   9000.0                   1000.0                      0.0
@@ -396,7 +396,7 @@ Compilation finished successfully
         
          # Account                                        ΔETH                OptinoGov                       OG                      OGD                     FEE0
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
-         0 Deployer:0xa00A                         -1.06365768                      0.0                  10000.0                      0.0                    100.0
+         0 Deployer:0xa00A                         -1.06301864                      0.0                  10000.0                      0.0                    100.0
          1 User1:0xa11A                            -0.06369032                   1000.0                   9000.0                   1000.0                      0.0
          2 User2:0xa22A                            -0.03328488                   1000.0                   9000.0                   1000.0                      0.0
          3 User3:0xa33a                             -0.0331588                   1000.0                   9000.0                   1000.0                      0.0
@@ -495,7 +495,7 @@ Compilation finished successfully
         
          # Account                                        ΔETH                OptinoGov                       OG                      OGD                     FEE0
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
-         0 Deployer:0xa00A                         -1.06365768                      0.0                  10000.0                      0.0                    100.0
+         0 Deployer:0xa00A                         -1.06301864                      0.0                  10000.0                      0.0                    100.0
          1 User1:0xa11A                            -0.06927104                   1000.0                   9000.0                   1000.0                      0.0
          2 User2:0xa22A                            -0.03328488                   1000.0                   9000.0                   1000.0                      0.0
          3 User3:0xa33a                             -0.0331588                   1000.0                   9000.0                   1000.0                      0.0
@@ -589,7 +589,7 @@ Compilation finished successfully
         
         --- Test Completed ---
 
-      ✓ Workflow #2 - Developing (3346ms)
+      ✓ Workflow #2 - Developing (3896ms)
 
 
   1 passing (7s)

@@ -158,23 +158,22 @@ contract OptinoGov is ERC20, OptinoGovConfig, InterestUtils {
         return accounts[tokenOwner].balance;
     }
     function transfer(address /*to*/, uint /*tokens*/) override external returns (bool success) {
-        require(false, "Not implemented");
-        accounts[address(0)].balance = accounts[address(0)].balance;
+        require(false, "Unimplemented");
+        _totalSupply = _totalSupply;
         return true;
     }
-    function approve(address spender, uint tokens) override external returns (bool success) {
-        require(false, "Not implemented");
-        allowed[msg.sender][spender] = tokens;
-        // emit Approval(msg.sender, spender, tokens);
+    function approve(address /*spender*/, uint /*tokens*/) override external returns (bool success) {
+        require(false, "Unimplemented");
+        _totalSupply = _totalSupply;
         return true;
     }
     function transferFrom(address /*from*/, address /*to*/, uint /*tokens*/) override external returns (bool success) {
-        require(false, "Not implemented");
-        accounts[address(0)].balance = accounts[address(0)].balance;
+        require(false, "Unimplemented");
+        _totalSupply = _totalSupply;
         return true;
     }
-    function allowance(address tokenOwner, address spender) override external view returns (uint remaining) {
-        return allowed[tokenOwner][spender];
+    function allowance(address /*tokenOwner*/, address /*spender*/) override external pure returns (uint remaining) {
+        return 0;
     }
 
     function getAccountByIndex(uint i) public view returns (address tokenOwner, Account memory account) {
@@ -187,7 +186,7 @@ contract OptinoGov is ERC20, OptinoGovConfig, InterestUtils {
     }
 
     function delegate(address delegatee) public {
-        require(delegatee == address(0) || accounts[delegatee].end != 0, "delegatee is not registered");
+        require(delegatee == address(0) || accounts[delegatee].end != 0, "delegatee not registered");
         require(msg.sender != delegatee, "Cannot delegate to self");
         Account storage account = accounts[msg.sender];
         require(uint(account.lastVoted) + votingDuration < block.timestamp, "Cannot delegate after recent vote");
@@ -237,39 +236,32 @@ contract OptinoGov is ERC20, OptinoGovConfig, InterestUtils {
     }
 
     function _changeCommitment(address tokenOwner, uint depositTokens, uint withdrawTokens, bool withdrawRewards, uint duration) internal {
-        // console.log("        >   _changeCommitment(tokenOwner %s, depositTokens %s, withdrawTokens %s,", tokenOwner, depositTokens, withdrawTokens);
-        // console.log("              withdrawRewards %s, duration %s)", withdrawRewards, duration);
         Account storage account = accounts[tokenOwner];
-
-        // commit(tokens, duration) or recommit(duration)
         if (depositTokens > 0) {
             require(duration > 0, "Duration must be > 0");
         }
-        // uncommit(tokens) or uncommitAll()
         if (withdrawTokens > 0) {
-            require(uint(account.end) < block.timestamp, "Staking period still active");
-            require(withdrawTokens <= account.balance, "Unsufficient staked balance");
+            require(uint(account.end) < block.timestamp, "Commitment still active");
+            require(withdrawTokens <= account.balance, "Unsufficient balance");
         }
         updateStatsBefore(account);
         (uint reward, /*uint term*/) = _calculateReward(account);
-        // console.log("        >     reward %s for %s seconds", reward, term);
         uint availableToMint = ogToken.availableToMint();
-        // console.log("        >     availableToMint %s", availableToMint);
         if (reward > availableToMint) {
             reward = availableToMint;
         }
         if (reward > 0) {
             if (withdrawRewards) {
-                require(ogToken.mint(tokenOwner, reward), "reward OG mint failed");
+                require(ogToken.mint(tokenOwner, reward), "OG mint failed");
             } else {
                 if (msg.sender != tokenOwner) {
                     uint callerReward = reward.mul(collectRewardForFee).div(1e18);
                     if (callerReward > 0) {
                         reward = reward.sub(callerReward);
-                        require(ogToken.mint(msg.sender, callerReward), "reward OG mint failed");
+                        require(ogToken.mint(msg.sender, callerReward), "OG mint failed");
                     }
                 }
-                require(ogToken.mint(address(this), reward), "reward OG mint failed");
+                require(ogToken.mint(address(this), reward), "OG mint failed");
                 account.balance = account.balance.add(reward);
                 _totalSupply = _totalSupply.add(reward);
                 require(ogdToken.mint(tokenOwner, reward), "OGD mint failed");
@@ -320,8 +312,6 @@ contract OptinoGov is ERC20, OptinoGovConfig, InterestUtils {
             account.duration = uint64(0);
             account.end = uint64(block.timestamp);
             require(ogdToken.withdrawDividendsAndBurnFor(tokenOwner, withdrawTokens), "OG withdrawDividendsAndBurnFor failed");
-            // require(ogdToken.withdrawDividendsFor(tokenOwner, tokenOwner), "OGD withdrawDividendsFor failed");
-            // require(ogdToken.transferFrom(tokenOwner, address(0), withdrawTokens), "OGD transfer failed");
             require(ogToken.transfer(tokenOwner, withdrawTokens), "OG transfer failed");
             // TODO Uncommit
         //     emit Unstaked(msg.sender, withdrawTokens, reward, tokensWithSlashingFactor, rewardWithSlashingFactor);
