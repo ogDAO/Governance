@@ -441,10 +441,12 @@ contract OptinoGov is ERC20, OptinoGovBase, InterestUtils {
         require(accounts[voter].lastDelegated + votingDuration < block.timestamp, "Cannot vote after recent delegation");
         require(!voted[id][voter], "Already voted");
         uint votes = accounts[voter].votes + accounts[voter].delegatedVotes;
-        if (support) {
-            proposal.forVotes = proposal.forVotes.add(votes);
-        } else {
-            proposal.againstVotes = proposal.forVotes.add(votes);
+        if (accounts[voter].delegatee != address(0)) {
+            if (support) {
+                proposal.forVotes = proposal.forVotes.add(votes);
+            } else {
+                proposal.againstVotes = proposal.forVotes.add(votes);
+            }
         }
         voted[id][voter] = true;
         accounts[voter].lastVoted = uint64(block.timestamp);
@@ -455,22 +457,47 @@ contract OptinoGov is ERC20, OptinoGovBase, InterestUtils {
         bytes32 structHash = keccak256(abi.encode(EIP712_VOTE_TYPEHASH, id, support));
         digest = keccak256(abi.encodePacked("\x19\x01", EIP712_DOMAIN_SEPARATOR, structHash));
     }
-    function voteBySigs(uint id, bool[] memory _supports, bytes[] memory sigs) public {
-        require(_supports.length == sigs.length);
-        for (uint i = 0; i < _supports.length; i++) {
-            bool support = _supports[i];
+    function voteBySigs(uint id, bytes[] memory sigs) public {
+        for (uint i = 0; i < sigs.length; i++) {
             bytes memory sig = sigs[i];
             uint gasStart = gasleft();
-            bytes32 digest = voteDigest(id, support);
+            bytes32 digest = voteDigest(id, true);
             address voter = ecrecoverFromSig(digest, sig);
+            if (voter != address(0) && accounts[voter].balance > 0) {
+                console.log("        > voteBySigs - %s true", voter);
+                if (!voted[id][voter]) {
+                    _vote(voter, id, true);
+                }
+            } else {
+                digest = voteDigest(id, false);
+                voter = ecrecoverFromSig(digest, sig);
+                if (voter != address(0) && accounts[voter].balance > 0) {
+                    console.log("        > voteBySigs - %s false", voter);
+                    if (!voted[id][voter]) {
+                        _vote(voter, id, false);
+                    }
+                }
+            }
             uint gasUsed = gasStart - gasleft();
             console.log("        > voteBySigs - gasUsed: ", gasUsed);
-            require(voter != address(0), "Invalid signature");
-            if (!voted[id][voter]) {
-                _vote(voter, id, support);
-            }
         }
     }
+    // function voteBySigs(uint id, bool[] memory _supports, bytes[] memory sigs) public {
+    //     require(_supports.length == sigs.length);
+    //     for (uint i = 0; i < _supports.length; i++) {
+    //         bool support = _supports[i];
+    //         bytes memory sig = sigs[i];
+    //         uint gasStart = gasleft();
+    //         bytes32 digest = voteDigest(id, support);
+    //         address voter = ecrecoverFromSig(digest, sig);
+    //         uint gasUsed = gasStart - gasleft();
+    //         console.log("        > voteBySigs - gasUsed: ", gasUsed);
+    //         require(voter != address(0), "Invalid signature");
+    //         if (!voted[id][voter]) {
+    //             _vote(voter, id, support);
+    //         }
+    //     }
+    // }
 
     // TODO
     function execute(uint id) public {

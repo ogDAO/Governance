@@ -331,16 +331,16 @@ describe("TestOptinoGov", function() {
       const types = {
           Vote: [
               { name: 'id', type: 'uint256' },
-              { name: 'support', type: 'bool' }
+              { name: 'support', type: 'bool' },
           ],
       }
       const value = {
           id: 0,
-          support: 'true'
+          support: false,
       }
       const signature = await wallet._signTypedData(domain, types, value);
       console.log("        signature : " + signature);
-      const voteBySigs1 = await data.optinoGov.connect(data.deployerSigner).voteBySigs(0, [true], [signature]);
+      const voteBySigs1 = await data.optinoGov.connect(data.deployerSigner).voteBySigs(0, [signature]);
       await data.printTxData("voteBySigs1", voteBySigs1);
       await data.printBalances();
 
