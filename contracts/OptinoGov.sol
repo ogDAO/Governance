@@ -460,11 +460,9 @@ contract OptinoGov is ERC20, OptinoGovBase, InterestUtils {
     function voteBySigs(uint id, bytes[] memory sigs) public {
         for (uint i = 0; i < sigs.length; i++) {
             bytes memory sig = sigs[i];
-            uint gasStart = gasleft();
             bytes32 digest = voteDigest(id, true);
             address voter = ecrecoverFromSig(digest, sig);
             if (voter != address(0) && accounts[voter].balance > 0) {
-                console.log("        > voteBySigs - %s true", voter);
                 if (!voted[id][voter]) {
                     _vote(voter, id, true);
                 }
@@ -472,14 +470,11 @@ contract OptinoGov is ERC20, OptinoGovBase, InterestUtils {
                 digest = voteDigest(id, false);
                 voter = ecrecoverFromSig(digest, sig);
                 if (voter != address(0) && accounts[voter].balance > 0) {
-                    console.log("        > voteBySigs - %s false", voter);
                     if (!voted[id][voter]) {
                         _vote(voter, id, false);
                     }
                 }
             }
-            uint gasUsed = gasStart - gasleft();
-            console.log("        > voteBySigs - gasUsed: ", gasUsed);
         }
     }
     // function voteBySigs(uint id, bool[] memory _supports, bytes[] memory sigs) public {
