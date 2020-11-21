@@ -9,7 +9,7 @@ import "./OGDTokenInterface.sol";
 import "./DividendTokens.sol";
 
 
-/// @notice Optino Governance Dividend Token = ERC20 + mint + burn + dividend payments. (c) The Optino Project 2020
+/// @notice Optino Governance Dividend Token = ERC20 + mint + burn + dividend payment. (c) The Optino Project 2020
 // SPDX-License-Identifier: GPLv2
 contract OGDToken is OGDTokenInterface, Permissioned {
     using SafeMath for uint;
@@ -22,16 +22,16 @@ contract OGDToken is OGDTokenInterface, Permissioned {
       mapping(address => uint) owing;
     }
 
-    string _symbol;
-    string  _name;
-    uint8 _decimals;
-    uint _totalSupply;
-    mapping(address => Account) accounts;
-    mapping(address => mapping(address => uint)) allowed;
+    string private _symbol;
+    string private _name;
+    uint8 private _decimals;
+    uint private _totalSupply;
+    mapping(address => Account) private accounts;
+    mapping(address => mapping(address => uint)) private allowed;
 
     DividendTokens.Data private dividendTokens;
 
-    uint public constant pointMultiplier = 10e27;
+    uint private constant POINT_MULTIPLIER = 10e27;
     mapping(address => uint) public totalDividendPoints;
     mapping(address => uint) public unclaimedDividends;
 
@@ -132,7 +132,7 @@ contract OGDToken is OGDTokenInterface, Permissioned {
     /// @notice New dividends owing since the last updateAccount(...)
     function newDividendsOwing(address dividendToken, address account) internal view returns (uint) {
         uint newDividendPoints = totalDividendPoints[dividendToken].sub(accounts[account].lastDividendPoints[dividendToken]);
-        return accounts[account].balance.mul(newDividendPoints).div(pointMultiplier);
+        return accounts[account].balance.mul(newDividendPoints).div(POINT_MULTIPLIER);
     }
     function updateAccount(address account) internal {
         for (uint i = 0; i < dividendTokens.index.length; i++) {
@@ -174,7 +174,7 @@ contract OGDToken is OGDTokenInterface, Permissioned {
         DividendTokens.DividendToken memory _dividendToken = dividendTokens.entries[token];
         require(_totalSupply > accounts[address(0)].balance, "totalSupply is 0");
         require(_dividendToken.enabled, "Dividend token is not enabled");
-        totalDividendPoints[token] = totalDividendPoints[token].add(tokens.mul(pointMultiplier).div(_totalSupply.sub(accounts[address(0)].balance)));
+        totalDividendPoints[token] = totalDividendPoints[token].add(tokens.mul(POINT_MULTIPLIER).div(_totalSupply.sub(accounts[address(0)].balance)));
         unclaimedDividends[token] = unclaimedDividends[token].add(tokens);
         if (token == address(0)) {
             require(msg.value >= tokens, "Insufficient ETH sent");
@@ -246,7 +246,7 @@ contract OGDToken is OGDTokenInterface, Permissioned {
         return true;
     }
     /// @notice Withdraw enabled dividends tokens before burning
-    function burnFrom(address tokenOwner, uint tokens) override external permitted(ROLE_BURNTOKENS, 0) returns (bool success) {
+    function burnFrom(address tokenOwner, uint tokens) override external permitted(ROLE_BURNTOKENS, tokens) returns (bool success) {
         require(accounts[tokenOwner].balance >= tokens, "Insufficient tokens");
         _withdrawDividendsFor(tokenOwner, tokenOwner);
         accounts[tokenOwner].balance = accounts[tokenOwner].balance.sub(tokens);

@@ -2,7 +2,7 @@ pragma solidity ^0.7.0;
 
 import "./ERC20.sol";
 
-/// @notice OGDTokenInterface = ERC20 + mint + burn (+ dividend payment)
+/// @notice OGDTokenInterface = ERC20 + mint + burn + dividend payment. (c) The Optino Project 2020
 // SPDX-License-Identifier: GPLv2
 interface OGDTokenInterface is ERC20 {
     function mint(address tokenOwner, uint tokens) external returns (bool success);

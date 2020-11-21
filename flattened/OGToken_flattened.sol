@@ -122,7 +122,7 @@ interface ERC20 {
 pragma solidity ^0.7.0;
 
 
-/// @notice OGTokenInterface = ERC20 + mint + burn
+/// @notice OGTokenInterface = ERC20 + mint + burn with optional freezable cap. (c) The Optino Project 2020
 // SPDX-License-Identifier: GPLv2
 interface OGTokenInterface is ERC20 {
     function availableToMint() external view returns (uint tokens);
@@ -140,18 +140,18 @@ pragma solidity ^0.7.0;
 
 
 
-/// @notice Optino Governance Token = ERC20 + mint + burn. (c) The Optino Project 2020
+/// @notice Optino Governance Token = ERC20 + mint + burn with optional freezable cap. (c) The Optino Project 2020
 // SPDX-License-Identifier: GPLv2
 contract OGToken is OGTokenInterface, Permissioned {
     using SafeMath for uint;
 
-    string _symbol;
-    string  _name;
-    uint8 _decimals;
-    uint _totalSupply;
-    mapping(address => uint) balances;
+    string private _symbol;
+    string private _name;
+    uint8 private _decimals;
+    uint private _totalSupply;
+    mapping(address => uint) private balances;
 
-    mapping(address => mapping(address => uint)) allowed;
+    mapping(address => mapping(address => uint)) private allowed;
     uint public cap;
     bool public freezeCap;
 
