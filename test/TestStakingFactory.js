@@ -169,8 +169,8 @@ describe("TestStakingFactory", function() {
       await data.printTxData("unstake3", unstake3);
       await data.printBalances();
 
-      console.log("        --- Test 6 - Unstake #2 - unstake(remaining) ---");
-      ogTokensToUnstake = ethers.utils.parseUnits("1000", 18);
+      console.log("        --- Test 6 - Unstake #2 - unstake(0 = remaining) ---");
+      ogTokensToUnstake = ethers.utils.parseUnits("0", 18);
       const test6 = [];
       test6.push(stakings[0].connect(data.user1Signer).unstake(ogTokensToUnstake));
       test6.push(stakings[0].connect(data.user2Signer).unstake(ogTokensToUnstake));
@@ -352,8 +352,8 @@ describe("TestStakingFactory", function() {
     });
   });
 
-  describe("TestStakingFactory - Workflow #3 - Stake through factory, stake, restake, unstake(some), unstakeAll()", function() {
-    it("Stake through factory, stake, restake, unstake(some), unstakeAll()", async function() {
+  describe("TestStakingFactory - Workflow #3 - Stake through factory, stake, restake, unstake(some), stakeAll(0 = remaining)", function() {
+    it("Stake through factory, stake, restake, unstake(some), unstakeAll(0 = remaining)", async function() {
       console.log("        --- Test 1 - Mint 10,000 OG tokens for user1; user1 approve 10,000 FEE for StakingFactory to spend ---");
       const ogTokens = ethers.utils.parseUnits("10000", 18);
       const test1 = [];
@@ -411,11 +411,11 @@ describe("TestStakingFactory", function() {
       // await data.printTxData("unstake1", unstake1);
       // await data.printBalances();
 
-      console.log("        --- Test 6 - user1 -> unstakeAll() ---");
+      console.log("        --- Test 6 - user1 -> unstake(0 = remaining) ---");
       data.pause("Waiting", duration + 1);
       await data.printBalances();
       const test6 = [];
-      test6.push(stakings[0].connect(data.user1Signer).unstakeAll());
+      test6.push(stakings[0].connect(data.user1Signer).unstake(0));
       const [unstake5] = await Promise.all(test6);
       await data.printTxData("unstake5", unstake5);
       await data.printBalances();

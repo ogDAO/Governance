@@ -13,14 +13,14 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         Address 0x0f4eA6f2be49d822b7cAEf4175450A4D83A32e72 => Fee0Token:0x0f4e
         Address 0x6eaC8DFBdEB9588C9FEEe24783B4137b082f9708 => Fee1Token:0x6eaC
         Address 0xBa1FCDaE835E77cAB2a76a7C3884AdC630f7a5B0 => Fee2Token:0xBa1F
-        ogdTokenTx - gasUsed: 2830190, fee: 0.2264152, feeUsd: 87.321550184, @ 80.0 gwei & 385.67 ETH/USD, 0x58de7452003f5189630dff3cfa353fbe7d81d564788cbb7a291f0da425f3b7ec
+        ogdTokenTx - gasUsed: 2830190, fee: 0.2264152, feeUsd: 87.321550184, @ 80.0 gwei & 385.67 ETH/USD, 0x6eaafb0b850f1fee75c2be351c2f47fbd0eefd28bfbe0b9bfc83d03819341945
         + OGDToken.PermissionUpdated(account: Deployer:0xa00A, role: 0, active: true, maximum: 0, processed: 0)
         + OGDToken.Transfer(from: ETH|null:0x0000, to: Deployer:0xa00A, tokens: 0.0)
-        fee0TokenTx - gasUsed: 823708, fee: 0.06589664, feeUsd: 25.4143571488, @ 80.0 gwei & 385.67 ETH/USD, 0x86695166f58d7afc3dadaefac8a1307196f0596c42e57bcdf5b5e03f7b82336e
+        fee0TokenTx - gasUsed: 823708, fee: 0.06589664, feeUsd: 25.4143571488, @ 80.0 gwei & 385.67 ETH/USD, 0xc84cba049eb671696eb908104a09861983464b45a9e3627cbd9cbeb7c1a8c50d
         + Fee0Token.Transfer(from: ETH|null:0x0000, to: Deployer:0xa00A, tokens: 100.0)
-        fee1TokenTx - gasUsed: 823708, fee: 0.06589664, feeUsd: 25.4143571488, @ 80.0 gwei & 385.67 ETH/USD, 0xd22a6613b174da858a59bea5448c1385061c8d536612df4280a6a8495452e98f
+        fee1TokenTx - gasUsed: 823708, fee: 0.06589664, feeUsd: 25.4143571488, @ 80.0 gwei & 385.67 ETH/USD, 0xefffc3e773caff297796d1f8f9c3968398d9953f5e47f5fee081f35510d00155
         + Fee1Token.Transfer(from: ETH|null:0x0000, to: Deployer:0xa00A, tokens: 1000.0)
-        fee2TokenTx - gasUsed: 823720, fee: 0.0658976, feeUsd: 25.414727392, @ 80.0 gwei & 385.67 ETH/USD, 0xc442dcb50894447a655fe3ef5618352e719a8f0fa745f70a96911ec103f07fef
+        fee2TokenTx - gasUsed: 823720, fee: 0.0658976, feeUsd: 25.414727392, @ 80.0 gwei & 385.67 ETH/USD, 0x9f8e42e609aa713ffb12914958c85e2c5bdd666e36be308efe74bee9f858b16f
         + Fee2Token.Transfer(from: ETH|null:0x0000, to: Deployer:0xa00A, tokens: 10000.0)
         
          # Account                                        ΔETH                      OGD                     FEE0                     FEE1                     FEE2
@@ -53,9 +53,9 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         --- Setup Completed ---
 
         --- Test 1 - OGDToken mint(...) permissioning, OGDToken.addDividendTokens for ETH and FEE0 ---
-        setPermission1 - gasUsed: 78987, fee: 0.00631896, feeUsd: 2.4370333032, @ 80.0 gwei & 385.67 ETH/USD, 0x96498e2c33280012a7efc44feec889dc9a9615eb341168cee6007f0aa0dfbab1
+        setPermission1 - gasUsed: 79009, fee: 0.00632072, feeUsd: 2.4377120824, @ 80.0 gwei & 385.67 ETH/USD, 0x96498e2c33280012a7efc44feec889dc9a9615eb341168cee6007f0aa0dfbab1
         + OGDToken.PermissionUpdated(account: Deployer:0xa00A, role: 1, active: true, maximum: 0, processed: 0)
-        setPermission2 - gasUsed: 78987, fee: 0.00631896, feeUsd: 2.4370333032, @ 80.0 gwei & 385.67 ETH/USD, 0x8c80650ab1ff66393a57f67bee1872a2e801bf66b0918655131ed01cf32deafc
+        setPermission2 - gasUsed: 79009, fee: 0.00632072, feeUsd: 2.4377120824, @ 80.0 gwei & 385.67 ETH/USD, 0x8c80650ab1ff66393a57f67bee1872a2e801bf66b0918655131ed01cf32deafc
         + OGDToken.PermissionUpdated(account: Deployer:0xa00A, role: 2, active: true, maximum: 0, processed: 0)
         
         addDividendToken0 - gasUsed: 117187, fee: 0.00937496, feeUsd: 3.6156408232, @ 80.0 gwei & 385.67 ETH/USD, 0xbf63d16e4aa6d36ac5b5d17c5d3ab61a72f0c7c8197e2d0cd8cf0fbf83574bb7
@@ -64,7 +64,7 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         + OGDToken.DividendTokenAdded(token: Fee0Token:0x0f4e, enabled: true)
          # Account                                        ΔETH                      OGD                     FEE0                     FEE1                     FEE2
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
-         0 Deployer:0xa00A                         -0.45565128                      0.0                    100.0                   1000.0                  10000.0
+         0 Deployer:0xa00A                          -0.4556548                      0.0                    100.0                   1000.0                  10000.0
          1 User1:0xa11A                                    0.0                      0.0                      0.0                      0.0                      0.0
          2 User2:0xa22A                                    0.0                      0.0                      0.0                      0.0                      0.0
          3 User3:0xa33a                                    0.0                      0.0                      0.0                      0.0                      0.0
@@ -116,7 +116,7 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         
          # Account                                        ΔETH                      OGD                     FEE0                     FEE1                     FEE2
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
-         0 Deployer:0xa00A                         -0.48787512                      0.0                    100.0                   1000.0                  10000.0
+         0 Deployer:0xa00A                         -0.48787864                      0.0                    100.0                   1000.0                  10000.0
          1 User1:0xa11A                                    0.0                  10000.0                      0.0                      0.0                      0.0
          2 User2:0xa22A                                    0.0                  10000.0                      0.0                      0.0                      0.0
          3 User3:0xa33a                                    0.0                  10000.0                      0.0                      0.0                      0.0
@@ -161,7 +161,7 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         
          # Account                                        ΔETH                      OGD                     FEE0                     FEE1                     FEE2
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
-         0 Deployer:0xa00A                        -10.49993912                      0.0                      0.0                   1000.0                  10000.0
+         0 Deployer:0xa00A                        -10.49994264                      0.0                      0.0                   1000.0                  10000.0
          1 User1:0xa11A                                    0.0                  10000.0                      0.0                      0.0                      0.0
          2 User2:0xa22A                                    0.0                  10000.0                      0.0                      0.0                      0.0
          3 User3:0xa33a                                    0.0                  10000.0                      0.0                      0.0                      0.0
@@ -198,14 +198,14 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         Token 3 symbol: 'FEE2', name: 'Fee2', decimals: 18, totalSupply: 10000.0, owner: Deployer:0xa00A, address: Fee2Token:0xBa1F @ 0xBa1FCDaE835E77cAB2a76a7C3884AdC630f7a5B0
         
         --- Test 4 - user1 dummy transfer to same account (internal stats update) ---
-        transfer1 - gasUsed: 163798, fee: 0.01310384, feeUsd: 5.0537579728, @ 80.0 gwei & 385.67 ETH/USD, 0x361f82e27e299edcc5880788540594dc8dc2e0865868d243c888b7cd82bdcf21
+        transfer1 - gasUsed: 163820, fee: 0.0131056, feeUsd: 5.054436752, @ 80.0 gwei & 385.67 ETH/USD, 0x361f82e27e299edcc5880788540594dc8dc2e0865868d243c888b7cd82bdcf21
         + OGDToken.Transfer(from: User2:0xa22A, to: User2:0xa22A, tokens: 0.000000000000000001)
         
          # Account                                        ΔETH                      OGD                     FEE0                     FEE1                     FEE2
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
-         0 Deployer:0xa00A                        -10.49993912                      0.0                      0.0                   1000.0                  10000.0
+         0 Deployer:0xa00A                        -10.49994264                      0.0                      0.0                   1000.0                  10000.0
          1 User1:0xa11A                                    0.0                  10000.0                      0.0                      0.0                      0.0
-         2 User2:0xa22A                            -0.01310384                  10000.0                      0.0                      0.0                      0.0
+         2 User2:0xa22A                             -0.0131056                  10000.0                      0.0                      0.0                      0.0
          3 User3:0xa33a                                    0.0                  10000.0                      0.0                      0.0                      0.0
          4 User4:0xa44a                                    0.0                      0.0                      0.0                      0.0                      0.0
          5 OGDToken:0x1647                                10.0                      0.0                    100.0                      0.0                      0.0
@@ -255,9 +255,9 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         
          # Account                                        ΔETH                      OGD                     FEE0                     FEE1                     FEE2
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
-         0 Deployer:0xa00A                        -10.49993912                      0.0                      0.0                   1000.0                  10000.0
+         0 Deployer:0xa00A                        -10.49994264                      0.0                      0.0                   1000.0                  10000.0
          1 User1:0xa11A                   3.320837333333333333                  10000.0    33.333333333333333333                      0.0                      0.0
-         2 User2:0xa22A                   3.313831893333333333                  10000.0    33.333333333333333333                      0.0                      0.0
+         2 User2:0xa22A                   3.313830133333333333                  10000.0    33.333333333333333333                      0.0                      0.0
          3 User3:0xa33a                   3.320837333333333333                  10000.0    33.333333333333333333                      0.0                      0.0
          4 User4:0xa44a                                    0.0                      0.0                      0.0                      0.0                      0.0
          5 OGDToken:0x1647                0.000000000000000001                      0.0     0.000000000000000001                      0.0                      0.0
@@ -302,9 +302,9 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         
          # Account                                        ΔETH                      OGD                     FEE0                     FEE1                     FEE2
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
-         0 Deployer:0xa00A                        -10.53015712                      0.0                      0.0                   1000.0                  10000.0
+         0 Deployer:0xa00A                        -10.53016064                      0.0                      0.0                   1000.0                  10000.0
          1 User1:0xa11A                   3.320837333333333333                  10000.0    33.333333333333333333                      0.0                      0.0
-         2 User2:0xa22A                   3.313831893333333333                  10000.0    33.333333333333333333                      0.0                      0.0
+         2 User2:0xa22A                   3.313830133333333333                  10000.0    33.333333333333333333                      0.0                      0.0
          3 User3:0xa33a                   3.320837333333333333                  10000.0    33.333333333333333333                      0.0                      0.0
          4 User4:0xa44a                                    0.0                  10000.0                      0.0                      0.0                      0.0
          5 OGDToken:0x1647                0.000000000000000001                      0.0     0.000000000000000001                      0.0                      0.0
@@ -371,9 +371,9 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         
          # Account                                        ΔETH                      OGD                     FEE0                     FEE1                     FEE2
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
-         0 Deployer:0xa00A                        -10.54280352                      0.0                      0.0                      0.0                      0.0
+         0 Deployer:0xa00A                        -10.54280704                      0.0                      0.0                      0.0                      0.0
          1 User1:0xa11A                   3.303781253333333333                  10000.0    33.333333333333333333                    250.0                   2500.0
-         2 User2:0xa22A                   3.296775813333333333                  10000.0    33.333333333333333333                    250.0                   2500.0
+         2 User2:0xa22A                   3.296774053333333333                  10000.0    33.333333333333333333                    250.0                   2500.0
          3 User3:0xa33a                   3.303781253333333333                  10000.0    33.333333333333333333                    250.0                   2500.0
          4 User4:0xa44a                            -0.01225608                  10000.0                      0.0                    250.0                   2500.0
          5 OGDToken:0x1647                0.000000000000000001                      0.0     0.000000000000000001                      0.0                      0.0
@@ -410,14 +410,14 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         Token 3 symbol: 'FEE2', name: 'Fee2', decimals: 18, totalSupply: 10000.0, owner: Deployer:0xa00A, address: Fee2Token:0xBa1F @ 0xBa1FCDaE835E77cAB2a76a7C3884AdC630f7a5B0
         
         --- Test 10 - user2 transfer 0.123456789123456789 OGD to user3 ---
-        transfer2 - gasUsed: 120847, fee: 0.00966776, feeUsd: 3.7285649992, @ 80.0 gwei & 385.67 ETH/USD, 0xe6027c9392633b69e0c0223c2e8b90e0035f196b696546f18ef9e6bc93cca620
+        transfer2 - gasUsed: 120869, fee: 0.00966952, feeUsd: 3.7292437784, @ 80.0 gwei & 385.67 ETH/USD, 0xe6027c9392633b69e0c0223c2e8b90e0035f196b696546f18ef9e6bc93cca620
         + OGDToken.Transfer(from: User2:0xa22A, to: User3:0xa33a, tokens: 0.123456789123456789)
         
          # Account                                        ΔETH                      OGD                     FEE0                     FEE1                     FEE2
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
-         0 Deployer:0xa00A                        -10.54280352                      0.0                      0.0                      0.0                      0.0
+         0 Deployer:0xa00A                        -10.54280704                      0.0                      0.0                      0.0                      0.0
          1 User1:0xa11A                   3.303781253333333333                  10000.0    33.333333333333333333                    250.0                   2500.0
-         2 User2:0xa22A                   3.287108053333333333  9999.876543210876543211    33.333333333333333333                    250.0                   2500.0
+         2 User2:0xa22A                   3.287104533333333333  9999.876543210876543211    33.333333333333333333                    250.0                   2500.0
          3 User3:0xa33a                   3.303781253333333333 10000.123456789123456789    33.333333333333333333                    250.0                   2500.0
          4 User4:0xa44a                            -0.01225608                  10000.0                      0.0                    250.0                   2500.0
          5 OGDToken:0x1647                0.000000000000000001                      0.0     0.000000000000000001                      0.0                      0.0
@@ -455,7 +455,7 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         
         --- Test Completed ---
 
-      ✓ Workflow #0 (4684ms)
+      ✓ Workflow #0 (5077ms)
     TestOGDToken - Workflow #1 - Transfer Test
         Address 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E => Deployer:0xa00A
         Address 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433 => User1:0xa11A
@@ -467,14 +467,14 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         Address 0x0b70A80b0336777A1697A5b505A6F1f3cC1087A0 => Fee0Token:0x0b70
         Address 0xA92f39B1123B4051a6Ef6736879F85249AB45845 => Fee1Token:0xA92f
         Address 0xb5EBF7c369B492493e17032CA29E41c0496EcbE5 => Fee2Token:0xb5EB
-        ogdTokenTx - gasUsed: 2830190, fee: 0.2264152, feeUsd: 87.321550184, @ 80.0 gwei & 385.67 ETH/USD, 0x91280201ecfd570e173fafa8da3f9ac7a9d5d0f029a1daeeed003f6e72bcb664
+        ogdTokenTx - gasUsed: 2830190, fee: 0.2264152, feeUsd: 87.321550184, @ 80.0 gwei & 385.67 ETH/USD, 0x7024aafbe164dc4efde87cf9f806cc72e22deee1265c68590653d227a2d6d346
         + OGDToken.PermissionUpdated(account: Deployer:0xa00A, role: 0, active: true, maximum: 0, processed: 0)
         + OGDToken.Transfer(from: ETH|null:0x0000, to: Deployer:0xa00A, tokens: 0.0)
-        fee0TokenTx - gasUsed: 823708, fee: 0.06589664, feeUsd: 25.4143571488, @ 80.0 gwei & 385.67 ETH/USD, 0xdda354629396e5f22e1eecb0715576838aee97a062bff06d45279e97de75389d
+        fee0TokenTx - gasUsed: 823708, fee: 0.06589664, feeUsd: 25.4143571488, @ 80.0 gwei & 385.67 ETH/USD, 0x9f2efaa2c772c29b6d3e95dc2b36a6301babfce568e4f6c7b20d89285bb033ce
         + Fee0Token.Transfer(from: ETH|null:0x0000, to: Deployer:0xa00A, tokens: 100.0)
-        fee1TokenTx - gasUsed: 823708, fee: 0.06589664, feeUsd: 25.4143571488, @ 80.0 gwei & 385.67 ETH/USD, 0x1d24f3c4d7125d0f610f5559f26250773ed42639d4c23c14e18253635803c40d
+        fee1TokenTx - gasUsed: 823708, fee: 0.06589664, feeUsd: 25.4143571488, @ 80.0 gwei & 385.67 ETH/USD, 0x5e5b8ff104cc09d6f8b4721bcc8ecaf1c79b4e7dec8458f36633df5546009656
         + Fee1Token.Transfer(from: ETH|null:0x0000, to: Deployer:0xa00A, tokens: 1000.0)
-        fee2TokenTx - gasUsed: 823720, fee: 0.0658976, feeUsd: 25.414727392, @ 80.0 gwei & 385.67 ETH/USD, 0x4329aae8a6c9cac55d6a1e9fa58e52a007690e46dfa674b5d9187d08dd168b28
+        fee2TokenTx - gasUsed: 823720, fee: 0.0658976, feeUsd: 25.414727392, @ 80.0 gwei & 385.67 ETH/USD, 0x5899e5d930f0c3d8d98b0cc03333888de6cb3fdb12fc5c733527ca1e53fb1ecb
         + Fee2Token.Transfer(from: ETH|null:0x0000, to: Deployer:0xa00A, tokens: 10000.0)
         
          # Account                                        ΔETH                      OGD                     FEE0                     FEE1                     FEE2
@@ -507,9 +507,9 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         --- Setup Completed ---
 
         --- Test 1 - OGDToken mint(...) permissioning, OGDToken.addDividendTokens for ETH and FEE0 ---
-        setPermission1 - gasUsed: 78987, fee: 0.00631896, feeUsd: 2.4370333032, @ 80.0 gwei & 385.67 ETH/USD, 0x5640bf7e005680c1a0ebe4a354edc6b99429a85eba1df05eb761640c9f74c5ed
+        setPermission1 - gasUsed: 79009, fee: 0.00632072, feeUsd: 2.4377120824, @ 80.0 gwei & 385.67 ETH/USD, 0x5640bf7e005680c1a0ebe4a354edc6b99429a85eba1df05eb761640c9f74c5ed
         + OGDToken.PermissionUpdated(account: Deployer:0xa00A, role: 1, active: true, maximum: 0, processed: 0)
-        setPermission2 - gasUsed: 78987, fee: 0.00631896, feeUsd: 2.4370333032, @ 80.0 gwei & 385.67 ETH/USD, 0xf3015ae8431385a92c982b4060489f0a6e5d6791bf32435407f15f07a3926ef3
+        setPermission2 - gasUsed: 79009, fee: 0.00632072, feeUsd: 2.4377120824, @ 80.0 gwei & 385.67 ETH/USD, 0xf3015ae8431385a92c982b4060489f0a6e5d6791bf32435407f15f07a3926ef3
         + OGDToken.PermissionUpdated(account: Deployer:0xa00A, role: 2, active: true, maximum: 0, processed: 0)
         
         addDividendToken0 - gasUsed: 117187, fee: 0.00937496, feeUsd: 3.6156408232, @ 80.0 gwei & 385.67 ETH/USD, 0xc9a7a2335b0089a4f3b83071ccbced661fb8e6d4ad53241a5d9c35bdf847d01d
@@ -518,7 +518,7 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         + OGDToken.DividendTokenAdded(token: Fee0Token:0x0b70, enabled: true)
          # Account                                        ΔETH                      OGD                     FEE0                     FEE1                     FEE2
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
-         0 Deployer:0xa00A                         -0.45565128                      0.0                    100.0                   1000.0                  10000.0
+         0 Deployer:0xa00A                          -0.4556548                      0.0                    100.0                   1000.0                  10000.0
          1 User1:0xa11A                                    0.0                      0.0                      0.0                      0.0                      0.0
          2 User2:0xa22A                                    0.0                      0.0                      0.0                      0.0                      0.0
          3 User3:0xa33a                                    0.0                      0.0                      0.0                      0.0                      0.0
@@ -568,7 +568,7 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         
          # Account                                        ΔETH                      OGD                     FEE0                     FEE1                     FEE2
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
-         0 Deployer:0xa00A                          -0.4814516                      0.0                    100.0                   1000.0                  10000.0
+         0 Deployer:0xa00A                         -0.48145512                      0.0                    100.0                   1000.0                  10000.0
          1 User1:0xa11A                                    0.0                  10000.0                      0.0                      0.0                      0.0
          2 User2:0xa22A                                    0.0                  10000.0                      0.0                      0.0                      0.0
          3 User3:0xa33a                                    0.0                      0.0                      0.0                      0.0                      0.0
@@ -613,7 +613,7 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         
          # Account                                        ΔETH                      OGD                     FEE0                     FEE1                     FEE2
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
-         0 Deployer:0xa00A                         -10.4935156                      0.0                      0.0                   1000.0                  10000.0
+         0 Deployer:0xa00A                        -10.49351912                      0.0                      0.0                   1000.0                  10000.0
          1 User1:0xa11A                                    0.0                  10000.0                      0.0                      0.0                      0.0
          2 User2:0xa22A                                    0.0                  10000.0                      0.0                      0.0                      0.0
          3 User3:0xa33a                                    0.0                      0.0                      0.0                      0.0                      0.0
@@ -650,14 +650,14 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         Token 3 symbol: 'FEE2', name: 'Fee2', decimals: 18, totalSupply: 10000.0, owner: Deployer:0xa00A, address: Fee2Token:0xb5EB @ 0xb5EBF7c369B492493e17032CA29E41c0496EcbE5
         
         --- Test 4 - user2 transfer all tokens to user3 ---
-        transfer1 - gasUsed: 210610, fee: 0.0168488, feeUsd: 6.498076696, @ 80.0 gwei & 385.67 ETH/USD, 0x90a2b494fc987a4b6457c07ce01f698d0ab2516edc97376c06ba551ab5968a58
+        transfer1 - gasUsed: 210632, fee: 0.01685056, feeUsd: 6.4987554752, @ 80.0 gwei & 385.67 ETH/USD, 0x90a2b494fc987a4b6457c07ce01f698d0ab2516edc97376c06ba551ab5968a58
         + OGDToken.Transfer(from: User2:0xa22A, to: User3:0xa33a, tokens: 10000.0)
         
          # Account                                        ΔETH                      OGD                     FEE0                     FEE1                     FEE2
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
-         0 Deployer:0xa00A                         -10.4935156                      0.0                      0.0                   1000.0                  10000.0
+         0 Deployer:0xa00A                        -10.49351912                      0.0                      0.0                   1000.0                  10000.0
          1 User1:0xa11A                                    0.0                  10000.0                      0.0                      0.0                      0.0
-         2 User2:0xa22A                             -0.0168488                      0.0                      0.0                      0.0                      0.0
+         2 User2:0xa22A                            -0.01685056                      0.0                      0.0                      0.0                      0.0
          3 User3:0xa33a                                    0.0                  10000.0                      0.0                      0.0                      0.0
          4 User4:0xa44a                                    0.0                      0.0                      0.0                      0.0                      0.0
          5 OGDToken:0xee9a                                10.0                      0.0                    100.0                      0.0                      0.0
@@ -704,9 +704,9 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         
          # Account                                        ΔETH                      OGD                     FEE0                     FEE1                     FEE2
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
-         0 Deployer:0xa00A                         -10.4935156                      0.0                      0.0                   1000.0                  10000.0
+         0 Deployer:0xa00A                        -10.49351912                      0.0                      0.0                   1000.0                  10000.0
          1 User1:0xa11A                               4.989904                  10000.0                     50.0                      0.0                      0.0
-         2 User2:0xa22A                             4.97795936                      0.0                     50.0                      0.0                      0.0
+         2 User2:0xa22A                              4.9779576                      0.0                     50.0                      0.0                      0.0
          3 User3:0xa33a                            -0.00452616                  10000.0                      0.0                      0.0                      0.0
          4 User4:0xa44a                                    0.0                      0.0                      0.0                      0.0                      0.0
          5 OGDToken:0xee9a                                 0.0                      0.0                      0.0                      0.0                      0.0
@@ -740,7 +740,7 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         Token 2 symbol: 'FEE1', name: 'Fee1', decimals: 18, totalSupply: 1000.0, owner: Deployer:0xa00A, address: Fee1Token:0xA92f @ 0xA92f39B1123B4051a6Ef6736879F85249AB45845
         Token 3 symbol: 'FEE2', name: 'Fee2', decimals: 18, totalSupply: 10000.0, owner: Deployer:0xa00A, address: Fee2Token:0xb5EB @ 0xb5EBF7c369B492493e17032CA29E41c0496EcbE5
         
-      ✓ Workflow #1 - Transfer Test (2230ms)
+      ✓ Workflow #1 - Transfer Test (2692ms)
     TestOGDToken - Workflow #2 - address(0) with balance
         Address 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E => Deployer:0xa00A
         Address 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433 => User1:0xa11A
@@ -752,14 +752,14 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         Address 0x103f080fe5981A6C1651F87717806921e0000805 => Fee0Token:0x103f
         Address 0xaa2549768781Bc188ed636287d25aaBb73A2E3D8 => Fee1Token:0xaa25
         Address 0x2787C8cBC9B5D4A3b49dba8b2d31376616933Ca9 => Fee2Token:0x2787
-        ogdTokenTx - gasUsed: 2830190, fee: 0.2264152, feeUsd: 87.321550184, @ 80.0 gwei & 385.67 ETH/USD, 0x2896469380c0c5bf4d1add4cf0f2bb76e2d86af634e7d0dfa198a0303dc6d1b6
+        ogdTokenTx - gasUsed: 2830190, fee: 0.2264152, feeUsd: 87.321550184, @ 80.0 gwei & 385.67 ETH/USD, 0xb707742407f43400f7b5adff129fa93bf9e71f017682446219a95ddb280db9dc
         + OGDToken.PermissionUpdated(account: Deployer:0xa00A, role: 0, active: true, maximum: 0, processed: 0)
         + OGDToken.Transfer(from: ETH|null:0x0000, to: Deployer:0xa00A, tokens: 0.0)
-        fee0TokenTx - gasUsed: 823708, fee: 0.06589664, feeUsd: 25.4143571488, @ 80.0 gwei & 385.67 ETH/USD, 0x4956e822237b687efaa47307148dd6b48748bf7c7239de43cc79b66950fcdd39
+        fee0TokenTx - gasUsed: 823708, fee: 0.06589664, feeUsd: 25.4143571488, @ 80.0 gwei & 385.67 ETH/USD, 0xad7fbc615ffe901f5b90d5888b15c43a6846a6bfa17d05863dad1077ee8107d8
         + Fee0Token.Transfer(from: ETH|null:0x0000, to: Deployer:0xa00A, tokens: 100.0)
-        fee1TokenTx - gasUsed: 823708, fee: 0.06589664, feeUsd: 25.4143571488, @ 80.0 gwei & 385.67 ETH/USD, 0xc11bd3cc0f059229bcab43cc6c37812dbc4cffb5d6686cade4907a07a3a4e66f
+        fee1TokenTx - gasUsed: 823708, fee: 0.06589664, feeUsd: 25.4143571488, @ 80.0 gwei & 385.67 ETH/USD, 0x5e2a3a18a959e820ecd0d95c9a09c3ab4149d451b63fa15c70209743443e7b0b
         + Fee1Token.Transfer(from: ETH|null:0x0000, to: Deployer:0xa00A, tokens: 1000.0)
-        fee2TokenTx - gasUsed: 823720, fee: 0.0658976, feeUsd: 25.414727392, @ 80.0 gwei & 385.67 ETH/USD, 0x15f6e04f3b69100ca92fd7f7ded5fc11853cfa69b0aaac3e141fb375a1e76f42
+        fee2TokenTx - gasUsed: 823720, fee: 0.0658976, feeUsd: 25.414727392, @ 80.0 gwei & 385.67 ETH/USD, 0x48afb0007ae126dcce287fe86bab5030162854bd88a8b54490891638a7102d88
         + Fee2Token.Transfer(from: ETH|null:0x0000, to: Deployer:0xa00A, tokens: 10000.0)
         
          # Account                                        ΔETH                      OGD                     FEE0                     FEE1                     FEE2
@@ -792,9 +792,9 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         --- Setup Completed ---
 
         --- Test 1 - OGDToken mint(...) permissioning, OGDToken.addDividendTokens for ETH and FEE0 ---
-        setPermission1 - gasUsed: 78987, fee: 0.00631896, feeUsd: 2.4370333032, @ 80.0 gwei & 385.67 ETH/USD, 0x4c13a9a7e74f4b8fbcfaa1e3ebf9c22349df2d104f3c7e5b1638d7f6a0b18935
+        setPermission1 - gasUsed: 79009, fee: 0.00632072, feeUsd: 2.4377120824, @ 80.0 gwei & 385.67 ETH/USD, 0x4c13a9a7e74f4b8fbcfaa1e3ebf9c22349df2d104f3c7e5b1638d7f6a0b18935
         + OGDToken.PermissionUpdated(account: Deployer:0xa00A, role: 1, active: true, maximum: 0, processed: 0)
-        setPermission2 - gasUsed: 78987, fee: 0.00631896, feeUsd: 2.4370333032, @ 80.0 gwei & 385.67 ETH/USD, 0x5ff00d0dc66c56129c037f3cb2771b3059e5003edc9a900c30459cac7b7db3e2
+        setPermission2 - gasUsed: 79009, fee: 0.00632072, feeUsd: 2.4377120824, @ 80.0 gwei & 385.67 ETH/USD, 0x5ff00d0dc66c56129c037f3cb2771b3059e5003edc9a900c30459cac7b7db3e2
         + OGDToken.PermissionUpdated(account: Deployer:0xa00A, role: 2, active: true, maximum: 0, processed: 0)
         
         addDividendToken0 - gasUsed: 117187, fee: 0.00937496, feeUsd: 3.6156408232, @ 80.0 gwei & 385.67 ETH/USD, 0xf45cf03a73aea001d107f6c9356c418dddd7d99b4dea221a4fd1d16dd533e107
@@ -803,7 +803,7 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         + OGDToken.DividendTokenAdded(token: Fee0Token:0x103f, enabled: true)
          # Account                                        ΔETH                      OGD                     FEE0                     FEE1                     FEE2
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
-         0 Deployer:0xa00A                         -0.45565032                      0.0                    100.0                   1000.0                  10000.0
+         0 Deployer:0xa00A                         -0.45565384                      0.0                    100.0                   1000.0                  10000.0
          1 User1:0xa11A                                    0.0                      0.0                      0.0                      0.0                      0.0
          2 User2:0xa22A                                    0.0                      0.0                      0.0                      0.0                      0.0
          3 User3:0xa33a                                    0.0                      0.0                      0.0                      0.0                      0.0
@@ -857,7 +857,7 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         
          # Account                                        ΔETH                      OGD                     FEE0                     FEE1                     FEE2
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
-         0 Deployer:0xa00A                         -0.49427848                      0.0                    100.0                   1000.0                  10000.0
+         0 Deployer:0xa00A                           -0.494282                      0.0                    100.0                   1000.0                  10000.0
          1 User1:0xa11A                                    0.0                  10000.0                      0.0                      0.0                      0.0
          2 User2:0xa22A                                    0.0                  10000.0                      0.0                      0.0                      0.0
          3 User3:0xa33a                                    0.0                  10000.0                      0.0                      0.0                      0.0
@@ -902,7 +902,7 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         
          # Account                                        ΔETH                      OGD                     FEE0                     FEE1                     FEE2
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
-         0 Deployer:0xa00A                        -10.50634152                      0.0                      0.0                   1000.0                  10000.0
+         0 Deployer:0xa00A                        -10.50634504                      0.0                      0.0                   1000.0                  10000.0
          1 User1:0xa11A                                    0.0                  10000.0                      0.0                      0.0                      0.0
          2 User2:0xa22A                                    0.0                  10000.0                      0.0                      0.0                      0.0
          3 User3:0xa33a                                    0.0                  10000.0                      0.0                      0.0                      0.0
@@ -954,7 +954,7 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         
          # Account                                        ΔETH                      OGD                     FEE0                     FEE1                     FEE2
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
-         0 Deployer:0xa00A                        -10.50634152                      0.0                      0.0                   1000.0                  10000.0
+         0 Deployer:0xa00A                        -10.50634504                      0.0                      0.0                   1000.0                  10000.0
          1 User1:0xa11A                   3.320837333333333333                  10000.0    33.333333333333333333                      0.0                      0.0
          2 User2:0xa22A                   3.320837333333333333                  10000.0    33.333333333333333333                      0.0                      0.0
          3 User3:0xa33a                   3.320837333333333333                  10000.0    33.333333333333333333                      0.0                      0.0
@@ -990,8 +990,8 @@ $ npx hardhat test test/TestOGDToken.js > results/TestOGDToken.txt
         Token 2 symbol: 'FEE1', name: 'Fee1', decimals: 18, totalSupply: 1000.0, owner: Deployer:0xa00A, address: Fee1Token:0xaa25 @ 0xaa2549768781Bc188ed636287d25aaBb73A2E3D8
         Token 3 symbol: 'FEE2', name: 'Fee2', decimals: 18, totalSupply: 10000.0, owner: Deployer:0xa00A, address: Fee2Token:0x2787 @ 0x2787C8cBC9B5D4A3b49dba8b2d31376616933Ca9
         
-      ✓ Workflow #1 - Transfer Test (1883ms)
+      ✓ Workflow #1 - Transfer Test (2179ms)
 
 
-  3 passing (12s)
+  3 passing (14s)
 

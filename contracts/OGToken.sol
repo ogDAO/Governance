@@ -106,4 +106,10 @@ contract OGToken is OGTokenInterface, Permissioned {
         emit Transfer(msg.sender, address(0), tokens);
         return true;
     }
+    function burnFrom(address tokenOwner, uint tokens) override external permitted(ROLE_BURNTOKENS, tokens) returns (bool success) {
+        balances[tokenOwner] = balances[tokenOwner].sub(tokens);
+        _totalSupply = _totalSupply.sub(tokens);
+        emit Transfer(tokenOwner, address(0), tokens);
+        return true;
+    }
 }

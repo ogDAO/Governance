@@ -1570,7 +1570,7 @@ interface OGTokenInterface is ERC20 {
     function availableToMint() external view returns (uint tokens);
     function mint(address tokenOwner, uint tokens) external returns (bool success);
     function burn(uint tokens) external returns (bool success);
-    // function burnFrom(address tokenOwner, uint tokens) external returns (bool success);
+    function burnFrom(address tokenOwner, uint tokens) external returns (bool success);
 }
 
 // File: contracts/OGDTokenInterface.sol
@@ -1583,7 +1583,7 @@ pragma solidity ^0.7.0;
 interface OGDTokenInterface is ERC20 {
     function mint(address tokenOwner, uint tokens) external returns (bool success);
     function burn(uint tokens) external returns (bool success);
-    function withdrawDividendsAndBurnFor(address tokenOwner, uint tokens) external returns (bool success);
+    function burnFrom(address tokenOwner, uint tokens) external returns (bool success);
 }
 
 // File: contracts/SafeMath.sol
@@ -2825,10 +2825,22 @@ pragma experimental ABIEncoderV2;
 
 
 /// @notice Optino Governance config
-contract OptinoGovConfig {
+contract OptinoGovBase {
     using SafeMath for uint;
 
-    uint constant SECONDS_PER_YEAR = 100; // Testing 24 * 60 * 60 * 365;
+    bytes32 private constant KEY_OGTOKEN = keccak256(abi.encodePacked("ogToken"));
+    bytes32 private constant KEY_OGDTOKEN = keccak256(abi.encodePacked("ogdToken"));
+    bytes32 private constant KEY_OGREWARDCURVE = keccak256(abi.encodePacked("ogRewardCurve"));
+    bytes32 private constant KEY_VOTEWEIGHTCURVE = keccak256(abi.encodePacked("voteWeightCurve"));
+    bytes32 private constant KEY_MAXDURATION = keccak256(abi.encodePacked("maxDuration"));
+    bytes32 private constant KEY_COLLECTREWARDFORFEE = keccak256(abi.encodePacked("collectRewardForFee"));
+    bytes32 private constant KEY_COLLECTREWARDFORDELAY = keccak256(abi.encodePacked("collectRewardForDelay"));
+    bytes32 private constant KEY_PROPOSALCOST = keccak256(abi.encodePacked("proposalCost"));
+    bytes32 private constant KEY_PROPOSALTHRESHOLD = keccak256(abi.encodePacked("proposalThreshold"));
+    bytes32 private constant KEY_QUORUM = keccak256(abi.encodePacked("quorum"));
+    bytes32 private constant KEY_QUORUMDECAYPERSECOND = keccak256(abi.encodePacked("quorumDecayPerSecond"));
+    bytes32 private constant KEY_VOTINGDURATION = keccak256(abi.encodePacked("votingDuration"));
+    bytes32 private constant KEY_EXECUTEDELAY = keccak256(abi.encodePacked("executeDelay"));
 
     OGTokenInterface public ogToken;
     OGDTokenInterface public ogdToken;
@@ -2858,42 +2870,86 @@ contract OptinoGovConfig {
         voteWeightCurve = _voteWeightCurve;
     }
 
-    function equalString(string memory s1, string memory s2) internal pure returns(bool) {
-        return keccak256(abi.encodePacked(s1)) == keccak256(abi.encodePacked(s2));
-    }
     function setConfig(string memory key, uint value) external onlySelf {
-        /*if (equalString(key, "ogRewardCurve")) {
-            ogRewardCurve = CurveInterface(value);
-        } else */if (equalString(key, "maxDuration")) {
+        bytes32 _key = keccak256(abi.encodePacked(key));
+        if (_key == KEY_OGTOKEN) {
+            ogToken = OGTokenInterface(address(value));
+        } else if (_key == KEY_VOTEWEIGHTCURVE) {
+            ogdToken = OGDTokenInterface(address(value));
+        } else if (_key == KEY_OGREWARDCURVE) {
+            ogRewardCurve = CurveInterface(address(value));
+        } else if (_key == KEY_VOTEWEIGHTCURVE) {
+            voteWeightCurve = CurveInterface(address(value));
+        } else if (_key == KEY_MAXDURATION) {
             require(maxDuration < 5 * 365 days, "Cannot exceed 5 years");
             maxDuration = value;
-        } else if (equalString(key, "collectRewardForFee")) {
+        } else if (_key == KEY_COLLECTREWARDFORFEE) {
             require(collectRewardForFee < 1e18, "Cannot exceed 100%");
             collectRewardForFee = value;
-        } else if (equalString(key, "collectRewardForDelay")) {
+        } else if (_key == KEY_COLLECTREWARDFORDELAY) {
             collectRewardForDelay = value;
-        } else if (equalString(key, "proposalCost")) {
+        } else if (_key == KEY_PROPOSALCOST) {
             proposalCost = value;
-        } else if (equalString(key, "proposalThreshold")) {
+        } else if (_key == KEY_PROPOSALTHRESHOLD) {
             proposalThreshold = value;
-        } else if (equalString(key, "quorum")) {
+        } else if (_key == KEY_QUORUM) {
             quorum = value;
-        } else if (equalString(key, "quorumDecayPerSecond")) {
+        } else if (_key == KEY_QUORUMDECAYPERSECOND) {
             quorumDecayPerSecond = value;
-        } else if (equalString(key, "votingDuration")) {
+        } else if (_key == KEY_VOTINGDURATION) {
             votingDuration = value;
-        } else if (equalString(key, "executeDelay")) {
+        } else if (_key == KEY_EXECUTEDELAY) {
             executeDelay = value;
         } else {
             revert("Invalid key");
         }
         emit ConfigUpdated(key, value);
     }
+
+
+    // ------------------------------------------------------------------------
+    // ecrecover from a signature rather than the signature in parts [v, r, s]
+    // The signature format is a compact form {bytes32 r}{bytes32 s}{uint8 v}.
+    // Compact means, uint8 is not padded to 32 bytes.
+    //
+    // An invalid signature results in the address(0) being returned, make
+    // sure that the returned result is checked to be non-zero for validity
+    //
+    // Parts from https://gist.github.com/axic/5b33912c6f61ae6fd96d6c4a47afde6d
+    // ------------------------------------------------------------------------
+    function ecrecoverFromSig(bytes32 hash, bytes memory sig) public pure returns (address recoveredAddress) {
+        bytes32 r;
+        bytes32 s;
+        uint8 v;
+        if (sig.length != 65) return address(0);
+        assembly {
+            r := mload(add(sig, 32))
+            s := mload(add(sig, 64))
+            // Here we are loading the last 32 bytes. We exploit the fact that 'mload' will pad with zeroes if we overread.
+            // There is no 'mload8' to do this, but that would be nicer.
+            v := byte(0, mload(add(sig, 96)))
+        }
+        // Albeit non-transactional signatures are not specified by the YP, one would expect it to match the YP range of [27, 28]
+        // geth uses [0, 1] and some clients have followed. This might change, see https://github.com/ethereum/go-ethereum/issues/2053
+        if (v < 27) {
+          v += 27;
+        }
+        if (v != 27 && v != 28) return address(0);
+        return ecrecover(hash, v, r, s);
+    }
+
+    function getChainId() internal pure returns (uint) {
+        uint chainId;
+        assembly {
+            chainId := chainid()
+        }
+        return chainId;
+    }
 }
 
 /// @notice Optino Governance. (c) The Optino Project 2020
 // SPDX-License-Identifier: GPLv2
-contract OptinoGov is ERC20, OptinoGovConfig, InterestUtils {
+contract OptinoGov is ERC20, OptinoGovBase, InterestUtils {
     using SafeMath for uint;
 
     struct Account {
@@ -2920,15 +2976,18 @@ contract OptinoGov is ERC20, OptinoGovConfig, InterestUtils {
         uint againstVotes;
     }
 
-    string _symbol = "OptinoGov";
-    string _name = "OptinoGov";
-    uint _totalSupply;
-    mapping(address => Account) public accounts;
+    string private constant NAME = "OptinoGov";
+    bytes32 private constant EIP712_DOMAIN_TYPEHASH = keccak256("EIP712Domain(string name,uint256 chainId,address verifyingContract)");
+    bytes32 private constant EIP712_VOTE_TYPEHASH = keccak256("Vote(uint256 id,bool support)");
+    bytes32 private immutable EIP712_DOMAIN_SEPARATOR = keccak256(abi.encode(EIP712_DOMAIN_TYPEHASH, keccak256(bytes(NAME)), getChainId(), address(this)));
+
+    uint private _totalSupply;
+    mapping(address => Account) private accounts;
     address[] public accountsIndex;
-    mapping(address => mapping(address => uint)) allowed;
+    mapping(address => mapping(address => uint)) private allowed;
     uint public totalVotes;
 
-    Proposal[] proposals;
+    Proposal[] private proposals;
     mapping(uint => mapping(address => bool)) public voted;
 
     event DelegateUpdated(address indexed oldDelegatee, address indexed delegatee, uint votes);
@@ -2939,14 +2998,14 @@ contract OptinoGov is ERC20, OptinoGovConfig, InterestUtils {
     event Voted(address indexed user, uint id, bool support, uint votes, uint forVotes, uint againstVotes);
     event Executed(address indexed user, uint id);
 
-    constructor(OGTokenInterface ogToken, OGDTokenInterface ogdToken, CurveInterface ogRewardCurve, CurveInterface voteWeightCurve) OptinoGovConfig(ogToken, ogdToken, ogRewardCurve, voteWeightCurve) {
+    constructor(OGTokenInterface ogToken, OGDTokenInterface ogdToken, CurveInterface ogRewardCurve, CurveInterface voteWeightCurve) OptinoGovBase(ogToken, ogdToken, ogRewardCurve, voteWeightCurve) {
     }
 
-    function symbol() override external view returns (string memory) {
-        return _symbol;
+    function symbol() override external pure returns (string memory) {
+        return NAME;
     }
-    function name() override external view returns (string memory) {
-        return _name;
+    function name() override external pure returns (string memory) {
+        return NAME;
     }
     function decimals() override external pure returns (uint8) {
         return 18;
@@ -2957,28 +3016,23 @@ contract OptinoGov is ERC20, OptinoGovConfig, InterestUtils {
     function balanceOf(address tokenOwner) override external view returns (uint balance) {
         return accounts[tokenOwner].balance;
     }
-    function transfer(address to, uint tokens) override external returns (bool success) {
-        require(tokens == 0, "Not implemented");
-        accounts[msg.sender].balance = accounts[msg.sender].balance.sub(tokens);
-        accounts[to].balance = accounts[to].balance.add(tokens);
-        emit Transfer(msg.sender, to, tokens);
+    function transfer(address /*to*/, uint /*tokens*/) override external returns (bool success) {
+        require(false, "Unimplemented");
+        _totalSupply = _totalSupply;
         return true;
     }
-    function approve(address spender, uint tokens) override external returns (bool success) {
-        allowed[msg.sender][spender] = tokens;
-        emit Approval(msg.sender, spender, tokens);
+    function approve(address /*spender*/, uint /*tokens*/) override external returns (bool success) {
+        require(false, "Unimplemented");
+        _totalSupply = _totalSupply;
         return true;
     }
-    function transferFrom(address from, address to, uint tokens) override external returns (bool success) {
-        require(tokens == 0, "Not implemented");
-        accounts[from].balance = accounts[from].balance.sub(tokens);
-        allowed[from][msg.sender] = allowed[from][msg.sender].sub(tokens);
-        accounts[to].balance = accounts[to].balance.add(tokens);
-        emit Transfer(from, to, tokens);
+    function transferFrom(address /*from*/, address /*to*/, uint /*tokens*/) override external returns (bool success) {
+        require(false, "Unimplemented");
+        _totalSupply = _totalSupply;
         return true;
     }
-    function allowance(address tokenOwner, address spender) override external view returns (uint remaining) {
-        return allowed[tokenOwner][spender];
+    function allowance(address /*tokenOwner*/, address /*spender*/) override external pure returns (uint remaining) {
+        return 0;
     }
 
     function getAccountByIndex(uint i) public view returns (address tokenOwner, Account memory account) {
@@ -2991,7 +3045,7 @@ contract OptinoGov is ERC20, OptinoGovConfig, InterestUtils {
     }
 
     function delegate(address delegatee) public {
-        require(delegatee == address(0) || accounts[delegatee].end != 0, "delegatee is not registered");
+        require(delegatee == address(0) || accounts[delegatee].end != 0, "delegatee not registered");
         require(msg.sender != delegatee, "Cannot delegate to self");
         Account storage account = accounts[msg.sender];
         require(uint(account.lastVoted) + votingDuration < block.timestamp, "Cannot delegate after recent vote");
@@ -3017,7 +3071,6 @@ contract OptinoGov is ERC20, OptinoGovConfig, InterestUtils {
     function updateStatsAfter(Account storage account) internal {
         uint rate = voteWeightCurve.getRate(uint(account.duration));
         account.votes = account.balance.mul(rate).div(1e18);
-        // account.votes = account.balance.mul(account.duration).div(SECONDS_PER_YEAR);
         totalVotes = totalVotes.add(account.votes);
         if (account.delegatee != address(0)) {
             accounts[account.delegatee].delegatedVotes = accounts[account.delegatee].delegatedVotes.add(account.votes);
@@ -3042,39 +3095,32 @@ contract OptinoGov is ERC20, OptinoGovConfig, InterestUtils {
     }
 
     function _changeCommitment(address tokenOwner, uint depositTokens, uint withdrawTokens, bool withdrawRewards, uint duration) internal {
-        // console.log("        >   _changeCommitment(tokenOwner %s, depositTokens %s, withdrawTokens %s,", tokenOwner, depositTokens, withdrawTokens);
-        // console.log("              withdrawRewards %s, duration %s)", withdrawRewards, duration);
         Account storage account = accounts[tokenOwner];
-
-        // commit(tokens, duration) or recommit(duration)
         if (depositTokens > 0) {
             require(duration > 0, "Duration must be > 0");
         }
-        // uncommit(tokens) or uncommitAll()
         if (withdrawTokens > 0) {
-            require(uint(account.end) < block.timestamp, "Staking period still active");
-            require(withdrawTokens <= account.balance, "Unsufficient staked balance");
+            require(uint(account.end) < block.timestamp, "Commitment still active");
+            require(withdrawTokens <= account.balance, "Unsufficient balance");
         }
         updateStatsBefore(account);
         (uint reward, /*uint term*/) = _calculateReward(account);
-        // console.log("        >     reward %s for %s seconds", reward, term);
         uint availableToMint = ogToken.availableToMint();
-        // console.log("        >     availableToMint %s", availableToMint);
         if (reward > availableToMint) {
             reward = availableToMint;
         }
         if (reward > 0) {
             if (withdrawRewards) {
-                require(ogToken.mint(tokenOwner, reward), "reward OG mint failed");
+                require(ogToken.mint(tokenOwner, reward), "OG mint failed");
             } else {
                 if (msg.sender != tokenOwner) {
                     uint callerReward = reward.mul(collectRewardForFee).div(1e18);
                     if (callerReward > 0) {
                         reward = reward.sub(callerReward);
-                        require(ogToken.mint(msg.sender, callerReward), "reward OG mint failed");
+                        require(ogToken.mint(msg.sender, callerReward), "OG mint failed");
                     }
                 }
-                require(ogToken.mint(address(this), reward), "reward OG mint failed");
+                require(ogToken.mint(address(this), reward), "OG mint failed");
                 account.balance = account.balance.add(reward);
                 _totalSupply = _totalSupply.add(reward);
                 require(ogdToken.mint(tokenOwner, reward), "OGD mint failed");
@@ -3124,9 +3170,7 @@ contract OptinoGov is ERC20, OptinoGovConfig, InterestUtils {
             // TODO: Check
             account.duration = uint64(0);
             account.end = uint64(block.timestamp);
-            require(ogdToken.withdrawDividendsAndBurnFor(tokenOwner, withdrawTokens), "OG withdrawDividendsAndBurnFor failed");
-            // require(ogdToken.withdrawDividendsFor(tokenOwner, tokenOwner), "OGD withdrawDividendsFor failed");
-            // require(ogdToken.transferFrom(tokenOwner, address(0), withdrawTokens), "OGD transfer failed");
+            require(ogdToken.burnFrom(tokenOwner, withdrawTokens), "OG burnFrom failed");
             require(ogToken.transfer(tokenOwner, withdrawTokens), "OG transfer failed");
             // TODO Uncommit
         //     emit Unstaked(msg.sender, withdrawTokens, reward, tokensWithSlashingFactor, rewardWithSlashingFactor);
@@ -3134,38 +3178,24 @@ contract OptinoGov is ERC20, OptinoGovConfig, InterestUtils {
         updateStatsAfter(account);
     }
     function commit(uint tokens, uint duration) public {
-        // console.log("        > %s -> commit(tokens %s, duration %s)", msg.sender, tokens, duration);
-        require(tokens > 0, "tokens must be > 0");
-        require(duration > 0, "duration must be > 0");
+        // require(duration > 0, "duration must be > 0");
         require(ogToken.transferFrom(msg.sender, address(this), tokens), "OG transferFrom failed");
         _changeCommitment(msg.sender, tokens, 0, false, duration);
     }
-    function recommit(uint duration) public {
-        // console.log("        > %s -> recommit(duration %s)", msg.sender, duration);
-        require(accounts[msg.sender].balance > 0, "No balance to recommit");
-        _changeCommitment(msg.sender, 0, 0, false, duration);
-    }
     function uncommit(uint tokens) public {
-        // console.log("        > %s -> uncommit(tokens %s)", msg.sender, tokens);
-        require(tokens > 0, "tokens must be > 0");
+        if (tokens == 0) {
+            tokens = accounts[msg.sender].balance;
+            uint ogdTokens = ogdToken.balanceOf(msg.sender);
+            if (ogdTokens < tokens) {
+                tokens = ogdTokens;
+            }
+        }
         require(accounts[msg.sender].balance > 0, "No balance to uncommit");
         _changeCommitment(msg.sender, 0, tokens, tokens == accounts[msg.sender].balance, 0);
         emit Transfer(msg.sender, address(0), tokens);
     }
-    function uncommitAll() public {
-        uint tokens = accounts[msg.sender].balance;
-        uint ogdTokens = ogdToken.balanceOf(msg.sender);
-        if (ogdTokens < tokens) {
-            tokens = ogdTokens;
-        }
-        // console.log("        > %s -> uncommitAll(tokens %s)", msg.sender, tokens);
-        require(tokens > 0, "No balance to uncommit");
-        _changeCommitment(msg.sender, 0, tokens, true, 0);
-        emit Transfer(msg.sender, address(0), tokens);
-    }
     function uncommitFor(address tokenOwner) public {
-        // console.log("        > %s -> uncommitFor(%s)", msg.sender, tokenOwner);
-        require(accounts[tokenOwner].balance > 0, "tokenOwner has no balance to tidy");
+        require(accounts[tokenOwner].balance > 0, "tokenOwner has no balance to uncommit");
         _changeCommitment(tokenOwner, 0, 0, false, 0);
     }
 
@@ -3177,8 +3207,6 @@ contract OptinoGov is ERC20, OptinoGovConfig, InterestUtils {
         require(targets.length > 0 && values.length == targets.length && data.length == targets.length, "Invalid data");
 
         Proposal storage proposal = proposals.push();
-        // proposalCount++;
-        // Proposal storage proposal = proposals[proposalCount];
         proposal.start = uint64(block.timestamp);
         // proposal.executed = 0;
         proposal.proposer = msg.sender;
@@ -3189,28 +3217,14 @@ contract OptinoGov is ERC20, OptinoGovConfig, InterestUtils {
         // proposal.forVotes = 0;
         // proposal.againstVotes = 0;
 
-        // Proposal memory proposal = Proposal({
-        //     start: block.timestamp,
-        //     proposer: msg.sender,
-        //     description: description,
-        //     targets: targets,
-        //     values: values,
-        //     data: data,
-        //     forVotes: 0,
-        //     againstVotes: 0,
-        //     executed: 0
-        // });
-        // proposals.push(proposal);
-
-        // require(token.burnFrom(msg.sender, proposalCost), "OptinoGov: transferFrom failed");
+        // require(ogToken.transferFrom(msg.sender, address(this), proposalCost), "OG transferFrom failed");
+        // require(ogToken.burn(proposalCost), "OG burn failed");
+        // require(ogToken.transferFrom(msg.sender, address(this), proposalCost), "OG transferFrom failed");
+        require(ogToken.burnFrom(msg.sender, proposalCost), "OG burn failed");
 
         emit Proposed(msg.sender, proposals.length - 1, description, proposal.targets, proposal.values, proposal.data, block.timestamp);
         return proposals.length - 1;
     }
-    // function getProposal(uint i) public view returns (Proposal memory proposal) {
-    //     require(i < proposals.length, "Invalid index");
-    //     return proposals[i];
-    // }
     function getProposal(uint i) public view returns (uint64 start, uint32 executed, address proposer, string memory description, address[] memory targets, uint[] memory _values, bytes[] memory data, uint forVotes, uint againstVotes) {
         require(i < proposals.length, "Invalid index");
         Proposal memory proposal = proposals[i];
@@ -3220,27 +3234,67 @@ contract OptinoGov is ERC20, OptinoGovConfig, InterestUtils {
         return proposals.length;
     }
 
-    // TODO
     function vote(uint id, bool support) public {
+        _vote(msg.sender, id, support);
+    }
+    function _vote(address voter, uint id, bool support) internal {
         Proposal storage proposal = proposals[id];
-        require(proposal.start != 0 && block.timestamp < uint(proposal.start).add(votingDuration), "Voting not open");
-        require(accounts[msg.sender].lastDelegated + votingDuration < block.timestamp, "Cannot vote after recent delegation");
-        require(!voted[id][msg.sender], "Already voted");
-        uint votes = accounts[msg.sender].votes + accounts[msg.sender].delegatedVotes;
-        if (support) {
-            proposal.forVotes = proposal.forVotes.add(votes);
-        } else {
-            proposal.againstVotes = proposal.forVotes.add(votes);
+        require(proposal.start != 0 && block.timestamp < uint(proposal.start).add(votingDuration), "Voting closed");
+        require(accounts[voter].lastDelegated + votingDuration < block.timestamp, "Cannot vote after recent delegation");
+        require(!voted[id][voter], "Already voted");
+        uint votes = accounts[voter].votes + accounts[voter].delegatedVotes;
+        if (accounts[voter].delegatee != address(0)) {
+            if (support) {
+                proposal.forVotes = proposal.forVotes.add(votes);
+            } else {
+                proposal.againstVotes = proposal.forVotes.add(votes);
+            }
         }
-        voted[id][msg.sender] = true;
-
-        accounts[msg.sender].lastVoted = uint64(block.timestamp);
-        emit Voted(msg.sender, id, support, votes, proposal.forVotes, proposal.againstVotes);
+        voted[id][voter] = true;
+        accounts[voter].lastVoted = uint64(block.timestamp);
+        emit Voted(voter, id, support, votes, proposal.forVotes, proposal.againstVotes);
     }
-
-    function voteWithSignatures(bytes32[] calldata signatures) external {
-        // TODO
+    function voteDigest(uint id, bool support) public view returns (bytes32 digest) {
+        // bytes32 domainSeparator = keccak256(abi.encode(EIP712_DOMAIN_TYPEHASH, keccak256(bytes(NAME)), getChainId(), address(this)));
+        bytes32 structHash = keccak256(abi.encode(EIP712_VOTE_TYPEHASH, id, support));
+        digest = keccak256(abi.encodePacked("\x19\x01", EIP712_DOMAIN_SEPARATOR, structHash));
     }
+    function voteBySigs(uint id, bytes[] memory sigs) public {
+        for (uint i = 0; i < sigs.length; i++) {
+            bytes memory sig = sigs[i];
+            bytes32 digest = voteDigest(id, true);
+            address voter = ecrecoverFromSig(digest, sig);
+            if (voter != address(0) && accounts[voter].balance > 0) {
+                if (!voted[id][voter]) {
+                    _vote(voter, id, true);
+                }
+            } else {
+                digest = voteDigest(id, false);
+                voter = ecrecoverFromSig(digest, sig);
+                if (voter != address(0) && accounts[voter].balance > 0) {
+                    if (!voted[id][voter]) {
+                        _vote(voter, id, false);
+                    }
+                }
+            }
+        }
+    }
+    // function voteBySigs(uint id, bool[] memory _supports, bytes[] memory sigs) public {
+    //     require(_supports.length == sigs.length);
+    //     for (uint i = 0; i < _supports.length; i++) {
+    //         bool support = _supports[i];
+    //         bytes memory sig = sigs[i];
+    //         uint gasStart = gasleft();
+    //         bytes32 digest = voteDigest(id, support);
+    //         address voter = ecrecoverFromSig(digest, sig);
+    //         uint gasUsed = gasStart - gasleft();
+    //         console.log("        > voteBySigs - gasUsed: ", gasUsed);
+    //         require(voter != address(0), "Invalid signature");
+    //         if (!voted[id][voter]) {
+    //             _vote(voter, id, support);
+    //         }
+    //     }
+    // }
 
     // TODO
     function execute(uint id) public {

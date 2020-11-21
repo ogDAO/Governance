@@ -95,7 +95,7 @@ interface OGTokenInterface is ERC20 {
     function availableToMint() external view returns (uint tokens);
     function mint(address tokenOwner, uint tokens) external returns (bool success);
     function burn(uint tokens) external returns (bool success);
-    // function burnFrom(address tokenOwner, uint tokens) external returns (bool success);
+    function burnFrom(address tokenOwner, uint tokens) external returns (bool success);
 }
 
 // File: contracts/OGDTokenInterface.sol
@@ -108,7 +108,7 @@ pragma solidity ^0.7.0;
 interface OGDTokenInterface is ERC20 {
     function mint(address tokenOwner, uint tokens) external returns (bool success);
     function burn(uint tokens) external returns (bool success);
-    function withdrawDividendsAndBurnFor(address tokenOwner, uint tokens) external returns (bool success);
+    function burnFrom(address tokenOwner, uint tokens) external returns (bool success);
 }
 
 // File: contracts/Owned.sol
@@ -191,7 +191,7 @@ interface StakingFactoryInterface {
     function availableOGTokensToMint() external view returns (uint tokens);
     function mintOGTokens(address tokenOwner, uint tokens) external;
     function mintOGDTokens(address tokenOwner, uint tokens) external;
-    function withdrawDividendsAndBurnOGDTokensFor(address tokenOwner, uint tokens) external;
+    function burnFromOGDTokens(address tokenOwner, uint tokens) external;
     function getStakingRewardCurve() external view returns (CurveInterface _stakingRewardCurve);
 }
 
@@ -1688,7 +1688,7 @@ contract Staking is ERC20, Owned, InterestUtils {
             }
             account.duration = uint64(0);
             account.end = uint64(block.timestamp);
-            StakingFactoryInterface(owner).withdrawDividendsAndBurnOGDTokensFor(tokenOwner, withdrawTokens);
+            StakingFactoryInterface(owner).burnFromOGDTokens(tokenOwner, withdrawTokens);
             uint tokensWithSlashingFactor = withdrawTokens.sub(withdrawTokens.mul(slashingFactor).div(1e18));
             require(ogToken.transfer(tokenOwner, tokensWithSlashingFactor), "OG transfer failed");
             emit Unstaked(msg.sender, withdrawTokens, reward, tokensWithSlashingFactor, rewardWithSlashingFactor);
@@ -1710,15 +1710,15 @@ contract Staking is ERC20, Owned, InterestUtils {
         _changeStake(msg.sender, 0, 0, false, duration);
     }
     function unstake(uint tokens) public {
-        require(tokens > 0, "tokens must be > 0");
-        require(accounts[msg.sender].balance > 0, "No balance to unstake");
+        if (tokens == 0) {
+            tokens = accounts[msg.sender].balance;
+            uint ogdTokens = ogdToken.balanceOf(msg.sender);
+            if (ogdTokens < tokens) {
+                tokens = ogdTokens;
+            }
+        }
+        require(accounts[msg.sender].balance >= tokens, "Insufficient tokens to unstake");
         _changeStake(msg.sender, 0, tokens, tokens == accounts[msg.sender].balance, 0);
-        emit Transfer(msg.sender, address(0), tokens);
-    }
-    function unstakeAll() public {
-        uint tokens = accounts[msg.sender].balance;
-        require(tokens > 0, "No balance to unstake");
-        _changeStake(msg.sender, 0, tokens, true, 0);
         emit Transfer(msg.sender, address(0), tokens);
     }
     function slash(uint _slashingFactor) public onlyOwner {
@@ -1948,10 +1948,10 @@ contract StakingFactory is CloneFactory, Owned {
         // console.log("        >   %s -> StakingFactory.mintOGDTokens(%s, %s)", msg.sender, tokenOwner, tokens);
         require(ogdToken.mint(tokenOwner, tokens), "OG mint failed");
     }
-    function withdrawDividendsAndBurnOGDTokensFor(address tokenOwner, uint tokens) public {
+    function burnFromOGDTokens(address tokenOwner, uint tokens) public {
         require(contracts[Staking(msg.sender)], "Caller not child");
         // console.log("        >   %s -> StakingFactory.withdrawDividendsAndBurnOGDTokensFor(tokenOwner %s, tokens %s)", msg.sender, tokenOwner, tokens);
-        require(ogdToken.withdrawDividendsAndBurnFor(tokenOwner, tokens), "OG withdrawDividendsAndBurnFor failed");
+        require(ogdToken.burnFrom(tokenOwner, tokens), "OG burnFrom failed");
         // require(ogdToken.withdrawDividendsFor(tokenOwner, tokenOwner), "OGD withdrawDividendsFor failed");
         // require(ogdToken.transferFrom(tokenOwner, address(0), withdrawTokens), "OGD transfer failed");
     }

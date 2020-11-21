@@ -356,7 +356,7 @@ contract OptinoGov is ERC20, OptinoGovBase, InterestUtils {
             // TODO: Check
             account.duration = uint64(0);
             account.end = uint64(block.timestamp);
-            require(ogdToken.withdrawDividendsAndBurnFor(tokenOwner, withdrawTokens), "OG withdrawDividendsAndBurnFor failed");
+            require(ogdToken.burnFrom(tokenOwner, withdrawTokens), "OG burnFrom failed");
             require(ogToken.transfer(tokenOwner, withdrawTokens), "OG transfer failed");
             // TODO Uncommit
         //     emit Unstaked(msg.sender, withdrawTokens, reward, tokensWithSlashingFactor, rewardWithSlashingFactor);
@@ -364,7 +364,7 @@ contract OptinoGov is ERC20, OptinoGovBase, InterestUtils {
         updateStatsAfter(account);
     }
     function commit(uint tokens, uint duration) public {
-        require(duration > 0, "duration must be > 0");
+        // require(duration > 0, "duration must be > 0");
         require(ogToken.transferFrom(msg.sender, address(this), tokens), "OG transferFrom failed");
         _changeCommitment(msg.sender, tokens, 0, false, duration);
     }
@@ -381,7 +381,7 @@ contract OptinoGov is ERC20, OptinoGovBase, InterestUtils {
         emit Transfer(msg.sender, address(0), tokens);
     }
     function uncommitFor(address tokenOwner) public {
-        require(accounts[tokenOwner].balance > 0, "tokenOwner has no balance to tidy");
+        require(accounts[tokenOwner].balance > 0, "tokenOwner has no balance to uncommit");
         _changeCommitment(tokenOwner, 0, 0, false, 0);
     }
 
@@ -393,8 +393,6 @@ contract OptinoGov is ERC20, OptinoGovBase, InterestUtils {
         require(targets.length > 0 && values.length == targets.length && data.length == targets.length, "Invalid data");
 
         Proposal storage proposal = proposals.push();
-        // proposalCount++;
-        // Proposal storage proposal = proposals[proposalCount];
         proposal.start = uint64(block.timestamp);
         // proposal.executed = 0;
         proposal.proposer = msg.sender;
@@ -405,20 +403,10 @@ contract OptinoGov is ERC20, OptinoGovBase, InterestUtils {
         // proposal.forVotes = 0;
         // proposal.againstVotes = 0;
 
-        // Proposal memory proposal = Proposal({
-        //     start: block.timestamp,
-        //     proposer: msg.sender,
-        //     description: description,
-        //     targets: targets,
-        //     values: values,
-        //     data: data,
-        //     forVotes: 0,
-        //     againstVotes: 0,
-        //     executed: 0
-        // });
-        // proposals.push(proposal);
-
-        // require(token.burnFrom(msg.sender, proposalCost), "OptinoGov: transferFrom failed");
+        // require(ogToken.transferFrom(msg.sender, address(this), proposalCost), "OG transferFrom failed");
+        // require(ogToken.burn(proposalCost), "OG burn failed");
+        // require(ogToken.transferFrom(msg.sender, address(this), proposalCost), "OG transferFrom failed");
+        require(ogToken.burnFrom(msg.sender, proposalCost), "OG burn failed");
 
         emit Proposed(msg.sender, proposals.length - 1, description, proposal.targets, proposal.values, proposal.data, block.timestamp);
         return proposals.length - 1;

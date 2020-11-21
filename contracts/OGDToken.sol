@@ -214,16 +214,6 @@ contract OGDToken is OGDTokenInterface, Permissioned {
     function withdrawDividends() public {
         _withdrawDividendsFor(msg.sender, msg.sender);
     }
-    /// @notice Withdraw enabled dividends tokens -
-    function withdrawDividendsAndBurnFor(address tokenOwner, uint tokens) override external permitted(ROLE_BURNTOKENS, 0) returns (bool success) {
-        // console.log("        >   %s -> OGDToken.withdrawDividendsAndBurnFor(tokenOwner %s, tokens %s)", msg.sender, tokenOwner, tokens);
-        require(accounts[tokenOwner].balance >= tokens, "Insufficient tokens");
-        _withdrawDividendsFor(tokenOwner, tokenOwner);
-        accounts[tokenOwner].balance = accounts[tokenOwner].balance.sub(tokens);
-        _totalSupply = _totalSupply.sub(tokens);
-        emit Transfer(tokenOwner, address(0), tokens);
-        return true;
-    }
     /// @notice Withdraw enabled and disabled dividends tokens
     function withdrawDividendByToken(address token) public {
         updateAccount(msg.sender);
@@ -253,6 +243,15 @@ contract OGDToken is OGDTokenInterface, Permissioned {
         accounts[msg.sender].balance = accounts[msg.sender].balance.sub(tokens);
         _totalSupply = _totalSupply.sub(tokens);
         emit Transfer(msg.sender, address(0), tokens);
+        return true;
+    }
+    /// @notice Withdraw enabled dividends tokens before burning
+    function burnFrom(address tokenOwner, uint tokens) override external permitted(ROLE_BURNTOKENS, 0) returns (bool success) {
+        require(accounts[tokenOwner].balance >= tokens, "Insufficient tokens");
+        _withdrawDividendsFor(tokenOwner, tokenOwner);
+        accounts[tokenOwner].balance = accounts[tokenOwner].balance.sub(tokens);
+        _totalSupply = _totalSupply.sub(tokens);
+        emit Transfer(tokenOwner, address(0), tokens);
         return true;
     }
 

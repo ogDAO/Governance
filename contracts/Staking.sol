@@ -304,7 +304,7 @@ contract Staking is ERC20, Owned, InterestUtils {
             }
             account.duration = uint64(0);
             account.end = uint64(block.timestamp);
-            StakingFactoryInterface(owner).withdrawDividendsAndBurnOGDTokensFor(tokenOwner, withdrawTokens);
+            StakingFactoryInterface(owner).burnFromOGDTokens(tokenOwner, withdrawTokens);
             uint tokensWithSlashingFactor = withdrawTokens.sub(withdrawTokens.mul(slashingFactor).div(1e18));
             require(ogToken.transfer(tokenOwner, tokensWithSlashingFactor), "OG transfer failed");
             emit Unstaked(msg.sender, withdrawTokens, reward, tokensWithSlashingFactor, rewardWithSlashingFactor);
@@ -326,15 +326,15 @@ contract Staking is ERC20, Owned, InterestUtils {
         _changeStake(msg.sender, 0, 0, false, duration);
     }
     function unstake(uint tokens) public {
-        require(tokens > 0, "tokens must be > 0");
-        require(accounts[msg.sender].balance > 0, "No balance to unstake");
+        if (tokens == 0) {
+            tokens = accounts[msg.sender].balance;
+            uint ogdTokens = ogdToken.balanceOf(msg.sender);
+            if (ogdTokens < tokens) {
+                tokens = ogdTokens;
+            }
+        }
+        require(accounts[msg.sender].balance >= tokens, "Insufficient tokens to unstake");
         _changeStake(msg.sender, 0, tokens, tokens == accounts[msg.sender].balance, 0);
-        emit Transfer(msg.sender, address(0), tokens);
-    }
-    function unstakeAll() public {
-        uint tokens = accounts[msg.sender].balance;
-        require(tokens > 0, "No balance to unstake");
-        _changeStake(msg.sender, 0, tokens, true, 0);
         emit Transfer(msg.sender, address(0), tokens);
     }
     function slash(uint _slashingFactor) public onlyOwner {

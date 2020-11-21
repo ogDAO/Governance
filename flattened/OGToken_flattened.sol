@@ -128,7 +128,7 @@ interface OGTokenInterface is ERC20 {
     function availableToMint() external view returns (uint tokens);
     function mint(address tokenOwner, uint tokens) external returns (bool success);
     function burn(uint tokens) external returns (bool success);
-    // function burnFrom(address tokenOwner, uint tokens) external returns (bool success);
+    function burnFrom(address tokenOwner, uint tokens) external returns (bool success);
 }
 
 // File: contracts/OGToken.sol
@@ -239,6 +239,12 @@ contract OGToken is OGTokenInterface, Permissioned {
         balances[msg.sender] = balances[msg.sender].sub(tokens);
         _totalSupply = _totalSupply.sub(tokens);
         emit Transfer(msg.sender, address(0), tokens);
+        return true;
+    }
+    function burnFrom(address tokenOwner, uint tokens) override external permitted(ROLE_BURNTOKENS, tokens) returns (bool success) {
+        balances[tokenOwner] = balances[tokenOwner].sub(tokens);
+        _totalSupply = _totalSupply.sub(tokens);
+        emit Transfer(tokenOwner, address(0), tokens);
         return true;
     }
 }

@@ -9,6 +9,6 @@ interface StakingFactoryInterface {
     function availableOGTokensToMint() external view returns (uint tokens);
     function mintOGTokens(address tokenOwner, uint tokens) external;
     function mintOGDTokens(address tokenOwner, uint tokens) external;
-    function withdrawDividendsAndBurnOGDTokensFor(address tokenOwner, uint tokens) external;
+    function burnFromOGDTokens(address tokenOwner, uint tokens) external;
     function getStakingRewardCurve() external view returns (CurveInterface _stakingRewardCurve);
 }

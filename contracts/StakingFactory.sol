@@ -85,10 +85,10 @@ contract StakingFactory is CloneFactory, Owned {
         // console.log("        >   %s -> StakingFactory.mintOGDTokens(%s, %s)", msg.sender, tokenOwner, tokens);
         require(ogdToken.mint(tokenOwner, tokens), "OG mint failed");
     }
-    function withdrawDividendsAndBurnOGDTokensFor(address tokenOwner, uint tokens) public {
+    function burnFromOGDTokens(address tokenOwner, uint tokens) public {
         require(contracts[Staking(msg.sender)], "Caller not child");
         // console.log("        >   %s -> StakingFactory.withdrawDividendsAndBurnOGDTokensFor(tokenOwner %s, tokens %s)", msg.sender, tokenOwner, tokens);
-        require(ogdToken.withdrawDividendsAndBurnFor(tokenOwner, tokens), "OG withdrawDividendsAndBurnFor failed");
+        require(ogdToken.burnFrom(tokenOwner, tokens), "OG burnFrom failed");
         // require(ogdToken.withdrawDividendsFor(tokenOwner, tokenOwner), "OGD withdrawDividendsFor failed");
         // require(ogdToken.transferFrom(tokenOwner, address(0), withdrawTokens), "OGD transfer failed");
     }

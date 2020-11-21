@@ -145,9 +145,9 @@ describe("TestOptinoGov", function() {
 
       console.log("        --- Test 4 - user{1..2} collecting rewards, user3 collecting and committing rewards and extending duration to 1d ---");
       const test4 = [];
-      test4.push(data.optinoGov.connect(data.user1Signer).recommit(0));
-      test4.push(data.optinoGov.connect(data.user2Signer).recommit(0));
-      test4.push(data.optinoGov.connect(data.user3Signer).recommit(SECONDS_PER_DAY));
+      test4.push(data.optinoGov.connect(data.user1Signer).commit(0, 0));
+      test4.push(data.optinoGov.connect(data.user2Signer).commit(0, 0));
+      test4.push(data.optinoGov.connect(data.user3Signer).commit(0, SECONDS_PER_DAY));
       const [collectReward1, collectReward2, collectReward3] = await Promise.all(test4);
       await data.printTxData("collectReward1", collectReward1);
       await data.printTxData("collectReward2", collectReward2);
@@ -268,7 +268,7 @@ describe("TestOptinoGov", function() {
     });
   });
 
-  describe.only("TestOptinoGov - Workflow #2 - Developing", function() {
+  describe("TestOptinoGov - Workflow #2 - Developing", function() {
     it("Workflow #2 - Developing", async function() {
       console.log("        --- Test 1 - user{1..3} commit 1,000 OGTokens for x seconds, user3 delegate to user1 ---");
       let duration1 = 2;
