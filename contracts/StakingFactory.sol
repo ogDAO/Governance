@@ -24,6 +24,7 @@ contract StakingFactory is CloneFactory, Owned {
     mapping(Staking => bool) public contracts;
 
     event StakingCreated(bytes32 indexed key, Staking indexed staking);
+    event StakingRewardCurveUpdated(CurveInterface indexed stakingRewardCurve);
 
     constructor(OGTokenInterface _ogToken, OGDTokenInterface _ogdToken, CurveInterface _stakingRewardCurve) {
         initOwned(msg.sender);
@@ -33,6 +34,10 @@ contract StakingFactory is CloneFactory, Owned {
         stakingTemplate = new Staking();
     }
 
+    function setStakingRewardCurve(CurveInterface _stakingRewardCurve) public onlyOwner {
+        stakingRewardCurve = _stakingRewardCurve;
+        emit StakingRewardCurveUpdated(_stakingRewardCurve);
+    }
     function getStakingRewardCurve() external view returns (CurveInterface _stakingRewardCurve) {
         _stakingRewardCurve = stakingRewardCurve;
     }
@@ -68,6 +73,9 @@ contract StakingFactory is CloneFactory, Owned {
         staking.stakeThroughFactory(msg.sender, tokens, duration);
     }
 
+    function setStakingStakingRewardCurve(Staking staking, CurveInterface _stakingRewardCurve) public onlyOwner {
+        staking.setStakingRewardCurve(_stakingRewardCurve);
+    }
     function slash(Staking staking, uint slashingFactor) public onlyOwner {
         staking.slash(slashingFactor);
     }

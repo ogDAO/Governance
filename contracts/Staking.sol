@@ -61,6 +61,7 @@ contract Staking is ERC20, Owned, InterestUtils {
     // uint public weightedDurationDenominator;
     uint public slashingFactor;
 
+    event StakingRewardCurveUpdated(CurveInterface indexed stakingRewardCurve);
     event Staked(address indexed tokenOwner, uint tokens, uint duration, uint end);
     event Unstaked(address indexed tokenOwner, uint tokens, uint reward, uint tokensWithSlashingFactor, uint rewardWithSlashingFactor);
     event Slashed(uint slashingFactor, uint tokensBurnt);
@@ -139,6 +140,10 @@ contract Staking is ERC20, Owned, InterestUtils {
         return allowed[tokenOwner][spender];
     }
 
+    function setStakingRewardCurve(CurveInterface _stakingRewardCurve) public onlyOwner {
+        stakingRewardCurve = _stakingRewardCurve;
+        emit StakingRewardCurveUpdated(_stakingRewardCurve);
+    }
     function _getRate(uint term) internal view returns (uint rate) {
         if (stakingRewardCurve == CurveInterface(0)) {
             try StakingFactoryInterface(owner).getStakingRewardCurve().getRate(term) returns (uint _rate) {
