@@ -1,6 +1,4 @@
-$ npx hardhat --verbose --show-stack-traces test test/TestOptinoGov.js > results/TestOptinoGov.txt
-Compiling 21 files with 0.7.5
-Compilation finished successfully
+$ npx hardhat test test/TestOptinoGov.js > results/TestOptinoGov.txt
 
 
   TestOptinoGov
@@ -17,10 +15,10 @@ Compilation finished successfully
         Address 0xBa1FCDaE835E77cAB2a76a7C3884AdC630f7a5B0 => VoteWeightCurve:0xBa1F
         Address 0x7305816b5991eb8B06Ba62F9F48531410c4Cd610 => OptinoGov:0x7305
         Address 0x5Fec6C68520cdf0Cd43ca00dDAAcd4b2e7c568D0 => Fee0Token:0x5Fec
-        ogToken.deployTransaction - gasUsed: 1377133, fee: 0.11017064, feeUsd: 42.4895107288, @ 80.0 gwei & 385.67 ETH/USD, 0x5795ffb7b4629c9f761df7dff12f7cbdd02d0b429d124a04effceecd391c6f81
+        ogToken.deployTransaction - gasUsed: 1386769, fee: 0.11094152, feeUsd: 42.7868160184, @ 80.0 gwei & 385.67 ETH/USD, 0xbe7f929da542074ee117bec719b808a0f82b25d8404b59e6e7a59da38ce44289
         + OGToken.PermissionUpdated(account: Deployer:0xa00A, role: 0, active: true, maximum: 0, processed: 0)
         + OGToken.Transfer(from: ETH|null:0x0000, to: Deployer:0xa00A, tokens: 40000.0)
-        ogdToken.deployTransaction - gasUsed: 2819839, fee: 0.22558712, feeUsd: 87.0021845704, @ 80.0 gwei & 385.67 ETH/USD, 0xeb9dc94bfdd6bf635db06689ea070a9b7885d89bc363450e59fc6408b786e1c9
+        ogdToken.deployTransaction - gasUsed: 2823372, fee: 0.22586976, feeUsd: 87.1111903392, @ 80.0 gwei & 385.67 ETH/USD, 0x9c4b98443c5f139cd117e30484dcaf697d1a5d601d4b3453053188e9f2a81a44
         + OGDToken.PermissionUpdated(account: Deployer:0xa00A, role: 0, active: true, maximum: 0, processed: 0)
         + OGDToken.Transfer(from: ETH|null:0x0000, to: Deployer:0xa00A, tokens: 0.0)
         ogRewardCurve.deployTransaction - gasUsed: 833717, fee: 0.06669736, feeUsd: 25.7231708312, @ 80.0 gwei & 385.67 ETH/USD, 0xa4bcd748dab5eab2e9b8b3833d72d79ff456f05d702bec4d9a8962f335b6bea4
@@ -32,49 +30,49 @@ Compilation finished successfully
         + VoteWeightCurve.PointUpdated(index: 1, term: 3y, rate: 1095.0%)
         fee0Token.deployTransaction - gasUsed: 823708, fee: 0.06589664, feeUsd: 25.4143571488, @ 80.0 gwei & 385.67 ETH/USD, 0x74c3ba83e6810cba2def1d1ecafa12899db407ed473c380a19d796d4f5c7eaf1
         + Fee0Token.Transfer(from: ETH|null:0x0000, to: Deployer:0xa00A, tokens: 100.0)
-        optinoGov.deployTransaction - gasUsed: 5710713, fee: 0.45685704, feeUsd: 176.1960546168, @ 80.0 gwei & 385.67 ETH/USD, 0x598d4569992cc3b9abf29cec84017c7c9cceefe1678af614399a23897687b514
+        optinoGov.deployTransaction - gasUsed: 5710701, fee: 0.45685608, feeUsd: 176.1956843736, @ 80.0 gwei & 385.67 ETH/USD, 0xcb81bb479210384e7513b461af8d9029cc6bd78100999320133faa29d0a9c24d
         OptinoGov.bytecode.length/2: 25861
         --- Setup 2 - OGToken and OGDToken permissioning ---
-        setup2Txs[0] - gasUsed: 78942, fee: 0.00631536, feeUsd: 2.4356448912, @ 80.0 gwei & 385.67 ETH/USD, 0xdcf1bd0bb6a7821b94947c7884ae113f87efa6b38a9933f8a4c9aff34fa76ef3
+        setup2Txs[0] - gasUsed: 81544, fee: 0.00652352, feeUsd: 2.5159259584, @ 80.0 gwei & 385.67 ETH/USD, 0xcb1f03f9c2669f844cbf8c0a3f2d611e85aadc8cc0df3664c34b19632eaf6063
         + OGToken.PermissionUpdated(account: Deployer:0xa00A, role: 1, active: true, maximum: 0, processed: 0)
-        setup2Txs[1] - gasUsed: 78930, fee: 0.0063144, feeUsd: 2.435274648, @ 80.0 gwei & 385.67 ETH/USD, 0x892077d9e40748a303f931e8bf89b6e220f4f6454f63b63c7fc30420c6162ccd
+        setup2Txs[1] - gasUsed: 81532, fee: 0.00652256, feeUsd: 2.5155557152, @ 80.0 gwei & 385.67 ETH/USD, 0x5b76732befd501b9371f8e2922eccfca23a589bd289bd5dba72c05a068cb67b4
         + OGToken.PermissionUpdated(account: OptinoGov:0x7305, role: 0, active: true, maximum: 0, processed: 0)
-        setup2Txs[2] - gasUsed: 78942, fee: 0.00631536, feeUsd: 2.4356448912, @ 80.0 gwei & 385.67 ETH/USD, 0x4fa825ee2eacd9cb37a9ffe96bd587ea11f2ae34652f9e0bd7432d7349725003
+        setup2Txs[2] - gasUsed: 81544, fee: 0.00652352, feeUsd: 2.5159259584, @ 80.0 gwei & 385.67 ETH/USD, 0xcb07da580f8c752d33d208d8e2e83d5abce161f6af481c102a29e297fec90ac2
         + OGToken.PermissionUpdated(account: OptinoGov:0x7305, role: 1, active: true, maximum: 0, processed: 0)
-        setup2Txs[3] - gasUsed: 98264, fee: 0.00786112, feeUsd: 3.0317981504, @ 80.0 gwei & 385.67 ETH/USD, 0x8bf126391c865cc6f10452326d8d92b8e6bf8afb4b2188dd694a040ea9c96046
+        setup2Txs[3] - gasUsed: 100866, fee: 0.00806928, feeUsd: 3.1120792176, @ 80.0 gwei & 385.67 ETH/USD, 0xc33b2ed852fd0c9d605e15792a9c187954eeb8587c1dcb70757b552605cc412c
         + OGToken.PermissionUpdated(account: OptinoGov:0x7305, role: 2, active: true, maximum: 123456789000000000000000000, processed: 0)
-        setup2Txs[4] - gasUsed: 78942, fee: 0.00631536, feeUsd: 2.4356448912, @ 80.0 gwei & 385.67 ETH/USD, 0x4d70ea3af6522d8a010d1b76098872db10f080672d96b70cbc0e5df25d8252cb
+        setup2Txs[4] - gasUsed: 81544, fee: 0.00652352, feeUsd: 2.5159259584, @ 80.0 gwei & 385.67 ETH/USD, 0x73035e7463ea258dd9d3c9743703449a5b25c5ce8b2267c8d0a26f4700cb309c
         + OGToken.PermissionUpdated(account: OptinoGov:0x7305, role: 3, active: true, maximum: 0, processed: 0)
-        setup2Txs[5] - gasUsed: 78987, fee: 0.00631896, feeUsd: 2.4370333032, @ 80.0 gwei & 385.67 ETH/USD, 0xfe9e9c535a140a993521813b123a82d813993027833359f01558933c164cea35
+        setup2Txs[5] - gasUsed: 81522, fee: 0.00652176, feeUsd: 2.5152471792, @ 80.0 gwei & 385.67 ETH/USD, 0x24fb4a81c80e11e63e3d27e29e29ed549bf57a3ca8caa51980ba7cbe6e965f3f
         + OGDToken.PermissionUpdated(account: Deployer:0xa00A, role: 1, active: true, maximum: 0, processed: 0)
-        setup2Txs[6] - gasUsed: 78975, fee: 0.006318, feeUsd: 2.43666306, @ 80.0 gwei & 385.67 ETH/USD, 0x88c9c217d5c1c2d89d82f18d86499332ec9e0d6e6988519025bd804cc4ade63e
+        setup2Txs[6] - gasUsed: 81510, fee: 0.0065208, feeUsd: 2.514876936, @ 80.0 gwei & 385.67 ETH/USD, 0x99e9a47f9791414b6b0c7b26cb9f2448145e3f98ecad70d1285c0754a42bc3cf
         + OGDToken.PermissionUpdated(account: OptinoGov:0x7305, role: 0, active: true, maximum: 0, processed: 0)
-        setup2Txs[7] - gasUsed: 78987, fee: 0.00631896, feeUsd: 2.4370333032, @ 80.0 gwei & 385.67 ETH/USD, 0x931ecfc25ce7f8ca29b6da890a79222abccacd546842094b2e80d9c87209358d
+        setup2Txs[7] - gasUsed: 81522, fee: 0.00652176, feeUsd: 2.5152471792, @ 80.0 gwei & 385.67 ETH/USD, 0x0b328637fbe9b5731b96771c252c2651f1a2c89c30536ec6cddc1ae5390152da
         + OGDToken.PermissionUpdated(account: OptinoGov:0x7305, role: 1, active: true, maximum: 0, processed: 0)
-        setup2Txs[8] - gasUsed: 98309, fee: 0.00786472, feeUsd: 3.0331865624, @ 80.0 gwei & 385.67 ETH/USD, 0xa8f456252145d9ce6dcbebb77dd1d71aca77ec39768bca6d219c2b74c609d585
+        setup2Txs[8] - gasUsed: 100844, fee: 0.00806752, feeUsd: 3.1114004384, @ 80.0 gwei & 385.67 ETH/USD, 0xeeb8e14b30cc5e7a7280975f73aae62e6a27c5db4996313d4e533a84faacd6d4
         + OGDToken.PermissionUpdated(account: OptinoGov:0x7305, role: 2, active: true, maximum: 123456789000000000000000000, processed: 0)
-        setup2Txs[9] - gasUsed: 78987, fee: 0.00631896, feeUsd: 2.4370333032, @ 80.0 gwei & 385.67 ETH/USD, 0x2d0a623b69d7d3ec5b2ee181b87c82bbf7de50fe1a97e706523d9281e52e60f8
+        setup2Txs[9] - gasUsed: 81522, fee: 0.00652176, feeUsd: 2.5152471792, @ 80.0 gwei & 385.67 ETH/USD, 0xdf16156a4bc8a92e723625610870237f4808a5d21d38b84d3b132461233578eb
         + OGDToken.PermissionUpdated(account: OptinoGov:0x7305, role: 3, active: true, maximum: 0, processed: 0)
         --- Setup 3 - OGDToken.addDividendToken([ETH, FEE0]) ---
-        addDividendToken0 - gasUsed: 117165, fee: 0.0093732, feeUsd: 3.614962044, @ 80.0 gwei & 385.67 ETH/USD, 0x84c2762869994da20935d862cb8ecb917cfa3d4691c5a49c86565ffe861d703d
-        + OGDToken.DividendTokenAdded(token: ETH|null:0x0000, enabled: true)
-        addDividendToken1 - gasUsed: 119132, fee: 0.00953056, feeUsd: 3.6756510752, @ 80.0 gwei & 385.67 ETH/USD, 0x5bfa4e12ff44a3ad4f72023cc8e307afa14f2b49b2e2daaf5f5ccb12e9401e00
-        + OGDToken.DividendTokenAdded(token: Fee0Token:0x5Fec, enabled: true)
+        addDividendToken0 - gasUsed: 117282, fee: 0.00938256, feeUsd: 3.6185719152, @ 80.0 gwei & 385.67 ETH/USD, 0x84c2762869994da20935d862cb8ecb917cfa3d4691c5a49c86565ffe861d703d
+        + OGDToken.TokenAdded(token: ETH|null:0x0000, enabled: true)
+        addDividendToken1 - gasUsed: 119249, fee: 0.00953992, feeUsd: 3.6792609464, @ 80.0 gwei & 385.67 ETH/USD, 0x5bfa4e12ff44a3ad4f72023cc8e307afa14f2b49b2e2daaf5f5ccb12e9401e00
+        + OGDToken.TokenAdded(token: Fee0Token:0x5Fec, enabled: true)
         --- Setup 4 - Remove deployer permissions from OGToken and OGDToken ---
-        setup4Txs[0] - gasUsed: 36944, fee: 0.00295552, feeUsd: 1.1398553984, @ 80.0 gwei & 385.67 ETH/USD, 0xfbabf4bdb0926b683c833b70b97f7b6236d7571db5e2e359f083b2271e72571e
+        setup4Txs[0] - gasUsed: 37122, fee: 0.00296976, feeUsd: 1.1453473392, @ 80.0 gwei & 385.67 ETH/USD, 0xc344c036f950f019bd0873d945d42ce57b641111cb6e8daf6ca1732e16616f2e
         + OGToken.PermissionUpdated(account: Deployer:0xa00A, role: 1, active: false, maximum: 0, processed: 0)
-        setup4Txs[1] - gasUsed: 36932, fee: 0.00295456, feeUsd: 1.1394851552, @ 80.0 gwei & 385.67 ETH/USD, 0x6933907363ca3bc44148926a161098e920de3d9e4e6b47dd6e9b560e338fa9f9
+        setup4Txs[1] - gasUsed: 37110, fee: 0.0029688, feeUsd: 1.144977096, @ 80.0 gwei & 385.67 ETH/USD, 0xd3591a946e703ea83ee65c583b2b5c4dc2854a4b41ddd89d98314aeccf3c2d93
         + OGToken.PermissionUpdated(account: Deployer:0xa00A, role: 0, active: false, maximum: 0, processed: 0)
-        setup4Txs[2] - gasUsed: 36989, fee: 0.00295912, feeUsd: 1.1412438104, @ 80.0 gwei & 385.67 ETH/USD, 0x8b90a4c7c052c33f9e3d9105bb4c559e44acae116523180f2165b75184556b4e
+        setup4Txs[2] - gasUsed: 37100, fee: 0.002968, feeUsd: 1.14466856, @ 80.0 gwei & 385.67 ETH/USD, 0x459a85139a80385ebcc69bda46979d1ed58f280a6ed1e017bf1898e97328e030
         + OGDToken.PermissionUpdated(account: Deployer:0xa00A, role: 1, active: false, maximum: 0, processed: 0)
-        setup4Txs[3] - gasUsed: 36977, fee: 0.00295816, feeUsd: 1.1408735672, @ 80.0 gwei & 385.67 ETH/USD, 0xb885b847850bc0f3b47cc74bf2f08dbbbdb3962a55972f8d9f81017684d3b471
+        setup4Txs[3] - gasUsed: 37088, fee: 0.00296704, feeUsd: 1.1442983168, @ 80.0 gwei & 385.67 ETH/USD, 0x577508cf13b574a267466a370460eee6b9dba0c69a2caa240e5563ef7cb089cc
         + OGDToken.PermissionUpdated(account: Deployer:0xa00A, role: 0, active: false, maximum: 0, processed: 0)
         --- Setup 5 - Transfer OGTokens, user{1..3} approve 2,000 OGTokens to OptinoGov, deployer approve 2,000 FEE0 tokens to OGDToken ---
-        transfer1 - gasUsed: 50893, fee: 0.00407144, feeUsd: 1.5702322648, @ 80.0 gwei & 385.67 ETH/USD, 0xaa00cfed2aaab5245f497be198ab63d1450a4753d87890eb33dd6d0c3a2811f2
+        transfer1 - gasUsed: 50915, fee: 0.0040732, feeUsd: 1.570911044, @ 80.0 gwei & 385.67 ETH/USD, 0xaa00cfed2aaab5245f497be198ab63d1450a4753d87890eb33dd6d0c3a2811f2
         + OGToken.Transfer(from: Deployer:0xa00A, to: User1:0xa11A, tokens: 10000.0)
-        transfer2 - gasUsed: 50893, fee: 0.00407144, feeUsd: 1.5702322648, @ 80.0 gwei & 385.67 ETH/USD, 0xcc30be2c9dcdce1e9dac035559fd65057d0e6949b2d1b28b5ea94583f84ea9df
+        transfer2 - gasUsed: 50915, fee: 0.0040732, feeUsd: 1.570911044, @ 80.0 gwei & 385.67 ETH/USD, 0xcc30be2c9dcdce1e9dac035559fd65057d0e6949b2d1b28b5ea94583f84ea9df
         + OGToken.Transfer(from: Deployer:0xa00A, to: User2:0xa22A, tokens: 10000.0)
-        transfer3 - gasUsed: 50893, fee: 0.00407144, feeUsd: 1.5702322648, @ 80.0 gwei & 385.67 ETH/USD, 0x8dcc0185fb60c127714fbd6b69d22a08d3a2b0723528dff383b9b739ed251ad4
+        transfer3 - gasUsed: 50915, fee: 0.0040732, feeUsd: 1.570911044, @ 80.0 gwei & 385.67 ETH/USD, 0x8dcc0185fb60c127714fbd6b69d22a08d3a2b0723528dff383b9b739ed251ad4
         + OGToken.Transfer(from: Deployer:0xa00A, to: User3:0xa33a, tokens: 10000.0)
         approve1 - gasUsed: 43968, fee: 0.00351744, feeUsd: 1.3565710848, @ 80.0 gwei & 385.67 ETH/USD, 0xdd0ce63a36ab3a62ae8e794ce019b33b75a001c8ea283fb5431de338cba3f3cd
         + OGToken.Approval(tokenOwner: User1:0xa11A, spender: OptinoGov:0x7305, tokens: 2000.0)
@@ -87,7 +85,7 @@ Compilation finished successfully
         
          # Account                                        ΔETH                OptinoGov                       OG                      OGD                     FEE0
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
-         0 Deployer:0xa00A                         -1.10107976                      0.0                  10000.0                      0.0                    100.0
+         0 Deployer:0xa00A                         -1.10425736                      0.0                  10000.0                      0.0                    100.0
          1 User1:0xa11A                            -0.00351744                      0.0                  10000.0                      0.0                      0.0
          2 User2:0xa22A                            -0.00351744                      0.0                  10000.0                      0.0                      0.0
          3 User3:0xa33a                            -0.00351744                      0.0                  10000.0                      0.0                      0.0
@@ -176,28 +174,28 @@ Compilation finished successfully
         --- Setup Completed ---
 
         --- Test 1 - user{1..3} commit OGTokens for {5, 50, 500} seconds duration ---
-        commit1 - gasUsed: 376073, fee: 0.03008584, feeUsd: 11.6032059128, @ 80.0 gwei & 385.67 ETH/USD, 0x3a614bae46098f4115c0c0bfc824e486ffb0985d0bd4f9302bf46f7799a65052
+        commit1 - gasUsed: 377030, fee: 0.0301624, feeUsd: 11.632732808, @ 80.0 gwei & 385.67 ETH/USD, 0x3a614bae46098f4115c0c0bfc824e486ffb0985d0bd4f9302bf46f7799a65052
         + OGToken.Transfer(from: User1:0xa11A, to: OptinoGov:0x7305, tokens: 1000.0)
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User1:0xa11A, tokens: 1000.0)
         + OptinoGov.Transfer(from: ETH|null:0x0000, to: User1:0xa11A, tokens: 1000.0)
-        + OptinoGov.Committed(user: User1:0xa11A, tokens: 1000.0, balance: 1000.0, duration: 5, end: 1606008293, delegatee: ETH|null:0x0000, votes: 10.0, totalVotes: 10.0)
-        commit2 - gasUsed: 305273, fee: 0.02442184, feeUsd: 9.4187710328, @ 80.0 gwei & 385.67 ETH/USD, 0x6831859cd708398ae09c70b127fa509beba366c59d06994c7a768b52d7f18ee6
+        + OptinoGov.Committed(user: User1:0xa11A, tokens: 1000.0, balance: 1000.0, duration: 5, end: 1606096484, delegatee: ETH|null:0x0000, votes: 10.0, totalVotes: 10.0)
+        commit2 - gasUsed: 306230, fee: 0.0244984, feeUsd: 9.448297928, @ 80.0 gwei & 385.67 ETH/USD, 0x6831859cd708398ae09c70b127fa509beba366c59d06994c7a768b52d7f18ee6
         + OGToken.Transfer(from: User2:0xa22A, to: OptinoGov:0x7305, tokens: 1000.0)
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User2:0xa22A, tokens: 1000.0)
         + OptinoGov.Transfer(from: ETH|null:0x0000, to: User2:0xa22A, tokens: 1000.0)
-        + OptinoGov.Committed(user: User2:0xa22A, tokens: 1000.0, balance: 1000.0, duration: 50, end: 1606008339, delegatee: ETH|null:0x0000, votes: 10.0, totalVotes: 20.0)
-        commit3 - gasUsed: 305285, fee: 0.0244228, feeUsd: 9.419141276, @ 80.0 gwei & 385.67 ETH/USD, 0x093d3e4e6670bf4fcef9aad62a3271f43c92f3793e638fe2f549969e900b9d81
+        + OptinoGov.Committed(user: User2:0xa22A, tokens: 1000.0, balance: 1000.0, duration: 50, end: 1606096530, delegatee: ETH|null:0x0000, votes: 10.0, totalVotes: 20.0)
+        commit3 - gasUsed: 306242, fee: 0.02449936, feeUsd: 9.4486681712, @ 80.0 gwei & 385.67 ETH/USD, 0x093d3e4e6670bf4fcef9aad62a3271f43c92f3793e638fe2f549969e900b9d81
         + OGToken.Transfer(from: User3:0xa33a, to: OptinoGov:0x7305, tokens: 1000.0)
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User3:0xa33a, tokens: 1000.0)
         + OptinoGov.Transfer(from: ETH|null:0x0000, to: User3:0xa33a, tokens: 1000.0)
-        + OptinoGov.Committed(user: User3:0xa33a, tokens: 1000.0, balance: 1000.0, duration: 500, end: 1606008790, delegatee: ETH|null:0x0000, votes: 10.0, totalVotes: 30.0)
+        + OptinoGov.Committed(user: User3:0xa33a, tokens: 1000.0, balance: 1000.0, duration: 500, end: 1606096981, delegatee: ETH|null:0x0000, votes: 10.0, totalVotes: 30.0)
         
          # Account                                        ΔETH                OptinoGov                       OG                      OGD                     FEE0
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
-         0 Deployer:0xa00A                         -1.10107976                      0.0                  10000.0                      0.0                    100.0
-         1 User1:0xa11A                            -0.03360328                   1000.0                   9000.0                   1000.0                      0.0
-         2 User2:0xa22A                            -0.02793928                   1000.0                   9000.0                   1000.0                      0.0
-         3 User3:0xa33a                            -0.02794024                   1000.0                   9000.0                   1000.0                      0.0
+         0 Deployer:0xa00A                         -1.10425736                      0.0                  10000.0                      0.0                    100.0
+         1 User1:0xa11A                            -0.03367984                   1000.0                   9000.0                   1000.0                      0.0
+         2 User2:0xa22A                            -0.02801584                   1000.0                   9000.0                   1000.0                      0.0
+         3 User3:0xa33a                             -0.0280168                   1000.0                   9000.0                   1000.0                      0.0
          4 User4:0xa44a                                    0.0                      0.0                      0.0                      0.0                      0.0
          5 OGToken:0x1647                                  0.0                      0.0                      0.0                      0.0                      0.0
          6 OGDToken:0x0f4e                                 0.0                      0.0                      0.0                      0.0                      0.0
@@ -291,10 +289,10 @@ Compilation finished successfully
         
          # Account                                        ΔETH                OptinoGov                       OG                      OGD                     FEE0
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
-         0 Deployer:0xa00A                         -1.10107976                      0.0                  10000.0                      0.0                    100.0
-         1 User1:0xa11A                            -0.04001192                   1000.0                   9000.0                   1000.0                      0.0
-         2 User2:0xa22A                            -0.03194792                   1000.0                   9000.0                   1000.0                      0.0
-         3 User3:0xa33a                            -0.02794024                   1000.0                   9000.0                   1000.0                      0.0
+         0 Deployer:0xa00A                         -1.10425736                      0.0                  10000.0                      0.0                    100.0
+         1 User1:0xa11A                            -0.04008848                   1000.0                   9000.0                   1000.0                      0.0
+         2 User2:0xa22A                            -0.03202448                   1000.0                   9000.0                   1000.0                      0.0
+         3 User3:0xa33a                             -0.0280168                   1000.0                   9000.0                   1000.0                      0.0
          4 User4:0xa44a                                    0.0                      0.0                      0.0                      0.0                      0.0
          5 OGToken:0x1647                                  0.0                      0.0                      0.0                      0.0                      0.0
          6 OGDToken:0x0f4e                                 0.0                      0.0                      0.0                      0.0                      0.0
@@ -381,21 +379,21 @@ Compilation finished successfully
          -- ---------- ------------------------
         
         --- Test 3 - user{2} commit again for {55} seconds duration ---
-        commit4 - gasUsed: 256322, fee: 0.02050576, feeUsd: 7.9084564592, @ 80.0 gwei & 385.67 ETH/USD, 0x5139494f769bed21050080e14f03e607753f7749d2878c37cfd2c98306d8b83c
+        commit4 - gasUsed: 257409, fee: 0.02059272, feeUsd: 7.9419943224, @ 80.0 gwei & 385.67 ETH/USD, 0x5139494f769bed21050080e14f03e607753f7749d2878c37cfd2c98306d8b83c
         + OGToken.Transfer(from: User2:0xa22A, to: OptinoGov:0x7305, tokens: 1000.0)
         + OGToken.Transfer(from: ETH|null:0x0000, to: OptinoGov:0x7305, tokens: 0.0000400000008)
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User2:0xa22A, tokens: 0.0000400000008)
         + OptinoGov.Transfer(from: ETH|null:0x0000, to: User2:0xa22A, tokens: 0.0000400000008)
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User2:0xa22A, tokens: 1000.0)
         + OptinoGov.Transfer(from: ETH|null:0x0000, to: User2:0xa22A, tokens: 1000.0)
-        + OptinoGov.Committed(user: User2:0xa22A, tokens: 1000.0, balance: 2000.0000400000008, duration: 55, end: 1606008348, delegatee: User3:0xa33a, votes: 20.000000400000008, totalVotes: 40.000000400000008)
+        + OptinoGov.Committed(user: User2:0xa22A, tokens: 1000.0, balance: 2000.0000400000008, duration: 55, end: 1606096539, delegatee: User3:0xa33a, votes: 20.000000400000008, totalVotes: 40.000000400000008)
         
          # Account                                        ΔETH                OptinoGov                       OG                      OGD                     FEE0
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
-         0 Deployer:0xa00A                         -1.10107976                      0.0                  10000.0                      0.0                    100.0
-         1 User1:0xa11A                            -0.04001192                   1000.0                   9000.0                   1000.0                      0.0
-         2 User2:0xa22A                            -0.05245368       2000.0000400000008                   8000.0       2000.0000400000008                      0.0
-         3 User3:0xa33a                            -0.02794024                   1000.0                   9000.0                   1000.0                      0.0
+         0 Deployer:0xa00A                         -1.10425736                      0.0                  10000.0                      0.0                    100.0
+         1 User1:0xa11A                            -0.04008848                   1000.0                   9000.0                   1000.0                      0.0
+         2 User2:0xa22A                             -0.0526172       2000.0000400000008                   8000.0       2000.0000400000008                      0.0
+         3 User3:0xa33a                             -0.0280168                   1000.0                   9000.0                   1000.0                      0.0
          4 User4:0xa44a                                    0.0                      0.0                      0.0                      0.0                      0.0
          5 OGToken:0x1647                                  0.0                      0.0                      0.0                      0.0                      0.0
          6 OGDToken:0x0f4e                                 0.0                      0.0                      0.0                      0.0                      0.0
@@ -482,31 +480,31 @@ Compilation finished successfully
          -- ---------- ------------------------
         
         --- Test 4 - user{1..2} collecting rewards, user3 collecting and committing rewards and extending duration to 1d ---
-        collectReward1 - gasUsed: 195849, fee: 0.01566792, feeUsd: 6.0426467064, @ 80.0 gwei & 385.67 ETH/USD, 0x74b1341d3f84c2cd212a5dc305c9d20517ddd415702fcdb3ac391fa67bbe2db5
+        collectReward1 - gasUsed: 196882, fee: 0.01575056, feeUsd: 6.0745184752, @ 80.0 gwei & 385.67 ETH/USD, 0x74b1341d3f84c2cd212a5dc305c9d20517ddd415702fcdb3ac391fa67bbe2db5
         + OGToken.Transfer(from: User1:0xa11A, to: OptinoGov:0x7305, tokens: 0.0)
         + OGToken.Transfer(from: ETH|null:0x0000, to: OptinoGov:0x7305, tokens: 0.0000600000018)
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User1:0xa11A, tokens: 0.0000600000018)
         + OptinoGov.Transfer(from: ETH|null:0x0000, to: User1:0xa11A, tokens: 0.0000600000018)
-        + OptinoGov.Recommitted(user: User1:0xa11A, elapsed: 6, reward: 0.0000600000018, callerReward: 0, balance: 1000.0000600000018, duration: 0, end: 1606008294, votes: 10.000000600000018, totalVotes: 40.000001000000026)
-        collectReward2 - gasUsed: 195864, fee: 0.01566912, feeUsd: 6.0431095104, @ 80.0 gwei & 385.67 ETH/USD, 0x9235bd4b6aaecbd13759941ae0f6050795493bb7eb26cdb73f8862d7b00735d4
+        + OptinoGov.Recommitted(user: User1:0xa11A, elapsed: 6, reward: 0.0000600000018, callerReward: 0, balance: 1000.0000600000018, duration: 0, end: 1606096485, votes: 10.000000600000018, totalVotes: 40.000001000000026)
+        collectReward2 - gasUsed: 196897, fee: 0.01575176, feeUsd: 6.0749812792, @ 80.0 gwei & 385.67 ETH/USD, 0x9235bd4b6aaecbd13759941ae0f6050795493bb7eb26cdb73f8862d7b00735d4
         + OGToken.Transfer(from: User2:0xa22A, to: OptinoGov:0x7305, tokens: 0.0)
         + OGToken.Transfer(from: ETH|null:0x0000, to: OptinoGov:0x7305, tokens: 0.0000400000012)
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User2:0xa22A, tokens: 0.0000400000012)
         + OptinoGov.Transfer(from: ETH|null:0x0000, to: User2:0xa22A, tokens: 0.0000400000012)
-        + OptinoGov.Recommitted(user: User2:0xa22A, elapsed: 2, reward: 0.0000400000012, callerReward: 0, balance: 2000.000080000002, duration: 0, end: 1606008295, votes: 20.00000080000002, totalVotes: 40.000001400000038)
-        collectReward3 - gasUsed: 183048, fee: 0.01464384, feeUsd: 5.6476897728, @ 80.0 gwei & 385.67 ETH/USD, 0xeda343edeb101be282dbc0da1f5abe502186678cafe9bf811a61acba6f33bd24
+        + OptinoGov.Recommitted(user: User2:0xa22A, elapsed: 2, reward: 0.0000400000012, callerReward: 0, balance: 2000.000080000002, duration: 0, end: 1606096486, votes: 20.00000080000002, totalVotes: 40.000001400000038)
+        collectReward3 - gasUsed: 184081, fee: 0.01472648, feeUsd: 5.6795615416, @ 80.0 gwei & 385.67 ETH/USD, 0xeda343edeb101be282dbc0da1f5abe502186678cafe9bf811a61acba6f33bd24
         + OGToken.Transfer(from: User3:0xa33a, to: OptinoGov:0x7305, tokens: 0.0)
         + OGToken.Transfer(from: ETH|null:0x0000, to: OptinoGov:0x7305, tokens: 0.0000600000018)
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User3:0xa33a, tokens: 0.0000600000018)
         + OptinoGov.Transfer(from: ETH|null:0x0000, to: User3:0xa33a, tokens: 0.0000600000018)
-        + OptinoGov.Recommitted(user: User3:0xa33a, elapsed: 6, reward: 0.0000600000018, callerReward: 0, balance: 1000.0000600000018, duration: 86400, end: 1606094696, votes: 10.000000600000018, totalVotes: 40.000002000000056)
+        + OptinoGov.Recommitted(user: User3:0xa33a, elapsed: 6, reward: 0.0000600000018, callerReward: 0, balance: 1000.0000600000018, duration: 86400, end: 1606182887, votes: 10.000000600000018, totalVotes: 40.000002000000056)
         
          # Account                                        ΔETH                OptinoGov                       OG                      OGD                     FEE0
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
-         0 Deployer:0xa00A                         -1.10107976                      0.0                  10000.0                      0.0                    100.0
-         1 User1:0xa11A                            -0.05567984       1000.0000600000018                   9000.0       1000.0000600000018                      0.0
-         2 User2:0xa22A                             -0.0681228        2000.000080000002                   8000.0        2000.000080000002                      0.0
-         3 User3:0xa33a                            -0.04258408       1000.0000600000018                   9000.0       1000.0000600000018                      0.0
+         0 Deployer:0xa00A                         -1.10425736                      0.0                  10000.0                      0.0                    100.0
+         1 User1:0xa11A                            -0.05583904       1000.0000600000018                   9000.0       1000.0000600000018                      0.0
+         2 User2:0xa22A                            -0.06836896        2000.000080000002                   8000.0        2000.000080000002                      0.0
+         3 User3:0xa33a                            -0.04274328       1000.0000600000018                   9000.0       1000.0000600000018                      0.0
          4 User4:0xa44a                                    0.0                      0.0                      0.0                      0.0                      0.0
          5 OGToken:0x1647                                  0.0                      0.0                      0.0                      0.0                      0.0
          6 OGDToken:0x0f4e                                 0.0                      0.0                      0.0                      0.0                      0.0
@@ -593,22 +591,22 @@ Compilation finished successfully
          -- ---------- ------------------------
         
         --- Test 5 - deployer uncommitFor(user1) for a % fee ---
-        Pausing 'Waiting' for 5s=Sun Nov 22 2020 12:24:28 GMT+1100 (Australian Eastern Daylight Time) now=Sun Nov 22 2020 12:24:23 GMT+1100 (Australian Eastern Daylight Time)
-        Paused 'Waiting' for 5s=Sun Nov 22 2020 12:24:28 GMT+1100 (Australian Eastern Daylight Time) now=Sun Nov 22 2020 12:24:28 GMT+1100 (Australian Eastern Daylight Time)
+        Pausing 'Waiting' for 5s=Mon Nov 23 2020 12:54:19 GMT+1100 (Australian Eastern Daylight Time) now=Mon Nov 23 2020 12:54:14 GMT+1100 (Australian Eastern Daylight Time)
+        Paused 'Waiting' for 5s=Mon Nov 23 2020 12:54:19 GMT+1100 (Australian Eastern Daylight Time) now=Mon Nov 23 2020 12:54:19 GMT+1100 (Australian Eastern Daylight Time)
         
-        uncommitFor1 - gasUsed: 206353, fee: 0.01650824, feeUsd: 6.3667329208, @ 80.0 gwei & 385.67 ETH/USD, 0x42b0cea753b8ba966b78fe882b4634eeb22ebf645bbcb2822da2b830a97376db
+        uncommitFor1 - gasUsed: 207462, fee: 0.01659696, feeUsd: 6.4009495632, @ 80.0 gwei & 385.67 ETH/USD, 0x42b0cea753b8ba966b78fe882b4634eeb22ebf645bbcb2822da2b830a97376db
         + OGToken.Transfer(from: ETH|null:0x0000, to: Deployer:0xa00A, tokens: 0.0000040000004)
         + OGToken.Transfer(from: ETH|null:0x0000, to: OptinoGov:0x7305, tokens: 0.0000760000076)
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User1:0xa11A, tokens: 0.0000760000076)
         + OptinoGov.Transfer(from: ETH|null:0x0000, to: User1:0xa11A, tokens: 0.0000760000076)
-        + OptinoGov.Recommitted(user: User1:0xa11A, elapsed: 8, reward: 0.0000760000076, callerReward: 4000000400000, balance: 1000.0001360000094, duration: 0, end: 1606008302, votes: 10.000001360000094, totalVotes: 40.000002760000132)
+        + OptinoGov.Recommitted(user: User1:0xa11A, elapsed: 8, reward: 0.0000760000076, callerReward: 4000000400000, balance: 1000.0001360000094, duration: 0, end: 1606096493, votes: 10.000001360000094, totalVotes: 40.000002760000132)
         
          # Account                                        ΔETH                OptinoGov                       OG                      OGD                     FEE0
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
-         0 Deployer:0xa00A                           -1.117588                      0.0      10000.0000040000004                      0.0                    100.0
-         1 User1:0xa11A                            -0.05567984       1000.0001360000094                   9000.0       1000.0001360000094                      0.0
-         2 User2:0xa22A                             -0.0681228        2000.000080000002                   8000.0        2000.000080000002                      0.0
-         3 User3:0xa33a                            -0.04258408       1000.0000600000018                   9000.0       1000.0000600000018                      0.0
+         0 Deployer:0xa00A                         -1.12085432                      0.0      10000.0000040000004                      0.0                    100.0
+         1 User1:0xa11A                            -0.05583904       1000.0001360000094                   9000.0       1000.0001360000094                      0.0
+         2 User2:0xa22A                            -0.06836896        2000.000080000002                   8000.0        2000.000080000002                      0.0
+         3 User3:0xa33a                            -0.04274328       1000.0000600000018                   9000.0       1000.0000600000018                      0.0
          4 User4:0xa44a                                    0.0                      0.0                      0.0                      0.0                      0.0
          5 OGToken:0x1647                                  0.0                      0.0                      0.0                      0.0                      0.0
          6 OGDToken:0x0f4e                                 0.0                      0.0                      0.0                      0.0                      0.0
@@ -695,18 +693,18 @@ Compilation finished successfully
          -- ---------- ------------------------
         
         --- Test 6 - deployer deposits dividends of 10 ETH and 100 FEE ---
-        depositDividendFee1 - gasUsed: 71766, fee: 0.00574128, feeUsd: 2.2142394576, @ 80.0 gwei & 385.67 ETH/USD, 0x824edc85bcf46d73ba94e47d6c9bcd8f04dfabfbcc0d6318bb6aa6e96c120630
+        depositDividendFee1 - gasUsed: 72696, fee: 0.00581568, feeUsd: 2.2429333056, @ 80.0 gwei & 385.67 ETH/USD, 0x824edc85bcf46d73ba94e47d6c9bcd8f04dfabfbcc0d6318bb6aa6e96c120630
         + OGDToken.DividendDeposited(token: ETH|null:0x0000, tokens: 10.0)
-        depositDividendFee2 - gasUsed: 94034, fee: 0.00752272, feeUsd: 2.9012874224, @ 80.0 gwei & 385.67 ETH/USD, 0x4f041f97e7db4ca88c8af689ae6cca312a989336a9e301535d078854ac82608d
+        depositDividendFee2 - gasUsed: 94964, fee: 0.00759712, feeUsd: 2.9299812704, @ 80.0 gwei & 385.67 ETH/USD, 0x4f041f97e7db4ca88c8af689ae6cca312a989336a9e301535d078854ac82608d
         + Fee0Token.Transfer(from: Deployer:0xa00A, to: OGDToken:0x0f4e, tokens: 100.0)
         + OGDToken.DividendDeposited(token: Fee0Token:0x5Fec, tokens: 100.0)
         
          # Account                                        ΔETH                OptinoGov                       OG                      OGD                     FEE0
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
-         0 Deployer:0xa00A                          -11.130852                      0.0      10000.0000040000004                      0.0                      0.0
-         1 User1:0xa11A                            -0.05567984       1000.0001360000094                   9000.0       1000.0001360000094                      0.0
-         2 User2:0xa22A                             -0.0681228        2000.000080000002                   8000.0        2000.000080000002                      0.0
-         3 User3:0xa33a                            -0.04258408       1000.0000600000018                   9000.0       1000.0000600000018                      0.0
+         0 Deployer:0xa00A                        -11.13426712                      0.0      10000.0000040000004                      0.0                      0.0
+         1 User1:0xa11A                            -0.05583904       1000.0001360000094                   9000.0       1000.0001360000094                      0.0
+         2 User2:0xa22A                            -0.06836896        2000.000080000002                   8000.0        2000.000080000002                      0.0
+         3 User3:0xa33a                            -0.04274328       1000.0000600000018                   9000.0       1000.0000600000018                      0.0
          4 User4:0xa44a                                    0.0                      0.0                      0.0                      0.0                      0.0
          5 OGToken:0x1647                                  0.0                      0.0                      0.0                      0.0                      0.0
          6 OGDToken:0x0f4e                                10.0                      0.0                      0.0                      0.0                    100.0
@@ -808,10 +806,10 @@ Compilation finished successfully
         
          # Account                                        ΔETH                OptinoGov                       OG                      OGD                     FEE0
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
-         0 Deployer:0xa00A                          -11.130852                      0.0      10000.0000040000004                      0.0                      0.0
-         1 User1:0xa11A                   2.431824327500003692       1000.0001360000094                   9000.0       1000.0001360000094    25.000001675000036924
-         2 User2:0xa22A                   4.919381054999998505        2000.000080000002                   8000.0        2000.000080000002     49.99999854999998505
-         3 User3:0xa33a                   2.444919897499997802       1000.0000600000018                   9000.0       1000.0000600000018    24.999999774999978025
+         0 Deployer:0xa00A                        -11.13426712                      0.0      10000.0000040000004                      0.0                      0.0
+         1 User1:0xa11A                   2.431665127500003692       1000.0001360000094                   9000.0       1000.0001360000094    25.000001675000036924
+         2 User2:0xa22A                   4.919134894999998505        2000.000080000002                   8000.0        2000.000080000002     49.99999854999998505
+         3 User3:0xa33a                   2.444760697499997802       1000.0000600000018                   9000.0       1000.0000600000018    24.999999774999978025
          4 User4:0xa44a                                    0.0                      0.0                      0.0                      0.0                      0.0
          5 OGToken:0x1647                                  0.0                      0.0                      0.0                      0.0                      0.0
          6 OGDToken:0x0f4e                0.000000000000000001                      0.0                      0.0                      0.0     0.000000000000000001
@@ -899,7 +897,7 @@ Compilation finished successfully
         
         --- Test Completed ---
 
-      ✓ Workflow #0 (10299ms)
+      ✓ Workflow #0 (10183ms)
     TestOptinoGov - Workflow #1
         Address 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E => Deployer:0xa00A
         Address 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433 => User1:0xa11A
@@ -913,10 +911,10 @@ Compilation finished successfully
         Address 0xD728e0590989cAA91B77589cBdB39DB3E554AA5b => VoteWeightCurve:0xD728
         Address 0xe669FCe9956608d2D90DB75737ec1B2133864937 => OptinoGov:0xe669
         Address 0xd3c99ED6565872b84B8b3515e08a1dAB3c7c73AB => Fee0Token:0xd3c9
-        ogToken.deployTransaction - gasUsed: 1377133, fee: 0.11017064, feeUsd: 42.4895107288, @ 80.0 gwei & 385.67 ETH/USD, 0x91a59a6f59d10cbadb4ac41136e092961c3b372a74186f4011a6e8797ed7c214
+        ogToken.deployTransaction - gasUsed: 1386769, fee: 0.11094152, feeUsd: 42.7868160184, @ 80.0 gwei & 385.67 ETH/USD, 0xc329b63fedfc8ce8079e4564d3d3e507ca012441cb40adc6316eb313395e75a3
         + OGToken.PermissionUpdated(account: Deployer:0xa00A, role: 0, active: true, maximum: 0, processed: 0)
         + OGToken.Transfer(from: ETH|null:0x0000, to: Deployer:0xa00A, tokens: 40000.0)
-        ogdToken.deployTransaction - gasUsed: 2819839, fee: 0.22558712, feeUsd: 87.0021845704, @ 80.0 gwei & 385.67 ETH/USD, 0x9d3ba3817e54e3fa29d2a425c7f721d4807aaa4eee74884e20f633002d8063e2
+        ogdToken.deployTransaction - gasUsed: 2823372, fee: 0.22586976, feeUsd: 87.1111903392, @ 80.0 gwei & 385.67 ETH/USD, 0x5717822ca58f58ca579afe36a6af0a7f4af65170510c7fec6d8632fad085b52b
         + OGDToken.PermissionUpdated(account: Deployer:0xa00A, role: 0, active: true, maximum: 0, processed: 0)
         + OGDToken.Transfer(from: ETH|null:0x0000, to: Deployer:0xa00A, tokens: 0.0)
         ogRewardCurve.deployTransaction - gasUsed: 833717, fee: 0.06669736, feeUsd: 25.7231708312, @ 80.0 gwei & 385.67 ETH/USD, 0x5ef9496b1a176cab3855e2b21f3dfecfce8be120099bb0872d6311bfa3668b34
@@ -928,49 +926,49 @@ Compilation finished successfully
         + VoteWeightCurve.PointUpdated(index: 1, term: 3y, rate: 1095.0%)
         fee0Token.deployTransaction - gasUsed: 823708, fee: 0.06589664, feeUsd: 25.4143571488, @ 80.0 gwei & 385.67 ETH/USD, 0x0946c9ba886241ac4f3875271e65f8905cd4665995d2030b368c2f1a6c73bfda
         + Fee0Token.Transfer(from: ETH|null:0x0000, to: Deployer:0xa00A, tokens: 100.0)
-        optinoGov.deployTransaction - gasUsed: 5710701, fee: 0.45685608, feeUsd: 176.1956843736, @ 80.0 gwei & 385.67 ETH/USD, 0xd9098fefc2e03c0b8303a25e7c9f289319066de73c3938a7b39d94b9ccbd6298
+        optinoGov.deployTransaction - gasUsed: 5710689, fee: 0.45685512, feeUsd: 176.1953141304, @ 80.0 gwei & 385.67 ETH/USD, 0x9892ac61ae8aeb388a835eaac8a10f582fa58cfe42d00e5818d2df87ce2a1160
         OptinoGov.bytecode.length/2: 25861
         --- Setup 2 - OGToken and OGDToken permissioning ---
-        setup2Txs[0] - gasUsed: 78942, fee: 0.00631536, feeUsd: 2.4356448912, @ 80.0 gwei & 385.67 ETH/USD, 0x759485b2fe5a4b5b96cb90c182b9f13e0e9198f135715059872585b0d8d62cc3
+        setup2Txs[0] - gasUsed: 81544, fee: 0.00652352, feeUsd: 2.5159259584, @ 80.0 gwei & 385.67 ETH/USD, 0xc75712c9a0b8db5fe4e951469663539e57753d3c74520a7f34937bf06d3a1c25
         + OGToken.PermissionUpdated(account: Deployer:0xa00A, role: 1, active: true, maximum: 0, processed: 0)
-        setup2Txs[1] - gasUsed: 78930, fee: 0.0063144, feeUsd: 2.435274648, @ 80.0 gwei & 385.67 ETH/USD, 0x69ca1fb0bcdf2ab734308ab97ffbdc00f267be69a0111eccc1d27b75b99838e1
+        setup2Txs[1] - gasUsed: 81532, fee: 0.00652256, feeUsd: 2.5155557152, @ 80.0 gwei & 385.67 ETH/USD, 0x745ba8d73afd440f1b3e786be984bcff5a9502cb833a09ae3722a1b4d443f7bf
         + OGToken.PermissionUpdated(account: OptinoGov:0xe669, role: 0, active: true, maximum: 0, processed: 0)
-        setup2Txs[2] - gasUsed: 78942, fee: 0.00631536, feeUsd: 2.4356448912, @ 80.0 gwei & 385.67 ETH/USD, 0x4c88932cac1dbf1255a45b8bba67c8a50ef37dd7e32f4b69017f5ea8fd4e1f69
+        setup2Txs[2] - gasUsed: 81544, fee: 0.00652352, feeUsd: 2.5159259584, @ 80.0 gwei & 385.67 ETH/USD, 0xa1d74ac4677815fc7ce00d66caf9fefe9e32f6ecaeace03818dfca3f2e358f10
         + OGToken.PermissionUpdated(account: OptinoGov:0xe669, role: 1, active: true, maximum: 0, processed: 0)
-        setup2Txs[3] - gasUsed: 98264, fee: 0.00786112, feeUsd: 3.0317981504, @ 80.0 gwei & 385.67 ETH/USD, 0xfc176cdab86fdd44ed582a3db4dbc3b48f40efec4f49dc525e527c1faf4c7aee
+        setup2Txs[3] - gasUsed: 100866, fee: 0.00806928, feeUsd: 3.1120792176, @ 80.0 gwei & 385.67 ETH/USD, 0x4e8a527044850220d2161a2c1859ddbd69ccdb2414981e7a292c084d4227be00
         + OGToken.PermissionUpdated(account: OptinoGov:0xe669, role: 2, active: true, maximum: 123456789000000000000000000, processed: 0)
-        setup2Txs[4] - gasUsed: 78942, fee: 0.00631536, feeUsd: 2.4356448912, @ 80.0 gwei & 385.67 ETH/USD, 0x7b859ce59dc7db02e9d8a1881d21a7395b4fd8cfe3ee20070acd868432880c88
+        setup2Txs[4] - gasUsed: 81544, fee: 0.00652352, feeUsd: 2.5159259584, @ 80.0 gwei & 385.67 ETH/USD, 0x4ffed2f51a677fe1e5b7519e9da2e991e8389cadc004b13a398b9b9714a06fcc
         + OGToken.PermissionUpdated(account: OptinoGov:0xe669, role: 3, active: true, maximum: 0, processed: 0)
-        setup2Txs[5] - gasUsed: 78987, fee: 0.00631896, feeUsd: 2.4370333032, @ 80.0 gwei & 385.67 ETH/USD, 0xad81daf292f165eb3371f2179ab0ade623a0a2e08b421d943ab6866ae0eb5e02
+        setup2Txs[5] - gasUsed: 81522, fee: 0.00652176, feeUsd: 2.5152471792, @ 80.0 gwei & 385.67 ETH/USD, 0x2f563edfe7f826d7208bd548c411ac42ca29c3bc1e268d312ad660ac25429b86
         + OGDToken.PermissionUpdated(account: Deployer:0xa00A, role: 1, active: true, maximum: 0, processed: 0)
-        setup2Txs[6] - gasUsed: 78975, fee: 0.006318, feeUsd: 2.43666306, @ 80.0 gwei & 385.67 ETH/USD, 0x4a4db6fcf242bd048812005e62a1d0a62a7aec3bba07b827a2f09beb5f70330a
+        setup2Txs[6] - gasUsed: 81510, fee: 0.0065208, feeUsd: 2.514876936, @ 80.0 gwei & 385.67 ETH/USD, 0x87a06f953bd62fbb387bf4bca61ddb1f31df2a45c4e8fc93f4cadba3904d11ee
         + OGDToken.PermissionUpdated(account: OptinoGov:0xe669, role: 0, active: true, maximum: 0, processed: 0)
-        setup2Txs[7] - gasUsed: 78987, fee: 0.00631896, feeUsd: 2.4370333032, @ 80.0 gwei & 385.67 ETH/USD, 0xe8658bc32b868d8045ddda4e9bf08a0d233d467ce8a799aa5af3596b85d6a37a
+        setup2Txs[7] - gasUsed: 81522, fee: 0.00652176, feeUsd: 2.5152471792, @ 80.0 gwei & 385.67 ETH/USD, 0x852beb56c331fabacf6e623c243166e08782808be5c1d0f756549fbce6e26623
         + OGDToken.PermissionUpdated(account: OptinoGov:0xe669, role: 1, active: true, maximum: 0, processed: 0)
-        setup2Txs[8] - gasUsed: 98309, fee: 0.00786472, feeUsd: 3.0331865624, @ 80.0 gwei & 385.67 ETH/USD, 0x3e5870e49f12b17e54ad6ae06f8eeaed4fbb5a560455cad5c9bad3b6a0c8f788
+        setup2Txs[8] - gasUsed: 100844, fee: 0.00806752, feeUsd: 3.1114004384, @ 80.0 gwei & 385.67 ETH/USD, 0x7bf5253287c9d105cd8e43fb9b3eab987a1ae917f491b65e4fd197fb1fc47d38
         + OGDToken.PermissionUpdated(account: OptinoGov:0xe669, role: 2, active: true, maximum: 123456789000000000000000000, processed: 0)
-        setup2Txs[9] - gasUsed: 78987, fee: 0.00631896, feeUsd: 2.4370333032, @ 80.0 gwei & 385.67 ETH/USD, 0xc249626c28e412b6c0fff4d696e80f371d30e8f72142b145e7f56fbb09bbfb1e
+        setup2Txs[9] - gasUsed: 81522, fee: 0.00652176, feeUsd: 2.5152471792, @ 80.0 gwei & 385.67 ETH/USD, 0x0c7b55dc1f7983679c327d49fa0b304c932fa2d102e327f022e5c98c016d5b23
         + OGDToken.PermissionUpdated(account: OptinoGov:0xe669, role: 3, active: true, maximum: 0, processed: 0)
         --- Setup 3 - OGDToken.addDividendToken([ETH, FEE0]) ---
-        addDividendToken0 - gasUsed: 117165, fee: 0.0093732, feeUsd: 3.614962044, @ 80.0 gwei & 385.67 ETH/USD, 0x1fa5c2033e783b66a9ca3dcb9788aed0d20472c9a0435749f78ac043ddfcec26
-        + OGDToken.DividendTokenAdded(token: ETH|null:0x0000, enabled: true)
-        addDividendToken1 - gasUsed: 119132, fee: 0.00953056, feeUsd: 3.6756510752, @ 80.0 gwei & 385.67 ETH/USD, 0x7845e5ab74f5400bdde237431195a616b34e6eb2cffcb39e5bd90338a636b13a
-        + OGDToken.DividendTokenAdded(token: Fee0Token:0xd3c9, enabled: true)
+        addDividendToken0 - gasUsed: 117282, fee: 0.00938256, feeUsd: 3.6185719152, @ 80.0 gwei & 385.67 ETH/USD, 0x1fa5c2033e783b66a9ca3dcb9788aed0d20472c9a0435749f78ac043ddfcec26
+        + OGDToken.TokenAdded(token: ETH|null:0x0000, enabled: true)
+        addDividendToken1 - gasUsed: 119249, fee: 0.00953992, feeUsd: 3.6792609464, @ 80.0 gwei & 385.67 ETH/USD, 0x7845e5ab74f5400bdde237431195a616b34e6eb2cffcb39e5bd90338a636b13a
+        + OGDToken.TokenAdded(token: Fee0Token:0xd3c9, enabled: true)
         --- Setup 4 - Remove deployer permissions from OGToken and OGDToken ---
-        setup4Txs[0] - gasUsed: 36944, fee: 0.00295552, feeUsd: 1.1398553984, @ 80.0 gwei & 385.67 ETH/USD, 0x247f2bd77a490576fc161eea2e245d183aab76a1ca7680ecb67361853d5875bf
+        setup4Txs[0] - gasUsed: 37122, fee: 0.00296976, feeUsd: 1.1453473392, @ 80.0 gwei & 385.67 ETH/USD, 0x080168806c45affcecb6d6acbd7c6499465cc1d3d0db9867c3119f4c48228847
         + OGToken.PermissionUpdated(account: Deployer:0xa00A, role: 1, active: false, maximum: 0, processed: 0)
-        setup4Txs[1] - gasUsed: 36932, fee: 0.00295456, feeUsd: 1.1394851552, @ 80.0 gwei & 385.67 ETH/USD, 0x3f9562dae499398a2fc0268aa825eee449dc65f8fd3f0319ddf3a33dc47e2487
+        setup4Txs[1] - gasUsed: 37110, fee: 0.0029688, feeUsd: 1.144977096, @ 80.0 gwei & 385.67 ETH/USD, 0xa671733ef181bf39ddaa9a09e519c5898967b7e1fc00c87336102b6d8e5feb22
         + OGToken.PermissionUpdated(account: Deployer:0xa00A, role: 0, active: false, maximum: 0, processed: 0)
-        setup4Txs[2] - gasUsed: 36989, fee: 0.00295912, feeUsd: 1.1412438104, @ 80.0 gwei & 385.67 ETH/USD, 0x7c5642a52b44191c8e4832b45aa7cc9a6fe618dc9e28964d9de7a374d5863326
+        setup4Txs[2] - gasUsed: 37100, fee: 0.002968, feeUsd: 1.14466856, @ 80.0 gwei & 385.67 ETH/USD, 0x0b01c6cdb5ab74fb85aee354362d304a6baacdd316983d5a102b63e82f9bcee2
         + OGDToken.PermissionUpdated(account: Deployer:0xa00A, role: 1, active: false, maximum: 0, processed: 0)
-        setup4Txs[3] - gasUsed: 36977, fee: 0.00295816, feeUsd: 1.1408735672, @ 80.0 gwei & 385.67 ETH/USD, 0x1178399707647886a50748334d39a93b4568fa2875d9d8718c71a13650cf6be6
+        setup4Txs[3] - gasUsed: 37088, fee: 0.00296704, feeUsd: 1.1442983168, @ 80.0 gwei & 385.67 ETH/USD, 0xd3ad6db9a82c9c1bd7fd752bff2448cc5561f1631be58723e34773070d4acb59
         + OGDToken.PermissionUpdated(account: Deployer:0xa00A, role: 0, active: false, maximum: 0, processed: 0)
         --- Setup 5 - Transfer OGTokens, user{1..3} approve 2,000 OGTokens to OptinoGov, deployer approve 2,000 FEE0 tokens to OGDToken ---
-        transfer1 - gasUsed: 50893, fee: 0.00407144, feeUsd: 1.5702322648, @ 80.0 gwei & 385.67 ETH/USD, 0xa9ec809361b5817922189c3f03781eaa281a5df16d8ef19cfd737451a0cfd5ca
+        transfer1 - gasUsed: 50915, fee: 0.0040732, feeUsd: 1.570911044, @ 80.0 gwei & 385.67 ETH/USD, 0xa9ec809361b5817922189c3f03781eaa281a5df16d8ef19cfd737451a0cfd5ca
         + OGToken.Transfer(from: Deployer:0xa00A, to: User1:0xa11A, tokens: 10000.0)
-        transfer2 - gasUsed: 50893, fee: 0.00407144, feeUsd: 1.5702322648, @ 80.0 gwei & 385.67 ETH/USD, 0x2d1aee41ca35e5748bd262583cee5f10faf41c4f53281a50fb3fb0ae871f11b4
+        transfer2 - gasUsed: 50915, fee: 0.0040732, feeUsd: 1.570911044, @ 80.0 gwei & 385.67 ETH/USD, 0x2d1aee41ca35e5748bd262583cee5f10faf41c4f53281a50fb3fb0ae871f11b4
         + OGToken.Transfer(from: Deployer:0xa00A, to: User2:0xa22A, tokens: 10000.0)
-        transfer3 - gasUsed: 50893, fee: 0.00407144, feeUsd: 1.5702322648, @ 80.0 gwei & 385.67 ETH/USD, 0x32cb64dc4c0aaeaf384112dcb104f930a2bb63d9417a3d14cc23af61e1a491ac
+        transfer3 - gasUsed: 50915, fee: 0.0040732, feeUsd: 1.570911044, @ 80.0 gwei & 385.67 ETH/USD, 0x32cb64dc4c0aaeaf384112dcb104f930a2bb63d9417a3d14cc23af61e1a491ac
         + OGToken.Transfer(from: Deployer:0xa00A, to: User3:0xa33a, tokens: 10000.0)
         approve1 - gasUsed: 43968, fee: 0.00351744, feeUsd: 1.3565710848, @ 80.0 gwei & 385.67 ETH/USD, 0x8cc246c92c482bb5488646ab9ece9299985cab69cd98464775a9de9c41d70fc2
         + OGToken.Approval(tokenOwner: User1:0xa11A, spender: OptinoGov:0xe669, tokens: 2000.0)
@@ -983,7 +981,7 @@ Compilation finished successfully
         
          # Account                                        ΔETH                OptinoGov                       OG                      OGD                     FEE0
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
-         0 Deployer:0xa00A                          -1.1010788                      0.0                  10000.0                      0.0                    100.0
+         0 Deployer:0xa00A                          -1.1042564                      0.0                  10000.0                      0.0                    100.0
          1 User1:0xa11A                            -0.00351744                      0.0                  10000.0                      0.0                      0.0
          2 User2:0xa22A                            -0.00351744                      0.0                  10000.0                      0.0                      0.0
          3 User3:0xa33a                            -0.00351744                      0.0                  10000.0                      0.0                      0.0
@@ -1072,28 +1070,28 @@ Compilation finished successfully
         --- Setup Completed ---
 
         --- Test 1 - user{1..3} commit OGTokens for {1, 1, 1} seconds duration ---
-        commit1 - gasUsed: 376073, fee: 0.03008584, feeUsd: 11.6032059128, @ 80.0 gwei & 385.67 ETH/USD, 0xd746a9bf47d2fbc879d6a3a12ffb659006d7860b30f4546b0e100bf3c60e4821
+        commit1 - gasUsed: 377030, fee: 0.0301624, feeUsd: 11.632732808, @ 80.0 gwei & 385.67 ETH/USD, 0xd746a9bf47d2fbc879d6a3a12ffb659006d7860b30f4546b0e100bf3c60e4821
         + OGToken.Transfer(from: User1:0xa11A, to: OptinoGov:0xe669, tokens: 1000.0)
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User1:0xa11A, tokens: 1000.0)
         + OptinoGov.Transfer(from: ETH|null:0x0000, to: User1:0xa11A, tokens: 1000.0)
-        + OptinoGov.Committed(user: User1:0xa11A, tokens: 1000.0, balance: 1000.0, duration: 1, end: 1606008338, delegatee: ETH|null:0x0000, votes: 10.0, totalVotes: 10.0)
-        commit2 - gasUsed: 305273, fee: 0.02442184, feeUsd: 9.4187710328, @ 80.0 gwei & 385.67 ETH/USD, 0x2a854e38dba245bb4ccb38504c8087ed8997d36a113654cffff8a3fdb83ace7a
+        + OptinoGov.Committed(user: User1:0xa11A, tokens: 1000.0, balance: 1000.0, duration: 1, end: 1606096529, delegatee: ETH|null:0x0000, votes: 10.0, totalVotes: 10.0)
+        commit2 - gasUsed: 306230, fee: 0.0244984, feeUsd: 9.448297928, @ 80.0 gwei & 385.67 ETH/USD, 0x2a854e38dba245bb4ccb38504c8087ed8997d36a113654cffff8a3fdb83ace7a
         + OGToken.Transfer(from: User2:0xa22A, to: OptinoGov:0xe669, tokens: 1000.0)
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User2:0xa22A, tokens: 1000.0)
         + OptinoGov.Transfer(from: ETH|null:0x0000, to: User2:0xa22A, tokens: 1000.0)
-        + OptinoGov.Committed(user: User2:0xa22A, tokens: 1000.0, balance: 1000.0, duration: 1, end: 1606008339, delegatee: ETH|null:0x0000, votes: 10.0, totalVotes: 20.0)
-        commit3 - gasUsed: 305273, fee: 0.02442184, feeUsd: 9.4187710328, @ 80.0 gwei & 385.67 ETH/USD, 0x6651a3844a29a4dd626722e65bc7ed047aa8828b28abbcf8980fc85c1b090315
+        + OptinoGov.Committed(user: User2:0xa22A, tokens: 1000.0, balance: 1000.0, duration: 1, end: 1606096530, delegatee: ETH|null:0x0000, votes: 10.0, totalVotes: 20.0)
+        commit3 - gasUsed: 306230, fee: 0.0244984, feeUsd: 9.448297928, @ 80.0 gwei & 385.67 ETH/USD, 0x6651a3844a29a4dd626722e65bc7ed047aa8828b28abbcf8980fc85c1b090315
         + OGToken.Transfer(from: User3:0xa33a, to: OptinoGov:0xe669, tokens: 1000.0)
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User3:0xa33a, tokens: 1000.0)
         + OptinoGov.Transfer(from: ETH|null:0x0000, to: User3:0xa33a, tokens: 1000.0)
-        + OptinoGov.Committed(user: User3:0xa33a, tokens: 1000.0, balance: 1000.0, duration: 1, end: 1606008340, delegatee: ETH|null:0x0000, votes: 10.0, totalVotes: 30.0)
+        + OptinoGov.Committed(user: User3:0xa33a, tokens: 1000.0, balance: 1000.0, duration: 1, end: 1606096531, delegatee: ETH|null:0x0000, votes: 10.0, totalVotes: 30.0)
         
          # Account                                        ΔETH                OptinoGov                       OG                      OGD                     FEE0
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
-         0 Deployer:0xa00A                          -1.1010788                      0.0                  10000.0                      0.0                    100.0
-         1 User1:0xa11A                            -0.03360328                   1000.0                   9000.0                   1000.0                      0.0
-         2 User2:0xa22A                            -0.02793928                   1000.0                   9000.0                   1000.0                      0.0
-         3 User3:0xa33a                            -0.02793928                   1000.0                   9000.0                   1000.0                      0.0
+         0 Deployer:0xa00A                          -1.1042564                      0.0                  10000.0                      0.0                    100.0
+         1 User1:0xa11A                            -0.03367984                   1000.0                   9000.0                   1000.0                      0.0
+         2 User2:0xa22A                            -0.02801584                   1000.0                   9000.0                   1000.0                      0.0
+         3 User3:0xa33a                            -0.02801584                   1000.0                   9000.0                   1000.0                      0.0
          4 User4:0xa44a                                    0.0                      0.0                      0.0                      0.0                      0.0
          5 OGToken:0x44dc                                  0.0                      0.0                      0.0                      0.0                      0.0
          6 OGDToken:0xc2e1                                 0.0                      0.0                      0.0                      0.0                      0.0
@@ -1180,21 +1178,21 @@ Compilation finished successfully
          -- ---------- ------------------------
         
         --- Test 2 - user{1..3} approve 2,000 OGDTokens to OptinoGov ---
-        approve1 - gasUsed: 44035, fee: 0.0035228, feeUsd: 1.358638276, @ 80.0 gwei & 385.67 ETH/USD, 0x24c9db2616650350ae9d343c12f2c8e1175f4d7fb899b8e1d4b7dd9e9c8585e0
+        approve1 - gasUsed: 44012, fee: 0.00352096, feeUsd: 1.3579286432, @ 80.0 gwei & 385.67 ETH/USD, 0x24c9db2616650350ae9d343c12f2c8e1175f4d7fb899b8e1d4b7dd9e9c8585e0
         + OGDToken.Approval(tokenOwner: User1:0xa11A, spender: OptinoGov:0xe669, tokens: 2000.0)
-        approve2 - gasUsed: 44035, fee: 0.0035228, feeUsd: 1.358638276, @ 80.0 gwei & 385.67 ETH/USD, 0x3650fed4a2a315f109d721cb606f03435d7e8f4fab158497d13c78f147d46b0b
+        approve2 - gasUsed: 44012, fee: 0.00352096, feeUsd: 1.3579286432, @ 80.0 gwei & 385.67 ETH/USD, 0x3650fed4a2a315f109d721cb606f03435d7e8f4fab158497d13c78f147d46b0b
         + OGDToken.Approval(tokenOwner: User2:0xa22A, spender: OptinoGov:0xe669, tokens: 2000.0)
-        approve3 - gasUsed: 44035, fee: 0.0035228, feeUsd: 1.358638276, @ 80.0 gwei & 385.67 ETH/USD, 0x3587c02c9e2219b76ad4a114f82b3e371a4c006863d31bd9518c8c1ee01903a1
+        approve3 - gasUsed: 44012, fee: 0.00352096, feeUsd: 1.3579286432, @ 80.0 gwei & 385.67 ETH/USD, 0x3587c02c9e2219b76ad4a114f82b3e371a4c006863d31bd9518c8c1ee01903a1
         + OGDToken.Approval(tokenOwner: User3:0xa33a, spender: OptinoGov:0xe669, tokens: 2000.0)
         approve3 - gasUsed: 24768, fee: 0.00198144, feeUsd: 0.7641819648, @ 80.0 gwei & 385.67 ETH/USD, 0xdf66705af36138cf24d1993c3ae5f427effa7553779b1197fed9d3416ae45b08
         + Fee0Token.Approval(tokenOwner: Deployer:0xa00A, spender: OGDToken:0xc2e1, tokens: 2000.0)
         
          # Account                                        ΔETH                OptinoGov                       OG                      OGD                     FEE0
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
-         0 Deployer:0xa00A                         -1.10306024                      0.0                  10000.0                      0.0                    100.0
-         1 User1:0xa11A                            -0.03712608                   1000.0                   9000.0                   1000.0                      0.0
-         2 User2:0xa22A                            -0.03146208                   1000.0                   9000.0                   1000.0                      0.0
-         3 User3:0xa33a                            -0.03146208                   1000.0                   9000.0                   1000.0                      0.0
+         0 Deployer:0xa00A                         -1.10623784                      0.0                  10000.0                      0.0                    100.0
+         1 User1:0xa11A                             -0.0372008                   1000.0                   9000.0                   1000.0                      0.0
+         2 User2:0xa22A                             -0.0315368                   1000.0                   9000.0                   1000.0                      0.0
+         3 User3:0xa33a                             -0.0315368                   1000.0                   9000.0                   1000.0                      0.0
          4 User4:0xa44a                                    0.0                      0.0                      0.0                      0.0                      0.0
          5 OGToken:0x44dc                                  0.0                      0.0                      0.0                      0.0                      0.0
          6 OGDToken:0xc2e1                                 0.0                      0.0                      0.0                      0.0                      0.0
@@ -1281,18 +1279,18 @@ Compilation finished successfully
          -- ---------- ------------------------
         
         --- Test 3 - deployer deposits dividends of 10 ETH and 100 FEE ---
-        depositDividendFee1 - gasUsed: 71766, fee: 0.00574128, feeUsd: 2.2142394576, @ 80.0 gwei & 385.67 ETH/USD, 0x0bdbc631d8abd9a11391c5dc5d7fe5e9c5a515750924b926672da54ebe03f59a
+        depositDividendFee1 - gasUsed: 72696, fee: 0.00581568, feeUsd: 2.2429333056, @ 80.0 gwei & 385.67 ETH/USD, 0x0bdbc631d8abd9a11391c5dc5d7fe5e9c5a515750924b926672da54ebe03f59a
         + OGDToken.DividendDeposited(token: ETH|null:0x0000, tokens: 10.0)
-        depositDividendFee2 - gasUsed: 94034, fee: 0.00752272, feeUsd: 2.9012874224, @ 80.0 gwei & 385.67 ETH/USD, 0x00d9188719d98ae544ea6e2ba83e3c797065632ac2439351448986c4f7d7e3cb
+        depositDividendFee2 - gasUsed: 94964, fee: 0.00759712, feeUsd: 2.9299812704, @ 80.0 gwei & 385.67 ETH/USD, 0x00d9188719d98ae544ea6e2ba83e3c797065632ac2439351448986c4f7d7e3cb
         + Fee0Token.Transfer(from: Deployer:0xa00A, to: OGDToken:0xc2e1, tokens: 100.0)
         + OGDToken.DividendDeposited(token: Fee0Token:0xd3c9, tokens: 100.0)
         
          # Account                                        ΔETH                OptinoGov                       OG                      OGD                     FEE0
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
-         0 Deployer:0xa00A                        -11.11632424                      0.0                  10000.0                      0.0                      0.0
-         1 User1:0xa11A                            -0.03712608                   1000.0                   9000.0                   1000.0                      0.0
-         2 User2:0xa22A                            -0.03146208                   1000.0                   9000.0                   1000.0                      0.0
-         3 User3:0xa33a                            -0.03146208                   1000.0                   9000.0                   1000.0                      0.0
+         0 Deployer:0xa00A                        -11.11965064                      0.0                  10000.0                      0.0                      0.0
+         1 User1:0xa11A                             -0.0372008                   1000.0                   9000.0                   1000.0                      0.0
+         2 User2:0xa22A                             -0.0315368                   1000.0                   9000.0                   1000.0                      0.0
+         3 User3:0xa33a                             -0.0315368                   1000.0                   9000.0                   1000.0                      0.0
          4 User4:0xa44a                                    0.0                      0.0                      0.0                      0.0                      0.0
          5 OGToken:0x44dc                                  0.0                      0.0                      0.0                      0.0                      0.0
          6 OGDToken:0xc2e1                                10.0                      0.0                      0.0                      0.0                    100.0
@@ -1379,7 +1377,7 @@ Compilation finished successfully
          -- ---------- ------------------------
         
         --- Test 4 - user{1..3} uncommit OGTokens ---
-        uncommit1 - gasUsed: 373976, fee: 0.02991808, feeUsd: 11.5385059136, @ 80.0 gwei & 385.67 ETH/USD, 0xb1b53f06315e4690b444d0d6132580a17569246f65245d0fecf5d29f07a406f4
+        uncommit1 - gasUsed: 375107, fee: 0.03000856, feeUsd: 11.5734013352, @ 80.0 gwei & 385.67 ETH/USD, 0xb1b53f06315e4690b444d0d6132580a17569246f65245d0fecf5d29f07a406f4
         + OGToken.Transfer(from: ETH|null:0x0000, to: OptinoGov:0xe669, tokens: 0.00009000000405)
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User1:0xa11A, tokens: 0.00009000000405)
         + OptinoGov.Transfer(from: ETH|null:0x0000, to: User1:0xa11A, tokens: 0.00009000000405)
@@ -1388,9 +1386,9 @@ Compilation finished successfully
         + OGDToken.DividendWithdrawn(account: User1:0xa11A, destination: User1:0xa11A, token: Fee0Token:0xd3c9, tokens: 33.333333333333333333)
         + OGDToken.Transfer(from: User1:0xa11A, to: ETH|null:0x0000, tokens: 100.0)
         + OGToken.Transfer(from: OptinoGov:0xe669, to: User1:0xa11A, tokens: 100.0)
-        + OptinoGov.Uncommitted(user: User1:0xa11A, tokens: 100.0, reward: 0.00009000000405, balance: 900.00009000000405, duration: 0, end: 1606008346, votes: 9.0000009000000405, totalVotes: 29.0000009000000405)
+        + OptinoGov.Uncommitted(user: User1:0xa11A, tokens: 100.0, reward: 0.00009000000405, balance: 900.00009000000405, duration: 0, end: 1606096537, votes: 9.0000009000000405, totalVotes: 29.0000009000000405)
         + OptinoGov.Transfer(from: User1:0xa11A, to: ETH|null:0x0000, tokens: 100.0)
-        uncommit2 - gasUsed: 343976, fee: 0.02751808, feeUsd: 10.6128979136, @ 80.0 gwei & 385.67 ETH/USD, 0x9aa74d0112b1f4a7320fa64d958562c4f56ed5b8bf38220e120c9ca086c0143a
+        uncommit2 - gasUsed: 345107, fee: 0.02760856, feeUsd: 10.6477933352, @ 80.0 gwei & 385.67 ETH/USD, 0x9aa74d0112b1f4a7320fa64d958562c4f56ed5b8bf38220e120c9ca086c0143a
         + OGToken.Transfer(from: ETH|null:0x0000, to: OptinoGov:0xe669, tokens: 0.00009000000405)
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User2:0xa22A, tokens: 0.00009000000405)
         + OptinoGov.Transfer(from: ETH|null:0x0000, to: User2:0xa22A, tokens: 0.00009000000405)
@@ -1399,9 +1397,9 @@ Compilation finished successfully
         + OGDToken.DividendWithdrawn(account: User2:0xa22A, destination: User2:0xa22A, token: Fee0Token:0xd3c9, tokens: 33.333333333333333333)
         + OGDToken.Transfer(from: User2:0xa22A, to: ETH|null:0x0000, tokens: 100.0)
         + OGToken.Transfer(from: OptinoGov:0xe669, to: User2:0xa22A, tokens: 100.0)
-        + OptinoGov.Uncommitted(user: User2:0xa22A, tokens: 100.0, reward: 0.00009000000405, balance: 900.00009000000405, duration: 0, end: 1606008347, votes: 9.0000009000000405, totalVotes: 28.000001800000081)
+        + OptinoGov.Uncommitted(user: User2:0xa22A, tokens: 100.0, reward: 0.00009000000405, balance: 900.00009000000405, duration: 0, end: 1606096538, votes: 9.0000009000000405, totalVotes: 28.000001800000081)
         + OptinoGov.Transfer(from: User2:0xa22A, to: ETH|null:0x0000, tokens: 100.0)
-        uncommit3 - gasUsed: 343976, fee: 0.02751808, feeUsd: 10.6128979136, @ 80.0 gwei & 385.67 ETH/USD, 0xdb0668a2692dcdfa5e2d5f0c2425602fb1546989056b6670ad820073e3a1513b
+        uncommit3 - gasUsed: 345107, fee: 0.02760856, feeUsd: 10.6477933352, @ 80.0 gwei & 385.67 ETH/USD, 0xdb0668a2692dcdfa5e2d5f0c2425602fb1546989056b6670ad820073e3a1513b
         + OGToken.Transfer(from: ETH|null:0x0000, to: OptinoGov:0xe669, tokens: 0.00009000000405)
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User3:0xa33a, tokens: 0.00009000000405)
         + OptinoGov.Transfer(from: ETH|null:0x0000, to: User3:0xa33a, tokens: 0.00009000000405)
@@ -1410,15 +1408,15 @@ Compilation finished successfully
         + OGDToken.DividendWithdrawn(account: User3:0xa33a, destination: User3:0xa33a, token: Fee0Token:0xd3c9, tokens: 33.333333333333333333)
         + OGDToken.Transfer(from: User3:0xa33a, to: ETH|null:0x0000, tokens: 100.0)
         + OGToken.Transfer(from: OptinoGov:0xe669, to: User3:0xa33a, tokens: 100.0)
-        + OptinoGov.Uncommitted(user: User3:0xa33a, tokens: 100.0, reward: 0.00009000000405, balance: 900.00009000000405, duration: 0, end: 1606008348, votes: 9.0000009000000405, totalVotes: 27.0000027000001215)
+        + OptinoGov.Uncommitted(user: User3:0xa33a, tokens: 100.0, reward: 0.00009000000405, balance: 900.00009000000405, duration: 0, end: 1606096539, votes: 9.0000009000000405, totalVotes: 27.0000027000001215)
         + OptinoGov.Transfer(from: User3:0xa33a, to: ETH|null:0x0000, tokens: 100.0)
         
          # Account                                        ΔETH                OptinoGov                       OG                      OGD                     FEE0
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
-         0 Deployer:0xa00A                        -11.11632424                      0.0                  10000.0                      0.0                      0.0
-         1 User1:0xa11A                   3.266289173333333333       900.00009000000405                   9100.0       900.00009000000405    33.333333333333333333
-         2 User2:0xa22A                   3.274353173333333333       900.00009000000405                   9100.0       900.00009000000405    33.333333333333333333
-         3 User3:0xa33a                   3.274353173333333333       900.00009000000405                   9100.0       900.00009000000405    33.333333333333333333
+         0 Deployer:0xa00A                        -11.11965064                      0.0                  10000.0                      0.0                      0.0
+         1 User1:0xa11A                   3.266123973333333333       900.00009000000405                   9100.0       900.00009000000405    33.333333333333333333
+         2 User2:0xa22A                   3.274187973333333333       900.00009000000405                   9100.0       900.00009000000405    33.333333333333333333
+         3 User3:0xa33a                   3.274187973333333333       900.00009000000405                   9100.0       900.00009000000405    33.333333333333333333
          4 User4:0xa44a                                    0.0                      0.0                      0.0                      0.0                      0.0
          5 OGToken:0x44dc                                  0.0                      0.0                      0.0                      0.0                      0.0
          6 OGDToken:0xc2e1                0.000000000000000001                      0.0                      0.0                      0.0     0.000000000000000001
@@ -1506,7 +1504,7 @@ Compilation finished successfully
         
         --- Test Completed ---
 
-      ✓ Workflow #1 (3392ms)
+      ✓ Workflow #1 (3486ms)
     TestOptinoGov - Workflow #2 - Developing
         Address 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E => Deployer:0xa00A
         Address 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433 => User1:0xa11A
@@ -1520,10 +1518,10 @@ Compilation finished successfully
         Address 0xa0dec39d042D8ff774f24F5cA257C952b719650E => VoteWeightCurve:0xa0de
         Address 0x1b9B18e66db4E227d1780f8ef81b537fB57712B3 => OptinoGov:0x1b9B
         Address 0x4A54E385b595aFCB2379e67a26fd0a48D98446f6 => Fee0Token:0x4A54
-        ogToken.deployTransaction - gasUsed: 1377133, fee: 0.11017064, feeUsd: 42.4895107288, @ 80.0 gwei & 385.67 ETH/USD, 0xb69f80a03b3178f1c81654ce7959229b4619ab4cdf37aa40284f00f614342396
+        ogToken.deployTransaction - gasUsed: 1386769, fee: 0.11094152, feeUsd: 42.7868160184, @ 80.0 gwei & 385.67 ETH/USD, 0x071c6117754b4bf7645d47e00c35976b649fc1c68c71ee67b95145109f0cfa19
         + OGToken.PermissionUpdated(account: Deployer:0xa00A, role: 0, active: true, maximum: 0, processed: 0)
         + OGToken.Transfer(from: ETH|null:0x0000, to: Deployer:0xa00A, tokens: 40000.0)
-        ogdToken.deployTransaction - gasUsed: 2819839, fee: 0.22558712, feeUsd: 87.0021845704, @ 80.0 gwei & 385.67 ETH/USD, 0x582a03d550e85b6970e2cb41fb4a4edb10d4287ee65a45418594ae116dfcb8b6
+        ogdToken.deployTransaction - gasUsed: 2823372, fee: 0.22586976, feeUsd: 87.1111903392, @ 80.0 gwei & 385.67 ETH/USD, 0x49e3ee85854d3479721d60ae3e8fe28baa073d88de1b584fcb7667867327c0c0
         + OGDToken.PermissionUpdated(account: Deployer:0xa00A, role: 0, active: true, maximum: 0, processed: 0)
         + OGDToken.Transfer(from: ETH|null:0x0000, to: Deployer:0xa00A, tokens: 0.0)
         ogRewardCurve.deployTransaction - gasUsed: 833717, fee: 0.06669736, feeUsd: 25.7231708312, @ 80.0 gwei & 385.67 ETH/USD, 0xf37634adf9070fcf7ec2da36861cb8169528ebbfb6d0496c267a24b7f6a090db
@@ -1535,49 +1533,49 @@ Compilation finished successfully
         + VoteWeightCurve.PointUpdated(index: 1, term: 3y, rate: 1095.0%)
         fee0Token.deployTransaction - gasUsed: 823708, fee: 0.06589664, feeUsd: 25.4143571488, @ 80.0 gwei & 385.67 ETH/USD, 0x46f83ba2fe6533a146ceaadb00a300ae921240fb7c915fee51b9a43e332b1913
         + Fee0Token.Transfer(from: ETH|null:0x0000, to: Deployer:0xa00A, tokens: 100.0)
-        optinoGov.deployTransaction - gasUsed: 5710713, fee: 0.45685704, feeUsd: 176.1960546168, @ 80.0 gwei & 385.67 ETH/USD, 0x3e9b8159a85211a94a285105454d62f00c70249906ca4b83a3e565309b82557b
+        optinoGov.deployTransaction - gasUsed: 5710701, fee: 0.45685608, feeUsd: 176.1956843736, @ 80.0 gwei & 385.67 ETH/USD, 0xf5782a269a5d44ce543ddd3388077da84c55432372aadd3ec17fa2f8162692fa
         OptinoGov.bytecode.length/2: 25861
         --- Setup 2 - OGToken and OGDToken permissioning ---
-        setup2Txs[0] - gasUsed: 78942, fee: 0.00631536, feeUsd: 2.4356448912, @ 80.0 gwei & 385.67 ETH/USD, 0x7c23d28e40353f86b189d8ca8ba709339df7ece32ffdea65126e8fde77ed1d63
+        setup2Txs[0] - gasUsed: 81544, fee: 0.00652352, feeUsd: 2.5159259584, @ 80.0 gwei & 385.67 ETH/USD, 0xc99cce7287b636bb90c1f53a5ddde32fc5530e0a50849888c8378321aebf1663
         + OGToken.PermissionUpdated(account: Deployer:0xa00A, role: 1, active: true, maximum: 0, processed: 0)
-        setup2Txs[1] - gasUsed: 78930, fee: 0.0063144, feeUsd: 2.435274648, @ 80.0 gwei & 385.67 ETH/USD, 0x7cc1cdea6b83e80b1bdea22bce1c7dd0e3e366c91f4dddbab85296cb68d35cb2
+        setup2Txs[1] - gasUsed: 81532, fee: 0.00652256, feeUsd: 2.5155557152, @ 80.0 gwei & 385.67 ETH/USD, 0x4063a639159a7845eff260250bcd257626d20e117a65de3717b9f1da3de922ca
         + OGToken.PermissionUpdated(account: OptinoGov:0x1b9B, role: 0, active: true, maximum: 0, processed: 0)
-        setup2Txs[2] - gasUsed: 78942, fee: 0.00631536, feeUsd: 2.4356448912, @ 80.0 gwei & 385.67 ETH/USD, 0x65cc5bd9dc777dcc96e81393fc1a6be5fddd04b096abe0db1f6b4d27057e27ee
+        setup2Txs[2] - gasUsed: 81544, fee: 0.00652352, feeUsd: 2.5159259584, @ 80.0 gwei & 385.67 ETH/USD, 0x9d47faca866680330e8d0858a00741a0aa2b4cd4280cb7e8aa61585f7e13ba24
         + OGToken.PermissionUpdated(account: OptinoGov:0x1b9B, role: 1, active: true, maximum: 0, processed: 0)
-        setup2Txs[3] - gasUsed: 98264, fee: 0.00786112, feeUsd: 3.0317981504, @ 80.0 gwei & 385.67 ETH/USD, 0x1f2f037b840d555bb46e680ea6b4d13f645a611fb407e11fe05fed0901ea849e
+        setup2Txs[3] - gasUsed: 100866, fee: 0.00806928, feeUsd: 3.1120792176, @ 80.0 gwei & 385.67 ETH/USD, 0x49f0464e42c4ed45840514a12f75ab9aab58fc392531285717d69f81036e92d3
         + OGToken.PermissionUpdated(account: OptinoGov:0x1b9B, role: 2, active: true, maximum: 123456789000000000000000000, processed: 0)
-        setup2Txs[4] - gasUsed: 78942, fee: 0.00631536, feeUsd: 2.4356448912, @ 80.0 gwei & 385.67 ETH/USD, 0xe030fe023f77d1e9f20741b619289a3735366e0ea0da2993e09c1b03fed81ef5
+        setup2Txs[4] - gasUsed: 81544, fee: 0.00652352, feeUsd: 2.5159259584, @ 80.0 gwei & 385.67 ETH/USD, 0x13f1ca78060f162adbae4736fe4440846e2cc0918adae28e31e7c16e8839f60d
         + OGToken.PermissionUpdated(account: OptinoGov:0x1b9B, role: 3, active: true, maximum: 0, processed: 0)
-        setup2Txs[5] - gasUsed: 78987, fee: 0.00631896, feeUsd: 2.4370333032, @ 80.0 gwei & 385.67 ETH/USD, 0x85c10559779d87b5378b302827086aa5895a13e065b1eccc009067465968bc3e
+        setup2Txs[5] - gasUsed: 81522, fee: 0.00652176, feeUsd: 2.5152471792, @ 80.0 gwei & 385.67 ETH/USD, 0x2fb0cccebc7c884d8f683acc9257f0c34abfb8faa40cf277b6ff7463524f1968
         + OGDToken.PermissionUpdated(account: Deployer:0xa00A, role: 1, active: true, maximum: 0, processed: 0)
-        setup2Txs[6] - gasUsed: 78975, fee: 0.006318, feeUsd: 2.43666306, @ 80.0 gwei & 385.67 ETH/USD, 0x9640dec54bb45fad92aa99fbc6537d5107a22e1f8320d8370ee1ad686892c2cb
+        setup2Txs[6] - gasUsed: 81510, fee: 0.0065208, feeUsd: 2.514876936, @ 80.0 gwei & 385.67 ETH/USD, 0xb038a772b20ee2b9ab89fc1a84129b519c975ce6e227e0da2deca29cff6cfbc9
         + OGDToken.PermissionUpdated(account: OptinoGov:0x1b9B, role: 0, active: true, maximum: 0, processed: 0)
-        setup2Txs[7] - gasUsed: 78987, fee: 0.00631896, feeUsd: 2.4370333032, @ 80.0 gwei & 385.67 ETH/USD, 0x8499feccf43b22b4f2cb3973fd773e9ccf2889b17bb00c5302d94cccd9167f5b
+        setup2Txs[7] - gasUsed: 81522, fee: 0.00652176, feeUsd: 2.5152471792, @ 80.0 gwei & 385.67 ETH/USD, 0x76c6c28b2fe0a90e334cdd9dbd99e9e51ebe3f28b37ae7c0c378cedb2738a9e8
         + OGDToken.PermissionUpdated(account: OptinoGov:0x1b9B, role: 1, active: true, maximum: 0, processed: 0)
-        setup2Txs[8] - gasUsed: 98309, fee: 0.00786472, feeUsd: 3.0331865624, @ 80.0 gwei & 385.67 ETH/USD, 0x8bb118bc44c98bb2ccf483899d75b7d5a9fa08ecdc43a6845a2463f4b47e2b46
+        setup2Txs[8] - gasUsed: 100844, fee: 0.00806752, feeUsd: 3.1114004384, @ 80.0 gwei & 385.67 ETH/USD, 0xb390f42824e14e8a162fc9d7e8478afa2aae0096166b6d6161e58907ad801de1
         + OGDToken.PermissionUpdated(account: OptinoGov:0x1b9B, role: 2, active: true, maximum: 123456789000000000000000000, processed: 0)
-        setup2Txs[9] - gasUsed: 78987, fee: 0.00631896, feeUsd: 2.4370333032, @ 80.0 gwei & 385.67 ETH/USD, 0x8806b318a46d225a8344baf9081f620f7b6fde386160d98771f0e7aca69d68f3
+        setup2Txs[9] - gasUsed: 81522, fee: 0.00652176, feeUsd: 2.5152471792, @ 80.0 gwei & 385.67 ETH/USD, 0x5a591f8a71c27056e14876e7195816a0f7108ec45af9beb09ff59559f6e737ca
         + OGDToken.PermissionUpdated(account: OptinoGov:0x1b9B, role: 3, active: true, maximum: 0, processed: 0)
         --- Setup 3 - OGDToken.addDividendToken([ETH, FEE0]) ---
-        addDividendToken0 - gasUsed: 117165, fee: 0.0093732, feeUsd: 3.614962044, @ 80.0 gwei & 385.67 ETH/USD, 0xc7bfa2a1756f88799703439bbe18b4d4091e403b29f9e6b0c2ae503581bf2b27
-        + OGDToken.DividendTokenAdded(token: ETH|null:0x0000, enabled: true)
-        addDividendToken1 - gasUsed: 119132, fee: 0.00953056, feeUsd: 3.6756510752, @ 80.0 gwei & 385.67 ETH/USD, 0xb4af5d92ca796dea513dd7b3950ab441834c13301f06ad894678d1db403c0070
-        + OGDToken.DividendTokenAdded(token: Fee0Token:0x4A54, enabled: true)
+        addDividendToken0 - gasUsed: 117282, fee: 0.00938256, feeUsd: 3.6185719152, @ 80.0 gwei & 385.67 ETH/USD, 0xc7bfa2a1756f88799703439bbe18b4d4091e403b29f9e6b0c2ae503581bf2b27
+        + OGDToken.TokenAdded(token: ETH|null:0x0000, enabled: true)
+        addDividendToken1 - gasUsed: 119249, fee: 0.00953992, feeUsd: 3.6792609464, @ 80.0 gwei & 385.67 ETH/USD, 0xb4af5d92ca796dea513dd7b3950ab441834c13301f06ad894678d1db403c0070
+        + OGDToken.TokenAdded(token: Fee0Token:0x4A54, enabled: true)
         --- Setup 4 - Remove deployer permissions from OGToken and OGDToken ---
-        setup4Txs[0] - gasUsed: 36944, fee: 0.00295552, feeUsd: 1.1398553984, @ 80.0 gwei & 385.67 ETH/USD, 0xd27af46812a700fdee97c42fc8527384e661db4ebbb47a6d41c61fd24f43dd88
+        setup4Txs[0] - gasUsed: 37122, fee: 0.00296976, feeUsd: 1.1453473392, @ 80.0 gwei & 385.67 ETH/USD, 0x6736114278a1c18fc2cedf0138cf7e32e21d4f65531f4c00916c34e03aac0dd0
         + OGToken.PermissionUpdated(account: Deployer:0xa00A, role: 1, active: false, maximum: 0, processed: 0)
-        setup4Txs[1] - gasUsed: 36932, fee: 0.00295456, feeUsd: 1.1394851552, @ 80.0 gwei & 385.67 ETH/USD, 0x33a88aca20e8aef8e121c9af357a9e2d6d1f82aff1812e90cfab7689ff5b95af
+        setup4Txs[1] - gasUsed: 37110, fee: 0.0029688, feeUsd: 1.144977096, @ 80.0 gwei & 385.67 ETH/USD, 0x7f5cbdf7f8bde8f610c6f14a4518c5bdef3873fdfe3c870a559e305a3a9f90d4
         + OGToken.PermissionUpdated(account: Deployer:0xa00A, role: 0, active: false, maximum: 0, processed: 0)
-        setup4Txs[2] - gasUsed: 36989, fee: 0.00295912, feeUsd: 1.1412438104, @ 80.0 gwei & 385.67 ETH/USD, 0x0c3a51fa02eab3f9816f22267336b5b925648a6e65d5783eb53cccefc7a917fe
+        setup4Txs[2] - gasUsed: 37100, fee: 0.002968, feeUsd: 1.14466856, @ 80.0 gwei & 385.67 ETH/USD, 0xcb5dfe0036603b928aa1d2ec0afa0d14490c03404e4f8b759d31eb0a8db1bcb1
         + OGDToken.PermissionUpdated(account: Deployer:0xa00A, role: 1, active: false, maximum: 0, processed: 0)
-        setup4Txs[3] - gasUsed: 36977, fee: 0.00295816, feeUsd: 1.1408735672, @ 80.0 gwei & 385.67 ETH/USD, 0x85bf4773e3f2f55a5ef21eab91919ab24ad5301df161a3f717404856279973d5
+        setup4Txs[3] - gasUsed: 37088, fee: 0.00296704, feeUsd: 1.1442983168, @ 80.0 gwei & 385.67 ETH/USD, 0x8a54edc813223118f9e6d4d8fb82b75588b97dc325e57dd2d9f345a918cb839a
         + OGDToken.PermissionUpdated(account: Deployer:0xa00A, role: 0, active: false, maximum: 0, processed: 0)
         --- Setup 5 - Transfer OGTokens, user{1..3} approve 2,000 OGTokens to OptinoGov, deployer approve 2,000 FEE0 tokens to OGDToken ---
-        transfer1 - gasUsed: 50893, fee: 0.00407144, feeUsd: 1.5702322648, @ 80.0 gwei & 385.67 ETH/USD, 0xb73e17d212a305c1bdb445e4327c8fef1093e2ca1298b599f413301263e6626f
+        transfer1 - gasUsed: 50915, fee: 0.0040732, feeUsd: 1.570911044, @ 80.0 gwei & 385.67 ETH/USD, 0xb73e17d212a305c1bdb445e4327c8fef1093e2ca1298b599f413301263e6626f
         + OGToken.Transfer(from: Deployer:0xa00A, to: User1:0xa11A, tokens: 10000.0)
-        transfer2 - gasUsed: 50893, fee: 0.00407144, feeUsd: 1.5702322648, @ 80.0 gwei & 385.67 ETH/USD, 0xc28619185ff214bb140a5babb313ad5dc09eeb9e32b9c6afe5d905d8a14dd4b8
+        transfer2 - gasUsed: 50915, fee: 0.0040732, feeUsd: 1.570911044, @ 80.0 gwei & 385.67 ETH/USD, 0xc28619185ff214bb140a5babb313ad5dc09eeb9e32b9c6afe5d905d8a14dd4b8
         + OGToken.Transfer(from: Deployer:0xa00A, to: User2:0xa22A, tokens: 10000.0)
-        transfer3 - gasUsed: 50893, fee: 0.00407144, feeUsd: 1.5702322648, @ 80.0 gwei & 385.67 ETH/USD, 0x7993656bdeeb4be868e083110f154276c08bc5d66b44c6667f170a3cb5b73365
+        transfer3 - gasUsed: 50915, fee: 0.0040732, feeUsd: 1.570911044, @ 80.0 gwei & 385.67 ETH/USD, 0x7993656bdeeb4be868e083110f154276c08bc5d66b44c6667f170a3cb5b73365
         + OGToken.Transfer(from: Deployer:0xa00A, to: User3:0xa33a, tokens: 10000.0)
         approve1 - gasUsed: 43968, fee: 0.00351744, feeUsd: 1.3565710848, @ 80.0 gwei & 385.67 ETH/USD, 0xc915d5f35b711c80ab040f28f1d7194b2cf21f80d2a9c04e2f93a2fbd2fa78df
         + OGToken.Approval(tokenOwner: User1:0xa11A, spender: OptinoGov:0x1b9B, tokens: 2000.0)
@@ -1590,7 +1588,7 @@ Compilation finished successfully
         
          # Account                                        ΔETH                OptinoGov                       OG                      OGD                     FEE0
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
-         0 Deployer:0xa00A                         -1.10107976                      0.0                  10000.0                      0.0                    100.0
+         0 Deployer:0xa00A                         -1.10425736                      0.0                  10000.0                      0.0                    100.0
          1 User1:0xa11A                            -0.00351744                      0.0                  10000.0                      0.0                      0.0
          2 User2:0xa22A                            -0.00351744                      0.0                  10000.0                      0.0                      0.0
          3 User3:0xa33a                            -0.00351744                      0.0                  10000.0                      0.0                      0.0
@@ -1679,30 +1677,30 @@ Compilation finished successfully
         --- Setup Completed ---
 
         --- Test 1 - user{1..3} commit 1,000 OGTokens for x seconds, user3 delegate to user1 ---
-        commit1 - gasUsed: 376073, fee: 0.03008584, feeUsd: 11.6032059128, @ 80.0 gwei & 385.67 ETH/USD, 0x7518d449abaae5b13df72f660e82040b549e57a4347f6d1f7b56af4d6a064459
+        commit1 - gasUsed: 377030, fee: 0.0301624, feeUsd: 11.632732808, @ 80.0 gwei & 385.67 ETH/USD, 0x7518d449abaae5b13df72f660e82040b549e57a4347f6d1f7b56af4d6a064459
         + OGToken.Transfer(from: User1:0xa11A, to: OptinoGov:0x1b9B, tokens: 1000.0)
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User1:0xa11A, tokens: 1000.0)
         + OptinoGov.Transfer(from: ETH|null:0x0000, to: User1:0xa11A, tokens: 1000.0)
-        + OptinoGov.Committed(user: User1:0xa11A, tokens: 1000.0, balance: 1000.0, duration: 2, end: 1606008380, delegatee: ETH|null:0x0000, votes: 10.0, totalVotes: 10.0)
-        commit2 - gasUsed: 305273, fee: 0.02442184, feeUsd: 9.4187710328, @ 80.0 gwei & 385.67 ETH/USD, 0x294d9676dbc1d3def8c209258385e7afdc64eccaa9904f3a575d2e4d60b344f3
+        + OptinoGov.Committed(user: User1:0xa11A, tokens: 1000.0, balance: 1000.0, duration: 2, end: 1606096571, delegatee: ETH|null:0x0000, votes: 10.0, totalVotes: 10.0)
+        commit2 - gasUsed: 306230, fee: 0.0244984, feeUsd: 9.448297928, @ 80.0 gwei & 385.67 ETH/USD, 0x294d9676dbc1d3def8c209258385e7afdc64eccaa9904f3a575d2e4d60b344f3
         + OGToken.Transfer(from: User2:0xa22A, to: OptinoGov:0x1b9B, tokens: 1000.0)
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User2:0xa22A, tokens: 1000.0)
         + OptinoGov.Transfer(from: ETH|null:0x0000, to: User2:0xa22A, tokens: 1000.0)
-        + OptinoGov.Committed(user: User2:0xa22A, tokens: 1000.0, balance: 1000.0, duration: 2, end: 1606008381, delegatee: ETH|null:0x0000, votes: 10.0, totalVotes: 20.0)
-        commit3 - gasUsed: 305273, fee: 0.02442184, feeUsd: 9.4187710328, @ 80.0 gwei & 385.67 ETH/USD, 0x837f929a2a3708fa2df6b065f63a4ef04d6f5fd2accf23d2e88b7c3a6fb77100
+        + OptinoGov.Committed(user: User2:0xa22A, tokens: 1000.0, balance: 1000.0, duration: 2, end: 1606096572, delegatee: ETH|null:0x0000, votes: 10.0, totalVotes: 20.0)
+        commit3 - gasUsed: 306230, fee: 0.0244984, feeUsd: 9.448297928, @ 80.0 gwei & 385.67 ETH/USD, 0x837f929a2a3708fa2df6b065f63a4ef04d6f5fd2accf23d2e88b7c3a6fb77100
         + OGToken.Transfer(from: User3:0xa33a, to: OptinoGov:0x1b9B, tokens: 1000.0)
         + OGDToken.Transfer(from: ETH|null:0x0000, to: User3:0xa33a, tokens: 1000.0)
         + OptinoGov.Transfer(from: ETH|null:0x0000, to: User3:0xa33a, tokens: 1000.0)
-        + OptinoGov.Committed(user: User3:0xa33a, tokens: 1000.0, balance: 1000.0, duration: 2, end: 1606008382, delegatee: ETH|null:0x0000, votes: 10.0, totalVotes: 30.0)
+        + OptinoGov.Committed(user: User3:0xa33a, tokens: 1000.0, balance: 1000.0, duration: 2, end: 1606096573, delegatee: ETH|null:0x0000, votes: 10.0, totalVotes: 30.0)
         delegate1 - gasUsed: 65108, fee: 0.00520864, feeUsd: 2.0088161888, @ 80.0 gwei & 385.67 ETH/USD, 0x578ec4ed7663c1a732c1b2b31ee3ef2417156629870d094939759f1b0a44de66
         + OptinoGov.DelegateUpdated(oldDelegatee: ETH|null:0x0000, delegatee: User1:0xa11A, votes: 10.0)
         
          # Account                                        ΔETH                OptinoGov                       OG                      OGD                     FEE0
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
-         0 Deployer:0xa00A                         -1.10107976                      0.0                  10000.0                      0.0                    100.0
-         1 User1:0xa11A                            -0.03360328                   1000.0                   9000.0                   1000.0                      0.0
-         2 User2:0xa22A                            -0.02793928                   1000.0                   9000.0                   1000.0                      0.0
-         3 User3:0xa33a                            -0.03314792                   1000.0                   9000.0                   1000.0                      0.0
+         0 Deployer:0xa00A                         -1.10425736                      0.0                  10000.0                      0.0                    100.0
+         1 User1:0xa11A                            -0.03367984                   1000.0                   9000.0                   1000.0                      0.0
+         2 User2:0xa22A                            -0.02801584                   1000.0                   9000.0                   1000.0                      0.0
+         3 User3:0xa33a                            -0.03322448                   1000.0                   9000.0                   1000.0                      0.0
          4 User4:0xa44a                                    0.0                      0.0                      0.0                      0.0                      0.0
          5 OGToken:0xc848                                  0.0                      0.0                      0.0                      0.0                      0.0
          6 OGDToken:0x63e9                                 0.0                      0.0                      0.0                      0.0                      0.0
@@ -1794,16 +1792,16 @@ Compilation finished successfully
         targets          : ["0xc848668d2e7F52cb59b6827f15257088d83cBd40"]
         values           : [0]
         dataItems        : ["0x156d3a46000000000000000000000000000000000000000002df458b38b62d1ae66c00000000000000000000000000000000000000000000000000000000000000000000"]
-        propose1 - gasUsed: 334743, fee: 0.02677944, feeUsd: 10.3280266248, @ 80.0 gwei & 385.67 ETH/USD, 0x145b188f25d99986db6297a468f650f613074d1793f52da89b4c266d6de7a82f
+        propose1 - gasUsed: 334819, fee: 0.02678552, feeUsd: 10.3303714984, @ 80.0 gwei & 385.67 ETH/USD, 0x145b188f25d99986db6297a468f650f613074d1793f52da89b4c266d6de7a82f
         + OGToken.Transfer(from: User1:0xa11A, to: ETH|null:0x0000, tokens: 100.0)
-        + OptinoGov.Proposed(proposer: User1:0xa11A, id: 0, description: Proposal 0 - OGToken.setCap(888888888.888, true), targets: 0xc848668d2e7F52cb59b6827f15257088d83cBd40, value: 0, data: 0x156d3a46000000000000000000000000000000000000000002df458b38b62d1ae66c00000000000000000000000000000000000000000000000000000000000000000000, start: 1606008382)
+        + OptinoGov.Proposed(proposer: User1:0xa11A, id: 0, description: Proposal 0 - OGToken.setCap(888888888.888, true), targets: 0xc848668d2e7F52cb59b6827f15257088d83cBd40, value: 0, data: 0x156d3a46000000000000000000000000000000000000000002df458b38b62d1ae66c00000000000000000000000000000000000000000000000000000000000000000000, start: 1606096573)
         
          # Account                                        ΔETH                OptinoGov                       OG                      OGD                     FEE0
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
-         0 Deployer:0xa00A                         -1.10107976                      0.0                  10000.0                      0.0                    100.0
-         1 User1:0xa11A                            -0.06038272                   1000.0                   8900.0                   1000.0                      0.0
-         2 User2:0xa22A                            -0.02793928                   1000.0                   9000.0                   1000.0                      0.0
-         3 User3:0xa33a                            -0.03314792                   1000.0                   9000.0                   1000.0                      0.0
+         0 Deployer:0xa00A                         -1.10425736                      0.0                  10000.0                      0.0                    100.0
+         1 User1:0xa11A                            -0.06046536                   1000.0                   8900.0                   1000.0                      0.0
+         2 User2:0xa22A                            -0.02801584                   1000.0                   9000.0                   1000.0                      0.0
+         3 User3:0xa33a                            -0.03322448                   1000.0                   9000.0                   1000.0                      0.0
          4 User4:0xa44a                                    0.0                      0.0                      0.0                      0.0                      0.0
          5 OGToken:0xc848                                  0.0                      0.0                      0.0                      0.0                      0.0
          6 OGDToken:0x63e9                                 0.0                      0.0                      0.0                      0.0                      0.0
@@ -1898,10 +1896,10 @@ Compilation finished successfully
         
          # Account                                        ΔETH                OptinoGov                       OG                      OGD                     FEE0
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
-         0 Deployer:0xa00A                         -1.10393088                      0.0                  10000.0                      0.0                    100.0
-         1 User1:0xa11A                            -0.06038272                   1000.0                   8900.0                   1000.0                      0.0
-         2 User2:0xa22A                            -0.02793928                   1000.0                   9000.0                   1000.0                      0.0
-         3 User3:0xa33a                            -0.03314792                   1000.0                   9000.0                   1000.0                      0.0
+         0 Deployer:0xa00A                         -1.10710848                      0.0                  10000.0                      0.0                    100.0
+         1 User1:0xa11A                            -0.06046536                   1000.0                   8900.0                   1000.0                      0.0
+         2 User2:0xa22A                            -0.02801584                   1000.0                   9000.0                   1000.0                      0.0
+         3 User3:0xa33a                            -0.03322448                   1000.0                   9000.0                   1000.0                      0.0
          4 User4:0xa44a                                    0.0                      0.0                      0.0                      0.0                      0.0
          5 OGToken:0xc848                                  0.0                      0.0                      0.0                      0.0                      0.0
          6 OGDToken:0x63e9                                 0.0                      0.0                      0.0                      0.0                      0.0
@@ -1992,8 +1990,8 @@ Compilation finished successfully
         
         --- Test Completed ---
 
-      ✓ Workflow #2 - Developing (2631ms)
+      ✓ Workflow #2 - Developing (2466ms)
 
 
-  3 passing (23s)
+  3 passing (22s)
 

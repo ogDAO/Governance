@@ -1445,6 +1445,7 @@ contract Staking is ERC20, Owned, InterestUtils {
     // uint public weightedDurationDenominator;
     uint public slashingFactor;
 
+    event StakingRewardCurveUpdated(CurveInterface indexed stakingRewardCurve);
     event Staked(address indexed tokenOwner, uint tokens, uint duration, uint end);
     event Unstaked(address indexed tokenOwner, uint tokens, uint reward, uint tokensWithSlashingFactor, uint rewardWithSlashingFactor);
     event Slashed(uint slashingFactor, uint tokensBurnt);
@@ -1523,6 +1524,10 @@ contract Staking is ERC20, Owned, InterestUtils {
         return allowed[tokenOwner][spender];
     }
 
+    function setStakingRewardCurve(CurveInterface _stakingRewardCurve) public onlyOwner {
+        stakingRewardCurve = _stakingRewardCurve;
+        emit StakingRewardCurveUpdated(_stakingRewardCurve);
+    }
     function _getRate(uint term) internal view returns (uint rate) {
         if (stakingRewardCurve == CurveInterface(0)) {
             try StakingFactoryInterface(owner).getStakingRewardCurve().getRate(term) returns (uint _rate) {
@@ -1887,6 +1892,7 @@ contract StakingFactory is CloneFactory, Owned {
     mapping(Staking => bool) public contracts;
 
     event StakingCreated(bytes32 indexed key, Staking indexed staking);
+    event StakingRewardCurveUpdated(CurveInterface indexed stakingRewardCurve);
 
     constructor(OGTokenInterface _ogToken, OGDTokenInterface _ogdToken, CurveInterface _stakingRewardCurve) {
         initOwned(msg.sender);
@@ -1896,6 +1902,10 @@ contract StakingFactory is CloneFactory, Owned {
         stakingTemplate = new Staking();
     }
 
+    function setStakingRewardCurve(CurveInterface _stakingRewardCurve) public onlyOwner {
+        stakingRewardCurve = _stakingRewardCurve;
+        emit StakingRewardCurveUpdated(_stakingRewardCurve);
+    }
     function getStakingRewardCurve() external view returns (CurveInterface _stakingRewardCurve) {
         _stakingRewardCurve = stakingRewardCurve;
     }
@@ -1931,6 +1941,9 @@ contract StakingFactory is CloneFactory, Owned {
         staking.stakeThroughFactory(msg.sender, tokens, duration);
     }
 
+    function setStakingStakingRewardCurve(Staking staking, CurveInterface _stakingRewardCurve) public onlyOwner {
+        staking.setStakingRewardCurve(_stakingRewardCurve);
+    }
     function slash(Staking staking, uint slashingFactor) public onlyOwner {
         staking.slash(slashingFactor);
     }

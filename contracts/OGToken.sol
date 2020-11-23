@@ -73,7 +73,7 @@ contract OGToken is OGTokenInterface, Permissioned {
         return allowed[tokenOwner][spender];
     }
 
-    function setCap(uint _cap, bool _freezeCap) external permitted(ROLE_SETCONFIG, 0) {
+    function setCap(uint _cap, bool _freezeCap) external permitted(Roles.SetConfig, 0) {
         require(!freezeCap, "Cap frozen");
         require(_cap >= __totalSupply(), "cap must be >= totalSupply");
         (cap, freezeCap) = (_cap, _freezeCap);
@@ -81,7 +81,7 @@ contract OGToken is OGTokenInterface, Permissioned {
     }
 
     function availableToMint() override external view returns (uint tokens) {
-        bytes32 key = keccak256(abi.encodePacked(msg.sender, ROLE_MINTTOKENS));
+        bytes32 key = keccak256(abi.encodePacked(msg.sender, Roles.MintTokens));
         Permission memory permission = permissions[key];
         if (permission.maximum == 0) {
             if (cap > 0) {
@@ -96,7 +96,7 @@ contract OGToken is OGTokenInterface, Permissioned {
             }
         }
     }
-    function mint(address tokenOwner, uint tokens) override external permitted(ROLE_MINTTOKENS, tokens) returns (bool success) {
+    function mint(address tokenOwner, uint tokens) override external permitted(Roles.MintTokens, tokens) returns (bool success) {
         require(cap == 0 || __totalSupply().add(tokens) <= cap, "cap exceeded");
         balances[tokenOwner] = balances[tokenOwner].add(tokens);
         _totalSupply = _totalSupply.add(tokens);
@@ -109,7 +109,7 @@ contract OGToken is OGTokenInterface, Permissioned {
         emit Transfer(msg.sender, address(0), tokens);
         return true;
     }
-    function burnFrom(address tokenOwner, uint tokens) override external permitted(ROLE_BURNTOKENS, tokens) returns (bool success) {
+    function burnFrom(address tokenOwner, uint tokens) override external permitted(Roles.BurnTokens, tokens) returns (bool success) {
         balances[tokenOwner] = balances[tokenOwner].sub(tokens);
         _totalSupply = _totalSupply.sub(tokens);
         emit Transfer(tokenOwner, address(0), tokens);

@@ -97,17 +97,17 @@ contract OGDToken is OGDTokenInterface, Permissioned {
         return allowed[tokenOwner][spender];
     }
 
-    function addDividendToken(address _dividendToken) external permitted(ROLE_SETCONFIG, 0) {
+    function addDividendToken(address _dividendToken) external permitted(Roles.SetConfig, 0) {
         if (!dividendTokens.initialised) {
             dividendTokens.init();
         }
         dividendTokens.add(_dividendToken, true);
     }
-    function updateToken(address token, bool enabled) public permitted(ROLE_SETCONFIG, 0) {
+    function updateToken(address token, bool enabled) public permitted(Roles.SetConfig, 0) {
         require(dividendTokens.initialised);
         dividendTokens.update(token, enabled);
     }
-    function removeToken(address token) public permitted(ROLE_SETCONFIG, 0) {
+    function removeToken(address token) public permitted(Roles.SetConfig, 0) {
         require(dividendTokens.initialised);
         dividendTokens.remove(token);
     }
@@ -233,7 +233,7 @@ contract OGDToken is OGDTokenInterface, Permissioned {
     }
 
     /// @notice Mint tokens
-    function mint(address tokenOwner, uint tokens) override external permitted(ROLE_MINTTOKENS, tokens) returns (bool success) {
+    function mint(address tokenOwner, uint tokens) override external permitted(Roles.MintTokens, tokens) returns (bool success) {
         _updateAccount(tokenOwner);
         accounts[tokenOwner].balance = accounts[tokenOwner].balance.add(tokens);
         _totalSupply = _totalSupply.add(tokens);
@@ -243,13 +243,14 @@ contract OGDToken is OGDTokenInterface, Permissioned {
     /// @notice Burn tokens
     function burn(uint tokens) override external returns (bool success) {
         _updateAccount(msg.sender);
+        _withdrawDividendsFor(msg.sender, msg.sender);
         accounts[msg.sender].balance = accounts[msg.sender].balance.sub(tokens);
         _totalSupply = _totalSupply.sub(tokens);
         emit Transfer(msg.sender, address(0), tokens);
         return true;
     }
     /// @notice Withdraw enabled dividends tokens before burning
-    function burnFrom(address tokenOwner, uint tokens) override external permitted(ROLE_BURNTOKENS, tokens) returns (bool success) {
+    function burnFrom(address tokenOwner, uint tokens) override external permitted(Roles.BurnTokens, tokens) returns (bool success) {
         require(accounts[tokenOwner].balance >= tokens, "Insufficient tokens");
         _withdrawDividendsFor(tokenOwner, tokenOwner);
         accounts[tokenOwner].balance = accounts[tokenOwner].balance.sub(tokens);
@@ -259,7 +260,7 @@ contract OGDToken is OGDTokenInterface, Permissioned {
     }
 
     /// @notice Recover tokens for non enabled dividend tokens
-    function recoverTokens(address token, uint tokens) public permitted(ROLE_RECOVERTOKENS, 0) {
+    function recoverTokens(address token, uint tokens) public permitted(Roles.RecoverTokens, 0) {
         TokenList.Token memory dividendToken = dividendTokens.entries[token];
         require(dividendToken.timestamp == 0 || !dividendToken.enabled, "Cannot recover tokens for enabled dividend token");
         if (token == address(0)) {
