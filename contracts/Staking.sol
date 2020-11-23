@@ -43,8 +43,6 @@ contract Staking is ERC20, Owned, InterestUtils {
     uint8 constant DASH = 45;
     uint8 constant ZERO = 48;
     uint constant MAXSTAKINGINFOSTRINGLENGTH = 8;
-    // uint constant SECONDS_PER_DAY = 1 days;
-    // uint constant SECONDS_PER_YEAR = 365 days;
 
     uint public id;
     OGTokenInterface public ogToken;
@@ -55,7 +53,6 @@ contract Staking is ERC20, Owned, InterestUtils {
     uint _totalSupply;
     mapping(address => Account) public accounts;
     address[] public accountsIndex;
-    mapping(address => mapping(address => uint)) allowed;
 
     uint public weightedEndNumerator;
     // uint public weightedDurationDenominator;
@@ -117,27 +114,22 @@ contract Staking is ERC20, Owned, InterestUtils {
         return accounts[tokenOwner].balance;
     }
     function transfer(address to, uint tokens) override external returns (bool success) {
-        require(tokens == 0, "Not implemented");
-        accounts[msg.sender].balance = accounts[msg.sender].balance.sub(tokens);
-        accounts[to].balance = accounts[to].balance.add(tokens);
+        require(false, "Unimplemented");
         emit Transfer(msg.sender, to, tokens);
         return true;
     }
     function approve(address spender, uint tokens) override external returns (bool success) {
-        allowed[msg.sender][spender] = tokens;
+        require(false, "Unimplemented");
         emit Approval(msg.sender, spender, tokens);
         return true;
     }
     function transferFrom(address from, address to, uint tokens) override external returns (bool success) {
-        require(tokens == 0, "Not implemented");
-        accounts[from].balance = accounts[from].balance.sub(tokens);
-        allowed[from][msg.sender] = allowed[from][msg.sender].sub(tokens);
-        accounts[to].balance = accounts[to].balance.add(tokens);
+        require(false, "Unimplemented");
         emit Transfer(from, to, tokens);
         return true;
     }
-    function allowance(address tokenOwner, address spender) override external view returns (uint remaining) {
-        return allowed[tokenOwner][spender];
+    function allowance(address /*tokenOwner*/, address /*spender*/) override external pure returns (uint remaining) {
+        return 0;
     }
 
     function setStakingRewardCurve(CurveInterface _stakingRewardCurve) public onlyOwner {
@@ -353,28 +345,6 @@ contract Staking is ERC20, Owned, InterestUtils {
 }
 
 /*
-
-struct Account {
-    uint64 duration;
-    uint64 end;
-    uint64 lastDelegated;
-    uint64 lastVoted;
-    uint balance;
-    // uint staked;
-    uint votes;
-    uint delegatedVotes;
-    address delegatee;
-}
-
-mapping(address => mapping(bytes32 => uint)) stakes;
-
-event StakeInfoAdded(bytes32 stakingKey, uint dataType, address[4] addresses, uint[6] uints, string string0, string string1, string string2, string string3);
-event Staked(address tokenOwner, uint tokens, uint balance, bytes32 stakingKey);
-event Unstaked(address tokenOwner, uint tokens, uint balance, bytes32 stakingKey);
-event StakeBurnt(address tokenOwner, uint tokens, uint balance, bytes32 stakingKey);
-
-
-
 function addStakeForToken(uint tokens, address tokenAddress, string memory name) external {
     bytes32 stakingKey = keccak256(abi.encodePacked(tokenAddress, name));
     StakeInfo memory stakeInfo = stakeInfoData[stakingKey];
@@ -436,46 +406,10 @@ function _addStake(uint tokens, bytes32 stakingKey) internal {
     require(committment.tokens > 0, "OptinoGov: Commit before staking");
     require(committment.tokens >= committment.staked + tokens, "OptinoGov: Insufficient tokens to stake");
     committment.staked = committment.staked.add(tokens);
-    // TODO committment.stakes[stakingKey] = committment.stakes[stakingKey].add(tokens);
-    // TODO emit Staked(msg.sender, tokens, committment.stakes[stakingKey], stakingKey);
 }
 function _subStake(uint tokens, bytes32 stakingKey) internal {
     Account storage committment = accounts[msg.sender];
     require(committment.tokens > 0, "OptinoGov: Commit and stake tokens before unstaking");
-    // TODO require(committment.stakes[stakingKey] >= tokens, "OptinoGov: Insufficient staked tokens");
     committment.staked = committment.staked.sub(tokens);
-    // TODO committment.stakes[stakingKey] = committment.stakes[stakingKey].sub(tokens);
-    // TODO emit Unstaked(msg.sender, tokens, committment.stakes[stakingKey], stakingKey);
-}
-function stakeInfoLength() public view returns (uint _stakeInfoLength) {
-    _stakeInfoLength = stakeInfoIndex.length;
-}
-function getStakeInfoByKey(bytes32 stakingKey) public view returns (uint dataType, address[4] memory addresses, uint[6] memory uints, string memory string0, string memory string1, string memory string2, string memory string3) {
-    StakeInfo memory stakeInfo = stakeInfoData[stakingKey];
-    (dataType, addresses, uints) = (stakeInfo.dataType, stakeInfo.addresses, stakeInfo.uints);
-    string0 = stakeInfo.string0;
-    string1 = stakeInfo.string1;
-    string2 = stakeInfo.string2;
-    string3 = stakeInfo.string3;
-}
-function getStaked(address tokenOwner, bytes32 stakingKey) public view returns (uint _staked) {
-    Account storage committment = accounts[tokenOwner];
-    // TODO _staked = committment.stakes[stakingKey];
-}
-
-function burnStake(address[] calldata tokenOwners, bytes32 stakingKey, uint percent) external onlySelf {
-    for (uint i = 0; i < tokenOwners.length; i++) {
-        address tokenOwner = tokenOwners[i];
-        Account storage committment = accounts[tokenOwner];
-        // TODO uint staked = committment.stakes[stakingKey];
-        // if (staked > 0) {
-        //     uint tokensToBurn = staked * percent / uint(100);
-        //     committment.staked = committment.staked.sub(tokensToBurn);
-        //     committment.stakes[stakingKey] = committment.stakes[stakingKey].sub(tokensToBurn);
-        //     committment.tokens = committment.tokens.sub(tokensToBurn);
-        //     require(ogToken.burn(tokensToBurn), "OptinoGov: burn failed");
-        //     emit StakeBurnt(tokenOwner, tokensToBurn, committment.stakes[stakingKey], stakingKey);
-        // }
-    }
 }
 */

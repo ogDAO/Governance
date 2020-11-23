@@ -60,19 +60,19 @@ contract OptinoGovBase {
 
     function setConfig(string memory key, uint value) external onlySelf {
         bytes32 _key = keccak256(abi.encodePacked(key));
-        if (_key == KEY_OGTOKEN) {
+        /*if (_key == KEY_OGTOKEN) {
             ogToken = OGTokenInterface(address(value));
         } else if (_key == KEY_VOTEWEIGHTCURVE) {
             ogdToken = OGDTokenInterface(address(value));
-        } else if (_key == KEY_OGREWARDCURVE) {
+        } else*/ if (_key == KEY_OGREWARDCURVE) {
             ogRewardCurve = CurveInterface(address(value));
         } else if (_key == KEY_VOTEWEIGHTCURVE) {
             voteWeightCurve = CurveInterface(address(value));
         } else if (_key == KEY_MAXDURATION) {
-            require(maxDuration < 5 * 365 days, "Cannot exceed 5 years");
+            require(maxDuration < 5 * 365 days); // Cannot exceed 5 years
             maxDuration = value;
         } else if (_key == KEY_COLLECTREWARDFORFEE) {
-            require(collectRewardForFee < 1e18, "Cannot exceed 100%");
+            require(collectRewardForFee < 1e18); // Cannot exceed 100%
             collectRewardForFee = value;
         } else if (_key == KEY_COLLECTREWARDFORDELAY) {
             collectRewardForDelay = value;
@@ -91,7 +91,7 @@ contract OptinoGovBase {
         } else if (_key == KEY_EXECUTEDELAY) {
             executeDelay = value;
         } else {
-            revert("Invalid key");
+            revert(); // Invalid key
         }
         emit ConfigUpdated(key, value);
     }
@@ -174,7 +174,6 @@ contract OptinoGov is ERC20, OptinoGovBase, InterestUtils {
     uint private _totalSupply;
     mapping(address => Account) private accounts;
     address[] public accountsIndex;
-    // mapping(address => mapping(address => uint)) private allowed;
     uint public totalVotes;
 
     Proposal[] private proposals;
