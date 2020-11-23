@@ -43,6 +43,9 @@ contract OGToken is OGTokenInterface, Permissioned {
         return _decimals;
     }
     function totalSupply() override external view returns (uint) {
+        return __totalSupply();
+    }
+    function __totalSupply() internal view returns (uint) {
         return _totalSupply.sub(balances[address(0)]);
     }
     function balanceOf(address tokenOwner) override external view returns (uint balance) {
@@ -72,7 +75,7 @@ contract OGToken is OGTokenInterface, Permissioned {
 
     function setCap(uint _cap, bool _freezeCap) external permitted(ROLE_SETCONFIG, 0) {
         require(!freezeCap, "Cap frozen");
-        require(_cap >= _totalSupply.sub(balances[address(0)]), "cap must be >= totalSupply");
+        require(_cap >= __totalSupply(), "cap must be >= totalSupply");
         (cap, freezeCap) = (_cap, _freezeCap);
         emit CapUpdated(cap, freezeCap);
     }
@@ -82,7 +85,7 @@ contract OGToken is OGTokenInterface, Permissioned {
         Permission memory permission = permissions[key];
         if (permission.maximum == 0) {
             if (cap > 0) {
-                tokens = cap.sub(_totalSupply.sub(balances[address(0)]));
+                tokens = cap.sub(__totalSupply());
             } else {
                 tokens = uint(-1);
             }
@@ -94,7 +97,7 @@ contract OGToken is OGTokenInterface, Permissioned {
         }
     }
     function mint(address tokenOwner, uint tokens) override external permitted(ROLE_MINTTOKENS, tokens) returns (bool success) {
-        require(cap == 0 || _totalSupply.sub(balances[address(0)]).add(tokens) <= cap, "cap exceeded");
+        require(cap == 0 || __totalSupply().add(tokens) <= cap, "cap exceeded");
         balances[tokenOwner] = balances[tokenOwner].add(tokens);
         _totalSupply = _totalSupply.add(tokens);
         emit Transfer(address(0), tokenOwner, tokens);

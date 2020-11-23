@@ -63,14 +63,17 @@ contract OGDToken is OGDTokenInterface, Permissioned {
         return _decimals;
     }
     function totalSupply() override external view returns (uint) {
+        return __totalSupply();
+    }
+    function __totalSupply() internal view returns (uint) {
         return _totalSupply.sub(accounts[address(0)].balance);
     }
     function balanceOf(address tokenOwner) override external view returns (uint balance) {
         return accounts[tokenOwner].balance;
     }
     function transfer(address to, uint tokens) override external returns (bool success) {
-        updateAccount(msg.sender);
-        updateAccount(to);
+        _updateAccount(msg.sender);
+        _updateAccount(to);
         accounts[msg.sender].balance = accounts[msg.sender].balance.sub(tokens);
         accounts[to].balance = accounts[to].balance.add(tokens);
         emit Transfer(msg.sender, to, tokens);
@@ -82,8 +85,8 @@ contract OGDToken is OGDTokenInterface, Permissioned {
         return true;
     }
     function transferFrom(address from, address to, uint tokens) override external returns (bool success) {
-        updateAccount(from);
-        updateAccount(to);
+        _updateAccount(from);
+        _updateAccount(to);
         allowed[from][msg.sender] = allowed[from][msg.sender].sub(tokens);
         accounts[from].balance = accounts[from].balance.sub(tokens);
         accounts[to].balance = accounts[to].balance.add(tokens);
@@ -117,7 +120,7 @@ contract OGDToken is OGDTokenInterface, Permissioned {
         return dividendTokens.length();
     }
 
-    /// @notice Dividends owning since the last updateAccount(...) + new dividends owing since the last updateAccount(...)
+    /// @notice Dividends owning since the last _updateAccount(...) + new dividends owing since the last _updateAccount(...)
     function dividendsOwing(address account) public view returns (address[] memory tokenList, uint[] memory owingList, uint[] memory newOwingList) {
         tokenList = new address[](dividendTokens.index.length);
         owingList = new uint[](dividendTokens.index.length);
@@ -126,19 +129,19 @@ contract OGDToken is OGDTokenInterface, Permissioned {
             TokenList.Token memory dividendToken = dividendTokens.entries[dividendTokens.index[i]];
             tokenList[i] = dividendToken.token;
             owingList[i] = accounts[account].owing[dividendToken.token];
-            newOwingList[i] = newDividendsOwing(dividendToken.token, account);
+            newOwingList[i] = _newDividendsOwing(dividendToken.token, account);
         }
     }
-    /// @notice New dividends owing since the last updateAccount(...)
-    function newDividendsOwing(address dividendToken, address account) internal view returns (uint) {
+    /// @notice New dividends owing since the last _updateAccount(...)
+    function _newDividendsOwing(address dividendToken, address account) internal view returns (uint) {
         uint newDividendPoints = totalDividendPoints[dividendToken].sub(accounts[account].lastDividendPoints[dividendToken]);
         return accounts[account].balance.mul(newDividendPoints).div(POINT_MULTIPLIER);
     }
-    function updateAccount(address account) internal {
+    function _updateAccount(address account) internal {
         for (uint i = 0; i < dividendTokens.index.length; i++) {
             TokenList.Token memory dividendToken = dividendTokens.entries[dividendTokens.index[i]];
             if (dividendToken.enabled) {
-                uint newOwing = newDividendsOwing(dividendToken.token, account);
+                uint newOwing = _newDividendsOwing(dividendToken.token, account);
                 if (newOwing > 0) {
                     unclaimedDividends[dividendToken.token] = unclaimedDividends[dividendToken.token].sub(newOwing);
                     accounts[account].owing[dividendToken.token] = accounts[account].owing[dividendToken.token].add(newOwing);
@@ -147,18 +150,18 @@ contract OGDToken is OGDTokenInterface, Permissioned {
             }
         }
     }
-    // function updateAccounts(address account1, address account2) internal {
+    // function _updateAccounts(address account1, address account2) internal {
     //     for (uint i = 0; i < dividendTokens.index.length; i++) {
     //         TokenList.Token memory dividendToken = dividendTokens.entries[dividendTokens.index[i]];
     //         if (dividendToken.enabled) {
-    //             uint newOwing1 = newDividendsOwing(dividendToken.token, account1);
+    //             uint newOwing1 = _newDividendsOwing(dividendToken.token, account1);
     //             if (newOwing1 > 0) {
     //                 unclaimedDividends[dividendToken.token] = unclaimedDividends[dividendToken.token].sub(newOwing1);
     //                 accounts[account1].owing[dividendToken.token] = accounts[account1].owing[dividendToken.token].add(newOwing1);
     //             }
     //             accounts[account1].lastDividendPoints[dividendToken.token] = totalDividendPoints[dividendToken.token];
     //             if (account1 != account2) {
-    //                 uint newOwing2 = newDividendsOwing(dividendToken.token, account2);
+    //                 uint newOwing2 = _newDividendsOwing(dividendToken.token, account2);
     //                 if (newOwing2 > 0) {
     //                     unclaimedDividends[dividendToken.token] = unclaimedDividends[dividendToken.token].sub(newOwing2);
     //                     accounts[account2].owing[dividendToken.token] = accounts[account2].owing[dividendToken.token].add(newOwing2);
@@ -172,9 +175,9 @@ contract OGDToken is OGDTokenInterface, Permissioned {
     /// @notice Deposit enabled dividend token
     function depositDividend(address token, uint tokens) public payable {
         TokenList.Token memory _dividendToken = dividendTokens.entries[token];
-        require(_totalSupply > accounts[address(0)].balance, "totalSupply is 0");
-        require(_dividendToken.enabled, "Dividend token is not enabled");
-        totalDividendPoints[token] = totalDividendPoints[token].add(tokens.mul(POINT_MULTIPLIER).div(_totalSupply.sub(accounts[address(0)].balance)));
+        require(__totalSupply() > accounts[address(0)].balance, "totalSupply 0");
+        require(_dividendToken.enabled, "Dividend token not enabled");
+        totalDividendPoints[token] = totalDividendPoints[token].add(tokens.mul(POINT_MULTIPLIER).div(__totalSupply()));
         unclaimedDividends[token] = unclaimedDividends[token].add(tokens);
         if (token == address(0)) {
             require(msg.value >= tokens, "Insufficient ETH sent");
@@ -193,7 +196,7 @@ contract OGDToken is OGDTokenInterface, Permissioned {
     }
 
     function _withdrawDividendsFor(address account, address destination) internal {
-        updateAccount(account);
+        _updateAccount(account);
         for (uint i = 0; i < dividendTokens.index.length; i++) {
             TokenList.Token memory dividendToken = dividendTokens.entries[dividendTokens.index[i]];
             if (dividendToken.enabled) {
@@ -216,7 +219,7 @@ contract OGDToken is OGDTokenInterface, Permissioned {
     }
     /// @notice Withdraw enabled and disabled dividends tokens
     function withdrawDividendByToken(address token) public {
-        updateAccount(msg.sender);
+        _updateAccount(msg.sender);
         uint tokens = accounts[msg.sender].owing[token];
         if (tokens > 0) {
             accounts[msg.sender].owing[token] = 0;
@@ -231,7 +234,7 @@ contract OGDToken is OGDTokenInterface, Permissioned {
 
     /// @notice Mint tokens
     function mint(address tokenOwner, uint tokens) override external permitted(ROLE_MINTTOKENS, tokens) returns (bool success) {
-        updateAccount(tokenOwner);
+        _updateAccount(tokenOwner);
         accounts[tokenOwner].balance = accounts[tokenOwner].balance.add(tokens);
         _totalSupply = _totalSupply.add(tokens);
         emit Transfer(address(0), tokenOwner, tokens);
@@ -239,7 +242,7 @@ contract OGDToken is OGDTokenInterface, Permissioned {
     }
     /// @notice Burn tokens
     function burn(uint tokens) override external returns (bool success) {
-        updateAccount(msg.sender);
+        _updateAccount(msg.sender);
         accounts[msg.sender].balance = accounts[msg.sender].balance.sub(tokens);
         _totalSupply = _totalSupply.sub(tokens);
         emit Transfer(msg.sender, address(0), tokens);

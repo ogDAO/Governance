@@ -15,7 +15,7 @@ Compilation finished successfully
         Address 0x0f4eA6f2be49d822b7cAEf4175450A4D83A32e72 => Fee0Token:0x0f4e
         Address 0x6eaC8DFBdEB9588C9FEEe24783B4137b082f9708 => Fee1Token:0x6eaC
         Address 0xBa1FCDaE835E77cAB2a76a7C3884AdC630f7a5B0 => Fee2Token:0xBa1F
-        ogdTokenTx - gasUsed: 2804312, fee: 0.22434496, feeUsd: 86.5231207232, @ 80.0 gwei & 385.67 ETH/USD, 0x5281853c5c9a5bb6bb910626345635137f9b73b5d0f14acd69579fd9e13963f3
+        ogdTokenTx - gasUsed: 2796289, fee: 0.22370312, feeUsd: 86.2755822904, @ 80.0 gwei & 385.67 ETH/USD, 0x61cfda14af6ed130e5fc9e6782d91ea2750d1ffc94bdfe5b345c332b5ac3d3c6
         + OGDToken.PermissionUpdated(account: Deployer:0xa00A, role: 0, active: true, maximum: 0, processed: 0)
         + OGDToken.Transfer(from: ETH|null:0x0000, to: Deployer:0xa00A, tokens: 0.0)
         fee0TokenTx - gasUsed: 823708, fee: 0.06589664, feeUsd: 25.4143571488, @ 80.0 gwei & 385.67 ETH/USD, 0xc84cba049eb671696eb908104a09861983464b45a9e3627cbd9cbeb7c1a8c50d
@@ -27,7 +27,7 @@ Compilation finished successfully
         
          # Account                                        ΔETH                      OGD                     FEE0                     FEE1                     FEE2
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
-         0 Deployer:0xa00A                         -0.42203584                      0.0                    100.0                   1000.0                  10000.0
+         0 Deployer:0xa00A                           -0.421394                      0.0                    100.0                   1000.0                  10000.0
          1 User1:0xa11A                                    0.0                      0.0                      0.0                      0.0                      0.0
          2 User2:0xa22A                                    0.0                      0.0                      0.0                      0.0                      0.0
          3 User3:0xa33a                                    0.0                      0.0                      0.0                      0.0                      0.0
@@ -66,7 +66,7 @@ Compilation finished successfully
         + OGDToken.TokenAdded(token: Fee0Token:0x0f4e, enabled: true)
          # Account                                        ΔETH                      OGD                     FEE0                     FEE1                     FEE2
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
-         0 Deployer:0xa00A                           -0.453574                      0.0                    100.0                   1000.0                  10000.0
+         0 Deployer:0xa00A                         -0.45293216                      0.0                    100.0                   1000.0                  10000.0
          1 User1:0xa11A                                    0.0                      0.0                      0.0                      0.0                      0.0
          2 User2:0xa22A                                    0.0                      0.0                      0.0                      0.0                      0.0
          3 User3:0xa33a                                    0.0                      0.0                      0.0                      0.0                      0.0
@@ -118,7 +118,7 @@ Compilation finished successfully
         
          # Account                                        ΔETH                      OGD                     FEE0                     FEE1                     FEE2
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
-         0 Deployer:0xa00A                         -0.48578728                      0.0                    100.0                   1000.0                  10000.0
+         0 Deployer:0xa00A                         -0.48514544                      0.0                    100.0                   1000.0                  10000.0
          1 User1:0xa11A                                    0.0                  10000.0                      0.0                      0.0                      0.0
          2 User2:0xa22A                                    0.0                  10000.0                      0.0                      0.0                      0.0
          3 User3:0xa33a                                    0.0                  10000.0                      0.0                      0.0                      0.0
@@ -155,15 +155,15 @@ Compilation finished successfully
         Token 3 symbol: 'FEE2', name: 'Fee2', decimals: 18, totalSupply: 10000.0, owner: Deployer:0xa00A, address: Fee2Token:0xBa1F @ 0xBa1FCDaE835E77cAB2a76a7C3884AdC630f7a5B0
         
         --- Test 3 - deployer deposits dividends of 100 FEE0 and 10 ETH ---
-        depositDividendFee0 - gasUsed: 78990, fee: 0.0063192, feeUsd: 2.437125864, @ 80.0 gwei & 385.67 ETH/USD, 0x8cb88c1b9a5ef5c747335f96a24aab6f9a30924730707b732b3d07d5369aa222
+        depositDividendFee0 - gasUsed: 79942, fee: 0.00639536, feeUsd: 2.4664984912, @ 80.0 gwei & 385.67 ETH/USD, 0x8cb88c1b9a5ef5c747335f96a24aab6f9a30924730707b732b3d07d5369aa222
         + Fee0Token.Transfer(from: Deployer:0xa00A, to: OGDToken:0x1647, tokens: 100.0)
         + OGDToken.DividendDeposited(token: Fee0Token:0x0f4e, tokens: 100.0)
-        depositDividendETH0 - gasUsed: 71722, fee: 0.00573776, feeUsd: 2.2128818992, @ 80.0 gwei & 385.67 ETH/USD, 0x49810bf02e77509cb88ea3d5d68878b9580e65f5109196b99f461a15148d7b8b
+        depositDividendETH0 - gasUsed: 72674, fee: 0.00581392, feeUsd: 2.2422545264, @ 80.0 gwei & 385.67 ETH/USD, 0x49810bf02e77509cb88ea3d5d68878b9580e65f5109196b99f461a15148d7b8b
         + OGDToken.DividendDeposited(token: ETH|null:0x0000, tokens: 10.0)
         
          # Account                                        ΔETH                      OGD                     FEE0                     FEE1                     FEE2
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
-         0 Deployer:0xa00A                        -10.49784424                      0.0                      0.0                   1000.0                  10000.0
+         0 Deployer:0xa00A                        -10.49735472                      0.0                      0.0                   1000.0                  10000.0
          1 User1:0xa11A                                    0.0                  10000.0                      0.0                      0.0                      0.0
          2 User2:0xa22A                                    0.0                  10000.0                      0.0                      0.0                      0.0
          3 User3:0xa33a                                    0.0                  10000.0                      0.0                      0.0                      0.0
@@ -205,7 +205,7 @@ Compilation finished successfully
         
          # Account                                        ΔETH                      OGD                     FEE0                     FEE1                     FEE2
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
-         0 Deployer:0xa00A                        -10.49784424                      0.0                      0.0                   1000.0                  10000.0
+         0 Deployer:0xa00A                        -10.49735472                      0.0                      0.0                   1000.0                  10000.0
          1 User1:0xa11A                                    0.0                  10000.0                      0.0                      0.0                      0.0
          2 User2:0xa22A                            -0.01310208                  10000.0                      0.0                      0.0                      0.0
          3 User3:0xa33a                                    0.0                  10000.0                      0.0                      0.0                      0.0
@@ -257,7 +257,7 @@ Compilation finished successfully
         
          # Account                                        ΔETH                      OGD                     FEE0                     FEE1                     FEE2
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
-         0 Deployer:0xa00A                        -10.49784424                      0.0                      0.0                   1000.0                  10000.0
+         0 Deployer:0xa00A                        -10.49735472                      0.0                      0.0                   1000.0                  10000.0
          1 User1:0xa11A                   3.320831973333333333                  10000.0    33.333333333333333333                      0.0                      0.0
          2 User2:0xa22A                   3.313828293333333333                  10000.0    33.333333333333333333                      0.0                      0.0
          3 User3:0xa33a                   3.320831973333333333                  10000.0    33.333333333333333333                      0.0                      0.0
@@ -304,7 +304,7 @@ Compilation finished successfully
         
          # Account                                        ΔETH                      OGD                     FEE0                     FEE1                     FEE2
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
-         0 Deployer:0xa00A                         -10.5280552                      0.0                      0.0                   1000.0                  10000.0
+         0 Deployer:0xa00A                        -10.52756568                      0.0                      0.0                   1000.0                  10000.0
          1 User1:0xa11A                   3.320831973333333333                  10000.0    33.333333333333333333                      0.0                      0.0
          2 User2:0xa22A                   3.313828293333333333                  10000.0    33.333333333333333333                      0.0                      0.0
          3 User3:0xa33a                   3.320831973333333333                  10000.0    33.333333333333333333                      0.0                      0.0
@@ -343,10 +343,10 @@ Compilation finished successfully
         Token 3 symbol: 'FEE2', name: 'Fee2', decimals: 18, totalSupply: 10000.0, owner: Deployer:0xa00A, address: Fee2Token:0xBa1F @ 0xBa1FCDaE835E77cAB2a76a7C3884AdC630f7a5B0
         
         --- Test 8 - deployer deposits dividends of 1,000 FEE1 and 10,000 FEE2 ---
-        depositDividendFee1 - gasUsed: 78990, fee: 0.0063192, feeUsd: 2.437125864, @ 80.0 gwei & 385.67 ETH/USD, 0x4663b7c2095702390ada487734a086dacd6842dbb3626179bb260b144dacaeb1
+        depositDividendFee1 - gasUsed: 79942, fee: 0.00639536, feeUsd: 2.4664984912, @ 80.0 gwei & 385.67 ETH/USD, 0x4663b7c2095702390ada487734a086dacd6842dbb3626179bb260b144dacaeb1
         + Fee1Token.Transfer(from: Deployer:0xa00A, to: OGDToken:0x1647, tokens: 1000.0)
         + OGDToken.DividendDeposited(token: Fee1Token:0x6eaC, tokens: 1000.0)
-        depositDividendFee2 - gasUsed: 79002, fee: 0.00632016, feeUsd: 2.4374961072, @ 80.0 gwei & 385.67 ETH/USD, 0xd35209cc2ba073a3cabbf19317a58d27d9234bf984b7d132f150e299093f6884
+        depositDividendFee2 - gasUsed: 79954, fee: 0.00639632, feeUsd: 2.4668687344, @ 80.0 gwei & 385.67 ETH/USD, 0xd35209cc2ba073a3cabbf19317a58d27d9234bf984b7d132f150e299093f6884
         + Fee2Token.Transfer(from: Deployer:0xa00A, to: OGDToken:0x1647, tokens: 10000.0)
         + OGDToken.DividendDeposited(token: Fee2Token:0xBa1F, tokens: 10000.0)
         --- Test 9 - user{1..4} withdraw 250 FEE1 and 2500 FEE2 ---
@@ -373,7 +373,7 @@ Compilation finished successfully
         
          # Account                                        ΔETH                      OGD                     FEE0                     FEE1                     FEE2
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
-         0 Deployer:0xa00A                        -10.54069456                      0.0                      0.0                      0.0                      0.0
+         0 Deployer:0xa00A                        -10.54035736                      0.0                      0.0                      0.0                      0.0
          1 User1:0xa11A                   3.303770533333333333                  10000.0    33.333333333333333333                    250.0                   2500.0
          2 User2:0xa22A                   3.296766853333333333                  10000.0    33.333333333333333333                    250.0                   2500.0
          3 User3:0xa33a                   3.303770533333333333                  10000.0    33.333333333333333333                    250.0                   2500.0
@@ -417,7 +417,7 @@ Compilation finished successfully
         
          # Account                                        ΔETH                      OGD                     FEE0                     FEE1                     FEE2
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
-         0 Deployer:0xa00A                        -10.54069456                      0.0                      0.0                      0.0                      0.0
+         0 Deployer:0xa00A                        -10.54035736                      0.0                      0.0                      0.0                      0.0
          1 User1:0xa11A                   3.303770533333333333                  10000.0    33.333333333333333333                    250.0                   2500.0
          2 User2:0xa22A                   3.287100853333333333  9999.876543210876543211    33.333333333333333333                    250.0                   2500.0
          3 User3:0xa33a                   3.303770533333333333 10000.123456789123456789    33.333333333333333333                    250.0                   2500.0
@@ -457,7 +457,7 @@ Compilation finished successfully
         
         --- Test Completed ---
 
-      ✓ Workflow #0 (4672ms)
+      ✓ Workflow #0 (4706ms)
     TestOGDToken - Workflow #1 - Transfer Test
         Address 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E => Deployer:0xa00A
         Address 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433 => User1:0xa11A
@@ -469,7 +469,7 @@ Compilation finished successfully
         Address 0x0b70A80b0336777A1697A5b505A6F1f3cC1087A0 => Fee0Token:0x0b70
         Address 0xA92f39B1123B4051a6Ef6736879F85249AB45845 => Fee1Token:0xA92f
         Address 0xb5EBF7c369B492493e17032CA29E41c0496EcbE5 => Fee2Token:0xb5EB
-        ogdTokenTx - gasUsed: 2804312, fee: 0.22434496, feeUsd: 86.5231207232, @ 80.0 gwei & 385.67 ETH/USD, 0xbd81d5293b9945761dab44505cf4cbdc565d23dd3aa41816bb81d6cf510bcd37
+        ogdTokenTx - gasUsed: 2796289, fee: 0.22370312, feeUsd: 86.2755822904, @ 80.0 gwei & 385.67 ETH/USD, 0x7e55caaa81c484d44e778276005fe8e8a3da73359ed01ff76d77f794ca89dedb
         + OGDToken.PermissionUpdated(account: Deployer:0xa00A, role: 0, active: true, maximum: 0, processed: 0)
         + OGDToken.Transfer(from: ETH|null:0x0000, to: Deployer:0xa00A, tokens: 0.0)
         fee0TokenTx - gasUsed: 823708, fee: 0.06589664, feeUsd: 25.4143571488, @ 80.0 gwei & 385.67 ETH/USD, 0x9f2efaa2c772c29b6d3e95dc2b36a6301babfce568e4f6c7b20d89285bb033ce
@@ -481,7 +481,7 @@ Compilation finished successfully
         
          # Account                                        ΔETH                      OGD                     FEE0                     FEE1                     FEE2
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
-         0 Deployer:0xa00A                         -0.42203584                      0.0                    100.0                   1000.0                  10000.0
+         0 Deployer:0xa00A                           -0.421394                      0.0                    100.0                   1000.0                  10000.0
          1 User1:0xa11A                                    0.0                      0.0                      0.0                      0.0                      0.0
          2 User2:0xa22A                                    0.0                      0.0                      0.0                      0.0                      0.0
          3 User3:0xa33a                                    0.0                      0.0                      0.0                      0.0                      0.0
@@ -520,7 +520,7 @@ Compilation finished successfully
         + OGDToken.TokenAdded(token: Fee0Token:0x0b70, enabled: true)
          # Account                                        ΔETH                      OGD                     FEE0                     FEE1                     FEE2
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
-         0 Deployer:0xa00A                           -0.453574                      0.0                    100.0                   1000.0                  10000.0
+         0 Deployer:0xa00A                         -0.45293216                      0.0                    100.0                   1000.0                  10000.0
          1 User1:0xa11A                                    0.0                      0.0                      0.0                      0.0                      0.0
          2 User2:0xa22A                                    0.0                      0.0                      0.0                      0.0                      0.0
          3 User3:0xa33a                                    0.0                      0.0                      0.0                      0.0                      0.0
@@ -570,7 +570,7 @@ Compilation finished successfully
         
          # Account                                        ΔETH                      OGD                     FEE0                     FEE1                     FEE2
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
-         0 Deployer:0xa00A                         -0.47936728                      0.0                    100.0                   1000.0                  10000.0
+         0 Deployer:0xa00A                         -0.47872544                      0.0                    100.0                   1000.0                  10000.0
          1 User1:0xa11A                                    0.0                  10000.0                      0.0                      0.0                      0.0
          2 User2:0xa22A                                    0.0                  10000.0                      0.0                      0.0                      0.0
          3 User3:0xa33a                                    0.0                      0.0                      0.0                      0.0                      0.0
@@ -607,15 +607,15 @@ Compilation finished successfully
         Token 3 symbol: 'FEE2', name: 'Fee2', decimals: 18, totalSupply: 10000.0, owner: Deployer:0xa00A, address: Fee2Token:0xb5EB @ 0xb5EBF7c369B492493e17032CA29E41c0496EcbE5
         
         --- Test 3 - deployer deposits dividends of 100 FEE0 and 10 ETH ---
-        depositDividendFee0 - gasUsed: 78990, fee: 0.0063192, feeUsd: 2.437125864, @ 80.0 gwei & 385.67 ETH/USD, 0xc1827a16ef14d27355caaec1469b44a28ec575031c4c3542759710b1c3b78ed1
+        depositDividendFee0 - gasUsed: 79942, fee: 0.00639536, feeUsd: 2.4664984912, @ 80.0 gwei & 385.67 ETH/USD, 0xc1827a16ef14d27355caaec1469b44a28ec575031c4c3542759710b1c3b78ed1
         + Fee0Token.Transfer(from: Deployer:0xa00A, to: OGDToken:0xee9a, tokens: 100.0)
         + OGDToken.DividendDeposited(token: Fee0Token:0x0b70, tokens: 100.0)
-        depositDividendETH0 - gasUsed: 71722, fee: 0.00573776, feeUsd: 2.2128818992, @ 80.0 gwei & 385.67 ETH/USD, 0xc56950e20f5ca125c8e2d899d1c5cbd859195021ae44dfbd1a719308aadc2087
+        depositDividendETH0 - gasUsed: 72674, fee: 0.00581392, feeUsd: 2.2422545264, @ 80.0 gwei & 385.67 ETH/USD, 0xc56950e20f5ca125c8e2d899d1c5cbd859195021ae44dfbd1a719308aadc2087
         + OGDToken.DividendDeposited(token: ETH|null:0x0000, tokens: 10.0)
         
          # Account                                        ΔETH                      OGD                     FEE0                     FEE1                     FEE2
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
-         0 Deployer:0xa00A                        -10.49142424                      0.0                      0.0                   1000.0                  10000.0
+         0 Deployer:0xa00A                        -10.49093472                      0.0                      0.0                   1000.0                  10000.0
          1 User1:0xa11A                                    0.0                  10000.0                      0.0                      0.0                      0.0
          2 User2:0xa22A                                    0.0                  10000.0                      0.0                      0.0                      0.0
          3 User3:0xa33a                                    0.0                      0.0                      0.0                      0.0                      0.0
@@ -657,7 +657,7 @@ Compilation finished successfully
         
          # Account                                        ΔETH                      OGD                     FEE0                     FEE1                     FEE2
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
-         0 Deployer:0xa00A                        -10.49142424                      0.0                      0.0                   1000.0                  10000.0
+         0 Deployer:0xa00A                        -10.49093472                      0.0                      0.0                   1000.0                  10000.0
          1 User1:0xa11A                                    0.0                  10000.0                      0.0                      0.0                      0.0
          2 User2:0xa22A                            -0.01684704                      0.0                      0.0                      0.0                      0.0
          3 User3:0xa33a                                    0.0                  10000.0                      0.0                      0.0                      0.0
@@ -706,7 +706,7 @@ Compilation finished successfully
         
          # Account                                        ΔETH                      OGD                     FEE0                     FEE1                     FEE2
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
-         0 Deployer:0xa00A                        -10.49142424                      0.0                      0.0                   1000.0                  10000.0
+         0 Deployer:0xa00A                        -10.49093472                      0.0                      0.0                   1000.0                  10000.0
          1 User1:0xa11A                             4.98989864                  10000.0                     50.0                      0.0                      0.0
          2 User2:0xa22A                             4.97795576                      0.0                     50.0                      0.0                      0.0
          3 User3:0xa33a                            -0.00453152                  10000.0                      0.0                      0.0                      0.0
@@ -742,7 +742,7 @@ Compilation finished successfully
         Token 2 symbol: 'FEE1', name: 'Fee1', decimals: 18, totalSupply: 1000.0, owner: Deployer:0xa00A, address: Fee1Token:0xA92f @ 0xA92f39B1123B4051a6Ef6736879F85249AB45845
         Token 3 symbol: 'FEE2', name: 'Fee2', decimals: 18, totalSupply: 10000.0, owner: Deployer:0xa00A, address: Fee2Token:0xb5EB @ 0xb5EBF7c369B492493e17032CA29E41c0496EcbE5
         
-      ✓ Workflow #1 - Transfer Test (2528ms)
+      ✓ Workflow #1 - Transfer Test (2493ms)
     TestOGDToken - Workflow #2 - address(0) with balance
         Address 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E => Deployer:0xa00A
         Address 0xa11AAE29840fBb5c86E6fd4cF809EBA183AEf433 => User1:0xa11A
@@ -754,7 +754,7 @@ Compilation finished successfully
         Address 0x103f080fe5981A6C1651F87717806921e0000805 => Fee0Token:0x103f
         Address 0xaa2549768781Bc188ed636287d25aaBb73A2E3D8 => Fee1Token:0xaa25
         Address 0x2787C8cBC9B5D4A3b49dba8b2d31376616933Ca9 => Fee2Token:0x2787
-        ogdTokenTx - gasUsed: 2804312, fee: 0.22434496, feeUsd: 86.5231207232, @ 80.0 gwei & 385.67 ETH/USD, 0xba54cb7d97a4be96b1669f858d73ed669caa72ad81fa4d54efb1bdc61c30f75c
+        ogdTokenTx - gasUsed: 2796289, fee: 0.22370312, feeUsd: 86.2755822904, @ 80.0 gwei & 385.67 ETH/USD, 0x52fed84c0218aa353b87d7f402814a6df05c6d952c505f6ea506968036941847
         + OGDToken.PermissionUpdated(account: Deployer:0xa00A, role: 0, active: true, maximum: 0, processed: 0)
         + OGDToken.Transfer(from: ETH|null:0x0000, to: Deployer:0xa00A, tokens: 0.0)
         fee0TokenTx - gasUsed: 823708, fee: 0.06589664, feeUsd: 25.4143571488, @ 80.0 gwei & 385.67 ETH/USD, 0xad7fbc615ffe901f5b90d5888b15c43a6846a6bfa17d05863dad1077ee8107d8
@@ -766,7 +766,7 @@ Compilation finished successfully
         
          # Account                                        ΔETH                      OGD                     FEE0                     FEE1                     FEE2
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
-         0 Deployer:0xa00A                         -0.42203584                      0.0                    100.0                   1000.0                  10000.0
+         0 Deployer:0xa00A                           -0.421394                      0.0                    100.0                   1000.0                  10000.0
          1 User1:0xa11A                                    0.0                      0.0                      0.0                      0.0                      0.0
          2 User2:0xa22A                                    0.0                      0.0                      0.0                      0.0                      0.0
          3 User3:0xa33a                                    0.0                      0.0                      0.0                      0.0                      0.0
@@ -805,7 +805,7 @@ Compilation finished successfully
         + OGDToken.TokenAdded(token: Fee0Token:0x103f, enabled: true)
          # Account                                        ΔETH                      OGD                     FEE0                     FEE1                     FEE2
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
-         0 Deployer:0xa00A                         -0.45357304                      0.0                    100.0                   1000.0                  10000.0
+         0 Deployer:0xa00A                          -0.4529312                      0.0                    100.0                   1000.0                  10000.0
          1 User1:0xa11A                                    0.0                      0.0                      0.0                      0.0                      0.0
          2 User2:0xa22A                                    0.0                      0.0                      0.0                      0.0                      0.0
          3 User3:0xa33a                                    0.0                      0.0                      0.0                      0.0                      0.0
@@ -859,7 +859,7 @@ Compilation finished successfully
         
          # Account                                        ΔETH                      OGD                     FEE0                     FEE1                     FEE2
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
-         0 Deployer:0xa00A                         -0.49218712                      0.0                    100.0                   1000.0                  10000.0
+         0 Deployer:0xa00A                         -0.49154528                      0.0                    100.0                   1000.0                  10000.0
          1 User1:0xa11A                                    0.0                  10000.0                      0.0                      0.0                      0.0
          2 User2:0xa22A                                    0.0                  10000.0                      0.0                      0.0                      0.0
          3 User3:0xa33a                                    0.0                  10000.0                      0.0                      0.0                      0.0
@@ -896,15 +896,15 @@ Compilation finished successfully
         Token 3 symbol: 'FEE2', name: 'Fee2', decimals: 18, totalSupply: 10000.0, owner: Deployer:0xa00A, address: Fee2Token:0x2787 @ 0x2787C8cBC9B5D4A3b49dba8b2d31376616933Ca9
         
         --- Test 3 - deployer deposits dividends of 100 FEE0 and 10 ETH ---
-        depositDividendFee0 - gasUsed: 78978, fee: 0.00631824, feeUsd: 2.4367556208, @ 80.0 gwei & 385.67 ETH/USD, 0xe429bac58583a847985a39cef78cf538f9fb23d420cd564a1c732df643c68d1a
+        depositDividendFee0 - gasUsed: 79930, fee: 0.0063944, feeUsd: 2.466128248, @ 80.0 gwei & 385.67 ETH/USD, 0xe429bac58583a847985a39cef78cf538f9fb23d420cd564a1c732df643c68d1a
         + Fee0Token.Transfer(from: Deployer:0xa00A, to: OGDToken:0xF393, tokens: 100.0)
         + OGDToken.DividendDeposited(token: Fee0Token:0x103f, tokens: 100.0)
-        depositDividendETH0 - gasUsed: 71722, fee: 0.00573776, feeUsd: 2.2128818992, @ 80.0 gwei & 385.67 ETH/USD, 0xbd98d3e9a473831f7a5fe0372509b4ec5b214e6faf62bc8a7811919e6d2ec830
+        depositDividendETH0 - gasUsed: 72674, fee: 0.00581392, feeUsd: 2.2422545264, @ 80.0 gwei & 385.67 ETH/USD, 0xbd98d3e9a473831f7a5fe0372509b4ec5b214e6faf62bc8a7811919e6d2ec830
         + OGDToken.DividendDeposited(token: ETH|null:0x0000, tokens: 10.0)
         
          # Account                                        ΔETH                      OGD                     FEE0                     FEE1                     FEE2
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
-         0 Deployer:0xa00A                        -10.50424312                      0.0                      0.0                   1000.0                  10000.0
+         0 Deployer:0xa00A                         -10.5037536                      0.0                      0.0                   1000.0                  10000.0
          1 User1:0xa11A                                    0.0                  10000.0                      0.0                      0.0                      0.0
          2 User2:0xa22A                                    0.0                  10000.0                      0.0                      0.0                      0.0
          3 User3:0xa33a                                    0.0                  10000.0                      0.0                      0.0                      0.0
@@ -956,7 +956,7 @@ Compilation finished successfully
         
          # Account                                        ΔETH                      OGD                     FEE0                     FEE1                     FEE2
         -- --------------------------- ----------------------- ------------------------ ------------------------ ------------------------ ------------------------
-         0 Deployer:0xa00A                        -10.50424312                      0.0                      0.0                   1000.0                  10000.0
+         0 Deployer:0xa00A                         -10.5037536                      0.0                      0.0                   1000.0                  10000.0
          1 User1:0xa11A                   3.320831973333333333                  10000.0    33.333333333333333333                      0.0                      0.0
          2 User2:0xa22A                   3.320831973333333333                  10000.0    33.333333333333333333                      0.0                      0.0
          3 User3:0xa33a                   3.320831973333333333                  10000.0    33.333333333333333333                      0.0                      0.0
@@ -992,7 +992,7 @@ Compilation finished successfully
         Token 2 symbol: 'FEE1', name: 'Fee1', decimals: 18, totalSupply: 1000.0, owner: Deployer:0xa00A, address: Fee1Token:0xaa25 @ 0xaa2549768781Bc188ed636287d25aaBb73A2E3D8
         Token 3 symbol: 'FEE2', name: 'Fee2', decimals: 18, totalSupply: 10000.0, owner: Deployer:0xa00A, address: Fee2Token:0x2787 @ 0x2787C8cBC9B5D4A3b49dba8b2d31376616933Ca9
         
-      ✓ Workflow #1 - Transfer Test (2118ms)
+      ✓ Workflow #1 - Transfer Test (2023ms)
 
 
   3 passing (13s)
