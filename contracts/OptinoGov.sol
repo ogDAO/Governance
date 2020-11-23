@@ -206,19 +206,19 @@ contract OptinoGov is ERC20, OptinoGovBase, InterestUtils {
     function balanceOf(address tokenOwner) override external view returns (uint balance) {
         return accounts[tokenOwner].balance;
     }
-    function transfer(address /*to*/, uint /*tokens*/) override external returns (bool success) {
+    function transfer(address to, uint tokens) override external returns (bool success) {
         require(false, "Unimplemented");
-        _totalSupply = _totalSupply;
+        emit Transfer(msg.sender, to, tokens);
         return true;
     }
-    function approve(address /*spender*/, uint /*tokens*/) override external returns (bool success) {
+    function approve(address spender, uint tokens) override external returns (bool success) {
         require(false, "Unimplemented");
-        _totalSupply = _totalSupply;
+        emit Approval(msg.sender, spender, tokens);
         return true;
     }
-    function transferFrom(address /*from*/, address /*to*/, uint /*tokens*/) override external returns (bool success) {
+    function transferFrom(address from, address to, uint tokens) override external returns (bool success) {
         require(false, "Unimplemented");
-        _totalSupply = _totalSupply;
+        emit Transfer(from, to, tokens);
         return true;
     }
     function allowance(address /*tokenOwner*/, address /*spender*/) override external pure returns (uint remaining) {
