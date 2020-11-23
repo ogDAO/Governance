@@ -175,7 +175,7 @@ contract OGDToken is OGDTokenInterface, Permissioned {
     /// @notice Deposit enabled dividend token
     function depositDividend(address token, uint tokens) public payable {
         TokenList.Token memory _dividendToken = dividendTokens.entries[token];
-        require(__totalSupply() > accounts[address(0)].balance, "totalSupply 0");
+        require(__totalSupply() > 0, "totalSupply 0");
         require(_dividendToken.enabled, "Dividend token not enabled");
         totalDividendPoints[token] = totalDividendPoints[token].add(tokens.mul(POINT_MULTIPLIER).div(__totalSupply()));
         unclaimedDividends[token] = unclaimedDividends[token].add(tokens);
