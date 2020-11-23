@@ -1,9 +1,9 @@
 pragma solidity ^0.7.0;
 
-/// @notice DividendTokens to map [token] => [enabled]
+/// @notice TokenList to map [token] => [enabled]
 // SPDX-License-Identifier: GPLv2
-library DividendTokens {
-    struct DividendToken {
+library TokenList {
+    struct Token {
         uint timestamp;
         uint index;
         address token;
@@ -11,28 +11,28 @@ library DividendTokens {
     }
     struct Data {
         bool initialised;
-        mapping(address => DividendToken) entries;
+        mapping(address => Token) entries;
         address[] index;
     }
 
-    event DividendTokenAdded(address indexed token, bool enabled);
-    event DividendTokenRemoved(address indexed token);
-    event DividendTokenUpdated(address indexed token, bool enabled);
+    event TokenAdded(address indexed token, bool enabled);
+    event TokenRemoved(address indexed token);
+    event TokenUpdated(address indexed token, bool enabled);
 
     function init(Data storage self) internal {
         require(!self.initialised);
         self.initialised = true;
     }
     function add(Data storage self, address token, bool enabled) internal {
-        require(self.entries[token].timestamp == 0, "DividendToken.add: Cannot add duplicate");
+        require(self.entries[token].timestamp == 0, "Cannot add duplicate");
         self.index.push(token);
-        self.entries[token] = DividendToken(block.timestamp, self.index.length - 1, token, enabled);
-        emit DividendTokenAdded(token, enabled);
+        self.entries[token] = Token(block.timestamp, self.index.length - 1, token, enabled);
+        emit TokenAdded(token, enabled);
     }
     function remove(Data storage self, address token) internal {
-        require(self.entries[token].timestamp > 0, "DividendToken.update: Address not registered");
+        require(self.entries[token].timestamp > 0, "Not registered");
         uint removeIndex = self.entries[token].index;
-        emit DividendTokenRemoved(token);
+        emit TokenRemoved(token);
         uint lastIndex = self.index.length - 1;
         address lastIndexKey = self.index[lastIndex];
         self.index[removeIndex] = lastIndexKey;
@@ -43,11 +43,11 @@ library DividendTokens {
         }
     }
     function update(Data storage self, address token, bool enabled) internal {
-        DividendToken storage entry = self.entries[token];
-        require(entry.timestamp > 0, "DividendToken.update: Address not registered");
+        Token storage entry = self.entries[token];
+        require(entry.timestamp > 0, "Not registered");
         entry.timestamp = block.timestamp;
         entry.enabled = enabled;
-        emit DividendTokenUpdated(token, enabled);
+        emit TokenUpdated(token, enabled);
     }
     function length(Data storage self) internal view returns (uint) {
         return self.index.length;

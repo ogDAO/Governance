@@ -1,7 +1,7 @@
 pragma solidity ^0.7.0;
 pragma experimental ABIEncoderV2;
 
-import "hardhat/console.sol";
+// import "hardhat/console.sol";
 
 // Use prefix "./" normally and "https://github.com/ogDAO/Governance/blob/master/contracts/" in Remix
 import "./OGTokenInterface.sol";
@@ -23,6 +23,7 @@ contract OptinoGovBase {
     bytes32 private constant KEY_COLLECTREWARDFORDELAY = keccak256(abi.encodePacked("collectRewardForDelay"));
     bytes32 private constant KEY_PROPOSALCOST = keccak256(abi.encodePacked("proposalCost"));
     bytes32 private constant KEY_PROPOSALTHRESHOLD = keccak256(abi.encodePacked("proposalThreshold"));
+    bytes32 private constant KEY_VOTEREWARD = keccak256(abi.encodePacked("voteReward"));
     bytes32 private constant KEY_QUORUM = keccak256(abi.encodePacked("quorum"));
     bytes32 private constant KEY_QUORUMDECAYPERSECOND = keccak256(abi.encodePacked("quorumDecayPerSecond"));
     bytes32 private constant KEY_VOTINGDURATION = keccak256(abi.encodePacked("votingDuration"));
@@ -37,6 +38,7 @@ contract OptinoGovBase {
     uint public collectRewardForDelay = 1 seconds; // Testing 7 days
     uint public proposalCost = 100e18; // 100 tokens assuming 18 decimals
     uint public proposalThreshold = 1e15; // 0.1%, 18 decimals
+    uint public voteReward = 1e15; // 0.1% of weightedVote
     uint public quorum = 2e17; // 20%, 18 decimals
     uint public quorumDecayPerSecond = 4e17 / uint(365 days); // 40% per year, i.e., 0 in 6 months
     uint public votingDuration = 10 seconds; // 3 days;
@@ -78,6 +80,8 @@ contract OptinoGovBase {
             proposalCost = value;
         } else if (_key == KEY_PROPOSALTHRESHOLD) {
             proposalThreshold = value;
+        } else if (_key == KEY_VOTEREWARD) {
+            voteReward = value;
         } else if (_key == KEY_QUORUM) {
             quorum = value;
         } else if (_key == KEY_QUORUMDECAYPERSECOND) {
@@ -170,7 +174,7 @@ contract OptinoGov is ERC20, OptinoGovBase, InterestUtils {
     uint private _totalSupply;
     mapping(address => Account) private accounts;
     address[] public accountsIndex;
-    mapping(address => mapping(address => uint)) private allowed;
+    // mapping(address => mapping(address => uint)) private allowed;
     uint public totalVotes;
 
     Proposal[] private proposals;
@@ -178,8 +182,8 @@ contract OptinoGov is ERC20, OptinoGovBase, InterestUtils {
 
     event DelegateUpdated(address indexed oldDelegatee, address indexed delegatee, uint votes);
     event Committed(address indexed user, uint tokens, uint balance, uint duration, uint end, address delegatee, uint votes, uint totalVotes);
-    event Collected(address indexed user, uint elapsed, uint reward, uint callerReward, uint end, uint duration);
-    event Uncommitted(address indexed user, uint tokens, uint balance, uint duration, uint end, uint votes, uint totalVotes);
+    event Recommitted(address indexed user, uint elapsed, uint reward, uint callerReward, uint balance, uint duration, uint end, uint votes, uint totalVotes);
+    event Uncommitted(address indexed user, uint tokens, uint reward, uint balance, uint duration, uint end, uint votes, uint totalVotes);
     event Proposed(address indexed proposer, uint id, string description, address[] targets, uint[] value, bytes[] data, uint start);
     event Voted(address indexed user, uint id, bool support, uint votes, uint forVotes, uint againstVotes);
     event Executed(address indexed user, uint id);
@@ -280,6 +284,9 @@ contract OptinoGov is ERC20, OptinoGovBase, InterestUtils {
         }
     }
 
+    // commit(tokens, duration) - tokens can be 0 for a recommit, duration can be 0
+    // uncommit(tokens) - tokens can be 0 to uncommit all
+    // uncommitFor(tokens) by different msg.sender for a %fee, only after may need a time delay
     function _changeCommitment(address tokenOwner, uint depositTokens, uint withdrawTokens, bool withdrawRewards, uint duration) internal {
         Account storage account = accounts[tokenOwner];
         if (depositTokens > 0) {
@@ -290,17 +297,18 @@ contract OptinoGov is ERC20, OptinoGovBase, InterestUtils {
             require(withdrawTokens <= account.balance, "Unsufficient balance");
         }
         updateStatsBefore(account);
-        (uint reward, /*uint term*/) = _calculateReward(account);
+        (uint reward, uint elapsed) = _calculateReward(account);
         uint availableToMint = ogToken.availableToMint();
         if (reward > availableToMint) {
             reward = availableToMint;
         }
+        uint callerReward;
         if (reward > 0) {
             if (withdrawRewards) {
                 require(ogToken.mint(tokenOwner, reward), "OG mint failed");
             } else {
                 if (msg.sender != tokenOwner) {
-                    uint callerReward = reward.mul(collectRewardForFee).div(1e18);
+                    callerReward = reward.mul(collectRewardForFee).div(1e18);
                     if (callerReward > 0) {
                         reward = reward.sub(callerReward);
                         require(ogToken.mint(msg.sender, callerReward), "OG mint failed");
@@ -312,12 +320,6 @@ contract OptinoGov is ERC20, OptinoGovBase, InterestUtils {
                 require(ogdToken.mint(tokenOwner, reward), "OGD mint failed");
                 emit Transfer(address(0), tokenOwner, reward);
             }
-        }
-        if (depositTokens == 0 && withdrawTokens == 0) {
-            // require(block.timestamp + duration >= account.end, "Cannot shorten duration");
-            // TODO emit Recommit
-            account.duration = uint64(duration);
-            account.end = uint64(block.timestamp.add(duration));
         }
         if (depositTokens > 0) {
             if (account.end == 0) {
@@ -334,11 +336,9 @@ contract OptinoGov is ERC20, OptinoGovBase, InterestUtils {
             }
             require(ogdToken.mint(tokenOwner, depositTokens), "OGD mint failed");
             // TODO account.votes not updated. remove remaining variables
-            emit Committed(tokenOwner, depositTokens, account.balance, account.duration, account.end, account.delegatee, account.votes, totalVotes);
             _totalSupply = _totalSupply.add(depositTokens);
             emit Transfer(address(0), tokenOwner, depositTokens);
-        }
-        if (withdrawTokens > 0) {
+        } else if (withdrawTokens > 0) {
             _totalSupply = _totalSupply.sub(withdrawTokens);
             account.balance = account.balance.sub(withdrawTokens);
             if (account.balance == 0) {
@@ -358,10 +358,20 @@ contract OptinoGov is ERC20, OptinoGovBase, InterestUtils {
             account.end = uint64(block.timestamp);
             require(ogdToken.burnFrom(tokenOwner, withdrawTokens), "OG burnFrom failed");
             require(ogToken.transfer(tokenOwner, withdrawTokens), "OG transfer failed");
-            // TODO Uncommit
-        //     emit Unstaked(msg.sender, withdrawTokens, reward, tokensWithSlashingFactor, rewardWithSlashingFactor);
+        } else  {
+            // require(block.timestamp + duration >= account.end, "Cannot shorten duration");
+            account.duration = uint64(duration);
+            account.end = uint64(block.timestamp.add(duration));
         }
         updateStatsAfter(account);
+        if (depositTokens > 0) {
+            emit Committed(tokenOwner, depositTokens, account.balance, account.duration, account.end, account.delegatee, account.votes, totalVotes);
+        } else if (withdrawTokens > 0) {
+            emit Uncommitted(tokenOwner, withdrawTokens, reward, account.balance, account.duration, account.end, account.votes, totalVotes);
+        } else {
+            emit Recommitted(tokenOwner, elapsed, reward, callerReward, account.balance, account.duration, account.end, account.votes, totalVotes);
+        }
+
     }
     function commit(uint tokens, uint duration) public {
         // require(duration > 0, "duration must be > 0");
@@ -387,11 +397,9 @@ contract OptinoGov is ERC20, OptinoGovBase, InterestUtils {
 
 
     function propose(string memory description, address[] memory targets, uint[] memory values, bytes[] memory data) public returns(uint) {
-        console.log("        > %s -> propose(description %s)", msg.sender, description);
+        // console.log("        > %s -> propose(description %s)", msg.sender, description);
         // require(accounts[msg.sender].votes >= totalVotes.mul(proposalThreshold).div(1e18), "OptinoGov: Not enough votes to propose");
-
         require(targets.length > 0 && values.length == targets.length && data.length == targets.length, "Invalid data");
-
         Proposal storage proposal = proposals.push();
         proposal.start = uint64(block.timestamp);
         // proposal.executed = 0;
@@ -402,12 +410,7 @@ contract OptinoGov is ERC20, OptinoGovBase, InterestUtils {
         proposal.data = data;
         // proposal.forVotes = 0;
         // proposal.againstVotes = 0;
-
-        // require(ogToken.transferFrom(msg.sender, address(this), proposalCost), "OG transferFrom failed");
-        // require(ogToken.burn(proposalCost), "OG burn failed");
-        // require(ogToken.transferFrom(msg.sender, address(this), proposalCost), "OG transferFrom failed");
         require(ogToken.burnFrom(msg.sender, proposalCost), "OG burn failed");
-
         emit Proposed(msg.sender, proposals.length - 1, description, proposal.targets, proposal.values, proposal.data, block.timestamp);
         return proposals.length - 1;
     }
@@ -435,13 +438,16 @@ contract OptinoGov is ERC20, OptinoGovBase, InterestUtils {
             } else {
                 proposal.againstVotes = proposal.forVotes.add(votes);
             }
+            uint _voteReward = accounts[voter].votes.mul(voteReward).div(1e18);
+            if (_voteReward > 0) {
+                require(ogToken.mint(voter, _voteReward), "OG mint failed");
+            }
         }
         voted[id][voter] = true;
         accounts[voter].lastVoted = uint64(block.timestamp);
         emit Voted(voter, id, support, votes, proposal.forVotes, proposal.againstVotes);
     }
     function voteDigest(uint id, bool support) public view returns (bytes32 digest) {
-        // bytes32 domainSeparator = keccak256(abi.encode(EIP712_DOMAIN_TYPEHASH, keccak256(bytes(NAME)), getChainId(), address(this)));
         bytes32 structHash = keccak256(abi.encode(EIP712_VOTE_TYPEHASH, id, support));
         digest = keccak256(abi.encodePacked("\x19\x01", EIP712_DOMAIN_SEPARATOR, structHash));
     }
@@ -465,22 +471,6 @@ contract OptinoGov is ERC20, OptinoGovBase, InterestUtils {
             }
         }
     }
-    // function voteBySigs(uint id, bool[] memory _supports, bytes[] memory sigs) public {
-    //     require(_supports.length == sigs.length);
-    //     for (uint i = 0; i < _supports.length; i++) {
-    //         bool support = _supports[i];
-    //         bytes memory sig = sigs[i];
-    //         uint gasStart = gasleft();
-    //         bytes32 digest = voteDigest(id, support);
-    //         address voter = ecrecoverFromSig(digest, sig);
-    //         uint gasUsed = gasStart - gasleft();
-    //         console.log("        > voteBySigs - gasUsed: ", gasUsed);
-    //         require(voter != address(0), "Invalid signature");
-    //         if (!voted[id][voter]) {
-    //             _vote(voter, id, support);
-    //         }
-    //     }
-    // }
 
     // TODO
     function execute(uint id) public {
