@@ -71,7 +71,7 @@ contract OGDToken is OGDTokenInterface, Permissioned {
     function balanceOf(address tokenOwner) override external view returns (uint balance) {
         return accounts[tokenOwner].balance;
     }
-    function transfer(address to, uint tokens) override external returns (bool success) {
+    function transfer(address to, uint tokens) override external permitted(Roles.TransferTokens, tokens) returns (bool success) {
         _updateAccount(msg.sender);
         _updateAccount(to);
         accounts[msg.sender].balance = accounts[msg.sender].balance.sub(tokens);
@@ -84,7 +84,7 @@ contract OGDToken is OGDTokenInterface, Permissioned {
         emit Approval(msg.sender, spender, tokens);
         return true;
     }
-    function transferFrom(address from, address to, uint tokens) override external returns (bool success) {
+    function transferFrom(address from, address to, uint tokens) override external permitted(Roles.TransferTokens, tokens) returns (bool success) {
         _updateAccount(from);
         _updateAccount(to);
         allowed[from][msg.sender] = allowed[from][msg.sender].sub(tokens);

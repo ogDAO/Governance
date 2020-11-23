@@ -82,12 +82,13 @@ describe("TestOGDToken", function() {
       await data.printTxData("depositDividendETH0", depositDividendETH0);
       await data.printBalances();
 
-      console.log("        --- Test 4 - user1 dummy transfer to same account (internal stats update) ---");
-      const test4 = [];
-      test4.push(data.ogdToken.connect(data.user2Signer).transfer(data.user2, "1"));
-      const [transfer1] = await Promise.all(test4);
-      await data.printTxData("transfer1", transfer1);
-      await data.printBalances();
+      console.log("        --- Test 4 - user1 cannot transfer to same account (internal stats update) ---");
+      // const test4 = [];
+      // test4.push(data.ogdToken.connect(data.user2Signer).transfer(data.user2, "1"));
+      // const [transfer1] = await Promise.all(test4);
+      // await data.printTxData("transfer1", transfer1);
+      // await data.printBalances();
+      await data.expectException("Cannot transfer OGTokens", "Not permissioned", data.ogdToken.connect(data.user2Signer).transfer(data.user2, "1"));
 
       console.log("        --- Test 5 - user{1..3} withdraw 33.333333333333333333 FEE0 and 3.333333333333333333 ETH ---");
       const test5 = [];
@@ -144,12 +145,12 @@ describe("TestOGDToken", function() {
       await data.printTxData("withdrawDividends7", withdrawDividends7);
       await data.printBalances();
 
-      console.log("        --- Test 10 - user2 transfer 0.123456789123456789 OGD to user3 ---");
-      const test10 = [];
-      test10.push(data.ogdToken.connect(data.user2Signer).transfer(data.user3, ethers.utils.parseUnits("0.123456789123456789", 18)));
-      const [transfer2] = await Promise.all(test10);
-      await data.printTxData("transfer2", transfer2);
-      await data.printBalances();
+      // console.log("        --- Test 10 - user2 transfer 0.123456789123456789 OGD to user3 ---");
+      // const test10 = [];
+      // test10.push(data.ogdToken.connect(data.user2Signer).transfer(data.user3, ethers.utils.parseUnits("0.123456789123456789", 18)));
+      // const [transfer2] = await Promise.all(test10);
+      // await data.printTxData("transfer2", transfer2);
+      // await data.printBalances();
 
       const user1Fee1Balance = await data.fee1Token.balanceOf(data.user1);
       if (verbose) {
@@ -212,13 +213,14 @@ describe("TestOGDToken", function() {
       await data.printTxData("depositDividendETH0", depositDividendETH0);
       await data.printBalances();
 
-      console.log("        --- Test 4 - user2 transfer all tokens to user3 ---");
+      console.log("        --- Test 4 - user2 cannot transfer all tokens to user3 ---");
       const tokensToTransfer = ethers.utils.parseUnits("10000", 18);
-      const test4 = [];
-      test4.push(data.ogdToken.connect(data.user2Signer).transfer(data.user3, tokensToTransfer));
-      const [transfer1] = await Promise.all(test4);
-      await data.printTxData("transfer1", transfer1);
-      await data.printBalances();
+      // const test4 = [];
+      // test4.push(data.ogdToken.connect(data.user2Signer).transfer(data.user3, tokensToTransfer));
+      // const [transfer1] = await Promise.all(test4);
+      // await data.printTxData("transfer1", transfer1);
+      // await data.printBalances();
+      await data.expectException("Cannot transfer OGTokens", "Not permissioned", data.ogdToken.connect(data.user2Signer).transfer(data.user3, tokensToTransfer));
 
       console.log("        --- Test 5 - user{1..3} withdraw FEE0 ---");
       const test5 = [];
@@ -234,7 +236,7 @@ describe("TestOGDToken", function() {
   });
 
   describe("TestOGDToken - Workflow #2 - address(0) with balance", function() {
-    it("Workflow #1 - Transfer Test", async function() {
+    it("Workflow #2 - address(0) with balance", async function() {
       console.log("        --- Test 1 - OGDToken mint(...) permissioning, OGDToken.addDividendTokens for ETH and FEE0 ---");
       const test1a = [];
       test1a.push(data.ogdToken.setPermission(data.deployer, ROLE.SETCONFIG, true, 0));

@@ -14,7 +14,8 @@ contract Permissioned {
         SetConfig,
         MintTokens,
         BurnTokens,
-        RecoverTokens
+        RecoverTokens,
+        TransferTokens
     }
 
     struct Permission {
