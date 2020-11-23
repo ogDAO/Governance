@@ -20,9 +20,7 @@ contract OGToken is OGTokenInterface, Permissioned {
     uint public cap;
     bool public freezeCap;
 
-
     event CapUpdated(uint256 cap, bool freezeCap);
-    event LogInfo(string topic, uint number, bytes32 data, string note, address addr);
 
     constructor(string memory __symbol, string memory __name, uint8 __decimals, address tokenOwner, uint initialSupply) {
         initPermissioned(msg.sender);
