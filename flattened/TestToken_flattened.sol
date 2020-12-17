@@ -1,6 +1,6 @@
 // File: contracts/Owned.sol
 
-pragma solidity ^0.7.0;
+pragma solidity ^0.8.0;
 
 /// @notice Ownership
 // SPDX-License-Identifier: GPLv2
@@ -28,7 +28,7 @@ contract Owned {
 
 // File: contracts/SafeMath.sol
 
-pragma solidity ^0.7.0;
+pragma solidity ^0.8.0;
 
 /// @notice Safe maths
 // SPDX-License-Identifier: GPLv2
@@ -59,7 +59,7 @@ library SafeMath {
 
 // File: contracts/ERC20.sol
 
-pragma solidity ^0.7.0;
+pragma solidity ^0.8.0;
 
 /// @notice ERC20 https://eips.ethereum.org/EIPS/eip-20 with optional symbol, name and decimals
 // SPDX-License-Identifier: GPLv2
@@ -81,7 +81,7 @@ interface ERC20 {
 
 // File: contracts/TestToken.sol
 
-pragma solidity ^0.7.0;
+pragma solidity ^0.8.0;
 
 // Use prefix "./" normally and "https://github.com/ogDAO/Governance/blob/master/contracts/" in Remix
 

@@ -1,4 +1,4 @@
-pragma solidity ^0.7.0;
+pragma solidity ^0.8.0;
 // pragma experimental ABIEncoderV2;
 
 // import "hardhat/console.sol";
@@ -183,7 +183,7 @@ contract OGDToken is OGDTokenInterface, Permissioned {
             require(msg.value >= tokens, "Insufficient ETH sent");
             uint refund = msg.value.sub(tokens);
             if (refund > 0) {
-                require(msg.sender.send(refund), "ETH refund failure");
+                require(payable(msg.sender).send(refund), "ETH refund failure");
             }
         } else {
             require(ERC20(token).transferFrom(msg.sender, address(this), tokens), "ERC20 transferFrom failure");

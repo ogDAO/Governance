@@ -4,7 +4,8 @@
  * Author: Mikhail Vladimirov <mikhail.vladimirov@gmail.com>
  */
 // pragma solidity ^0.5.0 || ^0.6.0 || ^0.7.0;
-pragma solidity ^0.7.0;
+// TODO BK CHECK pragma solidity ^0.7.0;
+pragma solidity ^0.8.0;
 
 /**
  * Smart contract library of mathematical functions operating with IEEE 754
@@ -219,6 +220,8 @@ library ABDKMathQuad {
    * @param x quadruple precision number
    * @return signed 64.64 bit fixed point number
    */
+  // TODO BK
+  /*
   function to64x64 (bytes16 x) internal pure returns (int128) {
     uint256 exponent = uint128 (x) >> 112 & 0x7FFF;
 
@@ -239,6 +242,7 @@ library ABDKMathQuad {
       return int128 (result);
     }
   }
+  */
 
   /**
    * Convert octuple precision number into quadruple precision number.

@@ -1,6 +1,6 @@
 // File: contracts/SafeMath.sol
 
-pragma solidity ^0.7.0;
+pragma solidity ^0.8.0;
 
 /// @notice Safe maths
 // SPDX-License-Identifier: GPLv2
@@ -31,7 +31,7 @@ library SafeMath {
 
 // File: contracts/Permissioned.sol
 
-pragma solidity ^0.7.0;
+pragma solidity ^0.8.0;
 
 // import "hardhat/console.sol";
 
@@ -46,7 +46,8 @@ contract Permissioned {
         SetConfig,
         MintTokens,
         BurnTokens,
-        RecoverTokens
+        RecoverTokens,
+        TransferTokens
     }
 
     struct Permission {
@@ -100,7 +101,7 @@ contract Permissioned {
 
 // File: contracts/ERC20.sol
 
-pragma solidity ^0.7.0;
+pragma solidity ^0.8.0;
 
 /// @notice ERC20 https://eips.ethereum.org/EIPS/eip-20 with optional symbol, name and decimals
 // SPDX-License-Identifier: GPLv2
@@ -122,7 +123,7 @@ interface ERC20 {
 
 // File: contracts/OGDTokenInterface.sol
 
-pragma solidity ^0.7.0;
+pragma solidity ^0.8.0;
 
 
 /// @notice OGDTokenInterface = ERC20 + mint + burn + dividend payment. (c) The Optino Project 2020
@@ -135,7 +136,7 @@ interface OGDTokenInterface is ERC20 {
 
 // File: contracts/TokenList.sol
 
-pragma solidity ^0.7.0;
+pragma solidity ^0.8.0;
 
 /// @notice TokenList to map [token] => [enabled]
 // SPDX-License-Identifier: GPLv2
@@ -193,7 +194,7 @@ library TokenList {
 
 // File: contracts/OGDToken.sol
 
-pragma solidity ^0.7.0;
+pragma solidity ^0.8.0;
 // pragma experimental ABIEncoderV2;
 
 // import "hardhat/console.sol";
@@ -266,7 +267,7 @@ contract OGDToken is OGDTokenInterface, Permissioned {
     function balanceOf(address tokenOwner) override external view returns (uint balance) {
         return accounts[tokenOwner].balance;
     }
-    function transfer(address to, uint tokens) override external returns (bool success) {
+    function transfer(address to, uint tokens) override external permitted(Roles.TransferTokens, tokens) returns (bool success) {
         _updateAccount(msg.sender);
         _updateAccount(to);
         accounts[msg.sender].balance = accounts[msg.sender].balance.sub(tokens);
@@ -279,7 +280,7 @@ contract OGDToken is OGDTokenInterface, Permissioned {
         emit Approval(msg.sender, spender, tokens);
         return true;
     }
-    function transferFrom(address from, address to, uint tokens) override external returns (bool success) {
+    function transferFrom(address from, address to, uint tokens) override external permitted(Roles.TransferTokens, tokens) returns (bool success) {
         _updateAccount(from);
         _updateAccount(to);
         allowed[from][msg.sender] = allowed[from][msg.sender].sub(tokens);
@@ -370,7 +371,7 @@ contract OGDToken is OGDTokenInterface, Permissioned {
     /// @notice Deposit enabled dividend token
     function depositDividend(address token, uint tokens) public payable {
         TokenList.Token memory _dividendToken = dividendTokens.entries[token];
-        require(__totalSupply() > accounts[address(0)].balance, "totalSupply 0");
+        require(__totalSupply() > 0, "totalSupply 0");
         require(_dividendToken.enabled, "Dividend token not enabled");
         totalDividendPoints[token] = totalDividendPoints[token].add(tokens.mul(POINT_MULTIPLIER).div(__totalSupply()));
         unclaimedDividends[token] = unclaimedDividends[token].add(tokens);
@@ -378,7 +379,7 @@ contract OGDToken is OGDTokenInterface, Permissioned {
             require(msg.value >= tokens, "Insufficient ETH sent");
             uint refund = msg.value.sub(tokens);
             if (refund > 0) {
-                require(msg.sender.send(refund), "ETH refund failure");
+                require(payable(msg.sender).send(refund), "ETH refund failure");
             }
         } else {
             require(ERC20(token).transferFrom(msg.sender, address(this), tokens), "ERC20 transferFrom failure");

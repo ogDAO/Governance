@@ -1,4 +1,4 @@
-pragma solidity ^0.7.0;
+pragma solidity ^0.8.0;
 
 // Use prefix "./" normally and "https://github.com/ogDAO/Governance/blob/master/contracts/" in Remix
 import "./Permissioned.sol";
@@ -81,11 +81,12 @@ contract OGToken is OGTokenInterface, Permissioned {
     function availableToMint() override external view returns (uint tokens) {
         bytes32 key = keccak256(abi.encodePacked(msg.sender, Roles.MintTokens));
         Permission memory permission = permissions[key];
+        // TODO
         if (permission.maximum == 0) {
             if (cap > 0) {
                 tokens = cap.sub(__totalSupply());
             } else {
-                tokens = uint(-1);
+                tokens = type(uint).max;
             }
         } else {
             tokens = permission.maximum.sub(permission.processed);

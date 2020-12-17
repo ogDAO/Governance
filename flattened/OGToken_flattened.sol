@@ -1,6 +1,6 @@
 // File: contracts/SafeMath.sol
 
-pragma solidity ^0.7.0;
+pragma solidity ^0.8.0;
 
 /// @notice Safe maths
 // SPDX-License-Identifier: GPLv2
@@ -31,7 +31,7 @@ library SafeMath {
 
 // File: contracts/Permissioned.sol
 
-pragma solidity ^0.7.0;
+pragma solidity ^0.8.0;
 
 // import "hardhat/console.sol";
 
@@ -46,7 +46,8 @@ contract Permissioned {
         SetConfig,
         MintTokens,
         BurnTokens,
-        RecoverTokens
+        RecoverTokens,
+        TransferTokens
     }
 
     struct Permission {
@@ -100,7 +101,7 @@ contract Permissioned {
 
 // File: contracts/ERC20.sol
 
-pragma solidity ^0.7.0;
+pragma solidity ^0.8.0;
 
 /// @notice ERC20 https://eips.ethereum.org/EIPS/eip-20 with optional symbol, name and decimals
 // SPDX-License-Identifier: GPLv2
@@ -122,7 +123,7 @@ interface ERC20 {
 
 // File: contracts/OGTokenInterface.sol
 
-pragma solidity ^0.7.0;
+pragma solidity ^0.8.0;
 
 
 /// @notice OGTokenInterface = ERC20 + mint + burn with optional freezable cap. (c) The Optino Project 2020
@@ -136,7 +137,7 @@ interface OGTokenInterface is ERC20 {
 
 // File: contracts/OGToken.sol
 
-pragma solidity ^0.7.0;
+pragma solidity ^0.8.0;
 
 // Use prefix "./" normally and "https://github.com/ogDAO/Governance/blob/master/contracts/" in Remix
 
@@ -158,9 +159,7 @@ contract OGToken is OGTokenInterface, Permissioned {
     uint public cap;
     bool public freezeCap;
 
-
     event CapUpdated(uint256 cap, bool freezeCap);
-    event LogInfo(string topic, uint number, bytes32 data, string note, address addr);
 
     constructor(string memory __symbol, string memory __name, uint8 __decimals, address tokenOwner, uint initialSupply) {
         initPermissioned(msg.sender);
@@ -221,11 +220,12 @@ contract OGToken is OGTokenInterface, Permissioned {
     function availableToMint() override external view returns (uint tokens) {
         bytes32 key = keccak256(abi.encodePacked(msg.sender, Roles.MintTokens));
         Permission memory permission = permissions[key];
+        // TODO
         if (permission.maximum == 0) {
             if (cap > 0) {
                 tokens = cap.sub(__totalSupply());
             } else {
-                tokens = uint(-1);
+                tokens = type(uint).max;
             }
         } else {
             tokens = permission.maximum.sub(permission.processed);

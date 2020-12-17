@@ -1,6 +1,6 @@
 // File: contracts/ERC20.sol
 
-pragma solidity ^0.7.0;
+pragma solidity ^0.8.0;
 
 /// @notice ERC20 https://eips.ethereum.org/EIPS/eip-20 with optional symbol, name and decimals
 // SPDX-License-Identifier: GPLv2
@@ -22,7 +22,7 @@ interface ERC20 {
 
 // File: contracts/CloneFactory.sol
 
-pragma solidity ^0.7.0;
+pragma solidity ^0.8.0;
 
 /// @notice https://github.com/optionality/clone-factory/blob/32782f82dfc5a00d103a7e61a17a5dedbd1e8e9d/contracts/CloneFactory.sol
 // SPDX-License-Identifier: MIT
@@ -86,7 +86,7 @@ contract CloneFactory {
 
 // File: contracts/OGTokenInterface.sol
 
-pragma solidity ^0.7.0;
+pragma solidity ^0.8.0;
 
 
 /// @notice OGTokenInterface = ERC20 + mint + burn with optional freezable cap. (c) The Optino Project 2020
@@ -100,7 +100,7 @@ interface OGTokenInterface is ERC20 {
 
 // File: contracts/OGDTokenInterface.sol
 
-pragma solidity ^0.7.0;
+pragma solidity ^0.8.0;
 
 
 /// @notice OGDTokenInterface = ERC20 + mint + burn + dividend payment. (c) The Optino Project 2020
@@ -113,7 +113,7 @@ interface OGDTokenInterface is ERC20 {
 
 // File: contracts/Owned.sol
 
-pragma solidity ^0.7.0;
+pragma solidity ^0.8.0;
 
 /// @notice Ownership
 // SPDX-License-Identifier: GPLv2
@@ -141,7 +141,7 @@ contract Owned {
 
 // File: contracts/SafeMath.sol
 
-pragma solidity ^0.7.0;
+pragma solidity ^0.8.0;
 
 /// @notice Safe maths
 // SPDX-License-Identifier: GPLv2
@@ -172,7 +172,7 @@ library SafeMath {
 
 // File: contracts/CurveInterface.sol
 
-pragma solidity ^0.7.0;
+pragma solidity ^0.8.0;
 
 // SPDX-License-Identifier: GPLv2
 interface CurveInterface {
@@ -181,7 +181,7 @@ interface CurveInterface {
 
 // File: contracts/StakingFactoryInterface.sol
 
-pragma solidity ^0.7.0;
+pragma solidity ^0.8.0;
 
 
 
@@ -203,7 +203,8 @@ interface StakingFactoryInterface {
  * Author: Mikhail Vladimirov <mikhail.vladimirov@gmail.com>
  */
 // pragma solidity ^0.5.0 || ^0.6.0 || ^0.7.0;
-pragma solidity ^0.7.0;
+// TODO BK CHECK pragma solidity ^0.7.0;
+pragma solidity ^0.8.0;
 
 /**
  * Smart contract library of mathematical functions operating with IEEE 754
@@ -418,6 +419,8 @@ library ABDKMathQuad {
    * @param x quadruple precision number
    * @return signed 64.64 bit fixed point number
    */
+  // TODO BK
+  /*
   function to64x64 (bytes16 x) internal pure returns (int128) {
     uint256 exponent = uint128 (x) >> 112 & 0x7FFF;
 
@@ -438,6 +441,7 @@ library ABDKMathQuad {
       return int128 (result);
     }
   }
+  */
 
   /**
    * Convert octuple precision number into quadruple precision number.
@@ -1358,7 +1362,7 @@ library ABDKMathQuad {
 
 // File: contracts/InterestUtils.sol
 
-pragma solidity ^0.7.0;
+pragma solidity ^0.8.0;
 
 // Use prefix "./" normally and "https://github.com/ogDAO/Governance/blob/master/contracts/" in Remix
 
@@ -1382,7 +1386,7 @@ contract InterestUtils {
 
 // File: contracts/Staking.sol
 
-pragma solidity ^0.7.0;
+pragma solidity ^0.8.0;
 pragma experimental ABIEncoderV2;
 
 // import "hardhat/console.sol";
@@ -1427,8 +1431,6 @@ contract Staking is ERC20, Owned, InterestUtils {
     uint8 constant DASH = 45;
     uint8 constant ZERO = 48;
     uint constant MAXSTAKINGINFOSTRINGLENGTH = 8;
-    // uint constant SECONDS_PER_DAY = 1 days;
-    // uint constant SECONDS_PER_YEAR = 365 days;
 
     uint public id;
     OGTokenInterface public ogToken;
@@ -1439,7 +1441,6 @@ contract Staking is ERC20, Owned, InterestUtils {
     uint _totalSupply;
     mapping(address => Account) public accounts;
     address[] public accountsIndex;
-    mapping(address => mapping(address => uint)) allowed;
 
     uint public weightedEndNumerator;
     // uint public weightedDurationDenominator;
@@ -1457,7 +1458,7 @@ contract Staking is ERC20, Owned, InterestUtils {
         id = _id;
         ogToken = _ogToken;
         ogdToken = _ogdToken;
-        stakingRewardCurve = CurveInterface(0);
+        stakingRewardCurve = CurveInterface(address(0));
         stakingInfo = StakingInfo(dataType, addresses, uints, strings[0], strings[1], strings[2], strings[3]);
     }
 
@@ -1473,7 +1474,7 @@ contract Staking is ERC20, Owned, InterestUtils {
         do {
             i--;
             num = id / 10**i;
-            b[j++] = byte(uint8(num % 10 + ZERO));
+            b[j++] = bytes1(uint8(num % 10 + ZERO));
         } while (i > 0);
         _symbol = string(b);
     }
@@ -1484,7 +1485,7 @@ contract Staking is ERC20, Owned, InterestUtils {
         for (i = 0; i < SYMBOLPREFIX.length; i++) {
             b[j++] = SYMBOLPREFIX[i];
         }
-        b[j++] = byte(DASH);
+        b[j++] = bytes1(DASH);
         bytes memory b1 = bytes(stakingInfo.string0);
         for (i = 0; i < b1.length && i < MAXSTAKINGINFOSTRINGLENGTH; i++) {
             b[j++] = b1[i];
@@ -1501,27 +1502,22 @@ contract Staking is ERC20, Owned, InterestUtils {
         return accounts[tokenOwner].balance;
     }
     function transfer(address to, uint tokens) override external returns (bool success) {
-        require(tokens == 0, "Not implemented");
-        accounts[msg.sender].balance = accounts[msg.sender].balance.sub(tokens);
-        accounts[to].balance = accounts[to].balance.add(tokens);
+        require(false, "Unimplemented");
         emit Transfer(msg.sender, to, tokens);
         return true;
     }
     function approve(address spender, uint tokens) override external returns (bool success) {
-        allowed[msg.sender][spender] = tokens;
+        require(false, "Unimplemented");
         emit Approval(msg.sender, spender, tokens);
         return true;
     }
     function transferFrom(address from, address to, uint tokens) override external returns (bool success) {
-        require(tokens == 0, "Not implemented");
-        accounts[from].balance = accounts[from].balance.sub(tokens);
-        allowed[from][msg.sender] = allowed[from][msg.sender].sub(tokens);
-        accounts[to].balance = accounts[to].balance.add(tokens);
+        require(false, "Unimplemented");
         emit Transfer(from, to, tokens);
         return true;
     }
-    function allowance(address tokenOwner, address spender) override external view returns (uint remaining) {
-        return allowed[tokenOwner][spender];
+    function allowance(address /*tokenOwner*/, address /*spender*/) override external pure returns (uint remaining) {
+        return 0;
     }
 
     function setStakingRewardCurve(CurveInterface _stakingRewardCurve) public onlyOwner {
@@ -1529,7 +1525,7 @@ contract Staking is ERC20, Owned, InterestUtils {
         emit StakingRewardCurveUpdated(_stakingRewardCurve);
     }
     function _getRate(uint term) internal view returns (uint rate) {
-        if (stakingRewardCurve == CurveInterface(0)) {
+        if (stakingRewardCurve == CurveInterface(address(0))) {
             try StakingFactoryInterface(owner).getStakingRewardCurve().getRate(term) returns (uint _rate) {
                 rate = _rate;
             } catch {
@@ -1737,28 +1733,6 @@ contract Staking is ERC20, Owned, InterestUtils {
 }
 
 /*
-
-struct Account {
-    uint64 duration;
-    uint64 end;
-    uint64 lastDelegated;
-    uint64 lastVoted;
-    uint balance;
-    // uint staked;
-    uint votes;
-    uint delegatedVotes;
-    address delegatee;
-}
-
-mapping(address => mapping(bytes32 => uint)) stakes;
-
-event StakeInfoAdded(bytes32 stakingKey, uint dataType, address[4] addresses, uint[6] uints, string string0, string string1, string string2, string string3);
-event Staked(address tokenOwner, uint tokens, uint balance, bytes32 stakingKey);
-event Unstaked(address tokenOwner, uint tokens, uint balance, bytes32 stakingKey);
-event StakeBurnt(address tokenOwner, uint tokens, uint balance, bytes32 stakingKey);
-
-
-
 function addStakeForToken(uint tokens, address tokenAddress, string memory name) external {
     bytes32 stakingKey = keccak256(abi.encodePacked(tokenAddress, name));
     StakeInfo memory stakeInfo = stakeInfoData[stakingKey];
@@ -1820,53 +1794,17 @@ function _addStake(uint tokens, bytes32 stakingKey) internal {
     require(committment.tokens > 0, "OptinoGov: Commit before staking");
     require(committment.tokens >= committment.staked + tokens, "OptinoGov: Insufficient tokens to stake");
     committment.staked = committment.staked.add(tokens);
-    // TODO committment.stakes[stakingKey] = committment.stakes[stakingKey].add(tokens);
-    // TODO emit Staked(msg.sender, tokens, committment.stakes[stakingKey], stakingKey);
 }
 function _subStake(uint tokens, bytes32 stakingKey) internal {
     Account storage committment = accounts[msg.sender];
     require(committment.tokens > 0, "OptinoGov: Commit and stake tokens before unstaking");
-    // TODO require(committment.stakes[stakingKey] >= tokens, "OptinoGov: Insufficient staked tokens");
     committment.staked = committment.staked.sub(tokens);
-    // TODO committment.stakes[stakingKey] = committment.stakes[stakingKey].sub(tokens);
-    // TODO emit Unstaked(msg.sender, tokens, committment.stakes[stakingKey], stakingKey);
-}
-function stakeInfoLength() public view returns (uint _stakeInfoLength) {
-    _stakeInfoLength = stakeInfoIndex.length;
-}
-function getStakeInfoByKey(bytes32 stakingKey) public view returns (uint dataType, address[4] memory addresses, uint[6] memory uints, string memory string0, string memory string1, string memory string2, string memory string3) {
-    StakeInfo memory stakeInfo = stakeInfoData[stakingKey];
-    (dataType, addresses, uints) = (stakeInfo.dataType, stakeInfo.addresses, stakeInfo.uints);
-    string0 = stakeInfo.string0;
-    string1 = stakeInfo.string1;
-    string2 = stakeInfo.string2;
-    string3 = stakeInfo.string3;
-}
-function getStaked(address tokenOwner, bytes32 stakingKey) public view returns (uint _staked) {
-    Account storage committment = accounts[tokenOwner];
-    // TODO _staked = committment.stakes[stakingKey];
-}
-
-function burnStake(address[] calldata tokenOwners, bytes32 stakingKey, uint percent) external onlySelf {
-    for (uint i = 0; i < tokenOwners.length; i++) {
-        address tokenOwner = tokenOwners[i];
-        Account storage committment = accounts[tokenOwner];
-        // TODO uint staked = committment.stakes[stakingKey];
-        // if (staked > 0) {
-        //     uint tokensToBurn = staked * percent / uint(100);
-        //     committment.staked = committment.staked.sub(tokensToBurn);
-        //     committment.stakes[stakingKey] = committment.stakes[stakingKey].sub(tokensToBurn);
-        //     committment.tokens = committment.tokens.sub(tokensToBurn);
-        //     require(ogToken.burn(tokensToBurn), "OptinoGov: burn failed");
-        //     emit StakeBurnt(tokenOwner, tokensToBurn, committment.stakes[stakingKey], stakingKey);
-        // }
-    }
 }
 */
 
 // File: contracts/StakingFactory.sol
 
-pragma solidity ^0.7.0;
+pragma solidity ^0.8.0;
 pragma experimental ABIEncoderV2;
 
 // import "hardhat/console.sol";

@@ -1,4 +1,4 @@
-pragma solidity ^0.7.0;
+pragma solidity ^0.8.0;
 pragma experimental ABIEncoderV2;
 
 // import "hardhat/console.sol";
@@ -70,7 +70,7 @@ contract Staking is ERC20, Owned, InterestUtils {
         id = _id;
         ogToken = _ogToken;
         ogdToken = _ogdToken;
-        stakingRewardCurve = CurveInterface(0);
+        stakingRewardCurve = CurveInterface(address(0));
         stakingInfo = StakingInfo(dataType, addresses, uints, strings[0], strings[1], strings[2], strings[3]);
     }
 
@@ -86,7 +86,7 @@ contract Staking is ERC20, Owned, InterestUtils {
         do {
             i--;
             num = id / 10**i;
-            b[j++] = byte(uint8(num % 10 + ZERO));
+            b[j++] = bytes1(uint8(num % 10 + ZERO));
         } while (i > 0);
         _symbol = string(b);
     }
@@ -97,7 +97,7 @@ contract Staking is ERC20, Owned, InterestUtils {
         for (i = 0; i < SYMBOLPREFIX.length; i++) {
             b[j++] = SYMBOLPREFIX[i];
         }
-        b[j++] = byte(DASH);
+        b[j++] = bytes1(DASH);
         bytes memory b1 = bytes(stakingInfo.string0);
         for (i = 0; i < b1.length && i < MAXSTAKINGINFOSTRINGLENGTH; i++) {
             b[j++] = b1[i];
@@ -137,7 +137,7 @@ contract Staking is ERC20, Owned, InterestUtils {
         emit StakingRewardCurveUpdated(_stakingRewardCurve);
     }
     function _getRate(uint term) internal view returns (uint rate) {
-        if (stakingRewardCurve == CurveInterface(0)) {
+        if (stakingRewardCurve == CurveInterface(address(0))) {
             try StakingFactoryInterface(owner).getStakingRewardCurve().getRate(term) returns (uint _rate) {
                 rate = _rate;
             } catch {

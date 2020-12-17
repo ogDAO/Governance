@@ -1,6 +1,6 @@
 // File: contracts/ERC20.sol
 
-pragma solidity ^0.7.0;
+pragma solidity ^0.8.0;
 
 /// @notice ERC20 https://eips.ethereum.org/EIPS/eip-20 with optional symbol, name and decimals
 // SPDX-License-Identifier: GPLv2
@@ -22,7 +22,7 @@ interface ERC20 {
 
 // File: contracts/OGTokenInterface.sol
 
-pragma solidity ^0.7.0;
+pragma solidity ^0.8.0;
 
 
 /// @notice OGTokenInterface = ERC20 + mint + burn with optional freezable cap. (c) The Optino Project 2020
@@ -36,7 +36,7 @@ interface OGTokenInterface is ERC20 {
 
 // File: contracts/OGDTokenInterface.sol
 
-pragma solidity ^0.7.0;
+pragma solidity ^0.8.0;
 
 
 /// @notice OGDTokenInterface = ERC20 + mint + burn + dividend payment. (c) The Optino Project 2020
@@ -49,7 +49,7 @@ interface OGDTokenInterface is ERC20 {
 
 // File: contracts/SafeMath.sol
 
-pragma solidity ^0.7.0;
+pragma solidity ^0.8.0;
 
 /// @notice Safe maths
 // SPDX-License-Identifier: GPLv2
@@ -86,7 +86,8 @@ library SafeMath {
  * Author: Mikhail Vladimirov <mikhail.vladimirov@gmail.com>
  */
 // pragma solidity ^0.5.0 || ^0.6.0 || ^0.7.0;
-pragma solidity ^0.7.0;
+// TODO BK CHECK pragma solidity ^0.7.0;
+pragma solidity ^0.8.0;
 
 /**
  * Smart contract library of mathematical functions operating with IEEE 754
@@ -301,6 +302,8 @@ library ABDKMathQuad {
    * @param x quadruple precision number
    * @return signed 64.64 bit fixed point number
    */
+  // TODO BK
+  /*
   function to64x64 (bytes16 x) internal pure returns (int128) {
     uint256 exponent = uint128 (x) >> 112 & 0x7FFF;
 
@@ -321,6 +324,7 @@ library ABDKMathQuad {
       return int128 (result);
     }
   }
+  */
 
   /**
    * Convert octuple precision number into quadruple precision number.
@@ -1241,7 +1245,7 @@ library ABDKMathQuad {
 
 // File: contracts/InterestUtils.sol
 
-pragma solidity ^0.7.0;
+pragma solidity ^0.8.0;
 
 // Use prefix "./" normally and "https://github.com/ogDAO/Governance/blob/master/contracts/" in Remix
 
@@ -1265,7 +1269,7 @@ contract InterestUtils {
 
 // File: contracts/CurveInterface.sol
 
-pragma solidity ^0.7.0;
+pragma solidity ^0.8.0;
 
 // SPDX-License-Identifier: GPLv2
 interface CurveInterface {
@@ -1274,7 +1278,7 @@ interface CurveInterface {
 
 // File: contracts/OptinoGov.sol
 
-pragma solidity ^0.7.0;
+pragma solidity ^0.8.0;
 pragma experimental ABIEncoderV2;
 
 // import "hardhat/console.sol";
@@ -1336,19 +1340,19 @@ contract OptinoGovBase {
 
     function setConfig(string memory key, uint value) external onlySelf {
         bytes32 _key = keccak256(abi.encodePacked(key));
-        if (_key == KEY_OGTOKEN) {
+        /*if (_key == KEY_OGTOKEN) {
             ogToken = OGTokenInterface(address(value));
         } else if (_key == KEY_VOTEWEIGHTCURVE) {
             ogdToken = OGDTokenInterface(address(value));
-        } else if (_key == KEY_OGREWARDCURVE) {
-            ogRewardCurve = CurveInterface(address(value));
+        } else*/ if (_key == KEY_OGREWARDCURVE) {
+            ogRewardCurve = CurveInterface(address(uint160(value)));
         } else if (_key == KEY_VOTEWEIGHTCURVE) {
-            voteWeightCurve = CurveInterface(address(value));
+            voteWeightCurve = CurveInterface(address(uint160(value)));
         } else if (_key == KEY_MAXDURATION) {
-            require(maxDuration < 5 * 365 days, "Cannot exceed 5 years");
+            require(maxDuration < 5 * 365 days); // Cannot exceed 5 years
             maxDuration = value;
         } else if (_key == KEY_COLLECTREWARDFORFEE) {
-            require(collectRewardForFee < 1e18, "Cannot exceed 100%");
+            require(collectRewardForFee < 1e18); // Cannot exceed 100%
             collectRewardForFee = value;
         } else if (_key == KEY_COLLECTREWARDFORDELAY) {
             collectRewardForDelay = value;
@@ -1367,7 +1371,7 @@ contract OptinoGovBase {
         } else if (_key == KEY_EXECUTEDELAY) {
             executeDelay = value;
         } else {
-            revert("Invalid key");
+            revert(); // Invalid key
         }
         emit ConfigUpdated(key, value);
     }
@@ -1404,7 +1408,7 @@ contract OptinoGovBase {
         return ecrecover(hash, v, r, s);
     }
 
-    function getChainId() internal pure returns (uint) {
+    function getChainId() internal view returns (uint) {
         uint chainId;
         assembly {
             chainId := chainid()
@@ -1425,7 +1429,7 @@ contract OptinoGov is ERC20, OptinoGovBase, InterestUtils {
         uint64 lastVoted;
         uint64 index;
         address delegatee;
-        uint rate; // max uint64 = 18_446744073_709551615 = 1800%
+        uint rate;
         uint balance;
         uint votes;
         uint delegatedVotes;
@@ -1450,9 +1454,7 @@ contract OptinoGov is ERC20, OptinoGovBase, InterestUtils {
     uint private _totalSupply;
     mapping(address => Account) private accounts;
     address[] public accountsIndex;
-    // mapping(address => mapping(address => uint)) private allowed;
     uint public totalVotes;
-
     Proposal[] private proposals;
     mapping(uint => mapping(address => bool)) public voted;
 
@@ -1482,19 +1484,19 @@ contract OptinoGov is ERC20, OptinoGovBase, InterestUtils {
     function balanceOf(address tokenOwner) override external view returns (uint balance) {
         return accounts[tokenOwner].balance;
     }
-    function transfer(address /*to*/, uint /*tokens*/) override external returns (bool success) {
+    function transfer(address to, uint tokens) override external returns (bool success) {
         require(false, "Unimplemented");
-        _totalSupply = _totalSupply;
+        emit Transfer(msg.sender, to, tokens);
         return true;
     }
-    function approve(address /*spender*/, uint /*tokens*/) override external returns (bool success) {
+    function approve(address spender, uint tokens) override external returns (bool success) {
         require(false, "Unimplemented");
-        _totalSupply = _totalSupply;
+        emit Approval(msg.sender, spender, tokens);
         return true;
     }
-    function transferFrom(address /*from*/, address /*to*/, uint /*tokens*/) override external returns (bool success) {
+    function transferFrom(address from, address to, uint tokens) override external returns (bool success) {
         require(false, "Unimplemented");
-        _totalSupply = _totalSupply;
+        emit Transfer(from, to, tokens);
         return true;
     }
     function allowance(address /*tokenOwner*/, address /*spender*/) override external pure returns (uint remaining) {

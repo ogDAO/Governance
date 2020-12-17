@@ -1,4 +1,4 @@
-pragma solidity ^0.7.0;
+pragma solidity ^0.8.0;
 pragma experimental ABIEncoderV2;
 
 // import "hardhat/console.sol";
@@ -65,9 +65,9 @@ contract OptinoGovBase {
         } else if (_key == KEY_VOTEWEIGHTCURVE) {
             ogdToken = OGDTokenInterface(address(value));
         } else*/ if (_key == KEY_OGREWARDCURVE) {
-            ogRewardCurve = CurveInterface(address(value));
+            ogRewardCurve = CurveInterface(address(uint160(value)));
         } else if (_key == KEY_VOTEWEIGHTCURVE) {
-            voteWeightCurve = CurveInterface(address(value));
+            voteWeightCurve = CurveInterface(address(uint160(value)));
         } else if (_key == KEY_MAXDURATION) {
             require(maxDuration < 5 * 365 days); // Cannot exceed 5 years
             maxDuration = value;
@@ -128,7 +128,7 @@ contract OptinoGovBase {
         return ecrecover(hash, v, r, s);
     }
 
-    function getChainId() internal pure returns (uint) {
+    function getChainId() internal view returns (uint) {
         uint chainId;
         assembly {
             chainId := chainid()
@@ -149,7 +149,7 @@ contract OptinoGov is ERC20, OptinoGovBase, InterestUtils {
         uint64 lastVoted;
         uint64 index;
         address delegatee;
-        uint rate; // max uint64 = 18_446744073_709551615 = 1800%
+        uint rate;
         uint balance;
         uint votes;
         uint delegatedVotes;
@@ -175,7 +175,6 @@ contract OptinoGov is ERC20, OptinoGovBase, InterestUtils {
     mapping(address => Account) private accounts;
     address[] public accountsIndex;
     uint public totalVotes;
-
     Proposal[] private proposals;
     mapping(uint => mapping(address => bool)) public voted;
 
