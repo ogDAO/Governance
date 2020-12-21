@@ -8,8 +8,6 @@ import "./OGTokenInterface.sol";
 /// @notice Optino Governance Token = ERC20 + mint + burn with optional freezable cap. (c) The Optino Project 2020
 // SPDX-License-Identifier: GPLv2
 contract OGToken is OGTokenInterface, Permissioned {
-    using SafeMath for uint;
-
     string private _symbol;
     string private _name;
     uint8 private _decimals;
@@ -44,14 +42,14 @@ contract OGToken is OGTokenInterface, Permissioned {
         return __totalSupply();
     }
     function __totalSupply() internal view returns (uint) {
-        return _totalSupply.sub(balances[address(0)]);
+        return _totalSupply - balances[address(0)];
     }
     function balanceOf(address tokenOwner) override external view returns (uint balance) {
         return balances[tokenOwner];
     }
     function transfer(address to, uint tokens) override external returns (bool success) {
-        balances[msg.sender] = balances[msg.sender].sub(tokens);
-        balances[to] = balances[to].add(tokens);
+        balances[msg.sender] -= tokens;
+        balances[to] += tokens;
         emit Transfer(msg.sender, to, tokens);
         return true;
     }
@@ -61,9 +59,9 @@ contract OGToken is OGTokenInterface, Permissioned {
         return true;
     }
     function transferFrom(address from, address to, uint tokens) override external returns (bool success) {
-        balances[from] = balances[from].sub(tokens);
-        allowed[from][msg.sender] = allowed[from][msg.sender].sub(tokens);
-        balances[to] = balances[to].add(tokens);
+        balances[from] -= tokens;
+        allowed[from][msg.sender] -= tokens;
+        balances[to] += tokens;
         emit Transfer(from, to, tokens);
         return true;
     }
@@ -84,33 +82,33 @@ contract OGToken is OGTokenInterface, Permissioned {
         // TODO
         if (permission.maximum == 0) {
             if (cap > 0) {
-                tokens = cap.sub(__totalSupply());
+                tokens = cap - __totalSupply();
             } else {
                 tokens = type(uint).max;
             }
         } else {
-            tokens = permission.maximum.sub(permission.processed);
+            tokens = permission.maximum - permission.processed;
             if (cap > 0 && tokens > cap) {
                 tokens = cap;
             }
         }
     }
     function mint(address tokenOwner, uint tokens) override external permitted(Roles.MintTokens, tokens) returns (bool success) {
-        require(cap == 0 || __totalSupply().add(tokens) <= cap, "cap exceeded");
-        balances[tokenOwner] = balances[tokenOwner].add(tokens);
-        _totalSupply = _totalSupply.add(tokens);
+        require(cap == 0 || __totalSupply() + tokens <= cap, "cap exceeded");
+        balances[tokenOwner] += tokens;
+        _totalSupply += tokens;
         emit Transfer(address(0), tokenOwner, tokens);
         return true;
     }
     function burn(uint tokens) override external returns (bool success) {
-        balances[msg.sender] = balances[msg.sender].sub(tokens);
-        _totalSupply = _totalSupply.sub(tokens);
+        balances[msg.sender] -= tokens;
+        _totalSupply -= tokens;
         emit Transfer(msg.sender, address(0), tokens);
         return true;
     }
     function burnFrom(address tokenOwner, uint tokens) override external permitted(Roles.BurnTokens, tokens) returns (bool success) {
-        balances[tokenOwner] = balances[tokenOwner].sub(tokens);
-        _totalSupply = _totalSupply.sub(tokens);
+        balances[tokenOwner] -= tokens;
+        _totalSupply -= tokens;
         emit Transfer(tokenOwner, address(0), tokens);
         return true;
     }

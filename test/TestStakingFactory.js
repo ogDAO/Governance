@@ -272,7 +272,7 @@ describe("TestStakingFactory", function() {
       test2.push(data.stakingFactory.connect(data.user2Signer).addStakingForToken(ogTokensToStake2, duration2, data.fee0Token.address, "FEE0Token"));
       // test2.push(data.stakingFactory.connect(data.user3Signer).addStakingForToken(ogTokensToStake3, duration3, data.fee0Token.address, "FEE0Token"));
       const [addStake1, addStake2/*, addStake3*/] = await Promise.all(test2);
-      await data.expectException("Insufficient approved OG tokens to stake with", "Sub underflow", data.stakingFactory.connect(data.user3Signer).addStakingForToken(ogTokensToStake3, duration3, data.fee0Token.address, "FEE0Token"));
+      await data.expectException("Insufficient approved OG tokens to stake with", "revert", data.stakingFactory.connect(data.user3Signer).addStakingForToken(ogTokensToStake3, duration3, data.fee0Token.address, "FEE0Token"));
 
       const stakingsLength = await data.stakingFactory.stakingsLength();
       const stakings = [];

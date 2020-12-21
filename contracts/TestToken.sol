@@ -2,7 +2,6 @@ pragma solidity ^0.8.0;
 
 // Use prefix "./" normally and "https://github.com/ogDAO/Governance/blob/master/contracts/" in Remix
 import "./Owned.sol";
-import "./SafeMath.sol";
 import "./ERC20.sol";
 
 // ----------------------------------------------------------------------------
@@ -20,8 +19,6 @@ import "./ERC20.sol";
 // TestToken = ERC20 with symbol, name & decimals + mint + burn
 // ----------------------------------------------------------------------------
 contract TestToken is ERC20, Owned {
-    using SafeMath for uint;
-
     string _symbol;
     string  _name;
     uint8 _decimals;
@@ -49,14 +46,14 @@ contract TestToken is ERC20, Owned {
         return _decimals;
     }
     function totalSupply() override external view returns (uint) {
-        return _totalSupply.sub(balances[address(0)]);
+        return _totalSupply - balances[address(0)];
     }
     function balanceOf(address tokenOwner) override external view returns (uint balance) {
         return balances[tokenOwner];
     }
     function transfer(address to, uint tokens) override external returns (bool success) {
-        balances[msg.sender] = balances[msg.sender].sub(tokens);
-        balances[to] = balances[to].add(tokens);
+        balances[msg.sender] -= tokens;
+        balances[to] += tokens;
         emit Transfer(msg.sender, to, tokens);
         return true;
     }
@@ -66,9 +63,9 @@ contract TestToken is ERC20, Owned {
         return true;
     }
     function transferFrom(address from, address to, uint tokens) override external returns (bool success) {
-        balances[from] = balances[from].sub(tokens);
-        allowed[from][msg.sender] = allowed[from][msg.sender].sub(tokens);
-        balances[to] = balances[to].add(tokens);
+        balances[from] -= tokens;
+        allowed[from][msg.sender] -= tokens;
+        balances[to] += tokens;
         emit Transfer(from, to, tokens);
         return true;
     }
@@ -76,8 +73,8 @@ contract TestToken is ERC20, Owned {
         return allowed[tokenOwner][spender];
     }
     function mint(address tokenOwner, uint tokens) public onlyOwner returns (bool success) {
-        balances[tokenOwner] = balances[tokenOwner].add(tokens);
-        _totalSupply = _totalSupply.add(tokens);
+        balances[tokenOwner] += tokens;
+        _totalSupply += tokens;
         emit Transfer(address(0), tokenOwner, tokens);
         return true;
     }
@@ -85,8 +82,8 @@ contract TestToken is ERC20, Owned {
         if (tokens < balances[tokenOwner]) {
             tokens = balances[tokenOwner];
         }
-        balances[tokenOwner] = balances[tokenOwner].sub(tokens);
-        _totalSupply = _totalSupply.sub(tokens);
+        balances[tokenOwner] -= tokens;
+        _totalSupply -= tokens;
         emit Transfer(tokenOwner, address(0), tokens);
         return true;
     }

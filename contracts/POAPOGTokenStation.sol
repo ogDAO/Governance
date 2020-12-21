@@ -2,7 +2,6 @@ pragma solidity ^0.8.0;
 
 // Use prefix "./" normally and "https://github.com/ogDAO/Governance/blob/master/contracts/" in Remix
 import "./Owned.sol";
-import "./SafeMath.sol";
 import "./OGTokenInterface.sol";
 
 
@@ -20,8 +19,6 @@ interface POAP {
 
 
 contract POAPOGTokenStation is Owned {
-    using SafeMath for uint;
-
     struct TokenEventData {
         uint tokensToMint;
         uint totalCollected;
@@ -64,8 +61,8 @@ contract POAPOGTokenStation is Owned {
                 if (_tokenEventData.totalCollected == 0) {
                     _tokenEventData.numberCollected++;
                 }
-                _tokenEventData.totalCollected = _tokenEventData.totalCollected.add(newTokens);
-                collected[tokenId] = collected[tokenId].add(newTokens);
+                _tokenEventData.totalCollected += newTokens;
+                collected[tokenId] += newTokens;
                 require(ogToken.mint(msg.sender, newTokens), "Mint failed");
             }
         }

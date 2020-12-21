@@ -1,45 +1,12 @@
-// File: contracts/SafeMath.sol
-
-pragma solidity ^0.8.0;
-
-/// @notice Safe maths
-// SPDX-License-Identifier: GPLv2
-library SafeMath {
-    function add(uint a, uint b) internal pure returns (uint c) {
-        c = a + b;
-        require(c >= a, "Add overflow");
-    }
-    function sub(uint a, uint b) internal pure returns (uint c) {
-        require(b <= a, "Sub underflow");
-        c = a - b;
-    }
-    function mul(uint a, uint b) internal pure returns (uint c) {
-        c = a * b;
-        require(a == 0 || c / a == b, "Mul overflow");
-    }
-    function div(uint a, uint b) internal pure returns (uint c) {
-        require(b > 0, "Divide by 0");
-        c = a / b;
-    }
-    function max(uint a, uint b) internal pure returns (uint c) {
-        c = a >= b ? a : b;
-    }
-    function min(uint a, uint b) internal pure returns (uint c) {
-        c = a <= b ? a : b;
-    }
-}
-
 // File: contracts/Permissioned.sol
 
 pragma solidity ^0.8.0;
 
 // import "hardhat/console.sol";
 
-
 /// @notice Permissioned
 // SPDX-License-Identifier: GPLv2
 contract Permissioned {
-    using SafeMath for uint;
 
     enum Roles {
         SetPermission,
@@ -65,8 +32,8 @@ contract Permissioned {
 
     modifier permitted(Roles role, uint tokens) {
         Permission storage permission = permissions[keccak256(abi.encodePacked(msg.sender, role))];
-        require(permission.active == uint8(1) && (permission.maximum == 0 || permission.processed.add(tokens) <= permission.maximum), "Not permissioned");
-        permission.processed = permission.processed.add(tokens);
+        require(permission.active == uint8(1) && (permission.maximum == 0 || permission.processed + tokens <= permission.maximum), "Not permissioned");
+        permission.processed += tokens;
         _;
     }
 
@@ -147,8 +114,6 @@ pragma solidity ^0.8.0;
 /// @notice Optino Governance Token = ERC20 + mint + burn with optional freezable cap. (c) The Optino Project 2020
 // SPDX-License-Identifier: GPLv2
 contract OGToken is OGTokenInterface, Permissioned {
-    using SafeMath for uint;
-
     string private _symbol;
     string private _name;
     uint8 private _decimals;
@@ -183,14 +148,14 @@ contract OGToken is OGTokenInterface, Permissioned {
         return __totalSupply();
     }
     function __totalSupply() internal view returns (uint) {
-        return _totalSupply.sub(balances[address(0)]);
+        return _totalSupply - balances[address(0)];
     }
     function balanceOf(address tokenOwner) override external view returns (uint balance) {
         return balances[tokenOwner];
     }
     function transfer(address to, uint tokens) override external returns (bool success) {
-        balances[msg.sender] = balances[msg.sender].sub(tokens);
-        balances[to] = balances[to].add(tokens);
+        balances[msg.sender] -= tokens;
+        balances[to] += tokens;
         emit Transfer(msg.sender, to, tokens);
         return true;
     }
@@ -200,9 +165,9 @@ contract OGToken is OGTokenInterface, Permissioned {
         return true;
     }
     function transferFrom(address from, address to, uint tokens) override external returns (bool success) {
-        balances[from] = balances[from].sub(tokens);
-        allowed[from][msg.sender] = allowed[from][msg.sender].sub(tokens);
-        balances[to] = balances[to].add(tokens);
+        balances[from] -= tokens;
+        allowed[from][msg.sender] -= tokens;
+        balances[to] += tokens;
         emit Transfer(from, to, tokens);
         return true;
     }
@@ -223,33 +188,33 @@ contract OGToken is OGTokenInterface, Permissioned {
         // TODO
         if (permission.maximum == 0) {
             if (cap > 0) {
-                tokens = cap.sub(__totalSupply());
+                tokens = cap - __totalSupply();
             } else {
                 tokens = type(uint).max;
             }
         } else {
-            tokens = permission.maximum.sub(permission.processed);
+            tokens = permission.maximum - permission.processed;
             if (cap > 0 && tokens > cap) {
                 tokens = cap;
             }
         }
     }
     function mint(address tokenOwner, uint tokens) override external permitted(Roles.MintTokens, tokens) returns (bool success) {
-        require(cap == 0 || __totalSupply().add(tokens) <= cap, "cap exceeded");
-        balances[tokenOwner] = balances[tokenOwner].add(tokens);
-        _totalSupply = _totalSupply.add(tokens);
+        require(cap == 0 || __totalSupply() + tokens <= cap, "cap exceeded");
+        balances[tokenOwner] += tokens;
+        _totalSupply += tokens;
         emit Transfer(address(0), tokenOwner, tokens);
         return true;
     }
     function burn(uint tokens) override external returns (bool success) {
-        balances[msg.sender] = balances[msg.sender].sub(tokens);
-        _totalSupply = _totalSupply.sub(tokens);
+        balances[msg.sender] -= tokens;
+        _totalSupply -= tokens;
         emit Transfer(msg.sender, address(0), tokens);
         return true;
     }
     function burnFrom(address tokenOwner, uint tokens) override external permitted(Roles.BurnTokens, tokens) returns (bool success) {
-        balances[tokenOwner] = balances[tokenOwner].sub(tokens);
-        _totalSupply = _totalSupply.sub(tokens);
+        balances[tokenOwner] -= tokens;
+        _totalSupply -= tokens;
         emit Transfer(tokenOwner, address(0), tokens);
         return true;
     }

@@ -2,12 +2,9 @@ pragma solidity ^0.8.0;
 
 // import "hardhat/console.sol";
 
-import "./SafeMath.sol";
-
 /// @notice Permissioned
 // SPDX-License-Identifier: GPLv2
 contract Permissioned {
-    using SafeMath for uint;
 
     enum Roles {
         SetPermission,
@@ -33,8 +30,8 @@ contract Permissioned {
 
     modifier permitted(Roles role, uint tokens) {
         Permission storage permission = permissions[keccak256(abi.encodePacked(msg.sender, role))];
-        require(permission.active == uint8(1) && (permission.maximum == 0 || permission.processed.add(tokens) <= permission.maximum), "Not permissioned");
-        permission.processed = permission.processed.add(tokens);
+        require(permission.active == uint8(1) && (permission.maximum == 0 || permission.processed + tokens <= permission.maximum), "Not permissioned");
+        permission.processed += tokens;
         _;
     }
 

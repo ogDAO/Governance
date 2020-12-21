@@ -1,10 +1,8 @@
 pragma solidity ^0.8.0;
-pragma experimental ABIEncoderV2;
 
 // import "hardhat/console.sol";
 
 // Use prefix "./" normally and "https://github.com/ogDAO/Governance/blob/master/contracts/" in Remix
-import "./SafeMath.sol";
 import "./OGTokenInterface.sol";
 import "./OGDTokenInterface.sol";
 import "./StakingFactoryInterface.sol";
@@ -14,8 +12,6 @@ import "./CurveInterface.sol";
 
 // SPDX-License-Identifier: GPLv2
 contract Staking is ERC20, Owned, InterestUtils {
-    using SafeMath for uint;
-
     // Contracts { dataType 0, address contractAddress, string name }
     // Token { dataType 1, address tokenAddress }
     // Feed { dataType 2, address feedAddress, uint feedType, uint feedDecimals, string name }
@@ -108,7 +104,7 @@ contract Staking is ERC20, Owned, InterestUtils {
         return 18;
     }
     function totalSupply() override external view returns (uint) {
-        return _totalSupply.sub(accounts[address(0)].balance);
+        return _totalSupply - accounts[address(0)].balance;
     }
     function balanceOf(address tokenOwner) override external view returns (uint balance) {
         return accounts[tokenOwner].balance;
@@ -171,7 +167,7 @@ contract Staking is ERC20, Owned, InterestUtils {
     }
     function weightedEnd() public view returns (uint _weightedEnd) {
         if (_totalSupply > 0) {
-            _weightedEnd = weightedEndNumerator.div(_totalSupply.sub(accounts[address(0)].balance));
+            _weightedEnd = weightedEndNumerator / (_totalSupply - accounts[address(0)].balance);
         }
         if (_weightedEnd < block.timestamp) {
             _weightedEnd = block.timestamp;
@@ -182,13 +178,13 @@ contract Staking is ERC20, Owned, InterestUtils {
     //     _weight = account.balance.mul(account.duration).div(365 days);
     // }
     function updateStatsBefore(Account memory account, address tokenOwner) internal {
-        weightedEndNumerator = weightedEndNumerator.sub(uint(account.end).mul(tokenOwner == address(0) ? 0 : account.balance));
+        weightedEndNumerator = weightedEndNumerator - uint(account.end) * (tokenOwner == address(0) ? 0 : account.balance);
         // uint weightedDuration = computeWeight(account);
         // console.log("        > updateStatsBefore(%s).weightedDuration: ", tokenOwner, weightedDuration);
         // weightedDurationDenominator = weightedDurationDenominator.sub(weightedDuration);
     }
     function updateStatsAfter(Account memory account, address tokenOwner) internal {
-        weightedEndNumerator = weightedEndNumerator.add(uint(account.end).mul(tokenOwner == address(0) ? 0 : account.balance));
+        weightedEndNumerator = weightedEndNumerator + uint(account.end) * (tokenOwner == address(0) ? 0 : account.balance);
         // uint weightedDuration = computeWeight(account);
         // console.log("        > updateStatsAfter(%s).weightedDuration: ", tokenOwner, weightedDuration);
         // weightedDurationDenominator = weightedDurationDenominator.add(weightedDuration);
@@ -222,10 +218,10 @@ contract Staking is ERC20, Owned, InterestUtils {
     }
 
     function _calculateReward(Account memory account) internal view returns (uint _reward, uint _term) {
-        uint from = account.end == 0 ? block.timestamp : uint(account.end).sub(uint(account.duration));
+        uint from = account.end == 0 ? block.timestamp : uint(account.end) - uint(account.duration);
         uint futureValue = InterestUtils.futureValue(account.balance, from, block.timestamp, account.rate);
-        _reward = futureValue.sub(account.balance);
-        _term = block.timestamp.sub(from);
+        _reward = futureValue - account.balance;
+        _term = block.timestamp - from;
     }
 
     function _changeStake(address tokenOwner, uint depositTokens, uint withdrawTokens, bool withdrawRewards, uint duration) internal {
@@ -252,14 +248,14 @@ contract Staking is ERC20, Owned, InterestUtils {
         }
         if (withdrawRewards) {
             if (reward > 0) {
-                rewardWithSlashingFactor = reward.sub(reward.mul(slashingFactor).div(1e18));
+                rewardWithSlashingFactor = reward - reward * slashingFactor / 1e18;
                 StakingFactoryInterface(owner).mintOGTokens(tokenOwner, rewardWithSlashingFactor);
             }
         } else {
             if (reward > 0) {
                 StakingFactoryInterface(owner).mintOGTokens(address(this), reward);
-                account.balance = account.balance.add(reward);
-                _totalSupply = _totalSupply.add(reward);
+                account.balance += reward;
+                _totalSupply += reward;
                 StakingFactoryInterface(owner).mintOGDTokens(tokenOwner, reward);
                 emit Transfer(address(0), tokenOwner, reward);
             }
@@ -267,26 +263,26 @@ contract Staking is ERC20, Owned, InterestUtils {
         if (depositTokens == 0 && withdrawTokens == 0 || depositTokens > 0) {
             if (account.end == 0) {
                 uint rate = _getRate(duration);
-                accounts[tokenOwner] = Account(uint64(duration), uint64(block.timestamp.add(duration)), uint64(accountsIndex.length), rate, depositTokens);
+                accounts[tokenOwner] = Account(uint64(duration), uint64(block.timestamp + duration), uint64(accountsIndex.length), rate, depositTokens);
                 account = accounts[tokenOwner];
                 accountsIndex.push(tokenOwner);
                 emit Staked(tokenOwner, depositTokens, duration, account.end);
             } else {
                 require(block.timestamp + duration >= account.end, "Cannot shorten duration");
                 account.duration = uint64(duration);
-                account.end = uint64(block.timestamp.add(duration));
+                account.end = uint64(block.timestamp + duration);
                 account.rate = _getRate(duration);
-                account.balance = account.balance.add(depositTokens);
+                account.balance += depositTokens;
             }
             if (depositTokens > 0) {
                 StakingFactoryInterface(owner).mintOGDTokens(tokenOwner, depositTokens);
-                _totalSupply = _totalSupply.add(depositTokens);
+                _totalSupply += depositTokens;
                 emit Transfer(address(0), tokenOwner, depositTokens);
             }
         }
         if (withdrawTokens > 0) {
-            _totalSupply = _totalSupply.sub(withdrawTokens);
-            account.balance = account.balance.sub(withdrawTokens);
+            _totalSupply -= withdrawTokens;
+            account.balance -= withdrawTokens;
             if (account.balance == 0) {
                 uint removedIndex = uint(account.index);
                 uint lastIndex = accountsIndex.length - 1;
@@ -302,7 +298,7 @@ contract Staking is ERC20, Owned, InterestUtils {
             account.duration = uint64(0);
             account.end = uint64(block.timestamp);
             StakingFactoryInterface(owner).burnFromOGDTokens(tokenOwner, withdrawTokens);
-            uint tokensWithSlashingFactor = withdrawTokens.sub(withdrawTokens.mul(slashingFactor).div(1e18));
+            uint tokensWithSlashingFactor = withdrawTokens - withdrawTokens * slashingFactor / 1e18;
             require(ogToken.transfer(tokenOwner, tokensWithSlashingFactor), "OG transfer failed");
             emit Unstaked(msg.sender, withdrawTokens, reward, tokensWithSlashingFactor, rewardWithSlashingFactor);
         }
@@ -338,7 +334,7 @@ contract Staking is ERC20, Owned, InterestUtils {
         require(_slashingFactor <= 1e18, "Cannot slash more than 100%");
         require(slashingFactor == 0, "Cannot slash more than once");
         slashingFactor = _slashingFactor;
-        uint tokensToBurn = _totalSupply.mul(slashingFactor).div(1e18);
+        uint tokensToBurn = _totalSupply * slashingFactor / 1e18;
         require(ogToken.burn(tokensToBurn), "OG burn failed");
         emit Slashed(_slashingFactor, tokensToBurn);
     }

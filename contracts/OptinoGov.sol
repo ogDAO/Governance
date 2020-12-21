@@ -1,18 +1,15 @@
 pragma solidity ^0.8.0;
-pragma experimental ABIEncoderV2;
 
 // import "hardhat/console.sol";
 
 // Use prefix "./" normally and "https://github.com/ogDAO/Governance/blob/master/contracts/" in Remix
 import "./OGTokenInterface.sol";
 import "./OGDTokenInterface.sol";
-import "./SafeMath.sol";
 import "./InterestUtils.sol";
 import "./CurveInterface.sol";
 
 /// @notice Optino Governance config
 contract OptinoGovBase {
-    using SafeMath for uint;
 
     bytes32 private constant KEY_OGTOKEN = keccak256(abi.encodePacked("ogToken"));
     bytes32 private constant KEY_OGDTOKEN = keccak256(abi.encodePacked("ogdToken"));
@@ -140,8 +137,6 @@ contract OptinoGovBase {
 /// @notice Optino Governance. (c) The Optino Project 2020
 // SPDX-License-Identifier: GPLv2
 contract OptinoGov is ERC20, OptinoGovBase, InterestUtils {
-    using SafeMath for uint;
-
     struct Account {
         uint64 duration;
         uint64 end;
@@ -199,7 +194,7 @@ contract OptinoGov is ERC20, OptinoGovBase, InterestUtils {
         return 18;
     }
     function totalSupply() override external view returns (uint) {
-        return _totalSupply.sub(accounts[address(0)].balance);
+        return _totalSupply - accounts[address(0)].balance;
     }
     function balanceOf(address tokenOwner) override external view returns (uint balance) {
         return accounts[tokenOwner].balance;
@@ -240,28 +235,28 @@ contract OptinoGov is ERC20, OptinoGovBase, InterestUtils {
         require(uint(account.lastDelegated) + votingDuration < block.timestamp, "Cannot vote after recent delegation");
         address oldDelegatee = account.delegatee;
         if (account.delegatee != address(0)) {
-            accounts[account.delegatee].delegatedVotes = accounts[account.delegatee].delegatedVotes.sub(account.votes);
+            accounts[account.delegatee].delegatedVotes -= account.votes;
         }
         account.delegatee = delegatee;
         account.lastDelegated = uint64(block.timestamp);
         if (account.delegatee != address(0)) {
-            accounts[account.delegatee].delegatedVotes = accounts[account.delegatee].delegatedVotes.add(account.votes);
+            accounts[account.delegatee].delegatedVotes += account.votes;
         }
         emit DelegateUpdated(oldDelegatee, delegatee, account.votes);
     }
 
     function updateStatsBefore(Account storage account) internal {
-        totalVotes = totalVotes.sub(account.votes);
+        totalVotes -= account.votes;
         if (account.delegatee != address(0)) {
-            accounts[account.delegatee].delegatedVotes = accounts[account.delegatee].delegatedVotes.sub(account.votes);
+            accounts[account.delegatee].delegatedVotes -= account.votes;
         }
     }
     function updateStatsAfter(Account storage account) internal {
         uint rate = voteWeightCurve.getRate(uint(account.duration));
-        account.votes = account.balance.mul(rate).div(1e18);
-        totalVotes = totalVotes.add(account.votes);
+        account.votes = account.balance * rate / 1e18;
+        totalVotes += account.votes;
         if (account.delegatee != address(0)) {
-            accounts[account.delegatee].delegatedVotes = accounts[account.delegatee].delegatedVotes.add(account.votes);
+            accounts[account.delegatee].delegatedVotes += account.votes;
         }
     }
 
@@ -269,10 +264,10 @@ contract OptinoGov is ERC20, OptinoGovBase, InterestUtils {
         return _calculateReward(accounts[tokenOwner]);
     }
     function _calculateReward(Account memory account) internal view returns (uint _reward, uint _term) {
-        uint from = account.end == 0 ? block.timestamp : uint(account.end).sub(uint(account.duration));
+        uint from = account.end == 0 ? block.timestamp : uint(account.end) - uint(account.duration);
         uint futureValue = InterestUtils.futureValue(account.balance, from, block.timestamp, account.rate);
-        _reward = futureValue.sub(account.balance);
-        _term = block.timestamp.sub(from);
+        _reward = futureValue - account.balance;
+        _term = block.timestamp - from;
     }
     function _getOGRewardRate(uint term) internal view returns (uint rate) {
         try ogRewardCurve.getRate(term) returns (uint _rate) {
@@ -306,15 +301,15 @@ contract OptinoGov is ERC20, OptinoGovBase, InterestUtils {
                 require(ogToken.mint(tokenOwner, reward), "OG mint failed");
             } else {
                 if (msg.sender != tokenOwner) {
-                    callerReward = reward.mul(collectRewardForFee).div(1e18);
+                    callerReward = reward * collectRewardForFee / 1e18;
                     if (callerReward > 0) {
-                        reward = reward.sub(callerReward);
+                        reward -= callerReward;
                         require(ogToken.mint(msg.sender, callerReward), "OG mint failed");
                     }
                 }
                 require(ogToken.mint(address(this), reward), "OG mint failed");
-                account.balance = account.balance.add(reward);
-                _totalSupply = _totalSupply.add(reward);
+                account.balance += reward;
+                _totalSupply += reward;
                 require(ogdToken.mint(tokenOwner, reward), "OGD mint failed");
                 emit Transfer(address(0), tokenOwner, reward);
             }
@@ -322,23 +317,23 @@ contract OptinoGov is ERC20, OptinoGovBase, InterestUtils {
         if (depositTokens > 0) {
             if (account.end == 0) {
                 uint rate = _getOGRewardRate(duration);
-                accounts[tokenOwner] = Account(uint64(duration), uint64(block.timestamp.add(duration)), uint64(0), uint64(0), uint64(accountsIndex.length), address(0), rate, depositTokens, 0, 0);
+                accounts[tokenOwner] = Account(uint64(duration), uint64(block.timestamp + duration), uint64(0), uint64(0), uint64(accountsIndex.length), address(0), rate, depositTokens, 0, 0);
                 account = accounts[tokenOwner];
                 accountsIndex.push(tokenOwner);
             } else {
                 require(block.timestamp + duration >= account.end, "Cannot shorten duration");
                 account.duration = uint64(duration);
-                account.end = uint64(block.timestamp.add(duration));
+                account.end = uint64(block.timestamp + duration);
                 account.rate = _getOGRewardRate(duration);
-                account.balance = account.balance.add(depositTokens);
+                account.balance += depositTokens;
             }
             require(ogdToken.mint(tokenOwner, depositTokens), "OGD mint failed");
             // TODO account.votes not updated. remove remaining variables
-            _totalSupply = _totalSupply.add(depositTokens);
+            _totalSupply += depositTokens;
             emit Transfer(address(0), tokenOwner, depositTokens);
         } else if (withdrawTokens > 0) {
-            _totalSupply = _totalSupply.sub(withdrawTokens);
-            account.balance = account.balance.sub(withdrawTokens);
+            _totalSupply -= withdrawTokens;
+            account.balance -= withdrawTokens;
             if (account.balance == 0) {
                 uint removedIndex = uint(account.index);
                 uint lastIndex = accountsIndex.length - 1;
@@ -359,7 +354,7 @@ contract OptinoGov is ERC20, OptinoGovBase, InterestUtils {
         } else  {
             // require(block.timestamp + duration >= account.end, "Cannot shorten duration");
             account.duration = uint64(duration);
-            account.end = uint64(block.timestamp.add(duration));
+            account.end = uint64(block.timestamp + duration);
         }
         updateStatsAfter(account);
         if (depositTokens > 0) {
@@ -426,17 +421,17 @@ contract OptinoGov is ERC20, OptinoGovBase, InterestUtils {
     }
     function _vote(address voter, uint id, bool support) internal {
         Proposal storage proposal = proposals[id];
-        require(proposal.start != 0 && block.timestamp < uint(proposal.start).add(votingDuration), "Voting closed");
+        require(proposal.start != 0 && block.timestamp < uint(proposal.start) + votingDuration, "Voting closed");
         require(accounts[voter].lastDelegated + votingDuration < block.timestamp, "Cannot vote after recent delegation");
         require(!voted[id][voter], "Already voted");
         uint votes = accounts[voter].votes + accounts[voter].delegatedVotes;
         if (accounts[voter].delegatee != address(0)) {
             if (support) {
-                proposal.forVotes = proposal.forVotes.add(votes);
+                proposal.forVotes += votes;
             } else {
-                proposal.againstVotes = proposal.forVotes.add(votes);
+                proposal.againstVotes += votes;
             }
-            uint _voteReward = accounts[voter].votes.mul(voteReward).div(1e18);
+            uint _voteReward = accounts[voter].votes * voteReward / 1e18;
             if (_voteReward > 0) {
                 require(ogToken.mint(voter, _voteReward), "OG mint failed");
             }

@@ -26,37 +26,6 @@ contract Owned {
     }
 }
 
-// File: contracts/SafeMath.sol
-
-pragma solidity ^0.8.0;
-
-/// @notice Safe maths
-// SPDX-License-Identifier: GPLv2
-library SafeMath {
-    function add(uint a, uint b) internal pure returns (uint c) {
-        c = a + b;
-        require(c >= a, "Add overflow");
-    }
-    function sub(uint a, uint b) internal pure returns (uint c) {
-        require(b <= a, "Sub underflow");
-        c = a - b;
-    }
-    function mul(uint a, uint b) internal pure returns (uint c) {
-        c = a * b;
-        require(a == 0 || c / a == b, "Mul overflow");
-    }
-    function div(uint a, uint b) internal pure returns (uint c) {
-        require(b > 0, "Divide by 0");
-        c = a / b;
-    }
-    function max(uint a, uint b) internal pure returns (uint c) {
-        c = a >= b ? a : b;
-    }
-    function min(uint a, uint b) internal pure returns (uint c) {
-        c = a <= b ? a : b;
-    }
-}
-
 // File: contracts/ERC20.sol
 
 pragma solidity ^0.8.0;
@@ -102,7 +71,6 @@ pragma solidity ^0.8.0;
 
 
 
-
 // ----------------------------------------------------------------------------
 // Collect Optino Governance tokens based on POAP tokenEvents
 //
@@ -117,8 +85,6 @@ interface POAP {
 
 
 contract POAPOGTokenStation is Owned {
-    using SafeMath for uint;
-
     struct TokenEventData {
         uint tokensToMint;
         uint totalCollected;
@@ -161,8 +127,8 @@ contract POAPOGTokenStation is Owned {
                 if (_tokenEventData.totalCollected == 0) {
                     _tokenEventData.numberCollected++;
                 }
-                _tokenEventData.totalCollected = _tokenEventData.totalCollected.add(newTokens);
-                collected[tokenId] = collected[tokenId].add(newTokens);
+                _tokenEventData.totalCollected += newTokens;
+                collected[tokenId] += newTokens;
                 require(ogToken.mint(msg.sender, newTokens), "Mint failed");
             }
         }

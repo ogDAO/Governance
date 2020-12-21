@@ -1,10 +1,8 @@
 pragma solidity ^0.8.0;
-pragma experimental ABIEncoderV2;
 
 // import "hardhat/console.sol";
 
 // Use prefix "./" normally and "https://github.com/ogDAO/Governance/blob/master/contracts/" in Remix
-import "./SafeMath.sol";
 import "./Owned.sol";
 import "./CurveInterface.sol";
 
@@ -12,8 +10,6 @@ import "./CurveInterface.sol";
 /// @notice Simple interpolated curve by term
 // SPDX-License-Identifier: GPLv2
 contract SimpleCurve is Owned, CurveInterface {
-    using SafeMath for uint;
-
     struct Point {
         uint term;
         uint rate;
