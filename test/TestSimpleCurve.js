@@ -18,7 +18,8 @@ describe("TestSimpleCurve", function() {
 
     async function test(terms, rates, testTerms, expectedRates, decimals) {
       const replacePoints = await simpleCurve.replacePoints(terms, rates);
-      // console.log("        replacePoints(" + JSON.stringify(terms) + ", " + JSON.stringify(rates.map((x) => { return ethers.utils.formatUnits(x, decimals); })) + ")");
+      const receipt = await replacePoints.wait();
+      console.log("        replacePoints(" + JSON.stringify(terms) + ", " + JSON.stringify(rates.map((x) => { return ethers.utils.formatUnits(x, decimals); })) + ") - gasUsed: " + receipt.gasUsed.toString());
 
       const pointsLength = await simpleCurve.pointsLength();
       console.log("        pointsLength: " + pointsLength);
@@ -60,8 +61,9 @@ describe("TestSimpleCurve", function() {
     let replaceTerm3 = 1604746674;
     let replaceRate3 = BigNumber.from("3000000000000000000000000");
     const replacePoint3 = await simpleCurve.replacePoint(1, replaceTerm3, replaceRate3);
+    const receipt3 = await replacePoint3.wait();
     const rate3 = await simpleCurve.getRate(1604746674);
-    console.log("        Replaced rate3: " + ethers.utils.formatUnits(rate3, 18) + " vs expected " + ethers.utils.formatUnits(replaceRate3, 18));
+    console.log("        Replaced rate3: " + ethers.utils.formatUnits(rate3, 18) + " vs expected " + ethers.utils.formatUnits(replaceRate3, 18) + " - gasUsed: " + receipt3.gasUsed.toString());
     expect(rate3.toString()).to.equal(replaceRate3.toString());
 
     console.log("        --- Test 4 - Linear from (0, 0) ---");

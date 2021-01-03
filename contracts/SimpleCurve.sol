@@ -32,8 +32,6 @@ contract SimpleCurve is Owned, CurveInterface {
 
     function replacePoint(uint i, uint term, uint rate) public onlyOwner {
         require(i < points.length);
-        // Check gas
-        // delete points[i[];
         points[i] = Point(term, rate);
         emit PointUpdated(i, term, rate);
     }

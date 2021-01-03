@@ -4,6 +4,7 @@ $ npx hardhat test test/TestSimpleCurve.js > results/TestSimpleCurve.txt
   TestSimpleCurve
         owner: 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E
         --- Test 1 - Increasing rates ---
+        replacePoints([2,5,10,100], ["20.0","50.0","100.0","1000.0"]) - gasUsed: 222089
         pointsLength: 4
         point(0): term: 2 => rate: 20.0
         point(1): term: 5 => rate: 50.0
@@ -19,6 +20,7 @@ $ npx hardhat test test/TestSimpleCurve.js > results/TestSimpleCurve.txt
         getRate(term: 101): 1000.0, expected: 1000.0
         getRate(term: 10000): 1000.0, expected: 1000.0
         --- Test 2 - Decreasing rates ---
+        replacePoints([2,4,6,8,10], ["10.0","8.0","6.0","4.0","2.0"]) - gasUsed: 133950
         pointsLength: 5
         point(0): term: 2 => rate: 10.0
         point(1): term: 4 => rate: 8.0
@@ -37,6 +39,7 @@ $ npx hardhat test test/TestSimpleCurve.js > results/TestSimpleCurve.txt
         getRate(term: 10): 2.0, expected: 2.0
         getRate(term: 11): 2.0, expected: 2.0
         --- Test 3a - Unixtime and BigNumber ---
+        replacePoints([{"type":"BigNumber","hex":"0x5fa60882"},{"type":"BigNumber","hex":"0x5fa656a2"}], ["1000000.0","2000000.0"]) - gasUsed: 45976
         pointsLength: 2
         point(0): term: 1604716674 => rate: 1000000.0
         point(1): term: 1604736674 => rate: 2000000.0
@@ -47,8 +50,9 @@ $ npx hardhat test test/TestSimpleCurve.js > results/TestSimpleCurve.txt
         getRate(term: 1604726774): 1505000.0, expected: 1505000.0
         getRate(term: 1604727674): 1550000.0, expected: 1550000.0
         --- Test 3b - Replace Point ---
-        Replaced rate3: 3000000.0 vs expected 3000000.0
+        Replaced rate3: 3000000.0 vs expected 3000000.0 - gasUsed: 36224
         --- Test 4 - Linear from (0, 0) ---
+        replacePoints([0,365], ["0.0","36500.0"]) - gasUsed: 30770
         pointsLength: 2
         point(0): term: 0 => rate: 0.0
         point(1): term: 365 => rate: 36500.0
@@ -58,6 +62,7 @@ $ npx hardhat test test/TestSimpleCurve.js > results/TestSimpleCurve.txt
         getRate(term: 100): 10000.0, expected: 10000.0
         getRate(term: 1000): 36500.0, expected: 36500.0
         --- Test 5 - Variable rates 1 ---
+        replacePoints([2,5,10,100], ["20.0","500.0","100.0","1000.0"]) - gasUsed: 180423
         pointsLength: 4
         point(0): term: 2 => rate: 20.0
         point(1): term: 5 => rate: 500.0
@@ -74,6 +79,7 @@ $ npx hardhat test test/TestSimpleCurve.js > results/TestSimpleCurve.txt
         getRate(term: 101): 1000.0, expected: 1000.0
         getRate(term: 10000): 1000.0, expected: 1000.0
         --- Test 6 - Variable rates 2 ---
+        replacePoints([20,50,100,1000], ["20.0","500.0","100.0","1000.0"]) - gasUsed: 72757
         pointsLength: 4
         point(0): term: 20 => rate: 20.0
         point(1): term: 50 => rate: 500.0
@@ -92,7 +98,7 @@ $ npx hardhat test test/TestSimpleCurve.js > results/TestSimpleCurve.txt
         getRate(term: 100000): 1000.0, expected: 1000.0
         --- Test Completed ---
 
-    ✓ TestSimpleCurve - #0 (2106ms)
+    ✓ TestSimpleCurve - #0 (2191ms)
 
 
   1 passing (2s)
