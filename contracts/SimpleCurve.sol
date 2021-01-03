@@ -16,10 +16,11 @@ contract SimpleCurve is Owned, CurveInterface {
     }
     Point[] public points;
     event PointUpdated(uint index, uint term, uint rate);
+    event PointsUpdated(uint[] terms, uint[] rates);
 
     constructor(uint[] memory terms, uint[] memory rates) {
         initOwned(msg.sender);
-        _addPoints(terms, rates);
+        _replacePoints(terms, rates);
     }
 
     function pointsLength() public view returns (uint) {
@@ -27,16 +28,23 @@ contract SimpleCurve is Owned, CurveInterface {
     }
 
     function replacePoints(uint[] memory terms, uint[] memory rates) public onlyOwner {
-        _addPoints(terms, rates);
+        _replacePoints(terms, rates);
     }
 
     function replacePoint(uint i, uint term, uint rate) public onlyOwner {
         require(i < points.length);
         points[i] = Point(term, rate);
+        // TODO Check
+        if (i > 1) {
+            require(points[i-1].term < term, "Invalid term");
+        }
+        if (i < points.length - 1) {
+            require(term < points[i+1].term, "Invalid term");
+        }
         emit PointUpdated(i, term, rate);
     }
 
-    function _addPoints(uint[] memory terms, uint[] memory rates) internal {
+    function _replacePoints(uint[] memory terms, uint[] memory rates) internal {
         require(terms.length == rates.length, "Invalid data");
         delete points;
         for (uint i = 0; i < terms.length; i++) {
@@ -44,8 +52,9 @@ contract SimpleCurve is Owned, CurveInterface {
                 require(terms[i-1] < terms[i], "Invalid terms");
             }
             points.push(Point(terms[i], rates[i]));
-            emit PointUpdated(i, terms[i], rates[i]);
+            // emit PointUpdated(i, terms[i], rates[i]);
         }
+        emit PointsUpdated(terms, rates);
     }
 
     function getRate(uint term) override external view returns (uint rate) {

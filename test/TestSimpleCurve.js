@@ -4,10 +4,29 @@ const util = require('util');
 
 describe("TestSimpleCurve", function() {
   it("TestSimpleCurve - #0", async function() {
+
+    function printEvents(contract, receipt) {
+      receipt.logs.forEach((log) => {
+        var data = contract.interface.parseLog(log);
+        var result = data.name + "(";
+        let separator = "";
+        data.eventFragment.inputs.forEach((a) => {
+          result = result + separator + a.name + ": ";
+          result = result + data.args[a.name].toString();
+          separator = ", ";
+        });
+        result = result + ")";
+        console.log("        + " + result);
+      });
+    }
+
     SimpleCurve = await ethers.getContractFactory("SimpleCurve");
     const setup1a = [];
     setup1a.push(SimpleCurve.deploy([], []));
     const [simpleCurve] = await Promise.all(setup1a);
+    const deployTransactionReceipt = await simpleCurve.deployTransaction.wait();
+    console.log("        simpleCurve deployment - gasUsed: " + deployTransactionReceipt.gasUsed.toString());
+    printEvents(simpleCurve, deployTransactionReceipt);
     const owner = await simpleCurve.owner();
     console.log("        owner: " + owner);
 
@@ -20,6 +39,7 @@ describe("TestSimpleCurve", function() {
       const replacePoints = await simpleCurve.replacePoints(terms, rates);
       const receipt = await replacePoints.wait();
       console.log("        replacePoints(" + JSON.stringify(terms) + ", " + JSON.stringify(rates.map((x) => { return ethers.utils.formatUnits(x, decimals); })) + ") - gasUsed: " + receipt.gasUsed.toString());
+      printEvents(simpleCurve, receipt);
 
       const pointsLength = await simpleCurve.pointsLength();
       console.log("        pointsLength: " + pointsLength);
@@ -62,6 +82,7 @@ describe("TestSimpleCurve", function() {
     let replaceRate3 = BigNumber.from("3000000000000000000000000");
     const replacePoint3 = await simpleCurve.replacePoint(1, replaceTerm3, replaceRate3);
     const receipt3 = await replacePoint3.wait();
+    printEvents(simpleCurve, receipt3);
     const rate3 = await simpleCurve.getRate(1604746674);
     console.log("        Replaced rate3: " + ethers.utils.formatUnits(rate3, 18) + " vs expected " + ethers.utils.formatUnits(replaceRate3, 18) + " - gasUsed: " + receipt3.gasUsed.toString());
     expect(rate3.toString()).to.equal(replaceRate3.toString());
