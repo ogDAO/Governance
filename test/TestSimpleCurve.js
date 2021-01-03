@@ -56,6 +56,17 @@ describe("TestSimpleCurve", function() {
       }
     }
 
+    async function expectException(message, searchString, promise) {
+      try {
+        await promise;
+      } catch (e) {
+        assert(e.toString().indexOf(searchString) >= 0, message + " - '" + searchString + "' not found in error message '" + e.toString() + "'");
+        console.log("        " + message + " - Exception '" + searchString + "' thrown as expected");
+        return;
+      }
+      assert.fail(message + " - Exception '" + searchString + "' was not thrown as expected");
+    }
+
     console.log("        --- Test 1 - Increasing rates ---");
     let terms1 = [2, 5, 10, 100];
     let rates1 = [20, 50, 100, 1000];
@@ -77,7 +88,7 @@ describe("TestSimpleCurve", function() {
     let expectedRates3 = [BigNumber.from("1000000000000000000000000"), BigNumber.from("1500000000000000000000000"), BigNumber.from("1500050000000000000000000"), BigNumber.from("1500500000000000000000000"), BigNumber.from("1505000000000000000000000"), BigNumber.from("1550000000000000000000000")];
     await test(terms3, rates3, testTerms3, expectedRates3, 18);
 
-    console.log("        --- Test 3b - Replace Point ---");
+    console.log("        --- Test 3b - Replace point ---");
     let replaceTerm3 = 1604746674;
     let replaceRate3 = BigNumber.from("3000000000000000000000000");
     const replacePoint3 = await simpleCurve.replacePoint(1, replaceTerm3, replaceRate3);
@@ -101,12 +112,18 @@ describe("TestSimpleCurve", function() {
     let expectedRates5 = [20, 20, 180, 500, 340, 100, 990, 1000, 1000, 1000];
     await test(terms5, rates5, testTerms5, expectedRates5, 0);
 
-    console.log("        --- Test 6 - Variable rates 2 ---");
+    console.log("        --- Test 6a - Variable rates 2 ---");
     let terms6 = [20, 50, 100, 1000];
     let rates6 = [20, 500, 100, 1000];
     let testTerms6 = [10, 20, 30, 50, 70, 100, 990, 999, 1000, 1010, 100000];
     let expectedRates6 = [20, 20, 180, 500, 340, 100, 990, 999, 1000, 1000, 1000];
     await test(terms6, rates6, testTerms6, expectedRates6, 0);
+
+    console.log("        --- Test 6b - Replace point with errors ---");
+    await expectException("Replace 1st point with term equal to 2nd point", "Invalid term", simpleCurve.replacePoint(0, 50, 20));
+    await expectException("Replace 2nd point with term equal to 1st point", "Invalid term", simpleCurve.replacePoint(1, 20, 20));
+    await expectException("Replace 2nd point with term greater than 3rd point", "Invalid term", simpleCurve.replacePoint(1, 101, 20));
+    await expectException("Replace 3rd/last point with term equal to 2nd point", "Invalid term", simpleCurve.replacePoint(3, 100, 20));
 
     console.log("        --- Test Completed ---");
     console.log("");

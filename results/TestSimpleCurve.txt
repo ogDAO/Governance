@@ -2,7 +2,7 @@ $ npx hardhat test test/TestSimpleCurve.js > results/TestSimpleCurve.txt
 
 
   TestSimpleCurve
-        simpleCurve deployment - gasUsed: 941544
+        simpleCurve deployment - gasUsed: 932683
         + PointsUpdated(terms: , rates: )
         owner: 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E
         --- Test 1 - Increasing rates ---
@@ -54,9 +54,9 @@ $ npx hardhat test test/TestSimpleCurve.js > results/TestSimpleCurve.txt
         getRate(term: 1604726684): 1500500.0, expected: 1500500.0
         getRate(term: 1604726774): 1505000.0, expected: 1505000.0
         getRate(term: 1604727674): 1550000.0, expected: 1550000.0
-        --- Test 3b - Replace Point ---
+        --- Test 3b - Replace point ---
         + PointUpdated(index: 1, term: 1604746674, rate: 3000000000000000000000000)
-        Replaced rate3: 3000000.0 vs expected 3000000.0 - gasUsed: 37140
+        Replaced rate3: 3000000.0 vs expected 3000000.0 - gasUsed: 38920
         --- Test 4 - Linear from (0, 0) ---
         replacePoints([0,365], ["0.0","36500.0"]) - gasUsed: 30769
         + PointsUpdated(terms: 0,365, rates: 0,36500)
@@ -86,7 +86,7 @@ $ npx hardhat test test/TestSimpleCurve.js > results/TestSimpleCurve.txt
         getRate(term: 100): 1000.0, expected: 1000.0
         getRate(term: 101): 1000.0, expected: 1000.0
         getRate(term: 10000): 1000.0, expected: 1000.0
-        --- Test 6 - Variable rates 2 ---
+        --- Test 6a - Variable rates 2 ---
         replacePoints([20,50,100,1000], ["20.0","500.0","100.0","1000.0"]) - gasUsed: 70606
         + PointsUpdated(terms: 20,50,100,1000, rates: 20,500,100,1000)
         pointsLength: 4
@@ -105,9 +105,14 @@ $ npx hardhat test test/TestSimpleCurve.js > results/TestSimpleCurve.txt
         getRate(term: 1000): 1000.0, expected: 1000.0
         getRate(term: 1010): 1000.0, expected: 1000.0
         getRate(term: 100000): 1000.0, expected: 1000.0
+        --- Test 6b - Replace point with errors ---
+        Replace 1st point with term equal to 2nd point - Exception 'Invalid term' thrown as expected
+        Replace 2nd point with term equal to 1st point - Exception 'Invalid term' thrown as expected
+        Replace 2nd point with term greater than 3rd point - Exception 'Invalid term' thrown as expected
+        Replace 3rd/last point with term equal to 2nd point - Exception 'Invalid term' thrown as expected
         --- Test Completed ---
 
-    ✓ TestSimpleCurve - #0 (2157ms)
+    ✓ TestSimpleCurve - #0 (2365ms)
 
 
   1 passing (2s)

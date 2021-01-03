@@ -34,8 +34,7 @@ contract SimpleCurve is Owned, CurveInterface {
     function replacePoint(uint i, uint term, uint rate) public onlyOwner {
         require(i < points.length);
         points[i] = Point(term, rate);
-        // TODO Check
-        if (i > 1) {
+        if (i > 0) {
             require(points[i-1].term < term, "Invalid term");
         }
         if (i < points.length - 1) {
@@ -49,7 +48,7 @@ contract SimpleCurve is Owned, CurveInterface {
         delete points;
         for (uint i = 0; i < terms.length; i++) {
             if (i > 0) {
-                require(terms[i-1] < terms[i], "Invalid terms");
+                require(terms[i-1] < terms[i], "Invalid term");
             }
             points.push(Point(terms[i], rates[i]));
             // emit PointUpdated(i, terms[i], rates[i]);
@@ -59,19 +58,20 @@ contract SimpleCurve is Owned, CurveInterface {
 
     function getRate(uint term) override external view returns (uint rate) {
         require(points.length > 0, "Curve empty");
+        // TODO Check gas & unchecked { }
         if (term <= points[0].term) {
-            rate = points[0].rate;
+            return points[0].rate;
         } else if (term >= points[points.length-1].term) {
-            rate = points[points.length-1].rate;
+            return points[points.length-1].rate;
         } else {
             for (uint i = 1; i < points.length; i++) {
                 if (term == points[i].term) {
-                    rate = points[i].rate;
+                    return points[i].rate;
                 } else if (term > points[i-1].term && term < points[i].term) {
                     if (points[i].rate >= points[i-1].rate) {
-                        rate = points[i-1].rate + (points[i].rate - points[i-1].rate) * (term - points[i-1].term) / (points[i].term - points[i-1].term);
+                        return points[i-1].rate + (points[i].rate - points[i-1].rate) * (term - points[i-1].term) / (points[i].term - points[i-1].term);
                     } else {
-                        rate = points[i-1].rate - (points[i-1].rate - points[i].rate) * (term - points[i-1].term) / (points[i].term - points[i-1].term);
+                        return points[i-1].rate - (points[i-1].rate - points[i].rate) * (term - points[i-1].term) / (points[i].term - points[i-1].term);
                     }
                 }
             }
