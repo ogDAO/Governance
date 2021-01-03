@@ -20,21 +20,6 @@ describe("TestSimpleCurve", function() {
       });
     }
 
-    SimpleCurve = await ethers.getContractFactory("SimpleCurve");
-    const setup1a = [];
-    setup1a.push(SimpleCurve.deploy([], []));
-    const [simpleCurve] = await Promise.all(setup1a);
-    const deployTransactionReceipt = await simpleCurve.deployTransaction.wait();
-    console.log("        simpleCurve deployment - gasUsed: " + deployTransactionReceipt.gasUsed.toString());
-    printEvents(simpleCurve, deployTransactionReceipt);
-    const owner = await simpleCurve.owner();
-    console.log("        owner: " + owner);
-
-    let deployerSigner;
-    [deployerSigner] = await ethers.getSigners();
-    const expectedOwner = await deployerSigner.getAddress();
-    expect(owner).to.equal(expectedOwner);
-
     async function test(terms, rates, testTerms, expectedRates, decimals) {
       const replacePoints = await simpleCurve.replacePoints(terms, rates);
       const receipt = await replacePoints.wait();
@@ -66,6 +51,21 @@ describe("TestSimpleCurve", function() {
       }
       assert.fail(message + " - Exception '" + searchString + "' was not thrown as expected");
     }
+
+    SimpleCurve = await ethers.getContractFactory("SimpleCurve");
+    const setup1a = [];
+    setup1a.push(SimpleCurve.deploy([1, 2], [10, 20]));
+    const [simpleCurve] = await Promise.all(setup1a);
+    const deployTransactionReceipt = await simpleCurve.deployTransaction.wait();
+    console.log("        simpleCurve deployment - gasUsed: " + deployTransactionReceipt.gasUsed.toString());
+    printEvents(simpleCurve, deployTransactionReceipt);
+    const owner = await simpleCurve.owner();
+    console.log("        owner: " + owner);
+
+    let deployerSigner;
+    [deployerSigner] = await ethers.getSigners();
+    const expectedOwner = await deployerSigner.getAddress();
+    expect(owner).to.equal(expectedOwner);
 
     console.log("        --- Test 1 - Increasing rates ---");
     let terms1 = [2, 5, 10, 100];

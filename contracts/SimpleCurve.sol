@@ -51,14 +51,12 @@ contract SimpleCurve is Owned, CurveInterface {
                 require(terms[i-1] < terms[i], "Invalid term");
             }
             points.push(Point(terms[i], rates[i]));
-            // emit PointUpdated(i, terms[i], rates[i]);
         }
         emit PointsUpdated(terms, rates);
     }
 
     function getRate(uint term) override external view returns (uint rate) {
         require(points.length > 0, "Curve empty");
-        // TODO Check gas & unchecked { }
         if (term <= points[0].term) {
             return points[0].rate;
         } else if (term >= points[points.length-1].term) {

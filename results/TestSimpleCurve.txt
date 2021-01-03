@@ -2,11 +2,11 @@ $ npx hardhat test test/TestSimpleCurve.js > results/TestSimpleCurve.txt
 
 
   TestSimpleCurve
-        simpleCurve deployment - gasUsed: 932683
-        + PointsUpdated(terms: , rates: )
+        simpleCurve deployment - gasUsed: 1038401
+        + PointsUpdated(terms: 1,2, rates: 10,20)
         owner: 0xa00Af22D07c87d96EeeB0Ed583f8F6AC7812827E
         --- Test 1 - Increasing rates ---
-        replacePoints([2,5,10,100], ["20.0","50.0","100.0","1000.0"]) - gasUsed: 219938
+        replacePoints([2,5,10,100], ["20.0","50.0","100.0","1000.0"]) - gasUsed: 148260
         + PointsUpdated(terms: 2,5,10,100, rates: 20,50,100,1000)
         pointsLength: 4
         point(0): term: 2 => rate: 20.0
@@ -112,8 +112,8 @@ $ npx hardhat test test/TestSimpleCurve.js > results/TestSimpleCurve.txt
         Replace 3rd/last point with term equal to 2nd point - Exception 'Invalid term' thrown as expected
         --- Test Completed ---
 
-    ✓ TestSimpleCurve - #0 (2365ms)
+    ✓ TestSimpleCurve - #0 (2707ms)
 
 
-  1 passing (2s)
+  1 passing (3s)
 
