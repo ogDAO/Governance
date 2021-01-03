@@ -71,13 +71,19 @@ describe("TestSimpleCurve", function() {
     let expectedRates4 = [0, 100, 1000, 10000, 36500];
     await test(terms4, rates4, testTerms4, expectedRates4, 0);
 
-    console.log("        --- Test 5 - Random rates ---");
+    console.log("        --- Test 5 - Variable rates 1 ---");
     let terms5 = [2, 5, 10, 100];
     let rates5 = [20, 500, 100, 1000];
-    let testTerms5 = [1, 2, 3, 5, 7, 10, 100, 101, 10000];
-    let expectedRates5 = [20, 20, 180, 500, 340, 100, 1000, 1000, 1000];
+    let testTerms5 = [1, 2, 3, 5, 7, 10, 99, 100, 101, 10000];
+    let expectedRates5 = [20, 20, 180, 500, 340, 100, 990, 1000, 1000, 1000];
     await test(terms5, rates5, testTerms5, expectedRates5, 0);
 
+    console.log("        --- Test 6 - Variable rates 2 ---");
+    let terms6 = [20, 50, 100, 1000];
+    let rates6 = [20, 500, 100, 1000];
+    let testTerms6 = [10, 20, 30, 50, 70, 100, 990, 999, 1000, 1010, 100000];
+    let expectedRates6 = [20, 20, 180, 500, 340, 100, 990, 999, 1000, 1000, 1000];
+    await test(terms6, rates6, testTerms6, expectedRates6, 0);
 
     console.log("        --- Test Completed ---");
     console.log("");
