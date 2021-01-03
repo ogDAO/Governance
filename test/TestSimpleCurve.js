@@ -125,6 +125,13 @@ describe("TestSimpleCurve", function() {
     await expectException("Replace 2nd point with term greater than 3rd point", "Invalid term", simpleCurve.replacePoint(1, 101, 20));
     await expectException("Replace 3rd/last point with term equal to 2nd point", "Invalid term", simpleCurve.replacePoint(3, 100, 20));
 
+    console.log("        --- Test 7 - Equal rates ---");
+    let terms7 = [2, 5, 10, 100, 200];
+    let rates7 = [100, 100, 200, 200, 100];
+    let testTerms7 = [1, 2, 3, 5, 7, 10, 99, 100, 101, 10000];
+    let expectedRates7 = [100, 100, 100, 100, 140, 200, 200, 200, 199, 100];
+    await test(terms7, rates7, testTerms7, expectedRates7, 0);
+
     console.log("        --- Test Completed ---");
     console.log("");
   });

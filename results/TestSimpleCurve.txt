@@ -110,9 +110,28 @@ $ npx hardhat test test/TestSimpleCurve.js > results/TestSimpleCurve.txt
         Replace 2nd point with term equal to 1st point - Exception 'Invalid term' thrown as expected
         Replace 2nd point with term greater than 3rd point - Exception 'Invalid term' thrown as expected
         Replace 3rd/last point with term equal to 2nd point - Exception 'Invalid term' thrown as expected
+        --- Test 7 - Equal rates ---
+        replacePoints([2,5,10,100,200], ["100.0","100.0","200.0","200.0","100.0"]) - gasUsed: 134925
+        + PointsUpdated(terms: 2,5,10,100,200, rates: 100,100,200,200,100)
+        pointsLength: 5
+        point(0): term: 2 => rate: 100.0
+        point(1): term: 5 => rate: 100.0
+        point(2): term: 10 => rate: 200.0
+        point(3): term: 100 => rate: 200.0
+        point(4): term: 200 => rate: 100.0
+        getRate(term: 1): 100.0, expected: 100.0
+        getRate(term: 2): 100.0, expected: 100.0
+        getRate(term: 3): 100.0, expected: 100.0
+        getRate(term: 5): 100.0, expected: 100.0
+        getRate(term: 7): 140.0, expected: 140.0
+        getRate(term: 10): 200.0, expected: 200.0
+        getRate(term: 99): 200.0, expected: 200.0
+        getRate(term: 100): 200.0, expected: 200.0
+        getRate(term: 101): 199.0, expected: 199.0
+        getRate(term: 10000): 100.0, expected: 100.0
         --- Test Completed ---
 
-    ✓ TestSimpleCurve - #0 (2707ms)
+    ✓ TestSimpleCurve - #0 (2862ms)
 
 
   1 passing (3s)
